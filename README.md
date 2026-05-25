@@ -6,6 +6,21 @@ Projeto desenvolvido no projeto de extensão **AILAB Makers — UnB FCTE**.
 
 ---
 
+## Sumário
+
+- [Objetivo do Projeto](#objetivo-do-projeto)
+- [Funcionalidades](#funcionalidades)
+- [Arquitetura de Pastas](#arquitetura-de-pastas)
+- [Tecnologias Utilizadas](#tecnologias-utilizadas)
+- [Pré-requisitos](#pré-requisitos)
+- [Fluxo de Desenvolvimento](#fluxo-de-desenvolvimento)
+- [Convenção de Commits](#convenção-de-commits)
+- [Status do Projeto](#status-do-projeto)
+- [Integrantes](#integrantes)
+- [Licença](#licença)
+
+---
+
 ## Objetivo do Projeto
 
 O sistema tem como objetivo digitalizar e proteger o armazenamento de produções científicas e rascunhos de pesquisas em andamento, permitindo:
@@ -41,38 +56,54 @@ O sistema tem como objetivo digitalizar e proteger o armazenamento de produçõe
 
 ---
 
+## Arquitetura de Pastas
+
+```text
+edtech-repositorio/
+├── .github/
+│   ├── PULL_REQUEST_TEMPLATE.md   # Template padrão para PRs
+│   └── workflows/
+│       └── ci-docs.yml            # Deploy automático do MkDocs via GitHub Pages
+├── backend/                       # API Java + Spring Boot
+├── docs/                          # Documentação técnica (MkDocs)
+│   ├── arquitetura/               # Diagramas e guias de arquitetura
+│   ├── entregas/                  # Relatórios semanais de progresso
+│   ├── planejamento/              # Rotações e planejamento do time
+│   └── index.md                   # Página inicial da documentação
+├── frontend/                      # Interface web (HTML/CSS/JS)
+├── infra/                         # Docker Compose e variáveis de ambiente
+│   ├── .env.example               # Exemplo de variáveis de ambiente
+│   └── docker-compose.yml         # Orquestração dos containers
+├── .gitignore
+├── mkdocs.yml                     # Configuração do MkDocs
+├── pyproject.toml                 # Dependências Python (uv)
+└── README.md
+```
+
+---
+
 ## Tecnologias Utilizadas
 
-### Frontend
+| Camada | Tecnologias |
+| --- | --- |
+| **Frontend** | HTML5, CSS3, JavaScript Vanilla, Bootstrap 5, Alpine.js (CDN) |
+| **Backend** | Java 17, Spring Boot, Spring Security, JWT (`HttpOnly` + `Secure` cookies) |
+| **Banco de Dados & Storage** | Google Cloud SQL for PostgreSQL, Google Cloud Storage |
+| **Infraestrutura & DevOps** | Docker, Google Cloud Run |
+| **CI/CD & Qualidade** | GitHub Actions, JUnit, Python 3.11 (scripts de telemetria) |
+| **Documentação** | MkDocs + Material for MkDocs |
 
-- HTML5
-- CSS3
-- JavaScript Vanilla
-- Bootstrap 5
-- Alpine.js (utilizado via CDN para gestão leve de estado e reatividade nas telas de login/upload)
+---
 
-### Backend
+## Pré-requisitos
 
-- Java 17
-- Spring Boot
-- Spring Security
-- JWT (Tokens de autenticação transmitidos obrigatoriamente via cookies `HttpOnly` e `Secure` contra ataques XSS)
+Antes de configurar o projeto localmente, é necessário instalar:
 
-### Banco de Dados & Storage
-
-- Google Cloud SQL for PostgreSQL (Persistência relacional gerenciada)
-- Google Cloud Storage (Armazenamento de objetos para PDFs e datasets binários)
-
-### Infraestrutura & DevOps
-
-- Docker
-- Google Cloud Run (Ambiente de execução containerizado e escalável)
-
-### CI/CD, Qualidade & Auditoria
-
-- GitHub Actions
-- JUnit (Testes automatizados de rotas e segurança no ecossistema Java)
-- Python 3.11 (Scripts analíticos complementares para consumo de telemetria do Cloud Logging)
+| Ferramenta | Versão | Link |
+| --- | --- | --- |
+| Java JDK | 17 | [Download](https://www.oracle.com/java/technologies/downloads/) |
+| Docker Desktop | latest | [Download](https://www.docker.com/products/docker-desktop/) |
+| Python | 3.11+ | [Download](https://www.python.org/downloads/) |
 
 ---
 
@@ -82,7 +113,7 @@ O sistema tem como objetivo digitalizar e proteger o armazenamento de produçõe
 
 Branch estável e protegida do projeto. O código presente aqui reflete o ambiente de deploy público.
 
-### `Branches de Funcionalidades`
+### Branches de Funcionalidades
 
 Cada funcionalidade (ex: `auth`, `upload`, `logging`) deve ser desenvolvida em uma branch própria derivada da `main`. Cada commit será feito na branch correspondente à sua funcionalidade. Nunca commitar diretamente na main. A integração com a `main` ocorrerá exclusivamente por meio de Pull Requests (PRs) revisados pela liderança técnica.
 
@@ -90,41 +121,14 @@ Cada funcionalidade (ex: `auth`, `upload`, `logging`) deve ser desenvolvida em u
 
 ## Convenção de Commits
 
-Organização de Commits para melhor compreensão e rastreabilidade do projeto.
+Organização de commits para melhor compreensão e rastreabilidade do projeto.
 
-### Funcionalidade
-
-`feat: implement secure jwt cookie storage`
-
-### Correção
-
-`fix: adjust spring security blocking path for unauthorized users`
-
-### Documentação
-
-`docs: update mkdocs architecture guides for phase 2`
-
-### Refatoração
-
-`refactor: optimize postgresql connection pooling on spring backend`
-
----
-
-## Pré-requisitos
-
-Antes de configurar o projeto localmente, é necessário instalar:
-
-### Java JDK 17
-
-<https://www.oracle.com/java/technologies/downloads/>
-
-### Docker Desktop
-
-<https://www.docker.com/products/docker-desktop/>
-
-### Python 3.11+
-
-<https://www.python.org/downloads/>
+| Tipo | Prefixo | Exemplo |
+| --- | --- | --- |
+| Funcionalidade | `feat` | `feat: implement secure jwt cookie storage` |
+| Correção | `fix` | `fix: adjust spring security blocking path for unauthorized users` |
+| Documentação | `docs` | `docs: update mkdocs architecture guides for phase 2` |
+| Refatoração | `refactor` | `refactor: optimize postgresql connection pooling on spring backend` |
 
 ---
 
