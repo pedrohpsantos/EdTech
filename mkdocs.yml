@@ -18,5 +18,5 @@ nav:
     - Diagrama de Banco: arquitetura/banco.md
     - Segurança e JWT: arquitetura/seguranca.md
   - Entregas:
-    - Semana 7: entregas/semana7.md
-    - Semana 8: entregas/semana8.md
+    - Semana 1: entregas/semana1.md
+    - Semana 2: entregas/semana2.md
