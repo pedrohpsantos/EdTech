@@ -1,0 +1,22 @@
+site_name: EdTech (Repositório Acadêmico)
+site_description: Documentação oficial do projeto EdTech da Fase 2 do AILAB MAKERS.
+theme:
+  name: material
+  language: pt-BR
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - toc.integrate
+nav:
+  - Início: index.md
+  - Planejamento:
+    - Cronograma e Sprints: planejamento/cronograma.md
+    - Papéis e Rotações: planejamento/rotacoes.md
+  - Arquitetura:
+    - Stack Tecnológica: arquitetura/stack.md
+    - Diagrama de Banco: arquitetura/banco.md
+    - Segurança e JWT: arquitetura/seguranca.md
+  - Entregas:
+    - Semana 7: entregas/semana7.md
+    - Semana 8: entregas/semana8.md

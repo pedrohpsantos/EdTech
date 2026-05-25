@@ -1,0 +1,30 @@
+# Sistema Operacional
+.DS_Store
+Thumbs.db
+
+# IDEs e Editores
+.idea/
+.vscode/
+*.swp
+
+# Backend (Java / Spring Boot)
+backend/target/
+*.class
+*.jar
+*.war
+.mvn/
+
+# Frontend e Node
+frontend/node_modules/
+frontend/dist/
+
+# Qualidade e Logs (Python)
+__pycache__/
+*.py[cod]
+.venv/
+
+# Documentação (MkDocs)
+site/
+
+# Infraestrutura
+infra/.env

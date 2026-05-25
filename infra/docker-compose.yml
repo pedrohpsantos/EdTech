@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: edtech-postgres
+    environment:
+      POSTGRES_USER: edtech_user
+      POSTGRES_PASSWORD: edtech_password
+      POSTGRES_DB: edtech_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:

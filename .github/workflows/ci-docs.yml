@@ -1,0 +1,33 @@
+name: Deploy MkDocs
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'docs/**'
+      - 'mkdocs.yml'
+      - '.github/workflows/ci-docs.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.11
+
+      - name: Instalar uv
+        uses: astral-sh/setup-uv@v3
+
+      - name: Instalar dependências
+        run: uv sync
+
+      - name: Deploy para GitHub Pages
+        run: uv run mkdocs gh-deploy --force
