@@ -1,22 +1,81 @@
-site_name: EdTech (Repositório Acadêmico)
-site_description: Documentação oficial do projeto EdTech da Fase 2 do AILAB MAKERS.
+site_name: EdTech — Repositório Acadêmico
+site_description: Documentação oficial do projeto EdTech — Plataforma de centralização, gerenciamento e auditoria de publicações acadêmicas. AILAB Makers — UnB FCTE.
+site_url: ""
+repo_url: https://github.com/AILAB-MAKERS/EdTech
+repo_name: AILAB-MAKERS/EdTech
+
 theme:
   name: material
   language: pt-BR
+  logo: https://raw.githubusercontent.com/squidfunk/mkdocs-material/master/material/templates/.icons/material/book-open-page-variant.svg
+  favicon: https://raw.githubusercontent.com/squidfunk/mkdocs-material/master/material/templates/.icons/material/school.svg
+  icon:
+    repo: fontawesome/brands/github
   features:
     - navigation.tabs
+    - navigation.tabs.sticky
     - navigation.sections
     - navigation.expand
+    - navigation.top
+    - navigation.footer
+    - navigation.instant
     - toc.integrate
+    - search.suggest
+    - search.highlight
+    - search.share
+    - content.tabs.link
+    - content.code.copy
+  palette:
+    - scheme: default
+      primary: deep purple
+      accent: amber
+      toggle:
+        icon: material/brightness-7
+        name: Alternar para modo escuro
+    - scheme: slate
+      primary: deep purple
+      accent: amber
+      toggle:
+        icon: material/brightness-4
+        name: Alternar para modo claro
+  font:
+    text: Plus Jakarta Sans
+    code: JetBrains Mono
+
+extra_css:
+  - stylesheets/extra.css
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+
 nav:
   - Início: index.md
   - Planejamento:
-    - Cronograma e Sprints: planejamento/cronograma.md
-    - Papéis e Rotações: planejamento/rotacoes.md
+      - Cronograma e Sprints: planejamento/cronograma.md
+      - Papéis e Rotações: planejamento/rotacoes.md
+      - Atas de Reunião: planejamento/atas.md
   - Arquitetura:
-    - Stack Tecnológica: arquitetura/stack.md
-    - Diagrama de Banco: arquitetura/banco.md
-    - Segurança e JWT: arquitetura/seguranca.md
+      - Stack Tecnológica: arquitetura/stack.md
+      - Diagrama de Banco: arquitetura/banco.md
+      - Segurança e JWT: arquitetura/seguranca.md
   - Entregas:
-    - Semana 1: entregas/semana1.md
-    - Semana 2: entregas/semana2.md
+      - Semana 1: entregas/semana1.md
+      - Semana 2: entregas/semana2.md
