@@ -6,38 +6,35 @@ Planejamento de desenvolvimento do EdTech, organizado em sprints semanais com en
 
 ## Roadmap Geral
 
+<div style="overflow-x: auto; min-width: 100%;" markdown="1">
 ```mermaid
 gantt
-    title Roadmap EdTech - Fase 2
+    title Roadmap EdTech - Ciclos e Sprints
     dateFormat YYYY-MM-DD
     axisFormat %d/%m
 
-    section Fundacao
-        Setup do repositorio e CI/CD       :done, s1a, 2026-05-12, 7d
-        Estrutura MkDocs e docs iniciais    :done, s1b, 2026-05-12, 7d
-        Docker Compose e ambiente local     :done, s1c, 2026-05-12, 7d
+    section S1: Fundacao
+        Setup, Docker, Docs, Stack          :done, s1, 2026-05-12, 7d
 
-    section Autenticacao
-        Modelagem do banco de dados         :active, s2a, 2026-05-19, 7d
-        API de registro e login             :active, s2b, 2026-05-19, 7d
-        JWT e Cookies seguros               :active, s2c, 2026-05-19, 7d
-        Frontend de login                   :active, s2d, 2026-05-19, 7d
+    section S2: Planejamento
+        Lean Inception, Requisitos, Arq     :done, s2, 2026-05-19, 7d
 
-    section Upload e Documentos
-        API de upload de documentos         :s3a, 2026-05-26, 7d
-        Integracao com Cloud Storage        :s3b, 2026-05-26, 7d
-        Listagem filtrada por usuario       :s3c, 2026-05-26, 7d
+    section S3: MVP 1 (Auth)
+        API de registro e login             :active, s3a, 2026-05-26, 7d
+        JWT e Cookies seguros               :active, s3b, 2026-05-26, 7d
+        Frontend de Autenticacao            :active, s3c, 2026-05-26, 7d
 
-    section Orientador e Isolamento
-        Painel do orientador                :s4a, 2026-06-02, 7d
-        Isolamento de dados por projeto     :s4b, 2026-06-02, 7d
-        Validacao de submissoes             :s4c, 2026-06-02, 7d
+    section S4: MVP 2 (Upload)
+        Integracao Google Cloud Storage     :s4a, 2026-06-02, 7d
+        API de upload de documentos         :s4b, 2026-06-02, 7d
+        Listagem filtrada por usuario       :s4c, 2026-06-02, 7d
 
-    section Auditoria e Deploy
-        Sistema de audit logs               :s5a, 2026-06-09, 7d
-        Testes e2e e integracao             :s5b, 2026-06-09, 7d
-        Deploy em Cloud Run                 :s5c, 2026-06-09, 7d
+    section S5: MVP 3 (Orientador)
+        Painel do Orientador                :s5a, 2026-06-09, 7d
+        Isolamento de dados por projeto     :s5b, 2026-06-09, 7d
+        Logs de Auditoria e Testes e2e      :s5c, 2026-06-09, 7d
 ```
+</div>
 
 ---
 
@@ -82,17 +79,17 @@ flowchart LR
 ```mermaid
 gitgraph
     commit id: "main"
-    branch feat/auth
+    branch "feat/auth"
     commit id: "feat: user model"
     commit id: "feat: login endpoint"
     commit id: "feat: jwt cookie auth"
     checkout main
-    merge feat/auth id: "PR 1 - Auth"
-    branch feat/upload
+    merge "feat/auth" id: "PR-1-Auth"
+    branch "feat/upload"
     commit id: "feat: upload"
     commit id: "feat: gcs integration"
     checkout main
-    merge feat/upload id: "PR 2 - Upload"
+    merge "feat/upload" id: "PR-2-Upload"
 ```
 
 ---
@@ -121,10 +118,10 @@ Todos os commits seguem o padrão **Conventional Commits** para rastreabilidade:
 
 ## Marcos do Projeto
 
-| Marco | Data | Status |
+| Marco | Data Prevista | Status |
 | :--- | :---: | :---: |
-| Setup completo (repo + CI/CD + docs) | 18/05 | :material-check-circle:{ .green } Concluído |
-| Autenticação funcional (login + JWT) | 25/05 | :material-progress-clock: Em andamento |
-| Upload e listagem de documentos | 01/06 | :material-circle-outline: Pendente |
-| Painel do orientador + isolamento | 08/06 | :material-circle-outline: Pendente |
-| Auditoria + deploy final | 15/06 | :material-circle-outline: Pendente |
+| **S1:** Setup completo (repo, infra, docs) | 18/05 | :material-check-circle:{ .green } Concluído |
+| **S2:** Lean Inception e Arquitetura fechados | 25/05 | :material-check-circle:{ .green } Concluído |
+| **S3:** Autenticação funcional (API + Frontend) | 01/06 | :material-progress-clock: Em andamento |
+| **S4:** Upload de documentos no GCS | 08/06 | :material-circle-outline: Pendente |
+| **S5:** Fluxo do Orientador, Auditoria e Deploy | 15/06 | :material-circle-outline: Pendente |

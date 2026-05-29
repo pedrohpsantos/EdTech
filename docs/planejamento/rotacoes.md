@@ -1,50 +1,55 @@
 # :material-account-switch: Papéis e Rotações
 
-Estrutura organizacional da equipe EdTech, com alocações estratégicas baseadas no perfil de cada integrante e plano de rotação para desenvolvimento full-stack.
+Estrutura organizacional da equipe EdTech, com papéis definidos por função e plano de rotação para desenvolvimento full-stack.
 
 ---
 
-## Posições Atuais
+## Composição da Equipe
 
 <div class="grid cards" markdown>
 
-- :material-crown: **Pedro Henrique P. Santos**
+- :material-crown: **Tech Lead**
 
     ---
 
-    **Tech Lead** — Coordenação técnica, arquitetura, revisão de PRs e mentoria da equipe.
+    Coordenação técnica, arquitetura, revisão de PRs e mentoria da equipe.
 
-- :material-monitor-dashboard: **Alana Cristyna F. Dias**
+    *Pedro Henrique P. Santos*
 
-    ---
-
-    **Frontend** — Interface web, consumo de APIs e experiência do usuário.
-
-- :material-server-network: **Arthur Carvalho Leite**
+- :material-code-braces-box: **Full Stack 1**
 
     ---
 
-    **DevOps** — Infraestrutura, deploy, automação e proteção da aplicação.
+    Desenvolvimento completo — frontend, backend, testes, infraestrutura e documentação conforme o ciclo de rotação vigente.
 
-- :material-test-tube: **Luis Gustavo F. Nunes**
-
-    ---
-
-    **QA** — Testes, validações, automação de cenários e garantia de qualidade.
-
-- :material-file-document-edit: **Mariana S. F. Andrade**
+- :material-code-braces-box: **Full Stack 2**
 
     ---
 
-    **Docs & Logs** — Documentação técnica, estruturação de logs e telemetria.
+    Desenvolvimento completo — frontend, backend, testes, infraestrutura e documentação conforme o ciclo de rotação vigente.
 
-- :material-code-braces: **Mateus Alves Araújo**
+- :material-code-braces-box: **Full Stack 3**
 
     ---
 
-    **Backend** — Lógica de negócio, serviços REST e modelagem de dados.
+    Desenvolvimento completo — frontend, backend, testes, infraestrutura e documentação conforme o ciclo de rotação vigente.
+
+- :material-code-braces-box: **Full Stack 4**
+
+    ---
+
+    Desenvolvimento completo — frontend, backend, testes, infraestrutura e documentação conforme o ciclo de rotação vigente.
+
+- :material-code-braces-box: **Full Stack 5**
+
+    ---
+
+    Desenvolvimento completo — frontend, backend, testes, infraestrutura e documentação conforme o ciclo de rotação vigente.
 
 </div>
+
+!!! info "Rotatividade"
+    Os membros Full Stack alternam entre as frentes de trabalho (frontend, backend, QA, DevOps e Docs & Logs) a cada ciclo de rotação. A função não é vinculada a uma pessoa fixa — qualquer integrante pode assumir qualquer frente.
 
 ---
 
@@ -52,27 +57,27 @@ Estrutura organizacional da equipe EdTech, com alocações estratégicas baseada
 
 Os integrantes são organizados em squads complementares para garantir cobertura de todas as frentes do projeto:
 
-| Squad | Integrantes | Foco |
+| Squad | Composição | Foco |
 | :--- | :--- | :--- |
-| :material-shield-check: **Qualidade e Rastreabilidade** | Luís + Mariana | Testes, QA, documentação, logs e auditoria |
-| :material-link-variant: **Integração** | Alana + Mateus | Frontend-backend, APIs e fluxo de dados |
-| :material-cog: **Arquitetura e Mentoria** | Pedro + Arthur | Infra, segurança, decisões técnicas e code review |
+| :material-shield-check: **Qualidade e Rastreabilidade** | 2 Full Stacks | Testes, QA, documentação, logs e auditoria |
+| :material-link-variant: **Integração** | 2 Full Stacks | Frontend-backend, APIs e fluxo de dados |
+| :material-cog: **Arquitetura e Mentoria** | Tech Lead + 1 Full Stack | Infra, segurança, decisões técnicas e code review |
 
 ```mermaid
 flowchart LR
     subgraph SQ1["Qualidade e Rastreabilidade"]
-        L["Luis - QA"]
-        M["Mariana - Docs"]
+        FS1["Full Stack — QA"]
+        FS2["Full Stack — Docs"]
     end
 
     subgraph SQ2["Integracao"]
-        AL["Alana - Frontend"]
-        MT["Mateus - Backend"]
+        FS3["Full Stack — Frontend"]
+        FS4["Full Stack — Backend"]
     end
 
     subgraph SQ3["Arquitetura e Mentoria"]
-        P["Pedro - Tech Lead"]
-        AR["Arthur - DevOps"]
+        TL["Tech Lead"]
+        FS5["Full Stack — DevOps"]
     end
 
     SQ2 --> SQ1
@@ -86,33 +91,14 @@ flowchart LR
 
 ---
 
-## Justificativa das Alocações
-
-??? note "Arthur — DevOps"
-    Arthur é o membro com perfil acadêmico mais avançado e o que apresenta maior experiência prática, especialmente em **cibersegurança, backend e integração**. Esse histórico o torna um bom candidato para lidar com infraestrutura, deploy, automação e proteção da aplicação. Além disso, o domínio em Java e Spring Boot facilita a relação entre código, ambiente e entrega.
-
-??? note "Alana — Frontend"
-    Alana é a única integrante que já relatou contato prévio com **HTML**, o que a coloca naturalmente mais próxima da camada visual. Como seu interesse principal está em dados, o papel em frontend pode ampliar sua visão de produto e reforçar a lógica necessária para consumir APIs. O fato de estar no terceiro semestre também favorece uma curva de aprendizado consistente nessa frente.
-
-??? note "Mateus — Backend"
-    Mateus declarou interesse principal em backend e possui base em **Java, POO e fundamentos em estruturas de dados**. Isso o coloca em uma posição adequada para evoluir na construção de lógica de negócio, organização de serviços e modelagem inicial de dados. O papel também combina com seu estágio acadêmico, que ainda está em formação, mas já com boa direção técnica.
-
-??? note "Luís — QA"
-    Luís possui exposição a várias linguagens, incluindo **C, C++, C#, Java e Python**, o que tende a favorecer leitura de código e adaptação a diferentes contextos. Esse perfil é útil para testes, validações e automação de cenários, inclusive em uma linha que pode conversar com segurança. Embora o interesse principal dele seja backend e jogos, QA pode ampliar bastante sua visão de produto e qualidade.
-
-??? note "Mariana — Docs & Logs"
-    Mariana está no segundo semestre e ainda constrói sua base técnica, mas já demonstra interesse em **dados e IA**. Essa combinação ajuda na organização de informações, documentação técnica e estruturação de logs e telemetria de forma clara. O contato com bibliotecas de dados em Python pode ser útil para transformar dados de execução em material de monitoramento e auditoria.
-
----
-
 ## Plano de Rotação
 
 ### Regras
 
 - :material-calendar-sync: Cada ciclo dura aproximadamente **duas semanas**
-- :material-rotate-3d-variant: Ao final de cada ciclo, cada membro **muda de papel**
+- :material-rotate-3d-variant: Ao final de cada ciclo, cada membro **muda de frente de trabalho**
 - :material-school: A rotação prioriza **aprendizado cruzado** entre produto, entrega, qualidade e operação
-- :material-crown: Pedro permanece como **Tech Lead** e atua na coordenação da progressão técnica e na revisão das trocas
+- :material-crown: O Tech Lead permanece fixo e atua na coordenação da progressão técnica e na revisão das trocas
 
 ### Ciclos de Rotação
 
@@ -133,14 +119,14 @@ flowchart LR
 
 ### Exemplo de Rotação
 
-| Membro | Ciclo 1 | Ciclo 2 | Ciclo 3 | Ciclo 4 | Ciclo 5 |
+| Função | Ciclo 1 | Ciclo 2 | Ciclo 3 | Ciclo 4 | Ciclo 5 |
 | :--- | :---: | :---: | :---: | :---: | :---: |
-| **Pedro** | Tech Lead | Tech Lead | Tech Lead | Tech Lead | Tech Lead |
-| **Alana** | Frontend | Backend | QA | DevOps | Docs & Logs |
-| **Arthur** | DevOps | Frontend | Backend | QA | Docs & Logs |
-| **Luís** | QA | DevOps | Docs & Logs | Frontend | Backend |
-| **Mariana** | Docs & Logs | QA | DevOps | Frontend | Backend |
-| **Mateus** | Backend | Docs & Logs | Frontend | Backend | QA |
+| **Tech Lead** | Tech Lead | Tech Lead | Tech Lead | Tech Lead | Tech Lead |
+| **Full Stack 1** | Frontend | Backend | QA | DevOps | Docs & Logs |
+| **Full Stack 2** | Backend | Docs & Logs | Frontend | QA | DevOps |
+| **Full Stack 3** | QA | DevOps | Docs & Logs | Frontend | Backend |
+| **Full Stack 4** | DevOps | Frontend | Backend | Docs & Logs | QA |
+| **Full Stack 5** | Docs & Logs | QA | DevOps | Backend | Frontend |
 
 !!! tip "Flexibilidade"
     A tabela acima é uma **sugestão de progressão**. A rotação real será ajustada conforme o andamento do projeto e o feedback da equipe em cada retrospectiva.

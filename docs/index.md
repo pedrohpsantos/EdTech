@@ -126,7 +126,7 @@ Tecnologias selecionadas para robustez, segurança e escalabilidade em ambiente 
 
 | Camada | Tecnologias |
 | :--- | :--- |
-| **Frontend** | HTML5, CSS3, JavaScript Vanilla, Bootstrap 5, Alpine.js (CDN) |
+| **Frontend** | HTML5, CSS3, JavaScript Vanilla, Bootstrap 5, React |
 | **Backend** | Java 17, Spring Boot, Spring Security, JWT (`HttpOnly` + `Secure`) |
 | **Banco de Dados & Storage** | Google Cloud SQL for PostgreSQL, Google Cloud Storage |
 | **Infraestrutura & DevOps** | Docker, Google Cloud Run |
@@ -154,29 +154,29 @@ Time multidisciplinar do AILAB Makers — UnB FCTE.
 <div class="team-role">Tech Lead</div>
 </div>
 <div class="team-card" markdown>
-<div class="team-icon">👩‍💻</div>
+<div class="team-icon">💻</div>
 <div class="team-name">Alana Cristyna F. Dias</div>
-<div class="team-role">Frontend</div>
+<div class="team-role">Full Stack</div>
 </div>
 <div class="team-card" markdown>
-<div class="team-icon">👨‍💻</div>
+<div class="team-icon">💻</div>
 <div class="team-name">Arthur Carvalho Leite</div>
-<div class="team-role">DevOps</div>
+<div class="team-role">Full Stack</div>
 </div>
 <div class="team-card" markdown>
-<div class="team-icon">👨‍💻</div>
+<div class="team-icon">💻</div>
 <div class="team-name">Luis Gustavo F. Nunes</div>
-<div class="team-role">QA</div>
+<div class="team-role">Full Stack</div>
 </div>
 <div class="team-card" markdown>
-<div class="team-icon">👩‍💻</div>
+<div class="team-icon">💻</div>
 <div class="team-name">Mariana S. F. Andrade</div>
-<div class="team-role">Docs & Logs</div>
+<div class="team-role">Full Stack</div>
 </div>
 <div class="team-card" markdown>
-<div class="team-icon">👨‍💻</div>
+<div class="team-icon">💻</div>
 <div class="team-name">Mateus Alves Araújo</div>
-<div class="team-role">Backend</div>
+<div class="team-role">Full Stack</div>
 </div>
 </div>
 

@@ -1,4 +1,4 @@
-# :material-rocket-launch: Semana 1 — Fundação
+# :material-rocket-launch: Semana 1 — Setup e Fundação
 
 <span class="status-badge">✅ Concluída</span>
 
@@ -8,7 +8,7 @@
 
 ## Objetivo da Sprint
 
-Estabelecer toda a fundação do projeto: repositório, pipeline de CI/CD, ambiente de desenvolvimento containerizado e documentação técnica inicial.
+Estabelecer toda a fundação do projeto: repositório, pipeline de CI/CD, ambiente de desenvolvimento containerizado, documentação técnica inicial e definição da equipe.
 
 ---
 
@@ -25,8 +25,7 @@ Estabelecer toda a fundação do projeto: repositório, pipeline de CI/CD, ambie
 
 - [x] Setup do MkDocs com Material for MkDocs
 - [x] Configuração do `pyproject.toml` para gerenciamento com `uv`
-- [x] Estrutura de navegação: Início, Planejamento, Arquitetura, Entregas
-- [x] CSS customizado para design diferenciado
+- [x] CSS customizado com design premium (glassmorphism, animações, dark mode)
 - [x] Deploy automático via GitHub Actions (`ci-docs.yml`)
 
 ### :material-docker: Infraestrutura
@@ -41,6 +40,18 @@ Estabelecer toda a fundação do projeto: repositório, pipeline de CI/CD, ambie
 - [x] Definição da convenção de commits (Conventional Commits)
 - [x] Proteção da branch `main` (merge somente via PR aprovado)
 - [x] Documentação do fluxo de branches (`feat/*`, `fix/*`, `docs/*`)
+
+### :material-account-switch: Equipe e Funções
+
+- [x] Definição de papéis: 1 Tech Lead + 5 Full Stacks
+- [x] Plano de rotação bimensal entre frentes de trabalho
+- [x] Organização em 3 squads complementares
+
+### :material-layers-triple: Stack Tecnológica
+
+- [x] Seleção e justificativa da stack (Java 17, Spring Boot, PostgreSQL, GCS, Docker)
+- [x] Frontend definido: HTML5, CSS3, JS Vanilla, Bootstrap 5, React
+- [x] Documentação de pré-requisitos para desenvolvimento local
 
 ---
 
@@ -63,8 +74,11 @@ Estabelecer toda a fundação do projeto: repositório, pipeline de CI/CD, ambie
 !!! note "Decisão: uv como gerenciador Python"
     Utilizamos `uv` ao invés de `pip` para gerenciar dependências Python, garantindo instalação rápida e reprodutível do ambiente de documentação.
 
+!!! note "Decisão: Funções genéricas (Full Stack)"
+    Todos os membros (exceto o Tech Lead) são designados como **Full Stack** com rotação bimensal entre frentes de trabalho, evitando especialização precoce.
+
 ---
 
 ## Próximos Passos
 
-→ [Semana 2 — Autenticação](semana2.md): modelagem do banco, API de login e JWT.
+→ [Semana 2 — Lean Inception, Requisitos e Arquitetura](semana2.md)

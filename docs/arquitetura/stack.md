@@ -11,7 +11,7 @@ graph TB
     subgraph Cliente["Frontend"]
         A[HTML5 + CSS3 + JS Vanilla]
         B[Bootstrap 5]
-        C[Alpine.js]
+        C[React]
     end
 
     subgraph Servidor["Backend"]
@@ -58,10 +58,10 @@ graph TB
 | **CSS3** | — | Estilização e responsividade |
 | **JavaScript Vanilla** | ES6+ | Lógica de interação e requisições à API |
 | **Bootstrap 5** | 5.x | Sistema de grid, componentes prontos e layout responsivo |
-| **Alpine.js** | 3.x (CDN) | Reatividade leve sem build step — ideal para interações simples |
+| **React** | 18.x | Biblioteca para construção de interfaces de usuário reativas e baseadas em componentes |
 
-!!! info "Por que não usar React ou Vue?"
-    O projeto prioriza **simplicidade e acessibilidade**: todos os integrantes conseguem contribuir sem precisar aprender um framework complexo. Alpine.js oferece reatividade declarativa com uma curva de aprendizado mínima.
+!!! info "Por que usar React?"
+    O React foi escolhido pela sua popularidade, ecossistema robusto e capacidade de criar componentes modulares e reutilizáveis, facilitando a colaboração e a escalabilidade do frontend no desenvolvimento em equipe.
 
 ---
 

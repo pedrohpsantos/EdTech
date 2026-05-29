@@ -6,6 +6,7 @@ Modelagem relacional do EdTech, projetada para garantir **isolamento de dados**,
 
 ## Diagrama Entidade-Relacionamento
 
+<div style="overflow-x: auto; min-width: 100%;" markdown="1">
 ```mermaid
 erDiagram
     users ||--o{ documents : "uploads"
@@ -69,6 +70,7 @@ erDiagram
         timestamp created_at
     }
 ```
+</div>
 
 ---
 

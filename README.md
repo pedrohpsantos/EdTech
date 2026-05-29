@@ -86,7 +86,7 @@ edtech-repositorio/
 
 | Camada | Tecnologias |
 | --- | --- |
-| **Frontend** | HTML5, CSS3, JavaScript Vanilla, Bootstrap 5, Alpine.js (CDN) |
+| **Frontend** | HTML5, CSS3, JavaScript Vanilla, Bootstrap 5, React |
 | **Backend** | Java 17, Spring Boot, Spring Security, JWT (`HttpOnly` + `Secure` cookies) |
 | **Banco de Dados & Storage** | Google Cloud SQL for PostgreSQL, Google Cloud Storage |
 | **Infraestrutura & DevOps** | Docker, Google Cloud Run |
@@ -141,11 +141,11 @@ Organização de commits para melhor compreensão e rastreabilidade do projeto.
 ## Integrantes
 
 - Pedro Henrique Pereira Santos (Tech Lead)
-- Alana Cristyna Feitosa Dias
-- Arthur Carvalho Leite
-- Luis Gustavo Ferreira Nunes
-- Mariana Souza Farias Andrade
-- Mateus Alves Araújo
+- Alana Cristyna Feitosa Dias (Full Stack)
+- Arthur Carvalho Leite (Full Stack)
+- Luis Gustavo Ferreira Nunes (Full Stack)
+- Mariana Souza Farias Andrade (Full Stack)
+- Mateus Alves Araújo (Full Stack)
 
 ---
 

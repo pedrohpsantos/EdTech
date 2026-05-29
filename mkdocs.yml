@@ -68,14 +68,28 @@ markdown_extensions:
 
 nav:
   - Início: index.md
-  - Planejamento:
-      - Cronograma e Sprints: planejamento/cronograma.md
-      - Papéis e Rotações: planejamento/rotacoes.md
-      - Atas de Reunião: planejamento/atas.md
+  - Lean Inception:
+      - Visão do Produto: lean-inception/visao.md
+      - É / Não É / Faz / Não Faz: lean-inception/e-nao-e.md
+      - Personas: lean-inception/personas.md
+      - Jornadas de Usuário: lean-inception/jornadas.md
+      - Brainstorming de Funcionalidades: lean-inception/funcionalidades.md
+      - Sequenciador: lean-inception/sequenciador.md
+      - Canvas MVP: lean-inception/canvas-mvp.md
+  - Requisitos:
+      - Requisitos Funcionais: requisitos/funcionais.md
+      - Requisitos Não Funcionais: requisitos/nao-funcionais.md
+      - Histórias de Usuário: requisitos/historias.md
   - Arquitetura:
       - Stack Tecnológica: arquitetura/stack.md
       - Diagrama de Banco: arquitetura/banco.md
       - Segurança e JWT: arquitetura/seguranca.md
-  - Entregas:
-      - Semana 1: entregas/semana1.md
-      - Semana 2: entregas/semana2.md
+  - Planejamento:
+      - Cronograma e Sprints: planejamento/cronograma.md
+      - Papéis e Rotações: planejamento/rotacoes.md
+      - Roadmap de Estudos: planejamento/roadmap.md
+      - Atas de Reunião: planejamento/atas.md
+      - Entregas:
+          - Semana 1: entregas/semana1.md
+          - Semana 2: entregas/semana2.md
+          - Semana 3: entregas/semana3.md

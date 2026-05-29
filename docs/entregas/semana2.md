@@ -1,6 +1,6 @@
-# :material-rocket-launch: Semana 2 — Autenticação
+# :material-rocket-launch: Semana 2 — Lean Inception, Requisitos e Arquitetura
 
-<span class="status-badge">🚧 Em Andamento</span>
+<span class="status-badge">✅ Concluída</span>
 
 **Período:** 19/05/2026 – 25/05/2026
 
@@ -8,66 +8,56 @@
 
 ## Objetivo da Sprint
 
-Implementar o módulo de autenticação completo: modelagem do banco de dados, API de registro e login, JWT com cookies seguros e tela de login no frontend.
+Executar o Lean Inception completo, levantar e especificar todos os requisitos do sistema e definir a arquitetura técnica do EdTech.
 
 ---
 
-## Entregas Planejadas
+## Entregas Realizadas
 
-### :material-database: Modelagem do Banco
+### :material-lightbulb-on: Lean Inception
 
-- [x] Definição do esquema de tabelas (`users`, `documents`, `projects`, `audit_logs`)
-- [x] Diagrama ER documentado na MkDocs
-- [x] Configuração do Flyway para migrations
-- [ ] Seed de dados para desenvolvimento local
+- [x] Visão do Produto definida e documentada
+- [x] Matriz É / Não É / Faz / Não Faz
+- [x] 3 Personas criadas (Pesquisadora, Orientador, Auditora)
+- [x] 3 Jornadas de Usuário mapeadas com diagramas
+- [x] Brainstorming de 22 funcionalidades catalogadas por módulo
+- [x] Revisão Técnica, de Negócio e de UX
+- [x] Sequenciador com 4 ondas de entrega
+- [x] Canvas MVP definido com métricas de validação e DoD
 
-### :material-server: API de Autenticação
+### :material-format-list-checks: Requisitos Funcionais
 
-- [x] Endpoint `POST /api/auth/register` — cadastro de pesquisador
-- [x] Endpoint `POST /api/auth/login` — autenticação com retorno de JWT
-- [ ] Endpoint `POST /api/auth/logout` — invalidação do cookie
-- [ ] Validação de e-mail institucional
+- [x] RF01 — Autenticação e Sessão (6 requisitos)
+- [x] RF02 — Upload e Gerenciamento de Documentos (7 requisitos)
+- [x] RF03 — Orientador e Isolamento (4 requisitos)
+- [x] RF04 — Auditoria (5 requisitos)
+- [x] Matriz de rastreabilidade (Requisitos ↔ Funcionalidades ↔ Personas)
 
-### :material-shield-lock: Segurança JWT
+### :material-shield-check: Requisitos Não Funcionais
 
-- [x] Geração de token JWT com claims (`id`, `role`, `exp`)
-- [x] Armazenamento em cookie `HttpOnly` + `Secure` + `SameSite=Strict`
-- [x] Filtro de autenticação no Spring Security
-- [ ] Tratamento de token expirado com resposta adequada
+- [x] RNF01 — Segurança (6 requisitos)
+- [x] RNF02 — Desempenho (4 requisitos)
+- [x] RNF03 — Confiabilidade e Disponibilidade (4 requisitos)
+- [x] RNF04 — Usabilidade (4 requisitos)
+- [x] RNF05 — Manutenibilidade (4 requisitos)
+- [x] RNF06 — Conformidade (3 requisitos)
 
-### :material-monitor: Frontend de Login
+### :material-book-open-variant: Histórias de Usuário
 
-- [ ] Tela de login responsiva (Bootstrap 5 + Alpine.js)
-- [ ] Tela de registro com validação de formulário
-- [ ] Feedback visual de erros (credenciais inválidas, campos obrigatórios)
-- [ ] Redirecionamento pós-login para o dashboard
+- [x] Épico 1 — Autenticação (US01–US03)
+- [x] Épico 2 — Documentos (US04–US06)
+- [x] Épico 3 — Orientador (US07–US08)
+- [x] Épico 4 — Auditoria (US09)
+- [x] Critérios de aceitação para todas as 9 histórias
 
-### :material-clipboard-text-clock: Auditoria
+### :material-layers-triple: Arquitetura
 
-- [x] Log de `LOGIN_SUCCESS` e `LOGIN_FAILED`
-- [ ] Log de `LOGOUT`
-- [ ] Log de `ACCESS_DENIED` para rotas protegidas
-
----
-
-## Progresso Visual
-
-```mermaid
-pie title Progresso da Sprint
-    "Concluído" : 9
-    "Em andamento" : 3
-    "Pendente" : 5
-```
-
----
-
-## Desafios Encontrados
-
-!!! warning "Configuração do Spring Security"
-    A integração do filtro JWT customizado com o `SecurityFilterChain` do Spring Security 6.x exigiu atenção especial à ordem dos filtros e ao handling de exceções. A documentação oficial do Spring foi essencial.
-
-!!! info "CORS em desenvolvimento local"
-    O frontend servido pelo Live Server (porta 5500) precisou de configuração de CORS no Spring para aceitar cookies cross-origin durante o desenvolvimento.
+- [x] Diagrama Entidade-Relacionamento completo (5 entidades)
+- [x] Estratégia de isolamento de dados por role (researcher, advisor, auditor)
+- [x] Documentação de segurança JWT (cookies HttpOnly, fluxo de autorização)
+- [x] Diagramas de fluxo de autenticação e autorização
+- [x] Especificação de logs de auditoria (7 tipos de ação)
+- [x] Cronograma detalhado com roadmap em Gantt (5 sprints)
 
 ---
 
@@ -75,13 +65,31 @@ pie title Progresso da Sprint
 
 | Métrica | Valor |
 | :--- | :---: |
-| Commits na semana | ~20 |
-| PRs abertos/mergeados | 4 / 2 |
-| Endpoints implementados | 2 / 4 |
-| Testes JUnit escritos | 5 |
+| Artefatos de Lean Inception | 7 |
+| Requisitos Funcionais | 22 |
+| Requisitos Não Funcionais | 25 |
+| Histórias de Usuário | 9 |
+| Funcionalidades catalogadas | 22 |
+| Diagramas Mermaid criados | 15+ |
+| Páginas de documentação novas | 10 |
+
+---
+
+## Aprendizados e Decisões
+
+!!! note "Decisão: Lean Inception como metodologia"
+    Adotamos o Lean Inception para alinhar a equipe sobre o produto antes de iniciar a implementação, garantindo que todos compartilhem a mesma visão e prioridades.
+
+!!! note "Decisão: Requisitos rastreáveis"
+    Cada requisito funcional é vinculado a uma funcionalidade do Lean Inception e a uma persona, permitindo rastreabilidade de ponta a ponta.
+
+!!! note "Decisão: JWT em cookies ao invés de localStorage"
+    Por segurança, os tokens são transmitidos exclusivamente via cookies `HttpOnly` + `Secure` + `SameSite=Strict`, protegendo contra XSS e CSRF.
 
 ---
 
 ## Próximos Passos
 
-→ **Semana 3** *(planejada)*: Upload de documentos, integração com Google Cloud Storage e listagem filtrada por usuário.
+→ [Semana 3](semana3.md): início da implementação do MVP.
+
+← [Semana 1 — Setup e Fundação](semana1.md)

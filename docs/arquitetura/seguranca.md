@@ -8,6 +8,7 @@ Guia completo da estratégia de segurança do EdTech, cobrindo autenticação, a
 
 O EdTech utiliza **Spring Security** como camada de segurança, com autenticação baseada em **JWT (JSON Web Tokens)** transmitidos via **cookies seguros** — nunca via `localStorage` ou `sessionStorage`.
 
+<div style="overflow-x: auto; min-width: 100%;" markdown="1">
 ```mermaid
 sequenceDiagram
     participant C as Cliente
@@ -27,6 +28,7 @@ sequenceDiagram
     DB-->>S: Documentos do usuario
     S-->>C: 200 OK + JSON
 ```
+</div>
 
 ---
 
