@@ -75,19 +75,19 @@ flowchart LR
 ### Fluxo de uma Feature
 
 ```mermaid
-gitgraph
-    commit id: "main"
-    branch "feat/auth"
-    commit id: "feat: user model"
-    commit id: "feat: login endpoint"
-    commit id: "feat: jwt cookie auth"
+gitGraph
+    commit id: "init"
+    branch feat_auth
+    commit id: "user-model"
+    commit id: "login-endpoint"
+    commit id: "jwt-cookie"
     checkout main
-    merge "feat/auth" id: "PR_1_Auth"
-    branch "feat/upload"
-    commit id: "feat: upload"
-    commit id: "feat: gcs integration"
+    merge feat_auth id: "PR1"
+    branch feat_upload
+    commit id: "upload-api"
+    commit id: "gcs-integration"
     checkout main
-    merge "feat/upload" id: "PR_2_Upload"
+    merge feat_upload id: "PR2"
 ```
 
 ---

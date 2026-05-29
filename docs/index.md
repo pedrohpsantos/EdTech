@@ -147,37 +147,37 @@ Tecnologias selecionadas para robustez, segurança e escalabilidade em ambiente 
 Time multidisciplinar do AILAB Makers — UnB FCTE.
 </p>
 
-<div class="team-grid" markdown>
-<div class="team-card" markdown>
-<div class="team-icon">👨‍💻</div>
-<div class="team-name">Pedro Henrique P. Santos</div>
-<div class="team-role">Tech Lead</div>
-</div>
-<div class="team-card" markdown>
-<div class="team-icon">💻</div>
-<div class="team-name">Alana Cristyna F. Dias</div>
-<div class="team-role">Full Stack</div>
-</div>
-<div class="team-card" markdown>
-<div class="team-icon">💻</div>
-<div class="team-name">Arthur Carvalho Leite</div>
-<div class="team-role">Full Stack</div>
-</div>
-<div class="team-card" markdown>
-<div class="team-icon">💻</div>
-<div class="team-name">Luis Gustavo F. Nunes</div>
-<div class="team-role">Full Stack</div>
-</div>
-<div class="team-card" markdown>
-<div class="team-icon">💻</div>
-<div class="team-name">Mariana S. F. Andrade</div>
-<div class="team-role">Full Stack</div>
-</div>
-<div class="team-card" markdown>
-<div class="team-icon">💻</div>
-<div class="team-name">Mateus Alves Araújo</div>
-<div class="team-role">Full Stack</div>
-</div>
+<div class="team-grid">
+<a href="https://github.com/pedrohpsantos" target="_blank" class="team-card">
+<img src="https://github.com/pedrohpsantos.png" alt="Pedro" class="team-avatar">
+<span class="team-name">Pedro Henrique P. Santos</span>
+<span class="team-role">Tech Lead</span>
+</a>
+<a href="https://github.com/alanafeitosa-ui" target="_blank" class="team-card">
+<img src="https://github.com/alanafeitosa-ui.png" alt="Alana" class="team-avatar">
+<span class="team-name">Alana Cristyna F. Dias</span>
+<span class="team-role">Full Stack</span>
+</a>
+<a href="https://github.com/arthurlleite" target="_blank" class="team-card">
+<img src="https://github.com/arthurlleite.png" alt="Arthur" class="team-avatar">
+<span class="team-name">Arthur Carvalho Leite</span>
+<span class="team-role">Full Stack</span>
+</a>
+<a href="https://github.com/yhikariTsuy" target="_blank" class="team-card">
+<img src="https://github.com/yhikariTsuy.png" alt="Luis" class="team-avatar">
+<span class="team-name">Luis Gustavo F. Nunes</span>
+<span class="team-role">Full Stack</span>
+</a>
+<a href="https://github.com/mariana-farias12" target="_blank" class="team-card">
+<img src="https://github.com/mariana-farias12.png" alt="Mariana" class="team-avatar">
+<span class="team-name">Mariana S. F. Andrade</span>
+<span class="team-role">Full Stack</span>
+</a>
+<a href="https://github.com/mateusaraujo2006" target="_blank" class="team-card">
+<img src="https://github.com/mateusaraujo2006.png" alt="Mateus" class="team-avatar">
+<span class="team-name">Mateus Alves Araújo</span>
+<span class="team-role">Full Stack</span>
+</a>
 </div>
 
 ---
