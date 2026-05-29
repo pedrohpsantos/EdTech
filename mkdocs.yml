@@ -84,6 +84,7 @@ nav:
       - Stack Tecnológica: arquitetura/stack.md
       - Diagrama de Banco: arquitetura/banco.md
       - Segurança e JWT: arquitetura/seguranca.md
+      - Estrutura do Monorepo: arquitetura/monorepo.md
   - Planejamento:
       - Cronograma e Sprints: planejamento/cronograma.md
       - Papéis e Rotações: planejamento/rotacoes.md
