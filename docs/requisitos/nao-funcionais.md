@@ -76,7 +76,8 @@ Restrições de qualidade, desempenho, segurança e operação que o EdTech deve
 ## Resumo Visual
 
 ```mermaid
-pie title Distribuição de Requisitos Não Funcionais
+pie
+    title Distribuição de Requisitos Não Funcionais
     "Segurança" : 6
     "Desempenho" : 4
     "Confiabilidade" : 4

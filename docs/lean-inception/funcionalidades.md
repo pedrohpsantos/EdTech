@@ -53,7 +53,8 @@ Levantamento de todas as funcionalidades discutidas pela equipe, categorizadas p
 ## Gráfico de Priorização
 
 ```mermaid
-pie title Distribuição por Prioridade
+pie
+    title Distribuição por Prioridade
     "🔴 Alta" : 14
     "🟡 Média" : 5
     "🟢 Baixa" : 3

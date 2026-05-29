@@ -6,35 +6,33 @@ Planejamento de desenvolvimento do EdTech, organizado em sprints semanais com en
 
 ## Roadmap Geral
 
-<div style="overflow-x: auto; min-width: 100%;" markdown="1">
 ```mermaid
 gantt
     title Roadmap EdTech - Ciclos e Sprints
     dateFormat YYYY-MM-DD
     axisFormat %d/%m
 
-    section S1: Fundacao
+    section S1 - Fundacao
         Setup, Docker, Docs, Stack          :done, s1, 2026-05-12, 7d
 
-    section S2: Planejamento
+    section S2 - Planejamento
         Lean Inception, Requisitos, Arq     :done, s2, 2026-05-19, 7d
 
-    section S3: MVP 1 (Auth)
+    section S3 - MVP 1 (Auth)
         API de registro e login             :active, s3a, 2026-05-26, 7d
         JWT e Cookies seguros               :active, s3b, 2026-05-26, 7d
         Frontend de Autenticacao            :active, s3c, 2026-05-26, 7d
 
-    section S4: MVP 2 (Upload)
+    section S4 - MVP 2 (Upload)
         Integracao Google Cloud Storage     :s4a, 2026-06-02, 7d
         API de upload de documentos         :s4b, 2026-06-02, 7d
         Listagem filtrada por usuario       :s4c, 2026-06-02, 7d
 
-    section S5: MVP 3 (Orientador)
+    section S5 - MVP 3 (Orientador)
         Painel do Orientador                :s5a, 2026-06-09, 7d
         Isolamento de dados por projeto     :s5b, 2026-06-09, 7d
         Logs de Auditoria e Testes e2e      :s5c, 2026-06-09, 7d
 ```
-</div>
 
 ---
 
@@ -84,12 +82,12 @@ gitgraph
     commit id: "feat: login endpoint"
     commit id: "feat: jwt cookie auth"
     checkout main
-    merge "feat/auth" id: "PR-1-Auth"
+    merge "feat/auth" id: "PR_1_Auth"
     branch "feat/upload"
     commit id: "feat: upload"
     commit id: "feat: gcs integration"
     checkout main
-    merge "feat/upload" id: "PR-2-Upload"
+    merge "feat/upload" id: "PR_2_Upload"
 ```
 
 ---

@@ -6,7 +6,6 @@ Modelagem relacional do EdTech, projetada para garantir **isolamento de dados**,
 
 ## Diagrama Entidade-Relacionamento
 
-<div style="overflow-x: auto; min-width: 100%;" markdown="1">
 ```mermaid
 erDiagram
     users ||--o{ documents : "uploads"
@@ -21,7 +20,7 @@ erDiagram
         varchar name
         varchar email UK
         varchar password_hash
-        enum role "researcher | advisor | auditor"
+        varchar role "researcher, advisor, auditor"
         timestamp created_at
         timestamp updated_at
         boolean active
@@ -41,7 +40,7 @@ erDiagram
         bigint id PK
         bigint project_id FK
         bigint user_id FK
-        enum role "member | supervisor"
+        varchar role "member, supervisor"
         timestamp joined_at
     }
 
@@ -50,8 +49,8 @@ erDiagram
         varchar title
         varchar filename
         varchar gcs_path
-        enum type "article | report | dataset"
-        enum status "draft | submitted | approved"
+        varchar type "article, report, dataset"
+        varchar status "draft, submitted, approved"
         bigint author_id FK
         bigint project_id FK
         bigint file_size_bytes
@@ -70,7 +69,6 @@ erDiagram
         timestamp created_at
     }
 ```
-</div>
 
 ---
 
