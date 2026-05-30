@@ -25,12 +25,44 @@
    ============================================================ */
 .md-header {
   background: var(--hero-gradient);
-  box-shadow: 0 4px 24px rgba(74, 20, 140, 0.25);
-  backdrop-filter: blur(10px);
+  box-shadow: none;
+  backdrop-filter: none;
 }
 
 .md-header[data-md-state="shadow"] {
-  box-shadow: 0 4px 30px rgba(74, 20, 140, 0.3);
+  box-shadow: none;
+}
+
+/* ============================================================
+   NAVIGATION TABS — MATCH HEADER TONE
+   ============================================================ */
+.md-tabs {
+  background: var(--hero-gradient);
+  border-top: 0;
+  border-bottom: 0;
+  box-shadow: none;
+}
+
+.md-tabs__inner,
+.md-tabs__list {
+  border-top: 0;
+  box-shadow: none;
+  background: transparent;
+}
+
+.md-tabs__list > li {
+  background: transparent;
+}
+
+.md-tabs__link {
+  color: rgba(255, 255, 255, 0.82);
+  font-weight: 600;
+}
+
+.md-tabs__link:hover,
+.md-tabs__link:focus,
+.md-tabs__link--active {
+  color: #ffffff;
 }
 
 /* ============================================================
