@@ -67,7 +67,8 @@ edtech-repositorio/
 ├── docvault/                      # Monorepo do código fonte (API, Auth, Frontend)
 ├── docs/                          # Documentação técnica (MkDocs)
 │   ├── arquitetura/               # Diagramas, nuvem, segurança e ADRs
-│   ├── gestao/                    # Planejamento, entregas, ágil e atas
+│   ├── gestao/                    # Execução, entregas, acordos e reuniões
+│   ├── planejamento/              # Visão de futuro, cronograma, rotas e regras
 │   ├── produto/                   # Discovery, estratégia e requisitos
 │   └── index.md                   # Página inicial da documentação
 ├── infra/                         # Docker Compose e variáveis de ambiente

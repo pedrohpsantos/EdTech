@@ -1,4 +1,4 @@
-# :material-handshake: Team Agreements & Ritos Ágeis
+# :material-handshake: Acordos do Time (Team Agreements)
 
 No lugar de "Atas Formais" burocráticas (onde alguém fica anotando tudo que é falado) ou "Rotações Acadêmicas de Papéis" (onde você é o Scrum Master de mentira por uma semana), o mercado exige velocidade, alinhamento e autonomia.
 

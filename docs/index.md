@@ -6,7 +6,7 @@ hide:
 
 <div class="md-hero" markdown>
 
-<span class="hero-badge">🚧 Em Desenvolvimento — AILAB Makers · UnB FCTE</span>
+<span class="hero-badge">🚧 Em Desenvolvimento — AILAB Makers</span>
 
 # :material-school: EdTech
 
@@ -15,7 +15,7 @@ Plataforma acadêmica para centralização, gerenciamento e auditoria de publica
 <div class="hero-actions" markdown>
 
 [Explorar Arquitetura :material-arrow-right:](arquitetura/c4_model.md){ .md-button .md-button--primary }
-[Ver Entregas :material-rocket-launch:](entregas/semana1.md){ .md-button }
+[Ver Entregas :material-rocket-launch:](gestao/entregas/semana1.md){ .md-button }
 
 </div>
 
@@ -144,7 +144,7 @@ Tecnologias selecionadas para robustez, segurança e escalabilidade em ambiente 
 </div>
 
 <p class="section-subtitle">
-Time multidisciplinar do AILAB Makers — UnB FCTE.
+Time multidisciplinar do AILAB Makers.
 </p>
 
 <div class="team-grid">

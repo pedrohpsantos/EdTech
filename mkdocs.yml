@@ -87,23 +87,25 @@ nav:
       - Backlog Ágil:
           - Histórias de Usuário: produto/requisitos/historias.md
   - Arquitetura:
-      - C4 Model (Context & Containers): arquitetura/c4_model.md
+      - C4 Model (Contexto e Containers): arquitetura/c4_model.md
       - Design Técnico (Detalhado): arquitetura/design_tecnico.md
       - Armazenamento em Nuvem: arquitetura/nuvem.md
       - Arquitetura de Dados: arquitetura/dados.md
       - Segurança e AppSec: arquitetura/seguranca_app.md
       - Decisões Técnicas (ADRs):
           - ADR 0001 (Google Cloud Storage): arquitetura/adrs/0001-armazenamento-gcs.md
-  - Planejamento & Gestão:
-      - Product Roadmap: gestao/agile/roadmap.md
-      - Definition of Ready/Done: gestao/planejamento/dor_dod.md
-      - Team Agreements & Ritos: gestao/agile/team_agreements.md
-      - Cronograma e Sprints: gestao/planejamento/cronograma.md
-      - Papéis e Rotações: gestao/planejamento/rotacoes.md
+  - Planejamento:
+      - Product Roadmap: planejamento/roadmap.md
+      - Trilha de Estudos: planejamento/trilha_estudos.md
+      - DoR & DoD (Critérios de Aceite): planejamento/dor_dod.md
+      - Cronograma e Sprints: planejamento/cronograma.md
+      - Papéis e Rotações: planejamento/rotacoes.md
+  - Gestão:
+      - Acordos do Time (Team Agreements): gestao/agile/team_agreements.md
       - Entregas:
           - Semana 1: gestao/entregas/semana1.md
           - Semana 2: gestao/entregas/semana2.md
           - Semana 3: gestao/entregas/semana3.md
-  - Reuniões: 
-      - Índice de Atas: gestao/reunioes/atas.md
-      - Ata de Reunião (29/05): gestao/reunioes/ata-29-05-2026.md
+      - Reuniões: 
+          - Índice de Atas: gestao/reunioes/atas.md
+          - Ata de Reunião (29/05): gestao/reunioes/ata-29-05-2026.md

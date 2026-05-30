@@ -18,8 +18,8 @@ Definição do Produto Mínimo Viável (MVP) do EdTech — o menor conjunto de f
 
     ---
 
-    **MVP inclui:** Ana (Pesquisadora) — perfil principal
-    **Pós-MVP:** Prof. Carlos (Orientador), Dra. Márcia (Auditora)
+    - **MVP inclui:** Ana (Pesquisadora) — perfil principal
+    - **Pós-MVP:** Prof. Carlos (Orientador), Dra. Márcia (Auditora)
 
 - :material-format-list-checks: **Funcionalidades do MVP**
 
@@ -39,9 +39,9 @@ Definição do Produto Mínimo Viável (MVP) do EdTech — o menor conjunto de f
 
     ---
 
-    **Sprints necessárias:** 2 (Sprint 2 + Sprint 3)
-    **Duração estimada:** 2 semanas
-    **Infra:** Google Cloud (free tier)
+    - **Sprints necessárias:** 2 (Sprint 2 + Sprint 3)
+    - **Duração estimada:** 2 semanas
+    - **Infra:** Google Cloud (free tier)
 
 - :material-chart-line: **Resultado Esperado**
 

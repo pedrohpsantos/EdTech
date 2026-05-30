@@ -14,7 +14,7 @@ Alinhamento de expectativas sobre os limites e o escopo do EdTech.
     - Uma plataforma web para centralização de documentos científicos
     - Um sistema com autenticação segura e isolamento de dados
     - Uma ferramenta de auditoria e rastreabilidade
-    - Um projeto do AILAB Makers — UnB FCTE
+    - Um projeto do AILAB Makers
 
 === ":material-close-circle: Não É"
 

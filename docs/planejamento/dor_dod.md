@@ -1,4 +1,4 @@
-# :material-check-all: Definition of Ready (DoR) e Definition of Done (DoD)
+# :material-check-all: DoR & DoD (Critérios de Aceite)
 
 Para garantir a qualidade nas entregas ágeis do projeto EdTech, substituímos pesados checklists de inspeção e Casos de Uso por contratos claros de transição de status para as Histórias de Usuário.
 

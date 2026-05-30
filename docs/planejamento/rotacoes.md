@@ -185,9 +185,9 @@ Antes de solicitar revisão, todo PR deve cumprir:
 | Canal | Uso |
 | :--- | :--- |
 | **GitHub Issues** | Tarefas, bugs e melhorias |
-| **GitHub PRs** | Revisão de código e discussões técnicas |
-| **WhatsApp (Grupo)** | Comunicação rápida e alinhamentos diários |
-| **Reuniões presenciais** | Plannings e retrospectivas (FCTE) |
+| **GitHub PRs** | Revisão de código e discussões técnicas (assíncrono) |
+| **Discord / Slack** | Comunicação rápida e alinhamentos diários |
+| **Google Meet / Teams** | Plannings e retrospectivas remotas |
 
 
 ---
