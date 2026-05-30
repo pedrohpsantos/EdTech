@@ -14,7 +14,7 @@ Plataforma acadêmica para centralização, gerenciamento e auditoria de publica
 
 <div class="hero-actions" markdown>
 
-[Explorar Arquitetura :material-arrow-right:](arquitetura/stack.md){ .md-button .md-button--primary }
+[Explorar Arquitetura :material-arrow-right:](arquitetura/visao-geral.md){ .md-button .md-button--primary }
 [Ver Entregas :material-rocket-launch:](entregas/semana1.md){ .md-button }
 
 </div>
@@ -128,12 +128,12 @@ Tecnologias selecionadas para robustez, segurança e escalabilidade em ambiente 
 | :--- | :--- |
 | **Frontend** | HTML5, CSS3, JavaScript Vanilla, Bootstrap 5, React |
 | **Backend** | Java 17, Spring Boot, Spring Security, JWT (`HttpOnly` + `Secure`) |
-| **Banco de Dados & Storage** | Google Cloud SQL for PostgreSQL, Google Cloud Storage |
+| **Banco de Dados & Storage** | Google Cloud SQL for PostgreSQL, Google Cloud Storage, Flyway (Migrações) |
 | **Infraestrutura & DevOps** | Docker, Google Cloud Run |
 | **CI/CD & Qualidade** | GitHub Actions, JUnit, Python 3.11 (scripts de telemetria) |
 | **Documentação** | MkDocs + Material for MkDocs |
 
-[:material-arrow-right: Ver detalhes completos da arquitetura](arquitetura/stack.md){ .md-button }
+[:material-arrow-right: Ver detalhes completos da arquitetura](arquitetura/visao-geral.md){ .md-button }
 
 ---
 

@@ -81,10 +81,13 @@ nav:
       - Requisitos Não Funcionais: requisitos/nao-funcionais.md
       - Histórias de Usuário: requisitos/historias.md
   - Arquitetura:
-      - Stack Tecnológica: arquitetura/stack.md
-      - Diagrama de Banco: arquitetura/banco.md
-      - Segurança e JWT: arquitetura/seguranca.md
-      - Estrutura do Monorepo: arquitetura/monorepo.md
+      - Visão Geral: arquitetura/visao-geral.md
+      - Visão Lógica: arquitetura/visao-logica.md
+      - Visão de Processos: arquitetura/visao-processos.md
+      - Visão de Implementação: arquitetura/visao-implementacao.md
+      - Visão de Dados: arquitetura/visao-dados.md
+      - Visão de Implantação: arquitetura/visao-implantacao.md
+      - Segurança e Auditoria: arquitetura/seguranca.md
   - Planejamento:
       - Cronograma e Sprints: planejamento/cronograma.md
       - Papéis e Rotações: planejamento/rotacoes.md
@@ -92,6 +95,7 @@ nav:
       - Entregas:
           - Semana 1: entregas/semana1.md
           - Semana 2: entregas/semana2.md
+          - Semana 3: entregas/semana3.md
   - Reuniões: 
       - Índice de Atas: reunioes/atas.md
       - Ata de Reunião (29/05): reunioes/ata-29-05-2026.md
