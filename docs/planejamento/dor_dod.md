@@ -3,14 +3,15 @@
 Para garantir a qualidade nas entregas ágeis do projeto EdTech, substituímos pesados checklists de inspeção e Casos de Uso por contratos claros de transição de status para as Histórias de Usuário.
 
 ```mermaid
-stateDiagram-v2
-    [*] --> Backlog
-    Backlog --> Ready : Passa pelo DoR
-    Ready --> InProgress : Desenvolvimento
-    InProgress --> CodeReview : PR Aberto
-    CodeReview --> InProgress : Rejeitado
-    CodeReview --> Done : Passa pelo DoD
-    Done --> [*]
+flowchart LR
+    %%{init: {"flowchart": {"nodeSpacing": 60, "rankSpacing": 80}}}%%
+    Start((Inicio)) --> B["Backlog"]
+    B -->|Passa pelo DoR| R["Ready"]
+    R -->|Desenvolvimento| IP["InProgress"]
+    IP -->|PR Aberto| CR["CodeReview"]
+    CR -->|Rejeitado| IP
+    CR -->|Passa pelo DoD| D["Done"]
+    D --> End((Fim))
 ```
 
 ## Definition of Ready (DoR)

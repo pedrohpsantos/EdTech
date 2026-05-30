@@ -29,24 +29,59 @@ O diagrama abaixo prova que todo evento de negócio vital resulta inexoravelment
 
 ```mermaid
 sequenceDiagram
-    participant FE as Frontend (Pesquisadora)
-    participant Auth as Auth Filter (JWT)
-    participant S as DocumentService
-    participant R as DocumentRepository
-    participant Audit as AuditService
-    participant GCS as Cloud Storage
-    participant DB as PostgreSQL
+    participant U as Usuário
+    participant L as Frontend Login
+    participant S as Spring Security
+    participant J as JWT Provider
 
-    FE->>Auth: POST /api/documents/upload (PDF)
-    Auth->>Auth: Valida Cookie HttpOnly e Extrai Perfil
-    Auth->>S: Encaminha Requisição Válida
-    S->>GCS: Streaming do Arquivo Pesado
-    GCS-->>S: Confirmação e URL gerada
-    S->>R: Inserir Metadados do Documento
-    R->>DB: Executa commit no Banco
-    S->>Audit: Registrar ("UPLOAD_SUCCESS")
-    Audit->>DB: Inserir na trilha imutável
-    S-->>FE: 201 Created
+    U->>L: Insere Credenciais
+    L->>S: POST /auth/login
+    S->>S: Valida Hash no Banco
+    S->>J: Solicita Geração de Token
+    J-->>S: Retorna Token Assinado
+    S-->>L: Retorna Cookie HttpOnly (JWT)
+    L-->>U: Redireciona para Dashboard
+```
+
+### Modelo de Ameaças
+
+```mermaid
+flowchart TD
+    %%{init: {"flowchart": {"nodeSpacing": 60, "rankSpacing": 80}}}%%
+    Atacante["Atacante Externo"]
+    FE["Frontend Web"]
+    API["Backend API"]
+    Token["JWT Validation"]
+    DB["Banco de Dados"]
+
+    Atacante -->|XSS / Phishing| FE
+    Atacante -->|Força Bruta / Injeção| API
+    FE --> API
+    API --> Token
+    Token -->|Falha: Bloqueio 401/403| API
+    Token -->|Sucesso: Autorizado| DB
+    
+    style Atacante fill:#ffcccc,stroke:#cc0000,color:#000
+    style Token fill:#ccffcc,stroke:#00cc00,color:#000
+```
+
+### Fluxo de Auditoria
+
+```mermaid
+sequenceDiagram
+    participant U as Usuário / Sistema
+    participant S as Sistema Principal
+    participant A as Serviço de Auditoria
+    participant L as Banco de Logs
+    participant Aud as Auditora
+
+    U->>S: Executa Ação Sensível
+    S->>A: Dispara Evento Assíncrono
+    A->>L: Armazena Log Imutável
+    Aud->>A: Consulta Filtro de Logs
+    A->>L: Busca Registros
+    L-->>A: Retorna Dados
+    A-->>Aud: Exibe Relatório de Segurança
 ```
 
 ---

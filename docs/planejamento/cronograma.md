@@ -8,30 +8,22 @@ Planejamento de desenvolvimento do EdTech, organizado em sprints semanais com en
 
 ```mermaid
 gantt
-    title Roadmap EdTech - Ciclos e Sprints
+    title Cronograma de Desenvolvimento (Sprints)
     dateFormat YYYY-MM-DD
     axisFormat %d/%m
 
-    section S1 - Fundacao
-        Setup, Docker, Docs, Stack          :done, s1, 2026-05-12, 7d
+    section Fase 1
+    Requisitos e Lean Inception      :done, f1, 2026-05-12, 7d
+    Arquitetura de Software          :done, f2, 2026-05-19, 7d
 
-    section S2 - Planejamento
-        Lean Inception, Requisitos, Arq     :done, s2, 2026-05-19, 7d
+    section Fase 2
+    Backend (Autenticação JWT)       :active, f3, 2026-05-26, 7d
+    Frontend (Tela de Login)         :active, f4, 2026-05-26, 7d
 
-    section S3 - MVP 1 (Auth)
-        API de registro e login             :active, s3a, 2026-05-26, 7d
-        JWT e Cookies seguros               :active, s3b, 2026-05-26, 7d
-        Frontend de Autenticacao            :active, s3c, 2026-05-26, 7d
-
-    section S4 - MVP 2 (Upload)
-        Integracao Google Cloud Storage     :s4a, 2026-06-02, 7d
-        API de upload de documentos         :s4b, 2026-06-02, 7d
-        Listagem filtrada por usuario       :s4c, 2026-06-02, 7d
-
-    section S5 - MVP 3 (Orientador)
-        Painel do Orientador                :s5a, 2026-06-09, 7d
-        Isolamento de dados por projeto     :s5b, 2026-06-09, 7d
-        Logs de Auditoria e Testes e2e      :s5c, 2026-06-09, 7d
+    section Fase 3
+    Integrações (GCS Uploads)        :f5, 2026-06-02, 10d
+    Testes de Segurança e e2e        :f6, 2026-06-12, 5d
+    Deploy de Produção               :f7, 2026-06-17, 3d
 ```
 
 ---
@@ -70,19 +62,26 @@ flowchart LR
 ### Fluxo de uma Feature
 
 ```mermaid
-gitGraph
-    commit id: "init"
-    branch feat_auth
-    commit id: "user-model"
-    commit id: "login-endpoint"
-    commit id: "jwt-cookie"
-    checkout main
-    merge feat_auth id: "PR1"
-    branch feat_upload
-    commit id: "upload-api"
-    commit id: "gcs-integration"
-    checkout main
-    merge feat_upload id: "PR2"
+flowchart TD
+    %%{init: {"flowchart": {"nodeSpacing": 60, "rankSpacing": 80}}}%%
+    subgraph Main["Branch: main"]
+        M1["init"]
+    end
+    subgraph FeatAuth["Branch: feat_auth"]
+        M1 --> A1["user-model"]
+        A1 --> A2["login-endpoint"]
+        A2 --> A3["jwt-cookie"]
+    end
+    subgraph Main2["Branch: main"]
+        A3 --> M2["merge feat_auth (PR1)"]
+    end
+    subgraph FeatUpload["Branch: feat_upload"]
+        M2 --> U1["upload-api"]
+        U1 --> U2["gcs-integration"]
+    end
+    subgraph Main3["Branch: main"]
+        U2 --> M3["merge feat_upload (PR2)"]
+    end
 ```
 
 ---

@@ -76,14 +76,14 @@ Restrições de qualidade, desempenho, segurança e operação que o EdTech deve
 ## Resumo Visual
 
 ```mermaid
-pie
-    title Distribuição de Requisitos Não Funcionais
-    "Segurança" : 6
-    "Desempenho" : 4
-    "Confiabilidade" : 4
-    "Usabilidade" : 4
-    "Manutenibilidade" : 4
-    "Conformidade" : 3
+flowchart TD
+    %%{init: {"flowchart": {"nodeSpacing": 60, "rankSpacing": 80}}}%%
+    R["Requisitos Não Funcionais"] --> Seg["Segurança (6)"]
+    R --> Des["Desempenho (4)"]
+    R --> Con["Confiabilidade (4)"]
+    R --> Usa["Usabilidade (4)"]
+    R --> Man["Manutenibilidade (4)"]
+    R --> Cnf["Conformidade (3)"]
 ```
 
 

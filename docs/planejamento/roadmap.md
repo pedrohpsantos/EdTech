@@ -3,25 +3,17 @@
 Gantt Charts com datas fictícias geralmente geram quebras de expectativa na indústria ágil. O repasse de "Semanas de Entrega" não traduz o valor que o produto está ganhando.
 Na EdTech, adotamos o framework **Now / Next / Later** para guiar a evolução macro do desenvolvimento sem cair na armadilha do microgerenciamento de cronograma.
 
+<div class="timeline-diagram" markdown="1">
+
 ```mermaid
-gantt
+timeline
     title Product Roadmap Macro (Now / Next / Later)
-    dateFormat  YYYY-MM-DD
-    axisFormat  %m/%y
-    
-    section NOW (Atuando)
-    Fundação de Segurança (Auth & GCS)     :active, a1, 2026-06-01, 30d
-    Pipeline de CI/CD                      :active, a2, 2026-06-15, 20d
-    
-    section NEXT (Próximos)
-    Dashboard de Submissão (Ana)           :a3, 2026-07-01, 30d
-    Isolamento e Painel (Carlos)           :a4, 2026-07-15, 40d
-    Trilhas de Auditoria (Logs)            :a5, 2026-08-01, 30d
-    
-    section LATER (Futuro)
-    Relatórios em CSV (Márcia)             :a6, 2026-09-01, 30d
-    Antiplágio com Machine Learning        :a7, 2026-10-01, 60d
+    NOW (Atuando) : Fundação de Segurança (Auth & GCS) : Pipeline de CI/CD
+    NEXT (Próximos) : Dashboard de Submissão (Ana) : Isolamento e Painel (Carlos) : Trilhas de Auditoria
+    LATER (Futuro) : Relatórios CSV (Márcia) : Antiplágio com ML
 ```
+
+</div>
 
 ## 🟢 NOW (Atuando Agora)
 **Foco:** Fundações de segurança, estabilidade do MVP e Integração Continua.

@@ -7,22 +7,22 @@ Para substituir mapas mentais acadêmicos e diagramas rígidos, o projeto adota 
 O Diagrama de Contexto mostra o sistema EdTech no centro, rodeado pelos seus atores (Personas) e sistemas externos que ele interage.
 
 ```mermaid
-C4Context
-    title Diagrama de Contexto de Sistema (Nível 1) - Repositório Acadêmico
-    
-    Person(pesquisador, "Pesquisadora", "Estudante ou Docente (Ana) que produz e envia artigos.")
-    Person(orientador, "Orientador", "Professor Doutor (Carlos) que gerencia laboratórios e revisa artigos.")
-    Person(auditora, "Auditora", "Time de Compliance (Márcia) que monitora os acessos e rastros do sistema.")
+flowchart LR
+    %%{init: {"flowchart": {"nodeSpacing": 60, "rankSpacing": 80}}}%%
+    Pesq["Pesquisadora (Ana)"]
+    Ori["Orientador (Carlos)"]
+    Aud["Auditora (Márcia)"]
 
-    System(edtech_sys, "Plataforma de Repositório", "Gerencia submissão, armazenamento, controle de acesso e log imutável de PDFs de teses.")
+    EdTech["Plataforma de Repositório"]
 
-    System_Ext(gcs, "Google Cloud Storage", "Plataforma externa em nuvem onde os arquivos binários são depositados.")
+    subgraph GCP["Google Cloud Platform"]
+        GCS["Google Cloud Storage"]
+    end
 
-    Rel(pesquisador, edtech_sys, "Autentica e Faz Upload de Arquivos", "HTTPS/Web")
-    Rel(orientador, edtech_sys, "Gerencia projetos e aprova teses", "HTTPS/Web")
-    Rel(auditora, edtech_sys, "Consulta e exporta logs imutáveis", "HTTPS/Web")
-    
-    Rel(edtech_sys, gcs, "Envia Streams de Arquivos (PDFs/CSVs)", "gRPC/API")
+    Pesq -->|Autentica e Faz Upload| EdTech
+    Ori -->|Gerencia projetos e aprova teses| EdTech
+    Aud -->|Consulta e exporta logs imutáveis| EdTech
+    EdTech -->|Envia Arquivos| GCS
 ```
 
 ## Nível 2: Diagrama de Container
@@ -30,23 +30,22 @@ C4Context
 No C4 Model, um "Container" representa algo que precisa estar rodando para que o sistema funcione (uma API, um App Web, um Banco de Dados).
 
 ```mermaid
-C4Container
-    title Diagrama de Container (Nível 2) - Repositório Acadêmico
+flowchart LR
+    %%{init: {"flowchart": {"nodeSpacing": 60, "rankSpacing": 80}}}%%
+    Usu["Usuário Logado"]
 
-    Person(usuario, "Usuário Logado", "Qualquer persona autenticada via Web")
+    subgraph EdTech["Plataforma de Repositório"]
+        SPA["Frontend (React/Vue)"]
+        API["Backend API (Spring Boot)"]
+        DB["Banco de Dados (PostgreSQL)"]
+    end
 
-    System_Boundary(c1, "Plataforma de Repositório") {
-        Container(spa, "Single Page Application", "React/Vue", "Provê todas as funcionalidades da interface web para os usuários através do navegador.")
-        Container(api, "API Backend", "Python / FastAPI", "Gerencia o fluxo de segurança, regras de isolamento de laboratório, e gera JWTs.")
-        ContainerDb(db, "Banco de Dados Relacional", "PostgreSQL", "Armazena dados de usuários, projetos, referências dos documentos e a tabela de audit_logs.")
-    }
+    GCS["Cloud Storage (Google)"]
 
-    System_Ext(gcs, "Google Cloud Storage", "Bucket de Armazenamento")
-
-    Rel(usuario, spa, "Visita a aplicação web usando", "HTTPS")
-    Rel(spa, api, "Faz chamadas a API (envia/recebe JSON)", "HTTPS")
-    Rel(api, db, "Lê de e escreve em", "TCP/IP")
-    Rel(api, gcs, "Gera Links Presigned e Faz Upload", "gRPC")
+    Usu -->|HTTPS| SPA
+    SPA -->|JSON HTTPS| API
+    API -->|TCP/IP| DB
+    API -->|gRPC| GCS
 ```
 
 ---

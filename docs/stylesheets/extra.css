@@ -517,8 +517,73 @@ a.team-card:hover .team-avatar {
 /* ============================================================
    MERMAID DIAGRAMS — POLISHED
    ============================================================ */
+/* ============================================================
+   MERMAID DIAGRAMS — PREMIUM QUALITY
+   ============================================================ */
 .md-typeset .mermaid {
-  margin: 1.5rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2.5rem 0;
+  padding: 1.5rem;
+  background: var(--glass-bg);
+  border-radius: var(--card-border-radius);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+  backdrop-filter: blur(12px);
+  overflow-x: auto;
+}
+
+[data-md-color-scheme="slate"] .md-typeset .mermaid {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.md-typeset .mermaid svg {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+}
+
+/* Garante que os rótulos de relacionamento (setas) fiquem sempre legíveis e não sobreponham as linhas confusamente */
+.md-typeset .mermaid svg .edgeLabel,
+.md-typeset .mermaid svg foreignObject div {
+  background-color: var(--md-default-bg-color) !important;
+  color: var(--md-default-fg-color) !important;
+  border: 1px solid var(--glass-border) !important;
+  border-radius: 6px !important;
+  padding: 4px 8px !important;
+  font-size: 0.9em !important;
+  font-weight: 600 !important;
+}
+
+/* Ajustes para diagramas no Modo Escuro (Foca apenas em corrigir legibilidade) */
+[data-md-color-scheme="slate"] .md-typeset .mermaid svg .messageText,
+[data-md-color-scheme="slate"] .md-typeset .mermaid svg .labelText {
+  fill: var(--md-default-fg-color) !important;
+}
+
+[data-md-color-scheme="slate"] .md-typeset .mermaid svg rect.boundary {
+  fill: rgba(255, 255, 255, 0.03) !important;
+  stroke: rgba(255, 255, 255, 0.15) !important;
+}
+
+[data-md-color-scheme="slate"] .md-typeset .mermaid svg text.boundaryLabel {
+  fill: var(--md-default-fg-color) !important;
+}
+
+/* ============================================================
+   TIMELINE DIAGRAM FIXES
+   ============================================================ */
+/* Título geral do Timeline (Product Roadmap Macro) - branco no modo escuro */
+[data-md-color-scheme="slate"] .timeline-diagram .mermaid svg .titleText,
+[data-md-color-scheme="slate"] .timeline-diagram .mermaid svg .timeline-title {
+  fill: #ffffff !important;
+  color: #ffffff !important;
+}
+
+/* Força *todo e qualquer* texto regular gerado pelo Timeline a ficar grafite,
+   já que o Mermaid não tem classes fixas e mantém os fundos pastéis claros. */
+.timeline-diagram .mermaid svg text {
+  fill: #1a1a1a !important;
+  color: #1a1a1a !important;
 }
 
 /* ============================================================

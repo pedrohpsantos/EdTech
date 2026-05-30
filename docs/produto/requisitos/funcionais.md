@@ -93,8 +93,23 @@ flowchart LR
 
 ---
 
+## Ciclo de Vida de Tese/Artigo
+
+```mermaid
+stateDiagram-v2
+    [*] --> Rascunho : Upload Inicial
+    Rascunho --> Submetido : Confirmação
+    Submetido --> Em_Revisao : Atribuído ao Orientador
+    Em_Revisao --> Aprovado : Aceite
+    Em_Revisao --> Rascunho : Rejeitado (Correções)
+    Aprovado --> Publicado : Liberação Final
+    Publicado --> [*]
+```
+---
+
 ## Histórico de Versões
 
 | Versão | Data | Descrição | Autor |
 | :---: | :---: | :--- | :--- |
 | `1.0` | 29/05/2026 | Criação do documento | Pedro Henrique P. Santos |
+| `1.1` | 30/05/2026 | Criação do diagrama de ciclo de vida | Pedro Henrique P. Santos |

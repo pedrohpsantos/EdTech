@@ -5,43 +5,20 @@ A camada de persistência garante os pilares de confidencialidade e trilha de au
 ## Diagrama Entidade-Relacionamento (ERD)
 
 ```mermaid
-erDiagram
-    users ||--o{ documents : "uploads"
-    users ||--o{ projects : "creates"
-    users ||--o{ audit_logs : "generates"
-    projects ||--o{ documents : "contains"
-    projects ||--o{ project_members : "has"
-    users ||--o{ project_members : "participates"
+flowchart LR
+    %%{init: {"flowchart": {"nodeSpacing": 60, "rankSpacing": 80}}}%%
+    U["users<br>id PK<br>name<br>email UK<br>role"]
+    P["projects<br>id PK<br>title<br>owner_id FK"]
+    PM["project_members<br>id PK<br>project_id FK<br>user_id FK"]
+    D["documents<br>id PK<br>title<br>gcs_path<br>author_id FK<br>project_id FK"]
+    AL["audit_logs<br>id PK<br>action<br>resource_type<br>resource_id"]
 
-    users {
-        bigint id PK
-        varchar name
-        varchar email UK
-        varchar role "researcher, advisor, auditor"
-    }
-    projects {
-        bigint id PK
-        varchar title
-        bigint owner_id FK
-    }
-    project_members {
-        bigint id PK
-        bigint project_id FK
-        bigint user_id FK
-    }
-    documents {
-        bigint id PK
-        varchar title
-        varchar gcs_path
-        bigint author_id FK
-        bigint project_id FK
-    }
-    audit_logs {
-        bigint id PK
-        varchar action
-        varchar resource_type
-        bigint resource_id
-    }
+    U -->|uploads| D
+    U -->|creates| P
+    U -->|generates| AL
+    P -->|contains| D
+    P -->|has| PM
+    U -->|participates| PM
 ```
 
 ## Regras de Isolamento (Multi-tenancy Lógico)

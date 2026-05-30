@@ -6,33 +6,20 @@ A topologia cloud do projeto foca em escalabilidade Serverless usando o ecossist
 
 ```mermaid
 flowchart TB
-    classDef person font-weight:bold
-    classDef container stroke-width:2px
-    classDef cloud stroke-width:2px,stroke-dasharray: 5 5
+    %%{init: {"flowchart": {"nodeSpacing": 60, "rankSpacing": 80}}}%%
+    User["Usuário"]
+    Internet["Internet"]
 
-    Browser(["Navegador Web do Cliente\n(Chrome/Safari)"]):::person
-    
-    subgraph GCP ["Google Cloud Platform (us-central1)"]
-        direction TB
-        
-        subgraph CloudRun ["Cloud Run (Serverless)"]
-            API["EdTech Backend API\n(Docker / Spring Boot)"]:::container
-        end
-        
-        subgraph CloudSQL ["Cloud SQL"]
-            DB[("PostgreSQL 15+\n(Banco Relacional)")]:::container
-        end
-        
-        subgraph CloudStorage ["Cloud Storage"]
-            GCS["Bucket de Submissões\n(Blob Storage)"]:::container
-        end
+    subgraph GCP["Google Cloud Platform"]
+        Run["Cloud Run<br>(Aplicação Spring Boot)"]
+        SQL["Cloud SQL<br>(PostgreSQL)"]
+        Storage["Cloud Storage<br>(Bucket PDFs)"]
     end
 
-    Browser -- "HTTPS / REST" --> API
-    API -- "JDBC TCP/IP" --> DB
-    API -- "gRPC Upload" --> GCS
-    
-    class GCP,CloudRun,CloudSQL,CloudStorage cloud
+    User --> Internet
+    Internet --> Run
+    Run -->|JDBC| SQL
+    Run -->|API/gRPC| Storage
 ```
 
 ## Benefícios da Topologia

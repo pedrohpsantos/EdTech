@@ -3,19 +3,23 @@
 O mapa mental abaixo consolida o foco do produto, removendo qualquer ambiguidade de escopo:
 
 ```mermaid
-mindmap
-  root((EdTech))
-    Público
-      Pesquisadores (Alunos)
-      Orientadores (Docentes)
-    Dores Resolvidas
-      Uploads quebram no e-mail
-      Vazamento de Dados
-      Falta de Auditoria
-    A Solução (MVP)
-      Upload no GCS (50MB)
-      Isolamento por Grupo
-      Logs Imutáveis
+flowchart LR
+    %%{init: {"flowchart": {"nodeSpacing": 60, "rankSpacing": 80}}}%%
+    Root["EdTech"]
+    
+    Root --> Pub["Público"]
+    Pub --> P1["Pesquisadores (Alunos)"]
+    Pub --> P2["Orientadores (Docentes)"]
+    
+    Root --> Dores["Dores Resolvidas"]
+    Dores --> D1["Uploads quebram no e-mail"]
+    Dores --> D2["Vazamento de Dados"]
+    Dores --> D3["Falta de Auditoria"]
+    
+    Root --> Sol["A Solução (MVP)"]
+    Sol --> S1["Upload no GCS (50MB)"]
+    Sol --> S2["Isolamento por Grupo"]
+    Sol --> S3["Logs Imutáveis"]
 ```
 
 ## A Essência do Produto
