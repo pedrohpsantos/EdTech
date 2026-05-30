@@ -9,6 +9,31 @@ Fluxos principais que cada persona percorre ao utilizar o EdTech, desde o primei
 **Persona:** Ana (Pesquisadora de IC)
 **Objetivo:** Fazer upload de um rascunho de artigo no sistema
 
+### 1. A Rotina (Antes do EdTech)
+Como é a rotina da Ana até o momento em que ela precisa utilizar o aplicativo:
+
+```mermaid
+flowchart LR
+    A[Usuário: Ana]
+    B[Faz experimento no lab]
+    C[Anota no caderno]
+    D[Tira foto pelo celular]
+    E[Passa pro PC]
+    F[Formata em PDF]
+    G([Uso do EdTech])
+    
+    A --> B --> C --> D --> E --> F --> G
+    
+    style A fill:#bbdefb,stroke:#1976d2
+    style G fill:#c8e6c9,stroke:#388e3c
+    style B fill:#fff9c4,stroke:#fbc02d
+    style C fill:#fff9c4,stroke:#fbc02d
+    style D fill:#fff9c4,stroke:#fbc02d
+    style E fill:#fff9c4,stroke:#fbc02d
+    style F fill:#fff9c4,stroke:#fbc02d
+```
+
+### 2. O Uso (No EdTech)
 ```mermaid
 journey
     title Ana envia um rascunho de artigo
@@ -41,6 +66,31 @@ journey
 **Persona:** Prof. Carlos (Orientador)
 **Objetivo:** Verificar quais alunos já entregaram o relatório semanal
 
+### 1. A Rotina (Antes do EdTech)
+Como é a rotina do professor até ele entrar no sistema para revisar:
+
+```mermaid
+flowchart LR
+    A[Usuário: Prof. Carlos]
+    B[Cobra aluno no WhatsApp]
+    C[Aluno manda por e-mail]
+    D[Baixa o anexo zipado]
+    E[Salva na pasta errada]
+    F[Perde tempo procurando]
+    G([Uso do EdTech])
+    
+    A --> B --> C --> D --> E --> F --> G
+    
+    style A fill:#bbdefb,stroke:#1976d2
+    style G fill:#c8e6c9,stroke:#388e3c
+    style B fill:#fff9c4,stroke:#fbc02d
+    style C fill:#fff9c4,stroke:#fbc02d
+    style D fill:#fff9c4,stroke:#fbc02d
+    style E fill:#fff9c4,stroke:#fbc02d
+    style F fill:#fff9c4,stroke:#fbc02d
+```
+
+### 2. O Uso (No EdTech)
 ```mermaid
 journey
     title Prof. Carlos revisa submissoes
@@ -71,6 +121,31 @@ journey
 **Persona:** Dra. Márcia (Auditora)
 **Objetivo:** Verificar se houve tentativa de acesso indevido a documentos de outro laboratório
 
+### 1. A Rotina (Antes do EdTech)
+Como a auditora investigava um problema antes de ter o painel de auditoria:
+
+```mermaid
+flowchart LR
+    A[Usuário: Dra. Márcia]
+    B[Comitê pede relatório]
+    C[Solicita logs pro TI]
+    D[TI demora 3 dias]
+    E[Recebe Excel gigante]
+    F[Filtra manualmente]
+    G([Uso do EdTech])
+    
+    A --> B --> C --> D --> E --> F --> G
+    
+    style A fill:#bbdefb,stroke:#1976d2
+    style G fill:#c8e6c9,stroke:#388e3c
+    style B fill:#fff9c4,stroke:#fbc02d
+    style C fill:#fff9c4,stroke:#fbc02d
+    style D fill:#fff9c4,stroke:#fbc02d
+    style E fill:#fff9c4,stroke:#fbc02d
+    style F fill:#fff9c4,stroke:#fbc02d
+```
+
+### 2. O Uso (No EdTech)
 ```mermaid
 journey
     title Dra. Marcia investiga acesso indevido

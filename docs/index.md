@@ -187,6 +187,6 @@ Time multidisciplinar do AILAB Makers — UnB FCTE.
     Utilize o **menu superior** para alternar entre os grandes módulos do projeto:
     **Planejamento**, **Arquitetura** e **Entregas**.
 
-    Para buscas rápidas, pressione ++s++ ou ++f++ no seu teclado e digite o termo desejado.
+    Para buscas rápidas, pressione '**s**' ou '**f**' no seu teclado e digite o termo desejado.
 
     Use o toggle :material-brightness-6: no cabeçalho para alternar entre **modo claro** e **modo escuro**.
