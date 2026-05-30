@@ -7,51 +7,74 @@ Para substituir mapas mentais acadêmicos e diagramas rígidos, o projeto adota 
 O Diagrama de Contexto mostra o sistema EdTech no centro, rodeado pelos seus atores (Personas) e sistemas externos que ele interage.
 
 ```mermaid
+%%{init: {"theme": "base", "flowchart": {"nodeSpacing": 60, "rankSpacing": 80, "curve": "basis"}}}%%
 flowchart LR
-    %%{init: {"flowchart": {"nodeSpacing": 60, "rankSpacing": 80}}}%%
-    Pesq["Pesquisadora (Ana)"]
-    Ori["Orientador (Carlos)"]
-    Aud["Auditora (Márcia)"]
+    Pesq["Pesquisadora"]
+    Ori["Orientador"]
+    Aud["Auditora"]
 
-    EdTech["Plataforma de Repositório"]
+    EdTech["Plataforma"]
 
-    subgraph GCP["Google Cloud Platform"]
-        GCS["Google Cloud Storage"]
+    subgraph GCP["Google Cloud"]
+        GCS["GCS"]
     end
 
-    Pesq -->|Autentica e Faz Upload| EdTech
-    Ori -->|Gerencia projetos e aprova teses| EdTech
-    Aud -->|Consulta e exporta logs imutáveis| EdTech
-    EdTech -->|Envia Arquivos| GCS
+    Pesq -->|Login e Upload| EdTech
+    Ori -->|Gestao de Projetos| EdTech
+    Aud -->|Auditoria| EdTech
+    EdTech -->|Arquivos| GCS
 ```
+
+### Walkthrough do diagrama
+
+A plataforma centraliza a interacao de pesquisa, orientacao e auditoria, enquanto o GCS atua como storage externo para
+arquivos de pesquisa.
 
 ## Nível 2: Diagrama de Container
 
 No C4 Model, um "Container" representa algo que precisa estar rodando para que o sistema funcione (uma API, um App Web, um Banco de Dados).
 
 ```mermaid
+%%{init: {"theme": "base", "flowchart": {"nodeSpacing": 60, "rankSpacing": 80, "curve": "basis"}}}%%
 flowchart LR
-    %%{init: {"flowchart": {"nodeSpacing": 60, "rankSpacing": 80}}}%%
-    Usu["Usuário Logado"]
+    Usu["Usuario"]
 
-    subgraph EdTech["Plataforma de Repositório"]
-        SPA["Frontend (React/Vue)"]
-        API["Backend API (Spring Boot)"]
-        DB["Banco de Dados (PostgreSQL)"]
+    subgraph EdTech["Plataforma"]
+        direction LR
+        SPA["SPA"]
+        API["Backend API"]
+        DB["PostgreSQL"]
     end
 
-    GCS["Cloud Storage (Google)"]
+    subgraph Suporte["Servicos de Suporte"]
+        direction TB
+        Auth["Auth Module"]
+        Audit["Audit Service"]
+    end
+
+    GCS["GCS"]
 
     Usu -->|HTTPS| SPA
-    SPA -->|JSON HTTPS| API
-    API -->|TCP/IP| DB
-    API -->|gRPC| GCS
+    SPA -->|API| API
+    API -->|SQL| DB
+    API -->|Objetos| GCS
+    Auth -.->|JWT| API
+    Audit -.->|Eventos| API
+
+    classDef support fill:#eef2ff,stroke:#6c7cff,color:#1a1a1a;
+    class Auth,Audit support;
 ```
+
+### Walkthrough do diagrama
+
+O fluxo principal segue da esquerda para a direita (Usuario -> SPA -> API -> DB/GCS), com autenticacao e auditoria como
+servicos auxiliares conectados a API.
 
 ---
 
 ## Histórico de Versões
 
-| Versão | Data | Descrição | Autor |
-| :---: | :---: | :--- | :--- |
-| `1.0` | 30/05/2026 | Diagramas C4 para documentação ágil de mercado | Pedro Henrique P. Santos |
+| Versão |    Data    | Descrição                                      | Autor                    |
+|:------:|:----------:|:-----------------------------------------------|:-------------------------|
+| `1.0`  | 30/05/2026 | Diagramas C4 para documentação ágil de mercado | Pedro Henrique P. Santos |
+| `1.1`  | 30/05/2026 | Refinamento visual dos diagramas C4            | Pedro Henrique P. Santos |

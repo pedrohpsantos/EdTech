@@ -48,6 +48,9 @@ theme:
 extra_css:
   - stylesheets/extra.css
 
+extra_javascript:
+  - assets/javascripts/rich-picture.js
+
 markdown_extensions:
   - admonition
   - pymdownx.details

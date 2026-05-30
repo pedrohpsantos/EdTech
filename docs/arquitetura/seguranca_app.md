@@ -46,48 +46,70 @@ sequenceDiagram
 ### Modelo de Ameaças
 
 ```mermaid
-flowchart TD
-    %%{init: {"flowchart": {"nodeSpacing": 60, "rankSpacing": 80}}}%%
-    Atacante["Atacante Externo"]
-    FE["Frontend Web"]
-    API["Backend API"]
-    Token["JWT Validation"]
-    DB["Banco de Dados"]
+%%{init: {"theme": "base", "flowchart": {"nodeSpacing": 60, "rankSpacing": 80, "curve": "basis"}}}%%
+flowchart LR
+    subgraph Atores["Atores Hostis"]
+        AE["Atacante Externo"]
+        UM["Usuario Mal-Intencionado"]
+    end
 
-    Atacante -->|XSS / Phishing| FE
-    Atacante -->|Força Bruta / Injeção| API
-    FE --> API
-    API --> Token
-    Token -->|Falha: Bloqueio 401/403| API
-    Token -->|Sucesso: Autorizado| DB
-    
-    style Atacante fill:#ffcccc,stroke:#cc0000,color:#000
-    style Token fill:#ccffcc,stroke:#00cc00,color:#000
+    subgraph Vetores["Vetores"]
+        SQL["Injecao SQL"]
+        XSS["XSS"]
+        SP["Spoofing Auth"]
+        TAM["Tampering Arquivos"]
+    end
+
+    subgraph Ativos["Pontos de Entrada / Ativos"]
+        FE["Frontend"]
+        API["Endpoints API"]
+        DB["Banco de Dados"]
+        GCS["GCS"]
+    end
+
+    subgraph Controles["Controles"]
+        WAF["WAF"]
+        JWT["JWT HttpOnly"]
+        VAL["Validacao de Input"]
+        LOG["Logs Imutaveis"]
+    end
+
+    AE --> SQL
+    AE --> XSS
+    UM --> SP
+    UM --> TAM
+
+    SQL --> API
+    SQL --> DB
+    XSS --> FE
+    SP --> API
+    TAM --> DB
+    TAM --> GCS
+
+    FE --> JWT
+    API --> WAF
+    API --> VAL
+    DB --> LOG
+    GCS --> LOG
+
+    classDef threat fill:#ffe5e5,stroke:#cc3b3b,color:#1a1a1a;
+    classDef asset fill:#f4f5f7,stroke:#9aa0a6,color:#1a1a1a;
+    classDef control fill:#e7f5ff,stroke:#2f7dd1,color:#1a1a1a;
+    class AE,UM,SQL,XSS,SP,TAM threat;
+    class FE,API,DB,GCS asset;
+    class WAF,JWT,VAL,LOG control;
 ```
 
-### Fluxo de Auditoria
+### Walkthrough do diagrama
 
-```mermaid
-sequenceDiagram
-    participant U as Usuário / Sistema
-    participant S as Sistema Principal
-    participant A as Serviço de Auditoria
-    participant L as Banco de Logs
-    participant Aud as Auditora
-
-    U->>S: Executa Ação Sensível
-    S->>A: Dispara Evento Assíncrono
-    A->>L: Armazena Log Imutável
-    Aud->>A: Consulta Filtro de Logs
-    A->>L: Busca Registros
-    L-->>A: Retorna Dados
-    A-->>Aud: Exibe Relatório de Segurança
-```
+Atores hostis disparam vetores de ataque que impactam os pontos de entrada e ativos, enquanto os controles mitigam as
+superficies criticas do frontend, API e persistencia.
 
 ---
 
 ## Histórico de Versões
 
-| Versão | Data | Descrição | Autor |
-| :---: | :---: | :--- | :--- |
-| `1.0` | 30/05/2026 | Criação do documento | Pedro Henrique P. Santos |
+| Versão |    Data    | Descrição                                | Autor                    |
+|:------:|:----------:|:-----------------------------------------|:-------------------------|
+| `1.0`  | 30/05/2026 | Criação do documento                     | Pedro Henrique P. Santos |
+| `1.1`  | 30/05/2026 | Refino do threat model e estilos visuais | Pedro Henrique P. Santos |

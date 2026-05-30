@@ -5,21 +5,41 @@ A camada de persistência garante os pilares de confidencialidade e trilha de au
 ## Diagrama Entidade-Relacionamento (ERD)
 
 ```mermaid
-flowchart LR
-    %%{init: {"flowchart": {"nodeSpacing": 60, "rankSpacing": 80}}}%%
-    U["users<br>id PK<br>name<br>email UK<br>role"]
-    P["projects<br>id PK<br>title<br>owner_id FK"]
-    PM["project_members<br>id PK<br>project_id FK<br>user_id FK"]
-    D["documents<br>id PK<br>title<br>gcs_path<br>author_id FK<br>project_id FK"]
-    AL["audit_logs<br>id PK<br>action<br>resource_type<br>resource_id"]
+%%{init: {"theme": "base"}}%%
+erDiagram
+    direction LR
 
-    U -->|uploads| D
-    U -->|creates| P
-    U -->|generates| AL
-    P -->|contains| D
-    P -->|has| PM
-    U -->|participates| PM
+    USUARIO {
+        string nome
+        string email
+        string papel
+    }
+
+    PROJETO {
+        string titulo
+        string orientador
+    }
+
+    DOCUMENTO {
+        string titulo
+        string arquivo_pdf
+        string status
+    }
+
+    AUDITORIA {
+        string acao
+        datetime data
+    }
+
+    USUARIO }o--o{ PROJETO : participa
+    PROJETO ||--o{ DOCUMENTO : possui
+    USUARIO ||--o{ AUDITORIA : gera
 ```
+
+### Walkthrough do diagrama
+
+O ERD resume quatro entidades centrais e suas relacoes principais: usuarios participam de projetos, projetos possuem
+documentos e usuarios geram auditoria.
 
 ## Regras de Isolamento (Multi-tenancy Lógico)
 Um Orientador (`advisor`) só consegue consultar metadados e arquivos dos artefatos de projetos nos quais ele está listado explicitamente na tabela de junção `project_members`. Consultas SQL abstraídas via JPA forçam *Query Filters* em tempo de compilação usando este relacionamento.
@@ -31,6 +51,7 @@ Utilizamos a ferramenta **Flyway** atrelada ao build do Spring Boot. Nenhum scri
 
 ## Histórico de Versões
 
-| Versão | Data | Descrição | Autor |
-| :---: | :---: | :--- | :--- |
-| `1.0` | 30/05/2026 | Criação do documento | Pedro Henrique P. Santos |
+| Versão |    Data    | Descrição                                 | Autor                    |
+|:------:|:----------:|:------------------------------------------|:-------------------------|
+| `1.0`  | 30/05/2026 | Criação do documento                      | Pedro Henrique P. Santos |
+| `1.1`  | 30/05/2026 | ERD simplificado com foco em legibilidade | Pedro Henrique P. Santos |

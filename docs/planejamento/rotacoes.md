@@ -136,18 +136,22 @@ flowchart LR
 
 ## Processo de Pull Request
 
-Todo código passa por um processo de revisão rigoroso antes de ser integrado à `main`:
+Todo código passa por um processo de revisão rigoroso antes de ser integrado a `develop` e, depois, promovido para
+`main`:
 
 ```mermaid
 flowchart TD
     A["Developer cria branch feat/*"] --> B["Desenvolve e commita"]
-    B --> C["Abre Pull Request"]
+    B --> C["Abre Pull Request para develop"]
     C --> D["Preenche template de PR"]
     D --> E{"Tech Lead revisa"}
-    E -->|Aprovado| F["Merge na main"]
+    E -->|Aprovado| F["Merge na develop"]
     E -->|Mudancas pedidas| G["Developer corrige"]
     G --> E
-    F --> H["GitHub Actions: build + deploy"]
+    F --> H["Validacao em develop"]
+    H --> I["PR de develop para main"]
+    I --> J["Merge na main"]
+    J --> K["GitHub Actions: build + deploy"]
 
 ```
 
@@ -194,6 +198,7 @@ Antes de solicitar revisão, todo PR deve cumprir:
 
 ## Histórico de Versões
 
-| Versão | Data | Descrição | Autor |
-| :---: | :---: | :--- | :--- |
-| `1.0` | 29/05/2026 | Criação do documento | Pedro Henrique P. Santos |
+| Versão |    Data    | Descrição                         | Autor                    |
+|:------:|:----------:|:----------------------------------|:-------------------------|
+| `1.0`  | 29/05/2026 | Criação do documento              | Pedro Henrique P. Santos |
+| `1.1`  | 30/05/2026 | Processo de PR com branch develop | Pedro Henrique P. Santos |

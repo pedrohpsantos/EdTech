@@ -48,40 +48,39 @@ flowchart LR
 
 ### Branches
 
-| Branch | Propósito | Proteção |
-| :--- | :--- | :---: |
-| `main` | Branch estável de deploy | :material-lock: Protegida |
-| `feat/*` | Funcionalidades novas | — |
-| `fix/*` | Correções de bugs | — |
-| `docs/*` | Atualizações de documentação | — |
-| `refactor/*` | Melhorias de código | — |
+| Branch       | Propósito                    |         Proteção          |
+|:-------------|:-----------------------------|:-------------------------:|
+| `main`       | Branch estavel de deploy     | :material-lock: Protegida |
+| `develop`    | Integracao e validacao       | :material-lock: Protegida |
+| `feat/*`     | Funcionalidades novas        |             —             |
+| `fix/*`      | Correcoes de bugs            |             —             |
+| `docs/*`     | Atualizacoes de documentacao |             —             |
+| `refactor/*` | Melhorias de codigo          |             —             |
 
 !!! warning "Regra de Ouro"
-    **Nunca commitar diretamente na `main`.** Toda integração ocorre exclusivamente via Pull Requests revisados pela liderança técnica.
+**Nunca commitar diretamente na `main`.** Todo fluxo passa por `develop` antes da integracao final.
 
 ### Fluxo de uma Feature
 
 ```mermaid
-flowchart TD
-    %%{init: {"flowchart": {"nodeSpacing": 60, "rankSpacing": 80}}}%%
+%%{init: {"flowchart": {"nodeSpacing": 60, "rankSpacing": 80}}}%%
+flowchart LR
     subgraph Main["Branch: main"]
-        M1["init"]
+        M1["release"]
+    end
+    subgraph Develop["Branch: develop"]
+        D1["integracao"]
     end
     subgraph FeatAuth["Branch: feat_auth"]
-        M1 --> A1["user-model"]
-        A1 --> A2["login-endpoint"]
-        A2 --> A3["jwt-cookie"]
+        F1["user-model"]
+        F2["login-endpoint"]
+        F3["jwt-cookie"]
     end
-    subgraph Main2["Branch: main"]
-        A3 --> M2["merge feat_auth (PR1)"]
-    end
-    subgraph FeatUpload["Branch: feat_upload"]
-        M2 --> U1["upload-api"]
-        U1 --> U2["gcs-integration"]
-    end
-    subgraph Main3["Branch: main"]
-        U2 --> M3["merge feat_upload (PR2)"]
-    end
+
+    M1 --> D1
+    D1 --> F1 --> F2 --> F3
+    F3 --> D1
+    D1 --> M1
 ```
 
 ---
@@ -123,6 +122,7 @@ Todos os commits seguem o padrão **Conventional Commits** para rastreabilidade:
 
 ## Histórico de Versões
 
-| Versão | Data | Descrição | Autor |
-| :---: | :---: | :--- | :--- |
-| `1.0` | 29/05/2026 | Criação do documento | Pedro Henrique P. Santos |
+| Versão |    Data    | Descrição                           | Autor                    |
+|:------:|:----------:|:------------------------------------|:-------------------------|
+| `1.0`  | 29/05/2026 | Criação do documento                | Pedro Henrique P. Santos |
+| `1.1`  | 30/05/2026 | Fluxo atualizado com branch develop | Pedro Henrique P. Santos |
