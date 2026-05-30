@@ -16,13 +16,11 @@ O resultado do Brainstorming foi organizado através da matriz MoSCoW (Must, Sho
 | Filtro de isolamento de laboratório | Orientação | 🔴 Must Have |
 | Registro Imutável de Logs | Auditoria | 🔴 Must Have |
 
-## 3. Visão Sistêmica Macro (Rich Picture Textual)
+## 3. Visão Sistêmica Macro (Rich Picture)
 
-A representação global do projeto após a fase de Discovery pode ser compreendida da seguinte forma:
+![Rich Picture](../../assets/imgs/rich_picture.png)
 
-- **(Círculo Superior):** Instituição com o "Guardião" (Auditor/Márcia) observando os fluxos por meio de tabelas de log imutáveis.
-- **(Círculo Esquerdo):** Laboratórios de Pesquisa, contendo Pesquisadores (Ana) produzindo Artigos. As setas apontam para um ícone de Nuvem (Upload GCS).
-- **(Círculo Direito):** Orientadores (Carlos) que recebem notificações dos laboratórios nos quais possuem vínculo direto e realizam o download e aprovação dos dados.
+*Fonte: Elaborado pelo autor com auxílio de inteligência artificial generativa (ChatGPT/OpenAI, 2026).*
 
 ---
 
