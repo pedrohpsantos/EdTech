@@ -527,3 +527,48 @@ a.team-card:hover .team-avatar {
 html {
   scroll-behavior: smooth;
 }
+
+/* ============================================================
+   GLOBAL PAGE ANIMATIONS (ALL DIRECTORIES)
+   ============================================================ */
+@keyframes contentSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Applying a subtle cascade (staggering) effect to all standard markdown elements */
+.md-typeset h1 {
+  animation: contentSlideUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) 0.05s both;
+}
+
+.md-typeset h2, 
+.md-typeset h3 {
+  animation: contentSlideUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) 0.10s both;
+}
+
+.md-typeset p, 
+.md-typeset ul, 
+.md-typeset ol {
+  animation: contentSlideUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) 0.15s both;
+}
+
+.md-typeset .admonition,
+.md-typeset details {
+  animation: contentSlideUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) 0.20s both;
+}
+
+.md-typeset table,
+.md-typeset .mermaid {
+  animation: contentSlideUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) 0.25s both;
+}
+
+/* Make sure the main content block itself doesn't clash with the Instant Navigation fade */
+.md-content {
+  animation: contentSlideUp 0.4s ease-out both;
+}

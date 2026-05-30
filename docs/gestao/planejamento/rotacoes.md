@@ -84,9 +84,6 @@ flowchart LR
     SQ3 --> SQ2
     SQ3 --> SQ1
 
-    style SQ1 fill:#e8f5e9,stroke:#2e7d32
-    style SQ2 fill:#e3f2fd,stroke:#1565c0
-    style SQ3 fill:#f3e5f5,stroke:#7b1fa2
 ```
 
 ---
@@ -110,11 +107,6 @@ flowchart LR
     D --> E["Docs e Logs"]
     E --> A
 
-    style A fill:#e3f2fd,stroke:#1565c0
-    style B fill:#f3e5f5,stroke:#7b1fa2
-    style C fill:#fff3e0,stroke:#ef6c00
-    style D fill:#e0f7fa,stroke:#00838f
-    style E fill:#fce4ec,stroke:#c62828
 ```
 
 ### Exemplo de Rotação
@@ -157,9 +149,6 @@ flowchart TD
     G --> E
     F --> H["GitHub Actions: build + deploy"]
 
-    style F fill:#c8e6c9,stroke:#2e7d32
-    style G fill:#fff9c4,stroke:#f57f17
-    style H fill:#e3f2fd,stroke:#1565c0
 ```
 
 ---

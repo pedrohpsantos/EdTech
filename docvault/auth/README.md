@@ -1,6 +1,6 @@
-# auth/ — Serviço de Autenticação do DocVault Academic
+# auth/ — Serviço de Autenticação do EdTech
 
-Serviço responsável pela autenticação e autorização dos usuários do DocVault Academic. Gerencia a emissão, validação e revogação de tokens JWT para os três perfis da plataforma.
+Serviço responsável pela autenticação e autorização dos usuários do EdTech. Gerencia a emissão, validação e revogação de tokens JWT para os três perfis da plataforma.
 
 ---
 

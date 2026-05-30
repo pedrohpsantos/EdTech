@@ -41,8 +41,7 @@ Definição do Produto Mínimo Viável (MVP) do EdTech — o menor conjunto de f
 
     **Sprints necessárias:** 2 (Sprint 2 + Sprint 3)
     **Duração estimada:** 2 semanas
-    **Infra:** Google Cloud (free tier acadêmico)
-    **Equipe:** 6 pessoas
+    **Infra:** Google Cloud (free tier)
 
 - :material-chart-line: **Resultado Esperado**
 
@@ -91,10 +90,6 @@ flowchart LR
 
     MVP --> Inc1
     Inc1 --> Inc2
-
-    style MVP fill:#e8f5e9,stroke:#2e7d32
-    style Inc1 fill:#e3f2fd,stroke:#1565c0
-    style Inc2 fill:#fff3e0,stroke:#ef6c00
 ```
 
 ---
@@ -112,11 +107,10 @@ flowchart LR
     - [x] O sistema roda containerizado via Docker
     - [x] Testes unitários cobrem os endpoints da API
 
-
 ---
 
 ## Histórico de Versões
 
 | Versão | Data | Descrição | Autor |
 | :---: | :---: | :--- | :--- |
-| `1.0` | 29/05/2026 | Criação do documento | Pedro Henrique P. Santos |
+| `1.0` | 30/05/2026 | Criação do documento | Pedro Henrique P. Santos |

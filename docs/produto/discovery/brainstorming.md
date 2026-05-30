@@ -1,0 +1,33 @@
+# :material-brain: Brainstorming e Priorização
+
+O levantamento focado no usuário nos afastou de criar features genéricas (como "Rede Social Acadêmica" ou "Chat") e mirou diretamente no fluxo transacional de envio, restrição e aprovação de documentos em nuvem.
+
+## 1. O Problema Real
+Conversas informais de 30 minutos com docentes e membros da secretaria da universidade evidenciaram que o maior risco não é o sistema sair do ar, mas sim a **quebra de sigilo** de teses inéditas.
+
+## 2. Matriz de Funcionalidades Descobertas
+
+O resultado do Brainstorming foi organizado através da matriz MoSCoW (Must, Should, Could, Won't):
+
+| Funcionalidade Sugerida | Categoria | Relevância (MoSCoW) |
+| :--- | :--- | :--- |
+| Upload de PDFs até 50MB (GCS) | Documentos | 🔴 Must Have |
+| Upload de CSV/JSON (Datasets) | Documentos | 🟡 Should Have |
+| Filtro de isolamento de laboratório | Orientação | 🔴 Must Have |
+| Registro Imutável de Logs | Auditoria | 🔴 Must Have |
+
+## 3. Visão Sistêmica Macro (Rich Picture Textual)
+
+A representação global do projeto após a fase de Discovery pode ser compreendida da seguinte forma:
+
+- **(Círculo Superior):** Instituição com o "Guardião" (Auditor/Márcia) observando os fluxos por meio de tabelas de log imutáveis.
+- **(Círculo Esquerdo):** Laboratórios de Pesquisa, contendo Pesquisadores (Ana) produzindo Artigos. As setas apontam para um ícone de Nuvem (Upload GCS).
+- **(Círculo Direito):** Orientadores (Carlos) que recebem notificações dos laboratórios nos quais possuem vínculo direto e realizam o download e aprovação dos dados.
+
+---
+
+## Histórico de Versões
+
+| Versão | Data | Descrição | Autor |
+| :---: | :---: | :--- | :--- |
+| `1.0` | 30/05/2026 | Criação do documento | Pedro Henrique P. Santos |

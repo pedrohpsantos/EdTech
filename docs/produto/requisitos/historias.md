@@ -23,7 +23,7 @@ Backlog de histórias de usuário do EdTech, escritas no formato padrão e rastr
     - [x] O formulário exige nome, e-mail e senha
     - [x] A senha é armazenada com hash BCrypt
     - [x] E-mails duplicados são rejeitados com mensagem clara
-    - [ ] Apenas e-mails `@unb.br` são aceitos
+    - [ ] Apenas e-mails `@instituicao.edu.br` são aceitos
 
 **Rastreabilidade:** RF01.1, RF01.6 · **Persona:** Ana · **Sprint:** 2
 

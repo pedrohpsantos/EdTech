@@ -13,7 +13,7 @@ Especificação dos requisitos funcionais do EdTech, organizados por módulo e r
 | RF01.3 | O sistema deve invalidar o cookie de sessão no logout | 🔴 Alta | F03 | ⬜ |
 | RF01.4 | O sistema deve interceptar todas as requisições para validar o JWT antes de processar | 🔴 Alta | F04 | ⬜ |
 | RF01.5 | O sistema deve retornar `401 Unauthorized` quando o token estiver expirado ou ausente | 🟡 Média | F05 | ⬜ |
-| RF01.6 | O sistema deve validar que o e-mail pertence a um domínio institucional (`@unb.br`) | 🟡 Média | F01 | ⬜ |
+| RF01.6 | O sistema deve validar que o e-mail pertence a um domínio institucional (`@instituicao.edu.br`) | 🟡 Média | F01 | ⬜ |
 
 ---
 
@@ -88,9 +88,6 @@ flowchart LR
     F13 --> P2
     F18 --> P3
 
-    style Requisitos fill:#e8eaf6,stroke:#3949ab
-    style Funcionalidades fill:#f3e5f5,stroke:#7b1fa2
-    style Personas fill:#e0f7fa,stroke:#00838f
 ```
 
 

@@ -19,6 +19,9 @@ theme:
     - navigation.top
     - navigation.footer
     - navigation.instant
+    - navigation.instant.progress
+    - navigation.instant.prefetch
+    - navigation.tracking
     - toc.integrate
     - search.suggest
     - search.highlight
@@ -68,34 +71,39 @@ markdown_extensions:
 
 nav:
   - Início: index.md
-  - Lean Inception:
-      - Visão do Produto: lean-inception/visao.md
-      - É / Não É / Faz / Não Faz: lean-inception/e-nao-e.md
-      - Personas: lean-inception/personas.md
-      - Jornadas de Usuário: lean-inception/jornadas.md
-      - Brainstorming de Funcionalidades: lean-inception/funcionalidades.md
-      - Sequenciador: lean-inception/sequenciador.md
-      - Canvas MVP: lean-inception/canvas-mvp.md
   - Requisitos:
-      - Requisitos Funcionais: requisitos/funcionais.md
-      - Requisitos Não Funcionais: requisitos/nao-funcionais.md
-      - Histórias de Usuário: requisitos/historias.md
+      - Produto e Visão:
+          - Product Discovery:
+              - Personas: produto/discovery/personas.md
+              - Jornadas do Usuário: produto/discovery/jornadas.md
+              - Brainstorming (MoSCoW): produto/discovery/brainstorming.md
+          - Product Strategy:
+              - Visão e Escopo: produto/strategy/visao.md
+              - É / Não É / Faz / Não Faz: produto/strategy/matriz_e_nao_e.md
+              - Canvas MVP: produto/strategy/canvas_mvp.md
+      - Especificação Técnica:
+          - Requisitos Funcionais: produto/requisitos/funcionais.md
+          - Requisitos Não Funcionais: produto/requisitos/nao-funcionais.md
+      - Backlog Ágil:
+          - Histórias de Usuário: produto/requisitos/historias.md
   - Arquitetura:
-      - Visão Geral: arquitetura/visao-geral.md
-      - Visão Lógica: arquitetura/visao-logica.md
-      - Visão de Processos: arquitetura/visao-processos.md
-      - Visão de Implementação: arquitetura/visao-implementacao.md
-      - Visão de Dados: arquitetura/visao-dados.md
-      - Visão de Implantação: arquitetura/visao-implantacao.md
-      - Segurança e Auditoria: arquitetura/seguranca.md
-  - Planejamento:
-      - Cronograma e Sprints: planejamento/cronograma.md
-      - Papéis e Rotações: planejamento/rotacoes.md
-      - Roadmap de Estudos: planejamento/roadmap.md
+      - C4 Model (Context & Containers): arquitetura/c4_model.md
+      - Design Técnico (Detalhado): arquitetura/design_tecnico.md
+      - Armazenamento em Nuvem: arquitetura/nuvem.md
+      - Arquitetura de Dados: arquitetura/dados.md
+      - Segurança e AppSec: arquitetura/seguranca_app.md
+      - Decisões Técnicas (ADRs):
+          - ADR 0001 (Google Cloud Storage): arquitetura/adrs/0001-armazenamento-gcs.md
+  - Planejamento & Gestão:
+      - Product Roadmap: gestao/agile/roadmap.md
+      - Definition of Ready/Done: gestao/planejamento/dor_dod.md
+      - Team Agreements & Ritos: gestao/agile/team_agreements.md
+      - Cronograma e Sprints: gestao/planejamento/cronograma.md
+      - Papéis e Rotações: gestao/planejamento/rotacoes.md
       - Entregas:
-          - Semana 1: entregas/semana1.md
-          - Semana 2: entregas/semana2.md
-          - Semana 3: entregas/semana3.md
+          - Semana 1: gestao/entregas/semana1.md
+          - Semana 2: gestao/entregas/semana2.md
+          - Semana 3: gestao/entregas/semana3.md
   - Reuniões: 
-      - Índice de Atas: reunioes/atas.md
-      - Ata de Reunião (29/05): reunioes/ata-29-05-2026.md
+      - Índice de Atas: gestao/reunioes/atas.md
+      - Ata de Reunião (29/05): gestao/reunioes/ata-29-05-2026.md

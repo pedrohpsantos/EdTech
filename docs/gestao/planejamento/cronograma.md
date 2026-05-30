@@ -48,11 +48,6 @@ flowchart LR
     D --> E["Retrospectiva\n(sexta)"]
     E --> A
 
-    style A fill:#e8eaf6,stroke:#3949ab
-    style B fill:#f3e5f5,stroke:#7b1fa2
-    style C fill:#fff3e0,stroke:#ef6c00
-    style D fill:#e8f5e9,stroke:#2e7d32
-    style E fill:#fce4ec,stroke:#c62828
 ```
 
 ---

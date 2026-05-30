@@ -1,6 +1,6 @@
-# DocVault Academic — Monorepo
+# EdTech — Monorepo
 
-Sistema web para centralização, gerenciamento e auditoria de publicações acadêmicas, relatórios de pesquisa e datasets. Desenvolvido no projeto de extensão **AILAB Makers — UnB FCTE**.
+Sistema web para centralização, gerenciamento e auditoria de publicações acadêmicas, relatórios de pesquisa e datasets. Desenvolvido no laboratório **AILAB Makers**.
 
 ---
 

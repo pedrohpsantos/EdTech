@@ -1,6 +1,6 @@
-# frontend/ — Interface do DocVault Academic
+# frontend/ — Interface do EdTech
 
-Interface web do DocVault Academic, construída com React e Tailwind CSS. Oferece experiências distintas e componentes reutilizáveis para cada uma das três personas da plataforma.
+Interface web do EdTech, construída com React e Tailwind CSS. Oferece experiências distintas e componentes reutilizáveis para cada uma das três personas da plataforma.
 
 ---
 

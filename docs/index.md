@@ -14,7 +14,7 @@ Plataforma acadêmica para centralização, gerenciamento e auditoria de publica
 
 <div class="hero-actions" markdown>
 
-[Explorar Arquitetura :material-arrow-right:](arquitetura/visao-geral.md){ .md-button .md-button--primary }
+[Explorar Arquitetura :material-arrow-right:](arquitetura/c4_model.md){ .md-button .md-button--primary }
 [Ver Entregas :material-rocket-launch:](entregas/semana1.md){ .md-button }
 
 </div>
@@ -133,7 +133,7 @@ Tecnologias selecionadas para robustez, segurança e escalabilidade em ambiente 
 | **CI/CD & Qualidade** | GitHub Actions, JUnit, Python 3.11 (scripts de telemetria) |
 | **Documentação** | MkDocs + Material for MkDocs |
 
-[:material-arrow-right: Ver detalhes completos da arquitetura](arquitetura/visao-geral.md){ .md-button }
+[:material-arrow-right: Ver detalhes completos da arquitetura](arquitetura/c4_model.md){ .md-button }
 
 ---
 

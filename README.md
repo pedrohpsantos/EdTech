@@ -2,7 +2,7 @@
 
 Sistema web para centralização, gerenciamento e auditoria de publicações acadêmicas, relatórios de pesquisa e datasets, desenvolvido para laboratórios universitários, grupos de iniciação científica ou programas de pós-graduação armazenarem suas produções de forma segura, auditável e isolada.
 
-Projeto desenvolvido no projeto de extensão **AILAB Makers — UnB FCTE**.
+Projeto desenvolvido no laboratório **AILAB Makers**.
 
 ---
 
@@ -64,13 +64,12 @@ edtech-repositorio/
 │   ├── PULL_REQUEST_TEMPLATE.md   # Template padrão para PRs
 │   └── workflows/
 │       └── ci-docs.yml            # Deploy automático do MkDocs via GitHub Pages
-├── backend/                       # API Java + Spring Boot
+├── docvault/                      # Monorepo do código fonte (API, Auth, Frontend)
 ├── docs/                          # Documentação técnica (MkDocs)
-│   ├── arquitetura/               # Diagramas e guias de arquitetura
-│   ├── entregas/                  # Relatórios semanais de progresso
-│   ├── planejamento/              # Rotações e planejamento do time
+│   ├── arquitetura/               # Diagramas, nuvem, segurança e ADRs
+│   ├── gestao/                    # Planejamento, entregas, ágil e atas
+│   ├── produto/                   # Discovery, estratégia e requisitos
 │   └── index.md                   # Página inicial da documentação
-├── frontend/                      # Interface web (HTML/CSS/JS)
 ├── infra/                         # Docker Compose e variáveis de ambiente
 │   ├── .env.example               # Exemplo de variáveis de ambiente
 │   └── docker-compose.yml         # Orquestração dos containers

@@ -14,7 +14,7 @@ Alinhamento de expectativas sobre os limites e o escopo do EdTech.
     - Uma plataforma web para centralização de documentos científicos
     - Um sistema com autenticação segura e isolamento de dados
     - Uma ferramenta de auditoria e rastreabilidade
-    - Um projeto acadêmico do AILAB Makers (UnB FCTE)
+    - Um projeto do AILAB Makers — UnB FCTE
 
 === ":material-close-circle: Não É"
 
@@ -22,7 +22,7 @@ Alinhamento de expectativas sobre os limites e o escopo do EdTech.
     - Um sistema de avaliação de artigos (peer review)
     - Uma plataforma de publicação aberta (open access)
     - Um editor de texto ou LaTeX online
-    - Um sistema de gestão de currículo Lattes
+    - Um sistema de gestão de currículo acadêmico
 
 === ":material-cog: Faz"
 
@@ -64,11 +64,7 @@ flowchart LR
         H["Detecção de plágio"]
         I["Publicação open access"]
     end
-
-    style Dentro fill:#e8f5e9,stroke:#2e7d32
-    style Fora fill:#ffebee,stroke:#c62828
 ```
-
 
 ---
 
@@ -76,4 +72,4 @@ flowchart LR
 
 | Versão | Data | Descrição | Autor |
 | :---: | :---: | :--- | :--- |
-| `1.0` | 29/05/2026 | Criação do documento | Pedro Henrique P. Santos |
+| `1.0` | 30/05/2026 | Criação do documento | Pedro Henrique P. Santos |

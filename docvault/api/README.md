@@ -1,6 +1,6 @@
-# api/ — Backend do DocVault Academic
+# api/ — Backend do EdTech
 
-Backend principal do DocVault Academic, responsável pelas regras de negócio, upload de documentos, controle de versões e geração de logs auditáveis.
+Backend principal do EdTech, responsável pelas regras de negócio, upload de documentos, controle de versões e geração de logs auditáveis.
 
 ---
 
