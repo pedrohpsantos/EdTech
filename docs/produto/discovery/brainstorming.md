@@ -18,19 +18,9 @@ O resultado do Brainstorming foi organizado através da matriz MoSCoW (Must, Sho
 
 ## 3. Visão Sistêmica Macro (Rich Picture)
 
-<figure class="rich-picture">
-  <img
-    src="/assets/imgs/rich_picture.png"
-    alt="Rich Picture"
-    class="rich-picture__image"
-    loading="lazy"
-    decoding="async"
-    data-rich-picture
-  />
-  <figcaption class="rich-picture__caption">
-    Clique para ampliar. Fonte: Elaborado pelo autor com auxílio de inteligência artificial generativa (ChatGPT/OpenAI, 2026).
-  </figcaption>
-</figure>
+![Rich Picture](../../assets/imgs/rich_picture.png)
+
+>Fonte: Elaborado pelo autor com auxílio de inteligência artificial generativa (ChatGPT/OpenAI, 2026).
 
 ---
 
