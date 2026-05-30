@@ -93,3 +93,12 @@ Executar o Lean Inception completo, levantar e especificar todos os requisitos d
 → [Semana 3](semana3.md): início da implementação do MVP.
 
 ← [Semana 1 — Setup e Fundação](semana1.md)
+
+
+---
+
+## Histórico de Versões
+
+| Versão | Data | Descrição | Autor |
+| :---: | :---: | :--- | :--- |
+| `1.0` | 29/05/2026 | Criação do documento | Pedro Henrique P. Santos |

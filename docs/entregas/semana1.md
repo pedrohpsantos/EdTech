@@ -82,3 +82,12 @@ Estabelecer toda a fundação do projeto: repositório, pipeline de CI/CD, ambie
 ## Próximos Passos
 
 → [Semana 2 — Lean Inception, Requisitos e Arquitetura](semana2.md)
+
+
+---
+
+## Histórico de Versões
+
+| Versão | Data | Descrição | Autor |
+| :---: | :---: | :--- | :--- |
+| `1.0` | 29/05/2026 | Criação do documento | Pedro Henrique P. Santos |

@@ -153,3 +153,12 @@ Para rodar o projeto localmente, instale:
     # 4. Rode o backend
     cd backend && ./mvnw spring-boot:run
     ```
+
+
+---
+
+## Histórico de Versões
+
+| Versão | Data | Descrição | Autor |
+| :---: | :---: | :--- | :--- |
+| `1.0` | 29/05/2026 | Criação do documento | Pedro Henrique P. Santos |

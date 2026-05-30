@@ -174,3 +174,12 @@ flowchart TD
 | **Backups** | Automáticos diários com retenção de 7 dias |
 | **Conexão** | Via Cloud SQL Auth Proxy ou IP privado |
 | **Migrations** | Flyway (integrado ao Spring Boot) |
+
+
+---
+
+## Histórico de Versões
+
+| Versão | Data | Descrição | Autor |
+| :---: | :---: | :--- | :--- |
+| `1.0` | 29/05/2026 | Criação do documento | Pedro Henrique P. Santos |

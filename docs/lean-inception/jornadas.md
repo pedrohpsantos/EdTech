@@ -167,3 +167,12 @@ journey
 | 2 | Filtra logs | 😊 | Filtros por ação, data e usuário |
 | 3 | Analisa detalhes | 😐 | IP, user-agent e timestamp claros |
 | 4 | Exporta dados | 😕 | Formato adequado *(planejado)* |
+
+
+---
+
+## Histórico de Versões
+
+| Versão | Data | Descrição | Autor |
+| :---: | :---: | :--- | :--- |
+| `1.0` | 29/05/2026 | Criação do documento | Pedro Henrique P. Santos |

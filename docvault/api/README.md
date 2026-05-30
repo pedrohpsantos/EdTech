@@ -18,7 +18,7 @@ Backend principal do DocVault Academic, responsável pelas regras de negócio, u
 
 | Tecnologia | Versão | Função |
 | :--- | :---: | :--- |
-| **Java** | 21 LTS | Linguagem principal |
+| **Java** | 17 LTS | Linguagem principal |
 | **Spring Boot** | 3.x | Framework web e autoconfiguração |
 | **Spring Security** | — | Proteção de rotas e controle de acesso |
 | **Flyway** | — | Migrações de banco de dados versionadas |

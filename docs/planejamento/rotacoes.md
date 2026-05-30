@@ -199,3 +199,12 @@ Antes de solicitar revisão, todo PR deve cumprir:
 | **GitHub PRs** | Revisão de código e discussões técnicas |
 | **WhatsApp (Grupo)** | Comunicação rápida e alinhamentos diários |
 | **Reuniões presenciais** | Plannings e retrospectivas (FCTE) |
+
+
+---
+
+## Histórico de Versões
+
+| Versão | Data | Descrição | Autor |
+| :---: | :---: | :--- | :--- |
+| `1.0` | 29/05/2026 | Criação do documento | Pedro Henrique P. Santos |

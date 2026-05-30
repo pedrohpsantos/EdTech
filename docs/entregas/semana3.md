@@ -20,3 +20,12 @@
 ---
 
 ← [Semana 2 — Lean Inception, Requisitos e Arquitetura](semana2.md)
+
+
+---
+
+## Histórico de Versões
+
+| Versão | Data | Descrição | Autor |
+| :---: | :---: | :--- | :--- |
+| `1.0` | 29/05/2026 | Criação do documento | Pedro Henrique P. Santos |

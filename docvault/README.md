@@ -31,7 +31,7 @@ docvault/
 
 | Camada | Tecnologias |
 | :--- | :--- |
-| **Backend (API)** | Java 21, Spring Boot 3, Spring Security, JWT, Flyway, PostgreSQL |
+| **Backend (API)** | Java 17, Spring Boot 3, Spring Security, JWT, Flyway, PostgreSQL |
 | **Autenticação** | Spring Security, JWT, cookies HttpOnly e Secure |
 | **Frontend** | React, Tailwind CSS |
 | **Banco de Dados** | PostgreSQL (Google Cloud SQL) |

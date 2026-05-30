@@ -91,3 +91,12 @@ flowchart LR
     style Tecnico fill:#e3f2fd,stroke:#1565c0
     style UX fill:#fff3e0,stroke:#ef6c00
 ```
+
+
+---
+
+## Histórico de Versões
+
+| Versão | Data | Descrição | Autor |
+| :---: | :---: | :--- | :--- |
+| `1.0` | 29/05/2026 | Criação do documento | Pedro Henrique P. Santos |

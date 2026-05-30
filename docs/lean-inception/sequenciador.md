@@ -101,3 +101,12 @@ flowchart TB
 | F12: Exclusão de rascunhos | Baixo | Médio | Full Stack (Backend) |
 | F16: Aprovação de submissões | Médio | Médio | Full Stack (Frontend + Backend) |
 | F21: Filtros de auditoria | Médio | Médio | Full Stack (QA) |
+
+
+---
+
+## Histórico de Versões
+
+| Versão | Data | Descrição | Autor |
+| :---: | :---: | :--- | :--- |
+| `1.0` | 29/05/2026 | Criação do documento | Pedro Henrique P. Santos |

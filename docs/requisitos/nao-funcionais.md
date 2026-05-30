@@ -85,3 +85,12 @@ pie
     "Manutenibilidade" : 4
     "Conformidade" : 3
 ```
+
+
+---
+
+## Histórico de Versões
+
+| Versão | Data | Descrição | Autor |
+| :---: | :---: | :--- | :--- |
+| `1.0` | 29/05/2026 | Criação do documento | Pedro Henrique P. Santos |

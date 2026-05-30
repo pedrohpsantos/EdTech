@@ -70,5 +70,13 @@ Template padrão para registro das reuniões da equipe EdTech. Copie a estrutura
 
 ## Histórico de Reuniões
 
-!!! info "Nenhuma ata registrada ainda"
-    Utilize o template acima para registrar a próxima reunião da equipe.
+1. [Ata de Reunião (29/05)](ata-29-05-2026.md)
+
+
+---
+
+## Histórico de Versões
+
+| Versão | Data | Descrição | Autor |
+| :---: | :---: | :--- | :--- |
+| `1.0` | 29/05/2026 | Criação do documento | Pedro Henrique P. Santos |

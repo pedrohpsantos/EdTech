@@ -89,8 +89,9 @@ nav:
       - Cronograma e Sprints: planejamento/cronograma.md
       - Papéis e Rotações: planejamento/rotacoes.md
       - Roadmap de Estudos: planejamento/roadmap.md
-      - Atas de Reunião: planejamento/atas.md
       - Entregas:
           - Semana 1: entregas/semana1.md
           - Semana 2: entregas/semana2.md
-          - Semana 3: entregas/semana3.md
+  - Reuniões: 
+      - Índice de Atas: reunioes/atas.md
+      - Ata de Reunião (29/05): reunioes/ata-29-05-2026.md

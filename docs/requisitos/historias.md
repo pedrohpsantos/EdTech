@@ -152,3 +152,12 @@ Backlog de histórias de usuário do EdTech, escritas no formato padrão e rastr
 | Orientador | 2 | 0 | 0 | 2 |
 | Auditoria | 1 | 0 | 0 | 1 |
 | **Total** | **9** | **1** | **2** | **6** |
+
+
+---
+
+## Histórico de Versões
+
+| Versão | Data | Descrição | Autor |
+| :---: | :---: | :--- | :--- |
+| `1.0` | 29/05/2026 | Criação do documento | Pedro Henrique P. Santos |

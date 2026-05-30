@@ -123,3 +123,12 @@ Todos os commits seguem o padrão **Conventional Commits** para rastreabilidade:
 | **S3:** Autenticação funcional (API + Frontend) | 01/06 | :material-progress-clock: Em andamento |
 | **S4:** Upload de documentos no GCS | 08/06 | :material-circle-outline: Pendente |
 | **S5:** Fluxo do Orientador, Auditoria e Deploy | 15/06 | :material-circle-outline: Pendente |
+
+
+---
+
+## Histórico de Versões
+
+| Versão | Data | Descrição | Autor |
+| :---: | :---: | :--- | :--- |
+| `1.0` | 29/05/2026 | Criação do documento | Pedro Henrique P. Santos |

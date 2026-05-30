@@ -63,3 +63,12 @@ Definição clara e compartilhada do que o EdTech é, para quem ele existe e qua
 | Tempo médio de upload | < 5s | Logs de auditoria (`UPLOAD_SUCCESS`) |
 | Tentativas de acesso negado | 0 cross-project | Logs de `ACCESS_DENIED` |
 | Cobertura de testes | ≥ 80% | JUnit + relatório de cobertura |
+
+
+---
+
+## Histórico de Versões
+
+| Versão | Data | Descrição | Autor |
+| :---: | :---: | :--- | :--- |
+| `1.0` | 29/05/2026 | Criação do documento | Pedro Henrique P. Santos |

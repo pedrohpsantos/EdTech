@@ -111,3 +111,12 @@ flowchart LR
     - [x] Todas as ações geram registros na tabela `audit_logs`
     - [x] O sistema roda containerizado via Docker
     - [x] Testes unitários cobrem os endpoints da API
+
+
+---
+
+## Histórico de Versões
+
+| Versão | Data | Descrição | Autor |
+| :---: | :---: | :--- | :--- |
+| `1.0` | 29/05/2026 | Criação do documento | Pedro Henrique P. Santos |

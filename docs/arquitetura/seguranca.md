@@ -161,3 +161,12 @@ Todas as ações de segurança geram registros imutáveis na tabela `audit_logs`
     Cloud Run aplica HTTPS por padrão. Cookies `Secure` garantem que tokens nunca trafeguem em HTTP.
 
 </div>
+
+
+---
+
+## Histórico de Versões
+
+| Versão | Data | Descrição | Autor |
+| :---: | :---: | :--- | :--- |
+| `1.0` | 29/05/2026 | Criação do documento | Pedro Henrique P. Santos |

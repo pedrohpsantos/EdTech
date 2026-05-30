@@ -68,3 +68,12 @@ Isso garante que, a cada nova rotação, o integrante saiba exatamente quais tec
 - **Markdown & MkDocs:** Atualizar a documentação técnica, atas de reunião e arquitetura usando sintaxe Markdown e Material for MkDocs.
 - **Mermaid:** Criação de fluxogramas e diagramas arquiteturais para manter o projeto legível.
 - **Monitoramento:** Compreender a estrutura e armazenamento de logs imutáveis conforme definido nos Requisitos Não Funcionais.
+
+
+---
+
+## Histórico de Versões
+
+| Versão | Data | Descrição | Autor |
+| :---: | :---: | :--- | :--- |
+| `1.0` | 29/05/2026 | Criação do documento | Pedro Henrique P. Santos |

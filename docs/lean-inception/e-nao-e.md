@@ -68,3 +68,12 @@ flowchart LR
     style Dentro fill:#e8f5e9,stroke:#2e7d32
     style Fora fill:#ffebee,stroke:#c62828
 ```
+
+
+---
+
+## Histórico de Versões
+
+| Versão | Data | Descrição | Autor |
+| :---: | :---: | :--- | :--- |
+| `1.0` | 29/05/2026 | Criação do documento | Pedro Henrique P. Santos |

@@ -92,3 +92,12 @@ flowchart LR
     style Funcionalidades fill:#f3e5f5,stroke:#7b1fa2
     style Personas fill:#e0f7fa,stroke:#00838f
 ```
+
+
+---
+
+## Histórico de Versões
+
+| Versão | Data | Descrição | Autor |
+| :---: | :---: | :--- | :--- |
+| `1.0` | 29/05/2026 | Criação do documento | Pedro Henrique P. Santos |
