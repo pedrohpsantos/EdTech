@@ -429,21 +429,88 @@ a.team-card:hover .team-avatar {
 /* ============================================================
    RESPONSIVE
    ============================================================ */
-@media (max-width: 768px) {
+
+/* Mobile Phones (Portrait - up to 480px) */
+@media (max-width: 480px) {
   .md-hero {
-    padding: 2rem 1.5rem;
+    padding: 2rem 1rem;
+    margin: 0.5rem 0 1.5rem 0;
   }
-
   .md-hero h1 {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
   }
-
   .md-hero p {
-    font-size: 1rem;
+    font-size: 0.95rem;
   }
+  .md-hero .hero-actions {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  .md-hero .md-button {
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .team-grid {
+    grid-template-columns: 1fr;
+  }
+}
 
+/* Tablets and Large Phones (481px to 768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+  .md-hero {
+    padding: 2.5rem 1.5rem;
+  }
+  .md-hero h1 {
+    font-size: 2rem;
+  }
+  .md-hero p {
+    font-size: 1.05rem;
+  }
   .team-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Laptops / Desktops (769px to 1199px) */
+@media (min-width: 769px) and (max-width: 1199px) {
+  .team-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Ultrawide / Large Desktops (1200px to 1599px) */
+@media (min-width: 1200px) and (max-width: 1599px) {
+  :root {
+    --md-text-container-width: 60rem; /* Expands MkDocs default max-width slightly */
+  }
+  .md-hero {
+    padding: 3.5rem 2.5rem;
+  }
+  .md-hero h1 {
+    font-size: 2.8rem;
+  }
+  .team-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Super Ultrawide (1600px and up) */
+@media (min-width: 1600px) {
+  :root {
+    --md-text-container-width: 75rem; /* Expands significantly for large monitors */
+  }
+  .md-hero {
+    padding: 4rem 3rem;
+  }
+  .md-hero h1 {
+    font-size: 3.2rem;
+  }
+  .md-hero p {
+    font-size: 1.25rem;
+    max-width: 900px;
+  }
+  .team-grid {
+    grid-template-columns: repeat(6, 1fr); /* All cards in one row! */
   }
 }
 
