@@ -1,6 +1,6 @@
 # :material-vector-arrange-below: C4 Model (Contexto e Containers)
 
-Para substituir mapas mentais acadêmicos e diagramas rígidos, o projeto adota o **C4 Model** (desenvolvido por Simon Brown), uma taxonomia padrão de mercado para visualização de arquitetura de software de forma clara para desenvolvedores e stakeholders de negócios.
+O projeto adota o **C4 Model** (desenvolvido por Simon Brown), uma taxonomia padrão de mercado para visualização de arquitetura de software de forma clara para desenvolvedores e stakeholders de negócios.
 
 ## Nível 1: Diagrama de Contexto de Sistema
 

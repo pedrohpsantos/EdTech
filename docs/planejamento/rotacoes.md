@@ -190,8 +190,8 @@ Antes de solicitar revisão, todo PR deve cumprir:
 | :--- | :--- |
 | **GitHub Issues** | Tarefas, bugs e melhorias |
 | **GitHub PRs** | Revisão de código e discussões técnicas (assíncrono) |
-| **Discord / Slack** | Comunicação rápida e alinhamentos diários |
-| **Google Meet / Teams** | Plannings e retrospectivas remotas |
+| **Whatsapp** | Comunicação rápida e alinhamentos diários |
+| **Discord** | Plannings e retrospectivas remotas |
 
 
 ---
