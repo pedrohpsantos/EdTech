@@ -105,7 +105,7 @@ nav:
           - Product Discovery:
               - Personas: produto/discovery/personas.md
               - Jornadas do Usuário: produto/discovery/jornadas.md
-              - Brainstorming (MoSCoW): produto/discovery/brainstorming.md
+              - Brainstorming e MoSCoW: produto/discovery/brainstorming.md
           - Product Strategy:
               - Visão e Escopo: produto/strategy/visao.md
               - É / Não É / Faz / Não Faz: produto/strategy/matriz_e_nao_e.md
@@ -116,13 +116,21 @@ nav:
       - Backlog Ágil:
           - Histórias de Usuário: produto/requisitos/historias.md
   - Arquitetura:
-      - C4 Model (Contexto e Containers): arquitetura/c4_model.md
-      - Design Técnico (Detalhado): arquitetura/design_tecnico.md
+      - C4 Model: arquitetura/c4_model.md
+      - Design Técnico: arquitetura/design_tecnico.md
       - Armazenamento em Nuvem: arquitetura/nuvem.md
       - Arquitetura de Dados: arquitetura/dados.md
       - Segurança e AppSec: arquitetura/seguranca_app.md
       - Decisões Técnicas (ADRs):
-          - ADR 0001 (Google Cloud Storage): arquitetura/adrs/0001-armazenamento-gcs.md
+          - ADR 0001 (Cloud Storage): arquitetura/adrs/0001-armazenamento-gcs.md
+          - ADR 0002 (Autenticação JWT): arquitetura/adrs/0002-autenticacao-jwt.md
+          - ADR 0003 (Cloud Run Serverless): arquitetura/adrs/0003-cloud-run.md
+          - ADR 0004 (PostgreSQL): arquitetura/adrs/0004-postgresql.md
+          - ADR 0005 (Spring Boot): arquitetura/adrs/0005-spring-boot.md
+          - ADR 0006 (SPA + API): arquitetura/adrs/0006-spa-api.md
+          - ADR 0007 (Flyway Migrations): arquitetura/adrs/0007-flyway.md
+          - ADR 0008 (GitHub Actions CI/CD): arquitetura/adrs/0008-github-actions.md
+          - ADR 0009 (Docs-as-Code via MkDocs): arquitetura/adrs/0009-mkdocs.md
   - Planejamento:
       - Product Roadmap: planejamento/roadmap.md
       - Trilha de Estudos: planejamento/trilha_estudos.md

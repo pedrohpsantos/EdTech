@@ -147,11 +147,11 @@ Backlog de histórias de usuário do EdTech, escritas no formato padrão e rastr
 
 | Épico | Histórias | Concluídas | Em andamento | Pendentes |
 | :--- | :---: | :---: | :---: | :---: |
-| Autenticação | 3 | 1 | 2 | 0 |
-| Documentos | 3 | 0 | 0 | 3 |
+| Autenticação | 3 | 0 | 1 | 2 |
+| Documentos | 3 | 0 | 1 | 2 |
 | Orientador | 2 | 0 | 0 | 2 |
 | Auditoria | 1 | 0 | 0 | 1 |
-| **Total** | **9** | **1** | **2** | **6** |
+| **Total** | **9** | **0** | **2** | **7** |
 
 
 ---
