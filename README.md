@@ -159,33 +159,3 @@ Organização de commits para melhor compreensão e rastreabilidade do projeto.
 ## Licença
 
 Projeto acadêmico desenvolvido para fins educacionais no Laboratório de Inteligência Artificial (AILAB).
-
-````
-This is the description of what the code block changes:
-<changeDescription>
-Atualiza o fluxo de desenvolvimento para incluir a branch develop como etapa intermediaria antes da main.
-</changeDescription>
-
-This is the code block that represents the suggested code change:
-```markdown
-# ...existing code...
-## Fluxo de Desenvolvimento
-
-### `main`
-
-Branch estavel e protegida do projeto. O codigo presente aqui reflete o ambiente de deploy publico.
-
-### `develop`
-
-Branch de integracao e validacao. Tudo que sai de `feat/*`, `fix/*`, `docs/*` e `refactor/*` deve passar por `develop` antes de chegar na `main`.
-
-### Branches de Funcionalidades
-
-Cada funcionalidade (ex: `auth`, `upload`, `logging`) deve ser desenvolvida em uma branch propria derivada da `develop`. Cada commit sera feito na branch correspondente a sua funcionalidade. Nunca commitar diretamente na `main`. A integracao com a `main` ocorre por meio de PRs revisados, via `develop`.
-# ...existing code...
-
-```
-<userPrompt>
-Provide the fully rewritten file, incorporating the suggested code change. You must produce the complete file.
-</userPrompt>
-
