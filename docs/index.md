@@ -163,7 +163,7 @@ Tecnologias selecionadas para robustez, segurança e escalabilidade em ambiente 
 
 <div class="section-heading" markdown>
 
-## :material-account-heart: Equipa
+## :material-account-heart: Equipe
 
 </div>
 
