@@ -46,7 +46,7 @@ Acesse `http://127.0.0.1:8000` no navegador.
 | Pedro Henrique P. Santos | Tech Lead | [@pedrohpsantos](https://github.com/pedrohpsantos) |
 | Alana Cristyna F. Dias | Full Stack | [@alanafeitosa-ui](https://github.com/alanafeitosa-ui) |
 | Arthur Carvalho Leite | Full Stack | [@arthurlleite](https://github.com/arthurlleite) |
-| Luis Gustavo F. Nunes | Full Stack | [@yhikariTsuy](https://github.com/yhikariTsuy) |
+| Luis Gustavo F. Nunes | Full Stack | [@yhikariTsuy](https://github.com/LuisGFNunes) |
 | Mariana S. F. Andrade | Full Stack | [@mariana-farias12](https://github.com/mariana-farias12) |
 | Mateus Alves Araújo | Full Stack | [@mateusaraujo2006](https://github.com/mateusaraujo2006) |
 
