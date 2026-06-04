@@ -572,6 +572,9 @@ a.team-card:hover .team-avatar {
 
 .md-typeset .mermaid svg {
   font-family: 'Plus Jakarta Sans', sans-serif !important;
+  max-width: 100%;
+  height: auto !important;
+  max-height: 500px;
 }
 
 /* Garante que os rótulos de relacionamento (setas) fiquem sempre legíveis e não sobreponham as linhas confusamente */
