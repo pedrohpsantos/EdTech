@@ -37,6 +37,38 @@
          <lastmod>2026-06-04</lastmod>
     </url>
     <url>
+         <loc>https://pedrohpsantos.github.io/EdTech/arquitetura/adrs/0002-autenticacao-jwt/</loc>
+         <lastmod>2026-06-04</lastmod>
+    </url>
+    <url>
+         <loc>https://pedrohpsantos.github.io/EdTech/arquitetura/adrs/0003-cloud-run/</loc>
+         <lastmod>2026-06-04</lastmod>
+    </url>
+    <url>
+         <loc>https://pedrohpsantos.github.io/EdTech/arquitetura/adrs/0004-postgresql/</loc>
+         <lastmod>2026-06-04</lastmod>
+    </url>
+    <url>
+         <loc>https://pedrohpsantos.github.io/EdTech/arquitetura/adrs/0005-spring-boot/</loc>
+         <lastmod>2026-06-04</lastmod>
+    </url>
+    <url>
+         <loc>https://pedrohpsantos.github.io/EdTech/arquitetura/adrs/0006-spa-api/</loc>
+         <lastmod>2026-06-04</lastmod>
+    </url>
+    <url>
+         <loc>https://pedrohpsantos.github.io/EdTech/arquitetura/adrs/0007-flyway/</loc>
+         <lastmod>2026-06-04</lastmod>
+    </url>
+    <url>
+         <loc>https://pedrohpsantos.github.io/EdTech/arquitetura/adrs/0008-github-actions/</loc>
+         <lastmod>2026-06-04</lastmod>
+    </url>
+    <url>
+         <loc>https://pedrohpsantos.github.io/EdTech/arquitetura/adrs/0009-mkdocs/</loc>
+         <lastmod>2026-06-04</lastmod>
+    </url>
+    <url>
          <loc>https://pedrohpsantos.github.io/EdTech/gestao/agile/team_agreements/</loc>
          <lastmod>2026-06-04</lastmod>
     </url>
