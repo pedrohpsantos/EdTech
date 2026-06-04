@@ -14,7 +14,7 @@ Plataforma acadêmica para centralização, gerenciamento e auditoria de publica
 
 <div class="hero-actions" markdown>
 
-[Explorar Arquitetura :material-arrow-right:](arquitetura/c4_model.md){ .md-button .md-button--primary }
+[Explorar MVP :material-star-shooting:](produto/strategy/canvas_mvp.md){ .md-button .md-button--primary }
 [Ver Entregas :material-rocket-launch:](gestao/entregas/semana1.md){ .md-button }
 
 </div>
@@ -187,8 +187,8 @@ Time multidisciplinar do AILAB Makers.
 <span class="team-name">Arthur Carvalho Leite</span>
 <span class="team-role">Full Stack</span>
 </a>
-<a href="https://github.com/yhikariTsuy" target="_blank" class="team-card">
-<img src="https://github.com/yhikariTsuy.png" alt="Luis" class="team-avatar">
+<a href="https://github.com/LuisGFNunes" target="_blank" class="team-card">
+<img src="https://github.com/LuisGFNunes.png" alt="Luis" class="team-avatar">
 <span class="team-name">Luis Gustavo F. Nunes</span>
 <span class="team-role">Full Stack</span>
 </a>
@@ -219,5 +219,5 @@ Time multidisciplinar do AILAB Makers.
 
 | Versão | Data | Descrição | Autor |
 | :---: | :---: | :--- | :--- |
-| `1.1` | 04/06/2026 | Adição da secção Início Rápido e melhorias visuais | Pedro Henrique P. Santos |
 | `1.0` | 29/05/2026 | Criação do documento | Pedro Henrique P. Santos |
+| `1.1` | 04/06/2026 | Adição da secção Início Rápido e melhorias visuais | Pedro Henrique P. Santos |
