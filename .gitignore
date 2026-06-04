@@ -25,6 +25,7 @@ __pycache__/
 
 # Documentação (MkDocs)
 site/
+.cache/
 
 # Infraestrutura
 infra/.env

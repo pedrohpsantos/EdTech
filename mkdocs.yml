@@ -1,8 +1,11 @@
 site_name: EdTech — Repositório Acadêmico
 site_description: Documentação oficial do projeto EdTech — Plataforma de centralização, gerenciamento e auditoria de publicações acadêmicas. AILAB Makers — UnB FCTE.
-site_url: ""
+site_url: https://pedrohpsantos.github.io/EdTech/
 repo_url: https://github.com/pedrohpsantos/EdTech
 repo_name: EdTech
+edit_uri: edit/main/docs/
+
+copyright: "© 2026 AILAB Makers — UnB FCTE"
 
 theme:
   name: material
@@ -11,6 +14,7 @@ theme:
   favicon: https://raw.githubusercontent.com/squidfunk/mkdocs-material/master/material/templates/.icons/material/school.svg
   icon:
     repo: fontawesome/brands/github
+    annotation: material/arrow-right-circle
   features:
     - navigation.tabs
     - navigation.tabs.sticky
@@ -22,12 +26,13 @@ theme:
     - navigation.instant.progress
     - navigation.instant.prefetch
     - navigation.tracking
-    - toc.integrate
+    - toc.follow
     - search.suggest
     - search.highlight
     - search.share
     - content.tabs.link
     - content.code.copy
+    - content.action.edit
   palette:
     - scheme: default
       primary: deep purple
@@ -45,8 +50,26 @@ theme:
     text: Plus Jakarta Sans
     code: JetBrains Mono
 
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/pedrohpsantos/EdTech
+      name: Repositório no GitHub
+
 extra_css:
   - stylesheets/extra.css
+
+not_in_nav: |
+  _glossary.md
+  _snippets/**
+
+plugins:
+  - search
+  - glightbox
+  - minify:
+      minify_html: true
+      minify_css: true
+      minify_js: true
 
 markdown_extensions:
   - admonition
@@ -63,6 +86,12 @@ markdown_extensions:
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - pymdownx.tasklist:
       custom_checkbox: true
+  - pymdownx.mark
+  - pymdownx.critic
+  - abbr
+  - pymdownx.snippets:
+      auto_append:
+        - docs/_glossary.md
   - attr_list
   - md_in_html
   - tables
@@ -106,6 +135,6 @@ nav:
           - Semana 1: gestao/entregas/semana1.md
           - Semana 2: gestao/entregas/semana2.md
           - Semana 3: gestao/entregas/semana3.md
-      - Reuniões: 
+      - Reuniões:
           - Índice de Atas: gestao/reunioes/atas.md
           - Ata de Reunião (29/05): gestao/reunioes/ata-29-05-2026.md

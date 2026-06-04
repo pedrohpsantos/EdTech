@@ -24,8 +24,6 @@
 
 ---
 
-## Histórico de Versões
+--8<-- "docs/_snippets/version_header.md"
 
-| Versão | Data | Descrição | Autor |
-| :---: | :---: | :--- | :--- |
 | `1.0` | 29/05/2026 | Criação do documento | Pedro Henrique P. Santos |

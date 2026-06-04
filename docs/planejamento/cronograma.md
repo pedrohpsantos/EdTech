@@ -34,7 +34,7 @@ Cada sprint tem duração de **1 semana** e segue o ciclo:
 
 ```mermaid
 flowchart LR
-    A["Planning\n(segunda)"] --> B["Desenvolvimento\n(terca-quinta)"]
+    A["Planning\n(segunda)"] --> B["Desenvolvimento\n(terça-quinta)"]
     B --> C["Code Review\n(sexta)"]
     C --> D["Merge e Deploy\n(sexta)"]
     D --> E["Retrospectiva\n(sexta)"]
@@ -50,15 +50,15 @@ flowchart LR
 
 | Branch       | Propósito                    |         Proteção          |
 |:-------------|:-----------------------------|:-------------------------:|
-| `main`       | Branch estavel de deploy     | :material-lock: Protegida |
-| `develop`    | Integracao e validacao       | :material-lock: Protegida |
+| `main`       | Branch estável de deploy     | :material-lock: Protegida |
+| `develop`    | Integração e validação       | :material-lock: Protegida |
 | `feat/*`     | Funcionalidades novas        |             —             |
-| `fix/*`      | Correcoes de bugs            |             —             |
-| `docs/*`     | Atualizacoes de documentacao |             —             |
-| `refactor/*` | Melhorias de codigo          |             —             |
+| `fix/*`      | Correções de bugs            |             —             |
+| `docs/*`     | Atualizações de documentação |             —             |
+| `refactor/*` | Melhorias de código          |             —             |
 
 !!! warning "Regra de Ouro"
-**Nunca commitar diretamente na `main`.** Todo fluxo passa por `develop` antes da integracao final.
+    **Nunca commitar diretamente na `main`.** Todo fluxo passa por `develop` antes da integração final.
 
 ### Fluxo de uma Feature
 
@@ -69,7 +69,7 @@ flowchart LR
         M1["release"]
     end
     subgraph Develop["Branch: develop"]
-        D1["integracao"]
+        D1["integração"]
     end
     subgraph FeatAuth["Branch: feat_auth"]
         F1["user-model"]

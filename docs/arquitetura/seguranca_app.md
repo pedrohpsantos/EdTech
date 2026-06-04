@@ -50,11 +50,11 @@ sequenceDiagram
 flowchart LR
     subgraph Atores["Atores Hostis"]
         AE["Atacante Externo"]
-        UM["Usuario Mal-Intencionado"]
+        UM["Usuário Mal-Intencionado"]
     end
 
     subgraph Vetores["Vetores"]
-        SQL["Injecao SQL"]
+        SQL["Injeção SQL"]
         XSS["XSS"]
         SP["Spoofing Auth"]
         TAM["Tampering Arquivos"]
@@ -70,8 +70,8 @@ flowchart LR
     subgraph Controles["Controles"]
         WAF["WAF"]
         JWT["JWT HttpOnly"]
-        VAL["Validacao de Input"]
-        LOG["Logs Imutaveis"]
+        VAL["Validação de Input"]
+        LOG["Logs Imutáveis"]
     end
 
     AE --> SQL
@@ -102,8 +102,7 @@ flowchart LR
 
 ### Walkthrough do diagrama
 
-Atores hostis disparam vetores de ataque que impactam os pontos de entrada e ativos, enquanto os controles mitigam as
-superficies criticas do frontend, API e persistencia.
+Atores hostis disparam vetores de ataque que impactam os pontos de entrada e ativos, enquanto os controles mitigam as superfícies críticas do frontend, API e persistência.
 
 ---
 

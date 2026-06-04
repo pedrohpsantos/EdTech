@@ -5,7 +5,7 @@ Para garantir a qualidade nas entregas ágeis do projeto EdTech, substituímos p
 ```mermaid
 flowchart LR
     %%{init: {"flowchart": {"nodeSpacing": 60, "rankSpacing": 80}}}%%
-    Start((Inicio)) --> B["Backlog"]
+    Start((Início)) --> B["Backlog"]
     B -->|Passa pelo DoR| R["Ready"]
     R -->|Desenvolvimento| IP["InProgress"]
     IP -->|PR Aberto| CR["CodeReview"]

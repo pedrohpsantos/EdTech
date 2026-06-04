@@ -70,7 +70,7 @@ flowchart LR
         FS2["Full Stack — Docs"]
     end
 
-    subgraph SQ2["Integracao"]
+    subgraph SQ2["Integração"]
         FS3["Full Stack — Frontend"]
         FS4["Full Stack — Backend"]
     end
@@ -146,9 +146,9 @@ flowchart TD
     C --> D["Preenche template de PR"]
     D --> E{"Tech Lead revisa"}
     E -->|Aprovado| F["Merge na develop"]
-    E -->|Mudancas pedidas| G["Developer corrige"]
+    E -->|Mudanças pedidas| G["Developer corrige"]
     G --> E
-    F --> H["Validacao em develop"]
+    F --> H["Validação em develop"]
     H --> I["PR de develop para main"]
     I --> J["Merge na main"]
     J --> K["GitHub Actions: build + deploy"]

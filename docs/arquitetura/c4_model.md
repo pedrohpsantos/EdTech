@@ -4,7 +4,7 @@ Para substituir mapas mentais acadêmicos e diagramas rígidos, o projeto adota 
 
 ## Nível 1: Diagrama de Contexto de Sistema
 
-O Diagrama de Contexto mostra o sistema EdTech no centro, rodeado pelos seus atores (Personas) e sistemas externos que ele interage.
+O Diagrama de Contexto mostra o sistema EdTech no centro, rodeado pelos seus atores (Personas) e sistemas externos com os quais ele interage.
 
 ```mermaid
 %%{init: {"theme": "base", "flowchart": {"nodeSpacing": 60, "rankSpacing": 80, "curve": "basis"}}}%%
@@ -20,15 +20,14 @@ flowchart LR
     end
 
     Pesq -->|Login e Upload| EdTech
-    Ori -->|Gestao de Projetos| EdTech
+    Ori -->|Gestão de Projetos| EdTech
     Aud -->|Auditoria| EdTech
     EdTech -->|Arquivos| GCS
 ```
 
 ### Walkthrough do diagrama
 
-A plataforma centraliza a interacao de pesquisa, orientacao e auditoria, enquanto o GCS atua como storage externo para
-arquivos de pesquisa.
+A plataforma centraliza a interação de pesquisa, orientação e auditoria, enquanto o GCS atua como storage externo para arquivos de pesquisa.
 
 ## Nível 2: Diagrama de Container
 
@@ -67,8 +66,7 @@ flowchart LR
 
 ### Walkthrough do diagrama
 
-O fluxo principal segue da esquerda para a direita (Usuario -> SPA -> API -> DB/GCS), com autenticacao e auditoria como
-servicos auxiliares conectados a API.
+O fluxo principal segue da esquerda para a direita (Usuário → SPA → API → DB/GCS), com autenticação e auditoria como serviços auxiliares conectados à API.
 
 ---
 

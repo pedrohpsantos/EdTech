@@ -1,4 +1,5 @@
 name: Deploy MkDocs
+
 on:
   push:
     branches:
@@ -6,7 +7,9 @@ on:
     paths:
       - 'docs/**'
       - 'mkdocs.yml'
+      - 'pyproject.toml'
       - '.github/workflows/ci-docs.yml'
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -14,17 +17,30 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout do código
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Configurar Python
         uses: actions/setup-python@v5
         with:
-          python-version: 3.11
+          python-version: '3.11'
 
       - name: Instalar uv
         uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
+
+      - name: Cache do MkDocs
+        uses: actions/cache@v4
+        with:
+          path: .cache
+          key: mkdocs-cache-${{ hashFiles('mkdocs.yml') }}
+          restore-keys: |
+            mkdocs-cache-
 
       - name: Instalar dependências
         run: uv sync

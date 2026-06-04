@@ -1,9 +1,21 @@
 [project]
 name = "edtech"
 version = "0.1.0"
-description = "Add your description here"
+description = "Plataforma acadêmica para centralização, gerenciamento e auditoria de publicações científicas — AILAB Makers / UnB FCTE."
 readme = "README.md"
-requires-python = ">=3.14"
+requires-python = ">=3.11"
+license = "MIT"
+keywords = ["edtech", "mkdocs", "documentação", "acadêmico"]
+authors = [
+    { name = "Pedro Henrique P. Santos" },
+]
+
 dependencies = [
     "mkdocs-material>=9.7.6",
+    "mkdocs-minify-plugin>=0.8.0",
+    "mkdocs-glightbox>=0.4.0",
 ]
+
+[project.urls]
+Documentation = "https://pedrohpsantos.github.io/EdTech/"
+Repository = "https://github.com/pedrohpsantos/EdTech"

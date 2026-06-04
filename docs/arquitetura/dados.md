@@ -38,8 +38,7 @@ erDiagram
 
 ### Walkthrough do diagrama
 
-O ERD resume quatro entidades centrais e suas relacoes principais: usuarios participam de projetos, projetos possuem
-documentos e usuarios geram auditoria.
+O ERD resume quatro entidades centrais e suas relações principais: usuários participam de projetos, projetos possuem documentos e usuários geram auditoria.
 
 ## Regras de Isolamento (Multi-tenancy Lógico)
 Um Orientador (`advisor`) só consegue consultar metadados e arquivos dos artefatos de projetos nos quais ele está listado explicitamente na tabela de junção `project_members`. Consultas SQL abstraídas via JPA forçam *Query Filters* em tempo de compilação usando este relacionamento.

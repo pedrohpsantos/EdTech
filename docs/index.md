@@ -39,39 +39,63 @@ Pesquisadores precisam de um lugar seguro, organizado e auditável para armazena
 
     ---
 
-    Login com JWT armazenado em cookies `HttpOnly` + `Secure`. Sessões protegidas contra XSS e CSRF.
+    Login com JWT em cookies `HttpOnly` + `Secure`, com sessões protegidas contra XSS e CSRF.
 
 - :material-file-upload: **Upload de Documentos**
 
     ---
 
-    Envio de artigos em PDF, relatórios de pesquisa e datasets com armazenamento em nuvem de alta disponibilidade via Google Cloud Storage.
+    Envio de artigos em PDF, relatórios e datasets com armazenamento de alta disponibilidade via Google Cloud Storage.
 
 - :material-filter-variant: **Listagem Filtrada**
 
     ---
 
-    Cada pesquisador visualiza e gerencia apenas seus próprios rascunhos não publicados, vinculados à sua conta autenticada.
+    Cada pesquisador visualiza e gerencia apenas seus próprios rascunhos não publicados, vinculados à sua conta.
 
 - :material-lock-check: **Isolamento de Dados**
 
     ---
 
-    Garantia de isolamento estrito entre autores e projetos. Orientadores acessam apenas produções de seus laboratórios.
+    Isolamento estrito entre autores e projetos. Orientadores acessam apenas produções dos seus laboratórios.
 
 - :material-clipboard-text-clock: **Logs de Auditoria**
 
     ---
 
-    Registros centralizados e inalteráveis de login, logout, uploads, downloads, exclusões e tentativas de acesso negadas.
+    Registros centralizados e inalteráveis de login, logout, uploads, downloads, exclusões e acessos negados.
 
 - :material-cloud-check: **Alta Disponibilidade**
 
     ---
 
-    Infraestrutura em Google Cloud Run com banco de dados gerenciado (Cloud SQL for PostgreSQL) e storage distribuído.
+    Google Cloud Run com banco gerenciado (Cloud SQL for PostgreSQL) e storage distribuído.
 
 </div>
+
+---
+
+<div class="section-heading" markdown>
+
+## :material-rocket-launch-outline: Início Rápido
+
+</div>
+
+<p class="section-subtitle">
+Sirva a documentação localmente em segundos com <code>uv</code>.
+</p>
+
+```bash
+# Clone o repositório
+git clone https://github.com/pedrohpsantos/EdTech.git
+cd EdTech
+
+# Instale as dependências
+uv sync
+
+# Sirva a documentação em http://127.0.0.1:8000
+uv run mkdocs serve
+```
 
 ---
 
@@ -82,7 +106,7 @@ Pesquisadores precisam de um lugar seguro, organizado e auditável para armazena
 </div>
 
 <p class="section-subtitle">
-O sistema foi projetado para atender três perfis distintos, cada um com permissões e visões específicas.
+O sistema atende três perfis distintos, cada um com permissões e visões específicas.
 </p>
 
 === ":material-flask: Pesquisador"
@@ -91,7 +115,7 @@ O sistema foi projetado para atender três perfis distintos, cada um com permiss
 
     - [x] Criar conta e fazer login seguro
     - [x] Enviar artigos em PDF, relatórios de pesquisa e datasets
-    - [x] Visualizar e gerenciar apenas seus próprios rascunhos não publicados
+    - [x] Visualizar e gerenciar apenas seus próprios rascunhos
     - [ ] Solicitar revisão ao orientador *(planejado)*
 
 === ":material-school: Orientador / Administrador"
@@ -128,7 +152,7 @@ Tecnologias selecionadas para robustez, segurança e escalabilidade em ambiente 
 | :--- | :--- |
 | **Frontend** | HTML5, CSS3, JavaScript Vanilla, Bootstrap 5, React |
 | **Backend** | Java 17, Spring Boot, Spring Security, JWT (`HttpOnly` + `Secure`) |
-| **Banco de Dados & Storage** | Google Cloud SQL for PostgreSQL, Google Cloud Storage, Flyway (Migrações) |
+| **Banco de Dados & Storage** | Google Cloud SQL for PostgreSQL, Google Cloud Storage, Flyway |
 | **Infraestrutura & DevOps** | Docker, Google Cloud Run |
 | **CI/CD & Qualidade** | GitHub Actions, JUnit, Python 3.11 (scripts de telemetria) |
 | **Documentação** | MkDocs + Material for MkDocs |
@@ -139,7 +163,7 @@ Tecnologias selecionadas para robustez, segurança e escalabilidade em ambiente 
 
 <div class="section-heading" markdown>
 
-## :material-account-heart: Equipe
+## :material-account-heart: Equipa
 
 </div>
 
@@ -184,12 +208,10 @@ Time multidisciplinar do AILAB Makers.
 
 !!! tip "Como navegar na documentação"
 
-    Utilize o **menu superior** para alternar entre os grandes módulos do projeto:
-    **Planejamento**, **Arquitetura** e **Entregas**.
-
-    Para buscas rápidas, pressione '**s**' ou '**f**' no seu teclado e digite o termo desejado.
-
-    Use o toggle :material-brightness-6: no cabeçalho para alternar entre **modo claro** e **modo escuro**.
+    - Use o **menu superior** para alternar entre os módulos: **Requisitos**, **Arquitetura**, **Planejamento** e **Gestão**.
+    - Pressione ++s++ ou ++f++ para busca rápida.
+    - Clique no toggle :material-brightness-6: para alternar entre **modo claro** e **modo escuro**.
+    - Cada página possui o botão :material-pencil: para editar diretamente no GitHub.
 
 ---
 
@@ -197,4 +219,5 @@ Time multidisciplinar do AILAB Makers.
 
 | Versão | Data | Descrição | Autor |
 | :---: | :---: | :--- | :--- |
+| `1.1` | 04/06/2026 | Adição da secção Início Rápido e melhorias visuais | Pedro Henrique P. Santos |
 | `1.0` | 29/05/2026 | Criação do documento | Pedro Henrique P. Santos |

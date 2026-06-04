@@ -16,7 +16,7 @@ timeline
 </div>
 
 ## 🟢 NOW (Atuando Agora)
-**Foco:** Fundações de segurança, estabilidade do MVP e Integração Continua.
+**Foco:** Fundações de segurança, estabilidade do MVP e Integração Contínua.
 
 - Setup do cluster PostgreSQL + Integração ao Google Cloud Storage (`ADR 0001`).
 - Endpoint unificado de Autenticação com regras restritas para o domínio `@instituicao.edu.br`.
