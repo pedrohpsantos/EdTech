@@ -20,7 +20,8 @@ public class AuditLogService{
             return auditLogRepository.save(auditLog);
         }
         catch (Exception e) {
-            System.err.println("Erro em salvar o log da auditoria: " + e.getMessage();
+            System.err.println("Erro em salvar o log da auditoria: " + e.getMessage());
+            return null;
         }
 
     }
