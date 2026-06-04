@@ -34,7 +34,7 @@ O Propósito (Elevator Pitch) que norteia todas as decisões.
     
     ---
 
-    Repositórios acadêmicos de acesso público e genérico.
+    Repositórios de acesso público e de soluções não-auditáveis genéricas (ex: Canvas, Google Drive, Dropbox).
 
 -   :material-trophy: **Nossa Vantagem**
     

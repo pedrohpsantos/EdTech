@@ -17,13 +17,16 @@ A fluidez da informação é crítica. Nossos canais estão estritamente dividid
 
 ### 1. Daily Syncs Assíncronas
 Nossas dailies são 100% assíncronas através do **Discord** (canal de texto). Cada membro digita sua pauta: "O que fiz? Qual meu bloqueio (Impedimento)? O que vou puxar hoje do quadro?"
-**Regra de Ouro:** Dailies não servem para resolver o problema, servem para sinalizar que o problema existe. Se alguém reportar um bloqueio crítico, os envolvidos realizam um "Spin-off" imediato (Pair Programming) sem arrastar o time inteiro para a call.
+
+!!! warning "Regra de Ouro"
+    Dailies não servem para resolver o problema, servem para sinalizar que o problema existe. Se alguém reportar um bloqueio crítico, os envolvidos realizam um "Spin-off" imediato (Pair Programming) sem arrastar o time inteiro para a call.
 
 ### 2. Backlog Refinement (Refinamento Contínuo)
 Regularmente olhamos o topo do Backlog (os itens categorizados como `NOW` no Roadmap) de forma assíncrona. O objetivo é garantir que a história possua valor claro e que **não fira nossas ADRs**, alinhando-se estritamente à *Definition of Ready (DoR)* antes de entrar para a próxima semana.
 
 ### 3. Reunião Única Semanal (Sextas-feiras)
 Temos apenas **uma única reunião síncrona na semana**, que ocorre todas as sextas-feiras (podendo ser presencial ou via Discord). É nela que concentramos nossos esforços humanos para não perdermos tempo em calls dispersas ao longo da semana. Nesta call agrupamos:
+
 - **Review:** Focamos em demonstrar o software rodando (Deploy da funcionalidade) em vez de enviar relatórios acadêmicos monótonos.
 - **Retrospectiva:** O rito contínuo de melhoria de pessoas e processos ("O que foi bom? O que foi ruim?").
 - **Planning:** O que iremos atacar na próxima segunda-feira.
