@@ -70,6 +70,7 @@ Template padrão para registro das reuniões da equipe EdTech. Copie a estrutura
 ## Histórico de Reuniões
 
 1. [Ata de Reunião (29/05)](ata-29-05-2026.md)
+2. [Ata de Reunião (05/06)](ata-05-06-2026.md)
 
 
 ---
