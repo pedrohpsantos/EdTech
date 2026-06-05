@@ -1,4 +1,4 @@
-package br.com.unb.edtech.service;
+package com.docvault.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
