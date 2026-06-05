@@ -13,7 +13,7 @@ public class RegisterRequestDTO {
     private String name;
     @NotBlank(message = "E-mail é obrigatório")
     @Email(message = "E-mail inválido")
-    @Pattern(regexp = ".+@(aluno\\.)?unb\\.br$", message = "E-mail deve ser do domínio UNB")
+    @Pattern(regexp = ".+@unb\\.br$", message = "E-mail deve ser do domínio UNB")
     private String email;
     private String password;
 
