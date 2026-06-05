@@ -15,7 +15,7 @@ public class UserService {
 
     @Transactional
     public User register(RegisterRequestDTO request){
-        if (!request.getEmail().endsWith("@unb.br") && !request.getEmail().endsWith("@aluno.unb.br")){
+        if (!request.getEmail().endsWith("@unb.br")){
             throw new IllegalArgumentException("Email deve pertencer ao domínio unb.br");
         }
         if(userRepository.findByEmail(request.getEmail()).isPresent()) {
