@@ -1,9 +1,9 @@
-package br.com.unb.edtech.service;
+package com.docvault.service;
 
 import org.springframework.stereotype.Service;
 
 @Service
-public class JwtService {
+public class JwtService { // Generic class only for tests
     public String generateToken(String email) {
         return "headerSample.payloadSample.signatureSample";
     }
@@ -12,10 +12,9 @@ public class JwtService {
         return 1L;
     }
 
-    public boolean validateToken(String token) {
+    public void validateToken(String token) {
         if (token.contains("expired")) {
             throw new IllegalArgumentException("Expired Token!");
         }
-        return true;
     }
 }
