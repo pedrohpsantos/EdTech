@@ -1,0 +1,73 @@
+name: Relatório de Bug
+description: Encontrou um erro no EdTech? Use este template para nos avisar.
+title: "[BUG] "
+labels: ["bug"]
+body:
+  - type: dropdown
+    id: persona
+    attributes:
+      label: Persona Afetada
+      description: Qual perfil encontrou este problema?
+      options:
+        - Pesquisador
+        - Orientador
+        - Admin
+    validations:
+      required: true
+  - type: dropdown
+    id: ambiente
+    attributes:
+      label: Ambiente
+      description: Onde ocorreu o problema?
+      options:
+        - Desenvolvimento
+        - Staging
+        - Produção
+    validations:
+      required: true
+  - type: textarea
+    id: passos_reproducao
+    attributes:
+      label: Passos para Reprodução
+      description: Como podemos simular o bug localmente?
+      placeholder: |
+        1. Logar como pesquisador...
+        2. Clicar em...
+        3. Enviar arquivo...
+    validations:
+      required: true
+  - type: textarea
+    id: comportamento_esperado
+    attributes:
+      label: Comportamento Esperado
+      description: O que deveria ter acontecido?
+    validations:
+      required: true
+  - type: textarea
+    id: comportamento_observado
+    attributes:
+      label: Comportamento Observado
+      description: O que aconteceu de fato? Pode incluir mensagens de erro do console ou logs.
+    validations:
+      required: true
+  - type: checkboxes
+    id: impacto_auditoria_check
+    attributes:
+      label: Impacto em Trilha de Auditoria
+      options:
+        - label: "Este bug afeta a trilha de auditoria?"
+          required: false
+  - type: textarea
+    id: impacto_auditoria_desc
+    attributes:
+      label: Descrição do Impacto (se marcou a opção acima)
+      description: Como este bug afeta os logs de ação ou a confidencialidade?
+    validations:
+      required: false
+  - type: textarea
+    id: logs_screenshots
+    attributes:
+      label: Logs e Screenshots Adicionais
+      description: (Opcional) Cole imagens, logs, ou evidências visuais aqui.
+    validations:
+      required: false

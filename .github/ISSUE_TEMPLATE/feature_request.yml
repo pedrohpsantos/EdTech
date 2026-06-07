@@ -1,0 +1,52 @@
+name: Requisição de Feature
+description: Proponha uma nova funcionalidade ou melhoria para o portal EdTech.
+title: "[FEAT] "
+labels: ["enhancement"]
+body:
+  - type: dropdown
+    id: persona_beneficiada
+    attributes:
+      label: Persona Beneficiada
+      description: Quem usará essa nova feature?
+      options:
+        - Pesquisador
+        - Orientador
+        - Admin
+        - Todas
+    validations:
+      required: true
+  - type: textarea
+    id: problema_que_resolve
+    attributes:
+      label: Problema que Resolve
+      description: Descreva o contexto ou a frustração que essa melhoria tenta sanar.
+    validations:
+      required: true
+  - type: textarea
+    id: solucao_proposta
+    attributes:
+      label: Solução Proposta
+      description: Explique brevemente o que você tem em mente para resolver o problema.
+    validations:
+      required: true
+  - type: textarea
+    id: impacto_auditoria
+    attributes:
+      label: Impacto em Auditoria / Dados Sensíveis
+      description: "Esta feature cria, altera ou lê dados sensíveis? Precisa de log de auditoria? Descreva."
+    validations:
+      required: true
+  - type: textarea
+    id: criterio_de_aceite
+    attributes:
+      label: Critério de Aceite
+      description: "Qual é o comportamento mínimo esperado para considerar esta feature concluída?"
+    validations:
+      required: true
+  - type: textarea
+    id: relacionamento_requisitos
+    attributes:
+      label: Relacionamento com Requisitos Anteriores
+      description: (Opcional) Links para épicos, atas de reunião, ou documentações relacionadas (ex. ADRs).
+    validations:
+      required: false

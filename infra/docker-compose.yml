@@ -10,6 +10,36 @@ services:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+    networks:
+      - edtech-network
+
+  api:
+    # TODO: substituir por Dockerfile real quando o backend for inicializado
+    image: eclipse-temurin:21-jre
+    container_name: edtech-api
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/edtech_db
+      - SPRING_DATASOURCE_USERNAME=edtech_user
+      - SPRING_DATASOURCE_PASSWORD=edtech_password
+    networks:
+      - edtech-network
+
+  frontend:
+    # TODO: substituir por Dockerfile real quando o frontend for completamente inicializado
+    image: node:20-alpine
+    container_name: edtech-frontend
+    depends_on:
+      - api
+    ports:
+      - "3000:3000"
+    networks:
+      - edtech-network
 
 volumes:
   pgdata:
+
+networks:
+  edtech-network:
+    driver: bridge
