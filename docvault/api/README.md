@@ -62,9 +62,40 @@ Cada camada tem responsabilidade única:
 
 ## Como Rodar
 
-> Instruções completas serão adicionadas após o scaffold inicial do Spring Boot.
+### Com Maven local
+
+Configure um PostgreSQL local ou use o Docker Compose da raiz do projeto. O backend le as seguintes variaveis:
+
+- `SPRING_DATASOURCE_URL`
+- `SPRING_DATASOURCE_USERNAME`
+- `SPRING_DATASOURCE_PASSWORD`
+- `JWT_SECRET`
+- `JWT_EXPIRATION_MINUTES`
 
 ```bash
 cd docvault/api
-./mvnw spring-boot:run
+mvn spring-boot:run
+```
+
+### Com Docker Compose
+
+```bash
+cp infra/.env.example infra/.env
+# Preencha POSTGRES_PASSWORD e JWT_SECRET em infra/.env
+docker compose --env-file infra/.env -f infra/docker-compose.yml up --build
+```
+
+Se a porta local `5432` ja estiver ocupada, altere `POSTGRES_PORT` em `infra/.env`.
+Essa porta e usada apenas para acesso externo ao PostgreSQL; o backend usa `db:5432` dentro da rede do Compose.
+
+### Teste de cadastro
+
+```bash
+curl -i -X POST http://localhost:8080/api/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Ana Pesquisadora",
+    "email": "ana.pesquisadora@unb.br",
+    "password": "senha-segura-123"
+  }'
 ```
