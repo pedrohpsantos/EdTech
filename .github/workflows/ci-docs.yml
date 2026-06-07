@@ -35,7 +35,7 @@ jobs:
           enable-cache: true
 
       - name: Cache do MkDocs
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: .cache
           key: mkdocs-cache-${{ hashFiles('mkdocs.yml') }}
