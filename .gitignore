@@ -9,6 +9,7 @@ Thumbs.db
 
 # Backend (Java / Spring Boot)
 backend/target/
+docvault/api/target/
 *.class
 *.jar
 *.war
@@ -28,4 +29,5 @@ site/
 .cache/
 
 # Infraestrutura
+.env
 infra/.env
