@@ -23,6 +23,20 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    @Transactional(readOnly = true)
+    public User authenticate(String email, String password) {
+        String normalizedEmail = email.trim().toLowerCase(Locale.ROOT);
+        User user = userRepository.findByEmailIgnoreCase(normalizedEmail)
+                .filter(User::isActive)
+                .orElseThrow(() -> new InvalidCredentialsException("Credenciais inválidas."));
+
+        if (!passwordEncoder.matches(password, user.getPasswordHash())) {
+            throw new InvalidCredentialsException("Credenciais inválidas.");
+        }
+
+        return user;
+    }
+
     @Transactional
     public User register(RegisterRequest request) {
         String normalizedEmail = request.email().trim().toLowerCase(Locale.ROOT);
