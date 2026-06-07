@@ -19,6 +19,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("test")
 class AuthControllerTest {
 
+    private static final String DUMMY_PWD = java.util.UUID.randomUUID().toString() + "A1@";
+
     @Autowired
     private MockMvc mockMvc;
 
@@ -29,13 +31,13 @@ class AuthControllerTest {
     void registerCreatesResearcherWithoutReturningPasswordHash() throws Exception {
         mockMvc.perform(post("/api/auth/register")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("""
+                        .content(String.format("""
                                 {
                                   "name": "Ana Pesquisadora",
                                   "email": "ana.pesquisadora@unb.br",
-                                  "password": "senha-segura-123"
+                                  "password": "%s"
                                 }
-                                """))
+                                """, DUMMY_PWD)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").isNumber())
                 .andExpect(jsonPath("$.name").value("Ana Pesquisadora"))
@@ -46,7 +48,7 @@ class AuthControllerTest {
 
         var user = userRepository.findByEmailIgnoreCase("ana.pesquisadora@unb.br").orElseThrow();
 
-        assertThat(user.getPasswordHash()).isNotEqualTo("senha-segura-123");
+        assertThat(user.getPasswordHash()).isNotEqualTo(DUMMY_PWD);
         assertThat(user.getPasswordHash()).startsWith("$2");
     }
 
@@ -54,26 +56,26 @@ class AuthControllerTest {
     void registerRejectsNonInstitutionalEmail() throws Exception {
         mockMvc.perform(post("/api/auth/register")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("""
+                        .content(String.format("""
                                 {
                                   "name": "Usuario Externo",
                                   "email": "usuario@example.com",
-                                  "password": "senha-segura-123"
+                                  "password": "%s"
                                 }
-                                """))
+                                """, DUMMY_PWD)))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.code").value("invalid_institutional_email"));
     }
 
     @Test
     void registerRejectsDuplicatedEmail() throws Exception {
-        String payload = """
+        String payload = String.format("""
                 {
                   "name": "Usuario Duplicado",
                   "email": "duplicado@unb.br",
-                  "password": "senha-segura-123"
+                  "password": "%s"
                 }
-                """;
+                """, DUMMY_PWD);
 
         mockMvc.perform(post("/api/auth/register")
                         .contentType(MediaType.APPLICATION_JSON)
