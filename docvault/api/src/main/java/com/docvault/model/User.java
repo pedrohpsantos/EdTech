@@ -1,42 +1,99 @@
 package com.docvault.model;
 
-import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
+import jakarta.persistence.Table;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
+
 @Entity
 @Table(name = "users")
 public class User {
-    @Setter
-    @Getter
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Getter
-    private  String name;
-    @Getter
-    private String email;
-    private String passwordHash;
-    @Getter @Setter
-    private String role;
-    @Getter @Setter
-    private Boolean active;
-    @Getter
-    private LocalDateTime createdAt;
-    @Getter
-    private  LocalDateTime updatedAt;
-    public  User(String name, String email, String passwordHash, String role, Boolean active) {
 
+    @Column(nullable = false, length = 120)
+    private String name;
+
+    @Column(nullable = false, unique = true, length = 180)
+    private String email;
+
+    @Column(name = "password_hash", nullable = false)
+    private String passwordHash;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 40)
+    private UserRole role = UserRole.RESEARCHER;
+
+    @Column(nullable = false)
+    private boolean active = true;
+
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private Instant createdAt;
+
+    @Column(name = "updated_at", nullable = false)
+    private Instant updatedAt;
+
+    protected User() {
+    }
+
+    public User(String name, String email, String passwordHash, UserRole role) {
         this.name = name;
         this.email = email;
         this.passwordHash = passwordHash;
         this.role = role;
-        this.active = active;
-        this.createdAt = LocalDateTime.now();
     }
 
-    public User() {
+    @PrePersist
+    void prePersist() {
+        Instant now = Instant.now();
+        createdAt = now;
+        updatedAt = now;
+    }
 
+    @PreUpdate
+    void preUpdate() {
+        updatedAt = Instant.now();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPasswordHash() {
+        return passwordHash;
+    }
+
+    public UserRole getRole() {
+        return role;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    public Instant getUpdatedAt() {
+        return updatedAt;
     }
 }
