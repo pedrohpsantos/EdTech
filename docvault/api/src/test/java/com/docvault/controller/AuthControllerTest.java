@@ -1,17 +1,28 @@
 package com.docvault.controller;
 
+import com.docvault.model.User;
 import com.docvault.repository.UserRepository;
+import com.docvault.service.JwtService;
+import jakarta.servlet.http.Cookie;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+
+import java.time.Duration;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -19,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("test")
 class AuthControllerTest {
 
-    private static final String DUMMY_PWD = java.util.UUID.randomUUID().toString() + "A1@";
+    private static final String JWT_SECRET = UUID.randomUUID() + UUID.randomUUID().toString();
 
     @Autowired
     private MockMvc mockMvc;
@@ -27,55 +38,70 @@ class AuthControllerTest {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private JwtService jwtService;
+
+    @DynamicPropertySource
+    static void jwtProperties(DynamicPropertyRegistry registry) {
+        registry.add("jwt.secret", () -> JWT_SECRET);
+        registry.add("jwt.expiration-minutes", () -> "60");
+    }
+
     @Test
     void registerCreatesResearcherWithoutReturningPasswordHash() throws Exception {
+        String email = uniqueEmail("ana");
+        String password = randomPassword();
+
         mockMvc.perform(post("/api/auth/register")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(String.format("""
+                        .content("""
                                 {
                                   "name": "Ana Pesquisadora",
-                                  "email": "ana.pesquisadora@unb.br",
+                                  "email": "%s",
                                   "password": "%s"
                                 }
-                                """, DUMMY_PWD)))
+                                """.formatted(email, password)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").isNumber())
                 .andExpect(jsonPath("$.name").value("Ana Pesquisadora"))
-                .andExpect(jsonPath("$.email").value("ana.pesquisadora@unb.br"))
+                .andExpect(jsonPath("$.email").value(email))
                 .andExpect(jsonPath("$.role").value("RESEARCHER"))
                 .andExpect(jsonPath("$.passwordHash").doesNotExist())
                 .andExpect(jsonPath("$.password").doesNotExist());
 
-        var user = userRepository.findByEmailIgnoreCase("ana.pesquisadora@unb.br").orElseThrow();
+        var user = userRepository.findByEmailIgnoreCase(email).orElseThrow();
 
-        assertThat(user.getPasswordHash()).isNotEqualTo(DUMMY_PWD);
+        assertThat(user.getPasswordHash()).isNotEqualTo(password);
         assertThat(user.getPasswordHash()).startsWith("$2");
     }
 
     @Test
     void registerRejectsNonInstitutionalEmail() throws Exception {
+        String password = randomPassword();
+
         mockMvc.perform(post("/api/auth/register")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(String.format("""
+                        .content("""
                                 {
                                   "name": "Usuario Externo",
                                   "email": "usuario@example.com",
                                   "password": "%s"
                                 }
-                                """, DUMMY_PWD)))
+                                """.formatted(password)))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.code").value("invalid_institutional_email"));
     }
 
     @Test
     void registerRejectsDuplicatedEmail() throws Exception {
-        String payload = String.format("""
+        String password = randomPassword();
+        String payload = """
                 {
                   "name": "Usuario Duplicado",
                   "email": "duplicado@unb.br",
                   "password": "%s"
                 }
-                """, DUMMY_PWD);
+                """.formatted(password);
 
         mockMvc.perform(post("/api/auth/register")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -87,5 +113,119 @@ class AuthControllerTest {
                         .content(payload))
                 .andExpect(status().isConflict())
                 .andExpect(jsonPath("$.code").value("email_already_registered"));
+    }
+
+    @Test
+    void loginReturnsHttpOnlyStrictCookieWithoutTokenInBody() throws Exception {
+        String email = uniqueEmail("login");
+        String password = randomPassword();
+        registerUser(email, password);
+
+        mockMvc.perform(post("/api/auth/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(loginPayload(email, password)))
+                .andExpect(status().isOk())
+                .andExpect(header().string("Set-Cookie", org.hamcrest.Matchers.containsString("token=")))
+                .andExpect(header().string("Set-Cookie", org.hamcrest.Matchers.containsString("HttpOnly")))
+                .andExpect(header().string("Set-Cookie", org.hamcrest.Matchers.containsString("SameSite=Strict")))
+                .andExpect(jsonPath("$.email").value(email))
+                .andExpect(jsonPath("$.password").doesNotExist())
+                .andExpect(jsonPath("$.passwordHash").doesNotExist())
+                .andExpect(jsonPath("$.token").doesNotExist());
+    }
+
+    @Test
+    void protectedRouteWithoutCookieReturnsUnauthorized() throws Exception {
+        mockMvc.perform(get("/api/auth/me"))
+                .andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$.code").value("unauthorized"));
+    }
+
+    @Test
+    void authenticatedUserEndpointReturnsCurrentUser() throws Exception {
+        String email = uniqueEmail("me");
+        String password = randomPassword();
+        registerUser(email, password);
+
+        Cookie cookie = loginAndGetTokenCookie(email, password);
+
+        mockMvc.perform(get("/api/auth/me").cookie(cookie))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.email").value(email))
+                .andExpect(jsonPath("$.role").value("RESEARCHER"))
+                .andExpect(jsonPath("$.password").doesNotExist())
+                .andExpect(jsonPath("$.passwordHash").doesNotExist());
+    }
+
+    @Test
+    void expiredTokenReturnsUnauthorized() throws Exception {
+        String email = uniqueEmail("expired");
+        String password = randomPassword();
+        registerUser(email, password);
+        User user = userRepository.findByEmailIgnoreCase(email).orElseThrow();
+        String expiredToken = jwtService.generateToken(user, Duration.ofSeconds(-1));
+
+        mockMvc.perform(get("/api/auth/me").cookie(new Cookie("token", expiredToken)))
+                .andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$.code").value("unauthorized"));
+    }
+
+    @Test
+    void publicRoutesRemainAccessibleWithoutCookie() throws Exception {
+        String email = uniqueEmail("public");
+        String password = randomPassword();
+
+        mockMvc.perform(post("/api/auth/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(registerPayload(email, password)))
+                .andExpect(status().isCreated());
+    }
+
+    private void registerUser(String email, String password) throws Exception {
+        mockMvc.perform(post("/api/auth/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(registerPayload(email, password)))
+                .andExpect(status().isCreated());
+    }
+
+    private Cookie loginAndGetTokenCookie(String email, String password) throws Exception {
+        MvcResult result = mockMvc.perform(post("/api/auth/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(loginPayload(email, password)))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        Cookie cookie = result.getResponse().getCookie("token");
+        assertThat(cookie).isNotNull();
+        assertThat(cookie.isHttpOnly()).isTrue();
+        assertThat(cookie.getPath()).isEqualTo("/");
+        return cookie;
+    }
+
+    private String registerPayload(String email, String password) {
+        return """
+                {
+                  "name": "Usuario Teste",
+                  "email": "%s",
+                  "password": "%s"
+                }
+                """.formatted(email, password);
+    }
+
+    private String loginPayload(String email, String password) {
+        return """
+                {
+                  "email": "%s",
+                  "password": "%s"
+                }
+                """.formatted(email, password);
+    }
+
+    private String uniqueEmail(String prefix) {
+        return prefix + "." + UUID.randomUUID() + "@unb.br";
+    }
+
+    private String randomPassword() {
+        return UUID.randomUUID().toString() + UUID.randomUUID();
     }
 }

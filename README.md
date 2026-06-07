@@ -53,7 +53,7 @@ curl -i -X POST http://localhost:8080/api/auth/register \
   -d '{
     "name": "Ana Pesquisadora",
     "email": "ana.pesquisadora@unb.br",
-    "password": "senha-segura-123"
+    "password": "<senha-local>"
   }'
 ```
 

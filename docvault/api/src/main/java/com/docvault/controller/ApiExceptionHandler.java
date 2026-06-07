@@ -2,6 +2,7 @@ package com.docvault.controller;
 
 import com.docvault.dto.ErrorResponse;
 import com.docvault.service.DuplicateEmailException;
+import com.docvault.service.InvalidCredentialsException;
 import com.docvault.service.InvalidInstitutionalEmailException;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,12 @@ public class ApiExceptionHandler {
     ) {
         return ResponseEntity.badRequest()
                 .body(new ErrorResponse("invalid_institutional_email", exception.getMessage()));
+    }
+
+    @ExceptionHandler(InvalidCredentialsException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidCredentials() {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(new ErrorResponse("invalid_credentials", "Credenciais inválidas."));
     }
 
     @ExceptionHandler({MethodArgumentNotValidException.class, ConstraintViolationException.class})
