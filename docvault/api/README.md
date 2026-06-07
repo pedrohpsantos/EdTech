@@ -71,6 +71,7 @@ Configure um PostgreSQL local ou use o Docker Compose da raiz do projeto. O back
 - `SPRING_DATASOURCE_PASSWORD`
 - `JWT_SECRET`
 - `JWT_EXPIRATION_MINUTES`
+- `JWT_COOKIE_SECURE`
 
 ```bash
 cd docvault/api
@@ -88,6 +89,12 @@ docker compose --env-file infra/.env -f infra/docker-compose.yml up --build
 Se a porta local `5432` ja estiver ocupada, altere `POSTGRES_PORT` em `infra/.env`.
 Essa porta e usada apenas para acesso externo ao PostgreSQL; o backend usa `db:5432` dentro da rede do Compose.
 
+### Segurança de autenticação
+
+O backend usa JWT em cookie `HttpOnly`, `SameSite=Strict` e `Path=/`. A flag `Secure` e controlada por `JWT_COOKIE_SECURE` para permitir desenvolvimento local sem HTTPS e ativacao em ambientes HTTPS.
+
+As rotas publicas sao `POST /api/auth/register` e `POST /api/auth/login`. As demais rotas sob `/api/**` exigem cookie JWT valido. A API usa sessao stateless; por isso o CSRF fica desabilitado em conjunto com cookie `SameSite=Strict` e sem sessao server-side.
+
 ### Teste de cadastro
 
 ```bash
@@ -96,6 +103,6 @@ curl -i -X POST http://localhost:8080/api/auth/register \
   -d '{
     "name": "Ana Pesquisadora",
     "email": "ana.pesquisadora@unb.br",
-    "password": "senha-segura-123"
+    "password": "<senha-local>"
   }'
 ```
