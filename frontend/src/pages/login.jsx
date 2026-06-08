@@ -1,14 +1,15 @@
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
-import {login} from '../services/api'
+import { useAuth } from "../context/authContext" 
 function Login(){
     const [email, setEmail] = useState('')
     const [senha, setSenha] = useState('')
     const [erro, setErro] = useState('')
     const navigate = useNavigate()
+    const {handleLogin} = useAuth()
     const handleSubmit = async() => {
         try{
-            const resultado = await login(email,senha)
+            const resultado = await handleLogin(email,senha)
             if(resultado.sucesso == true){
                 navigate ('/dashboard')
             }else {
