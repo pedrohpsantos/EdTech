@@ -1,7 +1,7 @@
-# 🎭 Identidade Visual
+#  Identidade Visual
 
-<div align="center">
-  <img src="../logo.svg" alt="EdTech Logo" width="250" />
+<div align="center" markdown="1">
+  ![EdTech Logo](logo.svg){ width="250" }
 </div>
 
 ---
@@ -17,13 +17,13 @@ O **EdTech** é mais que "Education Technology". A marca representa:
 O conceito visual principal (**"Research Trail"**) utiliza nós conectados formando um "E".
 Ele foge de clichês acadêmicos (como livros ou capelos) e foca no nosso real diferencial competitivo.
 
-![Logo Escuro](../logo-dark.svg){ width="150" align="right" }
+![Logo Escuro](logo-dark.svg){ width="150" align="right" }
 
 Representa visualmente:
-- 🔗 **Rastreabilidade:** Cada linha é um caminho auditável.
-- 🗂️ **Versionamento:** Múltiplos nós conectados mostram a evolução.
-- 🛡️ **Evidências:** A marca de confiança e conformidade.
-- 🏛️ **Trilha auditável:** O pilar da governança.
+-  **Rastreabilidade:** Cada linha é um caminho auditável.
+-  **Versionamento:** Múltiplos nós conectados mostram a evolução.
+-  **Evidências:** A marca de confiança e conformidade.
+-  **Trilha auditável:** O pilar da governança.
 
 ## 2. Storytelling da Marca
 
@@ -41,9 +41,9 @@ O **EdTech** surge como uma camada de governança acadêmica.
 
 | Atributo | Nível | O que significa na prática |
 | :--- | :---: | :--- |
-| **Confiável** | 🟢🟢🟢🟢🟢 | Sem margem para erros, foco em compliance. |
-| **Técnica** | 🟢🟢🟢🟢🟢 | Feito para cientistas de dados, acadêmicos e auditores. |
-| **Minimalista** | 🟢🟢🟢🟢🟢 | Interfaces limpas, redução de ruído visual (estilo Linear/Notion). |
-| **Moderna** | 🟢🟢🟢🟢⚪ | UI state-of-the-art, glassmorphism sutil. |
-| **Institucional**| 🟢🟢🟢🟢⚪ | Mantém a seriedade que as universidades exigem. |
-| **Inovadora** | 🟢🟢🟢🟢⚪ | Abordagem nova para um problema antigo. |
+| **Confiável** |  | Sem margem para erros, foco em compliance. |
+| **Técnica** |  | Feito para cientistas de dados, acadêmicos e auditores. |
+| **Minimalista** |  | Interfaces limpas, redução de ruído visual (estilo Linear/Notion). |
+| **Moderna** |  | UI state-of-the-art, glassmorphism sutil. |
+| **Institucional**|  | Mantém a seriedade que as universidades exigem. |
+| **Inovadora** |  | Abordagem nova para um problema antigo. |

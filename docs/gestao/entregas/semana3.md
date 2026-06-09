@@ -1,6 +1,6 @@
 # :material-rocket-launch: Semanas 3 — Implementação da Autenticação e Estrutura Base
 
-<span class="status-badge">✅ Concluída</span>
+<span class="status-badge"> Concluída</span>
 
 **Período:** 26/05/2026 – 08/06/2026
 
@@ -143,14 +143,14 @@ Iniciar a implementação do MVP do EdTech com foco em três frentes paralelas: 
 
 | Branch | Responsabilidade | Status |
 | :--- | :--- | :---: |
-| `feat/backend-setup` | Setup Spring Boot + User entity | ✅ Implementado |
-| `feat/auth-jwt` | JwtService + Login + Logout | ⬜ Pendente |
-| `feat/security-filter` | JwtAuthenticationFilter + SecurityConfig | ⬜ Pendente |
-| `feat/docker-backend` | Dockerfile + docker-compose backend | ⬜ Pendente |
-| `feat/frontend-setup` | React + Vite + Telas auth | ✅ Implementado |
-| `feat/frontend-auth` | PrivateRoute + Context API + Dark mode | ⬜ Pendente |
-| `feat/tests-auth` | JUnit + Mockito + JaCoCo | ✅ Implementado |
-| `feat/audit-logs` | AuditLog entity + Service + Repository | ⚠️ Parcial |
+| `feat/backend-setup` | Setup Spring Boot + User entity |  Implementado |
+| `feat/auth-jwt` | JwtService + Login + Logout |  Pendente |
+| `feat/security-filter` | JwtAuthenticationFilter + SecurityConfig |  Pendente |
+| `feat/docker-backend` | Dockerfile + docker-compose backend |  Pendente |
+| `feat/frontend-setup` | React + Vite + Telas auth |  Implementado |
+| `feat/frontend-auth` | PrivateRoute + Context API + Dark mode |  Pendente |
+| `feat/tests-auth` | JUnit + Mockito + JaCoCo |  Implementado |
+| `feat/audit-logs` | AuditLog entity + Service + Repository |  Parcial |
 
 ---
 
@@ -202,12 +202,12 @@ Iniciar a implementação do MVP do EdTech com foco em três frentes paralelas: 
 
 | Issue | Descrição | Impacto |
 | :---: | :--- | :--- |
-| #3 | JWT Service (login/logout com cookies) | 🔴 Crítico — bloqueia o fluxo de autenticação |
-| #4 | Security Filter (proteção de rotas) | 🔴 Crítico — bloqueia rotas protegidas |
-| #5 | Docker Backend (containerização) | 🟡 Médio — necessário para CI/CD |
-| #6 | api.js + redirecionamento + erros | 🟡 Médio — integração frontend ↔ backend |
-| #7 | PrivateRoute + Context API + Dark mode | 🟡 Médio — rotas protegidas no frontend |
-| #9 | Integração audit logs nos endpoints | 🟢 Baixo — funcionalidade auxiliar |
+| #3 | JWT Service (login/logout com cookies) |  Crítico — bloqueia o fluxo de autenticação |
+| #4 | Security Filter (proteção de rotas) |  Crítico — bloqueia rotas protegidas |
+| #5 | Docker Backend (containerização) |  Médio — necessário para CI/CD |
+| #6 | api.js + redirecionamento + erros |  Médio — integração frontend  backend |
+| #7 | PrivateRoute + Context API + Dark mode |  Médio — rotas protegidas no frontend |
+| #9 | Integração audit logs nos endpoints |  Baixo — funcionalidade auxiliar |
 
 ---
 

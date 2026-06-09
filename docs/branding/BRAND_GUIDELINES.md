@@ -1,20 +1,20 @@
-# 💎 Brand Guidelines
+#  Brand Guidelines
 
-<div align="center">
-  <img src="../logo.svg" alt="EdTech Logo" width="200" style="margin-bottom: 20px;" />
+<div align="center" markdown="1">
+  ![EdTech Logo](logo.svg){ width="200" style="margin-bottom: 20px;" }
   <h3>Secure Academic Research Governance Platform</h3>
   <p><b>Centralização • Rastreabilidade • Auditoria • Governança</b></p>
 </div>
 
 ---
 
-## 🎯 Nossa Missão
+##  Nossa Missão
 
 > Transformar a gestão da produção acadêmica em um processo seguro, auditável e institucionalmente confiável.
 
 ---
 
-## 🛡️ Pilares da Marca
+##  Pilares da Marca
 
 <div class="grid cards" markdown>
 
@@ -42,7 +42,7 @@
 
 ---
 
-## 🖼️ Assets Visuais
+##  Assets Visuais
 
 Temos todos os vetores e materiais prontos para uso em interfaces, repositórios e apresentações. 
 *Arquivos disponíveis localmente na pasta `docs/branding` do projeto.*

@@ -11,10 +11,10 @@ O resultado do Brainstorming foi organizado através da matriz MoSCoW (Must, Sho
 
 | Funcionalidade Sugerida | Categoria | Relevância (MoSCoW) |
 | :--- | :--- | :--- |
-| Upload de PDFs até 50MB (GCS) | Documentos | 🔴 Must Have |
-| Upload de CSV/JSON (Datasets) | Documentos | 🟡 Should Have |
-| Filtro de isolamento de laboratório | Orientação | 🔴 Must Have |
-| Registro Imutável de Logs | Auditoria | 🔴 Must Have |
+| Upload de PDFs até 50MB (GCS) | Documentos |  Must Have |
+| Upload de CSV/JSON (Datasets) | Documentos |  Should Have |
+| Filtro de isolamento de laboratório | Orientação |  Must Have |
+| Registro Imutável de Logs | Auditoria |  Must Have |
 
 ## 3. Visão Sistêmica Macro (Rich Picture)
 

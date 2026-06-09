@@ -14,7 +14,7 @@ timeline
 
 </div>
 
-## 🟢 NOW (Atuando Agora)
+##  NOW (Atuando Agora)
 **Foco:** Fundações de arquitetura, segurança, estabilidade do MVP e Integração Contínua.
 
 - Configuração de CI/CD via GitHub Actions e infraestrutura Serverless no Google Cloud Run (`ADR 0003`, `ADR 0008`).
@@ -23,14 +23,14 @@ timeline
 - Setup do cluster PostgreSQL e versionamento de esquema com Flyway (`ADR 0004`, `ADR 0007`).
 - Estabelecimento do Docs-as-Code com MkDocs (`ADR 0009`).
 
-## 🟡 NEXT (Próximos Passos)
+##  NEXT (Próximos Passos)
 **Foco:** Completude do Fluxo de Usuário (Pesquisador e Orientador) com o armazenamento funcional.
 
 - Integração completa ao Google Cloud Storage (`ADR 0001`) para upload seguro de artigos e relatórios (Ana).
 - Dashboard de acompanhamento e validação de submissões para Orientadores/Administradores (Carlos).
 - Geração da base de `audit_logs` inalterável, cobrindo todos os eventos sensíveis do sistema (Márcia).
 
-## 🔴 LATER (Futuro)
+##  LATER (Futuro)
 **Foco:** Visão expandida, integrações e inteligência.
 
 - Relatórios automatizados (exportação CSV/PDF) para a auditoria de acesso.

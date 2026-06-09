@@ -1,4 +1,4 @@
-# 🎨 Design System
+#  Design System
 
 Nosso Design System é construído para transmitir segurança, tecnologia e sofisticação.
 
@@ -6,7 +6,7 @@ Nosso Design System é construído para transmitir segurança, tecnologia e sofi
 
 A assinatura visual do produto é **Deep Purple** com contrastes em **Amber**.
 
-### 🟣 Cores Primárias (Deep Purple)
+###  Cores Primárias (Deep Purple)
 
 <div style="display: flex; gap: 16px; margin-bottom: 24px; flex-wrap: wrap;">
   <div style="text-align: center;"><div style="width: 80px; height: 80px; background-color: #4A148C; border-radius: 12px; margin-bottom: 8px;"></div><b>Primary 700</b><br/><code>#4A148C</code></div>
@@ -15,7 +15,7 @@ A assinatura visual do produto é **Deep Purple** com contrastes em **Amber**.
   <div style="text-align: center;"><div style="width: 80px; height: 80px; background-color: #D1C4E9; border-radius: 12px; margin-bottom: 8px; border: 1px solid #ddd;"></div><b>Primary 200</b><br/><code>#D1C4E9</code></div>
 </div>
 
-### 🟠 Cores de Destaque (Amber)
+###  Cores de Destaque (Amber)
 
 <div style="display: flex; gap: 16px; margin-bottom: 24px; flex-wrap: wrap;">
   <div style="text-align: center;"><div style="width: 80px; height: 80px; background-color: #FF6D00; border-radius: 12px; margin-bottom: 8px;"></div><b>Accent 600</b><br/><code>#FF6D00</code></div>
@@ -23,7 +23,7 @@ A assinatura visual do produto é **Deep Purple** com contrastes em **Amber**.
   <div style="text-align: center;"><div style="width: 80px; height: 80px; background-color: #FFE0B2; border-radius: 12px; margin-bottom: 8px; border: 1px solid #ddd;"></div><b>Accent 100</b><br/><code>#FFE0B2</code></div>
 </div>
 
-### 🌓 Temas (Background & Surfaces)
+###  Temas (Background & Surfaces)
 
 === "Light Theme"
     Ideal para leitura de documentos e painéis claros.
@@ -62,7 +62,7 @@ A tipografia é essencial para equilibrar o design moderno com a densidade técn
 
 ## 3. Variáveis e Tokens
 
-### 📐 Grid
+###  Grid
 ```css
 /* Base Grid de 8px para consistência absoluta */
 --spacing-1: 8px;
@@ -70,7 +70,7 @@ A tipografia é essencial para equilibrar o design moderno com a densidade técn
 --spacing-3: 24px;
 ```
 
-### ⭕ Border Radius
+###  Border Radius
 ```css
 --radius-sm: 8px;      /* Cards pequenos e botões */
 --radius-md: 12px;     /* Modais e containers médios */
@@ -79,7 +79,7 @@ A tipografia é essencial para equilibrar o design moderno com a densidade técn
 --radius-pill: 999px;  /* Badges e Tags */
 ```
 
-### 🌑 Shadows
+###  Shadows
 Sombras sutis tingidas com o **Deep Purple** para evitar o aspecto "sujo" de sombras pretas tradicionais.
 
 ```css
