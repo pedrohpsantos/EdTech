@@ -10,8 +10,8 @@ copyright: "© 2026 AILAB Makers — UnB FCTE"
 theme:
   name: material
   language: pt-BR
-  logo: https://raw.githubusercontent.com/squidfunk/mkdocs-material/master/material/templates/.icons/material/book-open-page-variant.svg
-  favicon: https://raw.githubusercontent.com/squidfunk/mkdocs-material/master/material/templates/.icons/material/school.svg
+  logo: branding/logo-white.svg
+  favicon: branding/favicon.svg
   icon:
     repo: fontawesome/brands/github
     annotation: material/arrow-right-circle

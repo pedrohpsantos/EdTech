@@ -5,7 +5,13 @@
    CSS VARIABLES
    ============================================================ */
 :root {
-  --hero-gradient: linear-gradient(135deg, #4a148c 0%, #7c4dff 50%, #ea80fc 100%);
+  /* Brand Colors Override */
+  --md-primary-fg-color:        #4A148C;
+  --md-primary-fg-color--light: #6A1B9A;
+  --md-primary-fg-color--dark:  #311b92;
+  --md-accent-fg-color:         #FF9100;
+
+  --hero-gradient: linear-gradient(135deg, #4A148C 0%, #7C4DFF 50%, #ea80fc 100%);
   --card-border-radius: 14px;
   --card-hover-shadow: 0 16px 40px rgba(106, 27, 154, 0.15);
   --transition-smooth: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
