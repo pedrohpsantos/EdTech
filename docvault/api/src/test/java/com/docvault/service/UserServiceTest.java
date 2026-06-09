@@ -1,20 +1,20 @@
 package com.docvault.service;
 
-import com.docvault.dto.RegisterRequestDTO;
+import com.docvault.dto.RegisterRequest;
 import com.docvault.model.User;
+import com.docvault.model.UserRole;
 import com.docvault.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
@@ -30,12 +30,13 @@ public class UserServiceTest {
     @Test
     void register_WithValidData_MustSavedInDataBase() {
         // Arrange - Data in official pattern @unb.br
-        RegisterRequestDTO dto = new RegisterRequestDTO("SchrodingerCat", "imalive@unb.br", "not_alive12");
-        User savedUser = new User("SchrodingerCat", "imalive@unb.br", "$2a$12$hashBcryptExample...", "USER", true);
+        RegisterRequest dto = new RegisterRequest("SchrodingerCat", "imalive@unb.br", "not_alive12");
+        User savedUser = new User("SchrodingerCat", "imalive@unb.br", "$2a$12$hashBcryptExample...", UserRole.RESEARCHER);
 
-        Mockito.when(passwordEncoder.encode(Mockito.anyString())).thenReturn("hashed_password");
-        Mockito.when(userRepository.findByEmail(dto.getEmail())).thenReturn(Optional.empty());
-        Mockito.when(userRepository.save(any(User.class))).thenReturn(savedUser);
+        when(passwordEncoder.encode(anyString())).thenReturn("hashed_password");
+
+        when(userRepository.existsByEmailIgnoreCase(dto.email())).thenReturn(false);
+        when(userRepository.save(any())).thenReturn(savedUser);
 
         // Act
         User result = userService.register(dto);
@@ -43,29 +44,30 @@ public class UserServiceTest {
         // Assert
         assertNotNull(result);
         assertEquals("imalive@unb.br", result.getEmail());
-        Mockito.verify(passwordEncoder, Mockito.times(1)).encode(dto.getPassword());
+        verify(passwordEncoder, times(1)).encode(dto.password());
+        verify(userRepository, times(1)).save(any(User.class));
     }
 
     @Test
     void register_WithInvalidDomain_MustThrowException() {
         // Arrange - E-mail from outside UnB
-        RegisterRequestDTO dto = new RegisterRequestDTO("SchrodingerCat", "imalive@gmail.com", "not_alive12");
+        RegisterRequest dto = new RegisterRequest("SchrodingerCat", "imalive@gmail.com", "not_alive12");
 
         // Act & Assert (Capture the exception validation that the service must throw)
-        assertThrows(IllegalArgumentException.class, () -> userService.register(dto));
+        assertThrows(InvalidInstitutionalEmailException.class, () -> userService.register(dto));
     }
 
     @Test
     void register_WithDuplicateEMail_MustThrowException() {
         // Arrange - The E-mail MUST be @unb.br for pass the first validation
-        RegisterRequestDTO dto = new RegisterRequestDTO("SchrodingerCat", "imalive@unb.br", "not_alive12");
+        RegisterRequest dto = new RegisterRequest("SchrodingerCat", "imalive@unb.br", "not_alive12");
 
-        Mockito.when(userRepository.findByEmail(dto.getEmail())).thenReturn(Optional.of(new User()));
+        when(userRepository.existsByEmailIgnoreCase("imalive@unb.br")).thenReturn(true);
 
         // Act & Assert
-        assertThrows(IllegalArgumentException.class, () -> userService.register(dto));
+        assertThrows(DuplicateEmailException.class, () -> userService.register(dto));
 
-        Mockito.verify(userRepository, Mockito.never()).save(Mockito.any(User.class));
+        verify(userRepository, never()).save(any(User.class));
     }
 
 }
