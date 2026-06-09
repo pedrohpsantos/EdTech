@@ -67,6 +67,8 @@ not_in_nav: |
 plugins:
   - search
   - glightbox
+  - social
+  - git-revision-date-localized
   - minify:
       minify_html: true
       minify_css: true
@@ -149,6 +151,6 @@ nav:
           - Ata de Reunião (29/05): gestao/reunioes/ata-29-05-2026.md
           - Ata de Reunião (05/06): gestao/reunioes/ata-05-06-2026.md
   - Design:
-      - Identidade Visual: branding/IDENTIDADE_VISUAL.md
-      - Design System: branding/DESIGN_SYSTEM.md
-      - Brand Guidelines: branding/BRAND_GUIDELINES.md
+      - Identidade Visual: branding/identidade_visual.md
+      - Design System: branding/design_system.md
+      - Design System Guidelines: branding/design_system_guidelines.md

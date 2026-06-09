@@ -20,14 +20,16 @@ docker-compose -f infra/docker-compose.yml up -d db
 ```
 
 ### 2.2 Backend (Spring Boot)
-# TODO: documentar este passo (comandos exatos do Maven/Gradle pendentes, pois o diretório do backend ainda não foi preenchido)
+!!! note "Em construção"
+    Comandos exatos do Maven/Gradle pendentes (o diretório do backend está sendo estruturado).
 
 ### 2.3 Frontend (React + Vite)
 Para rodar a interface de usuário:
 ```bash
 cd docvault/frontend
-# TODO: documentar este passo (comandos de instalação, ex: npm install)
-# TODO: documentar este passo (comandos de execução, ex: npm run dev)
+!!! note "Em construção"
+    - Comandos de instalação (ex: `npm install`).
+    - Comandos de execução (ex: `npm run dev`).
 ```
 
 ### 2.4 Documentação (MkDocs)

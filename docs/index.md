@@ -1,4 +1,5 @@
 ---
+description: EdTech — Plataforma acadêmica para centralização, gerenciamento e auditoria de publicações científicas.
 hide:
   - navigation
   - toc

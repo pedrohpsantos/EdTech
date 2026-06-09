@@ -26,9 +26,9 @@ timeline
 ##  NEXT (Próximos Passos)
 **Foco:** Completude do Fluxo de Usuário (Pesquisador e Orientador) com o armazenamento funcional.
 
-- Integração completa ao Google Cloud Storage (`ADR 0001`) para upload seguro de artigos e relatórios (Ana).
-- Dashboard de acompanhamento e validação de submissões para Orientadores/Administradores (Carlos).
-- Geração da base de `audit_logs` inalterável, cobrindo todos os eventos sensíveis do sistema (Márcia).
+- Integração completa ao Google Cloud Storage (`ADR 0001`) para upload seguro de artigos e relatórios (Alana).
+- Dashboard de acompanhamento e validação de submissões para Orientadores/Administradores (Arthur).
+- Geração da base de `audit_logs` inalterável, cobrindo todos os eventos sensíveis do sistema (Mariana).
 
 ##  LATER (Futuro)
 **Foco:** Visão expandida, integrações e inteligência.
