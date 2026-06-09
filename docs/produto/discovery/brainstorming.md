@@ -20,12 +20,13 @@ O resultado do Brainstorming foi organizado através da matriz MoSCoW (Must, Sho
 
 ![Rich Picture](../../assets/imgs/rich_picture.png)
 
-*Fonte: Elaborado pelo autor com auxílio de inteligência artificial generativa (ChatGPT/OpenAI, 2026).*
+>Fonte: Elaborado pelo autor com auxílio de inteligência artificial generativa (ChatGPT/OpenAI, 2026).
 
 ---
 
 ## Histórico de Versões
 
-| Versão | Data | Descrição | Autor |
-| :---: | :---: | :--- | :--- |
-| `1.0` | 30/05/2026 | Criação do documento | Pedro Henrique P. Santos |
+| Versão |    Data    | Descrição                        | Autor                    |
+|:------:|:----------:|:---------------------------------|:-------------------------|
+| `1.0`  | 30/05/2026 | Criação do documento             | Pedro Henrique P. Santos |
+| `1.1`  | 30/05/2026 | Rich Picture com animação e zoom | Pedro Henrique P. Santos |

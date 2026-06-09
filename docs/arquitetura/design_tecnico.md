@@ -31,6 +31,46 @@ O backend é um monólito modular que orquestra a lógica de negócio, autentica
 
 A estrutura semântica dos dados reflete as entidades de negócio em memória e seus relacionamentos diretos:
 
+```mermaid
+classDiagram
+    class Usuario {
+        +UUID id
+        +String nome
+        +String email
+        +String senhaHash
+        +Role papel
+        +login()
+        +atualizarPerfil()
+    }
+
+    class Projeto {
+        +UUID id
+        +String titulo
+        +String descricao
+        +adicionarMembro(Usuario)
+    }
+
+    class Documento {
+        +UUID id
+        +String titulo
+        +String urlGCS
+        +StatusDocumento status
+        +LocalDateTime dataEnvio
+        +aprovar()
+        +rejeitar()
+    }
+
+    class Auditoria {
+        +UUID id
+        +AcaoAuditoria acao
+        +LocalDateTime dataHora
+        +String ipOrigem
+    }
+
+    Usuario "1" -- "*" Projeto : Participa
+    Projeto "1" *-- "*" Documento : Contém
+    Usuario "1" -- "*" Auditoria : Gera
+```
 
 ---
 

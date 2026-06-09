@@ -1,0 +1,25 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+
+  - repo: https://github.com/DavidAnson/markdownlint-cli2
+    rev: v0.13.0
+    hooks:
+      - id: markdownlint-cli2
+        args: ["--config", ".markdownlint-cli2.jsonc"]
+
+# ----------------------------------------------------------------------
+# COMO CONFIGURAR LOCALMENTE
+# Certifique-se de ter o Python 3.11+ instalado e ative seu venv (se usar).
+# 1. Instale o pre-commit:
+#    pip install pre-commit
+# 2. Ative os hooks no repositório:
+#    pre-commit install
+#
+# Isso fará com que o lint de markdown, verificação de YAML e de formatação
+# de espaços rodem automaticamente antes de cada "git commit".
+# ----------------------------------------------------------------------

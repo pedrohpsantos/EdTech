@@ -1,151 +1,102 @@
-# EdTech — Repositório Acadêmico de Artigos e Pesquisas
+# EdTech — Repositório Acadêmico
 
-Sistema web para centralização, gerenciamento e auditoria de publicações acadêmicas, relatórios de pesquisa e datasets, desenvolvido para laboratórios universitários, grupos de iniciação científica ou programas de pós-graduação armazenarem suas produções de forma segura, auditável e isolada.
+[![Deploy MkDocs](https://github.com/pedrohpsantos/EdTech/actions/workflows/ci-docs.yml/badge.svg)](https://github.com/pedrohpsantos/EdTech/actions/workflows/ci-docs.yml)
+![Python](https://img.shields.io/badge/python-%3E%3D3.11-3776ab?logo=python&logoColor=white)
+![MkDocs Material](https://img.shields.io/badge/docs-MkDocs%20Material-7c4dff?logo=materialformkdocs&logoColor=white)
 
-Projeto desenvolvido no laboratório **AILAB Makers**.
+Plataforma acadêmica para centralização, gerenciamento e auditoria de publicações científicas, relatórios de pesquisa e datasets — desenvolvida no laboratório **AILAB Makers** (UnB FCTE).
 
----
-
-## Sumário
-
-- [Objetivo do Projeto](#objetivo-do-projeto)
-- [Funcionalidades](#funcionalidades)
-- [Arquitetura de Pastas](#arquitetura-de-pastas)
-- [Tecnologias Utilizadas](#tecnologias-utilizadas)
-- [Pré-requisitos](#pré-requisitos)
-- [Fluxo de Desenvolvimento](#fluxo-de-desenvolvimento)
-- [Convenção de Commits](#convenção-de-commits)
-- [Status do Projeto](#status-do-projeto)
-- [Integrantes](#integrantes)
-- [Licença](#licença)
+> **📖 Documentação completa:** <https://pedrohpsantos.github.io/EdTech/>
 
 ---
 
-## Objetivo do Projeto
+## Quick Start (Documentação Local)
 
-O sistema tem como objetivo digitalizar e proteger o armazenamento de produções científicas e rascunhos de pesquisas em andamento, permitindo:
+```bash
+# Clone o repositório
+git clone https://github.com/pedrohpsantos/EdTech.git
+cd EdTech
 
-- Cadastro e autenticação segura de usuários
-- Upload de documentos admissionais e científicos (PDFs e datasets)
-- Listagem filtrada e vinculada ao usuário autenticado
-- Garantia de isolamento estrito entre diferentes autores e projetos
-- Registro de logs de auditoria centralizados e inalteráveis
-- Armazenamento de alta disponibilidade seguro em nuvem
+# Instale as dependências com uv
+uv sync
 
----
-
-## Funcionalidades
-
-### Pesquisador (`researcher`)
-
-- Criar conta
-- Fazer login
-- Enviar artigos em PDF, relatórios de pesquisa e datasets
-- Visualizar e gerenciar apenas seus próprios rascunhos não publicados
-
-### Orientador / Administrador (`advisor`)
-
-- Fazer login
-- Visualizar rascunhos e documentos de todos os pesquisadores vinculados ao seu laboratório ou projeto
-- Validar submissões e acompanhar o andamento das pesquisas
-- Bloqueio automático de acesso a projetos nos quais não possui vínculo direto
-
-### Auditor / Logs do Sistema (`auditor`)
-
-- Registrar e consultar de forma centralizada logs inalteráveis de login, logout, uploads, downloads, exclusão de arquivos e tentativas de acesso negadas
-
----
-
-## Arquitetura de Pastas
-
-```text
-edtech-repositorio/
-├── .github/
-│   ├── PULL_REQUEST_TEMPLATE.md   # Template padrão para PRs
-│   └── workflows/
-│       └── ci-docs.yml            # Deploy automático do MkDocs via GitHub Pages
-├── docvault/                      # Monorepo do código fonte (API, Auth, Frontend)
-├── docs/                          # Documentação técnica (MkDocs)
-│   ├── arquitetura/               # Diagramas, nuvem, segurança e ADRs
-│   ├── gestao/                    # Execução, entregas, acordos e reuniões
-│   ├── planejamento/              # Visão de futuro, cronograma, rotas e regras
-│   ├── produto/                   # Discovery, estratégia e requisitos
-│   └── index.md                   # Página inicial da documentação
-├── infra/                         # Docker Compose e variáveis de ambiente
-│   ├── .env.example               # Exemplo de variáveis de ambiente
-│   └── docker-compose.yml         # Orquestração dos containers
-├── .gitignore
-├── mkdocs.yml                     # Configuração do MkDocs
-├── pyproject.toml                 # Dependências Python (uv)
-└── README.md
+# Sirva a documentação localmente
+uv run mkdocs serve
 ```
 
+Acesse `http://127.0.0.1:8000` no navegador.
+
 ---
 
-## Tecnologias Utilizadas
+## Ambiente Local com Docker Compose
+
+O ambiente de desenvolvimento sobe PostgreSQL 15 e o backend Spring Boot na porta `8080`.
+
+```bash
+# 1. Copie o arquivo de exemplo
+cp infra/.env.example infra/.env
+
+# 2. Preencha POSTGRES_PASSWORD e JWT_SECRET em infra/.env
+
+# 3. Suba banco e backend
+docker compose --env-file infra/.env -f infra/docker-compose.yml up --build
+
+# 4. Em outro terminal, acompanhe os logs do backend
+docker compose --env-file infra/.env -f infra/docker-compose.yml logs -f backend
+```
+
+Teste o cadastro de pesquisador:
+
+```bash
+curl -i -X POST http://localhost:8080/api/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Ana Pesquisadora",
+    "email": "ana.pesquisadora@unb.br",
+    "password": "<senha-local>"
+  }'
+```
+
+Para parar os containers:
+
+```bash
+docker compose --env-file infra/.env -f infra/docker-compose.yml down
+```
+
+Para remover também o volume local do PostgreSQL:
+
+```bash
+docker compose --env-file infra/.env -f infra/docker-compose.yml down -v
+```
+
+Nenhum segredo real deve ser salvo em arquivos versionados. O arquivo `infra/.env` fica fora do Git e deve conter apenas valores locais de desenvolvimento.
+
+Se a porta `5432` ja estiver em uso na sua maquina, altere `POSTGRES_PORT` em `infra/.env`.
+O backend continua conectando no PostgreSQL pela rede interna do Compose em `db:5432`.
+
+---
+
+## Stack Tecnológica
 
 | Camada | Tecnologias |
-| --- | --- |
-| **Frontend** | HTML5, CSS3, JavaScript Vanilla, Bootstrap 5, React |
-| **Backend** | Java 17, Spring Boot, Spring Security, JWT (`HttpOnly` + `Secure` cookies) |
-| **Banco de Dados & Storage** | Google Cloud SQL for PostgreSQL, Google Cloud Storage |
-| **Infraestrutura & DevOps** | Docker, Google Cloud Run |
-| **CI/CD & Qualidade** | GitHub Actions, JUnit, Python 3.11 (scripts de telemetria) |
-| **Documentação** | MkDocs + Material for MkDocs |
+| :--- | :--- |
+| **Backend** | Java 17 · Spring Boot · Spring Security · JWT |
+| **Frontend** | React · HTML5 · CSS3 · Bootstrap 5 |
+| **Cloud** | Google Cloud Run · Cloud SQL (PostgreSQL) · Cloud Storage |
+| **Docs & CI** | MkDocs Material · GitHub Actions · uv |
 
 ---
 
-## Pré-requisitos
+## Equipa
 
-Antes de configurar o projeto localmente, é necessário instalar:
-
-| Ferramenta | Versão | Link |
-| --- | --- | --- |
-| Java JDK | 17 | [Download](https://www.oracle.com/java/technologies/downloads/) |
-| Docker Desktop | latest | [Download](https://www.docker.com/products/docker-desktop/) |
-| Python | 3.11+ | [Download](https://www.python.org/downloads/) |
-
----
-
-## Fluxo de Desenvolvimento
-
-### `main`
-
-Branch estável e protegida do projeto. O código presente aqui reflete o ambiente de deploy público.
-
-### Branches de Funcionalidades
-
-Cada funcionalidade (ex: `auth`, `upload`, `logging`) deve ser desenvolvida em uma branch própria derivada da `main`. Cada commit será feito na branch correspondente à sua funcionalidade. Nunca commitar diretamente na main. A integração com a `main` ocorrerá exclusivamente por meio de Pull Requests (PRs) revisados pela liderança técnica.
-
----
-
-## Convenção de Commits
-
-Organização de commits para melhor compreensão e rastreabilidade do projeto.
-
-| Tipo | Prefixo | Exemplo |
-| --- | --- | --- |
-| Funcionalidade | `feat` | `feat: implement secure jwt cookie storage` |
-| Correção | `fix` | `fix: adjust spring security blocking path for unauthorized users` |
-| Documentação | `docs` | `docs: update mkdocs architecture guides for phase 2` |
-| Refatoração | `refactor` | `refactor: optimize postgresql connection pooling on spring backend` |
-
----
-
-## Status do Projeto
-
-🚧 Em desenvolvimento
-
----
-
-## Integrantes
-
-- Pedro Henrique Pereira Santos (Tech Lead)
-- Alana Cristyna Feitosa Dias (Full Stack)
-- Arthur Carvalho Leite (Full Stack)
-- Luis Gustavo Ferreira Nunes (Full Stack)
-- Mariana Souza Farias Andrade (Full Stack)
-- Mateus Alves Araújo (Full Stack)
+| Nome | Papel | GitHub |
+| :--- | :--- | :--- |
+| Pedro Henrique P. Santos | Tech Lead | [@pedrohpsantos](https://github.com/pedrohpsantos) |
+| Alana Cristyna F. Dias | Full Stack | [@alanafeitosa-ui](https://github.com/alanafeitosa-ui) |
+| Arthur Carvalho Leite | Full Stack | [@arthurlleite](https://github.com/arthurlleite) |
+| Luis Gustavo F. Nunes | Full Stack | [@LuisGFNunes](https://github.com/LuisGFNunes) |
+| Mariana S. F. Andrade | Full Stack | [@mariana-farias12](https://github.com/mariana-farias12) |
+| Mateus Alves Araújo | Full Stack | [@mateusaraujo2006](https://github.com/mateusaraujo2006) |
 
 ---
 

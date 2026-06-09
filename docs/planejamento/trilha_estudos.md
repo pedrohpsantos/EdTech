@@ -4,8 +4,6 @@ Como a equipe utilizará um esquema de rotações para atuar como **Full Stack**
 
 Sabemos que a equipe está em formação ("crua"), por isso cada trilha foi desenhada em **Níveis**, começando da fundação absoluta até chegar no conhecimento necessário para atuar no projeto EdTech.
 
-*(Nota: O Tech Lead é uma função fixa focada em mentoria, revisão e arquitetura geral, não entrando nesta trilha rotativa).*
-
 ---
 
 ## 💻 Frontend (React & UI)
@@ -44,8 +42,9 @@ Sabemos que a equipe está em formação ("crua"), por isso cada trilha foi dese
 - **Tratamento de Exceções Globais:** Como usar o `@ExceptionHandler` para retornar erros legíveis em JSON.
 
 ### 🔴 Nível 3: O Padrão EdTech (Dados e Segurança)
-- **Banco de Dados:** Conexão com PostgreSQL via Spring Data JPA e anotações de Entidades (`@Entity`, `@Id`).
-- **Segurança (Spring Security):** O que são filtros, como validar um Token JWT e como enviar Cookies `HttpOnly` e `Secure`.
+- **Banco de Dados & Migrações:** Conexão com PostgreSQL via Spring Data JPA e versionamento de esquema com **Flyway**.
+- **Segurança Avançada:** Uso do Spring Security para validar Token JWT, enviar Cookies `HttpOnly`/`Secure` e proteger contra **CSRF** (Cross-Site Request Forgery) ajustando regras de **CORS**.
+- **Integração Cloud:** Uso do Google Cloud Storage (GCS) para lidar com upload/download de binários (PDFs).
 
 ---
 
@@ -81,9 +80,9 @@ Sabemos que a equipe está em formação ("crua"), por isso cada trilha foi dese
 - **Docker Compose:** Como usar o arquivo `docker-compose.yml` da pasta `infra/` para subir o Banco de Dados PostgreSQL na máquina de todo o time com um só comando.
 
 ### 🔴 Nível 3: O Padrão EdTech (Nuvem e Pipelines)
-- **CI/CD Básico:** Como o GitHub Actions roda nossos testes e verifica nossa formatação sempre que alguém sobe um PR.
-- **Google Cloud Run:** Entender o processo básico de subir a aplicação web em um serviço gerenciado.
-- **Variáveis Sensíveis:** Entender por que chaves e senhas de banco nunca podem ser "comitadas" no código, usando o `.env`.
+- **CI/CD Automático:** Como o **GitHub Actions** roda testes (JUnit) e faz o deploy seguro para o provedor nas mesclagens de código.
+- **Google Cloud Run (Serverless):** Entender aplicações "Stateless" e como subir contêineres Docker que escalam elasticamente.
+- **Segurança Cloud & IAM:** Uso do *Workload Identity Federation* para não vazar variáveis sensíveis de banco/arquivos em repositórios (sem chaves fixas no `.env`).
 
 ---
 
@@ -97,7 +96,7 @@ Sabemos que a equipe está em formação ("crua"), por isso cada trilha foi dese
 
 ### 🟡 Nível 2: Documentação Viva
 - **MkDocs / Material:** Como subir o servidor de documentação localmente (`uv run mkdocs serve`) e como editar o menu (`mkdocs.yml`).
-- **Mermaid JS:** Como desenhar fluxogramas e diagramas arquiteturais inteiramente via código no Markdown, sem precisar de imagens.
+- **Mermaid JS & ADRs:** Como desenhar diagramas arquiteturais via código e como documentar escolhas em *Architecture Decision Records* (ADRs).
 
 ### 🔴 Nível 3: O Padrão EdTech (Rastreabilidade)
 - **Cultura de Logs:** O que é importante registrar no backend (Níveis de log: INFO, WARN, ERROR).

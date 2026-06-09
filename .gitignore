@@ -9,6 +9,7 @@ Thumbs.db
 
 # Backend (Java / Spring Boot)
 backend/target/
+docvault/api/target/
 *.class
 *.jar
 *.war
@@ -25,6 +26,8 @@ __pycache__/
 
 # Documentação (MkDocs)
 site/
+.cache/
 
 # Infraestrutura
+.env
 infra/.env

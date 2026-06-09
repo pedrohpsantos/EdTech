@@ -105,6 +105,7 @@ stateDiagram-v2
     Aprovado --> Publicado : Liberação Final
     Publicado --> [*]
 ```
+
 ---
 
 ## Histórico de Versões

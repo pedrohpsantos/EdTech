@@ -7,22 +7,22 @@ Template padrão para registro das reuniões da equipe EdTech. Copie a estrutura
 ## Template
 
 !!! tip "Como usar"
-    Copie toda a seção **"Modelo de Ata"** abaixo e cole ao final desta página para cada nova reunião. Preencha os campos e mantenha o histórico organizado em ordem cronológica inversa (reunião mais recente no topo).
+    Para cada nova reunião, crie um arquivo no formato `ata-DD-MM-YYYY.md` dentro da pasta `gestao/reunioes/`.
+    Copie toda a estrutura abaixo para o novo arquivo, preencha os dados e adicione o link do arquivo no "Histórico de Reuniões" no final desta página.
 
 ---
 
 ### Modelo de Ata
 
 ```markdown
-## Reunião DD/MM/AAAA
+# Ata de Reunião (DD/MM/AAAA)
 
-**Data:** DD/MM/AAAA
-**Horário:** HH:MM – HH:MM
-**Local:** (Presencial — FCTE / Remoto — Google Meet)
-**Facilitador(a):**
-**Secretário(a):**
+**Data:** DD/MM/AAAA  
+**Horário:** HH:MM – HH:MM  
+**Local:** (Presencial / Discord)  
+**Facilitador(a):**  
 
-### Participantes
+## Participantes
 
 | Nome | Presente |
 | :--- | :---: |
@@ -33,13 +33,13 @@ Template padrão para registro das reuniões da equipe EdTech. Copie a estrutura
 | Mariana S. F. Andrade | ⬜ |
 | Mateus Alves Araújo | ⬜ |
 
-### Pauta
+## Pauta
 
-1.
-2.
-3.
+1. 
+2. 
+3. 
 
-### Discussões e Decisões
+## Discussões e Decisões
 
 | # | Tópico | Decisão | Responsável |
 | :---: | :--- | :--- | :--- |
@@ -47,21 +47,20 @@ Template padrão para registro das reuniões da equipe EdTech. Copie a estrutura
 | 2 | | | |
 | 3 | | | |
 
-### Ações (Action Items)
+## Ações (Action Items)
 
 | Ação | Responsável | Prazo | Status |
 | :--- | :--- | :---: | :---: |
 | | | DD/MM | ⬜ |
 | | | DD/MM | ⬜ |
-| | | DD/MM | ⬜ |
 
-### Impedimentos Levantados
+## Impedimentos Levantados
 
--
+- 
 
-### Observações
+## Observações
 
--
+- 
 
 ---
 ```
@@ -71,6 +70,7 @@ Template padrão para registro das reuniões da equipe EdTech. Copie a estrutura
 ## Histórico de Reuniões
 
 1. [Ata de Reunião (29/05)](ata-29-05-2026.md)
+2. [Ata de Reunião (05/06)](ata-05-06-2026.md)
 
 
 ---

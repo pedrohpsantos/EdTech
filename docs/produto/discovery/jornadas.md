@@ -4,6 +4,7 @@ Abaixo estão os fluxos principais que cada persona percorre ao utilizar o EdTec
 
 !!! info "Legenda de Satisfação (Carinhas nos diagramas)"
     Os diagramas utilizam um escore de 1 a 5 para mapear a jornada emocional do usuário em cada etapa:
+
     - ☹️ **Frustração (Pontuação 1 a 2):** Etapas de atrito, dor ou em que o usuário está enfrentando problemas (como tentar usar e-mail pessoal ou lidar com sistemas defasados).
     - 😐 **Neutro (Pontuação 3):** Tarefas burocráticas ou transições de estado, sem forte emoção atrelada.
     - 😃 **Satisfação (Pontuação 4 a 5):** Etapas onde o usuário teve facilidade, atingiu o sucesso na tarefa e ficou feliz com o fluxo.

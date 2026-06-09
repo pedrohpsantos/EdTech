@@ -1,8 +1,11 @@
 site_name: EdTech — Repositório Acadêmico
 site_description: Documentação oficial do projeto EdTech — Plataforma de centralização, gerenciamento e auditoria de publicações acadêmicas. AILAB Makers — UnB FCTE.
-site_url: ""
+site_url: https://pedrohpsantos.github.io/EdTech/
 repo_url: https://github.com/pedrohpsantos/EdTech
 repo_name: EdTech
+edit_uri: edit/main/docs/
+
+copyright: "© 2026 AILAB Makers — UnB FCTE"
 
 theme:
   name: material
@@ -11,6 +14,7 @@ theme:
   favicon: https://raw.githubusercontent.com/squidfunk/mkdocs-material/master/material/templates/.icons/material/school.svg
   icon:
     repo: fontawesome/brands/github
+    annotation: material/arrow-right-circle
   features:
     - navigation.tabs
     - navigation.tabs.sticky
@@ -22,12 +26,13 @@ theme:
     - navigation.instant.progress
     - navigation.instant.prefetch
     - navigation.tracking
-    - toc.integrate
+    - toc.follow
     - search.suggest
     - search.highlight
     - search.share
     - content.tabs.link
     - content.code.copy
+    - content.action.edit
   palette:
     - scheme: default
       primary: deep purple
@@ -45,8 +50,26 @@ theme:
     text: Plus Jakarta Sans
     code: JetBrains Mono
 
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/pedrohpsantos/EdTech
+      name: Repositório no GitHub
+
 extra_css:
   - stylesheets/extra.css
+
+not_in_nav: |
+  _glossary.md
+  _snippets/**
+
+plugins:
+  - search
+  - glightbox
+  - minify:
+      minify_html: true
+      minify_css: true
+      minify_js: true
 
 markdown_extensions:
   - admonition
@@ -63,6 +86,12 @@ markdown_extensions:
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - pymdownx.tasklist:
       custom_checkbox: true
+  - pymdownx.mark
+  - pymdownx.critic
+  - abbr
+  - pymdownx.snippets:
+      auto_append:
+        - docs/_glossary.md
   - attr_list
   - md_in_html
   - tables
@@ -76,7 +105,7 @@ nav:
           - Product Discovery:
               - Personas: produto/discovery/personas.md
               - Jornadas do Usuário: produto/discovery/jornadas.md
-              - Brainstorming (MoSCoW): produto/discovery/brainstorming.md
+              - Brainstorming e MoSCoW: produto/discovery/brainstorming.md
           - Product Strategy:
               - Visão e Escopo: produto/strategy/visao.md
               - É / Não É / Faz / Não Faz: produto/strategy/matriz_e_nao_e.md
@@ -87,13 +116,21 @@ nav:
       - Backlog Ágil:
           - Histórias de Usuário: produto/requisitos/historias.md
   - Arquitetura:
-      - C4 Model (Contexto e Containers): arquitetura/c4_model.md
-      - Design Técnico (Detalhado): arquitetura/design_tecnico.md
+      - C4 Model: arquitetura/c4_model.md
+      - Design Técnico: arquitetura/design_tecnico.md
       - Armazenamento em Nuvem: arquitetura/nuvem.md
       - Arquitetura de Dados: arquitetura/dados.md
       - Segurança e AppSec: arquitetura/seguranca_app.md
       - Decisões Técnicas (ADRs):
-          - ADR 0001 (Google Cloud Storage): arquitetura/adrs/0001-armazenamento-gcs.md
+          - ADR 0001 (Cloud Storage): arquitetura/adrs/0001-armazenamento-gcs.md
+          - ADR 0002 (Autenticação JWT): arquitetura/adrs/0002-autenticacao-jwt.md
+          - ADR 0003 (Cloud Run Serverless): arquitetura/adrs/0003-cloud-run.md
+          - ADR 0004 (PostgreSQL): arquitetura/adrs/0004-postgresql.md
+          - ADR 0005 (Spring Boot): arquitetura/adrs/0005-spring-boot.md
+          - ADR 0006 (SPA + API): arquitetura/adrs/0006-spa-api.md
+          - ADR 0007 (Flyway Migrations): arquitetura/adrs/0007-flyway.md
+          - ADR 0008 (GitHub Actions CI/CD): arquitetura/adrs/0008-github-actions.md
+          - ADR 0009 (Docs-as-Code via MkDocs): arquitetura/adrs/0009-mkdocs.md
   - Planejamento:
       - Product Roadmap: planejamento/roadmap.md
       - Trilha de Estudos: planejamento/trilha_estudos.md
@@ -105,7 +142,8 @@ nav:
       - Entregas:
           - Semana 1: gestao/entregas/semana1.md
           - Semana 2: gestao/entregas/semana2.md
-          - Semana 3: gestao/entregas/semana3.md
-      - Reuniões: 
+          - Semanas 3: gestao/entregas/semana3.md
+      - Reuniões:
           - Índice de Atas: gestao/reunioes/atas.md
           - Ata de Reunião (29/05): gestao/reunioes/ata-29-05-2026.md
+          - Ata de Reunião (05/06): gestao/reunioes/ata-05-06-2026.md
