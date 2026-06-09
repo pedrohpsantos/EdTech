@@ -222,5 +222,5 @@ Iniciar a implementação do MVP do EdTech com foco em três frentes paralelas: 
 ## Histórico de Versões
 
 | Versão |    Data    | Descrição                           | Autor                    |
-|:------:|:----------:|:------------------------------------|:-------------------------|
+| :---: | :---: | :--- | :--- |
 | `1.0`  | 05/06/2026 | Criação do documento                | Pedro Henrique P. Santos |

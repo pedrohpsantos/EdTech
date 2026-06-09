@@ -1,4 +1,4 @@
-#  Brand Guidelines
+# Design System Guidelines
 
 <div align="center" markdown="1">
   ![EdTech Logo](logo.svg){ width="200" style="margin-bottom: 20px;" }

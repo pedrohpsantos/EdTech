@@ -109,6 +109,6 @@ Atores hostis disparam vetores de ataque que impactam os pontos de entrada e ati
 ## Histórico de Versões
 
 | Versão |    Data    | Descrição                                | Autor                    |
-|:------:|:----------:|:-----------------------------------------|:-------------------------|
+| :---: | :---: | :--- | :--- |
 | `1.0`  | 30/05/2026 | Criação do documento                     | Pedro Henrique P. Santos |
 | `1.1`  | 30/05/2026 | Refino do threat model e estilos visuais | Pedro Henrique P. Santos |

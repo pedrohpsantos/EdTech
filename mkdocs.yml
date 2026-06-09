@@ -27,11 +27,13 @@ theme:
     - navigation.instant.prefetch
     - navigation.tracking
     - toc.follow
+    - toc.integrate
     - search.suggest
     - search.highlight
     - search.share
     - content.tabs.link
     - content.code.copy
+    - content.code.annotate
     - content.action.edit
   palette:
     - scheme: default
@@ -147,7 +149,7 @@ nav:
           - Índice de Atas: gestao/reunioes/atas.md
           - Ata de Reunião (29/05): gestao/reunioes/ata-29-05-2026.md
           - Ata de Reunião (05/06): gestao/reunioes/ata-05-06-2026.md
-  - Branding:
+  - Design:
       - Identidade Visual: branding/IDENTIDADE_VISUAL.md
       - Design System: branding/DESIGN_SYSTEM.md
       - Brand Guidelines: branding/BRAND_GUIDELINES.md
