@@ -19,11 +19,14 @@ Ele foge de clichês acadêmicos (como livros ou capelos) e foca no nosso real d
 
 ![Logo Escuro](logo-dark.svg){ width="150" align="right" }
 
-Representa visualmente:
--  **Rastreabilidade:** Cada linha é um caminho auditável.
--  **Versionamento:** Múltiplos nós conectados mostram a evolução.
--  **Evidências:** A marca de confiança e conformidade.
--  **Trilha auditável:** O pilar da governança.
+**O Símbolo representa visualmente:**
+
+- **Rastreabilidade:** Cada linha é um caminho auditável.
+- **Versionamento:** Múltiplos nós conectados mostram a evolução.
+- **Evidências:** A marca de confiança e conformidade.
+- **Trilha auditável:** O pilar da governança.
+
+<div style="clear: both;"></div>
 
 ## 2. Storytelling da Marca
 
