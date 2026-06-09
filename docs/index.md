@@ -8,7 +8,7 @@ hide:
 
 <span class="hero-badge">🚧 Em Desenvolvimento — AILAB Makers</span>
 
-# :material-school: EdTech
+# <img src="branding/logo-white.svg" alt="EdTech Logo" style="height: 1.1em; vertical-align: -15%; margin-right: 0.2em;" /> EdTech
 
 Plataforma acadêmica para centralização, gerenciamento e auditoria de publicações científicas, relatórios de pesquisa e datasets — construída para laboratórios universitários, grupos de iniciação científica e programas de pós-graduação.
 
