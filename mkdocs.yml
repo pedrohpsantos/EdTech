@@ -61,13 +61,15 @@ extra_css:
   - stylesheets/extra.css
 
 not_in_nav: |
+  404.md
   _glossary.md
   _snippets/**
 
 plugins:
   - search
   - glightbox
-  - social
+  - social:
+      enabled: !ENV [CI, false]
   - git-revision-date-localized
   - minify:
       minify_html: true
