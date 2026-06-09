@@ -1,5 +1,6 @@
 package com.docvault.service;
 
+import com.docvault.dto.LoginRequestDTO;
 import com.docvault.dto.RegisterRequestDTO;
 import com.docvault.model.User;
 import com.docvault.repository.UserRepository;
@@ -24,11 +25,18 @@ public class UserService {
         User newUser = new User(request.getName(), request.getEmail(), passwordEncoder.encode(request.getPassword()), "USER", true);
         return userRepository.save(newUser);
     }
+    public User authenticate(LoginRequestDTO request){
+        User user = findByEmail(request.email());
+        if(!passwordEncoder.matches(request.password(), user.getPasswordHash())) {
+            throw new IllegalArgumentException("Senha incorreta");
+        }
+        return user;
+    }
 
 
 
     public User findByEmail(String email) {
         return userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
     }
 }
