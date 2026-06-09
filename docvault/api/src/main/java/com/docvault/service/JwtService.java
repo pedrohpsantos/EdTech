@@ -2,53 +2,74 @@ package com.docvault.service;
 
 import com.docvault.model.User;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.MalformedJwtException;
-import io.jsonwebtoken.security.SignatureException;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import javax.crypto.SecretKey;
+import java.nio.charset.StandardCharsets;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.Date;
 
 @Service
 public class JwtService {
-    private static final String SECRET_KEY = "sua_chave_secreta_muito_longa_e_segura_para_o_jwt_edtech";
-    private static final long EXPIRATION_TIME = 86400000; // 24 horas
+
+    private final SecretKey secretKey;
+    private final Duration expiration;
+
+    public JwtService(
+            @Value("${jwt.secret:}") String secret,
+            @Value("${jwt.expiration-minutes:60}") long expirationMinutes
+    ) {
+        if (secret == null || secret.isBlank()) {
+            throw new IllegalStateException("JWT_SECRET deve ser definido para autenticação.");
+        }
+        this.secretKey = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
+        this.expiration = Duration.ofMinutes(expirationMinutes);
+    }
 
     public String generateToken(User user) {
-        return io.jsonwebtoken.Jwts.builder()
+        return generateToken(user, expiration);
+    }
+
+    public String generateToken(User user, Duration tokenTtl) {
+        Instant now = Instant.now();
+        Instant expiresAt = now.plus(tokenTtl);
+
+        return Jwts.builder()
                 .subject(user.getEmail())
-                .claim("id", user.getId())
-                .issuedAt(new java.util.Date())
-                .expiration(new java.util.Date(System.currentTimeMillis() + EXPIRATION_TIME))
-                .signWith(io.jsonwebtoken.security.Keys.hmacShaKeyFor(SECRET_KEY.getBytes()))
+                .claim("uid", user.getId())
+                .claim("role", user.getRole().name())
+                .issuedAt(Date.from(now))
+                .expiration(Date.from(expiresAt))
+                .signWith(secretKey)
                 .compact();
     }
 
-    public Claims validateToken(String token) {
-        try {
-           return io.jsonwebtoken.Jwts.parser()
-                    .verifyWith(io.jsonwebtoken.security.Keys.hmacShaKeyFor(SECRET_KEY.getBytes()))
-                    .build()
-                    .parseSignedClaims(token)
-                    .getPayload();
-        } catch (ExpiredJwtException e) {
-            throw new RuntimeException("Token expirado");
-        }
-        catch (SignatureException e) {
-            throw new RuntimeException("Assinatura inválida");
-        }
-        catch (MalformedJwtException e) {
-            throw new RuntimeException("Token malformado");
-        }
-
+    public String extractSubject(String token) {
+        return parseClaims(token).getSubject();
     }
 
+    public boolean isValid(String token, User user) {
+        try {
+            String subject = extractSubject(token);
+            return subject != null && subject.equalsIgnoreCase(user.getEmail());
+        } catch (JwtException | IllegalArgumentException exception) {
+            return false;
+        }
+    }
 
-    public Long getUserIdFromToken(String token) {
-        return io.jsonwebtoken.Jwts.parser()
-                .verifyWith(io.jsonwebtoken.security.Keys.hmacShaKeyFor(SECRET_KEY.getBytes()))
+    private Claims parseClaims(String token) {
+        return Jwts.parser()
+                .verifyWith(secretKey)
                 .build()
                 .parseSignedClaims(token)
-                .getPayload()
-                .get("id", Long.class);
+                .getPayload();
     }
+
+
 
 }

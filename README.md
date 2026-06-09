@@ -28,6 +28,54 @@ Acesse `http://127.0.0.1:8000` no navegador.
 
 ---
 
+## Ambiente Local com Docker Compose
+
+O ambiente de desenvolvimento sobe PostgreSQL 15 e o backend Spring Boot na porta `8080`.
+
+```bash
+# 1. Copie o arquivo de exemplo
+cp infra/.env.example infra/.env
+
+# 2. Preencha POSTGRES_PASSWORD e JWT_SECRET em infra/.env
+
+# 3. Suba banco e backend
+docker compose --env-file infra/.env -f infra/docker-compose.yml up --build
+
+# 4. Em outro terminal, acompanhe os logs do backend
+docker compose --env-file infra/.env -f infra/docker-compose.yml logs -f backend
+```
+
+Teste o cadastro de pesquisador:
+
+```bash
+curl -i -X POST http://localhost:8080/api/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Ana Pesquisadora",
+    "email": "ana.pesquisadora@unb.br",
+    "password": "<senha-local>"
+  }'
+```
+
+Para parar os containers:
+
+```bash
+docker compose --env-file infra/.env -f infra/docker-compose.yml down
+```
+
+Para remover também o volume local do PostgreSQL:
+
+```bash
+docker compose --env-file infra/.env -f infra/docker-compose.yml down -v
+```
+
+Nenhum segredo real deve ser salvo em arquivos versionados. O arquivo `infra/.env` fica fora do Git e deve conter apenas valores locais de desenvolvimento.
+
+Se a porta `5432` ja estiver em uso na sua maquina, altere `POSTGRES_PORT` em `infra/.env`.
+O backend continua conectando no PostgreSQL pela rede interna do Compose em `db:5432`.
+
+---
+
 ## Stack Tecnológica
 
 | Camada | Tecnologias |
