@@ -1,9 +1,9 @@
-package com.edTech.service;
+package com.docvault.service;
 
 import java.util.UUID;
-import com.edTech.model.AuditLog;
-import com.edTech.model.AcaoAuditoria;
-import com.edTech.repository.AuditLogRepository;
+import com.docvault.model.AuditLog;
+import com.docvault.model.AcaoAuditoria;
+import com.docvault.repository.AuditLogRepository;
 import org.springframework.stereotype.Service;
 
 @Service

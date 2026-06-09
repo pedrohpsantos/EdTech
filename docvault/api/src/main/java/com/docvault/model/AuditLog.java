@@ -1,4 +1,4 @@
-package com.edTech.model;
+package com.docvault.model;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

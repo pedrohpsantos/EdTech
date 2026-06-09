@@ -5,9 +5,9 @@ spring:
   application:
     name: edtech-api
   datasource:
-    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/edtech_db}
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5435/edtech_db}
     username: ${SPRING_DATASOURCE_USERNAME:edtech_user}
-    password: ${SPRING_DATASOURCE_PASSWORD:}
+    password: ${SPRING_DATASOURCE_PASSWORD:12345}
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -30,6 +30,7 @@ management:
         enabled: true
 
 jwt:
-  secret: ${JWT_SECRET:}
+  # Chave padrão apenas para desenvolvimento local (mínimo de 32 caracteres exigido pelo HMAC-SHA). Em produção, use a variável de ambiente JWT_SECRET.
+  secret: ${JWT_SECRET:my-super-secret-default-development-key-for-jwt-needs-to-be-long-enough-32-chars}
   expiration-minutes: ${JWT_EXPIRATION_MINUTES:60}
   cookie-secure: ${JWT_COOKIE_SECURE:false}

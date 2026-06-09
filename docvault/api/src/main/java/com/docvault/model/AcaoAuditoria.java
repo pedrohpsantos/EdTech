@@ -1,4 +1,4 @@
-package com.edTech.model;
+package com.docvault.model;
 
 public enum AcaoAuditoria {
     LOGIN_SUCCESS, // — após login bem-sucedido

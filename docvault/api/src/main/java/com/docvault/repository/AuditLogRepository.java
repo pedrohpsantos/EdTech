@@ -1,6 +1,6 @@
-package com.edTech.repository;
+package com.docvault.repository;
 
-import com.edTech.model.AuditLog;
+import com.docvault.model.AuditLog;
 
 import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
