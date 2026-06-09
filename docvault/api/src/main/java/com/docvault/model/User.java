@@ -3,6 +3,7 @@ package com.docvault.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.jspecify.annotations.Nullable;
 
 import java.time.LocalDateTime;
 @Entity
@@ -17,6 +18,7 @@ public class User {
     private  String name;
     @Getter
     private String email;
+    @Getter
     private String passwordHash;
     @Getter @Setter
     private String role;
@@ -39,4 +41,6 @@ public class User {
     public User() {
 
     }
+
+
 }

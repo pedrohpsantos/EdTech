@@ -5,7 +5,9 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.security.SignatureException;
+import org.springframework.stereotype.Service;
 
+@Service
 public class JwtService {
     private static final String SECRET_KEY = "sua_chave_secreta_muito_longa_e_segura_para_o_jwt_edtech";
     private static final long EXPIRATION_TIME = 86400000; // 24 horas
