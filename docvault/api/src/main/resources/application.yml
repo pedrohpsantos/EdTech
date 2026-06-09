@@ -5,7 +5,7 @@ spring:
   application:
     name: edtech-api
   datasource:
-    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5435/edtech_db}
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/edtech_db}
     username: ${SPRING_DATASOURCE_USERNAME:edtech_user}
     password: ${SPRING_DATASOURCE_PASSWORD:12345}
     driver-class-name: org.postgresql.Driver
