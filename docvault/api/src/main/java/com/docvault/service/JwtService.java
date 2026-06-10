@@ -50,7 +50,12 @@ public class JwtService {
     }
 
     public String extractSubject(String token) {
-        return parseClaims(token).getSubject();
+        return validateToken(token).getSubject();
+    }
+
+    public Long getUserIdFromToken(String token) {
+        Claims claims = validateToken(token);
+        return claims.get("uid", Long.class);
     }
 
     public boolean isValid(String token, User user) {
@@ -62,7 +67,7 @@ public class JwtService {
         }
     }
 
-    private Claims parseClaims(String token) {
+    public Claims validateToken(String token) {
         return Jwts.parser()
                 .verifyWith(secretKey)
                 .build()
