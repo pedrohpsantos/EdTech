@@ -18,8 +18,8 @@ O projeto é atualmente suportado com as seguintes versões mínimas e configura
 > [!CAUTION]
 > **NÃO ABRA UMA ISSUE PÚBLICA** para relatar falhas de segurança que afetem a autenticação (JWT), auditoria ou isolamento de dados (autores/orientadores).
 
-Envie seu relato detalhado para o nosso canal privado de segurança:
-**[contato@ailab.unb.br — substituir pelo canal oficial]**
+Relate vulnerabilidades exclusivamente via **GitHub Security Advisories** (na aba `Security` > `Advisories` deste repositório) para um envio privado e criptografado direto à equipe.
+Como *fallback*, contate o Tech Lead diretamente pelo perfil do GitHub associado ao projeto.
 
 ### O que esperar após o relato?
 

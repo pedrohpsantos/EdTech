@@ -7,7 +7,7 @@ Enquanto o **C4 Model** descreve *o que* as partes fazem, este documento detalha
 O sistema é logicamente particionado em camadas cliente-servidor padrão.
 
 ### Camada Cliente (Frontend)
-A interface de usuário é uma **SPA** desenvolvida em **React 18.x** com estilização via **Tailwind CSS 3.x** e **Bootstrap 5**.
+A interface de usuário é uma **SPA** desenvolvida em **React 18.x** com estilização responsiva baseada no **Bootstrap 5**.
 
 | Tecnologia | Função |
 | :--- | :--- |

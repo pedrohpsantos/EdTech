@@ -1,0 +1,19 @@
+name: Proposta de Documentação
+description: Sugira uma melhoria na documentação, governança ou uma nova Decisão Arquitetural (ADR).
+title: "docs: <breve descrição da proposta>"
+labels: ["documentation"]
+body:
+  - type: textarea
+    id: context
+    attributes:
+      label: Contexto ou Problema
+      description: Qual é a motivação para essa documentação ou mudança? Que problemas ela resolve?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposta
+      description: O que você sugere adicionar, alterar ou remover? (Inclua links de arquivos afetados se possível)
+    validations:
+      required: true

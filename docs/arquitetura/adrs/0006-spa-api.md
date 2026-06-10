@@ -12,6 +12,10 @@ Na evolução de plataformas acadêmicas, frequentemente começamos com monolito
 
 Optamos por uma **Arquitetura Desacoplada**, utilizando um Frontend **SPA (Single Page Application)** construído em React e uma **API RESTful** independente no backend.
 
+## Alternativas Consideradas
+
+* **Monolito com Server-Side Rendering (SSR - Thymeleaf):** Descartado pois, embora simplificasse o deploy inicial e não exigisse tratamento complexo de tokens (CORS), limitaria a reusabilidade da API para integrações futuras (como uso por outros sistemas universitários) e dificultaria a interatividade fluida esperada em *dashboards* de auditoria.
+
 ## Consequências
 
 ### Positivas

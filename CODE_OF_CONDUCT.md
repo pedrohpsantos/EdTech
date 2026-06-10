@@ -53,8 +53,8 @@ mantenedores do projeto.
 
 ## Aplicação
 
-Casos de comportamento abusivo, de assédio ou inaceitável podem ser relatados ao
-entrar em contato com a equipe do projeto em **[contato@ailab.unb.br — substituir pelo canal oficial]**.
+Casos de comportamento abusivo, de assédio ou inaceitável podem ser relatados
+entrando em contato direto com os mantenedores (ex: via contato no perfil do GitHub do Tech Lead).
 Todas as reclamações serão analisadas e investigadas e resultarão numa resposta que
 seja considerada necessária e apropriada às circunstâncias. A equipe do projeto
 está obrigada a manter a confidencialidade no que diz respeito ao relator de um
