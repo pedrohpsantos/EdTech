@@ -1,8 +1,9 @@
 site_name: EdTech — Repositório Acadêmico
 site_description: Documentação oficial do projeto EdTech — Plataforma de centralização, gerenciamento e auditoria de publicações acadêmicas. AILAB Makers — UnB FCTE.
+site_author: AILAB Makers (UnB FCTE)
 site_url: https://pedrohpsantos.github.io/EdTech/
 repo_url: https://github.com/pedrohpsantos/EdTech
-repo_name: EdTech
+repo_name: pedrohpsantos/EdTech
 edit_uri: edit/main/docs/
 
 copyright: "© 2026 AILAB Makers — UnB FCTE"
