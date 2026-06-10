@@ -1,3 +1,7 @@
+<div align="center">
+  <img src="docs/assets/imgs/banner-github.png" alt="EdTech Banner" width="100%">
+</div>
+
 # EdTech — Repositório Acadêmico
 
 [![Deploy MkDocs](https://github.com/pedrohpsantos/EdTech/actions/workflows/ci-docs.yml/badge.svg)](https://github.com/pedrohpsantos/EdTech/actions/workflows/ci-docs.yml)
