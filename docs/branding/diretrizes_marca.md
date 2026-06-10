@@ -57,7 +57,8 @@ Temos todos os vetores e materiais prontos para uso em interfaces, repositórios
     * `banner-github.png` — Imagem oficial de header para repositório (1280x640).
     * `social-preview.png` — Card de preview social (1200x630).
     * `og-image.png` — Otimizado para Open Graph.
-    * `logo.png` — Versão em PNG do logo principal.
+    * `logo_claro.png` — Versão em PNG do logo (Fundo Claro).
+    * `logo_escuro.png` — Versão em PNG do logo (Fundo Escuro).
     * `simbolo.png` — Apenas o ícone "E" (Research Trail).
 
 ---
@@ -67,7 +68,8 @@ Temos todos os vetores e materiais prontos para uso em interfaces, repositórios
 Abaixo você confere as amostras dos principais materiais e banners gerados para o projeto:
 
 ![Banner GitHub](../assets/imgs/banner-github.png)
-![Logo](../assets/imgs/logo.png)
+![Logo Claro](../assets/imgs/logo_claro.png)
+![Logo Escuro](../assets/imgs/logo_escuro.png)
 ![Simbolo](../assets/imgs/simbolo.png)
 ![Social Preview](../assets/imgs/social-preview.png)
 ![OG Image](../assets/imgs/og-image.png)

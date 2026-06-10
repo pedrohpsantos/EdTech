@@ -18,6 +18,7 @@ O conceito visual principal (**"Research Trail"**) utiliza nós conectados forma
 Ele foge de clichês acadêmicos (como livros ou capelos) e foca no nosso real diferencial competitivo.
 
 ![Logo Escuro](../assets/svgs/logo-dark.svg){ width="150" align="right" }
+![Símbolo](../assets/imgs/simbolo.png){ width="80" align="right" style="margin-right: 20px;" }
 
 **O Símbolo representa visualmente:**
 
