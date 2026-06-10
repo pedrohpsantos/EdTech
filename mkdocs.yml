@@ -11,8 +11,8 @@ copyright: "© 2026 AILAB Makers — UnB FCTE"
 theme:
   name: material
   language: pt-BR
-  logo: branding/logo-white.svg
-  favicon: branding/favicon.svg
+  logo: assets/logo-white.svg
+  favicon: assets/favicon.svg
   icon:
     repo: fontawesome/brands/github
     annotation: material/arrow-right-circle
