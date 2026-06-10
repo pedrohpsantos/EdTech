@@ -17,8 +17,7 @@ O **EdTech** é mais que "Education Technology". A marca representa:
 O conceito visual principal (**"Research Trail"**) utiliza nós conectados formando um "E".
 Ele foge de clichês acadêmicos (como livros ou capelos) e foca no nosso real diferencial competitivo.
 
-![Logo Escuro](../assets/svgs/logo-dark.svg){ width="150" align="right" }
-![Símbolo](../assets/imgs/simbolo.png){ width="80" align="right" style="margin-right: 20px;" }
+![Símbolo](../assets/imgs/simbolo.png){ width="150" align="right" style="margin-right: 20px; margin-top: 40px;" }
 
 **O Símbolo representa visualmente:**
 
