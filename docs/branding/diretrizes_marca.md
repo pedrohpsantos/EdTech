@@ -1,8 +1,8 @@
-# Design System Guidelines
+# Diretrizes da Marca
 
 <div align="center" markdown="1">
   ![EdTech Logo](logo.svg){ width="200" style="margin-bottom: 20px;" }
-  <h3>Secure Academic Research Governance Platform</h3>
+  <h3>Plataforma Segura de Governança Acadêmica e Pesquisa</h3>
   <p><b>Centralização • Rastreabilidade • Auditoria • Governança</b></p>
 </div>
 

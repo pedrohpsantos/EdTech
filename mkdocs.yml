@@ -107,11 +107,11 @@ nav:
   - Início: index.md
   - Requisitos:
       - Produto e Visão:
-          - Product Discovery:
+          - Descoberta de Produto:
               - Personas: produto/discovery/personas.md
               - Jornadas do Usuário: produto/discovery/jornadas.md
               - Brainstorming e MoSCoW: produto/discovery/brainstorming.md
-          - Product Strategy:
+          - Estratégia de Produto:
               - Visão e Escopo: produto/strategy/visao.md
               - É / Não É / Faz / Não Faz: produto/strategy/matriz_e_nao_e.md
               - Canvas MVP: produto/strategy/canvas_mvp.md
@@ -137,13 +137,13 @@ nav:
           - ADR 0008 (GitHub Actions CI/CD): arquitetura/adrs/0008-github-actions.md
           - ADR 0009 (Docs-as-Code via MkDocs): arquitetura/adrs/0009-mkdocs.md
   - Planejamento:
-      - Product Roadmap: planejamento/roadmap.md
+      - Roadmap do Produto: planejamento/roadmap.md
       - Trilha de Estudos: planejamento/trilha_estudos.md
       - DoR & DoD (Critérios de Aceite): planejamento/dor_dod.md
       - Cronograma e Sprints: planejamento/cronograma.md
       - Papéis e Rotações: planejamento/rotacoes.md
   - Gestão:
-      - Acordos do Time (Team Agreements): gestao/agile/team_agreements.md
+      - Acordos do Time: gestao/agile/team_agreements.md
       - Entregas:
           - Semana 1: gestao/entregas/semana1.md
           - Semana 2: gestao/entregas/semana2.md
@@ -155,4 +155,4 @@ nav:
   - Design:
       - Identidade Visual: branding/identidade_visual.md
       - Design System: branding/design_system.md
-      - Design System Guidelines: branding/design_system_guidelines.md
+      - Diretrizes da Marca: branding/diretrizes_marca.md
