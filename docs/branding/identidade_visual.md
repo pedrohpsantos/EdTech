@@ -42,11 +42,19 @@ O **EdTech** surge como uma camada de governança acadêmica.
 
 ## 3. Personalidade
 
-| Atributo | Nível | O que significa na prática |
-| :--- | :---: | :--- |
-| **Confiável** |  | Sem margem para erros, foco em compliance. |
-| **Técnica** |  | Feito para cientistas de dados, acadêmicos e auditores. |
-| **Minimalista** |  | Interfaces limpas, redução de ruído visual (estilo Linear/Notion). |
-| **Moderna** |  | UI state-of-the-art, glassmorphism sutil. |
-| **Institucional**|  | Mantém a seriedade que as universidades exigem. |
-| **Inovadora** |  | Abordagem nova para um problema antigo. |
+| Atributo | O que significa na prática |
+| :--- | :--- |
+| **Confiável** | Sem margem para erros, foco em compliance. |
+| **Técnica** | Feito para cientistas de dados, acadêmicos e auditores. |
+| **Minimalista** | Interfaces limpas, redução de ruído visual (estilo Linear/Notion). |
+| **Moderna** | UI state-of-the-art, glassmorphism sutil. |
+| **Institucional**| Mantém a seriedade que as universidades exigem. |
+| **Inovadora** | Abordagem nova para um problema antigo. |
+
+---
+
+## Histórico de Versões
+
+| Versão | Data | Descrição | Autor |
+| :---: | :---: | :--- | :--- |
+| `1.0` | 09/06/2026 | Criação da identidade visual e storytelling | Pedro Henrique P. Santos |
