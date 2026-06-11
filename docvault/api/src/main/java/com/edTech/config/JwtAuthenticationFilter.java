@@ -1,8 +1,8 @@
-package com.docvault.config;
+package com.edTech.config;
 
-import com.docvault.model.User;
-import com.docvault.repository.UserRepository;
-import com.docvault.service.JwtService;
+import com.edTech.model.User;
+import com.edTech.repository.UserRepository;
+import com.edTech.service.JwtService;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

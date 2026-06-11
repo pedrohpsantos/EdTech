@@ -1,4 +1,4 @@
-package com.docvault.dto;
+package com.edTech.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

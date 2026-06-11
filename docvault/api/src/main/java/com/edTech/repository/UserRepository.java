@@ -1,6 +1,7 @@
-package com.docvault.repository;
+package com.edTech.repository;
 
-import com.docvault.model.User;
+import com.edTech.model.User;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

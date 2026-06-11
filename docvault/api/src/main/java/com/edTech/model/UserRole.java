@@ -1,4 +1,4 @@
-package com.docvault.model;
+package com.edTech.model;
 
 public enum UserRole {
     RESEARCHER,

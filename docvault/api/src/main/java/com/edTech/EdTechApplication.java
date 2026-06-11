@@ -1,4 +1,4 @@
-package com.docvault;
+package com.edTech;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

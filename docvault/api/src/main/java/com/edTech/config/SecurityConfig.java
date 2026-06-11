@@ -1,4 +1,4 @@
-package com.docvault.config;
+package com.edTech.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
