@@ -11,7 +11,7 @@
         <relativePath/>
     </parent>
 
-    <groupId>com.docvault</groupId>
+    <groupId>com.edTech</groupId>
     <artifactId>edtech-api</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>edtech-api</name>
