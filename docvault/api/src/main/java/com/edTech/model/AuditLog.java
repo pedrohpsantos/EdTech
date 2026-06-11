@@ -24,6 +24,7 @@ public class AuditLog {
     private UUID userId;
 
     @Enumerated(EnumType.STRING)
+    @org.hibernate.annotations.JdbcType(org.hibernate.dialect.PostgreSQLEnumJdbcType.class)
     @Column(nullable = false)
     private AcaoAuditoria action;
 
