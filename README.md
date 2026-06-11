@@ -1,3 +1,7 @@
+<div align="center">
+  <img src="docs/assets/imgs/banner-github.png" alt="EdTech Banner" width="100%">
+</div>
+
 # EdTech — Repositório Acadêmico
 
 [![Deploy MkDocs](https://github.com/pedrohpsantos/EdTech/actions/workflows/ci-docs.yml/badge.svg)](https://github.com/pedrohpsantos/EdTech/actions/workflows/ci-docs.yml)
@@ -6,11 +10,21 @@
 
 Plataforma acadêmica para centralização, gerenciamento e auditoria de publicações científicas, relatórios de pesquisa e datasets — desenvolvida no laboratório **AILAB Makers** (UnB FCTE).
 
-> **📖 Documentação completa:** <https://pedrohpsantos.github.io/EdTech/>
+> **📖 Portal da Documentação:** [pedrohpsantos.github.io/EdTech](https://pedrohpsantos.github.io/EdTech/)
 
 ---
 
-## Quick Start (Documentação Local)
+## 📌 Estado Atual do Repositório
+
+O projeto encontra-se atualmente na fase de **fundação de governança e arquitetura técnica**.
+- **✅ Concluído:** Documentação rica e consolidada (*Docs-as-Code*), arquitetura técnica (C4 Model, ADRs) e Design System.
+- **🚧 Em Desenvolvimento:** Os módulos de aplicação (Backend Java e Frontend React) estão em fase de *scaffolding* e construção ativa. Ainda não há uma versão funcional do produto.
+
+Para entender as prioridades atuais e como ajudar na documentação, leia nosso [Guia de Contribuição](CONTRIBUTING.md).
+
+---
+
+## 🚀 Quick Start (Documentação Local)
 
 ```bash
 # Clone o repositório
@@ -103,3 +117,7 @@ O backend continua conectando no PostgreSQL pela rede interna do Compose em `db:
 ## Licença
 
 Projeto acadêmico desenvolvido para fins educacionais no Laboratório de Inteligência Artificial (AILAB).
+O código fonte é disponibilizado sob a [MIT License](LICENSE).
+
+---
+*Consulte o [Changelog](CHANGELOG.md) para o histórico de versões e nossa [Política de Segurança](SECURITY.md) para o fluxo de relato de vulnerabilidades.*

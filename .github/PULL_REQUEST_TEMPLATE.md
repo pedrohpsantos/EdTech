@@ -17,7 +17,9 @@ Antes de solicitar a revisão, certifique-se de que os itens abaixo foram atendi
 - [ ] **Nenhum dado sensível** (chaves de API, credenciais, segredos de infra) foi exposto no texto.
 
 ### Padrões do Repositório
-- [ ] O título do PR e os commits seguem a convenção do projeto (ex: `docs: ...`, `feat: ...`).
+- [ ] O título do PR e os commits seguem a convenção do projeto (ex: `docs: ...`, `chore: ...`).
+- [ ] O PR **não adiciona placeholders públicos** (ex: e-mails falsos) ou **comandos não verificáveis** de módulos ainda não finalizados.
+- [ ] Links cruzados entre `README.md`, `CONTRIBUTING.md` e a documentação interna foram atualizados se necessário.
 - [ ] (Opcional) Se for uma nova página, ela foi devidamente registrada na estrutura de navegação do `mkdocs.yml`?
 
 ---

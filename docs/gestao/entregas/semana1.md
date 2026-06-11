@@ -1,6 +1,6 @@
 # :material-rocket-launch: Semana 1 — Setup e Fundação
 
-<span class="status-badge">✅ Concluída</span>
+<span class="status-badge"> Concluída</span>
 
 **Período:** 12/05/2026 – 18/05/2026
 

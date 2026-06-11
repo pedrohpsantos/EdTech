@@ -24,14 +24,16 @@ Template padrão para registro das reuniões da equipe EdTech. Copie a estrutura
 
 ## Participantes
 
+*(Use ✅ para presente e ❌ para ausente)*
+
 | Nome | Presente |
 | :--- | :---: |
-| Pedro Henrique P. Santos | ⬜ |
-| Alana Cristyna F. Dias | ⬜ |
-| Arthur Carvalho Leite | ⬜ |
-| Luis Gustavo F. Nunes | ⬜ |
-| Mariana S. F. Andrade | ⬜ |
-| Mateus Alves Araújo | ⬜ |
+| Pedro Henrique P. Santos |  |
+| Alana Cristyna F. Dias |  |
+| Arthur Carvalho Leite |  |
+| Luis Gustavo F. Nunes |  |
+| Mariana S. F. Andrade |  |
+| Mateus Alves Araújo |  |
 
 ## Pauta
 
@@ -51,8 +53,8 @@ Template padrão para registro das reuniões da equipe EdTech. Copie a estrutura
 
 | Ação | Responsável | Prazo | Status |
 | :--- | :--- | :---: | :---: |
-| | | DD/MM | ⬜ |
-| | | DD/MM | ⬜ |
+| | | DD/MM |  |
+| | | DD/MM |  |
 
 ## Impedimentos Levantados
 

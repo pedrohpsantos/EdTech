@@ -11,26 +11,23 @@ Para contribuir com o projeto, você precisa ter as seguintes ferramentas instal
 - **uv**: Gerenciador de pacotes Python
 - **Docker**: Engine e Docker Compose (Banco de dados e serviços isolados)
 
-## 2. Setup do Ambiente Local
+## 2. Estágio Atual do Projeto e Contribuições
 
-### 2.1 Banco de Dados (Docker)
-Suba a infraestrutura base (PostgreSQL 15):
-```bash
-docker-compose -f infra/docker-compose.yml up -d db
-```
+O repositório EdTech encontra-se na fase de **fundação de governança e arquitetura técnica**. A estrutura de documentação está madura e consolidada através do paradigma *Docs-as-Code*. Contudo, os módulos de aplicação (Backend Java e Frontend React) estão em desenvolvimento ativo de scaffolding.
 
-### 2.2 Backend (Spring Boot)
-# TODO: documentar este passo (comandos exatos do Maven/Gradle pendentes, pois o diretório do backend ainda não foi preenchido)
+### 2.1 O que aceitamos neste momento:
+- Adição ou melhoria na documentação técnica (MkDocs).
+- Propostas de revisão ou detalhamento de Arquitetura (novas ADRs, aprimoramento do C4 Model).
+- Melhorias na clareza dos requisitos de produto, jornadas de usuário e personas.
+- Ajustes editoriais, correção de links e consistência narrativa.
 
-### 2.3 Frontend (React + Vite)
-Para rodar a interface de usuário:
-```bash
-cd docvault/frontend
-# TODO: documentar este passo (comandos de instalação, ex: npm install)
-# TODO: documentar este passo (comandos de execução, ex: npm run dev)
-```
+### 2.2 O que NÃO aceitamos neste momento:
+- Pull Requests introduzindo código de aplicação funcional de backend ou frontend.
+- Criação de novos endpoints de API, migrações de banco de dados ou views no frontend.
 
-### 2.4 Documentação (MkDocs)
+> **Nota:** Os comandos finais de setup do produto e infraestrutura serão documentados oficialmente assim que a estrutura dos módulos estiver estabilizada.
+
+## 3. Setup da Documentação Local (MkDocs)
 Para rodar o site de documentação localmente e visualizar suas edições:
 ```bash
 # Na raiz do projeto, instale as dependências com uv

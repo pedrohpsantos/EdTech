@@ -69,20 +69,20 @@ Definição do Produto Mínimo Viável (MVP) do EdTech — o menor conjunto de f
 
 ```mermaid
 flowchart LR
-    subgraph MVP["🏁 MVP"]
+    subgraph MVP[" MVP"]
         M1["Login seguro"]
         M2["Upload PDF"]
         M3["Listagem filtrada"]
         M4["Logs de auditoria"]
     end
 
-    subgraph Inc1["📦 Incremento 1"]
+    subgraph Inc1[" Incremento 1"]
         I1["Painel orientador"]
         I2["Isolamento por projeto"]
         I3["Aprovação de docs"]
     end
 
-    subgraph Inc2["📦 Incremento 2"]
+    subgraph Inc2[" Incremento 2"]
         I4["Consulta de logs com filtros"]
         I5["Exportação de relatórios"]
         I6["Notificações"]

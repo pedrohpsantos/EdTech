@@ -1,6 +1,6 @@
 # :material-rocket-launch: Semana 2 — Lean Inception, Requisitos e Arquitetura
 
-<span class="status-badge">✅ Concluída</span>
+<span class="status-badge"> Concluída</span>
 
 **Período:** 19/05/2026 – 25/05/2026
 
@@ -31,7 +31,7 @@ Executar o Lean Inception completo, levantar e especificar todos os requisitos d
 - [x] RF02 — Upload e Gerenciamento de Documentos (7 requisitos)
 - [x] RF03 — Orientador e Isolamento (4 requisitos)
 - [x] RF04 — Auditoria (5 requisitos)
-- [x] Matriz de rastreabilidade (Requisitos ↔ Funcionalidades ↔ Personas)
+- [x] Matriz de rastreabilidade (Requisitos  Funcionalidades  Personas)
 
 ### :material-shield-check: Requisitos Não Funcionais
 

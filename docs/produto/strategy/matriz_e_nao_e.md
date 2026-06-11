@@ -50,7 +50,7 @@ Alinhamento de expectativas sobre os limites e o escopo do EdTech.
 
 ```mermaid
 flowchart LR
-    subgraph Dentro["✅ Dentro do Escopo"]
+    subgraph Dentro[" Dentro do Escopo"]
         A["Upload de documentos"]
         B["Autenticação JWT"]
         C["Isolamento por autor"]
@@ -58,7 +58,7 @@ flowchart LR
         E["Painel do orientador"]
     end
 
-    subgraph Fora["❌ Fora do Escopo"]
+    subgraph Fora[" Fora do Escopo"]
         F["Peer review"]
         G["Busca semântica"]
         H["Detecção de plágio"]

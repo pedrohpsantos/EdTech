@@ -1,4 +1,5 @@
 ---
+description: EdTech — Plataforma acadêmica para centralização, gerenciamento e auditoria de publicações científicas.
 hide:
   - navigation
   - toc
@@ -6,9 +7,9 @@ hide:
 
 <div class="md-hero" markdown>
 
-<span class="hero-badge">🚧 Em Desenvolvimento — AILAB Makers</span>
+<span class="hero-badge"> Em Desenvolvimento — AILAB Makers</span>
 
-# :material-school: EdTech
+# EdTech
 
 Plataforma acadêmica para centralização, gerenciamento e auditoria de publicações científicas, relatórios de pesquisa e datasets — construída para laboratórios universitários, grupos de iniciação científica e programas de pós-graduação.
 
