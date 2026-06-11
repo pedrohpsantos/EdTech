@@ -1,4 +1,4 @@
-package com.docvault.service;
+package com.edTech.service;
 
 public class InvalidCredentialsException extends RuntimeException {
 

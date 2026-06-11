@@ -1,6 +1,6 @@
-package com.docvault.dto;
+package com.edTech.dto;
 
-import com.docvault.model.User;
+import com.edTech.model.User;
 
 import java.time.Instant;
 

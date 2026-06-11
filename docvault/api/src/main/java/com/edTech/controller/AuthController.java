@@ -1,11 +1,11 @@
-package com.docvault.controller;
+package com.edTech.controller;
 
-import com.docvault.dto.LoginRequest;
-import com.docvault.dto.RegisterRequest;
-import com.docvault.dto.UserResponse;
-import com.docvault.model.User;
-import com.docvault.service.JwtService;
-import com.docvault.service.UserService;
+import com.edTech.dto.LoginRequest;
+import com.edTech.dto.RegisterRequest;
+import com.edTech.dto.UserResponse;
+import com.edTech.model.User;
+import com.edTech.service.JwtService;
+import com.edTech.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;

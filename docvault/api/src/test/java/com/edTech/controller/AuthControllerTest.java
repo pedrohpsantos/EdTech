@@ -1,8 +1,8 @@
-package com.docvault.controller;
+package com.edTech.controller;
 
-import com.docvault.model.User;
-import com.docvault.repository.UserRepository;
-import com.docvault.service.JwtService;
+import com.edTech.model.User;
+import com.edTech.repository.UserRepository;
+import com.edTech.service.JwtService;
 import jakarta.servlet.http.Cookie;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

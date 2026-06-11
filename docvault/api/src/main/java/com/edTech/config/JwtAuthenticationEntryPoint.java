@@ -1,7 +1,7 @@
-package com.docvault.config;
+package com.edTech.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.docvault.dto.ErrorResponse;
+import com.edTech.dto.ErrorResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;

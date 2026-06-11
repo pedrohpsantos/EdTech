@@ -1,6 +1,6 @@
-package com.docvault.service;
+package com.edTech.service;
 
-import com.docvault.model.User;
+import com.edTech.model.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;

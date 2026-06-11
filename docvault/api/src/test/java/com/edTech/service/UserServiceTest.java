@@ -1,9 +1,9 @@
-package com.docvault.service;
+package com.edTech.service;
 
-import com.docvault.dto.RegisterRequest;
-import com.docvault.model.User;
-import com.docvault.model.UserRole;
-import com.docvault.repository.UserRepository;
+import com.edTech.dto.RegisterRequest;
+import com.edTech.model.User;
+import com.edTech.model.UserRole;
+import com.edTech.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

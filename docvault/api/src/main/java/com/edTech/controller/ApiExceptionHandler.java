@@ -1,9 +1,9 @@
-package com.docvault.controller;
+package com.edTech.controller;
 
-import com.docvault.dto.ErrorResponse;
-import com.docvault.service.DuplicateEmailException;
-import com.docvault.service.InvalidCredentialsException;
-import com.docvault.service.InvalidInstitutionalEmailException;
+import com.edTech.dto.ErrorResponse;
+import com.edTech.service.DuplicateEmailException;
+import com.edTech.service.InvalidCredentialsException;
+import com.edTech.service.InvalidInstitutionalEmailException;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,9 +1,9 @@
-package com.docvault.service;
+package com.edTech.service;
 
-import com.docvault.dto.RegisterRequest;
-import com.docvault.model.User;
-import com.docvault.model.UserRole;
-import com.docvault.repository.UserRepository;
+import com.edTech.dto.RegisterRequest;
+import com.edTech.model.User;
+import com.edTech.model.UserRole;
+import com.edTech.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

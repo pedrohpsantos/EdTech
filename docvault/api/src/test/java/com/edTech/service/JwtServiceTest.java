@@ -1,7 +1,7 @@
-package com.docvault.service;
+package com.edTech.service;
 
-import com.docvault.model.User;
-import com.docvault.model.UserRole;
+import com.edTech.model.User;
+import com.edTech.model.UserRole;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.junit.jupiter.api.BeforeEach;
