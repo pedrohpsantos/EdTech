@@ -50,3 +50,11 @@ O **EdTech** surge como uma camada de governança acadêmica.
 | **Moderna** | UI state-of-the-art, glassmorphism sutil. |
 | **Institucional**| Mantém a seriedade que as universidades exigem. |
 | **Inovadora** | Abordagem nova para um problema antigo. |
+
+---
+
+## Histórico de Versões
+
+| Versão | Data | Descrição | Autor |
+| :---: | :---: | :--- | :--- |
+| `1.0` | 09/06/2026 | Criação da identidade visual e storytelling | Pedro Henrique P. Santos |
