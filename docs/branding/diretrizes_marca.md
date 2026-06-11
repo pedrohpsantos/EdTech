@@ -74,3 +74,11 @@ Abaixo você confere as amostras dos principais materiais e banners gerados para
 ![Social Preview](../assets/imgs/social-preview.png)
 ![OG Image](../assets/imgs/og-image.png)
 
+---
+
+## Histórico de Versões
+
+| Versão | Data | Descrição | Autor |
+| :---: | :---: | :--- | :--- |
+| `1.0` | 09/06/2026 | Consolidação das diretrizes de marca e galeria de assets | Pedro Henrique P. Santos |
+
