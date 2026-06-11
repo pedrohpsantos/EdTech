@@ -87,3 +87,11 @@ Sombras sutis tingidas com o **Deep Purple** para evitar o aspecto "sujo" de som
 --shadow-md: 0 12px 30px rgba(74,20,140,.12);
 --shadow-lg: 0 18px 42px rgba(74,20,140,.16);
 ```
+
+---
+
+## Histórico de Versões
+
+| Versão | Data | Descrição | Autor |
+| :---: | :---: | :--- | :--- |
+| `1.0` | 09/06/2026 | Documentação do Design System e Tokens | Pedro Henrique P. Santos |

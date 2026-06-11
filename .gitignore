@@ -16,7 +16,7 @@ docvault/api/target/
 .mvn/
 
 # Frontend e Node
-frontend/node_modules/
+node_modules/
 frontend/dist/
 
 # Qualidade e Logs (Python)
