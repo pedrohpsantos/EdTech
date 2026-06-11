@@ -72,6 +72,21 @@ public class AuthController {
     }
 
 
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logout() {
+        ResponseCookie clearedCookie = ResponseCookie.from("token", "")
+                .httpOnly(true)
+                .secure(secureCookie)
+                .sameSite("Lax")
+                .path("/")
+                .maxAge(0)
+                .build();
+
+        return ResponseEntity.ok()
+                .header("Set-Cookie", clearedCookie.toString())
+                .build();
+    }
+
     @GetMapping("/me")
     public ResponseEntity<UserResponse> me(Authentication authentication) {
         User user = (User) authentication.getPrincipal();
@@ -82,7 +97,7 @@ public class AuthController {
         return ResponseCookie.from("token", token)
                 .httpOnly(true)
                 .secure(secureCookie)
-                .sameSite("Strict")
+                .sameSite("Lax")
                 .path("/")
                 .maxAge(Duration.ofMinutes(jwtExpirationMinutes))
                 .build();
