@@ -155,7 +155,7 @@ Caso o frontend (`app.meusistema.com`) e o backend (`api.outrosistema.com`) resi
 
 ## Histórico de Versão
 
-| Versão | Data | Autor | Descrição das Alterações |
-|--------|------|-------|--------------------------|
-| 1.1 | 11/06/2026 | EdTech Team | Refatoração e melhoria da documentação. Inclusão de dicas, checklists e formatação aprimorada com Admonitions do MkDocs. |
-| 1.0 | 11/06/2026 | EdTech Team | Versão inicial detalhando a configuração de CORS e credenciais em desenvolvimento e produção. |
+| Versão | Data | Descrição | Autor |
+|--------|------|-----------|-------|
+| 1.0 | 30/05/2026 | Criação do documento | Pedro Henrique P. Santos |
+| 1.1 | 30/05/2026 | Refino do threat model e estilos visuais | Pedro Henrique P. Santos |
