@@ -3,9 +3,10 @@ package com.edTech.dto;
 import com.edTech.model.User;
 
 import java.time.Instant;
+import java.util.UUID;
 
 public record UserResponse(
-        Long id,
+        UUID id,
         String name,
         String email,
         String role,

@@ -7,28 +7,43 @@ import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Column;
+import jakarta.persistence.Table;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.EnumType;
 
 @Entity
+@Table(name = "audit_logs")
 public class AuditLog {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(unique = true, nullable = false)
-    public UUID id;
+    private UUID id;
 
-    public UUID userId;
+    @Column(name = "user_id", nullable = false)
+    private UUID userId;
 
-    public AcaoAuditoria action;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private AcaoAuditoria action;
 
-    public String resourceType;
+    @Column(name = "resource_type", nullable = false)
+    private String resourceType;
 
-    public UUID resourceId;
+    @Column(name = "resource_id", nullable = false)
+    private UUID resourceId;
 
-    public String ipAddress;
+    @Column(name = "ip_address", nullable = false)
+    private String ipAddress;
 
-    public String details;
+    private String details;
 
-    public LocalDateTime createdAt;
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime createdAt;
+
+    public UUID getId() {
+        return id;
+    }
 
     public UUID getUserId() {
         return userId;
