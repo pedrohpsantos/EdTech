@@ -127,6 +127,7 @@ nav:
       - Armazenamento em Nuvem: arquitetura/nuvem.md
       - Arquitetura de Dados: arquitetura/dados.md
       - Segurança e AppSec: arquitetura/seguranca_app.md
+      - Configuração CORS: cors-configuration.md
       - Decisões Técnicas (ADRs):
           - ADR 0001 (Cloud Storage): arquitetura/adrs/0001-armazenamento-gcs.md
           - ADR 0002 (Autenticação JWT): arquitetura/adrs/0002-autenticacao-jwt.md
