@@ -1,14 +1,16 @@
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
-import {login} from '../services/api'
+import { useAuth } from "../context/authContext" 
+import ThemeToggle from "../components/themeToggle"
 function Login(){
     const [email, setEmail] = useState('')
     const [senha, setSenha] = useState('')
     const [erro, setErro] = useState('')
     const navigate = useNavigate()
+    const {handleLogin} = useAuth()
     const handleSubmit = async() => {
         try{
-            const resultado = await login(email,senha)
+            const resultado = await handleLogin(email,senha)
             if(resultado.sucesso == true){
                 navigate ('/dashboard')
             }else {
@@ -21,6 +23,7 @@ function Login(){
     }
     return(
     <div className="container">
+        <ThemeToggle/>
         <h1 style={{color: '#220c46'}}>LOGIN</h1>
         <div className="d-flex justify-content-center">
             <div className="col-md-4">
