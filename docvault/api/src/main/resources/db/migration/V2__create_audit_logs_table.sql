@@ -14,4 +14,4 @@ CREATE TABLE IF NOT EXISTS audit_logs (
     ip_address VARCHAR(45) NOT NULL,
     details TEXT,
     created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW()
-)
+);
