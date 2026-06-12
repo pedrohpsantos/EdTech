@@ -213,7 +213,7 @@ Iniciar a implementação do MVP do EdTech com foco em três frentes paralelas: 
 
 ## Próximos Passos
 
-→ [Semana 4 — Integração, Rotas e Refinamento de Escopo](semana4.md): Fechar débitos de autenticação (#3, #4, #5) e iniciar a Fase 3 (Upload de Documentos + CI/CD)
+→ [Semana 4 — Integração, Rotas e Refinamento de Escopo](semana4.md)
 
 ← [Semana 2 — Lean Inception, Requisitos e Arquitetura](semana2.md)
 

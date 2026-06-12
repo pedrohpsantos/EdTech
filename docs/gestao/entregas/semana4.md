@@ -106,6 +106,8 @@ Consolidar tecnicamente a integração entre o Frontend (React) e o Backend (Spr
 | **Pedro Henrique** (Tech Lead) | Gestão e Frontend | Reversão do *scope creep* para o MVP, criação de relatórios, atas e CSS do Modo Escuro |
 | **Alana Cristyna** | Frontend | Implementação do `api.js` e do componente `PrivateRoute` no React |
 | **Luis Gustavo** | Integração | Validação dos cookies e endpoints de Auth integrados ao React |
+| **Mateus Alves** | Backend | Suporte na configuração do CORS e revisão da camada de segurança |
+| **Mariana Andrade** | Qualidade | Validação das rotas integradas e revisão técnica da documentação |
 | **Arthur** | - | *Ausente por motivos de saúde* |
 
 ---
@@ -137,7 +139,7 @@ Consolidar tecnicamente a integração entre o Frontend (React) e o Backend (Spr
 
 ## Próximos Passos
 
-→ [Semana 5] Iniciar o ciclo resolvendo urgentemente a configuração do Flyway (#72) e os contratos da API (#73), liberando caminho para a entidade de Documentos (#13).
+→ Sprint 5: Iniciar Fase 3 (Upload de Documentos, Flyway e Contratos de API).
 
 ← [Semana 3 — Implementação da Autenticação e Estrutura Base](semana3.md)
 
