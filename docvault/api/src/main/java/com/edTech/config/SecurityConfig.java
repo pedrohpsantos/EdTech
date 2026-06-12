@@ -39,7 +39,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                // API stateless: JWT em cookie HttpOnly com SameSite=Lax, sem sessão server-side.
+                // API stateless: JWT em cookie HttpOnly com SameSite=Strict, sem sessão server-side.
                 .csrf(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
