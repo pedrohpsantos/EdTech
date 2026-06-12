@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS projects(
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     title VARCHAR(120) NOT NULL ,
-    description VARCHAR(500) NOT NULL,
+    description TEXT NOT NULL,
     advisor_id UUID,
     created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
