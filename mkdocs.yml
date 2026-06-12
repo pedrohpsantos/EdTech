@@ -148,11 +148,13 @@ nav:
       - Entregas:
           - Semana 1: gestao/entregas/semana1.md
           - Semana 2: gestao/entregas/semana2.md
-          - Semanas 3: gestao/entregas/semana3.md
+          - Semana 3: gestao/entregas/semana3.md
+          - Semana 4: gestao/entregas/semana4.md
       - Reuniões:
           - Índice de Atas: gestao/reunioes/atas.md
           - Ata de Reunião (29/05): gestao/reunioes/ata-29-05-2026.md
           - Ata de Reunião (05/06): gestao/reunioes/ata-05-06-2026.md
+          - Ata de Reunião (12/06): gestao/reunioes/ata-12-06-2026.md
   - Design:
       - Identidade Visual: branding/identidade_visual.md
       - Design System: branding/design_system.md
