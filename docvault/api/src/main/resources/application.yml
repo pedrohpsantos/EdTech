@@ -33,7 +33,7 @@ management:
         enabled: true
 
 jwt:
-  secret: ${JWT_SECRET:uma-chave-secreta-bem-longa-para-desenvolvimento-local-nao-usar-em-producao}
+  secret: ${JWT_SECRET:}
   expiration-minutes: ${JWT_EXPIRATION_MINUTES:60}
   cookie-secure: ${JWT_COOKIE_SECURE:false}
 
