@@ -3,7 +3,7 @@ REVOKE UPDATE, DELETE ON TABLE audit_logs FROM edtech_user;
 CREATE OR REPLACE FUNCTION prevent_audit_logs_delete()
     RETURNS TRIGGER AS $$
 BEGIN
-    RAISE EXCEPTION 'Deletions from the audit_logs table are not allowed.';
+    RAISE EXCEPTION 'Não é permitido deletar conteúdo da tabela audit_logs.';
 END;
 $$ LANGUAGE plpgsql;
 
