@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import {register} from '../services/api'
+import ThemeToggle from "../components/themeToggle"
 function Register(){
     const [nome, setNome] = useState('')
     const [email, setEmail] = useState('')
@@ -27,6 +28,7 @@ function Register(){
         }
     return(
         <div className="container">
+        <ThemeToggle/>
         <h1 style={{color: '#220c46'}}>CADASTRE-SE AQUI</h1>
         <div className="d-flex justify-content-center">
             <div className="col-md-4">
