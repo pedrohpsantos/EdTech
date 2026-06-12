@@ -1,4 +1,4 @@
-# :material-flag-checkered: Entrega da Semana 4 (Sprint 4)
+# :material-flag-checkered: Semana 4 — Integração, Rotas e Refinamento de Escopo
 
 <span class="status-badge"> Concluída</span>
 
@@ -6,47 +6,84 @@
 
 ---
 
-## Objetivo das Sprints
+## Objetivo da Sprint
 
-A quarta semana foi marcada por dois grandes eixos: a consolidação técnica da integração entre as camadas de Frontend e Backend, e um importante alinhamento de escopo gerencial frente aos protótipos de design propostos para evitar *scope creep*.
+Consolidar tecnicamente a integração entre o Frontend (React) e o Backend (Spring Boot), garantir a proteção das rotas com JWT via Cookies `HttpOnly`, e alinhar o escopo gerencial para conter o *scope creep* identificado nos protótipos de design.
 
 ---
 
 ## Entregas Realizadas
 
-### :material-server-network: Backend e Integração
+### :material-server-network: Backend — CORS e Segurança
 
 - [x] Configuração de `CorsConfigurationSource` no `SecurityConfig`
-- [x] Aceite de origens cruzadas (`localhost:5173`)
-- [x] Aceite de envio de credenciais (cookies JWT) via `allowCredentials = true`
-- [x] Liberação de métodos `GET, POST, PUT, DELETE, OPTIONS`
+- [x] Aceite de origens cruzadas mapeado para o ambiente de dev (`localhost:5173`)
+- [x] Aceite do envio de credenciais (cookies JWT) via `allowCredentials = true`
+- [x] Liberação global dos métodos `GET, POST, PUT, DELETE, OPTIONS`
+
+**Commits relacionados:**
+
+| Hash | Data | Autor | Descrição |
+| :--- | :---: | :--- | :--- |
+| `a654efe` | 12/06 | Pedro Henrique | `Update SecurityConfig.java for CORS` |
 
 **Branch:** `feat/cors-integration`  
 **Issue:** [#16](https://github.com/pedrohpsantos/EdTech/issues/16)
 
 ---
 
-### :material-monitor-cellphone: Frontend — Serviços e Experiência
+### :material-monitor-cellphone: Frontend — Serviços HTTP e Rotas Protegidas
 
-- [x] Camada de serviço HTTP `api.js` mapeada com funções completas (login, register, logout, getMe)
-- [x] Envio de formulários de Login e Registro perfeitamente acoplado ao Spring Boot
-- [x] Implementação de rotas protegidas (`PrivateRoute`) com validação automática da sessão
-- [x] Implementação da acessibilidade visual de Modo Claro/Escuro via `localStorage` e variáveis CSS globais
+- [x] Camada de serviço HTTP `api.js` mapeada usando `fetch` com `credentials: 'include'`
+- [x] Acoplamento de sucesso entre formulários de Login/Registro e o Spring Boot
+- [x] Implementação de `PrivateRoute` validando a sessão ativa em `/dashboard`
+- [x] Redirecionamentos de login resolvidos perfeitamente
 
-**Branches:** `feat/api-service`, `feat/theme-toggle`  
-**Issues:** [#17](https://github.com/pedrohpsantos/EdTech/issues/17), [#7](https://github.com/pedrohpsantos/EdTech/issues/7), [#18](https://github.com/pedrohpsantos/EdTech/issues/18)
+**Commits relacionados:**
+
+| Hash | Data | Autor | Descrição |
+| :--- | :---: | :--- | :--- |
+| `14f52b7` | 08/06 | Alana Cristyna | `feat: implementa api.js e chamadas de login/register` |
+| `c628f41` | 09/06 | Alana Cristyna | `feat: adiciona componente PrivateRoute para protecao de dashboard` |
+
+**Branches:** `feat/api-service`, `feat/frontend-auth`  
+**Issues:** [#17](https://github.com/pedrohpsantos/EdTech/issues/17), [#7](https://github.com/pedrohpsantos/EdTech/issues/7)
+
+---
+
+### :material-palette: Frontend — Acessibilidade Visual (Modo Escuro)
+
+- [x] Implementação nativa de Modo Claro/Escuro usando variáveis CSS puras (`data-theme`)
+- [x] Persistência do estado de preferência visual no `localStorage`
+- [x] Integração de um componente genérico de `ThemeToggle` no cabeçalho
+
+**Commits relacionados:**
+
+| Hash | Data | Autor | Descrição |
+| :--- | :---: | :--- | :--- |
+| `9d35a82` | 10/06 | Pedro Henrique | `feat: add light/dark mode css variables and toggle hook` |
+
+**Branch:** `feat/theme-toggle`  
+**Issue:** [#18](https://github.com/pedrohpsantos/EdTech/issues/18)
 
 ---
 
 ### :material-file-document-edit: Gestão e Refinamento de Escopo
 
-- [x] Avaliação do protótipo UX/UI de alta fidelidade
-- [x] Identificação de *scope creep* (Analytics, Compliance LGPD, Design System complexo)
-- [x] Reversão e *hard reset* de documentações e issues para o MVP core (F01 a F22)
-- [x] Documentação da primeira rotação de papéis da equipe (ciclo exato de duas semanas)
-- [x] Criação de Issues da Sprint 5 e documentação de Atas de Reunião
+- [x] Avaliação aprofundada do protótipo de UI/UX proposto pelo design
+- [x] Identificação de fuga de escopo (Analytics, Dashboard de Auditor LGPD, Design System customizado demais)
+- [x] Reversão completa do planejamento para o formato original (F01 a F22)
+- [x] Fechamento e rejeição permanente das Issues excedentes da V2
+- [x] Execução e formalização da nossa primeira rotação de papéis de trabalho
 
-**Issues Relacionadas:** Extras do protótipo permanentemente fechadas (#62 a #67)
+**Commits relacionados:**
+
+| Hash | Data | Autor | Descrição |
+| :--- | :---: | :--- | :--- |
+| `e301b04` | 12/06 | Pedro Henrique | `docs: sync documentation from develop branch to revert scope creep` |
+| `b5b9eb0` | 12/06 | Pedro Henrique | `docs: registrar ata de reuniao, entrega da sprint 4 e rotacoes` |
+
+**Issues Fechadas por Rejeição:** #62 a #67
 
 ---
 
@@ -54,11 +91,11 @@ A quarta semana foi marcada por dois grandes eixos: a consolidação técnica da
 
 | Métrica | Valor |
 | :--- | :---: |
-| Issues entregues / fechadas | 4 (Issues #7, #16, #17, #18) |
-| Issues de Scope Creep fechadas | 6 (Issues #62 a #67) |
-| Reuniões e Atas documentadas | 1 (12/06/2026) |
-| Entregas de Frontend | Integração da API, Rotas Protegidas, Modo Escuro |
-| Mudanças de Gestão | Primeira Rotação, Ajustes de Escopo |
+| Commits no período | ~12 |
+| Issues entregues / concluídas | 4 (Issues #7, #16, #17, #18) |
+| Issues de Scope Creep rejeitadas | 6 (Issues #62 a #67) |
+| Reuniões e Atas documentadas | 1 (Ata 12/06/2026) |
+| Páginas de documentação atualizadas | 4 |
 
 ---
 
@@ -66,8 +103,9 @@ A quarta semana foi marcada por dois grandes eixos: a consolidação técnica da
 
 | Membro | Frente | Contribuição Principal |
 | :--- | :--- | :--- |
-| **Pedro Henrique** (Tech Lead) | Gestão e Arquitetura | Identificação do scope creep, reversão para o MVP, criação de novas issues, atas e relatórios |
-| **Equipe Dev** | Frontend/Backend | Resolução do CORS, componentização do PrivateRoute e do ThemeToggle, configuração do `api.js` |
+| **Pedro Henrique** (Tech Lead) | Gestão e Frontend | Reversão do *scope creep* para o MVP, criação de relatórios, atas e CSS do Modo Escuro |
+| **Alana Cristyna** | Frontend | Implementação do `api.js` e do componente `PrivateRoute` no React |
+| **Luis Gustavo** | Integração | Validação dos cookies e endpoints de Auth integrados ao React |
 | **Arthur** | - | *Ausente por motivos de saúde* |
 
 ---
@@ -75,13 +113,13 @@ A quarta semana foi marcada por dois grandes eixos: a consolidação técnica da
 ## Aprendizados e Decisões
 
 !!! note "Decisão: Contenção de Scope Creep"
-    O desafio de garantir que a equipe de UI não projete features além do MVP foi resolvido com um "hard reset". Voltamos o foco estritamente às Personas e Funcionalidades Core originais.
+    O desafio de garantir que a equipe não codifique além do que foi acordado no Canvas MVP foi resolvido. Fizemos um *hard reset* de documentações que protegiam a plataforma de crescer de forma irresponsável na Sprint 4.
 
-!!! note "Decisão: Novo Ciclo de Rotações"
-    O plano de rotações da equipe foi refinado para acontecer a cada **duas semanas exatas**, visando acelerar a proficiência full-stack de todos.
+!!! note "Decisão: Tempo de Rotações Fixado"
+    Após a execução da primeira rotação no dia 12/06, o plano foi ajustado de "aproximadamente" para **exatamente duas semanas**, melhorando a previsibilidade da gestão de equipe.
 
-!!! warning "Desafio: Ausência Técnica"
-    O desenvolvedor Arthur precisou se ausentar por problemas de saúde, impactando as tarefas sob sua gestão. A equipe foi alertada e se organizou para suprir os gargalos na transição para a Sprint 5.
+!!! warning "Desafio: Ausência Técnica de Membro"
+    Arthur não pôde atuar nesta Sprint por conta de problemas de saúde. Fizemos o balanceamento temporário de suas tarefas e acompanharemos a transição para a Sprint 5.
 
 ---
 
@@ -89,18 +127,19 @@ A quarta semana foi marcada por dois grandes eixos: a consolidação técnica da
 
 | Issue | Descrição | Impacto |
 | :---: | :--- | :--- |
-| #72 | Implementação Definitiva do Flyway (Correção do DDL-Auto) | Crítico — essencial para a base de dados em produção |
-| #73 | Contratos de API (Requests/Responses) | Alto — necessário para o trabalho em paralelo Frontend/Backend |
-| #13, #14 | Upload de Documentos e GCS | Alto — feature core do sistema |
-| #15 | Entidade de Projetos (Orientador) | Médio — preparação do painel |
+| #72 | Implementação Definitiva do Flyway (Correção do DDL-Auto) | Crítico — Sem o Flyway, o banco perderá dados ao subir pra nuvem |
+| #73 | Contratos de API (Requests/Responses) Sprint 5 | Alto — Fundamental para trabalhar em paralelo sem quebrar contratos |
+| #13 | Entidade Document e CRUD Backend | Alto — Feature Core de arquivos |
+| #14 | Tela de Upload Frontend | Alto — Feature Core de interface |
+| #15 | Entidade Project e Membros (Backend) | Médio — Preparação da base de dados |
 
 ---
 
 ## Próximos Passos
 
-→ Sprint 5: Fechar débitos de arquitetura (Flyway, Contratos API), iniciar Upload de Documentos e Painel de Auditoria/Orientador.
+→ [Semana 5] Iniciar o ciclo resolvendo urgentemente a configuração do Flyway (#72) e os contratos da API (#73), liberando caminho para a entidade de Documentos (#13).
 
-← [Semanas 3 — Implementação da Autenticação e Estrutura Base](semana3.md)
+← [Semana 3 — Implementação da Autenticação e Estrutura Base](semana3.md)
 
 ---
 
@@ -108,4 +147,5 @@ A quarta semana foi marcada por dois grandes eixos: a consolidação técnica da
 
 | Versão | Data | Descrição | Autor |
 | :---: | :---: | :--- | :--- |
-| `1.0` | 12/06/2026 | Criação do documento | Pedro Henrique P. Santos |
+| `1.0` | 12/06/2026 | Documentação inicial da Entrega 4 | Pedro Henrique P. Santos |
+| `1.1` | 12/06/2026 | Padronização e adição de tabelas de commits e debito técnico | Pedro Henrique P. Santos |
