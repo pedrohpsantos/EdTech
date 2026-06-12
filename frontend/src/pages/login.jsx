@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { useAuth } from "../context/authContext" 
+import ThemeToggle from "../components/themeToggle"
 function Login(){
     const [email, setEmail] = useState('')
     const [senha, setSenha] = useState('')
@@ -22,6 +23,7 @@ function Login(){
     }
     return(
     <div className="container">
+        <ThemeToggle/>
         <h1 style={{color: '#220c46'}}>LOGIN</h1>
         <div className="d-flex justify-content-center">
             <div className="col-md-4">
