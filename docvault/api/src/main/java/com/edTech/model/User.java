@@ -10,16 +10,20 @@ import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
+import org.hibernate.annotations.JdbcType;
+import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 
 import java.time.Instant;
+import java.util.UUID;
 
 @Entity
 @Table(name = "users")
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(updatable = false, nullable = false)
+    private UUID id;
 
     @Column(nullable = false, length = 120)
     private String name;
@@ -31,7 +35,8 @@ public class User {
     private String passwordHash;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 40)
+    @JdbcType(PostgreSQLEnumJdbcType.class)
+    @Column(nullable = false)
     private UserRole role = UserRole.RESEARCHER;
 
     @Column(nullable = false)
@@ -65,7 +70,7 @@ public class User {
         updatedAt = Instant.now();
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 

@@ -13,6 +13,7 @@ import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Date;
+import java.util.UUID;
 
 @Service
 public class JwtService {
@@ -41,7 +42,7 @@ public class JwtService {
 
         return Jwts.builder()
                 .subject(user.getEmail())
-                .claim("uid", user.getId())
+                .claim("uid", user.getId().toString())
                 .claim("role", user.getRole().name())
                 .issuedAt(Date.from(now))
                 .expiration(Date.from(expiresAt))
@@ -53,9 +54,10 @@ public class JwtService {
         return validateToken(token).getSubject();
     }
 
-    public Long getUserIdFromToken(String token) {
+    public UUID getUserIdFromToken(String token) {
         Claims claims = validateToken(token);
-        return claims.get("uid", Long.class);
+        String uidStr = claims.get("uid", String.class);
+        return UUID.fromString(uidStr);
     }
 
     public boolean isValid(String token, User user) {

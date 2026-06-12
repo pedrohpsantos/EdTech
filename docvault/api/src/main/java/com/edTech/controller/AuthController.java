@@ -56,20 +56,6 @@ public class AuthController {
                 .header("Set-Cookie", buildAuthCookie(token).toString())
                 .body(UserResponse.from(user));
     }
-    @PostMapping("/logout")
-    public ResponseEntity<Void> logout() {
-        ResponseCookie clearedCookie = ResponseCookie.from("token", "")
-                .httpOnly(true)
-                .secure(secureCookie)
-                .sameSite("Strict")
-                .path("/")
-                .maxAge(0)
-                .build();
-
-        return ResponseEntity.ok()
-                .header("Set-Cookie", clearedCookie.toString())
-                .build();
-    }
 
 
     @PostMapping("/logout")
