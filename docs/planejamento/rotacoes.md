@@ -92,7 +92,7 @@ flowchart LR
 
 ### Regras
 
-- :material-calendar-sync: Cada ciclo dura aproximadamente **duas semanas**
+- :material-calendar-sync: Cada ciclo dura **exatamente duas semanas**. A primeira rotação ocorreu hoje (12/06/2026).
 - :material-rotate-3d-variant: Ao final de cada ciclo, cada membro **muda de frente de trabalho**
 - :material-school: A rotação prioriza **aprendizado cruzado** entre produto, entrega, qualidade e operação
 - :material-crown: O Tech Lead permanece fixo e atua na coordenação da progressão técnica e na revisão das trocas
