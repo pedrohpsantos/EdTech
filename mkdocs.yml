@@ -138,6 +138,7 @@ nav:
           - ADR 0007 (Flyway Migrations): arquitetura/adrs/0007-flyway.md
           - ADR 0008 (GitHub Actions CI/CD): arquitetura/adrs/0008-github-actions.md
           - ADR 0009 (Docs-as-Code via MkDocs): arquitetura/adrs/0009-mkdocs.md
+  - API Reference: api/endpoints.md
   - Planejamento:
       - Roadmap do Produto: planejamento/roadmap.md
       - Trilha de Estudos: planejamento/trilha_estudos.md

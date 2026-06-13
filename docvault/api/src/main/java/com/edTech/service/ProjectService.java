@@ -1,0 +1,92 @@
+package com.edTech.service;
+
+import com.edTech.dto.ProjectRequestDTO;
+import com.edTech.dto.ProjectResponseDTO;
+import com.edTech.dto.AddProjectMemberDTO;
+import com.edTech.model.Project;
+import com.edTech.model.ProjectMember;
+import com.edTech.model.ProjectRole;
+import com.edTech.model.User;
+import com.edTech.repository.ProjectMemberRepository;
+import com.edTech.repository.ProjectRepository;
+import com.edTech.repository.UserRepository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
+@Service
+public class ProjectService {
+
+    private final ProjectRepository projectRepository;
+    private final ProjectMemberRepository projectMemberRepository;
+    private final UserRepository userRepository;
+
+    public ProjectService(ProjectRepository projectRepository, ProjectMemberRepository projectMemberRepository, UserRepository userRepository) {
+        this.projectRepository = projectRepository;
+        this.projectMemberRepository = projectMemberRepository;
+        this.userRepository = userRepository;
+    }
+
+    @Transactional
+    public ProjectResponseDTO createProject(ProjectRequestDTO request, UUID advisorId) {
+        User advisor = userRepository.findById(advisorId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        Project project = new Project();
+        project.setTitle(request.getTitle());
+        project.setDescription(request.getDescription());
+        project.setAdvisor(advisor);
+
+        project = projectRepository.save(project);
+
+        ProjectMember member = new ProjectMember();
+        member.setProject(project);
+        member.setUser(advisor);
+        member.setRole(ProjectRole.ADVISOR);
+        projectMemberRepository.save(member);
+
+        return mapToDTO(project);
+    }
+
+    public List<ProjectResponseDTO> listProjectsByUser(UUID userId) {
+        return projectRepository.findProjectsByUserId(userId)
+                .stream()
+                .map(this::mapToDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void addMember(UUID projectId, AddProjectMemberDTO dto, UUID advisorId) {
+        ProjectMember advisorMember = projectMemberRepository.findByProjectIdAndUserId(projectId, advisorId)
+                .orElseThrow(() -> new RuntimeException("User is not part of the project"));
+
+        if (advisorMember.getRole() != ProjectRole.ADVISOR) {
+            throw new RuntimeException("Only ADVISORS can add members");
+        }
+
+        User newUser = userRepository.findByEmail(dto.getEmail())
+                .orElseThrow(() -> new RuntimeException("User not found with email " + dto.getEmail()));
+
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new RuntimeException("Project not found"));
+
+        ProjectMember newMember = new ProjectMember();
+        newMember.setProject(project);
+        newMember.setUser(newUser);
+        newMember.setRole(ProjectRole.valueOf(dto.getRole().toUpperCase()));
+        projectMemberRepository.save(newMember);
+    }
+
+    private ProjectResponseDTO mapToDTO(Project project) {
+        ProjectResponseDTO dto = new ProjectResponseDTO();
+        dto.setId(project.getId());
+        dto.setTitle(project.getTitle());
+        dto.setDescription(project.getDescription());
+        dto.setAdvisorId(project.getAdvisor().getId());
+        dto.setCreatedAt(project.getCreatedAt());
+        return dto;
+    }
+}
