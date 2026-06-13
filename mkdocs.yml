@@ -106,28 +106,34 @@ markdown_extensions:
 
 nav:
   - Início: index.md
-  - Requisitos:
-      - Produto e Visão:
-          - Descoberta de Produto:
-              - Personas: produto/discovery/personas.md
-              - Jornadas do Usuário: produto/discovery/jornadas.md
-              - Brainstorming e MoSCoW: produto/discovery/brainstorming.md
-          - Estratégia de Produto:
-              - Visão e Escopo: produto/strategy/visao.md
-              - É / Não É / Faz / Não Faz: produto/strategy/matriz_e_nao_e.md
-              - Canvas MVP: produto/strategy/canvas_mvp.md
-      - Especificação Técnica:
-          - Requisitos Funcionais: produto/requisitos/funcionais.md
-          - Requisitos Não Funcionais: produto/requisitos/nao-funcionais.md
-      - Backlog Ágil:
+  - Produto e Negócio:
+      - Descoberta (Discovery):
+          - Personas: produto/discovery/personas.md
+          - Jornadas do Usuário: produto/discovery/jornadas.md
+          - Brainstorming e MoSCoW: produto/discovery/brainstorming.md
+      - Estratégia de Produto:
+          - Visão e Escopo: produto/strategy/visao.md
+          - É / Não É / Faz / Não Faz: produto/strategy/matriz_e_nao_e.md
+          - Canvas MVP: produto/strategy/canvas_mvp.md
+      - Requisitos e Backlog:
+          - Funcionais: produto/requisitos/funcionais.md
+          - Não Funcionais: produto/requisitos/nao-funcionais.md
           - Histórias de Usuário: produto/requisitos/historias.md
-  - Arquitetura:
-      - C4 Model: arquitetura/c4_model.md
+      - Planejamento Macro:
+          - Roadmap do Produto: produto/planejamento/roadmap.md
+          - Cronograma e Sprints: produto/planejamento/cronograma.md
+      - Identidade e Design:
+          - Identidade Visual: produto/branding/identidade_visual.md
+          - Design System: produto/branding/design_system.md
+          - Diretrizes da Marca: produto/branding/diretrizes_marca.md
+  - Arquitetura de Software:
       - Design Técnico: arquitetura/design_tecnico.md
-      - Armazenamento em Nuvem: arquitetura/nuvem.md
-      - Arquitetura de Dados: arquitetura/dados.md
-      - Segurança e AppSec: arquitetura/seguranca_app.md
-      - Configuração CORS: cors-configuration.md
+      - Diagramas de Sistema:
+          - C4 Model: arquitetura/diagramas/c4_model.md
+          - Arquitetura de Dados: arquitetura/diagramas/dados.md
+      - Infraestrutura e Segurança:
+          - Armazenamento em Nuvem: arquitetura/infraestrutura/nuvem.md
+          - Segurança e AppSec: arquitetura/infraestrutura/seguranca_app.md
       - Decisões Técnicas (ADRs):
           - ADR 0001 (Cloud Storage): arquitetura/adrs/0001-armazenamento-gcs.md
           - ADR 0002 (Autenticação JWT): arquitetura/adrs/0002-autenticacao-jwt.md
@@ -138,26 +144,27 @@ nav:
           - ADR 0007 (Flyway Migrations): arquitetura/adrs/0007-flyway.md
           - ADR 0008 (GitHub Actions CI/CD): arquitetura/adrs/0008-github-actions.md
           - ADR 0009 (Docs-as-Code via MkDocs): arquitetura/adrs/0009-mkdocs.md
-  - API Reference: api/endpoints.md
-  - Planejamento:
-      - Roadmap do Produto: planejamento/roadmap.md
-      - Trilha de Estudos: planejamento/trilha_estudos.md
-      - DoR & DoD (Critérios de Aceite): planejamento/dor_dod.md
-      - Cronograma e Sprints: planejamento/cronograma.md
-      - Papéis e Rotações: planejamento/rotacoes.md
-  - Gestão:
-      - Acordos do Time: gestao/agile/team_agreements.md
-      - Entregas:
-          - Semana 1: gestao/entregas/semana1.md
-          - Semana 2: gestao/entregas/semana2.md
-          - Semana 3: gestao/entregas/semana3.md
-          - Semana 4: gestao/entregas/semana4.md
-      - Reuniões:
+  - Desenvolvimento (DevEx):
+      - Setup e Onboarding: desenvolvimento/guia_local.md
+      - Frontend (Vite + React): desenvolvimento/frontend_vite.md
+      - Backend (Spring Boot): desenvolvimento/backend_spring.md
+      - Pipeline CI/CD: desenvolvimento/ci_cd.md
+      - Configuração de CORS: desenvolvimento/cors_configuration.md
+      - API Reference: desenvolvimento/api_endpoints.md
+  - Gestão e Metodologia Ágil:
+      - Ritos e Acordos:
+          - Acordos do Time: gestao/agile/team_agreements.md
+          - DoR & DoD: gestao/agile/dor_dod.md
+      - Time e Atribuições:
+          - Papéis e Rotações: gestao/equipe/rotacoes.md
+          - Trilha de Estudos: gestao/equipe/trilha_estudos.md
+      - Histórico de Sprints:
+          - Semana 1: gestao/historico_sprints/semana1.md
+          - Semana 2: gestao/historico_sprints/semana2.md
+          - Semana 3: gestao/historico_sprints/semana3.md
+          - Semana 4: gestao/historico_sprints/semana4.md
+      - Atas de Reuniões:
           - Índice de Atas: gestao/reunioes/atas.md
           - Ata de Reunião (29/05): gestao/reunioes/ata-29-05-2026.md
           - Ata de Reunião (05/06): gestao/reunioes/ata-05-06-2026.md
           - Ata de Reunião (12/06): gestao/reunioes/ata-12-06-2026.md
-  - Design:
-      - Identidade Visual: branding/identidade_visual.md
-      - Design System: branding/design_system.md
-      - Diretrizes da Marca: branding/diretrizes_marca.md
