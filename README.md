@@ -5,6 +5,8 @@
 # EdTech — Repositório Acadêmico
 
 [![Deploy MkDocs](https://github.com/pedrohpsantos/EdTech/actions/workflows/ci-docs.yml/badge.svg)](https://github.com/pedrohpsantos/EdTech/actions/workflows/ci-docs.yml)
+[![CI Backend](https://github.com/pedrohpsantos/EdTech/actions/workflows/ci-backend.yml/badge.svg)](https://github.com/pedrohpsantos/EdTech/actions/workflows/ci-backend.yml)
+[![CI Frontend](https://github.com/pedrohpsantos/EdTech/actions/workflows/ci-frontend.yml/badge.svg)](https://github.com/pedrohpsantos/EdTech/actions/workflows/ci-frontend.yml)
 ![Python](https://img.shields.io/badge/python-%3E%3D3.11-3776ab?logo=python&logoColor=white)
 ![MkDocs Material](https://img.shields.io/badge/docs-MkDocs%20Material-7c4dff?logo=materialformkdocs&logoColor=white)
 
