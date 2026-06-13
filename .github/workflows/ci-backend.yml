@@ -9,6 +9,9 @@ on:
             - 'docvault/api/**'
             - '.github/workflows/ci-backend.yml'
 
+permissions:
+  contents: read
+
 jobs: 
     build:
         runs-on: ubuntu-latest

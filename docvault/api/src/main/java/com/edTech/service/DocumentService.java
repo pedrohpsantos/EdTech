@@ -56,7 +56,11 @@ public class DocumentService {
             File dir = new File(UPLOAD_DIR);
             if (!dir.exists()) dir.mkdirs();
 
-            String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
+            String originalFilename = file.getOriginalFilename();
+            if (originalFilename != null && (originalFilename.contains("..") || originalFilename.contains("/") || originalFilename.contains("\\"))) {
+                throw new IllegalArgumentException("Invalid filename");
+            }
+            String fileName = UUID.randomUUID() + "_" + originalFilename;
             Path filePath = Paths.get(UPLOAD_DIR + fileName);
             Files.write(filePath, file.getBytes());
 
