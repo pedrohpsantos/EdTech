@@ -16,13 +16,16 @@ Iniciar a implementação do MVP do EdTech com foco em três frentes paralelas: 
 
 ### :material-server-network: Backend — Setup e Entidade User
 
+
 - [x] Projeto Spring Boot criado via Spring Initializr (Java 17, Maven)
 - [x] Dependências configuradas: Spring Web, Spring Security, Spring Data JPA, PostgreSQL Driver, Lombok, Validation
+
 - [x] Entidade `User` com campos: `id (UUID)`, `name`, `email`, `passwordHash`, `role`, `active`, `createdAt`, `updatedAt`
 - [x] `UserRepository` (interface JPA)
 - [x] `UserService` com métodos `register()` e `findByEmail()`
 - [x] `AuthController` com endpoint `POST /api/auth/register`
 - [x] Validação de domínio `@unb.br` no e-mail
+
 - [x] Senha hasheada via BCrypt (custo ≥ 12)
 - [x] Reestruturação dos pacotes para `com.docvault`
 
@@ -40,11 +43,13 @@ Iniciar a implementação do MVP do EdTech com foco em três frentes paralelas: 
 
 ### :material-monitor-cellphone: Frontend — Setup e Telas de Autenticação
 
+
 - [x] Projeto React criado com Vite (`npm create vite@latest frontend -- --template react`)
 - [x] Dependências instaladas: `react-router-dom`, `bootstrap`, `axios`
 - [x] Estrutura de pastas: `components/`, `pages/`, `services/`, `App.jsx`
 - [x] Página `/login` com formulário: e-mail + senha + botão "Entrar"
 - [x] Página `/register` com formulário: nome + e-mail + senha + confirmação
+
 - [x] Página `/dashboard` com mensagem de boas-vindas e botão "Sair"
 - [x] Configuração do React Router com rotas básicas
 
@@ -61,10 +66,14 @@ Iniciar a implementação do MVP do EdTech com foco em três frentes paralelas: 
 
 ### :material-test-tube: Testes Automatizados e Cobertura
 
+
 - [x] Testes unitários para `UserService`: registro com dados válidos, e-mail duplicado, domínio inválido
+
 - [x] Testes unitários para `JwtService`: geração de token, validação com token expirado, extração de ID
+
 - [x] Testes de integração para `AuthController`: register (201), register com e-mail inválido (400), login (200 + cookie), login com senha errada (401), `/me` sem cookie (401)
 - [x] Relatório de cobertura configurado com JaCoCo
+
 - [x] **Cobertura atingida: 92%** nos pacotes `service` e `controller` (meta: ≥ 80%)
 
 **Commits relacionados:**
@@ -80,10 +89,12 @@ Iniciar a implementação do MVP do EdTech com foco em três frentes paralelas: 
 
 ### :material-clipboard-text-clock: Módulo de Auditoria
 
+
 - [x] Entidade `AuditLog` com campos: `id`, `userId`, `action`, `resourceType`, `resourceId`, `ipAddress`, `details`, `createdAt`
 - [x] `AuditLogRepository`
 - [x] `AuditLogService` com método `log(action, userId, resourceType, resourceId, ip, details)`
 - [x] Enum `AcaoAuditoria` com ações: `LOGIN_SUCCESS`, `LOGIN_FAILED`, `LOGOUT`, `REGISTER`, `UPLOAD_SUCCESS`, etc.
+
 - [ ] Integração dos audit logs nos endpoints de auth (em andamento)
 
 **Commits relacionados:**
@@ -101,21 +112,37 @@ Iniciar a implementação do MVP do EdTech com foco em três frentes paralelas: 
 
 ### :material-file-document-edit: Documentação e Arquitetura
 
+
 - [x] 9 ADRs (Architecture Decision Records) publicados:
+
     - ADR 0001: Armazenamento GCS
+
     - ADR 0002: Autenticação JWT
+
     - ADR 0003: Cloud Run Serverless
+
     - ADR 0004: PostgreSQL
+
     - ADR 0005: Spring Boot
+
     - ADR 0006: SPA + API
+
     - ADR 0007: Flyway Migrations
+
     - ADR 0008: GitHub Actions CI/CD
+
     - ADR 0009: Docs-as-Code via MkDocs
+
 - [x] DoR & DoD atualizados com garantias de arquitetura, Flyway, CI/CD e Docs-as-Code
+
 - [x] Roadmap atualizado com framework Now / Next / Later
+
 - [x] Product Vision e Team Agreements documentados
+
 - [x] Landing page do GitHub Pages redesenhada com hero section customizada
+
 - [x] Diagramas Mermaid padronizados em toda a documentação
+
 - [x] Deploy automático no GitHub Pages operacional
 
 **Commits relacionados:**
@@ -133,10 +160,14 @@ Iniciar a implementação do MVP do EdTech com foco em três frentes paralelas: 
 
 ### :material-source-branch: Gestão de Branches e Processo
 
+
 - [x] 8 branches de feature criadas seguindo o padrão `feat/*`
 - [x] Labels e milestone configurados no GitHub
+
 - [x] Convenção de Conventional Commits sendo seguida
+
 - [x] Issues #2 a #10 criadas com tarefas detalhadas e critérios de aceitação
+
 - [x] Branch `develop` configurada como branch de integração
 
 **Branches criadas:**
@@ -224,3 +255,4 @@ Iniciar a implementação do MVP do EdTech com foco em três frentes paralelas: 
 | Versão |    Data    | Descrição                           | Autor                    |
 | :---: | :---: | :--- | :--- |
 | `1.0`  | 05/06/2026 | Criação do documento                | Pedro Henrique P. Santos |
+| 1.1 | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |

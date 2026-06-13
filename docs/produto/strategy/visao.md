@@ -12,11 +12,13 @@ O Propósito (Elevator Pitch) que norteia todas as decisões.
 
 <div class="grid cards" markdown>
 
+
 -   :material-account-group: **Para**
     
     ---
 
     Pesquisadores e Docentes Orientadores da Universidade.
+
 
 -   :material-alert-circle: **Cujo problema é**
     
@@ -24,17 +26,20 @@ O Propósito (Elevator Pitch) que norteia todas as decisões.
 
     A desorganização no versionamento, falta de privacidade e ausência de auditoria em teses não publicadas.
 
+
 -   :material-rocket-launch: **O EdTech é**
     
     ---
 
     Uma plataforma acadêmica de armazenamento com escopo e acesso fechado.
 
+
 -   :material-shield-off: **Diferente de**
     
     ---
 
     Repositórios de acesso público e de soluções não-auditáveis genéricas (ex: Canvas, Google Drive, Dropbox).
+
 
 -   :material-trophy: **Nossa Vantagem**
     
@@ -77,3 +82,4 @@ flowchart LR
 | Versão | Data | Descrição | Autor |
 | :---: | :---: | :--- | :--- |
 | `1.0` | 30/05/2026 | Criação do documento | Pedro Henrique P. Santos |
+| 1.1 | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |

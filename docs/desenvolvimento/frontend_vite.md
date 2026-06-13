@@ -21,13 +21,18 @@ frontend/
 ## Por que Vite?
 
 Diferente do `create-react-app` ou do Webpack tradicional, o Vite não agrupa toda a aplicação para servi-la no modo de desenvolvimento. Ele serve o código fonte sobre ES Modules nativos, resultando em:
+
 1. **Inicialização quase instantânea** do servidor local.
+
 2. **HMR rápido**, independentemente do tamanho da aplicação.
 
 ## Fluxo de Comandos
 
+
 - `npm run dev`: Inicia o servidor local de desenvolvimento. Por padrão, ele ouve na porta `5173`.
+
 - `npm run build`: Roda o compilador Rollup (por baixo dos panos) para gerar os arquivos minificados prontos para produção na pasta `/dist`.
+
 - `npm run preview`: Inicia um servidor simples local para testar a build gerada na pasta `/dist`.
 
 ## Proxy Reverso no Desenvolvimento
@@ -44,3 +49,4 @@ Isso permite que você programe como se frontend e backend estivessem no mesmo d
 | Versão | Data | Descrição | Autor |
 | :---: | :---: | :--- | :--- |
 | 1.0 | 13/06/2026 | Criação do documento de suporte ao DevEx | Pedro Henrique P. Santos |
+| 1.1 | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |

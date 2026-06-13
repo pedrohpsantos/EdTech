@@ -12,9 +12,12 @@ A aplicação não armazena sessão em banco ou memória do servidor (`STATELESS
 
 ### Confinamento do Cookie
 Para evitar roubo de token, o token JWT nunca deve ser lido pelo código JavaScript do frontend. O Backend Spring devolve o cookie configurado com defesas embutidas para o navegador:
+
     
 - **`HttpOnly`:** Bloqueia leituras via JavaScript (`document.cookie`), blindando o sistema contra XSS.
+
 - **`Secure`:** Exige tráfego via HTTPS.
+
 - **`SameSite=Strict`:** Impede ataques CSRF bloqueando envios em sites de terceiros.
 
 ## 2. Controle de Acesso Baseado em Papéis (RBAC)
@@ -116,3 +119,4 @@ Atores hostis disparam vetores de ataque que impactam os pontos de entrada e ati
 | :---: | :---: | :--- | :--- |
 | `1.0`  | 30/05/2026 | Criação do documento                     | Pedro Henrique P. Santos |
 | `1.1`  | 30/05/2026 | Refino do threat model e estilos visuais | Pedro Henrique P. Santos |
+| 1.2 | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |

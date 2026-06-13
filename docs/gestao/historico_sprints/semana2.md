@@ -16,16 +16,24 @@ Executar o Lean Inception completo, levantar e especificar todos os requisitos d
 
 ### :material-lightbulb-on: Lean Inception
 
+
 - [x] Visão do Produto definida e documentada
+
 - [x] Matriz É / Não É / Faz / Não Faz
+
 - [x] 3 Personas criadas (Pesquisadora, Orientador, Auditora)
 - [x] 3 Jornadas de Usuário mapeadas com diagramas
+
 - [x] Brainstorming de 22 funcionalidades catalogadas por módulo
+
 - [x] Revisão Técnica, de Negócio e de UX
+
 - [x] Sequenciador com 4 ondas de entrega
+
 - [x] Canvas MVP definido com métricas de validação e DoD
 
 ### :material-format-list-checks: Requisitos Funcionais
+
 
 - [x] RF01 — Autenticação e Sessão (6 requisitos)
 - [x] RF02 — Upload e Gerenciamento de Documentos (7 requisitos)
@@ -34,6 +42,7 @@ Executar o Lean Inception completo, levantar e especificar todos os requisitos d
 - [x] Matriz de rastreabilidade (Requisitos  Funcionalidades  Personas)
 
 ### :material-shield-check: Requisitos Não Funcionais
+
 
 - [x] RNF01 — Segurança (6 requisitos)
 - [x] RNF02 — Desempenho (4 requisitos)
@@ -44,6 +53,7 @@ Executar o Lean Inception completo, levantar e especificar todos os requisitos d
 
 ### :material-book-open-variant: Histórias de Usuário
 
+
 - [x] Épico 1 — Autenticação (US01–US03)
 - [x] Épico 2 — Documentos (US04–US06)
 - [x] Épico 3 — Orientador (US07–US08)
@@ -52,10 +62,12 @@ Executar o Lean Inception completo, levantar e especificar todos os requisitos d
 
 ### :material-layers-triple: Arquitetura
 
+
 - [x] Diagrama Entidade-Relacionamento completo (5 entidades)
 - [x] Estratégia de isolamento de dados por role (researcher, advisor, auditor)
 - [x] Documentação de segurança JWT (cookies HttpOnly, fluxo de autorização)
 - [x] Diagramas de fluxo de autenticação e autorização
+
 - [x] Especificação de logs de auditoria (7 tipos de ação)
 - [x] Cronograma detalhado com roadmap em Gantt (5 sprints)
 
@@ -102,3 +114,4 @@ Executar o Lean Inception completo, levantar e especificar todos os requisitos d
 | Versão | Data | Descrição | Autor |
 | :---: | :---: | :--- | :--- |
 | `1.0` | 29/05/2026 | Criação do documento | Pedro Henrique P. Santos |
+| 1.1 | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |

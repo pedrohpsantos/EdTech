@@ -1,7 +1,9 @@
 ---
 description: EdTech — Plataforma acadêmica para centralização, gerenciamento e auditoria de publicações científicas.
 hide:
+
   - navigation
+
   - toc
 ---
 
@@ -36,11 +38,13 @@ Pesquisadores precisam de um lugar seguro, organizado e auditável para armazena
 
 <div class="grid cards" markdown>
 
+
 - :material-shield-lock: **Autenticação Segura**
 
     ---
 
     Login com JWT em cookies `HttpOnly` + `Secure`, com sessões protegidas contra XSS e CSRF.
+
 
 - :material-file-upload: **Upload de Documentos**
 
@@ -48,11 +52,13 @@ Pesquisadores precisam de um lugar seguro, organizado e auditável para armazena
 
     Envio de artigos em PDF, relatórios e datasets com armazenamento de alta disponibilidade via Google Cloud Storage.
 
+
 - :material-filter-variant: **Listagem Filtrada**
 
     ---
 
     Cada pesquisador visualiza e gerencia apenas seus próprios rascunhos não publicados, vinculados à sua conta.
+
 
 - :material-lock-check: **Isolamento de Dados**
 
@@ -60,11 +66,13 @@ Pesquisadores precisam de um lugar seguro, organizado e auditável para armazena
 
     Isolamento estrito entre autores e projetos. Orientadores acessam apenas produções dos seus laboratórios.
 
+
 - :material-clipboard-text-clock: **Logs de Auditoria**
 
     ---
 
     Registros centralizados e inalteráveis de login, logout, uploads, downloads, exclusões e acessos negados.
+
 
 - :material-cloud-check: **Alta Disponibilidade**
 
@@ -114,27 +122,39 @@ O sistema atende três perfis distintos, cada um com permissões e visões espec
 
     O perfil principal do sistema. O pesquisador pode:
 
+
     - [x] Criar conta e fazer login seguro
+
     - [x] Enviar artigos em PDF, relatórios de pesquisa e datasets
+
     - [x] Visualizar e gerenciar apenas seus próprios rascunhos
+
     - [ ] Solicitar revisão ao orientador *(planejado)*
 
 === ":material-school: Orientador / Administrador"
 
     Visão ampliada para supervisão acadêmica:
 
+
     - [x] Visualizar rascunhos e documentos de todos os pesquisadores vinculados
+
     - [x] Validar submissões e acompanhar o andamento das pesquisas
+
     - [x] Bloqueio automático de acesso a projetos sem vínculo direto
+
     - [ ] Painel de métricas do laboratório *(planejado)*
 
 === ":material-shield-search: Auditor"
 
     Módulo de compliance e rastreabilidade:
 
+
     - [x] Registrar logs inalteráveis de todas as ações do sistema
+
     - [x] Consultar histórico de login, logout, uploads e downloads
+
     - [x] Monitorar tentativas de acesso negadas
+
     - [ ] Exportação de relatórios de auditoria *(planejado)*
 
 ---
@@ -210,8 +230,11 @@ Time multidisciplinar do AILAB Makers.
 !!! tip "Como navegar na documentação"
 
     - Use o **menu superior** para alternar entre os módulos: **Produto e Negócio**, **Arquitetura de Software**, **Desenvolvimento (DevEx)** e **Gestão e Metodologia Ágil**.
+
     - Pressione ++s++ ou ++f++ para busca rápida.
+
     - Clique no toggle :material-brightness-6: para alternar entre **modo claro** e **modo escuro**.
+
     - Cada página possui o botão :material-pencil: para editar diretamente no GitHub.
 
 ---

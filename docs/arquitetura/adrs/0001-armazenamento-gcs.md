@@ -15,10 +15,13 @@ Optou-se por integrar a aplicação backend ao **Google Cloud Storage (GCS)** pa
 ## Consequências
 
 ### Positivas
+
 - **Escalabilidade e Redundância:** Altíssima escalabilidade e redundância de hardware garantida pelo SLA do Google Cloud.
+
 - **Desempenho:** Desonera o disco e a memória da máquina virtual de backend (Cloud Run), impedindo gargalos de I/O.
 
 ### Negativas / Riscos
+
 - **Complexidade de Autenticação:** Exige o gerenciamento de credenciais via `Service Accounts` do GCP, aumentando o escopo das regras de segurança de ambiente local e CI/CD.
 
 ---
@@ -29,3 +32,4 @@ Optou-se por integrar a aplicação backend ao **Google Cloud Storage (GCS)** pa
 | :---: | :---: | :--- | :--- |
 | `1.0` | 30/05/2026 | Documento de Registro de Decisão Arquitetural | Pedro Henrique P. Santos |
 | `1.1` | 04/06/2026 | Padronização do formato do documento | Pedro Henrique P. Santos |
+| 1.2 | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |

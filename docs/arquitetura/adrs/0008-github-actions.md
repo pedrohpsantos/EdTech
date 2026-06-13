@@ -15,11 +15,15 @@ Adotamos o **GitHub Actions** como nossa plataforma oficial de Integração Cont
 ## Consequências
 
 ### Positivas
+
 - **Fricção Zero:** O GitHub Actions já é nativo na mesma plataforma de versionamento do código, evitando a necessidade de gerenciar infraestrutura separada (como instâncias de Jenkins).
+
 - **Integração com GCP:** Integração extremamente forte com o Google Cloud via `Workload Identity Federation`, permitindo deploys sem precisar armazenar senhas fixas/Service Accounts em texto plano no repositório.
+
 - **Verificação de Qualidade:** Pipelines automatizados garantem que código que falha no JUnit ou na cobertura mínima nunca atinja o ambiente de produção.
 
 ### Negativas / Riscos
+
 - **Vendor Lock-in Parcial:** Os scripts `.yaml` escritos para o GitHub Actions não são facilmente portáveis para GitLab CI ou AWS CodePipeline sem refatoração considerável caso haja migração de provedor Git.
 
 ---
@@ -29,3 +33,4 @@ Adotamos o **GitHub Actions** como nossa plataforma oficial de Integração Cont
 | Versão | Data | Descrição | Autor |
 | :---: | :---: | :--- | :--- |
 | `1.0` | 04/06/2026 | Criação do documento | Pedro Henrique P. Santos |
+| 1.1 | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |

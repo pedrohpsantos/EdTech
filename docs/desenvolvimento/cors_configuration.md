@@ -8,7 +8,9 @@ Este documento detalha a configuração de Cross-Origin Resource Sharing (CORS) 
 
 Quando o frontend (Vite, porta `5173`) faz requisições ao backend (Spring Boot, porta `8080`), o navegador trata como **cross-origin** porque as portas diferem. Por padrão, o navegador:
 
+
 - **Não envia cookies** em requests cross-origin.
+
 - **Bloqueia respostas** que não contenham os headers CORS adequados.
 
 Ao usar `credentials: 'include'` na API `fetch`, instruímos o navegador a enviar cookies (como o JWT `HttpOnly`) junto com a requisição. Porém, isso impõe restrições adicionais no servidor:
@@ -64,7 +66,9 @@ cors:
 
 O cookie contendo o token JWT usa a política `SameSite=Lax`, que permite o envio em:
 
+
 - Navegações *top-level* (links, redirects).
+
 - Requisições assíncronas (AJAX) com `credentials: 'include'` para a mesma origin **ou** cross-origin, desde que o servidor responda com headers CORS válidos.
 
 ---
@@ -134,9 +138,13 @@ Ao fazer o deploy da aplicação em produção, é imperativo ajustar o ambiente
 
 ### Checklist de Deploy
 
+
 - [ ] A variável `CORS_ALLOWED_ORIGINS` está apontando para o domínio correto de produção (sem a barra `/` no final).
+
 - [ ] A variável `JWT_COOKIE_SECURE` está configurada como `true` e a aplicação responde em HTTPS.
+
 - [ ] O `JWT_SECRET` é gerado usando uma fonte criptograficamente segura.
+
 - [ ] Se o frontend e o backend estiverem em domínios completamente diferentes (não subdomínios), validar a política de `SameSite`.
 
 ### Estratégia de `SameSite` com Domínios Distintos

@@ -27,6 +27,7 @@ A assinatura visual do produto é **Deep Purple** com contrastes em **Amber**.
 
 === "Light Theme"
     Ideal para leitura de documentos e painéis claros.
+
     
     * **Background:** `<div style="display:inline-block; width:15px; height:15px; background:#F7F7FB; border:1px solid #ccc; border-radius:3px; vertical-align:middle;"></div> #F7F7FB`
     * **Surface:** `<div style="display:inline-block; width:15px; height:15px; background:#FFFFFF; border:1px solid #ccc; border-radius:3px; vertical-align:middle;"></div> #FFFFFF`
@@ -36,6 +37,7 @@ A assinatura visual do produto é **Deep Purple** com contrastes em **Amber**.
 
 === "Dark Theme"
     Para foco profundo, logs técnicos e dashboards.
+
     
     * **Background:** `<div style="display:inline-block; width:15px; height:15px; background:#0F0B1A; border-radius:3px; vertical-align:middle;"></div> #0F0B1A`
     * **Surface:** `<div style="display:inline-block; width:15px; height:15px; background:#171124; border-radius:3px; vertical-align:middle;"></div> #171124`
@@ -95,3 +97,4 @@ Sombras sutis tingidas com o **Deep Purple** para evitar o aspecto "sujo" de som
 | Versão | Data | Descrição | Autor |
 | :---: | :---: | :--- | :--- |
 | `1.0` | 09/06/2026 | Documentação do Design System e Tokens | Pedro Henrique P. Santos |
+| 1.1 | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |

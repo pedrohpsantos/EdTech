@@ -16,6 +16,7 @@ Consolidar tecnicamente a integração entre o Frontend (React) e o Backend (Spr
 
 ### :material-server-network: Backend — CORS e Segurança
 
+
 - [x] Configuração de `CorsConfigurationSource` no `SecurityConfig`
 - [x] Aceite de origens cruzadas mapeado para o ambiente de dev (`localhost:5173`)
 - [x] Aceite do envio de credenciais (cookies JWT) via `allowCredentials = true`
@@ -34,8 +35,10 @@ Consolidar tecnicamente a integração entre o Frontend (React) e o Backend (Spr
 
 ### :material-monitor-cellphone: Frontend — Serviços HTTP e Rotas Protegidas
 
+
 - [x] Camada de serviço HTTP `api.js` mapeada usando `fetch` com `credentials: 'include'`
 - [x] Acoplamento de sucesso entre formulários de Login/Registro e o Spring Boot
+
 - [x] Implementação de `PrivateRoute` validando a sessão ativa em `/dashboard`
 - [x] Redirecionamentos de login resolvidos perfeitamente
 
@@ -70,10 +73,13 @@ Consolidar tecnicamente a integração entre o Frontend (React) e o Backend (Spr
 
 ### :material-file-document-edit: Gestão e Refinamento de Escopo
 
+
 - [x] Avaliação aprofundada do protótipo de UI/UX proposto pelo design
+
 - [x] Identificação de fuga de escopo (Analytics, Dashboard de Auditor LGPD, Design System customizado demais)
 - [x] Reversão completa do planejamento para o formato original (F01 a F22)
 - [x] Fechamento e rejeição permanente das Issues excedentes da V2
+
 - [x] Execução e formalização da nossa primeira rotação de papéis de trabalho
 
 **Commits relacionados:**
@@ -151,3 +157,4 @@ Consolidar tecnicamente a integração entre o Frontend (React) e o Backend (Spr
 | :---: | :---: | :--- | :--- |
 | `1.0` | 12/06/2026 | Documentação inicial da Entrega 4 | Pedro Henrique P. Santos |
 | `1.1` | 12/06/2026 | Padronização e adição de tabelas de commits e debito técnico | Pedro Henrique P. Santos |
+| 1.2 | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |

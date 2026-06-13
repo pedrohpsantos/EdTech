@@ -8,6 +8,7 @@ Estrutura organizacional da equipe EdTech, com papéis definidos por função e 
 
 <div class="grid cards" markdown>
 
+
 - :material-crown: **Tech Lead**
 
     ---
@@ -22,11 +23,13 @@ Estrutura organizacional da equipe EdTech, com papéis definidos por função e 
 
     Desenvolvimento completo — frontend, backend, testes, infraestrutura e documentação conforme o ciclo de rotação vigente.
 
+
 - :material-code-braces-box: **Full Stack 2**
 
     ---
 
     Desenvolvimento completo — frontend, backend, testes, infraestrutura e documentação conforme o ciclo de rotação vigente.
+
 
 - :material-code-braces-box: **Full Stack 3**
 
@@ -34,11 +37,13 @@ Estrutura organizacional da equipe EdTech, com papéis definidos por função e 
 
     Desenvolvimento completo — frontend, backend, testes, infraestrutura e documentação conforme o ciclo de rotação vigente.
 
+
 - :material-code-braces-box: **Full Stack 4**
 
     ---
 
     Desenvolvimento completo — frontend, backend, testes, infraestrutura e documentação conforme o ciclo de rotação vigente.
+
 
 - :material-code-braces-box: **Full Stack 5**
 
@@ -92,9 +97,12 @@ flowchart LR
 
 ### Regras
 
+
 - :material-calendar-sync: Cada ciclo dura **exatamente duas semanas**. A primeira rotação ocorreu hoje (12/06/2026).
+
 - :material-rotate-3d-variant: Ao final de cada ciclo, cada membro **muda de frente de trabalho**
 - :material-school: A rotação prioriza **aprendizado cruzado** entre produto, entrega, qualidade e operação
+
 - :material-crown: O Tech Lead permanece fixo e atua na coordenação da progressão técnica e na revisão das trocas
 
 ### Ciclos de Rotação
@@ -163,20 +171,29 @@ Antes de solicitar revisão, todo PR deve cumprir:
 
 ### :material-shield-check: Código e Segurança
 
+
 - [x] O código respeita o isolamento estrito de dados
+
 - [x] Logs de auditoria foram implementados para esta funcionalidade
+
 - [x] O código foi testado localmente sem comportamentos anômalos
+
 - [x] **Nenhum dado sensível** exposto no código (chaves, credenciais, segredos)
 
 ### :material-test-tube: Testes e Documentação
 
+
 - [x] Testes unitários (JUnit) criados ou atualizados
+
 - [x] Documentação no MkDocs atualizada
+
 - [x] Commits seguem a convenção (`feat`, `fix`, `docs`, `refactor`)
 
 ### :material-source-merge: Integração
 
+
 - [x] Branch atualizada com a `main` e sem conflitos
+
 - [x] Todos os passos do checklist validados manualmente
 
 !!! quote "Compromisso"
@@ -202,3 +219,4 @@ Antes de solicitar revisão, todo PR deve cumprir:
 | :---: | :---: | :--- | :--- |
 | `1.0`  | 29/05/2026 | Criação do documento              | Pedro Henrique P. Santos |
 | `1.1`  | 30/05/2026 | Processo de PR com branch develop | Pedro Henrique P. Santos |
+| 1.2 | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |

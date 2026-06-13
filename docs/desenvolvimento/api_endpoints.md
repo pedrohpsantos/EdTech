@@ -88,7 +88,9 @@ Envia um novo arquivo vinculado a um projeto.
 
 **Request Form Data:**
 - `file` (File): O arquivo físico (ex: PDF).
+
 - `title` (String): O título do documento.
+
 - `projectId` (String/UUID): ID do projeto associado.
 
 **Response (201 Created):**
@@ -149,3 +151,4 @@ Remove um documento. **Regra de negócio:** Apenas documentos no status `DRAFT` 
 | Versão | Data | Descrição | Autor |
 | :---: | :---: | :--- | :--- |
 | 1.0 | 13/06/2026 | Criação do documento de suporte ao DevEx | Pedro Henrique P. Santos |
+| 1.1 | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |

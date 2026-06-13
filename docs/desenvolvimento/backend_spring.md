@@ -6,10 +6,15 @@ O backend do EdTech atua como uma API RESTful independente, empacotada e orquest
 
 Seguimos a arquitetura padrão baseada em domínio de negócio isolado:
 
+
 1. **Controllers (`com.edTech.controller`)**: Pontos de entrada HTTP.
+
 2. **Services (`com.edTech.service`)**: Onde a lógica de negócio principal e regras de autorização habitam.
+
 3. **Repositories (`com.edTech.repository`)**: Interfaces JPA para persistência de dados.
+
 4. **Models/Entities (`com.edTech.model`)**: Mapeamento Objeto-Relacional (ORM) e Enums.
+
 5. **DTOs (`com.edTech.dto`)**: Objetos que blindam a entidade para o envio ou recebimento de dados da internet.
 
 
@@ -31,3 +36,4 @@ Toda evolução do banco de dados (novas tabelas, colunas, chaves estrangeiras) 
 | Versão | Data | Descrição | Autor |
 | :---: | :---: | :--- | :--- |
 | 1.0 | 13/06/2026 | Criação do documento de suporte ao DevEx | Pedro Henrique P. Santos |
+| 1.1 | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |

@@ -22,8 +22,11 @@ Ele foge de clichês acadêmicos (como livros ou capelos) e foca no nosso real d
 **O Símbolo representa visualmente:**
 
 - **Rastreabilidade:** Cada linha é um caminho auditável.
+
 - **Versionamento:** Múltiplos nós conectados mostram a evolução.
+
 - **Evidências:** A marca de confiança e conformidade.
+
 - **Trilha auditável:** O pilar da governança.
 
 <div style="clear: both;"></div>
@@ -37,7 +40,9 @@ O **EdTech** surge como uma camada de governança acadêmica.
 
 !!! success "A Promessa EdTech"
     - Cada documento possui histórico.
+
     - Cada alteração possui evidência.
+
     - Cada submissão possui rastreabilidade.
 
 ## 3. Personalidade
@@ -58,3 +63,4 @@ O **EdTech** surge como uma camada de governança acadêmica.
 | Versão | Data | Descrição | Autor |
 | :---: | :---: | :--- | :--- |
 | `1.0` | 09/06/2026 | Criação da identidade visual e storytelling | Pedro Henrique P. Santos |
+| 1.1 | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |
