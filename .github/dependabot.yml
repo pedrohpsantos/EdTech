@@ -1,7 +1,16 @@
 version: 2
 updates:
   - package-ecosystem: "npm"
-    directory: "/docvault/frontend"
+    directory: "/frontend"
+    target-branch: "develop"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "dependencies"
+    open-pull-requests-limit: 5
+
+  - package-ecosystem: "maven"
+    directory: "/docvault/api"
     target-branch: "develop"
     schedule:
       interval: "weekly"
