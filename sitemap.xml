@@ -13,35 +13,11 @@
          <lastmod>2026-06-13</lastmod>
     </url>
     <url>
-         <loc>https://pedrohpsantos.github.io/EdTech/cors-configuration/</loc>
-         <lastmod>2026-06-13</lastmod>
-    </url>
-    <url>
          <loc>https://pedrohpsantos.github.io/EdTech/_snippets/version_header/</loc>
          <lastmod>2026-06-13</lastmod>
     </url>
     <url>
-         <loc>https://pedrohpsantos.github.io/EdTech/api/endpoints/</loc>
-         <lastmod>2026-06-13</lastmod>
-    </url>
-    <url>
-         <loc>https://pedrohpsantos.github.io/EdTech/arquitetura/c4_model/</loc>
-         <lastmod>2026-06-13</lastmod>
-    </url>
-    <url>
-         <loc>https://pedrohpsantos.github.io/EdTech/arquitetura/dados/</loc>
-         <lastmod>2026-06-13</lastmod>
-    </url>
-    <url>
          <loc>https://pedrohpsantos.github.io/EdTech/arquitetura/design_tecnico/</loc>
-         <lastmod>2026-06-13</lastmod>
-    </url>
-    <url>
-         <loc>https://pedrohpsantos.github.io/EdTech/arquitetura/nuvem/</loc>
-         <lastmod>2026-06-13</lastmod>
-    </url>
-    <url>
-         <loc>https://pedrohpsantos.github.io/EdTech/arquitetura/seguranca_app/</loc>
          <lastmod>2026-06-13</lastmod>
     </url>
     <url>
@@ -81,15 +57,47 @@
          <lastmod>2026-06-13</lastmod>
     </url>
     <url>
-         <loc>https://pedrohpsantos.github.io/EdTech/branding/design_system/</loc>
+         <loc>https://pedrohpsantos.github.io/EdTech/arquitetura/diagramas/c4_model/</loc>
          <lastmod>2026-06-13</lastmod>
     </url>
     <url>
-         <loc>https://pedrohpsantos.github.io/EdTech/branding/diretrizes_marca/</loc>
+         <loc>https://pedrohpsantos.github.io/EdTech/arquitetura/diagramas/dados/</loc>
          <lastmod>2026-06-13</lastmod>
     </url>
     <url>
-         <loc>https://pedrohpsantos.github.io/EdTech/branding/identidade_visual/</loc>
+         <loc>https://pedrohpsantos.github.io/EdTech/arquitetura/infraestrutura/nuvem/</loc>
+         <lastmod>2026-06-13</lastmod>
+    </url>
+    <url>
+         <loc>https://pedrohpsantos.github.io/EdTech/arquitetura/infraestrutura/seguranca_app/</loc>
+         <lastmod>2026-06-13</lastmod>
+    </url>
+    <url>
+         <loc>https://pedrohpsantos.github.io/EdTech/desenvolvimento/api_endpoints/</loc>
+         <lastmod>2026-06-13</lastmod>
+    </url>
+    <url>
+         <loc>https://pedrohpsantos.github.io/EdTech/desenvolvimento/backend_spring/</loc>
+         <lastmod>2026-06-13</lastmod>
+    </url>
+    <url>
+         <loc>https://pedrohpsantos.github.io/EdTech/desenvolvimento/ci_cd/</loc>
+         <lastmod>2026-06-13</lastmod>
+    </url>
+    <url>
+         <loc>https://pedrohpsantos.github.io/EdTech/desenvolvimento/cors_configuration/</loc>
+         <lastmod>2026-06-13</lastmod>
+    </url>
+    <url>
+         <loc>https://pedrohpsantos.github.io/EdTech/desenvolvimento/frontend_vite/</loc>
+         <lastmod>2026-06-13</lastmod>
+    </url>
+    <url>
+         <loc>https://pedrohpsantos.github.io/EdTech/desenvolvimento/guia_local/</loc>
+         <lastmod>2026-06-13</lastmod>
+    </url>
+    <url>
+         <loc>https://pedrohpsantos.github.io/EdTech/gestao/agile/dor_dod/</loc>
          <lastmod>2026-06-13</lastmod>
     </url>
     <url>
@@ -97,19 +105,27 @@
          <lastmod>2026-06-13</lastmod>
     </url>
     <url>
-         <loc>https://pedrohpsantos.github.io/EdTech/gestao/entregas/semana1/</loc>
+         <loc>https://pedrohpsantos.github.io/EdTech/gestao/equipe/rotacoes/</loc>
          <lastmod>2026-06-13</lastmod>
     </url>
     <url>
-         <loc>https://pedrohpsantos.github.io/EdTech/gestao/entregas/semana2/</loc>
+         <loc>https://pedrohpsantos.github.io/EdTech/gestao/equipe/trilha_estudos/</loc>
          <lastmod>2026-06-13</lastmod>
     </url>
     <url>
-         <loc>https://pedrohpsantos.github.io/EdTech/gestao/entregas/semana3/</loc>
+         <loc>https://pedrohpsantos.github.io/EdTech/gestao/historico_sprints/semana1/</loc>
          <lastmod>2026-06-13</lastmod>
     </url>
     <url>
-         <loc>https://pedrohpsantos.github.io/EdTech/gestao/entregas/semana4/</loc>
+         <loc>https://pedrohpsantos.github.io/EdTech/gestao/historico_sprints/semana2/</loc>
+         <lastmod>2026-06-13</lastmod>
+    </url>
+    <url>
+         <loc>https://pedrohpsantos.github.io/EdTech/gestao/historico_sprints/semana3/</loc>
+         <lastmod>2026-06-13</lastmod>
+    </url>
+    <url>
+         <loc>https://pedrohpsantos.github.io/EdTech/gestao/historico_sprints/semana4/</loc>
          <lastmod>2026-06-13</lastmod>
     </url>
     <url>
@@ -129,23 +145,15 @@
          <lastmod>2026-06-13</lastmod>
     </url>
     <url>
-         <loc>https://pedrohpsantos.github.io/EdTech/planejamento/cronograma/</loc>
+         <loc>https://pedrohpsantos.github.io/EdTech/produto/branding/design_system/</loc>
          <lastmod>2026-06-13</lastmod>
     </url>
     <url>
-         <loc>https://pedrohpsantos.github.io/EdTech/planejamento/dor_dod/</loc>
+         <loc>https://pedrohpsantos.github.io/EdTech/produto/branding/diretrizes_marca/</loc>
          <lastmod>2026-06-13</lastmod>
     </url>
     <url>
-         <loc>https://pedrohpsantos.github.io/EdTech/planejamento/roadmap/</loc>
-         <lastmod>2026-06-13</lastmod>
-    </url>
-    <url>
-         <loc>https://pedrohpsantos.github.io/EdTech/planejamento/rotacoes/</loc>
-         <lastmod>2026-06-13</lastmod>
-    </url>
-    <url>
-         <loc>https://pedrohpsantos.github.io/EdTech/planejamento/trilha_estudos/</loc>
+         <loc>https://pedrohpsantos.github.io/EdTech/produto/branding/identidade_visual/</loc>
          <lastmod>2026-06-13</lastmod>
     </url>
     <url>
@@ -158,6 +166,14 @@
     </url>
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/produto/discovery/personas/</loc>
+         <lastmod>2026-06-13</lastmod>
+    </url>
+    <url>
+         <loc>https://pedrohpsantos.github.io/EdTech/produto/planejamento/cronograma/</loc>
+         <lastmod>2026-06-13</lastmod>
+    </url>
+    <url>
+         <loc>https://pedrohpsantos.github.io/EdTech/produto/planejamento/roadmap/</loc>
          <lastmod>2026-06-13</lastmod>
     </url>
     <url>
