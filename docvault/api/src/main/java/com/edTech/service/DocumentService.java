@@ -57,11 +57,17 @@ public class DocumentService {
             if (!dir.exists()) dir.mkdirs();
 
             String originalFilename = file.getOriginalFilename();
-            if (originalFilename != null && (originalFilename.contains("..") || originalFilename.contains("/") || originalFilename.contains("\\"))) {
-                throw new IllegalArgumentException("Invalid filename");
+            if (originalFilename == null) {
+                throw new IllegalArgumentException("Filename cannot be null");
             }
             String fileName = UUID.randomUUID() + "_" + originalFilename;
-            Path filePath = Paths.get(UPLOAD_DIR + fileName);
+
+            Path publicFolder = Paths.get(UPLOAD_DIR).normalize().toAbsolutePath();
+            Path filePath = publicFolder.resolve(fileName).normalize().toAbsolutePath();
+
+            if (!filePath.startsWith(publicFolder + File.separator)) {
+                throw new IllegalArgumentException("Invalid filename");
+            }
             Files.write(filePath, file.getBytes());
 
             Document document = new Document();
