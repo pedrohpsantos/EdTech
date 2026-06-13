@@ -1,7 +1,7 @@
 #  Identidade Visual
 
 <div align="center" markdown="1">
-  ![EdTech Logo](../assets/svgs/logo.svg){ width="250" }
+  ![EdTech Logo](../../assets/svgs/logo.svg){ width="250" }
 </div>
 
 ---
@@ -17,7 +17,7 @@ O **EdTech** é mais que "Education Technology". A marca representa:
 O conceito visual principal (**"Research Trail"**) utiliza nós conectados formando um "E".
 Ele foge de clichês acadêmicos (como livros ou capelos) e foca no nosso real diferencial competitivo.
 
-![Símbolo](../assets/imgs/simbolo.png){ width="150" align="right" style="margin-right: 20px; margin-top: 40px;" }
+![Símbolo](../../assets/imgs/simbolo.png){ width="150" align="right" style="margin-right: 20px; margin-top: 40px;" }
 
 **O Símbolo representa visualmente:**
 

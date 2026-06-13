@@ -7,6 +7,7 @@ A integração e entrega contínua do projeto ocorrem através do **GitHub Actio
 Toda abertura de um `Pull Request` ou envio para a branch `develop` engatilha nossa bateria automatizada de testes e checks. 
 
 Existem fluxos independentes:
+
 1. **Frontend CI (`ci-frontend.yml`)**: Baixa as dependências Node e roda o comando de build do Vite.
 2. **Backend CI (`ci-backend.yml`)**: Compila o código Java, roda todos os testes unitários (`mvn verify`) e expõe relatórios.
 3. **Docs CI (`ci-docs.yml`)**: Publica automaticamente esta documentação (MkDocs) para o GitHub Pages (rodando sempre que há alterações na branch `main`).

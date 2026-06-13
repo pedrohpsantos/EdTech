@@ -209,7 +209,7 @@ Time multidisciplinar do AILAB Makers.
 
 !!! tip "Como navegar na documentação"
 
-    - Use o **menu superior** para alternar entre os módulos: **Requisitos**, **Arquitetura**, **Planejamento** e **Gestão**.
+    - Use o **menu superior** para alternar entre os módulos: **Produto e Negócio**, **Arquitetura de Software**, **Desenvolvimento (DevEx)** e **Gestão e Metodologia Ágil**.
     - Pressione ++s++ ou ++f++ para busca rápida.
     - Clique no toggle :material-brightness-6: para alternar entre **modo claro** e **modo escuro**.
     - Cada página possui o botão :material-pencil: para editar diretamente no GitHub.
@@ -222,3 +222,4 @@ Time multidisciplinar do AILAB Makers.
 | :---: | :---: | :--- | :--- |
 | `1.0` | 29/05/2026 | Criação do documento | Pedro Henrique P. Santos |
 | `1.1` | 04/06/2026 | Adição da secção Início Rápido e melhorias visuais | Pedro Henrique P. Santos |
+| `1.2` | 13/06/2026 | Reestruturação arquitetural da documentação e introdução de guias DevEx | Pedro Henrique P. Santos |

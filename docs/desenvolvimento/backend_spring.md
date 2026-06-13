@@ -5,11 +5,13 @@ O backend do EdTech atua como uma API RESTful independente, empacotada e orquest
 ## Arquitetura em Camadas
 
 Seguimos a arquitetura padrão baseada em domínio de negócio isolado:
+
 1. **Controllers (`com.edTech.controller`)**: Pontos de entrada HTTP.
 2. **Services (`com.edTech.service`)**: Onde a lógica de negócio principal e regras de autorização habitam.
 3. **Repositories (`com.edTech.repository`)**: Interfaces JPA para persistência de dados.
 4. **Models/Entities (`com.edTech.model`)**: Mapeamento Objeto-Relacional (ORM) e Enums.
 5. **DTOs (`com.edTech.dto`)**: Objetos que blindam a entidade para o envio ou recebimento de dados da internet.
+
 
 ## Segurança e Autenticação
 

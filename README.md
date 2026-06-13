@@ -114,10 +114,19 @@ O backend continua conectando no PostgreSQL pela rede interna do Compose em `db:
 
 ---
 
+## Histórico de Versões
+
+| Versão | Data | Descrição | Autor |
+| :---: | :---: | :--- | :--- |
+| `0.1.0` | 10/06/2026 | Fundação da documentação técnica e governança. | Pedro Henrique P. Santos |
+| `0.2.0` | 13/06/2026 | Reestruturação arquitetural da documentação e guias de Desenvolvimento (DevEx). | Pedro Henrique P. Santos |
+
+---
+
 ## Licença
 
 Projeto acadêmico desenvolvido para fins educacionais no Laboratório de Inteligência Artificial (AILAB).
 O código fonte é disponibilizado sob a [MIT License](LICENSE).
 
 ---
-*Consulte o [Changelog](CHANGELOG.md) para o histórico de versões e nossa [Política de Segurança](SECURITY.md) para o fluxo de relato de vulnerabilidades.*
+*Consulte o [Changelog](CHANGELOG.md) para o histórico de versões completo e nossa [Política de Segurança](SECURITY.md) para o fluxo de relato de vulnerabilidades.*
