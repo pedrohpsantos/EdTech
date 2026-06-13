@@ -175,7 +175,7 @@ Tecnologias selecionadas para robustez, segurança e escalabilidade em ambiente 
 | **Backend** | Java 17, Spring Boot, Spring Security, JWT (`HttpOnly` + `Secure`) |
 | **Banco de Dados & Storage** | Google Cloud SQL for PostgreSQL, Google Cloud Storage, Flyway |
 | **Infraestrutura & DevOps** | Docker, Google Cloud Run |
-| **CI/CD & Qualidade** | GitHub Actions, JUnit, Python 3.11 (scripts de telemetria) |
+| **CI/CD & Qualidade** | GitHub Actions, JUnit, Python 3.11 (scripts de telemetria - Pós-MVP) |
 | **Documentação** | MkDocs + Material for MkDocs |
 
 [:material-arrow-right: Ver detalhes completos da arquitetura](arquitetura/diagramas/c4_model.md){ .md-button }

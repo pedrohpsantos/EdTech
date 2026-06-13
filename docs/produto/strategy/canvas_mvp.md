@@ -104,6 +104,7 @@ flowchart LR
         I4["Consulta de logs com filtros"]
         I5["Exportação de relatórios"]
         I6["Notificações"]
+        I7["Telemetria e Analytics (Python)"]
     end
 
     MVP --> Inc1
