@@ -1,7 +1,7 @@
 # Diretrizes da Marca
 
 <div align="center" markdown="1">
-  ![EdTech Logo](../assets/svgs/logo.svg){ width="200" style="margin-bottom: 20px;" }
+  ![EdTech Logo](../../assets/svgs/logo.svg){ width="200" style="margin-bottom: 20px;" }
   <h3>Plataforma Segura de Governança Acadêmica e Pesquisa</h3>
   <p><b>Centralização • Rastreabilidade • Auditoria • Governança</b></p>
 </div>
@@ -67,12 +67,12 @@ Temos todos os vetores e materiais prontos para uso em interfaces, repositórios
 
 Abaixo você confere as amostras dos principais materiais e banners gerados para o projeto:
 
-![Banner GitHub](../assets/imgs/banner-github.png)
-![Logo Claro](../assets/imgs/logo_claro.png)
-![Logo Escuro](../assets/imgs/logo_escuro.png)
-![Simbolo](../assets/imgs/simbolo.png)
-![Social Preview](../assets/imgs/social-preview.png)
-![OG Image](../assets/imgs/og-image.png)
+![Banner GitHub](../../assets/imgs/banner-github.png)
+![Logo Claro](../../assets/imgs/logo_claro.png)
+![Logo Escuro](../../assets/imgs/logo_escuro.png)
+![Simbolo](../../assets/imgs/simbolo.png)
+![Social Preview](../../assets/imgs/social-preview.png)
+![OG Image](../../assets/imgs/og-image.png)
 
 ---
 

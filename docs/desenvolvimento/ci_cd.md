@@ -21,3 +21,11 @@ A branch `develop` possui regras (Branch Protection Rules) no reposit√≥rio. O "M
 ## Processo de Deploy em Produ√ß√£o
 
 De acordo com o ADR 0003, o deploy das partes ativas do sistema (Frontend e Backend) ocorrer√£o via Google Cloud Run de forma conteinerizada. (Documenta√ß√£o de instru√ß√µes manuais de deploy ainda a ser elaborada nas pr√≥ximas fases).
+
+---
+
+## HistÛrico de Versıes
+
+| Vers„o | Data | DescriÁ„o | Autor |
+| :---: | :---: | :--- | :--- |
+| 1.0 | 13/06/2026 | CriaÁ„o do documento de suporte ao DevEx | Pedro Henrique P. Santos |

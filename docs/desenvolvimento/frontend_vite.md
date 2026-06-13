@@ -36,3 +36,11 @@ Para evitar configura√ß√£o pesada de CORS apenas para rodar a aplica√ß√£o em loc
 Todas as chamadas do cliente para `/api` s√£o interceptadas pelo servidor do Vite e repassadas ao Spring Boot (`http://localhost:8080/api`).
 
 Isso permite que voc√™ programe como se frontend e backend estivessem no mesmo dom√≠nio. Em produ√ß√£o (Cloud Run), regras expl√≠citas de CORS s√£o aplicadas.
+
+---
+
+## HistÛrico de Versıes
+
+| Vers„o | Data | DescriÁ„o | Autor |
+| :---: | :---: | :--- | :--- |
+| 1.0 | 13/06/2026 | CriaÁ„o do documento de suporte ao DevEx | Pedro Henrique P. Santos |

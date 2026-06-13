@@ -159,3 +159,4 @@ Caso o frontend (`app.meusistema.com`) e o backend (`api.outrosistema.com`) resi
 |--------|------|-----------|-------|
 | 1.0 | 30/05/2026 | Criação do documento | Pedro Henrique P. Santos |
 | 1.1 | 30/05/2026 | Refino do threat model e estilos visuais | Pedro Henrique P. Santos |
+| 1.2 | 13/06/2026 | Reestruturação e movido para a trilha DevEx | Pedro Henrique P. Santos |

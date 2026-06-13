@@ -23,3 +23,11 @@ Qualquer rota protegida passa pelo `JwtAuthenticationFilter` antes de chegar no 
 Para garantir que o banco de dados possa ser replicado consistentemente entre o computador dos desenvolvedores e a nuvem, n√≥s **n√£o utilizamos o gerador autom√°tico do Hibernate** (`ddl-auto=update`).
 
 Toda evolu√ß√£o do banco de dados (novas tabelas, colunas, chaves estrangeiras) √© feita explicitamente atrav√©s dos scripts de migra√ß√£o do **Flyway**, contidos em `src/main/resources/db/migration/`.
+
+---
+
+## HistÛrico de Versıes
+
+| Vers„o | Data | DescriÁ„o | Autor |
+| :---: | :---: | :--- | :--- |
+| 1.0 | 13/06/2026 | CriaÁ„o do documento de suporte ao DevEx | Pedro Henrique P. Santos |

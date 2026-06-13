@@ -53,3 +53,11 @@ npm run dev
 
 **Troubleshooting:**
 Se vocÃª encontrar erros de CORS durante o desenvolvimento local, certifique-se de que o backend estÃ¡ rodando e de que vocÃª acessou o frontend em `localhost:5173` (e nÃ£o via IP como `127.0.0.1`). O proxy do Vite embutido lida com a ponte transparente para a API local.
+
+---
+
+## Histórico de Versões
+
+| Versão | Data | Descrição | Autor |
+| :---: | :---: | :--- | :--- |
+| 1.0 | 13/06/2026 | Criação do documento de suporte ao DevEx | Pedro Henrique P. Santos |

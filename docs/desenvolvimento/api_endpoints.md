@@ -141,3 +141,11 @@ Retorna as informa√ß√µes completas de um documento espec√≠fico.
 Remove um documento. **Regra de neg√≥cio:** Apenas documentos no status `DRAFT` podem ser exclu√≠dos.
 
 **Response (204 No Content)**
+
+---
+
+## HistÛrico de Versıes
+
+| Vers„o | Data | DescriÁ„o | Autor |
+| :---: | :---: | :--- | :--- |
+| 1.0 | 13/06/2026 | CriaÁ„o do documento de suporte ao DevEx | Pedro Henrique P. Santos |
