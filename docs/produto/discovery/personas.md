@@ -133,4 +133,4 @@ Márcia representa a segurança e a gestão da universidade. Ela não avalia o c
 | :---: | :---: | :--- | :--- |
 | `1.0` | 30/05/2026 | Criação do documento | Pedro Henrique P. Santos |
 | `1.1` | 04/06/2026 | Detalhamento completo das personas com padrão de mercado | Pedro Henrique P. Santos |
-| 1.2 | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |
+| `1.2` | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |

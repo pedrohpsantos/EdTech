@@ -33,5 +33,5 @@ De acordo com o ADR 0003, o deploy das partes ativas do sistema (Frontend e Back
 
 | Versão | Data | Descrição | Autor |
 | :---: | :---: | :--- | :--- |
-| 1.0 | 13/06/2026 | Criação do documento de suporte ao DevEx | Pedro Henrique P. Santos |
-| 1.1 | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |
+| `1.0` | 13/06/2026 | Criação do documento de suporte ao DevEx | Pedro Henrique P. Santos |
+| `1.1` | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |

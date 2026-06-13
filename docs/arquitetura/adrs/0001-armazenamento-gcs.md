@@ -32,4 +32,4 @@ Optou-se por integrar a aplicação backend ao **Google Cloud Storage (GCS)** pa
 | :---: | :---: | :--- | :--- |
 | `1.0` | 30/05/2026 | Documento de Registro de Decisão Arquitetural | Pedro Henrique P. Santos |
 | `1.1` | 04/06/2026 | Padronização do formato do documento | Pedro Henrique P. Santos |
-| 1.2 | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |
+| `1.2` | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |
