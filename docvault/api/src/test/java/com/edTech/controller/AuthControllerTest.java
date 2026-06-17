@@ -117,7 +117,7 @@ class AuthControllerTest {
     }
 
     @Test
-    void loginReturnsHttpOnlyStrictCookieWithoutTokenInBody() throws Exception {
+    void loginReturnsHttpOnlyLaxCookieWithoutTokenInBody() throws Exception {
         String email = uniqueEmail("login");
         String password = randomPassword();
         registerUser(email, password);
