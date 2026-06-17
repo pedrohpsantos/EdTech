@@ -88,3 +88,70 @@ export const getMe = async() =>{
         return {sucesso: false, mensagem: erro.message}
     }
 }
+
+export const getProjects = async() =>{
+    try{
+        const resposta = await fetch(`${BASE_URL}/api/projects`, {
+            method: 'GET',
+            credentials: 'include'
+        })
+        if(!resposta.ok){
+            const erro = await resposta.json()
+            throw new Error(erro.message || 'Erro ao listar projetos.')
+        }
+        const dados = await resposta.json()
+        return {sucesso: true, dados}
+    }
+    catch(erro){
+        return {sucesso: false, mensagem: erro.message}
+    }
+}
+
+export const getDocuments = async(projectId, title) =>{
+    try{
+        const params = new URLSearchParams()
+        if (projectId) params.append('projectId', projectId)
+        if (title) params.append('title', title)
+        
+        const resposta = await fetch(`${BASE_URL}/api/documents?${params.toString()}`, {
+            method: 'GET',
+            credentials: 'include'
+        })
+        if(!resposta.ok){
+            const erro = await resposta.json()
+            throw new Error(erro.message || 'Erro ao listar documentos.')
+        }
+        const dados = await resposta.json()
+        return {sucesso: true, dados}
+    }
+    catch(erro){
+        return {sucesso: false, mensagem: erro.message}
+    }
+}
+
+export const uploadDocument = async(file, title, projectId) =>{
+    try{
+        const formData = new FormData()
+        formData.append('file', file)
+        formData.append('title', title)
+        formData.append('projectId', projectId)
+
+        const resposta = await fetch(`${BASE_URL}/api/documents`, {
+            method: 'POST',
+            headers: {
+                'X-XSRF-TOKEN': getCsrfToken()
+            },
+            credentials: 'include',
+            body: formData
+        })
+        if(!resposta.ok){
+            const erro = await resposta.json()
+            throw new Error(erro.message || 'Erro ao fazer upload do documento.')
+        }
+        const dados = await resposta.json()
+        return {sucesso: true, dados}
+    }
+    catch(erro){
+        return {sucesso: false, mensagem: erro.message}
+    }
+}
