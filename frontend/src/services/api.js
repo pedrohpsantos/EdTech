@@ -1,9 +1,20 @@
 const BASE_URL = import.meta.env.VITE_API_URL
+
+const getCsrfToken = () => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; XSRF-TOKEN=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+    return '';
+};
+
 export const login = async(email, senha) =>{
     try{
         const resposta = await fetch(`${BASE_URL}/api/auth/login`, {
         method: 'POST', 
-        headers: {'Content-Type': 'application/json' }, 
+        headers: {
+            'Content-Type': 'application/json',
+            'X-XSRF-TOKEN': getCsrfToken()
+        }, 
         credentials: 'include',
         body: JSON.stringify({email, password: senha})
     })
@@ -23,7 +34,10 @@ export const register= async(nome, email, senha) =>{
     try{
         const resposta = await fetch(`${BASE_URL}/api/auth/register`, {
         method: 'POST',
-        headers:{'Content-Type': 'application/json'},
+        headers:{
+            'Content-Type': 'application/json',
+            'X-XSRF-TOKEN': getCsrfToken()
+        },
         credentials: 'include',
         body: JSON.stringify({name: nome, email, password: senha})
     })
@@ -42,6 +56,9 @@ export const logout = async() =>{
     try{
         const resposta = await fetch(`${BASE_URL}/api/auth/logout`, {
             method: 'POST',
+            headers: {
+                'X-XSRF-TOKEN': getCsrfToken()
+            },
             credentials: 'include'
         })
         if(!resposta.ok){
