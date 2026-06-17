@@ -28,10 +28,12 @@ function AuthProvider({children}){
                 setUser(resultado.dados)
                 setIsAuthenticated(true)
             }
+            return resultado
         }
         catch(erro){
             setUser(null)
             setIsAuthenticated(false)
+            return {sucesso: false, mensagem: erro.message}
         }
     }
     const handleLogout = async () => {

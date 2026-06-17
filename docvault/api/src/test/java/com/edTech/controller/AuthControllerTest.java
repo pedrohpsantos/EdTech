@@ -21,6 +21,7 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -52,7 +53,7 @@ class AuthControllerTest {
         String email = uniqueEmail("ana");
         String password = randomPassword();
 
-        mockMvc.perform(post("/api/auth/register")
+        mockMvc.perform(post("/api/auth/register").with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
@@ -62,7 +63,7 @@ class AuthControllerTest {
                                 }
                                 """.formatted(email, password)))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.id").isNumber())
+                .andExpect(jsonPath("$.id").isString())
                 .andExpect(jsonPath("$.name").value("Ana Pesquisadora"))
                 .andExpect(jsonPath("$.email").value(email))
                 .andExpect(jsonPath("$.role").value("RESEARCHER"))
@@ -79,7 +80,7 @@ class AuthControllerTest {
     void registerRejectsNonInstitutionalEmail() throws Exception {
         String password = randomPassword();
 
-        mockMvc.perform(post("/api/auth/register")
+        mockMvc.perform(post("/api/auth/register").with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
@@ -103,12 +104,12 @@ class AuthControllerTest {
                 }
                 """.formatted(password);
 
-        mockMvc.perform(post("/api/auth/register")
+        mockMvc.perform(post("/api/auth/register").with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(payload))
                 .andExpect(status().isCreated());
 
-        mockMvc.perform(post("/api/auth/register")
+        mockMvc.perform(post("/api/auth/register").with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(payload))
                 .andExpect(status().isConflict())
@@ -116,18 +117,18 @@ class AuthControllerTest {
     }
 
     @Test
-    void loginReturnsHttpOnlyStrictCookieWithoutTokenInBody() throws Exception {
+    void loginReturnsHttpOnlyLaxCookieWithoutTokenInBody() throws Exception {
         String email = uniqueEmail("login");
         String password = randomPassword();
         registerUser(email, password);
 
-        mockMvc.perform(post("/api/auth/login")
+        mockMvc.perform(post("/api/auth/login").with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(loginPayload(email, password)))
                 .andExpect(status().isOk())
                 .andExpect(header().string("Set-Cookie", org.hamcrest.Matchers.containsString("token=")))
                 .andExpect(header().string("Set-Cookie", org.hamcrest.Matchers.containsString("HttpOnly")))
-                .andExpect(header().string("Set-Cookie", org.hamcrest.Matchers.containsString("SameSite=Strict")))
+                .andExpect(header().string("Set-Cookie", org.hamcrest.Matchers.containsString("SameSite=Lax")))
                 .andExpect(jsonPath("$.email").value(email))
                 .andExpect(jsonPath("$.password").doesNotExist())
                 .andExpect(jsonPath("$.passwordHash").doesNotExist())
@@ -175,21 +176,21 @@ class AuthControllerTest {
         String email = uniqueEmail("public");
         String password = randomPassword();
 
-        mockMvc.perform(post("/api/auth/register")
+        mockMvc.perform(post("/api/auth/register").with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(registerPayload(email, password)))
                 .andExpect(status().isCreated());
     }
 
     private void registerUser(String email, String password) throws Exception {
-        mockMvc.perform(post("/api/auth/register")
+        mockMvc.perform(post("/api/auth/register").with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(registerPayload(email, password)))
                 .andExpect(status().isCreated());
     }
 
     private Cookie loginAndGetTokenCookie(String email, String password) throws Exception {
-        MvcResult result = mockMvc.perform(post("/api/auth/login")
+        MvcResult result = mockMvc.perform(post("/api/auth/login").with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(loginPayload(email, password)))
                 .andExpect(status().isOk())

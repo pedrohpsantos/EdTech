@@ -5,7 +5,7 @@ CREATE TYPE project_role AS ENUM (
 
 
 CREATE TABLE IF NOT EXISTS project_members(
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    id UUID PRIMARY KEY,
     project_id UUID,
     role project_role NOT NULL,
     user_id UUID,

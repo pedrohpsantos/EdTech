@@ -1,11 +1,22 @@
 const BASE_URL = import.meta.env.VITE_API_URL
+
+const getCsrfToken = () => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; XSRF-TOKEN=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+    return '';
+};
+
 export const login = async(email, senha) =>{
     try{
         const resposta = await fetch(`${BASE_URL}/api/auth/login`, {
         method: 'POST', 
-        headers: {'Content-Type': 'application/json' }, 
+        headers: {
+            'Content-Type': 'application/json',
+            'X-XSRF-TOKEN': getCsrfToken()
+        }, 
         credentials: 'include',
-        body: JSON.stringify({email, senha})
+        body: JSON.stringify({email, password: senha})
     })
     if (!resposta.ok){
         const erro = await resposta.json();
@@ -23,9 +34,12 @@ export const register= async(nome, email, senha) =>{
     try{
         const resposta = await fetch(`${BASE_URL}/api/auth/register`, {
         method: 'POST',
-        headers:{'Content-Type': 'application/json'},
+        headers:{
+            'Content-Type': 'application/json',
+            'X-XSRF-TOKEN': getCsrfToken()
+        },
         credentials: 'include',
-        body: JSON.stringify({nome,email,senha})
+        body: JSON.stringify({name: nome, email, password: senha})
     })
     if (!resposta.ok){
         const erro = await resposta.json()
@@ -42,6 +56,9 @@ export const logout = async() =>{
     try{
         const resposta = await fetch(`${BASE_URL}/api/auth/logout`, {
             method: 'POST',
+            headers: {
+                'X-XSRF-TOKEN': getCsrfToken()
+            },
             credentials: 'include'
         })
         if(!resposta.ok){
@@ -65,7 +82,74 @@ export const getMe = async() =>{
             throw new Error(erro.message || 'Usuário não logado.')
         }
         const dados = await resposta.json()
-        return{sucesso: true, usuario: dados}
+        return{sucesso: true, dados}
+    }
+    catch(erro){
+        return {sucesso: false, mensagem: erro.message}
+    }
+}
+
+export const getProjects = async() =>{
+    try{
+        const resposta = await fetch(`${BASE_URL}/api/projects`, {
+            method: 'GET',
+            credentials: 'include'
+        })
+        if(!resposta.ok){
+            const erro = await resposta.json()
+            throw new Error(erro.message || 'Erro ao listar projetos.')
+        }
+        const dados = await resposta.json()
+        return {sucesso: true, dados}
+    }
+    catch(erro){
+        return {sucesso: false, mensagem: erro.message}
+    }
+}
+
+export const getDocuments = async(projectId, title) =>{
+    try{
+        const params = new URLSearchParams()
+        if (projectId) params.append('projectId', projectId)
+        if (title) params.append('title', title)
+        
+        const resposta = await fetch(`${BASE_URL}/api/documents?${params.toString()}`, {
+            method: 'GET',
+            credentials: 'include'
+        })
+        if(!resposta.ok){
+            const erro = await resposta.json()
+            throw new Error(erro.message || 'Erro ao listar documentos.')
+        }
+        const dados = await resposta.json()
+        return {sucesso: true, dados}
+    }
+    catch(erro){
+        return {sucesso: false, mensagem: erro.message}
+    }
+}
+
+export const uploadDocument = async(file, title, projectId) =>{
+    try{
+        const formData = new FormData()
+        formData.append('file', file)
+        formData.append('title', title)
+        formData.append('projectId', projectId)
+
+        const resposta = await fetch(`${BASE_URL}/api/documents`, {
+            method: 'POST',
+            headers: {
+                'X-XSRF-TOKEN': getCsrfToken()
+            },
+            credentials: 'include',
+            body: formData
+        })
+        if(!resposta.ok){
+            const erro = await resposta.json()
+            throw new Error(erro.message || 'Erro ao fazer upload do documento.')
+        }
+        const dados = await resposta.json()
+        return {sucesso: true, dados}
     }
     catch(erro){
         return {sucesso: false, mensagem: erro.message}
