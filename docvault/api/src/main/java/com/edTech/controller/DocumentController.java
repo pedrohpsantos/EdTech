@@ -34,9 +34,13 @@ public class DocumentController {
     }
 
     @GetMapping
-    public ResponseEntity<List<DocumentResponseDTO>> listDocuments(Authentication authentication) {
+    public ResponseEntity<List<DocumentResponseDTO>> listDocuments(
+            @RequestParam(required = false) UUID projectId,
+            @RequestParam(required = false) String title,
+            Authentication authentication
+    ) {
         User user = (User) authentication.getPrincipal();
-        return ResponseEntity.ok(documentService.listDocumentsByUser(user.getId()));
+        return ResponseEntity.ok(documentService.listDocumentsByUser(user.getId(), projectId, title));
     }
 
     @DeleteMapping("/{id}")

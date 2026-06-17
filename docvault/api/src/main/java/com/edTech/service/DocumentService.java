@@ -87,8 +87,8 @@ public class DocumentService {
         }
     }
 
-    public List<DocumentResponseDTO> listDocumentsByUser(UUID userId) {
-        return documentRepository.findDocumentsByUserId(userId)
+    public List<DocumentResponseDTO> listDocumentsByUser(UUID userId, UUID projectId, String title) {
+        return documentRepository.findDocumentsByUserIdAndFilters(userId, projectId, title)
                 .stream()
                 .map(this::mapToDTO)
                 .collect(Collectors.toList());
