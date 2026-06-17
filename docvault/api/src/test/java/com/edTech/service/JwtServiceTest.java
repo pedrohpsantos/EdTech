@@ -15,6 +15,7 @@ import org.mockito.quality.Strictness;
 import javax.crypto.SecretKey;
 
 import java.nio.charset.StandardCharsets;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -27,12 +28,15 @@ public class JwtServiceTest {
     private JwtService jwtService;
     private final String MOCK_SECRET = "chave-secreta-muito-longa-para-validar-o-jwt-123";
 
+    private UUID testUuid;
+
     @BeforeEach
     void setUp() {
         jwtService = new JwtService(MOCK_SECRET, 60);
 
+        testUuid = UUID.randomUUID();
         // standard values for mock user
-        when(mockUser.getId()).thenReturn(1L);
+        when(mockUser.getId()).thenReturn(testUuid);
         when(mockUser.getEmail()).thenReturn("imalive@unb.br");
         when(mockUser.getRole()).thenReturn(UserRole.RESEARCHER);
     }
@@ -54,10 +58,10 @@ public class JwtServiceTest {
         String token = jwtService.generateToken(mockUser);
 
         // Act
-        Long extractedId = extractUserIdFromToken(token);
+        UUID extractedId = extractUserIdFromToken(token);
 
         // Assert
-        assertEquals(1L, extractedId);
+        assertEquals(testUuid, extractedId);
     }
 
     @Test
@@ -73,14 +77,15 @@ public class JwtServiceTest {
         assertFalse(isValid);
     }
 
-    private Long extractUserIdFromToken(String token) {
+    private UUID extractUserIdFromToken(String token) {
         SecretKey key = Keys.hmacShaKeyFor(MOCK_SECRET.getBytes(StandardCharsets.UTF_8));
 
-        return Jwts.parser()
+        String uidStr = Jwts.parser()
                 .verifyWith(key)
                 .build()
                 .parseSignedClaims(token)
                 .getPayload()
-                .get("uid", Long.class);
+                .get("uid", String.class);
+        return UUID.fromString(uidStr);
     }
 }

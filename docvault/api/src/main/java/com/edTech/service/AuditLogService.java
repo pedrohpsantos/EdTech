@@ -23,6 +23,9 @@ public class AuditLogService{
             System.err.println("Erro em salvar o log da auditoria: " + e.getMessage());
             return null;
         }
+    }
 
+    public AuditLog logAction(UUID userId, AcaoAuditoria action, String details) {
+        return log(action, userId, null, null, null, details);
     }
 }
