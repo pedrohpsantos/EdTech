@@ -5,7 +5,7 @@ export const login = async(email, senha) =>{
         method: 'POST', 
         headers: {'Content-Type': 'application/json' }, 
         credentials: 'include',
-        body: JSON.stringify({email, senha})
+        body: JSON.stringify({email, password: senha})
     })
     if (!resposta.ok){
         const erro = await resposta.json();
@@ -25,7 +25,7 @@ export const register= async(nome, email, senha) =>{
         method: 'POST',
         headers:{'Content-Type': 'application/json'},
         credentials: 'include',
-        body: JSON.stringify({nome,email,senha})
+        body: JSON.stringify({name: nome, email, password: senha})
     })
     if (!resposta.ok){
         const erro = await resposta.json()
@@ -65,7 +65,7 @@ export const getMe = async() =>{
             throw new Error(erro.message || 'Usuário não logado.')
         }
         const dados = await resposta.json()
-        return{sucesso: true, usuario: dados}
+        return{sucesso: true, dados}
     }
     catch(erro){
         return {sucesso: false, mensagem: erro.message}
