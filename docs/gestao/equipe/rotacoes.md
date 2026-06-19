@@ -123,10 +123,10 @@ flowchart LR
 | :--- | :---: | :---: | :---: | :---: | :---: |
 | **Tech Lead** | Tech Lead | Tech Lead | Tech Lead | Tech Lead | Tech Lead |
 | **Full Stack 1** | Frontend | Backend | QA | DevOps | Docs & Logs |
-| **Full Stack 2** | Backend | Docs & Logs | Frontend | QA | DevOps |
+| **Full Stack 2** | Backend | QA | DevOps | Docs & Logs | Frontend |
 | **Full Stack 3** | QA | DevOps | Docs & Logs | Frontend | Backend |
-| **Full Stack 4** | DevOps | Frontend | Backend | Docs & Logs | QA |
-| **Full Stack 5** | Docs & Logs | QA | DevOps | Backend | Frontend |
+| **Full Stack 4** | DevOps | Docs & Logs | Frontend | Backend | QA |
+| **Full Stack 5** | Docs & Logs | Frontend | Backend | QA | DevOps |
 
 !!! tip "Flexibilidade"
     A tabela acima é uma **sugestão de progressão**. A rotação real será ajustada conforme o andamento do projeto e o feedback da equipe em cada retrospectiva.

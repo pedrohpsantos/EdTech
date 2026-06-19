@@ -124,9 +124,9 @@ Todos os commits devem seguir rigorosamente a especificação do **Conventional 
 | :--- | :---: | :---: |
 | **S1:** Setup completo (repo, infra, docs) | 18/05 | :material-check-circle:{ .green } Concluído |
 | **S2:** Lean Inception e Arquitetura fechados | 25/05 | :material-check-circle:{ .green } Concluído |
-| **S3:** Autenticação funcional (API + Frontend) | 01/06 | :material-progress-clock: Em andamento |
-| **S4:** GCS Uploads & Base do Orientador | 10/06 | :material-circle-outline: Pendente |
-| **S5:** Painel Concluído & Auditoria Integrada | 20/06 | :material-circle-outline: Pendente |
+| **S3:** Autenticação funcional (API + Frontend) | 01/06 | :material-check-circle:{ .green } Concluído |
+| **S4:** GCS Uploads & Base do Orientador | 10/06 | :material-check-circle:{ .green } Concluído |
+| **S5:** Painel Concluído & Auditoria Integrada | 20/06 | :material-progress-clock: Em andamento |
 | **S6:** Bateria de Testes e2e & Integrações ML | 30/06 | :material-circle-outline: Pendente |
 | **S7:** Homologação Final e Deploy de Produção | 07/07 | :material-circle-outline: Pendente |
 
