@@ -136,7 +136,7 @@ Consolidar tecnicamente a integração entre o Frontend (React) e o Backend (Spr
 | Issue | Descrição | Impacto |
 | :---: | :--- | :--- |
 | #72 | Implementação Definitiva do Flyway (Correção do DDL-Auto) | Crítico — Sem o Flyway, o banco perderá dados ao subir pra nuvem |
-| #73 | Contratos de API (Requests/Responses) Sprint 5 | Alto — Fundamental para trabalhar em paralelo sem quebrar contratos |
+| #73 | Contratos de API (Requests/Responses) | Alto — Fundamental para trabalhar em paralelo sem quebrar contratos |
 | #13 | Entidade Document e CRUD Backend | Alto — Feature Core de arquivos |
 | #14 | Tela de Upload Frontend | Alto — Feature Core de interface |
 | #15 | Entidade Project e Membros (Backend) | Médio — Preparação da base de dados |
