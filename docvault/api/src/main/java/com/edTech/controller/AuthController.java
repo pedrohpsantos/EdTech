@@ -1,8 +1,8 @@
 package com.edTech.controller;
 
-import com.edTech.dto.LoginRequest;
-import com.edTech.dto.RegisterRequest;
-import com.edTech.dto.UserResponse;
+import com.edTech.dto.LoginRequestDTO;
+import com.edTech.dto.RegisterRequestDTO;
+import com.edTech.dto.UserResponseDTO;
 import com.edTech.model.User;
 import com.edTech.service.JwtService;
 import com.edTech.service.UserService;
@@ -42,19 +42,19 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest request) {
+    public ResponseEntity<?> register(@Valid @RequestBody RegisterRequestDTO request) {
         User registeredUser = userService.register(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(UserResponse.from(registeredUser));
+        return ResponseEntity.status(HttpStatus.CREATED).body(UserResponseDTO.from(registeredUser));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<UserResponse> login(@Valid @RequestBody LoginRequest request) {
+    public ResponseEntity<UserResponseDTO> login(@Valid @RequestBody LoginRequestDTO request) {
         User user = userService.authenticate(request.email(), request.password());
         String token = jwtService.generateToken(user);
 
         return ResponseEntity.ok()
                 .header("Set-Cookie", buildAuthCookie(token).toString())
-                .body(UserResponse.from(user));
+                .body(UserResponseDTO.from(user));
     }
 
 
@@ -74,9 +74,9 @@ public class AuthController {
     }
 
     @GetMapping("/me")
-    public ResponseEntity<UserResponse> me(Authentication authentication) {
+    public ResponseEntity<UserResponseDTO> me(Authentication authentication) {
         User user = (User) authentication.getPrincipal();
-        return ResponseEntity.ok(UserResponse.from(user));
+        return ResponseEntity.ok(UserResponseDTO.from(user));
     }
 
     private ResponseCookie buildAuthCookie(String token) {
