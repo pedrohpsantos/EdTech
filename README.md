@@ -103,7 +103,7 @@ O backend continua conectando no PostgreSQL pela rede interna do Compose em `db:
 
 ---
 
-## Equipa
+## Equipe
 
 | Nome | Papel | GitHub |
 | :--- | :--- | :--- |
