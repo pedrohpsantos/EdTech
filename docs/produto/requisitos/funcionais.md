@@ -8,12 +8,12 @@ Especificação dos requisitos funcionais do EdTech, organizados por módulo e r
 
 | ID | Requisito | Prioridade | Funcionalidade | Status |
 | :---: | :--- | :---: | :---: | :---: |
-| RF01.1 | O sistema deve permitir o cadastro de pesquisadores com nome, e-mail institucional e senha |  Alta | F01 | 🚧 |
-| RF01.2 | O sistema deve autenticar usuários via e-mail e senha, retornando um JWT em cookie `HttpOnly` |  Alta | F02 | 🚧 |
-| RF01.3 | O sistema deve invalidar o cookie de sessão no logout |  Alta | F03 | 🚧 |
-| RF01.4 | O sistema deve interceptar todas as requisições para validar o JWT antes de processar |  Alta | F04 | 🚧 |
-| RF01.5 | O sistema deve retornar `401 Unauthorized` quando o token estiver expirado ou ausente |  Média | F05 | 🚧 |
-| RF01.6 | O sistema deve validar que o e-mail pertence a um domínio institucional (`@instituicao.edu.br`) |  Média | F01 | ⏳ |
+| RF01.1 | O sistema deve permitir o cadastro de pesquisadores com nome, e-mail institucional e senha |  Alta | F01 | ✅ |
+| RF01.2 | O sistema deve autenticar usuários via e-mail e senha, retornando um JWT em cookie `HttpOnly` |  Alta | F02 | ✅ |
+| RF01.3 | O sistema deve invalidar o cookie de sessão no logout |  Alta | F03 | ✅ |
+| RF01.4 | O sistema deve interceptar todas as requisições para validar o JWT antes de processar |  Alta | F04 | ✅ |
+| RF01.5 | O sistema deve retornar `401 Unauthorized` quando o token estiver expirado ou ausente |  Média | F05 | ✅ |
+| RF01.6 | O sistema deve validar que o e-mail pertence a um domínio institucional (`@instituicao.edu.br`) |  Média | F01 | ✅ |
 
 ---
 
