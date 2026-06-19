@@ -94,7 +94,7 @@ Consolidar a Integração Contínua, finalizar a base de Autenticação com CORS
 
 ## Aprendizados e Decisões
 
-!!! success "Reconhecimento da Professora Marina"
+!!! success "Reconhecimento da Tutora Marina"
     Nosso grupo foi usado como referência no feedback de outros grupos mostrando como estamos bem e fazendo um ótimo trabalho. Os pontos fortes elogiados foram as correções de build, as implementações rigorosas de segurança (CORS, SameSite, XSRF) e o upload completo.
 
 !!! note "Decisão: Pausa na Rotação"
