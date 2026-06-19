@@ -13,22 +13,22 @@ gantt
     axisFormat %d/%m
 
     section Fase 1: Fundação
-    Requisitos e Lean Inception      :done, f1, 2026-05-12, 7d
-    Arquitetura de Software          :done, f2, 2026-05-19, 7d
+    Requisitos e Lean Inception      :done, f1, 2026-05-16, 7d
+    Arquitetura de Software          :done, f2, 2026-05-23, 7d
 
     section Fase 2: Auth
-    Backend (Autenticação JWT)       :active, f3, 2026-05-26, 7d
-    Frontend (Tela de Login)         :active, f4, 2026-05-26, 7d
+    Backend (Autenticação JWT)       :done, f3, 2026-05-30, 7d
+    Frontend (Tela de Login)         :done, f4, 2026-05-30, 7d
 
     section Fase 3: Paralelização
-    Integrações (GCS Uploads)        :f5, 2026-06-02, 14d
-    Fluxo do Orientador (Painel SPA) :f6, 2026-06-04, 14d
-    Módulo de Auditoria (Backend)    :f7, 2026-06-06, 14d
+    Integrações (GCS Uploads)        :done, f5, 2026-06-06, 7d
+    Fluxo do Orientador (Painel SPA) :active, f6, 2026-06-13, 7d
+    Módulo de Auditoria (Backend)    :active, f7, 2026-06-20, 7d
 
     section Fase 4: Entrega
-    Testes de Segurança e e2e        :f8, 2026-06-20, 10d
-    Integrações Extras (ML/SSO)      :f9, 2026-06-24, 7d
-    Deploy de Produção               :f10, 2026-07-01, 7d
+    Testes de Segurança e e2e        :f8, 2026-06-20, 7d
+    Integrações Extras (ML/SSO)      :f9, 2026-06-27, 7d
+    Deploy de Produção               :f10, 2026-07-04, 7d
 ```
 
 ---
@@ -122,13 +122,13 @@ Todos os commits devem seguir rigorosamente a especificação do **Conventional 
 
 | Marco | Data Prevista | Status |
 | :--- | :---: | :---: |
-| **S1:** Setup completo (repo, infra, docs) | 18/05 | :material-check-circle:{ .green } Concluído |
-| **S2:** Lean Inception e Arquitetura fechados | 25/05 | :material-check-circle:{ .green } Concluído |
-| **S3:** Autenticação funcional (API + Frontend) | 01/06 | :material-check-circle:{ .green } Concluído |
-| **S4:** GCS Uploads & Base do Orientador | 10/06 | :material-check-circle:{ .green } Concluído |
-| **S5:** Painel Concluído & Auditoria Integrada | 20/06 | :material-progress-clock: Em andamento |
-| **S6:** Bateria de Testes e2e & Integrações ML | 30/06 | :material-circle-outline: Pendente |
-| **S7:** Homologação Final e Deploy de Produção | 07/07 | :material-circle-outline: Pendente |
+| **S1:** Setup completo (repo, infra, docs) | 16/05 | :material-check-circle:{ .green } Concluído |
+| **S2:** Lean Inception e Arquitetura fechados | 23/05 | :material-check-circle:{ .green } Concluído |
+| **S3:** Autenticação funcional (API + Frontend) | 30/05 | :material-check-circle:{ .green } Concluído |
+| **S4:** GCS Uploads & Base do Orientador | 06/06 | :material-check-circle:{ .green } Concluído |
+| **S5:** Painel Concluído & Auditoria Integrada | 13/06 | :material-progress-clock: Em andamento |
+| **S6:** Bateria de Testes e2e & Integrações ML | 20/06 | :material-circle-outline: Pendente |
+| **S7:** Homologação Final e Deploy de Produção | 27/06 | :material-circle-outline: Pendente |
 
 
 ---
