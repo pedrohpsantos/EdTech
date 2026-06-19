@@ -1,6 +1,6 @@
 package com.edTech.service;
 
-import com.edTech.dto.RegisterRequest;
+import com.edTech.dto.RegisterRequestDTO;
 import com.edTech.model.User;
 import com.edTech.model.UserRole;
 import com.edTech.repository.UserRepository;
@@ -38,7 +38,7 @@ public class UserService {
     }
 
     @Transactional
-    public User register(RegisterRequest request) {
+    public User register(RegisterRequestDTO request) {
         String normalizedEmail = request.email().trim().toLowerCase(Locale.ROOT);
 
         if (!normalizedEmail.endsWith(INSTITUTIONAL_DOMAIN)) {

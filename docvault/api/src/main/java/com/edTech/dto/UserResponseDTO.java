@@ -5,7 +5,7 @@ import com.edTech.model.User;
 import java.time.Instant;
 import java.util.UUID;
 
-public record UserResponse(
+public record UserResponseDTO(
         UUID id,
         String name,
         String email,
@@ -14,8 +14,8 @@ public record UserResponse(
         Instant createdAt
 ) {
 
-    public static UserResponse from(User user) {
-        return new UserResponse(
+    public static UserResponseDTO from(User user) {
+        return new UserResponseDTO(
                 user.getId(),
                 user.getName(),
                 user.getEmail(),
