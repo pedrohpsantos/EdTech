@@ -151,7 +151,7 @@ nav:
       - Pipeline CI/CD: desenvolvimento/ci_cd.md
       - Configuração de CORS: desenvolvimento/cors_configuration.md
       - API Reference: desenvolvimento/api_endpoints.md
-      - Contratos de API (Sprint 5): desenvolvimento/api_contracts.md
+      - Contratos de API: desenvolvimento/api_contracts.md
   - Gestão e Metodologia Ágil:
       - Ritos e Acordos:
           - Acordos do Time: gestao/agile/team_agreements.md

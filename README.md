@@ -18,9 +18,9 @@ Plataforma acadêmica para centralização, gerenciamento e auditoria de publica
 
 ## 📌 Estado Atual do Repositório
 
-O projeto encontra-se atualmente na fase de **fundação de governança e arquitetura técnica**.
-- **✅ Concluído:** Documentação rica e consolidada (*Docs-as-Code*), arquitetura técnica (C4 Model, ADRs) e Design System.
-- **🚧 Em Desenvolvimento:** Os módulos de aplicação (Backend Java e Frontend React) estão em fase de *scaffolding* e construção ativa. Ainda não há uma versão funcional do produto.
+O projeto encontra-se atualmente na fase final rumo à **conclusão do MVP (Sprint 6)**.
+- **✅ Concluído:** Documentação (Docs-as-Code), Arquitetura Técnica, Autenticação completa, Upload de Documentos para GCP e Contratos de API consolidados.
+- **🚧 Em Desenvolvimento:** Interfaces de gestão de projetos, painel do orientador, fluxos de auditoria/logs estruturados e automação E2E.
 
 Para entender as prioridades atuais e como ajudar na documentação, leia nosso [Guia de Contribuição](CONTRIBUTING.md).
 
