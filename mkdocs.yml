@@ -135,7 +135,7 @@ nav:
           - Armazenamento em Nuvem: arquitetura/infraestrutura/nuvem.md
           - Segurança e AppSec: arquitetura/infraestrutura/seguranca_app.md
       - Decisões Técnicas (ADRs):
-          - ADR 0001 (Cloud Storage): arquitetura/adrs/0001-armazenamento-gcs.md
+          - Armazenamento S3 (Supabase): arquitetura/adrs/0001-armazenamento-supabase-s3.md
           - ADR 0002 (Autenticação JWT): arquitetura/adrs/0002-autenticacao-jwt.md
           - ADR 0003 (Cloud Run Serverless): arquitetura/adrs/0003-cloud-run.md
           - ADR 0004 (PostgreSQL): arquitetura/adrs/0004-postgresql.md
