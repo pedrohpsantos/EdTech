@@ -73,14 +73,23 @@ export const getProjects = async () => {
     }
 };
 
-export const getDocuments = async (projectId, title) => {
+export const getDocuments = async (projectId, title, page = 0, size = 20) => {
     try {
         const resposta = await api.get('/api/documents', {
-            params: { projectId, title }
+            params: { projectId, title, page, size }
         });
         return { sucesso: true, dados: resposta.data };
     } catch (error) {
         return handleApiError(error, 'Erro ao listar documentos.');
+    }
+};
+
+export const getDownloadUrl = async (documentId) => {
+    try {
+        const resposta = await api.get(`/api/documents/${documentId}/download`);
+        return { sucesso: true, dados: resposta.data };
+    } catch (error) {
+        return handleApiError(error, 'Erro ao gerar link de download seguro.');
     }
 };
 

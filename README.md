@@ -52,7 +52,7 @@ O ambiente de desenvolvimento sobe PostgreSQL 15 e o backend Spring Boot na port
 # 1. Copie o arquivo de exemplo
 cp infra/.env.example infra/.env
 
-# 2. Preencha POSTGRES_PASSWORD e JWT_SECRET em infra/.env
+# 2. Preencha POSTGRES_PASSWORD, JWT_SECRET e as credenciais do Supabase S3 em infra/.env
 
 # 3. Suba banco e backend
 docker compose --env-file infra/.env -f infra/docker-compose.yml up --build
@@ -96,9 +96,9 @@ O backend continua conectando no PostgreSQL pela rede interna do Compose em `db:
 
 | Camada | Tecnologias |
 | :--- | :--- |
-| **Backend** | Java 17 · Spring Boot · Spring Security · JWT |
-| **Frontend** | React · HTML5 · CSS3 · Bootstrap 5 |
-| **Cloud** | Google Cloud Run · Cloud SQL (PostgreSQL) · Cloud Storage |
+| **Backend** | Java 21 · Spring Boot 4.1 · Spring Security · JWT |
+| **Frontend** | React 19 · HTML5 · CSS3 · Bootstrap 5 |
+| **Cloud** | Supabase S3 Storage · Cloud SQL (PostgreSQL) |
 | **Docs & CI** | MkDocs Material · GitHub Actions · uv |
 
 ---

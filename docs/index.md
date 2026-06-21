@@ -172,8 +172,8 @@ Tecnologias selecionadas para robustez, segurança e escalabilidade em ambiente 
 | Camada | Tecnologias |
 | :--- | :--- |
 | **Frontend** | HTML5, CSS3, JavaScript Vanilla, Bootstrap 5, React |
-| **Backend** | Java 17, Spring Boot, Spring Security, JWT (`HttpOnly` + `Secure`) |
-| **Banco de Dados & Storage** | Google Cloud SQL for PostgreSQL, Google Cloud Storage, Flyway |
+| **Backend** | Java 21, Spring Boot 4.1, Spring Security, JWT (`HttpOnly` + `Secure`) |
+| **Banco de Dados & Storage** | Google Cloud SQL for PostgreSQL, Supabase S3 Object Storage, Flyway |
 | **Infraestrutura & DevOps** | Docker, Google Cloud Run |
 | **CI/CD & Qualidade** | GitHub Actions, JUnit, Python 3.11 (scripts de telemetria - Pós-MVP) |
 | **Documentação** | MkDocs + Material for MkDocs |
@@ -246,3 +246,4 @@ Time multidisciplinar do AILAB Makers.
 | `1.0` | 29/05/2026 | Criação do documento | Pedro Henrique P. Santos |
 | `1.1` | 04/06/2026 | Adição da secção Início Rápido e melhorias visuais | Pedro Henrique P. Santos |
 | `1.2` | 13/06/2026 | Reestruturação arquitetural da documentação e introdução de guias DevEx | Pedro Henrique P. Santos |
+| `1.3` | 21/06/2026 | Atualização da Stack Tecnológica (Java 21, Spring 4.1, S3) | Pedro Henrique P. Santos |

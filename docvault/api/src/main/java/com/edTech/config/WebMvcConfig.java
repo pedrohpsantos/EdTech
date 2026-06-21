@@ -9,7 +9,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/uploads/**")
-                .addResourceLocations("file:uploads/");
+        // A pasta de uploads não é mais exposta estaticamente (Mitigação SEC-001)
     }
 }
