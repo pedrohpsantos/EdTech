@@ -39,3 +39,10 @@ jwt:
 
 cors:
   allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:5173}
+
+s3:
+  access-key: ${AWS_ACCESS_KEY_ID:}
+  secret-key: ${AWS_SECRET_ACCESS_KEY:}
+  endpoint: ${S3_ENDPOINT:https://abc.supabase.co/storage/v1/s3}
+  region: ${S3_REGION:us-east-1}
+  bucket: ${S3_BUCKET_NAME:documents}
