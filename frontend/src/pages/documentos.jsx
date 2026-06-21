@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import { useAuth } from "../context/authContext"
+
 import { getDocuments, getProjects, uploadDocument } from "../services/api"
 import ThemeToggle from "../components/themeToggle"
 
 function Documentos() {
-    const { user } = useAuth()
     const navigate = useNavigate()
     
     const [documents, setDocuments] = useState([])
@@ -20,11 +19,6 @@ function Documentos() {
     const [uploadError, setUploadError] = useState("")
     const [uploadSuccess, setUploadSuccess] = useState("")
 
-    useEffect(() => {
-        loadProjects()
-        loadDocuments()
-    }, [])
-
     const loadProjects = async () => {
         const res = await getProjects()
         if (res.sucesso) {
@@ -38,6 +32,13 @@ function Documentos() {
             setDocuments(res.dados)
         }
     }
+
+    useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        loadProjects()
+        loadDocuments()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     const handleFilter = (e) => {
         e.preventDefault()

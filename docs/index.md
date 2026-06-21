@@ -78,7 +78,7 @@ Pesquisadores precisam de um lugar seguro, organizado e auditável para armazena
 
     ---
 
-    Google Cloud Run com banco gerenciado (Cloud SQL for PostgreSQL) e storage distribuído.
+    Google Cloud Run com banco gerenciado (Cloud SQL for PostgreSQL) e storage distribuído multi-cloud (Supabase S3 e GCS).
 
 </div>
 
