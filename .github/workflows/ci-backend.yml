@@ -57,6 +57,8 @@ jobs:
                 S3_ENDPOINT: https://abc.supabase.co/storage/v1/s3
                 S3_REGION: us-east-1
                 S3_BUCKET_NAME: documents
+                JWT_SECRET: supersecretjwtsecretkeyformyspringbootapp123
+                JWT_EXPIRATION_MINUTES: 60
    
            
             - name: Upload JaCoCo Report
