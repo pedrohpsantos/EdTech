@@ -1,4 +1,4 @@
-# ADR 0001: Armazenamento em Nuvem (Supabase Storage / AWS S3)
+# ADR 0001: Armazenamento em Nuvem (Supabase Storage / GCS)
 
 ## Status
 
