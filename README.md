@@ -19,7 +19,7 @@ Plataforma acadêmica para centralização, gerenciamento e auditoria de publica
 ## 📌 Estado Atual do Repositório
 
 O projeto encontra-se atualmente na fase final rumo à **conclusão do MVP (Sprint 6)**.
-- **✅ Concluído:** Documentação (Docs-as-Code), Arquitetura Técnica, Autenticação completa, Upload de Documentos para GCP e Contratos de API consolidados.
+- **✅ Concluído:** Documentação (Docs-as-Code), Arquitetura Técnica, Autenticação completa, Upload de Documentos para Supabase Storage e Contratos de API consolidados.
 - **🚧 Em Desenvolvimento:** Interfaces de gestão de projetos, painel do orientador, fluxos de auditoria/logs estruturados e automação E2E.
 
 Para entender as prioridades atuais e como ajudar na documentação, leia nosso [Guia de Contribuição](CONTRIBUTING.md).
@@ -96,10 +96,10 @@ O backend continua conectando no PostgreSQL pela rede interna do Compose em `db:
 
 | Camada | Tecnologias |
 | :--- | :--- |
-| **Backend** | Java 17 · Spring Boot · Spring Security · JWT |
-| **Frontend** | React · HTML5 · CSS3 · Bootstrap 5 |
-| **Cloud** | Google Cloud Run · Cloud SQL (PostgreSQL) · Cloud Storage |
-| **Docs & CI** | MkDocs Material · GitHub Actions · uv |
+| **Backend** | Java 21 · Spring Boot 4.1 · Spring Security · JWT · Flyway |
+| **Frontend** | React 19 · Vite 8 · React Router · Axios |
+| **Cloud / Infra** | Supabase (PostgreSQL + Storage S3) · Docker Compose · GCS (fallback) |
+| **Docs & CI** | MkDocs Material · GitHub Actions · uv · JaCoCo |
 
 ---
 

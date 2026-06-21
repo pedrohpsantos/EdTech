@@ -18,7 +18,7 @@ Para evitar roubo de token, o token JWT nunca deve ser lido pelo código JavaScr
 
 - **`Secure`:** Exige tráfego via HTTPS.
 
-- **`SameSite=Strict`:** Impede ataques CSRF bloqueando envios em sites de terceiros.
+- **`SameSite=Lax`:** Permite navegações top-level e requisições cross-origin autenticadas via CORS, enquanto mitiga ataques CSRF de sites de terceiros.
 
 ## 2. Controle de Acesso Baseado em Papéis (RBAC)
 

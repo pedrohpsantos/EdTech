@@ -5,7 +5,7 @@ Bem-vindo ao projeto EdTech do AILAB Makers (UnB FCTE)! Este documento é a font
 ## 1. Pré-requisitos
 
 Para contribuir com o projeto, você precisa ter as seguintes ferramentas instaladas:
-- **Java**: 17 LTS (Backend)
+- **Java**: 21 LTS (Backend)
 - **Node.js**: 20.x ou superior (Frontend Vite)
 - **Python**: 3.11 ou superior (Documentação MkDocs)
 - **uv**: Gerenciador de pacotes Python
@@ -21,11 +21,10 @@ O repositório EdTech encontra-se na fase de **fundação de governança e arqui
 - Melhorias na clareza dos requisitos de produto, jornadas de usuário e personas.
 - Ajustes editoriais, correção de links e consistência narrativa.
 
-### 2.2 O que NÃO aceitamos neste momento:
-- Pull Requests introduzindo código de aplicação funcional de backend ou frontend.
-- Criação de novos endpoints de API, migrações de banco de dados ou views no frontend.
-
-> **Nota:** Os comandos finais de setup do produto e infraestrutura serão documentados oficialmente assim que a estrutura dos módulos estiver estabilizada.
+### 2.2 Diretrizes de Contribuição:
+- Pull Requests de código devem seguir os contratos de API documentados em `docs/desenvolvimento/api_endpoints.md`.
+- Novas features devem ter uma issue vinculada e seguir o fluxo de branches descrito abaixo.
+- Toda alteração de código deve passar pelos testes automatizados e pelo lint local.
 
 ## 3. Setup da Documentação Local (MkDocs)
 Para rodar o site de documentação localmente e visualizar suas edições:
@@ -38,7 +37,7 @@ uv run mkdocs serve
 ```
 Acesse `http://127.0.0.1:8000` no navegador.
 
-## 3. Fluxo de Branches
+## 4. Fluxo de Branches
 
 Adotamos a seguinte estrutura de ramificações:
 - `main`: Branch de produção, contendo apenas código estável.

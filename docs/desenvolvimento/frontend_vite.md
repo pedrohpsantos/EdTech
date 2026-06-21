@@ -11,7 +11,8 @@ frontend/
 │   ├── context/         # Contextos da aplicação (AuthContext, etc)
 │   ├── hooks/           # Custom hooks (useTheme, etc)
 │   ├── pages/           # Views das páginas mapeadas em rotas
-│   ├── App.jsx          # Entrypoint de rotas
+│   ├── services/        # Integração com backend (api.js, axios)
+│   ├── App.jsx          # Entrypoint de rotas (react-router-dom)
 │   └── index.css        # Estilos globais e tokens (Design System)
 ├── public/              # Assets estáticos
 ├── index.html           # Template HTML raiz
@@ -50,3 +51,4 @@ Isso permite que você programe como se frontend e backend estivessem no mesmo d
 | :---: | :---: | :--- | :--- |
 | `1.0` | 13/06/2026 | Criação do documento de suporte ao DevEx | Pedro Henrique P. Santos |
 | `1.1` | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |
+| `1.2` | 21/06/2026 | Adição da camada de services e dependências-chave | Pedro Henrique P. Santos |

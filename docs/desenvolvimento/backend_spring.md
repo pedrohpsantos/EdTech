@@ -1,6 +1,6 @@
 # Backend e API (Spring Boot)
 
-O backend do EdTech atua como uma API RESTful independente, empacotada e orquestrada via **Spring Boot 3**.
+O backend do EdTech atua como uma API RESTful independente, empacotada e orquestrada via **Spring Boot 4.1**.
 
 ## Arquitetura em Camadas
 
@@ -20,7 +20,7 @@ Seguimos a arquitetura padrão baseada em domínio de negócio isolado:
 
 ## Segurança e Autenticação
 
-A arquitetura utiliza **JWT** injetados via cookies seguros HTTPOnly (`SameSite=Strict`), blindando a aplicação contra ataques XSS.
+A arquitetura utiliza **JWT** injetados via cookies seguros HTTPOnly (`SameSite=Lax`), blindando a aplicação contra ataques XSS e permitindo navegação top-level cross-origin.
 Qualquer rota protegida passa pelo `JwtAuthenticationFilter` antes de chegar no Controller.
 
 ## Persistência de Dados (Flyway)

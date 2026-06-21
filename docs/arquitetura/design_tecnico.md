@@ -7,21 +7,21 @@ Enquanto o **C4 Model** descreve *o que* as partes fazem, este documento detalha
 O sistema é logicamente particionado em camadas cliente-servidor padrão.
 
 ### Camada Cliente (Frontend)
-A interface de usuário é uma **SPA** desenvolvida em **React 18.x** com estilização responsiva baseada no **Bootstrap 5**.
+A interface de usuário é uma **SPA** desenvolvida em **React 19.x** com estilização responsiva baseada em **CSS puro** com Design System próprio.
 
 | Tecnologia | Função |
 | :--- | :--- |
 | **HTML5/CSS3** | Estrutura semântica e estilização base |
-| **Bootstrap 5** | Sistema de grid e layout |
-| **React 18.x** | Biblioteca de interfaces de usuário |
+| **Bootstrap 5** | Sistema de grid e layout <!-- TODO: confirmar com o time se Bootstrap ainda é usado ou se foi removido --> |
+| **React 19.x** | Biblioteca de interfaces de usuário |
 
 ### Camada Servidora (Backend)
 O backend é um monólito modular que orquestra a lógica de negócio, autenticação e comunicação externa.
 
 | Tecnologia | Função |
 | :--- | :--- |
-| **Java 17 LTS** | Linguagem principal |
-| **Spring Boot 3.x** | Framework web e autoconfiguração |
+| **Java 21 LTS** | Linguagem principal |
+| **Spring Boot 4.1** | Framework web e autoconfiguração |
 | **Spring Security** | Gateway interno para validação de JWTs |
 | **Flyway** | Migrações versionadas do banco PostgreSQL |
 
@@ -53,7 +53,7 @@ classDiagram
     class Documento {
         +UUID id
         +String titulo
-        +String urlGCS
+        +String fileUrl
         +StatusDocumento status
         +LocalDateTime dataEnvio
         +aprovar()
@@ -83,7 +83,7 @@ sequenceDiagram
     participant P as Pesquisadora
     participant F as Frontend
     participant B as Backend
-    participant S as Storage (GCS)
+    participant S as Storage (Supabase S3)
     participant A as Auditoria
 
     P->>F: Submete Arquivo PDF

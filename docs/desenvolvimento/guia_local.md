@@ -6,8 +6,8 @@ Bem-vindo ao projeto EdTech! Siga este guia para configurar sua máquina e rodar
 
 Certifique-se de ter os seguintes softwares instalados na sua máquina:
 
-- **Node.js** (v18 ou superior)
-- **Java JDK** (v17 ou superior)
+- **Node.js** (v20 ou superior)
+- **Java JDK** (v21 ou superior)
 - **Docker** e **Docker Compose**
 - **Git**
 
@@ -17,7 +17,9 @@ O projeto utiliza PostgreSQL. Em ambiente de desenvolvimento, subimos o banco vi
 
 ```bash
 # Na raiz do repositório
-docker-compose up -d
+cp infra/.env.example infra/.env
+# Preencha POSTGRES_PASSWORD e JWT_SECRET em infra/.env
+docker compose --env-file infra/.env -f infra/docker-compose.yml up -d
 ```
 *Isso iniciará o container `edtech-postgres` rodando na porta `5432`.*
 
