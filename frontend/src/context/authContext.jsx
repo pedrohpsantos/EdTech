@@ -14,7 +14,7 @@ function AuthProvider({children}){
                 setIsAuthenticated(true)
             }
         }
-        catch(e){
+        catch {
             setUser(null)
             setIsAuthenticated(false)
         }
