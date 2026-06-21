@@ -11,7 +11,10 @@ Além disso, a persistência em disco local se mostrou frágil e inadequada para
 
 ## Decisão
 
-Optou-se por integrar a aplicação backend ao **Supabase Storage** (via API compatível com **AWS S3**) para hospedagem de arquivos binários. O banco de dados PostgreSQL armazenará apenas a URI (metadados) do arquivo apontando para a URL pública do bucket S3.
+Optou-se por integrar a aplicação backend ao **Supabase Storage** (via API compatível com **AWS S3**) para hospedagem de arquivos binários no momento atual. O banco de dados PostgreSQL armazenará apenas a URI (metadados) do arquivo apontando para a URL pública do bucket S3.
+
+**Estratégia de Transição e Fallback (Google Cloud):**
+Apesar de utilizarmos o Supabase primariamente neste momento, **todo o código e configuração referentes ao Google Cloud Storage (GCS) serão mantidos intactos no repositório**. Essa decisão estratégica visa garantir um fallback imediato e facilitar uma futura transição de infraestrutura, caso a adoção corporativa do Google Cloud seja oficializada ou se os limites gratuitos do Supabase exigirem uma mudança brusca para o ecossistema do GCP em ambiente Enterprise.
 
 ## Consequências
 
