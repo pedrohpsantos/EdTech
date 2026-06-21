@@ -144,6 +144,7 @@ nav:
           - ADR 0007 (Flyway Migrations): arquitetura/adrs/0007-flyway.md
           - ADR 0008 (GitHub Actions CI/CD): arquitetura/adrs/0008-github-actions.md
           - ADR 0009 (Docs-as-Code via MkDocs): arquitetura/adrs/0009-mkdocs.md
+          - ADR 0010 (Monolito Modular): arquitetura/adrs/0010-monolito-modular.md
   - Desenvolvimento (DevEx):
       - Setup e Onboarding: desenvolvimento/guia_local.md
       - Frontend (Vite + React): desenvolvimento/frontend_vite.md
