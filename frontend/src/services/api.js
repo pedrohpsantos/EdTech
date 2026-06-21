@@ -1,4 +1,6 @@
-const BASE_URL = import.meta.env.VITE_API_URL
+import axios from 'axios';
+
+const BASE_URL = import.meta.env.VITE_API_URL;
 
 const getCsrfToken = () => {
     const value = `; ${document.cookie}`;
@@ -7,151 +9,92 @@ const getCsrfToken = () => {
     return '';
 };
 
-export const login = async(email, senha) =>{
-    try{
-        const resposta = await fetch(`${BASE_URL}/api/auth/login`, {
-        method: 'POST', 
-        headers: {
-            'Content-Type': 'application/json',
-            'X-XSRF-TOKEN': getCsrfToken()
-        }, 
-        credentials: 'include',
-        body: JSON.stringify({email, password: senha})
-    })
-    if (!resposta.ok){
-        const erro = await resposta.json();
-        throw new Error(erro.message || 'Erro ao realizar o login. Verifique seus dados e tente novamente')
-    }
-    const dados = await resposta.json()
-    return {sucesso: true, dados}
-    }
-    catch(erro){
-        return{sucesso: false, mensagem: erro.message}
-    }
-    
-}
-export const register= async(nome, email, senha) =>{
-    try{
-        const resposta = await fetch(`${BASE_URL}/api/auth/register`, {
-        method: 'POST',
-        headers:{
-            'Content-Type': 'application/json',
-            'X-XSRF-TOKEN': getCsrfToken()
-        },
-        credentials: 'include',
-        body: JSON.stringify({name: nome, email, password: senha})
-    })
-    if (!resposta.ok){
-        const erro = await resposta.json()
-        throw new Error(erro.message || 'Erro ao realizar o cadastro. Por favor verifique os dados e tente novamente.')
-    }
-    const dados = await resposta.json()
-    return {sucesso: true, dados}
-    }
-    catch(erro){
-        return {sucesso:false, mensagem: erro.message}
-    }
-}
-export const logout = async() =>{
-    try{
-        const resposta = await fetch(`${BASE_URL}/api/auth/logout`, {
-            method: 'POST',
-            headers: {
-                'X-XSRF-TOKEN': getCsrfToken()
-            },
-            credentials: 'include'
-        })
-        if(!resposta.ok){
-            const erro = await resposta.json()
-            throw new Error(erro.message || 'Falha ao encerrar sessão')
-        }
-        
-    }
-    catch(erro){
-        return {sucesso:false, mensagem: erro.message}
-    }
-}
-export const getMe = async() =>{
-    try{
-        const resposta = await fetch(`${BASE_URL}/api/auth/me`, {
-            method: 'GET',
-            credentials: 'include'
-        })
-        if(!resposta.ok){
-            const erro = await resposta.json()
-            throw new Error(erro.message || 'Usuário não logado.')
-        }
-        const dados = await resposta.json()
-        return{sucesso: true, dados}
-    }
-    catch(erro){
-        return {sucesso: false, mensagem: erro.message}
-    }
-}
+const api = axios.create({
+    baseURL: BASE_URL,
+    withCredentials: true, // Substitui 'credentials: include'
+});
 
-export const getProjects = async() =>{
-    try{
-        const resposta = await fetch(`${BASE_URL}/api/projects`, {
-            method: 'GET',
-            credentials: 'include'
-        })
-        if(!resposta.ok){
-            const erro = await resposta.json()
-            throw new Error(erro.message || 'Erro ao listar projetos.')
-        }
-        const dados = await resposta.json()
-        return {sucesso: true, dados}
+// Interceptor para adicionar o token CSRF em requisições que não sejam GET
+api.interceptors.request.use((config) => {
+    if (config.method !== 'get') {
+        config.headers['X-XSRF-TOKEN'] = getCsrfToken();
     }
-    catch(erro){
-        return {sucesso: false, mensagem: erro.message}
-    }
-}
+    return config;
+});
 
-export const getDocuments = async(projectId, title) =>{
-    try{
-        const params = new URLSearchParams()
-        if (projectId) params.append('projectId', projectId)
-        if (title) params.append('title', title)
-        
-        const resposta = await fetch(`${BASE_URL}/api/documents?${params.toString()}`, {
-            method: 'GET',
-            credentials: 'include'
-        })
-        if(!resposta.ok){
-            const erro = await resposta.json()
-            throw new Error(erro.message || 'Erro ao listar documentos.')
-        }
-        const dados = await resposta.json()
-        return {sucesso: true, dados}
-    }
-    catch(erro){
-        return {sucesso: false, mensagem: erro.message}
-    }
-}
+// Utilitário padrão para tratamento de erros
+const handleApiError = (error, defaultMessage) => {
+    const message = error.response?.data?.message || error.message || defaultMessage;
+    return { sucesso: false, mensagem: message };
+};
 
-export const uploadDocument = async(file, title, projectId) =>{
-    try{
-        const formData = new FormData()
-        formData.append('file', file)
-        formData.append('title', title)
-        formData.append('projectId', projectId)
+export const login = async (email, senha) => {
+    try {
+        const resposta = await api.post('/api/auth/login', { email, password: senha });
+        return { sucesso: true, dados: resposta.data };
+    } catch (error) {
+        return handleApiError(error, 'Erro ao realizar o login. Verifique seus dados e tente novamente');
+    }
+};
 
-        const resposta = await fetch(`${BASE_URL}/api/documents`, {
-            method: 'POST',
-            headers: {
-                'X-XSRF-TOKEN': getCsrfToken()
-            },
-            credentials: 'include',
-            body: formData
-        })
-        if(!resposta.ok){
-            const erro = await resposta.json()
-            throw new Error(erro.message || 'Erro ao fazer upload do documento.')
-        }
-        const dados = await resposta.json()
-        return {sucesso: true, dados}
+export const register = async (nome, email, senha) => {
+    try {
+        const resposta = await api.post('/api/auth/register', { name: nome, email, password: senha });
+        return { sucesso: true, dados: resposta.data };
+    } catch (error) {
+        return handleApiError(error, 'Erro ao realizar o cadastro. Por favor verifique os dados e tente novamente.');
     }
-    catch(erro){
-        return {sucesso: false, mensagem: erro.message}
+};
+
+export const logout = async () => {
+    try {
+        await api.post('/api/auth/logout');
+        return { sucesso: true };
+    } catch (error) {
+        return handleApiError(error, 'Falha ao encerrar sessão');
     }
-}
+};
+
+export const getMe = async () => {
+    try {
+        const resposta = await api.get('/api/auth/me');
+        return { sucesso: true, dados: resposta.data };
+    } catch (error) {
+        return handleApiError(error, 'Usuário não logado.');
+    }
+};
+
+export const getProjects = async () => {
+    try {
+        const resposta = await api.get('/api/projects');
+        return { sucesso: true, dados: resposta.data };
+    } catch (error) {
+        return handleApiError(error, 'Erro ao listar projetos.');
+    }
+};
+
+export const getDocuments = async (projectId, title) => {
+    try {
+        const resposta = await api.get('/api/documents', {
+            params: { projectId, title }
+        });
+        return { sucesso: true, dados: resposta.data };
+    } catch (error) {
+        return handleApiError(error, 'Erro ao listar documentos.');
+    }
+};
+
+export const uploadDocument = async (file, title, projectId) => {
+    try {
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('title', title);
+        formData.append('projectId', projectId);
+
+        // O axios já configura automaticamente o Content-Type para multipart/form-data quando recebe um FormData
+        const resposta = await api.post('/api/documents', formData);
+        return { sucesso: true, dados: resposta.data };
+    } catch (error) {
+        return handleApiError(error, 'Erro ao fazer upload do documento.');
+    }
+};
