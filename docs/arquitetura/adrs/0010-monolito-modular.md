@@ -3,9 +3,6 @@
 ## Status
 Aceito
 
-## Data
-21 de Junho de 2026
-
 ## Contexto
 Durante as fases iniciais de desenvolvimento do EdTech, surgiu a necessidade de definir como os domínios do sistema (ex: Autenticação, Gestão de Documentos, Gestão de Projetos) seriam separados. A estrutura inicial de diretórios chegou a prever pastas separadas (`docvault/auth` e `docvault/api`), sugerindo uma arquitetura orientada a Microsserviços, onde o serviço de Autenticação rodaria de forma isolada do restante do backend.
 
@@ -30,3 +27,11 @@ A antiga pasta de microsserviço de autenticação (`docvault/auth`) foi removid
 
 ## Alternativas Consideradas
 * **Microsserviços Completos (Auth + API Isolados):** Rejeitado. Isso demandaria a criação de um API Gateway, tratamento complexo de CORS e o dobro do trabalho no setup local dos desenvolvedores. Para o estágio de MVP, isso violaria o princípio de simplicidade (KISS).
+
+---
+
+## Histórico de Versões
+
+| Versão | Data | Descrição | Autor |
+| :---: | :---: | :--- | :--- |
+| `1.0` | 21/06/2026 | Criação do documento | Pedro Henrique P. Santos |
