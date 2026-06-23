@@ -27,6 +27,8 @@ theme:
     - navigation.instant.progress
     - navigation.instant.prefetch
     - navigation.tracking
+    - navigation.prune
+    - toc.integrate
     - toc.follow
     - search.suggest
     - search.highlight
@@ -53,6 +55,8 @@ theme:
     code: JetBrains Mono
 
 extra:
+  announce: >
+    **🚀 Aviso da Equipe:** Confira nosso mais novo [Roadmap do Produto](produto/planejamento/roadmap.md) e as [Atualizações Críticas de Nuvem](https://github.com/pedrohpsantos/EdTech/issues/102).
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/pedrohpsantos/EdTech
@@ -72,6 +76,7 @@ plugins:
   - social:
       enabled: !ENV [CI, false]
   - git-revision-date-localized
+  - tags
   - minify:
       minify_html: true
       minify_css: true

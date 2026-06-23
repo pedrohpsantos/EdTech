@@ -45,5 +45,8 @@ jobs:
       - name: Instalar dependências
         run: uv sync
 
+      - name: Verificar links quebrados (Strict Build)
+        run: uv run mkdocs build --strict
+
       - name: Deploy para GitHub Pages
         run: uv run mkdocs gh-deploy --force
