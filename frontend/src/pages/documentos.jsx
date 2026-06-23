@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 
-import { getDocuments, getProjects, uploadDocument } from "../services/api"
+import { getDocuments, getProjects, uploadDocument, getDownloadUrl } from "../services/api"
 import ThemeToggle from "../components/themeToggle"
 
 function Documentos() {
@@ -29,7 +29,21 @@ function Documentos() {
     const loadDocuments = async () => {
         const res = await getDocuments(filterProjectId, filterTitle)
         if (res.sucesso) {
-            setDocuments(res.dados)
+            setDocuments(res.dados.content || res.dados || [])
+        }
+    }
+
+    const handleDownload = async (docId) => {
+        const res = await getDownloadUrl(docId)
+        if (res.sucesso) {
+            const url = typeof res.dados === 'string' ? res.dados : (res.dados?.url || res.dados?.downloadUrl || res.dados?.fileUrl);
+            if (url) {
+                window.open(url, '_blank', 'noopener,noreferrer');
+            } else {
+                alert("URL de download não encontrada na resposta.");
+            }
+        } else {
+            alert(res.mensagem || "Erro ao obter link de download.");
         }
     }
 
@@ -169,9 +183,9 @@ function Documentos() {
                                     <p className="card-text">
                                         Data: {new Date(doc.createdAt).toLocaleDateString()}
                                     </p>
-                                    <a href={`http://localhost:8080${doc.fileUrl}`} target="_blank" rel="noreferrer" className="btn btn-outline-primary btn-sm">
+                                    <button onClick={() => handleDownload(doc.id)} className="btn btn-outline-primary btn-sm">
                                         Baixar / Visualizar
-                                    </a>
+                                    </button>
                                 </div>
                             </div>
                         </div>
