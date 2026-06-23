@@ -881,3 +881,66 @@ html {
     scroll-behavior: auto !important;
   }
 }
+
+/* ============================================================
+   MKDOCS GLOSSARY / ABBREVIATION (ABBR) STYLE
+   ============================================================ */
+.md-typeset abbr {
+  text-decoration: none;
+  border-bottom: 2px dotted var(--md-primary-color);
+  cursor: help;
+  position: relative;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.md-typeset abbr:hover {
+  background-color: var(--md-primary-fg-color--transparent);
+  border-bottom: 2px solid var(--md-primary-color);
+  border-radius: 2px;
+}
+
+/* ============================================================
+   SEARCH BAR VISUAL SHORTCUT [ / ]
+   ============================================================ */
+.md-search__inner {
+  position: relative;
+}
+.md-search__input::placeholder {
+  opacity: 0;
+}
+.md-search__inner::after {
+  content: "Buscar...  [ / ]";
+  position: absolute;
+  top: 50%;
+  left: 3rem;
+  transform: translateY(-50%);
+  color: var(--md-default-fg-color--light);
+  pointer-events: none;
+  transition: opacity 0.3s;
+  font-family: var(--md-text-font-family);
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+.md-search__input:focus ~ .md-search__inner::after,
+.md-search__input:not(:placeholder-shown) ~ .md-search__inner::after,
+.md-search__input:active ~ .md-search__inner::after {
+  opacity: 0 !important;
+  display: none;
+}
+
+/* ============================================================
+   MATHJAX ARITHMATEX STYLING
+   ============================================================ */
+.md-typeset .arithmatex {
+  overflow-x: auto;
+  padding: 0.5rem 0;
+}
+.md-typeset div.arithmatex {
+  margin: 1.5em 0 !important;
+  padding: 1rem;
+  background-color: var(--glass-bg);
+  border-left: 4px solid var(--md-primary-color);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
