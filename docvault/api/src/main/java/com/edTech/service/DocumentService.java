@@ -16,13 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import software.amazon.awssdk.core.sync.RequestBody;
-import software.amazon.awssdk.services.s3.S3Client;
-import software.amazon.awssdk.services.s3.model.GetObjectRequest;
-import software.amazon.awssdk.services.s3.model.PutObjectRequest;
-import software.amazon.awssdk.services.s3.presigner.S3Presigner;
-import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignRequest;
-import software.amazon.awssdk.services.s3.presigner.model.PresignedGetObjectRequest;
+
 
 import java.io.IOException;
 import java.time.Duration;
@@ -38,26 +32,20 @@ public class DocumentService {
     private final UserRepository userRepository;
     private final ProjectMemberRepository projectMemberRepository;
     private final AuditLogService auditLogService;
-    private final S3Client s3Client;
-    private final S3Presigner s3Presigner;
-
-    @Value("${s3.bucket}")
-    private String bucketName;
+    private final StorageService storageService;
 
     public DocumentService(DocumentRepository documentRepository, 
                            ProjectRepository projectRepository, 
                            UserRepository userRepository, 
                            ProjectMemberRepository projectMemberRepository, 
                            AuditLogService auditLogService, 
-                           S3Client s3Client, 
-                           S3Presigner s3Presigner) {
+                           StorageService storageService) {
         this.documentRepository = documentRepository;
         this.projectRepository = projectRepository;
         this.userRepository = userRepository;
         this.projectMemberRepository = projectMemberRepository;
         this.auditLogService = auditLogService;
-        this.s3Client = s3Client;
-        this.s3Presigner = s3Presigner;
+        this.storageService = storageService;
     }
 
     @Transactional
@@ -84,13 +72,7 @@ public class DocumentService {
             // A chave do objeto no S3
             String fileKey = UUID.randomUUID() + "_" + originalFilename;
 
-            PutObjectRequest putObjectRequest = PutObjectRequest.builder()
-                    .bucket(bucketName)
-                    .key(fileKey)
-                    .contentType(contentType)
-                    .build();
-
-            s3Client.putObject(putObjectRequest, RequestBody.fromBytes(file.getBytes()));
+            storageService.uploadFile(file, fileKey, contentType);
 
             Document document = new Document();
             document.setTitle(title);
@@ -119,20 +101,15 @@ public class DocumentService {
         projectMemberRepository.findByProjectIdAndUserId(document.getProject().getId(), userId)
                 .orElseThrow(() -> new RuntimeException("Access denied: You are not a member of this project"));
 
-        GetObjectRequest getObjectRequest = GetObjectRequest.builder()
-                .bucket(bucketName)
-                .key(document.getFileUrl())
-                .build();
-
-        GetObjectPresignRequest presignRequest = GetObjectPresignRequest.builder()
-                .signatureDuration(Duration.ofMinutes(15))
-                .getObjectRequest(getObjectRequest)
-                .build();
-
-        PresignedGetObjectRequest presignedRequest = s3Presigner.presignGetObject(presignRequest);
+        String presignedUrl;
+        try {
+            presignedUrl = storageService.getPresignedUrl(document.getFileUrl());
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to generate presigned URL", e);
+        }
         
         auditLogService.logAction(userId, AcaoAuditoria.UPLOAD_SUCCESS, "Gerada URL presigned para download: " + document.getTitle());
-        return presignedRequest.url().toString();
+        return presignedUrl;
     }
 
     public Page<DocumentResponseDTO> listDocumentsByUser(UUID userId, UUID projectId, String title, Pageable pageable) {

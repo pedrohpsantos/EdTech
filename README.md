@@ -52,7 +52,7 @@ O ambiente de desenvolvimento sobe PostgreSQL 15 e o backend Spring Boot na port
 # 1. Copie o arquivo de exemplo
 cp infra/.env.example infra/.env
 
-# 2. Preencha POSTGRES_PASSWORD, JWT_SECRET e as credenciais do Supabase S3 em infra/.env
+# 2. Preencha POSTGRES_PASSWORD, JWT_SECRET e defina seu STORAGE_PROVIDER (s3 ou gcs) com as chaves de nuvem em infra/.env
 
 # 3. Suba banco e backend
 docker compose --env-file infra/.env -f infra/docker-compose.yml up --build
