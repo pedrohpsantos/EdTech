@@ -9,7 +9,7 @@ hide:
 
 <script src="https://cdn.redoc.ly/redoc/latest/bundles/redoc.standalone.js"></script>
 <script>
-  Redoc.init('../assets/openapi.json', {
+  Redoc.init('../../assets/openapi.json', {
     theme: {
       colors: {
         primary: { main: '#6200ea' }
