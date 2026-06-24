@@ -1,0 +1,12 @@
+title: Decisões Técnicas (ADRs)
+nav:
+  - 0001-armazenamento-supabase-s3.md
+  - 0002-autenticacao-jwt.md
+  - 0003-cloud-run.md
+  - 0004-postgresql.md
+  - 0005-spring-boot.md
+  - 0006-spa-api.md
+  - 0007-flyway.md
+  - 0008-github-actions.md
+  - 0009-mkdocs.md
+  - 0010-monolito-modular.md

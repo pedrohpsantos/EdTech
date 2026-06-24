@@ -1,0 +1,6 @@
+title: Arquitetura de Software
+nav:
+  - design_tecnico.md
+  - diagramas
+  - infraestrutura
+  - adrs
