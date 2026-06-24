@@ -28,7 +28,6 @@ theme:
     - navigation.instant.prefetch
     - navigation.tracking
     - navigation.prune
-    - header.autohide
     - toc.follow
     - search.suggest
     - search.highlight
