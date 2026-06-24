@@ -1,3 +1,10 @@
+---
+date: 2026-06-05
+authors:
+  - pedrohpsantos
+categories:
+  - Sprint
+---
 # :material-rocket-launch: Semana 2 — Lean Inception, Requisitos e Arquitetura
 
 <span class="status-badge"> Concluída</span>

@@ -5,5 +5,5 @@ nav:
   - backend_spring.md
   - ci_cd.md
   - cors_configuration.md
-  - api_endpoints.md
-  - api_contracts.md
+  - api_reference.md
+  - qualidade_testes.md

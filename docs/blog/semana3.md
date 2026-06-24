@@ -1,3 +1,10 @@
+---
+date: 2026-06-12
+authors:
+  - pedrohpsantos
+categories:
+  - Sprint
+---
 # :material-rocket-launch: Semana 3 — Implementação da Autenticação e Estrutura Base
 
 <span class="status-badge"> Concluída</span>

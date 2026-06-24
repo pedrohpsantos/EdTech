@@ -10,6 +10,7 @@ copyright: "© 2026 AILAB Makers — UnB FCTE"
 
 theme:
   name: material
+  custom_dir: docs/overrides
   language: pt-BR
   logo: assets/svgs/logo-white.svg
   favicon: assets/svgs/favicon.svg
@@ -75,11 +76,13 @@ not_in_nav: |
   _snippets/**
 
 plugins:
+  - blog
   - search:
       lang: pt
   - awesome-pages
   - macros
   - roamlinks
+  - git-authors
   - glightbox
   - social:
       enabled: !ENV [CI, false]

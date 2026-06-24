@@ -1,3 +1,10 @@
+---
+date: 2026-06-19
+authors:
+  - pedrohpsantos
+categories:
+  - Sprint
+---
 # :material-rocket-launch: Semana 5 — Uploads, Autenticação e Integrações GCS
 
 <span class="status-badge"> Concluída</span>
