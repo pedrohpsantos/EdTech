@@ -4,6 +4,7 @@ import Register from "./pages/register";
 import Dashboard from "./pages/dashboard";
 import AuthProvider from "./context/authContext";
 import PrivateRoute from "./components/privateRoute";
+import Documentos from "./pages/documentos";
 function App(){
   return(<AuthProvider>
 <BrowserRouter>
@@ -13,6 +14,10 @@ function App(){
   <Route path="/dashboard" element={
     <PrivateRoute>
       <Dashboard/>
+    </PrivateRoute>}/>
+  <Route path="/documentos" element={
+    <PrivateRoute>
+      <Documentos/>
     </PrivateRoute>}/>
 </Routes>
 </BrowserRouter>

@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useState, useEffect } from "react";
 import { login, logout, register, getMe } from "../services/api";
 const AuthContext = createContext()
@@ -13,7 +14,7 @@ function AuthProvider({children}){
                 setIsAuthenticated(true)
             }
         }
-        catch(erro){
+        catch {
             setUser(null)
             setIsAuthenticated(false)
         }
@@ -28,10 +29,12 @@ function AuthProvider({children}){
                 setUser(resultado.dados)
                 setIsAuthenticated(true)
             }
+            return resultado
         }
         catch(erro){
             setUser(null)
             setIsAuthenticated(false)
+            return {sucesso: false, mensagem: erro.message}
         }
     }
     const handleLogout = async () => {
@@ -44,6 +47,7 @@ function AuthProvider({children}){
         return resultado
     }
     useEffect(()=> {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         checkAuth()
     },[])
     return(

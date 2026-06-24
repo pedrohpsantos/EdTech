@@ -6,9 +6,13 @@ Para mantermos a coesão de um time distribuído e garantirmos a evolução sadi
 
 A fluidez da informação é crítica. Nossos canais estão estritamente divididos para evitar ruídos e o esquecimento de decisões operacionais:
 
+
 1. **WhatsApp:** Comunicação assíncrona rápida, tira-dúvidas e alinhamentos triviais do dia a dia.
+
 2. **Discord:** Canal oficial para as Daily Syncs (formato assíncrono em texto) e também utilizado como ambiente para a nossa única reunião de sexta-feira (quando a equipe não se encontrar presencialmente no laboratório).
+
 3. **Atas de Reunião:** Durante a nossa única reunião da semana (nas sextas-feiras), **sempre** formalizamos as pautas e os planos de ação através das Atas de Reunião (presentes na seção `Gestão > Reuniões`). Elas são a nossa principal ferramenta de rastreabilidade humana, garantindo que o que foi falado presencialmente/verbalmente vire conhecimento documentado para o histórico do projeto.
+
 4. **GitHub (Issues/PRs):** Todo debate focado em *revisão de código ou resolução de bugs* deve acontecer no PR, e não perdido no chat instantâneo.
 
 ---
@@ -27,8 +31,11 @@ Regularmente olhamos o topo do Backlog (os itens categorizados como `NOW` no Roa
 ### 3. Reunião Única Semanal (Sextas-feiras)
 Temos apenas **uma única reunião síncrona na semana**, que ocorre todas as sextas-feiras (podendo ser presencial ou via Discord). É nela que concentramos nossos esforços humanos para não perdermos tempo em calls dispersas ao longo da semana. Nesta call agrupamos:
 
+
 - **Review:** Focamos em demonstrar o software rodando (Deploy da funcionalidade) em vez de enviar relatórios acadêmicos monótonos.
+
 - **Retrospectiva:** O rito contínuo de melhoria de pessoas e processos ("O que foi bom? O que foi ruim?").
+
 - **Planning:** O que iremos atacar na próxima segunda-feira.
   
 *Lembrete: Toda e qualquer decisão ou "Action Item" gerado nesta reunião ÚNICA de sexta-feira vira material oficial para a respectiva **Ata da Reunião**.*
@@ -37,10 +44,14 @@ Temos apenas **uma única reunião síncrona na semana**, que ocorre todas as se
 
 ## Engenharia e Versionamento
 
+
 - **Docs-as-Code e ADRs:** Toda decisão técnica de alto impacto (uso de Flyway, adoção de SPA, Cloud Run) não é guardada "na cabeça" dos devs. Ela vira um documento markdown de *Architecture Decision Record (ADR)* dentro do portal.
+
 - **Git Flow Ágil:** Trabalhamos com branches derivativas (`feat/`, `fix/`, `docs/`) e a integração ocorre via `develop` até chegar à blindada branch `main`.
+
 - **Regras de CI e Commits:**
     - O título das mensagens deve seguir rigorosamente a especificação do **Conventional Commits** (tabela documentada no nosso Cronograma).
+
     - Nenhum PR (Pull Request) passa para aprovação sem que o Pipeline automatizado do *GitHub Actions* sinalize luz verde nos testes e no linter de código. A revisão do Tech Lead é obrigatória conforme a *Definition of Done (DoD)*.
 
 ---
@@ -51,3 +62,4 @@ Temos apenas **uma única reunião síncrona na semana**, que ocorre todas as se
 | :---: | :---: | :--- | :--- |
 | `1.0` | 30/05/2026 | Consolidação inicial dos acordos | Pedro Henrique P. Santos |
 | `1.1` | 04/06/2026 | Refinamento das políticas: adoção de uma ÚNICA reunião síncrona semanal (Sexta) presencial/Discord, formalização das Dailies totalmente assíncronas no Discord e rastreabilidade vital via Atas | Pedro Henrique P. Santos |
+| `1.2` | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |

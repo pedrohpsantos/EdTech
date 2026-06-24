@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS projects(
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    id UUID PRIMARY KEY,
     title VARCHAR(120) NOT NULL ,
     description TEXT NOT NULL,
     advisor_id UUID,

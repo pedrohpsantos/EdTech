@@ -14,17 +14,23 @@ Optamos por uma **Arquitetura Desacoplada**, utilizando um Frontend **SPA (Singl
 
 ## Alternativas Consideradas
 
+
 * **Monolito com Server-Side Rendering (SSR - Thymeleaf):** Descartado pois, embora simplificasse o deploy inicial e não exigisse tratamento complexo de tokens (CORS), limitaria a reusabilidade da API para integrações futuras (como uso por outros sistemas universitários) e dificultaria a interatividade fluida esperada em *dashboards* de auditoria.
 
 ## Consequências
 
 ### Positivas
+
 - **Experiência de Usuário (UX):** Transições rápidas e interativas sem recarregar a página, melhorando a percepção de performance.
+
 - **Separação de Preocupações:** O time de frontend pode trabalhar e fazer deploys independentes do time de backend.
+
 - **Reaproveitamento de API:** A mesma API que atende o React poderá atender eventuais integrações via scripts ou aplicativos móveis no futuro.
 
 ### Negativas / Riscos
+
 - **Complexidade de Deploy:** Exige dois pipelines de CI/CD distintos (um para o frontend, outro para o backend).
+
 - **Gerenciamento de Estado de Autenticação:** Diferente de um monolito tradicional, exige a troca de tokens ou configuração fina de cookies CORS (ADR 0002) entre domínios distintos.
 
 ---
@@ -34,3 +40,4 @@ Optamos por uma **Arquitetura Desacoplada**, utilizando um Frontend **SPA (Singl
 | Versão | Data | Descrição | Autor |
 | :---: | :---: | :--- | :--- |
 | `1.0` | 04/06/2026 | Criação do documento | Pedro Henrique P. Santos |
+| `1.1` | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |

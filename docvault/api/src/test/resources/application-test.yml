@@ -1,6 +1,8 @@
 spring:
+  flyway:
+    enabled: false
   datasource:
-    url: jdbc:h2:mem:edtech_test;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DB_CLOSE_DELAY=-1
+    url: jdbc:h2:mem:edtech_test;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DB_CLOSE_DELAY=-1;INIT=CREATE USER IF NOT EXISTS edtech_user PASSWORD 'password'
     username: sa
     password:
     driver-class-name: org.h2.Driver

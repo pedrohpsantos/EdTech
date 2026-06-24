@@ -1,7 +1,9 @@
 ---
 description: EdTech — Plataforma acadêmica para centralização, gerenciamento e auditoria de publicações científicas.
 hide:
+
   - navigation
+
   - toc
 ---
 
@@ -16,7 +18,7 @@ Plataforma acadêmica para centralização, gerenciamento e auditoria de publica
 <div class="hero-actions" markdown>
 
 [Explorar MVP :material-star-shooting:](produto/strategy/canvas_mvp.md){ .md-button .md-button--primary }
-[Ver Entregas :material-rocket-launch:](gestao/entregas/semana1.md){ .md-button }
+[Ver Entregas :material-rocket-launch:](gestao/historico_sprints/semana1.md){ .md-button }
 
 </div>
 
@@ -36,11 +38,13 @@ Pesquisadores precisam de um lugar seguro, organizado e auditável para armazena
 
 <div class="grid cards" markdown>
 
+
 - :material-shield-lock: **Autenticação Segura**
 
     ---
 
     Login com JWT em cookies `HttpOnly` + `Secure`, com sessões protegidas contra XSS e CSRF.
+
 
 - :material-file-upload: **Upload de Documentos**
 
@@ -48,11 +52,13 @@ Pesquisadores precisam de um lugar seguro, organizado e auditável para armazena
 
     Envio de artigos em PDF, relatórios e datasets com armazenamento de alta disponibilidade via Google Cloud Storage.
 
+
 - :material-filter-variant: **Listagem Filtrada**
 
     ---
 
     Cada pesquisador visualiza e gerencia apenas seus próprios rascunhos não publicados, vinculados à sua conta.
+
 
 - :material-lock-check: **Isolamento de Dados**
 
@@ -60,17 +66,19 @@ Pesquisadores precisam de um lugar seguro, organizado e auditável para armazena
 
     Isolamento estrito entre autores e projetos. Orientadores acessam apenas produções dos seus laboratórios.
 
+
 - :material-clipboard-text-clock: **Logs de Auditoria**
 
     ---
 
     Registros centralizados e inalteráveis de login, logout, uploads, downloads, exclusões e acessos negados.
 
+
 - :material-cloud-check: **Alta Disponibilidade**
 
     ---
 
-    Google Cloud Run com banco gerenciado (Cloud SQL for PostgreSQL) e storage distribuído.
+    Google Cloud Run com banco gerenciado (Cloud SQL for PostgreSQL) e storage distribuído multi-cloud (Supabase S3 e GCS).
 
 </div>
 
@@ -114,27 +122,39 @@ O sistema atende três perfis distintos, cada um com permissões e visões espec
 
     O perfil principal do sistema. O pesquisador pode:
 
+
     - [x] Criar conta e fazer login seguro
+
     - [x] Enviar artigos em PDF, relatórios de pesquisa e datasets
+
     - [x] Visualizar e gerenciar apenas seus próprios rascunhos
+
     - [ ] Solicitar revisão ao orientador *(planejado)*
 
 === ":material-school: Orientador / Administrador"
 
     Visão ampliada para supervisão acadêmica:
 
+
     - [x] Visualizar rascunhos e documentos de todos os pesquisadores vinculados
+
     - [x] Validar submissões e acompanhar o andamento das pesquisas
+
     - [x] Bloqueio automático de acesso a projetos sem vínculo direto
+
     - [ ] Painel de métricas do laboratório *(planejado)*
 
 === ":material-shield-search: Auditor"
 
     Módulo de compliance e rastreabilidade:
 
+
     - [x] Registrar logs inalteráveis de todas as ações do sistema
+
     - [x] Consultar histórico de login, logout, uploads e downloads
+
     - [x] Monitorar tentativas de acesso negadas
+
     - [ ] Exportação de relatórios de auditoria *(planejado)*
 
 ---
@@ -152,13 +172,13 @@ Tecnologias selecionadas para robustez, segurança e escalabilidade em ambiente 
 | Camada | Tecnologias |
 | :--- | :--- |
 | **Frontend** | HTML5, CSS3, JavaScript Vanilla, Bootstrap 5, React |
-| **Backend** | Java 17, Spring Boot, Spring Security, JWT (`HttpOnly` + `Secure`) |
-| **Banco de Dados & Storage** | Google Cloud SQL for PostgreSQL, Google Cloud Storage, Flyway |
+| **Backend** | Java 21, Spring Boot 4.1, Spring Security, JWT (`HttpOnly` + `Secure`) |
+| **Banco de Dados & Storage** | Google Cloud SQL for PostgreSQL, Supabase S3 Object Storage, Flyway |
 | **Infraestrutura & DevOps** | Docker, Google Cloud Run |
-| **CI/CD & Qualidade** | GitHub Actions, JUnit, Python 3.11 (scripts de telemetria) |
+| **CI/CD & Qualidade** | GitHub Actions, JUnit, Python 3.11 (scripts de telemetria - Pós-MVP) |
 | **Documentação** | MkDocs + Material for MkDocs |
 
-[:material-arrow-right: Ver detalhes completos da arquitetura](arquitetura/c4_model.md){ .md-button }
+[:material-arrow-right: Ver detalhes completos da arquitetura](arquitetura/diagramas/c4_model.md){ .md-button }
 
 ---
 
@@ -209,9 +229,12 @@ Time multidisciplinar do AILAB Makers.
 
 !!! tip "Como navegar na documentação"
 
-    - Use o **menu superior** para alternar entre os módulos: **Requisitos**, **Arquitetura**, **Planejamento** e **Gestão**.
+    - Use o **menu superior** para alternar entre os módulos: **Produto e Negócio**, **Arquitetura de Software**, **Desenvolvimento (DevEx)** e **Gestão e Metodologia Ágil**.
+
     - Pressione ++s++ ou ++f++ para busca rápida.
+
     - Clique no toggle :material-brightness-6: para alternar entre **modo claro** e **modo escuro**.
+
     - Cada página possui o botão :material-pencil: para editar diretamente no GitHub.
 
 ---
@@ -222,3 +245,5 @@ Time multidisciplinar do AILAB Makers.
 | :---: | :---: | :--- | :--- |
 | `1.0` | 29/05/2026 | Criação do documento | Pedro Henrique P. Santos |
 | `1.1` | 04/06/2026 | Adição da secção Início Rápido e melhorias visuais | Pedro Henrique P. Santos |
+| `1.2` | 13/06/2026 | Reestruturação arquitetural da documentação e introdução de guias DevEx | Pedro Henrique P. Santos |
+| `1.3` | 21/06/2026 | Atualização da Stack Tecnológica (Java 21, Spring 4.1, S3) | Pedro Henrique P. Santos |

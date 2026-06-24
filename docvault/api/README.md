@@ -72,6 +72,7 @@ Configure um PostgreSQL local ou use o Docker Compose da raiz do projeto. O back
 - `JWT_SECRET`
 - `JWT_EXPIRATION_MINUTES`
 - `JWT_COOKIE_SECURE`
+- `STORAGE_PROVIDER` (s3 ou gcs)
 
 ```bash
 cd docvault/api
@@ -82,7 +83,7 @@ mvn spring-boot:run
 
 ```bash
 cp infra/.env.example infra/.env
-# Preencha POSTGRES_PASSWORD e JWT_SECRET em infra/.env
+# Preencha POSTGRES_PASSWORD, JWT_SECRET e a configuracao de Storage em infra/.env
 docker compose --env-file infra/.env -f infra/docker-compose.yml up --build
 ```
 

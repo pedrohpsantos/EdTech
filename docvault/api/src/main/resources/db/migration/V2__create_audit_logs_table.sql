@@ -6,7 +6,7 @@ CREATE TYPE acao_auditoria AS ENUM (
 );
 
 CREATE TABLE IF NOT EXISTS audit_logs (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    id UUID PRIMARY KEY,
     user_id UUID NOT NULL,
     action acao_auditoria NOT NULL,
     resource_type VARCHAR(255) NOT NULL,

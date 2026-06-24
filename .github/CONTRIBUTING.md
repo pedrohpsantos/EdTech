@@ -1,0 +1,68 @@
+# Guia de Contribuição — EdTech
+
+Bem-vindo ao projeto EdTech do AILAB Makers (UnB FCTE)! Este documento é a fonte de verdade para a configuração do ambiente e o fluxo de trabalho da equipe.
+
+## 1. Pré-requisitos
+
+Para contribuir com o projeto, você precisa ter as seguintes ferramentas instaladas:
+- **Java**: 21 LTS (Backend)
+- **Node.js**: 20.x ou superior (Frontend Vite)
+- **Python**: 3.11 ou superior (Documentação MkDocs)
+- **uv**: Gerenciador de pacotes Python
+- **Docker**: Engine e Docker Compose (Banco de dados e serviços isolados)
+
+## 2. Estágio Atual do Projeto e Contribuições
+
+O repositório EdTech encontra-se na fase de **fundação de governança e arquitetura técnica**. A estrutura de documentação está madura e consolidada através do paradigma *Docs-as-Code*. Contudo, os módulos de aplicação (Backend Java e Frontend React) estão em desenvolvimento ativo de scaffolding.
+
+### 2.1 O que aceitamos neste momento:
+- Adição ou melhoria na documentação técnica (MkDocs).
+- Propostas de revisão ou detalhamento de Arquitetura (novas ADRs, aprimoramento do C4 Model).
+- Melhorias na clareza dos requisitos de produto, jornadas de usuário e personas.
+- Ajustes editoriais, correção de links e consistência narrativa.
+
+### 2.2 Diretrizes de Contribuição:
+- Pull Requests de código devem seguir os contratos de API documentados em `docs/desenvolvimento/api_endpoints.md`.
+- Novas features devem ter uma issue vinculada e seguir o fluxo de branches descrito abaixo.
+- Toda alteração de código deve passar pelos testes automatizados e pelo lint local.
+
+## 3. Setup da Documentação Local (MkDocs)
+Para rodar o site de documentação localmente e visualizar suas edições:
+```bash
+# Na raiz do projeto, instale as dependências com uv
+uv sync
+
+# Sirva a documentação localmente
+uv run mkdocs serve
+```
+Acesse `http://127.0.0.1:8000` no navegador.
+
+## 4. Fluxo de Branches
+
+Adotamos a seguinte estrutura de ramificações:
+- `main`: Branch de produção, contendo apenas código estável.
+- `develop`: Branch principal de desenvolvimento, alvo dos PRs de features.
+- Prefixos de ramificações temporárias:
+  - `feat/`: para novas funcionalidades (ex: `feat/filtro-orientador`)
+  - `fix/`: para correção de bugs (ex: `fix/login-pesquisador`)
+  - `docs/`: para adições na documentação MkDocs
+  - `chore/`: para tarefas de infraestrutura ou manutenção (ex: dependabot, lint)
+
+## 4. Padrões de Commit (Conventional Commits)
+
+Nossos títulos e mensagens de commit devem seguir as regras do **Conventional Commits**. Exemplos no contexto do EdTech:
+- `feat(publicacoes): adicionar filtro por orientador`
+- `fix(auth): corrigir expiração de sessão para perfil Pesquisador`
+- `docs(adr): registrar decisão de uso do Flyway`
+- `refactor(api): melhorar tratamento de erros no upload`
+- `test(auth): cobrir geração de JWT`
+- `chore(deps): atualizar versão do vite`
+
+## 5. Pull Requests (PR)
+
+Nosso repositório exige que cada PR preencha um Checklist (já disponibilizado automaticamente via `PULL_REQUEST_TEMPLATE.md`). No template, você precisará:
+- Informar a motivação (Contexto) da mudança.
+- Checar se o código atende às regras de isolamento de dados (onde aplicável) e ausência de senhas hardcoded.
+- Executar os testes e o lint locais. 
+
+Ao abrir o PR, verifique minuciosamente as políticas da seção de "Validação e Qualidade".

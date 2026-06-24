@@ -1,6 +1,6 @@
 package com.edTech.service;
 
-import com.edTech.dto.RegisterRequest;
+import com.edTech.dto.RegisterRequestDTO;
 import com.edTech.model.User;
 import com.edTech.model.UserRole;
 import com.edTech.repository.UserRepository;
@@ -30,7 +30,7 @@ public class UserServiceTest {
     @Test
     void register_WithValidData_MustSavedInDataBase() {
         // Arrange - Data in official pattern @unb.br
-        RegisterRequest dto = new RegisterRequest("SchrodingerCat", "imalive@unb.br", "not_alive12");
+        RegisterRequestDTO dto = new RegisterRequestDTO("SchrodingerCat", "imalive@unb.br", "not_alive12");
         User savedUser = new User("SchrodingerCat", "imalive@unb.br", "$2a$12$hashBcryptExample...", UserRole.RESEARCHER);
 
         when(passwordEncoder.encode(anyString())).thenReturn("hashed_password");
@@ -51,7 +51,7 @@ public class UserServiceTest {
     @Test
     void register_WithInvalidDomain_MustThrowException() {
         // Arrange - E-mail from outside UnB
-        RegisterRequest dto = new RegisterRequest("SchrodingerCat", "imalive@gmail.com", "not_alive12");
+        RegisterRequestDTO dto = new RegisterRequestDTO("SchrodingerCat", "imalive@gmail.com", "not_alive12");
 
         // Act & Assert (Capture the exception validation that the service must throw)
         assertThrows(InvalidInstitutionalEmailException.class, () -> userService.register(dto));
@@ -60,7 +60,7 @@ public class UserServiceTest {
     @Test
     void register_WithDuplicateEMail_MustThrowException() {
         // Arrange - The E-mail MUST be @unb.br for pass the first validation
-        RegisterRequest dto = new RegisterRequest("SchrodingerCat", "imalive@unb.br", "not_alive12");
+        RegisterRequestDTO dto = new RegisterRequestDTO("SchrodingerCat", "imalive@unb.br", "not_alive12");
 
         when(userRepository.existsByEmailIgnoreCase("imalive@unb.br")).thenReturn(true);
 

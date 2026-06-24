@@ -1,6 +1,10 @@
 name: CI Backend
 
 on:
+    push:
+        branches:
+            - main
+            - develop
     pull_request:
         branches:
             - main
@@ -9,46 +13,38 @@ on:
             - 'docvault/api/**'
             - '.github/workflows/ci-backend.yml'
 
+permissions:
+  contents: read
+
 jobs: 
     build:
         runs-on: ubuntu-latest
         defaults:
             run:
                 working-directory: docvault/api
-        services: 
-            postgres:
-                image: postgres:15
-                env:
-                    POSTGRES_DB: edtech_test
-                    POSTGRES_USER: sa
-                    POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
-                ports:
-                    - 5432:5432
-                options: >-
-                    --health-cmd pg_isready
-                    --health-interval 10s
-                    --health-timeout 5s
-                    --health-retries 5
-
         steps:
-            - uses: actions/checkout@v4
-            - name: Set up JDK 17
-              uses: actions/setup-java@v4
+            - uses: actions/checkout@v6
+            - name: Set up JDK 21
+              uses: actions/setup-java@v5
               with:
-                java-version: '17'
+                java-version: '21'
                 distribution: 'temurin'
                 cache: maven
            
             - name: Build and Test
               run: mvn verify
               env:
-                SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/edtech_test
-                SPRING_DATASOURCE_USERNAME: sa
-                SPRING_DATASOURCE_PASSWORD: password
+                AWS_ACCESS_KEY_ID: dummy_key
+                AWS_SECRET_ACCESS_KEY: dummy_secret
+                S3_ENDPOINT: https://abc.supabase.co/storage/v1/s3
+                S3_REGION: us-east-1
+                S3_BUCKET_NAME: documents
+                JWT_SECRET: supersecretjwtsecretkeyformyspringbootapp123
+                JWT_EXPIRATION_MINUTES: 60
    
            
             - name: Upload JaCoCo Report
-              uses: actions/upload-artifact@v4
+              uses: actions/upload-artifact@v7
               with:
                 name: jacoco-report
                 path: docvault/api/target/site/jacoco/

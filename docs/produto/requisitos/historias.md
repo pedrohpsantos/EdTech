@@ -21,9 +21,12 @@ Backlog de histórias de usuário do EdTech, escritas no formato padrão e rastr
 
 ??? note "Critérios de Aceitação"
     - [x] O formulário exige nome, e-mail e senha
+
     - [x] A senha é armazenada com hash BCrypt
+
     - [x] E-mails duplicados são rejeitados com mensagem clara
-    - [ ] Apenas e-mails `@instituicao.edu.br` são aceitos
+
+    - [x] Apenas e-mails `@instituicao.edu.br` são aceitos
 
 **Rastreabilidade:** RF01.1, RF01.6 · **Persona:** Ana · **Sprint:** 2
 
@@ -36,6 +39,7 @@ Backlog de histórias de usuário do EdTech, escritas no formato padrão e rastr
 ??? note "Critérios de Aceitação"
     - [x] O login retorna um JWT em cookie `HttpOnly` + `Secure`
     - [x] Credenciais inválidas retornam mensagem genérica
+
     - [x] Login bem-sucedido gera log `LOGIN_SUCCESS`
     - [x] Login falho gera log `LOGIN_FAILED`
 
@@ -48,9 +52,10 @@ Backlog de histórias de usuário do EdTech, escritas no formato padrão e rastr
 > **Como** usuário autenticado, **quero** fazer logout, **para que** minha sessão seja encerrada e o cookie invalidado.
 
 ??? note "Critérios de Aceitação"
-    - [ ] O cookie é removido ou expirado
-    - [ ] Requisições subsequentes retornam `401`
-    - [ ] O logout gera log `LOGOUT`
+    - [x] O cookie é removido ou expirado
+
+    - [x] Requisições subsequentes retornam `401`
+    - [x] O logout gera log `LOGOUT`
 
 **Rastreabilidade:** RF01.3, RF04.1 · **Persona:** Todos · **Sprint:** 2
 
@@ -63,11 +68,13 @@ Backlog de histórias de usuário do EdTech, escritas no formato padrão e rastr
 > **Como** pesquisadora, **quero** fazer upload de um artigo em PDF, **para que** ele fique armazenado de forma segura no repositório.
 
 ??? note "Critérios de Aceitação"
-    - [ ] Aceita arquivos PDF de até 50 MB
-    - [ ] O arquivo é salvo no Google Cloud Storage
-    - [ ] Os metadados são salvos no PostgreSQL com `author_id`
-    - [ ] O status inicial é `draft`
-    - [ ] O upload gera log `UPLOAD_SUCCESS`
+    - [x] Aceita arquivos PDF de até 50 MB
+
+    - [x] O arquivo é salvo no Google Cloud Storage
+
+    - [x] Os metadados são salvos no PostgreSQL com `author_id`
+    - [x] O status inicial é `draft`
+    - [x] O upload gera log `UPLOAD_SUCCESS`
 
 **Rastreabilidade:** RF02.1, RF02.2, RF02.3, RF04.2 · **Persona:** Ana · **Sprint:** 3
 
@@ -80,7 +87,9 @@ Backlog de histórias de usuário do EdTech, escritas no formato padrão e rastr
 ??? note "Critérios de Aceitação"
     - [ ] A lista é filtrada por `author_id = user.id`
     - [ ] Exibe título, tipo, status e data de upload
+
     - [ ] Pesquisador não vê documentos de outros autores
+
     - [ ] Resposta da API em < 500ms (p95)
 
 **Rastreabilidade:** RF02.4, RNF02.1 · **Persona:** Ana · **Sprint:** 3
@@ -93,7 +102,9 @@ Backlog de histórias de usuário do EdTech, escritas no formato padrão e rastr
 
 ??? note "Critérios de Aceitação"
     - [ ] Apenas o autor ou orientador vinculado pode baixar
+
     - [ ] O download gera log de auditoria
+
     - [ ] O arquivo é servido diretamente do GCS
 
 **Rastreabilidade:** RF02.5, RF04.2 · **Persona:** Ana · **Sprint:** 3
@@ -109,6 +120,7 @@ Backlog de histórias de usuário do EdTech, escritas no formato padrão e rastr
 ??? note "Critérios de Aceitação"
     - [ ] Lista projetos onde `project_members.user_id = orientador.id`
     - [ ] Exibe contagem de documentos por projeto
+
     - [ ] Não exibe projetos de outros orientadores
 
 **Rastreabilidade:** RF03.1, RF03.3 · **Persona:** Carlos · **Sprint:** 4
@@ -121,7 +133,9 @@ Backlog de histórias de usuário do EdTech, escritas no formato padrão e rastr
 
 ??? note "Critérios de Aceitação"
     - [ ] Exibe documentos de todos os membros do projeto
+
     - [ ] Permite visualização inline ou download
+
     - [ ] Filtra por `project_members` para garantir isolamento
 
 **Rastreabilidade:** RF03.2, RF03.3 · **Persona:** Carlos · **Sprint:** 4
@@ -136,7 +150,9 @@ Backlog de histórias de usuário do EdTech, escritas no formato padrão e rastr
 
 ??? note "Critérios de Aceitação"
     - [ ] Filtros por ação, data, usuário e recurso
+
     - [ ] Exibe IP, user-agent e timestamp
+
     - [ ] Logs são imutáveis (sem UPDATE/DELETE)
 
 **Rastreabilidade:** RF04.4, RNF03.2 · **Persona:** Márcia · **Sprint:** 5
@@ -147,11 +163,11 @@ Backlog de histórias de usuário do EdTech, escritas no formato padrão e rastr
 
 | Épico | Histórias | Concluídas | Em andamento | Pendentes |
 | :--- | :---: | :---: | :---: | :---: |
-| Autenticação | 3 | 0 | 1 | 2 |
-| Documentos | 3 | 0 | 1 | 2 |
-| Orientador | 2 | 0 | 0 | 2 |
-| Auditoria | 1 | 0 | 0 | 1 |
-| **Total** | **9** | **0** | **2** | **7** |
+| Autenticação | 3 | 3 | 0 | 0 |
+| Documentos | 3 | 1 | 1 | 1 |
+| Orientador | 2 | 0 | 1 | 1 |
+| Auditoria | 1 | 0 | 1 | 0 |
+| **Total** | **9** | **4** | **3** | **2** |
 
 
 ---
@@ -161,3 +177,4 @@ Backlog de histórias de usuário do EdTech, escritas no formato padrão e rastr
 | Versão | Data | Descrição | Autor |
 | :---: | :---: | :--- | :--- |
 | `1.0` | 29/05/2026 | Criação do documento | Pedro Henrique P. Santos |
+| `1.1` | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |

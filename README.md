@@ -18,9 +18,9 @@ Plataforma acadêmica para centralização, gerenciamento e auditoria de publica
 
 ## 📌 Estado Atual do Repositório
 
-O projeto encontra-se atualmente na fase de **fundação de governança e arquitetura técnica**.
-- **✅ Concluído:** Documentação rica e consolidada (*Docs-as-Code*), arquitetura técnica (C4 Model, ADRs) e Design System.
-- **🚧 Em Desenvolvimento:** Os módulos de aplicação (Backend Java e Frontend React) estão em fase de *scaffolding* e construção ativa. Ainda não há uma versão funcional do produto.
+O projeto encontra-se atualmente na fase final rumo à **conclusão do MVP (Sprint 6)**.
+- **✅ Concluído:** Documentação (Docs-as-Code), Arquitetura Técnica, Autenticação completa, Upload de Documentos para Supabase Storage e Contratos de API consolidados.
+- **🚧 Em Desenvolvimento:** Interfaces de gestão de projetos, painel do orientador, fluxos de auditoria/logs estruturados e automação E2E.
 
 Para entender as prioridades atuais e como ajudar na documentação, leia nosso [Guia de Contribuição](CONTRIBUTING.md).
 
@@ -52,7 +52,7 @@ O ambiente de desenvolvimento sobe PostgreSQL 15 e o backend Spring Boot na port
 # 1. Copie o arquivo de exemplo
 cp infra/.env.example infra/.env
 
-# 2. Preencha POSTGRES_PASSWORD e JWT_SECRET em infra/.env
+# 2. Preencha POSTGRES_PASSWORD, JWT_SECRET e defina seu STORAGE_PROVIDER (s3 ou gcs) com as chaves de nuvem em infra/.env
 
 # 3. Suba banco e backend
 docker compose --env-file infra/.env -f infra/docker-compose.yml up --build
@@ -96,14 +96,14 @@ O backend continua conectando no PostgreSQL pela rede interna do Compose em `db:
 
 | Camada | Tecnologias |
 | :--- | :--- |
-| **Backend** | Java 17 · Spring Boot · Spring Security · JWT |
-| **Frontend** | React · HTML5 · CSS3 · Bootstrap 5 |
-| **Cloud** | Google Cloud Run · Cloud SQL (PostgreSQL) · Cloud Storage |
-| **Docs & CI** | MkDocs Material · GitHub Actions · uv |
+| **Backend** | Java 21 · Spring Boot 4.1 · Spring Security · JWT · Flyway |
+| **Frontend** | React 19 · Vite 8 · React Router · Axios · Bootstrap 5 |
+| **Cloud / Infra** | Supabase S3 Storage · Cloud SQL (PostgreSQL) · Docker Compose |
+| **Docs & CI** | MkDocs Material · GitHub Actions · uv · JaCoCo |
 
 ---
 
-## Equipa
+## Equipe
 
 | Nome | Papel | GitHub |
 | :--- | :--- | :--- |
@@ -116,10 +116,19 @@ O backend continua conectando no PostgreSQL pela rede interna do Compose em `db:
 
 ---
 
+## Histórico de Versões
+
+| Versão | Data | Descrição | Autor |
+| :---: | :---: | :--- | :--- |
+| `0.1.0` | 10/06/2026 | Fundação da documentação técnica e governança. | Pedro Henrique P. Santos |
+| `0.2.0` | 13/06/2026 | Reestruturação arquitetural da documentação e guias de Desenvolvimento (DevEx). | Pedro Henrique P. Santos |
+
+---
+
 ## Licença
 
 Projeto acadêmico desenvolvido para fins educacionais no Laboratório de Inteligência Artificial (AILAB).
 O código fonte é disponibilizado sob a [MIT License](LICENSE).
 
 ---
-*Consulte o [Changelog](CHANGELOG.md) para o histórico de versões e nossa [Política de Segurança](SECURITY.md) para o fluxo de relato de vulnerabilidades.*
+*Consulte o [Changelog](CHANGELOG.md) para o histórico de versões completo e nossa [Política de Segurança](SECURITY.md) para o fluxo de relato de vulnerabilidades.*
