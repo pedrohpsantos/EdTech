@@ -153,4 +153,26 @@ public class DocumentService {
         dto.setCreatedAt(document.getCreatedAt());
         return dto;
     }
+    @Transactional
+    public DocumentResponseDTO reviewDocument(UUID documentId, UUID reviewerId, DocumentStaus newStatus, String feedback){
+        if (newStatus != DocumentStatus.APPROVED && newStatus != DocumentStatus.REJECTED){
+            throw new IllegalArgumentException("Status inválido. Apenas APPROVED ou REJECTED são permitidos na revisão.");
+        }
+        Document document = documentRepository.findById(documentId)
+            .orElseThrow(() -> new RuntimeException("Document not found"));
+        ProjectMember member = projectMemberRepository.findByProjectIdAndUserId(document.getProject().getId(), reviewId)
+            .orElseThrow(() -> new RuntimeException("Acess denied: You are not a member of this project"));
+        if (member.getRole() != ProjectRole.ADVISOR){
+            throw new RuntimeException("Acess denied: Only an ADVISOR can review documents");
+        }
+        if (document.getStatus() != DocumentStatus.PENDING_REVIEW){
+            throw new RuntimeException("Document is not pending review");
+        }
+        document.setStatus(newStatus);
+        Document savedDocument = documentRepository.save(document);
+        AcaoAuditoria acao = (newStatus == DocumentStatus.APPROVED) ? AcaoAuditoria.DOCUMENT_APPROVED : AcaoAuditoria.DOCUMENT_REJECTED;
+        String details = "Status alterado para " + newStatus + ".Feedback: " + (feedback != null && !feedback.trim().isEmpty() ? feedback : "Sem feedback");
+        auditLogService.logAction(reviewerId, acao, details);
+        return mapToDTO(savedDocument)
+    }
 }
