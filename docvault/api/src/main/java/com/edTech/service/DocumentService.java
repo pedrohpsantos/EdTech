@@ -10,13 +10,14 @@ import com.edTech.repository.DocumentRepository;
 import com.edTech.repository.ProjectMemberRepository;
 import com.edTech.repository.ProjectRepository;
 import com.edTech.repository.UserRepository;
+import com.edTech.model.ProjectMember;
+import com.edTech.model.ProjectRole;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
 
 import java.io.IOException;
 import java.time.Duration;
@@ -154,13 +155,13 @@ public class DocumentService {
         return dto;
     }
     @Transactional
-    public DocumentResponseDTO reviewDocument(UUID documentId, UUID reviewerId, DocumentStaus newStatus, String feedback){
+    public DocumentResponseDTO reviewDocument(UUID documentId, UUID reviewerId, DocumentStatus newStatus, String feedback){
         if (newStatus != DocumentStatus.APPROVED && newStatus != DocumentStatus.REJECTED){
             throw new IllegalArgumentException("Status inválido. Apenas APPROVED ou REJECTED são permitidos na revisão.");
         }
         Document document = documentRepository.findById(documentId)
             .orElseThrow(() -> new RuntimeException("Document not found"));
-        ProjectMember member = projectMemberRepository.findByProjectIdAndUserId(document.getProject().getId(), reviewId)
+        ProjectMember member = projectMemberRepository.findByProjectIdAndUserId(document.getProject().getId(), reviewerId)
             .orElseThrow(() -> new RuntimeException("Acess denied: You are not a member of this project"));
         if (member.getRole() != ProjectRole.ADVISOR){
             throw new RuntimeException("Acess denied: Only an ADVISOR can review documents");
@@ -173,6 +174,6 @@ public class DocumentService {
         AcaoAuditoria acao = (newStatus == DocumentStatus.APPROVED) ? AcaoAuditoria.DOCUMENT_APPROVED : AcaoAuditoria.DOCUMENT_REJECTED;
         String details = "Status alterado para " + newStatus + ".Feedback: " + (feedback != null && !feedback.trim().isEmpty() ? feedback : "Sem feedback");
         auditLogService.logAction(reviewerId, acao, details);
-        return mapToDTO(savedDocument)
+        return mapToDTO(savedDocument);
     }
 }
