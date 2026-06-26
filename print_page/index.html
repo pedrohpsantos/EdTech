@@ -4922,7 +4922,7 @@ O Propósito (Elevator Pitch) que norteia todas as decisões.
         </head><body><h1 id="requisitos-funcionais"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 5h6v6H3zm2 2v2h2V7zm6 0h10v2H11zm0 8h10v2H11zm-6 5-3.5-3.5 1.41-1.41L5 17.17l4.59-4.58L11 14z"></path></svg></span> Requisitos Funcionais<a class="headerlink" href="#produto-requisitos-funcionais-requisitos-funcionais" title="Permanent link">¶</a></h1>
 <p>Especificação dos requisitos funcionais do EdTech, organizados por módulo e rastreáveis às funcionalidades do Lean Inception.</p>
 <hr>
-<h2 id="produto-requisitos-funcionais-rf01-autenticacao-e-sessao">RF01 — Autenticação e Sessão<a class="headerlink" href="#produto-requisitos-funcionais-rf01-autenticacao-e-sessao" title="Permanent link">¶</a></h2>
+<h2 id="produto-requisitos-funcionais-autenticacao-e-sessao">🔐 Autenticação e Sessão<a class="headerlink" href="#produto-requisitos-funcionais-autenticacao-e-sessao" title="Permanent link">¶</a></h2>
 <table>
 <thead>
 <tr>
@@ -4935,42 +4935,42 @@ O Propósito (Elevator Pitch) que norteia todas as decisões.
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;">RF01.1</td>
+<td style="text-align: center;">RF01</td>
 <td style="text-align: left;">O sistema deve permitir o cadastro de pesquisadores com nome, e-mail institucional e senha</td>
 <td style="text-align: center;">Alta</td>
 <td style="text-align: center;">F01</td>
 <td style="text-align: center;">✅</td>
 </tr>
 <tr>
-<td style="text-align: center;">RF01.2</td>
+<td style="text-align: center;">RF02</td>
 <td style="text-align: left;">O sistema deve autenticar usuários via e-mail e senha, retornando um <abbr title="JSON Web Token">JWT</abbr> em cookie <code>HttpOnly</code></td>
 <td style="text-align: center;">Alta</td>
 <td style="text-align: center;">F02</td>
 <td style="text-align: center;">✅</td>
 </tr>
 <tr>
-<td style="text-align: center;">RF01.3</td>
+<td style="text-align: center;">RF03</td>
 <td style="text-align: left;">O sistema deve invalidar o cookie de sessão no logout</td>
 <td style="text-align: center;">Alta</td>
 <td style="text-align: center;">F03</td>
 <td style="text-align: center;">✅</td>
 </tr>
 <tr>
-<td style="text-align: center;">RF01.4</td>
+<td style="text-align: center;">RF04</td>
 <td style="text-align: left;">O sistema deve interceptar todas as requisições para validar o <abbr title="JSON Web Token">JWT</abbr> antes de processar</td>
 <td style="text-align: center;">Alta</td>
 <td style="text-align: center;">F04</td>
 <td style="text-align: center;">✅</td>
 </tr>
 <tr>
-<td style="text-align: center;">RF01.5</td>
+<td style="text-align: center;">RF05</td>
 <td style="text-align: left;">O sistema deve retornar <code>401 Unauthorized</code> quando o token estiver expirado ou ausente</td>
 <td style="text-align: center;">Média</td>
 <td style="text-align: center;">F05</td>
 <td style="text-align: center;">✅</td>
 </tr>
 <tr>
-<td style="text-align: center;">RF01.6</td>
+<td style="text-align: center;">RF06</td>
 <td style="text-align: left;">O sistema deve validar que o e-mail pertence a um domínio institucional (<code>@instituicao.edu.br</code>)</td>
 <td style="text-align: center;">Média</td>
 <td style="text-align: center;">F01</td>
@@ -4979,7 +4979,7 @@ O Propósito (Elevator Pitch) que norteia todas as decisões.
 </tbody>
 </table>
 <hr>
-<h2 id="produto-requisitos-funcionais-rf02-upload-e-gerenciamento-de-documentos">RF02 — Upload e Gerenciamento de Documentos<a class="headerlink" href="#produto-requisitos-funcionais-rf02-upload-e-gerenciamento-de-documentos" title="Permanent link">¶</a></h2>
+<h2 id="produto-requisitos-funcionais-upload-e-gerenciamento-de-documentos">📄 Upload e Gerenciamento de Documentos<a class="headerlink" href="#produto-requisitos-funcionais-upload-e-gerenciamento-de-documentos" title="Permanent link">¶</a></h2>
 <table>
 <thead>
 <tr>
@@ -4992,58 +4992,58 @@ O Propósito (Elevator Pitch) que norteia todas as decisões.
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;">RF02.1</td>
+<td style="text-align: center;">RF07</td>
 <td style="text-align: left;">O sistema deve permitir o upload de arquivos <abbr title="Portable Document Format">PDF</abbr> com tamanho máximo de 50 <abbr title="Megabyte">MB</abbr></td>
 <td style="text-align: center;">Alta</td>
 <td style="text-align: center;">F07</td>
-<td style="text-align: center;">🚧</td>
+<td style="text-align: center;">✅</td>
 </tr>
 <tr>
-<td style="text-align: center;">RF02.2</td>
+<td style="text-align: center;">RF08</td>
 <td style="text-align: left;">O sistema deve armazenar o arquivo binário no Google Cloud Storage e os metadados no PostgreSQL</td>
 <td style="text-align: center;">Alta</td>
 <td style="text-align: center;">F09</td>
-<td style="text-align: center;">🚧</td>
+<td style="text-align: center;">✅</td>
 </tr>
 <tr>
-<td style="text-align: center;">RF02.3</td>
+<td style="text-align: center;">RF09</td>
 <td style="text-align: left;">O sistema deve associar cada documento ao <code>user_id</code> do autor autenticado</td>
 <td style="text-align: center;">Alta</td>
 <td style="text-align: center;">F07</td>
-<td style="text-align: center;">⏳</td>
+<td style="text-align: center;">✅</td>
 </tr>
 <tr>
-<td style="text-align: center;">RF02.4</td>
+<td style="text-align: center;">RF10</td>
 <td style="text-align: left;">O sistema deve exibir uma lista de documentos filtrada pelo <code>author_id</code> do usuário logado</td>
 <td style="text-align: center;">Alta</td>
 <td style="text-align: center;">F10</td>
-<td style="text-align: center;">⏳</td>
+<td style="text-align: center;">✅</td>
 </tr>
 <tr>
-<td style="text-align: center;">RF02.5</td>
+<td style="text-align: center;">RF11</td>
 <td style="text-align: left;">O sistema deve permitir o download de documentos apenas pelo autor ou orientador vinculado</td>
 <td style="text-align: center;">Alta</td>
 <td style="text-align: center;">F11</td>
-<td style="text-align: center;">⏳</td>
+<td style="text-align: center;">✅</td>
 </tr>
 <tr>
-<td style="text-align: center;">RF02.6</td>
+<td style="text-align: center;">RF12</td>
 <td style="text-align: left;">O sistema deve permitir a exclusão de documentos com status <code>draft</code> pelo autor</td>
 <td style="text-align: center;">Média</td>
 <td style="text-align: center;">F12</td>
-<td style="text-align: center;">⏳</td>
+<td style="text-align: center;">🚧</td>
 </tr>
 <tr>
-<td style="text-align: center;">RF02.7</td>
+<td style="text-align: center;">RF13</td>
 <td style="text-align: left;">O sistema deve aceitar upload de datasets nos formatos <abbr title="Comma-Separated Values — Valores Separados por Vírgula">CSV</abbr> e <abbr title="JavaScript Object Notation">JSON</abbr></td>
 <td style="text-align: center;">Média</td>
 <td style="text-align: center;">F08</td>
-<td style="text-align: center;">⏳</td>
+<td style="text-align: center;">✅</td>
 </tr>
 </tbody>
 </table>
 <hr>
-<h2 id="produto-requisitos-funcionais-rf03-orientador-e-isolamento">RF03 — Orientador e Isolamento<a class="headerlink" href="#produto-requisitos-funcionais-rf03-orientador-e-isolamento" title="Permanent link">¶</a></h2>
+<h2 id="produto-requisitos-funcionais-orientador-e-isolamento">👨‍🏫 Orientador e Isolamento<a class="headerlink" href="#produto-requisitos-funcionais-orientador-e-isolamento" title="Permanent link">¶</a></h2>
 <table>
 <thead>
 <tr>
@@ -5056,37 +5056,37 @@ O Propósito (Elevator Pitch) que norteia todas as decisões.
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;">RF03.1</td>
+<td style="text-align: center;">RF14</td>
 <td style="text-align: left;">O sistema deve exibir um painel com todos os projetos vinculados ao orientador</td>
 <td style="text-align: center;">Alta</td>
 <td style="text-align: center;">F13</td>
-<td style="text-align: center;">🚧</td>
+<td style="text-align: center;">✅</td>
 </tr>
 <tr>
-<td style="text-align: center;">RF03.2</td>
+<td style="text-align: center;">RF15</td>
 <td style="text-align: left;">O orientador deve visualizar documentos apenas de pesquisadores pertencentes aos seus projetos</td>
 <td style="text-align: center;">Alta</td>
 <td style="text-align: center;">F14</td>
-<td style="text-align: center;">🚧</td>
+<td style="text-align: center;">✅</td>
 </tr>
 <tr>
-<td style="text-align: center;">RF03.3</td>
+<td style="text-align: center;">RF16</td>
 <td style="text-align: left;">O sistema deve filtrar queries por <code>project_members.user_id</code> para garantir isolamento entre laboratórios</td>
 <td style="text-align: center;">Alta</td>
 <td style="text-align: center;">F15</td>
-<td style="text-align: center;">🚧</td>
+<td style="text-align: center;">✅</td>
 </tr>
 <tr>
-<td style="text-align: center;">RF03.4</td>
+<td style="text-align: center;">RF17</td>
 <td style="text-align: left;">O orientador deve poder aprovar ou rejeitar submissões, alterando o status do documento</td>
 <td style="text-align: center;">Média</td>
 <td style="text-align: center;">F16</td>
-<td style="text-align: center;">⏳</td>
+<td style="text-align: center;">✅</td>
 </tr>
 </tbody>
 </table>
 <hr>
-<h2 id="produto-requisitos-funcionais-rf04-auditoria">RF04 — Auditoria<a class="headerlink" href="#produto-requisitos-funcionais-rf04-auditoria" title="Permanent link">¶</a></h2>
+<h2 id="produto-requisitos-funcionais-auditoria">🛡️ Auditoria<a class="headerlink" href="#produto-requisitos-funcionais-auditoria" title="Permanent link">¶</a></h2>
 <table>
 <thead>
 <tr>
@@ -5099,35 +5099,35 @@ O Propósito (Elevator Pitch) que norteia todas as decisões.
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;">RF04.1</td>
+<td style="text-align: center;">RF18</td>
 <td style="text-align: left;">O sistema deve registrar logs imutáveis para login bem-sucedido e falho</td>
 <td style="text-align: center;">Alta</td>
 <td style="text-align: center;">F18</td>
-<td style="text-align: center;">🚧</td>
+<td style="text-align: center;">✅</td>
 </tr>
 <tr>
-<td style="text-align: center;">RF04.2</td>
+<td style="text-align: center;">RF19</td>
 <td style="text-align: left;">O sistema deve registrar logs de upload e download de documentos</td>
 <td style="text-align: center;">Alta</td>
 <td style="text-align: center;">F19</td>
-<td style="text-align: center;">🚧</td>
+<td style="text-align: center;">✅</td>
 </tr>
 <tr>
-<td style="text-align: center;">RF04.3</td>
+<td style="text-align: center;">RF20</td>
 <td style="text-align: left;">O sistema deve registrar tentativas de acesso negado (<code>403 Forbidden</code>)</td>
 <td style="text-align: center;">Alta</td>
 <td style="text-align: center;">F20</td>
-<td style="text-align: center;">🚧</td>
+<td style="text-align: center;">✅</td>
 </tr>
 <tr>
-<td style="text-align: center;">RF04.4</td>
+<td style="text-align: center;">RF21</td>
 <td style="text-align: left;">O auditor deve poder consultar logs com filtros por ação, data e usuário</td>
 <td style="text-align: center;">Média</td>
 <td style="text-align: center;">F21</td>
-<td style="text-align: center;">⏳</td>
+<td style="text-align: center;">✅</td>
 </tr>
 <tr>
-<td style="text-align: center;">RF04.5</td>
+<td style="text-align: center;">RF22</td>
 <td style="text-align: left;">O auditor deve poder exportar relatórios de auditoria</td>
 <td style="text-align: center;">Baixa</td>
 <td style="text-align: center;">F22</td>
@@ -5137,47 +5137,49 @@ O Propósito (Elevator Pitch) que norteia todas as decisões.
 </table>
 <hr>
 <h2 id="produto-requisitos-funcionais-matriz-de-rastreabilidade">Matriz de Rastreabilidade<a class="headerlink" href="#produto-requisitos-funcionais-matriz-de-rastreabilidade" title="Permanent link">¶</a></h2>
-<pre class="mermaid"><code>flowchart LR
-    subgraph Requisitos["Requisitos"]
-        RF01["RF01: Autenticação"]
-        RF02["RF02: Documentos"]
-        RF03["RF03: Orientador"]
-        RF04["RF04: Auditoria"]
-    end
+<p>`mermaid
+flowchart LR
+    subgraph Modulos["Módulos"]
+        M01["M01: Autenticação"]
+        M02["M02: Documentos"]
+        M03["M03: Orientador"]
+        M04["M04: Auditoria"]
+    end</p>
+<pre><code>subgraph Funcionalidades["Funcionalidades"]
+    F01["F01-F06"]
+    F07["F07-F12"]
+    F13["F13-F17"]
+    F18["F18-F22"]
+end
 
-    subgraph Funcionalidades["Funcionalidades"]
-        F01["F01-F06"]
-        F07["F07-F12"]
-        F13["F13-F17"]
-        F18["F18-F22"]
-    end
+subgraph Personas["Personas"]
+    P1["Ana"]
+    P2["Carlos"]
+    P3["Márcia"]
+end
 
-    subgraph Personas["Personas"]
-        P1["Ana"]
-        P2["Carlos"]
-        P3["Márcia"]
-    end
+M01 --&gt; F01
+M02 --&gt; F07
+M03 --&gt; F13
+M04 --&gt; F18
 
-    RF01 --&gt; F01
-    RF02 --&gt; F07
-    RF03 --&gt; F13
-    RF04 --&gt; F18
-
-    F01 --&gt; P1
-    F07 --&gt; P1
-    F13 --&gt; P2
-    F18 --&gt; P3
+F01 --&gt; P1
+F07 --&gt; P1
+F13 --&gt; P2
+F18 --&gt; P3
 </code></pre>
+<p>`</p>
 <hr>
 <h2 id="produto-requisitos-funcionais-ciclo-de-vida-de-teseartigo">Ciclo de Vida de Tese/Artigo<a class="headerlink" href="#produto-requisitos-funcionais-ciclo-de-vida-de-teseartigo" title="Permanent link">¶</a></h2>
-<pre class="mermaid"><code>stateDiagram-v2
+<p><code>mermaid
+stateDiagram-v2
     [*] --&gt; Rascunho : Upload Inicial
     Rascunho --&gt; Submetido : Confirmação
     Submetido --&gt; Em_Revisao : Atribuído ao Orientador
     Em_Revisao --&gt; Aprovado : Aceite
     Em_Revisao --&gt; Rascunho : Rejeitado (Correções)
     Aprovado --&gt; Publicado : Liberação Final
-    Publicado --&gt; [*]</code></pre>
+    Publicado --&gt; [*]</code></p>
 <hr>
 <h2 id="produto-requisitos-funcionais-historico-de-versoes">Histórico de Versões<a class="headerlink" href="#produto-requisitos-funcionais-historico-de-versoes" title="Permanent link">¶</a></h2>
 <table>
@@ -5191,21 +5193,33 @@ O Propósito (Elevator Pitch) que norteia todas as decisões.
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>1.0</code></td>
+<td style="text-align: center;">1.0</td>
 <td style="text-align: center;">29/05/2026</td>
 <td style="text-align: left;">Criação do documento</td>
 <td style="text-align: left;">Pedro Henrique P. Santos</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>1.1</code></td>
+<td style="text-align: center;">1.1</td>
 <td style="text-align: center;">30/05/2026</td>
 <td style="text-align: left;">Criação do diagrama de ciclo de vida</td>
 <td style="text-align: left;">Pedro Henrique P. Santos</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>1.2</code></td>
+<td style="text-align: center;">1.2</td>
 <td style="text-align: center;">13/06/2026</td>
 <td style="text-align: left;">Revisão técnica e reestruturação da documentação</td>
+<td style="text-align: left;">Pedro Henrique P. Santos</td>
+</tr>
+<tr>
+<td style="text-align: center;">1.3</td>
+<td style="text-align: center;">26/06/2026</td>
+<td style="text-align: left;">Atualização dos status de entrega com base no <abbr title="Minimum Viable Product — Produto Mínimo Viável">MVP</abbr></td>
+<td style="text-align: left;">Pedro Henrique P. Santos</td>
+</tr>
+<tr>
+<td style="text-align: center;">1.4</td>
+<td style="text-align: center;">26/06/2026</td>
+<td style="text-align: left;">Refatoração da notação para numeração contínua</td>
 <td style="text-align: left;">Pedro Henrique P. Santos</td>
 </tr>
 </tbody>
