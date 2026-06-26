@@ -5,8 +5,7 @@
 # EdTech — Repositório Acadêmico
 
 [![Deploy MkDocs](https://github.com/pedrohpsantos/EdTech/actions/workflows/ci-docs.yml/badge.svg)](https://github.com/pedrohpsantos/EdTech/actions/workflows/ci-docs.yml)
-[![CI Backend](https://github.com/pedrohpsantos/EdTech/actions/workflows/ci-backend.yml/badge.svg)](https://github.com/pedrohpsantos/EdTech/actions/workflows/ci-backend.yml)
-[![CI Frontend](https://github.com/pedrohpsantos/EdTech/actions/workflows/ci-frontend.yml/badge.svg)](https://github.com/pedrohpsantos/EdTech/actions/workflows/ci-frontend.yml)
+[![CI Pipeline](https://github.com/pedrohpsantos/EdTech/actions/workflows/ci.yml/badge.svg)](https://github.com/pedrohpsantos/EdTech/actions/workflows/ci.yml)
 ![NodeJS](https://img.shields.io/badge/Node.js-%3E%3D24-339933?logo=nodedotjs&logoColor=white)
 ![Java](https://img.shields.io/badge/Java-21_LTS-007396?logo=openjdk&logoColor=white)
 ![Supabase](https://img.shields.io/badge/Supabase-Database_%26_Storage-3ECF8E?logo=supabase&logoColor=white)

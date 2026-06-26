@@ -210,13 +210,35 @@ Iniciar a implementação do MVP do EdTech com foco em três frentes paralelas: 
 
 ## Contribuições da Equipe
 
-| Membro | Frente | Contribuição Principal |
-| :--- | :--- | :--- |
-| **Pedro Henrique** (Tech Lead) | Coordenação, Docs, Arquitetura | ADRs, documentação, landing page, gestão de branches, planning |
-| **Mateus Alves** | Backend | Setup Spring Boot, entidade User, AuthController |
-| **Alana Cristyna** | Frontend | Setup React/Vite, telas de login, register, dashboard |
-| **Luis Gustavo** | QA / Backend | Testes JUnit/Mockito com 92% cobertura, reestruturação de pacotes |
-| **Mariana Andrade** | Backend / Docs & Logs | Entidade AuditLog, AuditLogService, enum AcaoAuditoria |
+### 👨‍💻 Tech Lead (Pedro Henrique)
+- **Foco:** ADRs, documentação, landing page, gestão de branches, planning.
+- **Entregas:** Documentação base e arquitetura.
+- **Commits:** `d08174b`, `23c3a8c`, `390569d`.
+
+### ⚙️ Backend (Mateus Alves)
+- **Foco:** Setup Spring Boot, entidade User, AuthController.
+- **Entregas:** Issue #2.
+- **Commits:** `891bf54`.
+
+### 🎨 Frontend (Alana Cristyna)
+- **Foco:** Setup React/Vite, telas de login, register, dashboard.
+- **Entregas:** Issue #6.
+- **Commits:** `abb1466`.
+
+### 🚀 DevOps / QA (Luis Gustavo)
+- **Foco:** Testes JUnit/Mockito com 92% cobertura, reestruturação de pacotes.
+- **Entregas:** Issue #8.
+- **Commits:** `1ed4334`, `8381796`.
+
+### 📝 Docs & Logs (Mariana Andrade)
+- **Foco:** Entidade AuditLog, AuditLogService, enum AcaoAuditoria.
+- **Entregas:** Issue #9.
+- **Commits:** `c3eb41b`, `83af273`.
+
+### 🛡️ Apoio e Testes (Arthur)
+- **Foco:** Participação nas definições iniciais de arquitetura.
+- **Entregas:** Cerimônias e alinhamento.
+- **Commits:** `(Revisões de PR)`.
 
 ---
 

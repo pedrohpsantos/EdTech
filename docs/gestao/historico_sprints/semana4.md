@@ -114,14 +114,35 @@ Consolidar tecnicamente a integração entre o Frontend (React) e o Backend (Spr
 
 ## Contribuições da Equipe
 
-| Membro | Frente | Contribuição Principal |
-| :--- | :--- | :--- |
-| **Pedro Henrique** (Tech Lead) | Gestão e Frontend | Reversão do *scope creep* para o MVP, criação de relatórios, atas e CSS do Modo Escuro |
-| **Alana Cristyna** | Frontend | Implementação do `api.js` e do componente `PrivateRoute` no React |
-| **Luis Gustavo** | Integração | Validação dos cookies e endpoints de Auth integrados ao React |
-| **Mateus Alves** | Backend | Suporte na configuração do CORS e revisão da camada de segurança |
-| **Mariana Andrade** | Qualidade | Validação das rotas integradas e revisão técnica da documentação |
-| **Arthur** | - | *Ausente por motivos de saúde* |
+### 👨‍💻 Tech Lead (Pedro Henrique)
+- **Foco:** Reversão do *scope creep* para o MVP, criação de relatórios, atas e CSS do Modo Escuro.
+- **Entregas:** Issue #18 e Gestão de Issues.
+- **Commits:** `9d35a82`, `e301b04`, `b5b9eb0`.
+
+### 🎨 Frontend (Alana Cristyna)
+- **Foco:** Implementação do `api.js` e do componente `PrivateRoute` no React.
+- **Entregas:** Issues #7, #17.
+- **Commits:** `14f52b7`, `c628f41`.
+
+### 🚀 DevOps / Integração (Luis Gustavo)
+- **Foco:** Validação dos cookies e endpoints de Auth integrados ao React.
+- **Entregas:** Testes de integração E2E.
+- **Commits:** `(Revisões de PR)`.
+
+### ⚙️ Backend (Mateus Alves)
+- **Foco:** Suporte na configuração do CORS e revisão da camada de segurança.
+- **Entregas:** Issue #16.
+- **Commits:** `a654efe` (Co-autoria).
+
+### 🛡️ QA (Mariana Andrade)
+- **Foco:** Validação das rotas integradas e revisão técnica da documentação.
+- **Entregas:** Homologação E2E de login.
+- **Commits:** `(Validações manuais)`.
+
+### 📝 Docs & Logs (Arthur)
+- **Foco:** Recuperação médica.
+- **Entregas:** -
+- **Commits:** `(Ausente por motivos de saúde nesta Sprint)`.
 
 ---
 

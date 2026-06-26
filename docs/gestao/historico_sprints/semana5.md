@@ -88,14 +88,35 @@ Consolidar a Integração Contínua, finalizar a base de Autenticação com CORS
 
 ## Contribuições da Equipe
 
-| Membro | Frente | Contribuição Principal |
-| :--- | :--- | :--- |
-| **Pedro Henrique** (Tech Lead) | Gestão, Ops e Backend | Revisão técnica, criação de relatórios, atas e resolução da integração com Flyway |
-| **Alana Cristyna** | - | Desenvolvimento e validação de requisitos da Sprint |
-| **Luis Gustavo** | - | Desenvolvimento e validação de requisitos da Sprint |
-| **Mateus Alves** | - | Desenvolvimento e validação de requisitos da Sprint |
-| **Mariana Andrade** | - | Desenvolvimento e validação de requisitos da Sprint |
-| **Arthur** | Docs & Logs | Retorno e início do foco em documentação técnica e observabilidade |
+### 👨‍💻 Tech Lead (Pedro Henrique)
+- **Foco:** Padronização arquitetural da documentação e Code Review.
+- **Entregas:** Issues #16, #17, #18, #73.
+- **Commits:** `88df106` (Contratos de API).
+
+### ⚙️ Backend (Mateus Alves)
+- **Foco:** Endpoint de login/cadastro, JWT e Upload GCS.
+- **Entregas:** Issues #13, #72.
+- **Commits:** `f45a1c0`, `312b9c2`.
+
+### 🎨 Frontend (Mariana Andrade)
+- **Foco:** Fluxo de autenticação na UI, rotas protegidas, interceptors.
+- **Entregas:** Issue #14.
+- **Commits:** `c891f21`.
+
+### 🚀 DevOps (Luis Gustavo)
+- **Foco:** Configuração do Supabase e revisão da esteira CI.
+- **Entregas:** Auxílio em infraestrutura.
+- **Commits:** `(Revisões de PR)`.
+
+### 🛡️ QA (Alana Cristyna)
+- **Foco:** Testes de integração do fluxo de autenticação e perfis.
+- **Entregas:** Homologação E2E.
+- **Commits:** `(Testes manuais exploratórios)`.
+
+### 📝 Docs & Logs (Arthur)
+- **Foco:** Retorno e início do foco em documentação técnica e observabilidade.
+- **Entregas:** Estudos iniciais S3/GCS.
+- **Commits:** `(Pesquisa técnica)`.
 
 ---
 

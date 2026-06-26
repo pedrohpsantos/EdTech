@@ -50,14 +50,35 @@ Apesar do atraso nas features principais de negócio (telas de painéis), avanç
 ---
 ## Contribuições da Equipe
 
-| Membro | Frente | Contribuição Principal |
-| :--- | :--- | :--- |
-| **Pedro Henrique** (Tech Lead) | Gestão, Ops e Backend | Revisão técnica, refatoração de infraestrutura, CodeQL e CI/CD |
-| **Alana Cristyna** | QA e Frontend | Foco total em garantia de qualidade integrada ao Frontend |
-| **Luis Gustavo** | DevOps e Backend | Melhoria contínua de esteiras, paralelismo e auxílio backend |
-| **Mateus Alves** | Full Stack | Desenvolvimento das demandas atrasadas e features da Sprint |
-| **Mariana Andrade** | Full Stack | Desenvolvimento das demandas atrasadas e features da Sprint |
-| **Arthur** | Docs & Logs | Modernização do portal MkDocs e ferramentas de comentários |
+### 👨‍💻 Tech Lead (Pedro Henrique)
+- **Foco:** Revisão técnica, refatoração de infraestrutura, CodeQL e CI/CD.
+- **Entregas:** Issue #96.
+- **Commits em Destaque:** `a2e97f9`, `ef0afec`, `5b752ae`.
+
+### 🚀 DevOps (Luis Gustavo)
+- **Foco:** Melhoria contínua de esteiras, paralelismo e auxílio backend.
+- **Entregas:** Issue #96.
+- **Commits em Destaque:** `98be0a5`, `19eb9b4`, `612910d`.
+
+### ⚙️ Backend (Mateus Alves)
+- **Foco:** Desenvolvimento das demandas atrasadas e features da Sprint.
+- **Entregas:** Issue #73 (Contratos e Refatoração).
+- **Commits:** `(Revisado em PR e Pair Programming)`.
+
+### 🎨 Frontend (Mariana Andrade)
+- **Foco:** Desenvolvimento das demandas atrasadas e componentes de UI.
+- **Entregas:** Issues #101, #102.
+- **Commits:** `(Entregas em andamento/validação)`.
+
+### 🛡️ QA (Alana Cristyna)
+- **Foco:** Garantia de qualidade integrada ao Frontend e fluxos visuais.
+- **Entregas:** Validação das Issues #101 e #102.
+- **Commits:** `(Validações em PR)`.
+
+### 📝 Docs & Logs (Arthur)
+- **Foco:** Modernização do portal MkDocs e ferramentas de comentários.
+- **Entregas:** Revisão de layout (Giscus, Tema).
+- **Commits:** `(Auxílio indireto)`.
 
 ---
 
