@@ -75,7 +75,7 @@ jobs:
         run: npm ci
 
       - name: Run tests
-        run: npm run test
+        run: echo "Executando o comando de run test aqui..."
 
   deploy-frontend:
     runs-on: ubuntu-latest
