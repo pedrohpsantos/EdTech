@@ -33,13 +33,18 @@ Apesar do atraso nas features principais de negócio (telas de painéis), avanç
 - [x] Configuração do Giscus para comentários e discussões na documentação, com sincronização automática do tema claro/escuro injetada via script JavaScript.
 - [x] Adição e organização da seção "Planejamento" na aba de Gestão.
 
+### :material-shield-check: CI/CD e Segurança (Issue #96)
+- [x] Unificação e Paralelização da pipeline de CI no GitHub Actions.
+- [x] Resolução dos erros do CodeQL migrando para o Github Advanced Security "Default Setup".
+- [x] Atualização da versão do Node.js para 24, correção de avisos da JVM (Mockito) e atualização segura de dependências NPM.
+
 ---
 
 ## Resumo Técnico
 
 | Métrica | Valor |
 | :--- | :---: |
-| Issues entregues / concluídas | 3 (Issues #101, #102, #73 parcial) |
+| Issues entregues / concluídas | 4 (Issues #96, #101, #102, #73 parcial) |
 | Reuniões e Atas documentadas | 1 (Ata 26/06/2026) |
 
 ---
@@ -65,7 +70,6 @@ Todas as issues críticas da Sprint 6 foram repriorizadas para a Sprint 7, junta
 | :---: | :--- | :--- |
 | #70 / #71 | Painel do Orientador e Endpoint de Aprovação | Crítico — Demonstração |
 | #68 / #69 | Painel de Auditoria e Endpoint de Consulta | Crítico — Demonstração |
-| #96 | Auditoria de Segurança e Deploy MVP | Crítico — Demonstração |
 
 ---
 
