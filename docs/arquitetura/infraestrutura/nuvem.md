@@ -57,7 +57,7 @@ flowchart TB
 - **Cloud SQL:** Isola a base relacional da internet pública, limitando o tráfego exclusivamente para a rede VPC interna do Cloud Run.
 - **Cloud Storage:** Separa o armazenamento de grandes volumes binários (PDFs) do banco relacional, garantindo performance nas requisições textuais (APIs).
 
-> **📌 Decisão Arquitetural:** Consulte a [ADR 0001](../adrs/0001-armazenamento-supabase-s3.md) para detalhes completos da estratégia de armazenamento e transição.
+> ** Decisão Arquitetural:** Consulte a [ADR 0001](../adrs/0001-armazenamento-supabase-s3.md) para detalhes completos da estratégia de armazenamento e transição.
 
 ---
 

@@ -10,8 +10,8 @@ O nosso pipeline de CI está configurado para executar os testes e extrair a cob
 
 | Módulo | Cobertura de Linhas | Testes Passando |
 | :--- | :---: | :---: |
-| **API** | 100% | ✅ |
-| **Service** | 100% | ✅ |
-| **Security** | 98% | ✅ |
+| **API** | 100% | :material-check-circle: |
+| **Service** | 100% | :material-check-circle: |
+| **Security** | 98% | :material-check-circle: |
 
 *(Estes são dados representativos para a Sprint atual baseados na validação da Issue 15).*

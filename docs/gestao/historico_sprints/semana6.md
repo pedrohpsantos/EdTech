@@ -50,32 +50,32 @@ Apesar do atraso nas features principais de negócio (telas de painéis), avanç
 ---
 ## Contribuições da Equipe
 
-### 👨‍💻 Tech Lead (Pedro Henrique)
+### Tech Lead (Pedro Henrique)
 - **Foco:** Revisão técnica, refatoração de infraestrutura, CodeQL e CI/CD.
 - **Entregas:** Issue #96.
 - **Commits em Destaque:** `a2e97f9`, `ef0afec`, `5b752ae`.
 
-### 🚀 DevOps (Luis Gustavo)
+### DevOps (Luis Gustavo)
 - **Foco:** Melhoria contínua de esteiras, paralelismo e auxílio backend.
 - **Entregas:** Issue #96.
 - **Commits em Destaque:** `98be0a5`, `19eb9b4`, `612910d`.
 
-### ⚙️ Backend (Alana Cristyna)
+### Backend (Alana Cristyna)
 - **Foco:** Desenvolvimento das demandas atrasadas e features da Sprint.
 - **Entregas:** Issue #73 (Contratos e Refatoração).
 - **Commits:** `(Revisado em PR e Pair Programming)`.
 
-### 🎨 Frontend (Mariana Andrade)
+### Frontend (Mariana Andrade)
 - **Foco:** Desenvolvimento das demandas atrasadas e componentes de UI.
 - **Entregas:** Issues #101, #102.
 - **Commits:** `(Entregas em andamento/validação)`.
 
-### 🛡️ QA (Mateus Alves)
+### QA (Mateus Alves)
 - **Foco:** Garantia de qualidade integrada ao Frontend e fluxos visuais.
 - **Entregas:** Validação das Issues #101 e #102.
 - **Commits:** `(Validações em PR)`.
 
-### 📝 Docs & Logs (Arthur)
+### Docs & Logs (Arthur)
 - **Foco:** Modernização do portal MkDocs e ferramentas de comentários.
 - **Entregas:** Revisão de layout (Giscus, Tema).
 - **Commits:** `(Auxílio indireto)`.

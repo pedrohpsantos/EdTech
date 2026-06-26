@@ -24,7 +24,7 @@ Template padrão para registro das reuniões da equipe EdTech. Copie a estrutura
 
 ## Participantes
 
-*(Use ✅ para presente e ❌ para ausente)*
+*(Use :material-check-circle: para presente e :material-close-circle: para ausente)*
 
 | Nome | Presente |
 | :--- | :---: |

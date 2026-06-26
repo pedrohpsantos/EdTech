@@ -88,32 +88,32 @@ Consolidar a Integração Contínua, finalizar a base de Autenticação com CORS
 
 ## Contribuições da Equipe
 
-### 👨‍💻 Tech Lead (Pedro Henrique)
+### Tech Lead (Pedro Henrique)
 - **Foco:** Padronização arquitetural da documentação e Code Review.
 - **Entregas:** Issues #16, #17, #18, #73.
 - **Commits:** `88df106` (Contratos de API).
 
-### ⚙️ Backend (Alana Cristyna)
+### Backend (Alana Cristyna)
 - **Foco:** Endpoint de login/cadastro, JWT e Upload GCS.
 - **Entregas:** Issues #13, #72.
 - **Commits:** `f45a1c0`, `312b9c2`.
 
-### 🎨 Frontend (Mariana Andrade)
+### Frontend (Mariana Andrade)
 - **Foco:** Fluxo de autenticação na UI, rotas protegidas, interceptors.
 - **Entregas:** Issue #14.
 - **Commits:** `c891f21`.
 
-### 🚀 DevOps (Luis Gustavo)
+### DevOps (Luis Gustavo)
 - **Foco:** Configuração do Supabase e revisão da esteira CI.
 - **Entregas:** Auxílio em infraestrutura.
 - **Commits:** `(Revisões de PR)`.
 
-### 🛡️ QA (Mateus Alves)
+### QA (Mateus Alves)
 - **Foco:** Testes de integração do fluxo de autenticação e perfis.
 - **Entregas:** Homologação E2E.
 - **Commits:** `(Testes manuais exploratórios)`.
 
-### 📝 Docs & Logs (Arthur)
+### Docs & Logs (Arthur)
 - **Foco:** Retorno e início do foco em documentação técnica e observabilidade.
 - **Entregas:** Estudos iniciais S3/GCS.
 - **Commits:** `(Pesquisa técnica)`.

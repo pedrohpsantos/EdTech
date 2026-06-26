@@ -4,53 +4,53 @@ Especificação dos requisitos funcionais do EdTech, organizados por módulo e r
 
 ---
 
-## 🔐 Autenticação e Sessão
+## Autenticação e Sessão
 
 | ID | Requisito | Prioridade | Funcionalidade | Status |
 | :---: | :--- | :---: | :---: | :---: |
-| RF01 | O sistema deve permitir o cadastro de pesquisadores com nome, e-mail institucional e senha |  Alta | F01 | ✅ |
-| RF02 | O sistema deve autenticar usuários via e-mail e senha, retornando um JWT em cookie `HttpOnly` |  Alta | F02 | ✅ |
-| RF03 | O sistema deve invalidar o cookie de sessão no logout |  Alta | F03 | ✅ |
-| RF04 | O sistema deve interceptar todas as requisições para validar o JWT antes de processar |  Alta | F04 | ✅ |
-| RF05 | O sistema deve retornar `401 Unauthorized` quando o token estiver expirado ou ausente |  Média | F05 | ✅ |
-| RF06 | O sistema deve validar que o e-mail pertence a um domínio institucional (`@instituicao.edu.br`) |  Média | F01 | ✅ |
+| RF01 | O sistema deve permitir o cadastro de pesquisadores com nome, e-mail institucional e senha |  Alta | F01 | :material-check-circle: |
+| RF02 | O sistema deve autenticar usuários via e-mail e senha, retornando um JWT em cookie `HttpOnly` |  Alta | F02 | :material-check-circle: |
+| RF03 | O sistema deve invalidar o cookie de sessão no logout |  Alta | F03 | :material-check-circle: |
+| RF04 | O sistema deve interceptar todas as requisições para validar o JWT antes de processar |  Alta | F04 | :material-check-circle: |
+| RF05 | O sistema deve retornar `401 Unauthorized` quando o token estiver expirado ou ausente |  Média | F05 | :material-check-circle: |
+| RF06 | O sistema deve validar que o e-mail pertence a um domínio institucional (`@instituicao.edu.br`) |  Média | F01 | :material-check-circle: |
 
 ---
 
-## 📄 Upload e Gerenciamento de Documentos
+## Upload e Gerenciamento de Documentos
 
 | ID | Requisito | Prioridade | Funcionalidade | Status |
 | :---: | :--- | :---: | :---: | :---: |
-| RF07 | O sistema deve permitir o upload de arquivos PDF com tamanho máximo de 50 MB |  Alta | F07 | ✅ |
-| RF08 | O sistema deve armazenar o arquivo binário no Google Cloud Storage e os metadados no PostgreSQL |  Alta | F09 | ✅ |
-| RF09 | O sistema deve associar cada documento ao `user_id` do autor autenticado |  Alta | F07 | ✅ |
-| RF10 | O sistema deve exibir uma lista de documentos filtrada pelo `author_id` do usuário logado |  Alta | F10 | ✅ |
-| RF11 | O sistema deve permitir o download de documentos apenas pelo autor ou orientador vinculado |  Alta | F11 | ✅ |
-| RF12 | O sistema deve permitir a exclusão de documentos com status `draft` pelo autor |  Média | F12 | 🚧 |
-| RF13 | O sistema deve aceitar upload de datasets nos formatos CSV e JSON |  Média | F08 | ✅ |
+| RF07 | O sistema deve permitir o upload de arquivos PDF com tamanho máximo de 50 MB |  Alta | F07 | :material-check-circle: |
+| RF08 | O sistema deve armazenar o arquivo binário no Google Cloud Storage e os metadados no PostgreSQL |  Alta | F09 | :material-check-circle: |
+| RF09 | O sistema deve associar cada documento ao `user_id` do autor autenticado |  Alta | F07 | :material-check-circle: |
+| RF10 | O sistema deve exibir uma lista de documentos filtrada pelo `author_id` do usuário logado |  Alta | F10 | :material-check-circle: |
+| RF11 | O sistema deve permitir o download de documentos apenas pelo autor ou orientador vinculado |  Alta | F11 | :material-check-circle: |
+| RF12 | O sistema deve permitir a exclusão de documentos com status `draft` pelo autor |  Média | F12 | :material-progress-wrench: |
+| RF13 | O sistema deve aceitar upload de datasets nos formatos CSV e JSON |  Média | F08 | :material-check-circle: |
 
 ---
 
-## 👨‍🏫 Orientador e Isolamento
+## ‍ Orientador e Isolamento
 
 | ID | Requisito | Prioridade | Funcionalidade | Status |
 | :---: | :--- | :---: | :---: | :---: |
-| RF14 | O sistema deve exibir um painel com todos os projetos vinculados ao orientador |  Alta | F13 | ✅ |
-| RF15 | O orientador deve visualizar documentos apenas de pesquisadores pertencentes aos seus projetos |  Alta | F14 | ✅ |
-| RF16 | O sistema deve filtrar queries por `project_members.user_id` para garantir isolamento entre laboratórios |  Alta | F15 | ✅ |
-| RF17 | O orientador deve poder aprovar ou rejeitar submissões, alterando o status do documento |  Média | F16 | ✅ |
+| RF14 | O sistema deve exibir um painel com todos os projetos vinculados ao orientador |  Alta | F13 | :material-check-circle: |
+| RF15 | O orientador deve visualizar documentos apenas de pesquisadores pertencentes aos seus projetos |  Alta | F14 | :material-check-circle: |
+| RF16 | O sistema deve filtrar queries por `project_members.user_id` para garantir isolamento entre laboratórios |  Alta | F15 | :material-check-circle: |
+| RF17 | O orientador deve poder aprovar ou rejeitar submissões, alterando o status do documento |  Média | F16 | :material-check-circle: |
 
 ---
 
-## 🛡️ Auditoria
+## Auditoria
 
 | ID | Requisito | Prioridade | Funcionalidade | Status |
 | :---: | :--- | :---: | :---: | :---: |
-| RF18 | O sistema deve registrar logs imutáveis para login bem-sucedido e falho |  Alta | F18 | ✅ |
-| RF19 | O sistema deve registrar logs de upload e download de documentos |  Alta | F19 | ✅ |
-| RF20 | O sistema deve registrar tentativas de acesso negado (`403 Forbidden`) |  Alta | F20 | ✅ |
-| RF21 | O auditor deve poder consultar logs com filtros por ação, data e usuário |  Média | F21 | ✅ |
-| RF22 | O auditor deve poder exportar relatórios de auditoria |  Baixa | F22 | ⏳ |
+| RF18 | O sistema deve registrar logs imutáveis para login bem-sucedido e falho |  Alta | F18 | :material-check-circle: |
+| RF19 | O sistema deve registrar logs de upload e download de documentos |  Alta | F19 | :material-check-circle: |
+| RF20 | O sistema deve registrar tentativas de acesso negado (`403 Forbidden`) |  Alta | F20 | :material-check-circle: |
+| RF21 | O auditor deve poder consultar logs com filtros por ação, data e usuário |  Média | F21 | :material-check-circle: |
+| RF22 | O auditor deve poder exportar relatórios de auditoria |  Baixa | F22 | :material-clock-outline: |
 
 ---
 

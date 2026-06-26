@@ -114,32 +114,32 @@ Consolidar tecnicamente a integração entre o Frontend (React) e o Backend (Spr
 
 ## Contribuições da Equipe
 
-### 👨‍💻 Tech Lead (Pedro Henrique)
+### Tech Lead (Pedro Henrique)
 - **Foco:** Reversão do *scope creep* para o MVP, criação de relatórios, atas e CSS do Modo Escuro.
 - **Entregas:** Issue #18 e Gestão de Issues.
 - **Commits:** `9d35a82`, `e301b04`, `b5b9eb0`.
 
-### 🎨 Frontend (Alana Cristyna)
+### Frontend (Alana Cristyna)
 - **Foco:** Implementação do `api.js` e do componente `PrivateRoute` no React.
 - **Entregas:** Issues #7, #17.
 - **Commits:** `14f52b7`, `c628f41`.
 
-### 🛡️ QA (Luis Gustavo)
+### QA (Luis Gustavo)
 - **Foco:** Validação dos cookies e endpoints de Auth integrados ao React.
 - **Entregas:** Testes de integração E2E.
 - **Commits:** `(Revisões de PR)`.
 
-### ⚙️ Backend (Mateus Alves)
+### Backend (Mateus Alves)
 - **Foco:** Suporte na configuração do CORS e revisão da camada de segurança.
 - **Entregas:** Issue #16.
 - **Commits:** `a654efe` (Co-autoria).
 
-### 📝 Docs & Logs (Mariana Andrade)
+### Docs & Logs (Mariana Andrade)
 - **Foco:** Validação das rotas integradas e revisão técnica da documentação.
 - **Entregas:** Homologação E2E de login.
 - **Commits:** `(Validações manuais)`.
 
-### 🚀 DevOps (Arthur)
+### DevOps (Arthur)
 - **Foco:** Recuperação médica.
 - **Entregas:** -
 - **Commits:** `(Ausente por motivos de saúde nesta Sprint)`.
