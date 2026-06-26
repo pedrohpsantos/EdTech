@@ -1,4 +1,4 @@
-name: CI Backend - Multi-Stage
+name: CI Backend
 
 on:
   push:
