@@ -1,68 +1,68 @@
-# :material-format-list-checks: Requisitos Funcionais
+﻿# :material-format-list-checks: Requisitos Funcionais
 
 Especificação dos requisitos funcionais do EdTech, organizados por módulo e rastreáveis às funcionalidades do Lean Inception.
 
 ---
 
-## RF01 — Autenticação e Sessão
+## 🔐 Autenticação e Sessão
 
 | ID | Requisito | Prioridade | Funcionalidade | Status |
 | :---: | :--- | :---: | :---: | :---: |
-| RF01.1 | O sistema deve permitir o cadastro de pesquisadores com nome, e-mail institucional e senha |  Alta | F01 | ✅ |
-| RF01.2 | O sistema deve autenticar usuários via e-mail e senha, retornando um JWT em cookie `HttpOnly` |  Alta | F02 | ✅ |
-| RF01.3 | O sistema deve invalidar o cookie de sessão no logout |  Alta | F03 | ✅ |
-| RF01.4 | O sistema deve interceptar todas as requisições para validar o JWT antes de processar |  Alta | F04 | ✅ |
-| RF01.5 | O sistema deve retornar `401 Unauthorized` quando o token estiver expirado ou ausente |  Média | F05 | ✅ |
-| RF01.6 | O sistema deve validar que o e-mail pertence a um domínio institucional (`@instituicao.edu.br`) |  Média | F01 | ✅ |
+| RF01 | O sistema deve permitir o cadastro de pesquisadores com nome, e-mail institucional e senha |  Alta | F01 | ✅ |
+| RF02 | O sistema deve autenticar usuários via e-mail e senha, retornando um JWT em cookie `HttpOnly` |  Alta | F02 | ✅ |
+| RF03 | O sistema deve invalidar o cookie de sessão no logout |  Alta | F03 | ✅ |
+| RF04 | O sistema deve interceptar todas as requisições para validar o JWT antes de processar |  Alta | F04 | ✅ |
+| RF05 | O sistema deve retornar `401 Unauthorized` quando o token estiver expirado ou ausente |  Média | F05 | ✅ |
+| RF06 | O sistema deve validar que o e-mail pertence a um domínio institucional (`@instituicao.edu.br`) |  Média | F01 | ✅ |
 
 ---
 
-## RF02 — Upload e Gerenciamento de Documentos
+## 📄 Upload e Gerenciamento de Documentos
 
 | ID | Requisito | Prioridade | Funcionalidade | Status |
 | :---: | :--- | :---: | :---: | :---: |
-| RF02.1 | O sistema deve permitir o upload de arquivos PDF com tamanho máximo de 50 MB |  Alta | F07 | 🚧 |
-| RF02.2 | O sistema deve armazenar o arquivo binário no Google Cloud Storage e os metadados no PostgreSQL |  Alta | F09 | 🚧 |
-| RF02.3 | O sistema deve associar cada documento ao `user_id` do autor autenticado |  Alta | F07 | ⏳ |
-| RF02.4 | O sistema deve exibir uma lista de documentos filtrada pelo `author_id` do usuário logado |  Alta | F10 | ⏳ |
-| RF02.5 | O sistema deve permitir o download de documentos apenas pelo autor ou orientador vinculado |  Alta | F11 | ⏳ |
-| RF02.6 | O sistema deve permitir a exclusão de documentos com status `draft` pelo autor |  Média | F12 | ⏳ |
-| RF02.7 | O sistema deve aceitar upload de datasets nos formatos CSV e JSON |  Média | F08 | ⏳ |
+| RF07 | O sistema deve permitir o upload de arquivos PDF com tamanho máximo de 50 MB |  Alta | F07 | ✅ |
+| RF08 | O sistema deve armazenar o arquivo binário no Google Cloud Storage e os metadados no PostgreSQL |  Alta | F09 | ✅ |
+| RF09 | O sistema deve associar cada documento ao `user_id` do autor autenticado |  Alta | F07 | ✅ |
+| RF10 | O sistema deve exibir uma lista de documentos filtrada pelo `author_id` do usuário logado |  Alta | F10 | ✅ |
+| RF11 | O sistema deve permitir o download de documentos apenas pelo autor ou orientador vinculado |  Alta | F11 | ✅ |
+| RF12 | O sistema deve permitir a exclusão de documentos com status `draft` pelo autor |  Média | F12 | 🚧 |
+| RF13 | O sistema deve aceitar upload de datasets nos formatos CSV e JSON |  Média | F08 | ✅ |
 
 ---
 
-## RF03 — Orientador e Isolamento
+## 👨‍🏫 Orientador e Isolamento
 
 | ID | Requisito | Prioridade | Funcionalidade | Status |
 | :---: | :--- | :---: | :---: | :---: |
-| RF03.1 | O sistema deve exibir um painel com todos os projetos vinculados ao orientador |  Alta | F13 | 🚧 |
-| RF03.2 | O orientador deve visualizar documentos apenas de pesquisadores pertencentes aos seus projetos |  Alta | F14 | 🚧 |
-| RF03.3 | O sistema deve filtrar queries por `project_members.user_id` para garantir isolamento entre laboratórios |  Alta | F15 | 🚧 |
-| RF03.4 | O orientador deve poder aprovar ou rejeitar submissões, alterando o status do documento |  Média | F16 | ⏳ |
+| RF14 | O sistema deve exibir um painel com todos os projetos vinculados ao orientador |  Alta | F13 | ✅ |
+| RF15 | O orientador deve visualizar documentos apenas de pesquisadores pertencentes aos seus projetos |  Alta | F14 | ✅ |
+| RF16 | O sistema deve filtrar queries por `project_members.user_id` para garantir isolamento entre laboratórios |  Alta | F15 | ✅ |
+| RF17 | O orientador deve poder aprovar ou rejeitar submissões, alterando o status do documento |  Média | F16 | ✅ |
 
 ---
 
-## RF04 — Auditoria
+## 🛡️ Auditoria
 
 | ID | Requisito | Prioridade | Funcionalidade | Status |
 | :---: | :--- | :---: | :---: | :---: |
-| RF04.1 | O sistema deve registrar logs imutáveis para login bem-sucedido e falho |  Alta | F18 | 🚧 |
-| RF04.2 | O sistema deve registrar logs de upload e download de documentos |  Alta | F19 | 🚧 |
-| RF04.3 | O sistema deve registrar tentativas de acesso negado (`403 Forbidden`) |  Alta | F20 | 🚧 |
-| RF04.4 | O auditor deve poder consultar logs com filtros por ação, data e usuário |  Média | F21 | ⏳ |
-| RF04.5 | O auditor deve poder exportar relatórios de auditoria |  Baixa | F22 | ⏳ |
+| RF18 | O sistema deve registrar logs imutáveis para login bem-sucedido e falho |  Alta | F18 | ✅ |
+| RF19 | O sistema deve registrar logs de upload e download de documentos |  Alta | F19 | ✅ |
+| RF20 | O sistema deve registrar tentativas de acesso negado (`403 Forbidden`) |  Alta | F20 | ✅ |
+| RF21 | O auditor deve poder consultar logs com filtros por ação, data e usuário |  Média | F21 | ✅ |
+| RF22 | O auditor deve poder exportar relatórios de auditoria |  Baixa | F22 | ⏳ |
 
 ---
 
 ## Matriz de Rastreabilidade
 
-```mermaid
+`mermaid
 flowchart LR
-    subgraph Requisitos["Requisitos"]
-        RF01["RF01: Autenticação"]
-        RF02["RF02: Documentos"]
-        RF03["RF03: Orientador"]
-        RF04["RF04: Auditoria"]
+    subgraph Modulos["Módulos"]
+        M01["M01: Autenticação"]
+        M02["M02: Documentos"]
+        M03["M03: Orientador"]
+        M04["M04: Auditoria"]
     end
 
     subgraph Funcionalidades["Funcionalidades"]
@@ -78,24 +78,23 @@ flowchart LR
         P3["Márcia"]
     end
 
-    RF01 --> F01
-    RF02 --> F07
-    RF03 --> F13
-    RF04 --> F18
+    M01 --> F01
+    M02 --> F07
+    M03 --> F13
+    M04 --> F18
 
     F01 --> P1
     F07 --> P1
     F13 --> P2
     F18 --> P3
 
-```
-
+`
 
 ---
 
 ## Ciclo de Vida de Tese/Artigo
 
-```mermaid
+`mermaid
 stateDiagram-v2
     [*] --> Rascunho : Upload Inicial
     Rascunho --> Submetido : Confirmação
@@ -104,7 +103,7 @@ stateDiagram-v2
     Em_Revisao --> Rascunho : Rejeitado (Correções)
     Aprovado --> Publicado : Liberação Final
     Publicado --> [*]
-```
+`
 
 ---
 
@@ -112,6 +111,8 @@ stateDiagram-v2
 
 | Versão | Data | Descrição | Autor |
 | :---: | :---: | :--- | :--- |
-| `1.0` | 29/05/2026 | Criação do documento | Pedro Henrique P. Santos |
-| `1.1` | 30/05/2026 | Criação do diagrama de ciclo de vida | Pedro Henrique P. Santos |
-| `1.2` | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |
+| 1.0 | 29/05/2026 | Criação do documento | Pedro Henrique P. Santos |
+| 1.1 | 30/05/2026 | Criação do diagrama de ciclo de vida | Pedro Henrique P. Santos |
+| 1.2 | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |
+| 1.3 | 26/06/2026 | Atualização dos status de entrega com base no MVP | Pedro Henrique P. Santos |
+| 1.4 | 26/06/2026 | Refatoração da notação para numeração contínua | Pedro Henrique P. Santos |
