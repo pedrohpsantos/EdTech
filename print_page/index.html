@@ -1430,6 +1430,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#gestao-historico_sprints-semana6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4.6 Semana 6 — Infraestrutura, Plugins e Ajuste de Rotas
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1496,6 +1507,17 @@
     <span class="md-ellipsis">
       
         5.5.5 Ata de Reunião (19/06/2026)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gestao-reunioes-ata-26-06-2026" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.5.6 Ata de Reunião (26/06/2026)
       
     </span>
   </a>
@@ -8079,6 +8101,118 @@ Refs: #numero-da-issue
 <td style="text-align: left;">Pedro Henrique P. Santos</td>
 </tr>
 </tbody>
+</table></body></html></section><section class="print-page" id="gestao-historico_sprints-semana6" heading-number="5.4.6"><html><head>
+        <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            remove_material_navigation();remove_mkdocs_theme_navigation();generate_toc();
+        })
+        </script>
+        </head><body><h1 id="semana-6-infraestrutura-plugins-e-ajuste-de-rotas"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m13.13 22.19-1.63-3.83c1.57-.58 3.04-1.36 4.4-2.27zM5.64 12.5l-3.83-1.63 6.1-2.77C7 9.46 6.22 10.93 5.64 12.5M21.61 2.39S16.66.269 11 5.93c-2.19 2.19-3.5 4.6-4.35 6.71-.28.75-.09 1.57.46 2.13l2.13 2.12c.55.56 1.37.74 2.12.46A19.1 19.1 0 0 0 18.07 13c5.66-5.66 3.54-10.61 3.54-10.61m-7.07 7.07c-.78-.78-.78-2.05 0-2.83s2.05-.78 2.83 0c.77.78.78 2.05 0 2.83s-2.05.78-2.83 0m-5.66 7.07-1.41-1.41zM6.24 22l3.64-3.64c-.34-.09-.67-.24-.97-.45L4.83 22zM2 22h1.41l4.77-4.76-1.42-1.41L2 20.59zm0-2.83 4.09-4.08c-.21-.3-.36-.62-.45-.97L2 17.76z"></path></svg></span> Semana 6 — Infraestrutura, Plugins e Ajuste de Rotas<a class="headerlink" href="#gestao-historico_sprints-semana6-semana-6-infraestrutura-plugins-e-ajuste-de-rotas" title="Permanent link">¶</a></h1>
+<p><span class="status-badge"> Parcialmente Concluída</span></p>
+<p><strong>Período:</strong> 20/06/2026 – 26/06/2026</p>
+<hr>
+<h2 id="gestao-historico_sprints-semana6-objetivo-da-sprint">Objetivo da Sprint<a class="headerlink" href="#gestao-historico_sprints-semana6-objetivo-da-sprint" title="Permanent link">¶</a></h2>
+<p>O objetivo desta sprint era finalizar a auditoria (backend e frontend), realizar o deploy do <abbr title="Minimum Viable Product — Produto Mínimo Viável">MVP</abbr> e preparar os painéis do orientador e auditor. Devido a uma semana acadêmica muito puxada e pouco tempo para estudo da equipe, o escopo não foi concluído e as tarefas cruciais foram movidas para a Sprint 7.</p>
+<hr>
+<h2 id="gestao-historico_sprints-semana6-entregas-realizadas">Entregas Realizadas<a class="headerlink" href="#gestao-historico_sprints-semana6-entregas-realizadas" title="Permanent link">¶</a></h2>
+<p>Apesar do atraso nas features principais de negócio (telas de painéis), avançamos consideravelmente na infraestrutura, código e documentação:</p>
+<h3 id="gestao-historico_sprints-semana6-arquitetura-e-backend"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19h1a1 1 0 0 1 1 1h7v2h-7a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1H2v-2h7a1 1 0 0 1 1-1h1v-2H4a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1h-7zM4 3h16a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1m5 4h1V5H9zm0 8h1v-2H9zM5 5v2h2V5zm0 8v2h2v-2z"></path></svg></span> Arquitetura e Backend<a class="headerlink" href="#gestao-historico_sprints-semana6-arquitetura-e-backend" title="Permanent link">¶</a></h3>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Migração da persistência de arquivos para o Supabase Storage (S3-compatible) com fallback mantido para Google Cloud Storage (<abbr title="Google Cloud Storage">GCS</abbr>).</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Upgrade do Spring Boot para a versão 4.1.0 e atualizações de dependências críticas.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Configuração centralizada do Swagger (ReDoc) gerando contratos dinâmicos.</li>
+</ul>
+<h3 id="gestao-historico_sprints-semana6-documentacao-docs-as-code"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6 2c-1.11 0-2 .89-2 2v16a2 2 0 0 0 2 2h4v-1.91L12.09 18H6v-2h8.09l2-2H6v-2h12.09L20 10.09V8l-6-6zm7 1.5L18.5 9H13zm7.15 9.5a.55.55 0 0 0-.4.16l-1.02 1.02 2.09 2.08 1.02-1.01c.21-.22.21-.58 0-.79l-1.3-1.3a.54.54 0 0 0-.39-.16m-2.01 1.77L12 20.92V23h2.08l6.15-6.15z"></path></svg></span> Documentação (Docs-as-Code)<a class="headerlink" href="#gestao-historico_sprints-semana6-documentacao-docs-as-code" title="Permanent link">¶</a></h3>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Refatoração do repositório MkDocs com plugins avançados (<code>awesome-pages</code>, <code>macros</code>, <code>roamlinks</code>, <code>git-authors</code>).</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Configuração do Giscus para comentários e discussões na documentação, com sincronização automática do tema claro/escuro injetada via script JavaScript.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Adição e organização da seção "Planejamento" na aba de Gestão.</li>
+</ul>
+<hr>
+<h2 id="gestao-historico_sprints-semana6-resumo-tecnico">Resumo Técnico<a class="headerlink" href="#gestao-historico_sprints-semana6-resumo-tecnico" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Métrica</th>
+<th style="text-align: center;">Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Issues entregues / concluídas</td>
+<td style="text-align: center;">3 (Issues #101, #102, #73 parcial)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Reuniões e Atas documentadas</td>
+<td style="text-align: center;">1 (Ata 26/06/2026)</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="gestao-historico_sprints-semana6-aprendizados-e-decisoes">Aprendizados e Decisões<a class="headerlink" href="#gestao-historico_sprints-semana6-aprendizados-e-decisoes" title="Permanent link">¶</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Decisão Estratégica: Cancelamento da Rotação de Papéis</p>
+<p>Na reunião de fechamento (26/06), o grupo decidiu que <strong>não haverá rotação de papéis</strong> nesta virada de sprint. A semana foi muito puxada e os desenvolvedores full-stack não tiveram tempo hábil para estudar o suficiente as outras stacks.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Força Tarefa: Ajuda Mútua</p>
+<p>Como as issues da Sprint 6 atrasaram e não atingimos o deadline, decidimos juntar forças para a Sprint 7. A definição foi de pareamento por afinidade:
+- O responsável pela área de <strong>DevOps</strong> vai auxiliar o <strong>Backend</strong>.
+- O responsável pela área de <strong><abbr title="Quality Assurance — Garantia de Qualidade">QA</abbr></strong> vai auxiliar o <strong>Frontend</strong>.
+A ideia é focar 100% nas entregas finais para não comprometer a Demonstração da Semana 14.</p>
+</div>
+<hr>
+<h2 id="gestao-historico_sprints-semana6-debitos-tecnicos-para-a-proxima-sprint-sprint-7">Débitos Técnicos para a Próxima Sprint (Sprint 7)<a class="headerlink" href="#gestao-historico_sprints-semana6-debitos-tecnicos-para-a-proxima-sprint-sprint-7" title="Permanent link">¶</a></h2>
+<p>Todas as issues críticas da Sprint 6 foram repriorizadas para a Sprint 7, juntando-se às tarefas finais:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Issue</th>
+<th style="text-align: left;">Descrição</th>
+<th style="text-align: left;">Impacto</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">#70 / #71</td>
+<td style="text-align: left;">Painel do Orientador e Endpoint de Aprovação</td>
+<td style="text-align: left;">Crítico — Demonstração</td>
+</tr>
+<tr>
+<td style="text-align: center;">#68 / #69</td>
+<td style="text-align: left;">Painel de Auditoria e Endpoint de Consulta</td>
+<td style="text-align: left;">Crítico — Demonstração</td>
+</tr>
+<tr>
+<td style="text-align: center;">#96</td>
+<td style="text-align: left;">Auditoria de Segurança e Deploy <abbr title="Minimum Viable Product — Produto Mínimo Viável">MVP</abbr></td>
+<td style="text-align: left;">Crítico — Demonstração</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="gestao-historico_sprints-semana6-proximos-passos">Próximos Passos<a class="headerlink" href="#gestao-historico_sprints-semana6-proximos-passos" title="Permanent link">¶</a></h2>
+<p>→ <strong>Sprint 7</strong>: Foco total na entrega do fluxo E2E (Pesquisador → Orientador → Auditor) via ajuda mútua (DevOps+Backend, <abbr title="Quality Assurance — Garantia de Qualidade">QA</abbr>+Frontend) e Deploy na nuvem.</p>
+<p>← <a href="#gestao-historico_sprints-semana5">Semana 5 — Uploads, Autenticação e Integrações <abbr title="Google Cloud Storage">GCS</abbr></a></p>
+<hr>
+<h2 id="gestao-historico_sprints-semana6-historico-de-versoes">Histórico de Versões<a class="headerlink" href="#gestao-historico_sprints-semana6-historico-de-versoes" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Versão</th>
+<th style="text-align: center;">Data</th>
+<th style="text-align: left;">Descrição</th>
+<th style="text-align: left;">Autor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><code>1.0</code></td>
+<td style="text-align: center;">26/06/2026</td>
+<td style="text-align: left;">Documentação inicial da Entrega 6</td>
+<td style="text-align: left;">Pedro Henrique P. Santos</td>
+</tr>
+</tbody>
 </table></body></html></section></section>
                     <section class='print-page md-section' id='section-5-5' heading-number='5.5'>
                         <h1>Atas de Reuniões<a class='headerlink' href='#section-5-5' title='Permanent link'></a>
@@ -8161,6 +8295,7 @@ Copie toda a estrutura abaixo para o novo arquivo, preencha os dados e adicione 
 <li><a href="#gestao-reunioes-ata-05-06-2026">Ata de Reunião (05/06)</a></li>
 <li><a href="#gestao-reunioes-ata-12-06-2026">Ata de Reunião (12/06)</a></li>
 <li><a href="#gestao-reunioes-ata-19-06-2026">Ata de Reunião (19/06)</a></li>
+<li><a href="#gestao-reunioes-ata-26-06-2026">Ata de Reunião (26/06)</a></li>
 </ol>
 <hr>
 <h2 id="gestao-reunioes-atas-historico-de-versoes">Histórico de Versões<a class="headerlink" href="#gestao-reunioes-atas-historico-de-versoes" title="Permanent link">¶</a></h2>
@@ -8790,6 +8925,147 @@ Copie toda a estrutura abaixo para o novo arquivo, preencha os dados e adicione 
 <td style="text-align: left;">Pedro Henrique P. Santos</td>
 </tr>
 </tbody>
+</table></body></html></section><section class="print-page" id="gestao-reunioes-ata-26-06-2026" heading-number="5.5.6"><html><head>
+        <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            remove_material_navigation();remove_mkdocs_theme_navigation();generate_toc();
+        })
+        </script>
+        </head><body><h1 id="ata-de-reuniao-26062026">Ata de Reunião (26/06/2026)<a class="headerlink" href="#gestao-reunioes-ata-26-06-2026-ata-de-reuniao-26062026" title="Permanent link">¶</a></h1>
+<p><strong>Data:</strong> 26/06/2026<br>
+<strong>Horário:</strong> 15:00 – 16:00<br>
+<strong>Local:</strong> Online (Discord)<br>
+<strong>Facilitador(a):</strong> Pedro Henrique P. Santos  </p>
+<h2 id="gestao-reunioes-ata-26-06-2026-participantes">Participantes<a class="headerlink" href="#gestao-reunioes-ata-26-06-2026-participantes" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Nome</th>
+<th style="text-align: center;">Presente</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Pedro Henrique P. Santos</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td style="text-align: left;">Alana Cristyna F. Dias</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td style="text-align: left;">Arthur Carvalho Leite</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td style="text-align: left;">Luis Gustavo F. Nunes</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td style="text-align: left;">Mariana S. F. Andrade</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td style="text-align: left;">Mateus Alves Araújo</td>
+<td style="text-align: center;">✅</td>
+</tr>
+</tbody>
+</table>
+<h2 id="gestao-reunioes-ata-26-06-2026-pauta">Pauta<a class="headerlink" href="#gestao-reunioes-ata-26-06-2026-pauta" title="Permanent link">¶</a></h2>
+<ol>
+<li>Status das issues da Sprint 6 e dificuldades da semana.</li>
+<li>Definição de rotação de papéis.</li>
+<li>Planejamento das Sprints 7 e 8 (Demonstração Final).</li>
+</ol>
+<h2 id="gestao-reunioes-ata-26-06-2026-discussoes-e-decisoes">Discussões e Decisões<a class="headerlink" href="#gestao-reunioes-ata-26-06-2026-discussoes-e-decisoes" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th style="text-align: left;">Tópico</th>
+<th style="text-align: left;">Decisão</th>
+<th style="text-align: left;">Responsável</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">Rotação de Papéis</td>
+<td style="text-align: left;">Decidido que <strong>não haverá rotação</strong> de papéis agora, pois a semana está puxada e os full stacks não tiveram tempo para estudar o suficiente.</td>
+<td style="text-align: left;">Equipe</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">Atraso nas Issues (Sprint 6)</td>
+<td style="text-align: left;">As issues da Sprint 6 não serão entregues no prazo por conta da sobrecarga. Todas as pendências cruciais foram movidas para a Sprint 7.</td>
+<td style="text-align: left;">Equipe</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">Pareamento e Ajuda Mútua</td>
+<td style="text-align: left;">Quem está com <strong>DevOps</strong> ajudará o <strong>Backend</strong>, e quem está com <strong><abbr title="Quality Assurance — Garantia de Qualidade">QA</abbr></strong> ajudará o <strong>Frontend</strong>.</td>
+<td style="text-align: left;">DevOps, <abbr title="Quality Assurance — Garantia de Qualidade">QA</abbr>, Backend, Frontend</td>
+</tr>
+</tbody>
+</table>
+<h2 id="gestao-reunioes-ata-26-06-2026-acoes-action-items">Ações (Action Items)<a class="headerlink" href="#gestao-reunioes-ata-26-06-2026-acoes-action-items" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Ação</th>
+<th style="text-align: left;">Responsável</th>
+<th style="text-align: center;">Prazo</th>
+<th style="text-align: center;">Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Desenvolver Endpoint e Painel de Auditoria (#68, #69)</td>
+<td style="text-align: left;">Backend + DevOps, Frontend + <abbr title="Quality Assurance — Garantia de Qualidade">QA</abbr></td>
+<td style="text-align: center;">Sprint 7</td>
+<td style="text-align: center;">🚧</td>
+</tr>
+<tr>
+<td style="text-align: left;">Desenvolver Endpoint e Painel de Orientador (#70, #71)</td>
+<td style="text-align: left;">Backend + DevOps, Frontend + <abbr title="Quality Assurance — Garantia de Qualidade">QA</abbr></td>
+<td style="text-align: center;">Sprint 7</td>
+<td style="text-align: center;">🚧</td>
+</tr>
+<tr>
+<td style="text-align: left;">Deploy do <abbr title="Minimum Viable Product — Produto Mínimo Viável">MVP</abbr> em Nuvem (Cloud Run)</td>
+<td style="text-align: left;">Tech Lead</td>
+<td style="text-align: center;">Sprint 7</td>
+<td style="text-align: center;">🚧</td>
+</tr>
+</tbody>
+</table>
+<h2 id="gestao-reunioes-ata-26-06-2026-impedimentos-levantados">Impedimentos Levantados<a class="headerlink" href="#gestao-reunioes-ata-26-06-2026-impedimentos-levantados" title="Permanent link">¶</a></h2>
+<ul>
+<li>Sobrecarga de tempo e falta de horas para estudo das outras tecnologias, impossibilitando a rotação dos full stacks.</li>
+</ul>
+<h2 id="gestao-reunioes-ata-26-06-2026-observacoes">Observações<a class="headerlink" href="#gestao-reunioes-ata-26-06-2026-observacoes" title="Permanent link">¶</a></h2>
+<ul>
+<li>A união da equipe foi ressaltada: "a gente tem que se ajudar" para fechar o <abbr title="Minimum Viable Product — Produto Mínimo Viável">MVP</abbr> e não deixar o projeto parar.</li>
+</ul>
+<hr>
+<h2 id="gestao-reunioes-ata-26-06-2026-historico-de-versoes">Histórico de Versões<a class="headerlink" href="#gestao-reunioes-ata-26-06-2026-historico-de-versoes" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Versão</th>
+<th style="text-align: center;">Data</th>
+<th style="text-align: left;">Descrição</th>
+<th style="text-align: left;">Autor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><code>1.0</code></td>
+<td style="text-align: center;">26/06/2026</td>
+<td style="text-align: left;">Criação do documento</td>
+<td style="text-align: left;">Pedro Henrique P. Santos</td>
+</tr>
+</tbody>
 </table></body></html></section></section></section></div><style>.print-site-enumerate-headings #index > h1:before { content: '1 ' }
 
                 .print-site-enumerate-headings #index h2:before { content: '1.' counter(counter-index-2) ' ' }
@@ -8927,6 +9203,8 @@ Copie toda a estrutura abaixo para o novo arquivo, preencha os dados e adicione 
 
 .print-site-enumerate-headings #gestao-historico_sprints-semana5 > h1:before { content: '5.4.5 ' }
 
+.print-site-enumerate-headings #gestao-historico_sprints-semana6 > h1:before { content: '5.4.6 ' }
+
 .print-site-enumerate-headings #section-5-5 > h1:before { content: '5.5 ' }
 .print-site-enumerate-headings #gestao-reunioes-atas > h1:before { content: '5.5.1 ' }
 
@@ -8937,6 +9215,8 @@ Copie toda a estrutura abaixo para o novo arquivo, preencha os dados e adicione 
 .print-site-enumerate-headings #gestao-reunioes-ata-12-06-2026 > h1:before { content: '5.5.4 ' }
 
 .print-site-enumerate-headings #gestao-reunioes-ata-19-06-2026 > h1:before { content: '5.5.5 ' }
+
+.print-site-enumerate-headings #gestao-reunioes-ata-26-06-2026 > h1:before { content: '5.5.6 ' }
 </style>
 
 
