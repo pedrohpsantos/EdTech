@@ -6,23 +6,21 @@ document.addEventListener("DOMContentLoaded", function() {
     const navLinks = document.querySelectorAll(".md-nav__link");
 
     navLinks.forEach(function(link) {
-      const parentLi = link.closest("li.md-nav__item--nested");
-      if (parentLi) {
-        link.addEventListener("click", function(e) {
-          // Verifica se o link clicado está dentro do <nav> interno deste parentLi
-          // Se estiver, é um link filho/página normal e DEVE navegar
-          const innerNav = parentLi.querySelector(':scope > nav');
-          if (innerNav && innerNav.contains(link)) {
-            return; // Permite a navegação normal
-          }
-          
-          // Caso contrário, é o link principal da categoria. Bloqueamos navegação e abrimos a sanfona.
-          const checkbox = parentLi.querySelector(':scope > input[type="checkbox"].md-nav__toggle');
-          if (checkbox) {
-            e.preventDefault(); // Stop navigation
-            checkbox.checked = !checkbox.checked; // Toggle the accordion
-          }
-        });
+      // Queremos interceptar APENAS as tags <a> que agem como título de categoria
+      // No MkDocs Material, quando tem index, elas ficam dentro de uma div.md-nav__container
+      if (link.tagName.toLowerCase() === 'a') {
+        const container = link.closest('.md-nav__container');
+        if (container) {
+          // O link é direto filho do container (título da categoria)
+          // Impede a navegação e clica na setinha (label) para abrir a sanfona nativamente
+          link.addEventListener("click", function(e) {
+            e.preventDefault();
+            const label = container.querySelector('label.md-nav__icon');
+            if (label) {
+              label.click();
+            }
+          });
+        }
       }
     });
   }
