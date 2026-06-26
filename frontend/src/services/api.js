@@ -22,6 +22,20 @@ api.interceptors.request.use((config) => {
     return config;
 });
 
+// Interceptor para tratamento de sessão expirada (401)
+api.interceptors.response.use(
+    (response) => response,
+    (error) => {
+        if (error.response && error.response.status === 401) {
+            // Ignorar redirect no próprio login
+            if (!error.config.url.includes('/api/auth/login')) {
+                window.location.href = '/login?session_expired=true';
+            }
+        }
+        return Promise.reject(error);
+    }
+);
+
 // Utilitário padrão para tratamento de erros
 const handleApiError = (error, defaultMessage) => {
     const message = error.response?.data?.message || error.message || defaultMessage;
@@ -93,7 +107,7 @@ export const getDownloadUrl = async (documentId) => {
     }
 };
 
-export const uploadDocument = async (file, title, projectId) => {
+export const uploadDocument = async (file, title, projectId, onUploadProgress) => {
     try {
         const formData = new FormData();
         formData.append('file', file);
@@ -101,7 +115,9 @@ export const uploadDocument = async (file, title, projectId) => {
         formData.append('projectId', projectId);
 
         // O axios já configura automaticamente o Content-Type para multipart/form-data quando recebe um FormData
-        const resposta = await api.post('/api/documents', formData);
+        const resposta = await api.post('/api/documents', formData, {
+            onUploadProgress: onUploadProgress
+        });
         return { sucesso: true, dados: resposta.data };
     } catch (error) {
         return handleApiError(error, 'Erro ao fazer upload do documento.');

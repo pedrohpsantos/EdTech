@@ -18,6 +18,8 @@ function Documentos() {
     const [uploadFile, setUploadFile] = useState(null)
     const [uploadError, setUploadError] = useState("")
     const [uploadSuccess, setUploadSuccess] = useState("")
+    const [uploadProgress, setUploadProgress] = useState(0)
+    const [isDragging, setIsDragging] = useState(false)
 
     const loadProjects = async () => {
         const res = await getProjects()
@@ -48,10 +50,8 @@ function Documentos() {
     }
 
     useEffect(() => {
-        // eslint-disable-next-line react-hooks/set-state-in-effect
         loadProjects()
         loadDocuments()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const handleFilter = (e) => {
@@ -59,24 +59,49 @@ function Documentos() {
         loadDocuments()
     }
 
+    const handleDragOver = (e) => {
+        e.preventDefault()
+        setIsDragging(true)
+    }
+
+    const handleDragLeave = (e) => {
+        e.preventDefault()
+        setIsDragging(false)
+    }
+
+    const handleDrop = (e) => {
+        e.preventDefault()
+        setIsDragging(false)
+        if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+            setUploadFile(e.dataTransfer.files[0])
+        }
+    }
+
     const handleUpload = async (e) => {
         e.preventDefault()
         setUploadError("")
         setUploadSuccess("")
+        setUploadProgress(0)
         
         if (!uploadFile || !uploadTitle || !uploadProjectId) {
             setUploadError("Por favor, preencha todos os campos do upload.")
             return
         }
 
-        const res = await uploadDocument(uploadFile, uploadTitle, uploadProjectId)
+        const res = await uploadDocument(uploadFile, uploadTitle, uploadProjectId, (progressEvent) => {
+            const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
+            setUploadProgress(percentCompleted)
+        })
+
         if (res.sucesso) {
             setUploadSuccess("Documento enviado com sucesso!")
             setUploadTitle("")
             setUploadFile(null)
+            setTimeout(() => setUploadProgress(0), 3000)
             loadDocuments()
         } else {
             setUploadError(res.mensagem)
+            setUploadProgress(0)
         }
     }
 
@@ -133,17 +158,16 @@ function Documentos() {
                     {uploadSuccess && <div className="alert alert-success">{uploadSuccess}</div>}
                     <form onSubmit={handleUpload} className="row g-3">
                         <div className="col-md-4">
+                            <label className="form-label fw-bold">1. Título e Projeto</label>
                             <input 
                                 type="text" 
-                                className="form-control" 
+                                className="form-control mb-3" 
                                 placeholder="Título do Documento" 
                                 value={uploadTitle}
                                 onChange={(e) => setUploadTitle(e.target.value)}
                             />
-                        </div>
-                        <div className="col-md-4">
                             <select 
-                                className="form-select" 
+                                className="form-select mb-3" 
                                 value={uploadProjectId}
                                 onChange={(e) => setUploadProjectId(e.target.value)}
                             >
@@ -153,16 +177,54 @@ function Documentos() {
                                 ))}
                             </select>
                         </div>
-                        <div className="col-md-4">
-                            <input 
-                                type="file" 
-                                className="form-control" 
-                                onChange={(e) => setUploadFile(e.target.files[0])}
-                            />
+                        <div className="col-md-8">
+                            <label className="form-label fw-bold">2. Arquivo (Drag & Drop)</label>
+                            <div 
+                                className={`border rounded p-4 text-center ${isDragging ? 'border-primary bg-light' : 'border-secondary'}`}
+                                onDragOver={handleDragOver}
+                                onDragLeave={handleDragLeave}
+                                onDrop={handleDrop}
+                                style={{ borderStyle: 'dashed !important', borderWidth: '2px', cursor: 'pointer', transition: 'all 0.3s' }}
+                                onClick={() => document.getElementById('fileInput').click()}
+                            >
+                                {uploadFile ? (
+                                    <div>
+                                        <p className="mb-1 fw-bold text-success">Arquivo selecionado: {uploadFile.name}</p>
+                                        <small className="text-muted">Clique ou arraste outro para alterar</small>
+                                    </div>
+                                ) : (
+                                    <div>
+                                        <p className="mb-1">Arraste e solte o PDF aqui ou clique para selecionar</p>
+                                    </div>
+                                )}
+                                <input 
+                                    id="fileInput"
+                                    type="file" 
+                                    className="d-none" 
+                                    onChange={(e) => setUploadFile(e.target.files[0])}
+                                    accept=".pdf,.json,.csv"
+                                />
+                            </div>
                         </div>
-                        <div className="col-12 text-end">
-                            <button type="submit" className="btn btn-success" style={{ backgroundColor: '#3b1b6d', borderColor: '#3b1b6d' }}>
-                                Fazer Upload
+                        {uploadProgress > 0 && (
+                            <div className="col-12 mt-3">
+                                <div className="progress" style={{ height: '20px' }}>
+                                    <div 
+                                        className="progress-bar progress-bar-striped progress-bar-animated bg-success" 
+                                        role="progressbar" 
+                                        style={{ width: `${uploadProgress}%` }}
+                                        aria-valuenow={uploadProgress} 
+                                        aria-valuemin="0" 
+                                        aria-valuemax="100"
+                                    >
+                                        {uploadProgress}%
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                        <div className="col-12 text-end mt-3">
+                            <button type="submit" className="btn btn-success" disabled={uploadProgress > 0 && uploadProgress < 100} style={{ backgroundColor: '#3b1b6d', borderColor: '#3b1b6d' }}>
+                                {uploadProgress > 0 && uploadProgress < 100 ? 'Enviando...' : 'Fazer Upload'}
                             </button>
                         </div>
                     </form>

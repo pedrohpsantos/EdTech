@@ -6,3 +6,5 @@ spring:
   jpa:
     hibernate:
       ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO:update}
+  flyway:
+    locations: classpath:db/migration,classpath:db/migration/local
