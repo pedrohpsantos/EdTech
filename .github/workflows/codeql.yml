@@ -36,7 +36,7 @@ jobs:
       if: matrix.language == 'java-kotlin'
       uses: actions/setup-java@v4
       with:
-        java-version: '17'
+        java-version: '21'
         distribution: 'temurin'
         
     - name: Build Java Code
@@ -44,6 +44,10 @@ jobs:
       run: |
         cd docvault/api
         mvn clean package -DskipTests
+
+    - name: Autobuild
+      if: matrix.language == 'javascript-typescript'
+      uses: github/codeql-action/autobuild@v3
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
