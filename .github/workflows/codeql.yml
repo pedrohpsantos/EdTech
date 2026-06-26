@@ -43,11 +43,8 @@ jobs:
       if: matrix.language == 'java-kotlin'
       run: |
         cd docvault/api
-        mvn clean package -DskipTests
-
-    - name: Autobuild
-      if: matrix.language == 'javascript-typescript'
-      uses: github/codeql-action/autobuild@v3
+        chmod +x mvnw
+        ./mvnw clean compile -DskipTests
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
