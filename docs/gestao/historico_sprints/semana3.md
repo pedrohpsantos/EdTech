@@ -225,7 +225,7 @@ Iniciar a implementação do MVP do EdTech com foco em três frentes paralelas: 
 - **Entregas:** Issue #6.
 - **Commits:** `abb1466`.
 
-### 🚀 DevOps / QA (Luis Gustavo)
+### 🛡️ QA (Luis Gustavo)
 - **Foco:** Testes JUnit/Mockito com 92% cobertura, reestruturação de pacotes.
 - **Entregas:** Issue #8.
 - **Commits:** `1ed4334`, `8381796`.
@@ -235,7 +235,7 @@ Iniciar a implementação do MVP do EdTech com foco em três frentes paralelas: 
 - **Entregas:** Issue #9.
 - **Commits:** `c3eb41b`, `83af273`.
 
-### 🛡️ Apoio e Testes (Arthur)
+### 🚀 DevOps (Arthur)
 - **Foco:** Participação nas definições iniciais de arquitetura.
 - **Entregas:** Cerimônias e alinhamento.
 - **Commits:** `(Revisões de PR)`.

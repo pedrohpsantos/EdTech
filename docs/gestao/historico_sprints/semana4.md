@@ -124,7 +124,7 @@ Consolidar tecnicamente a integração entre o Frontend (React) e o Backend (Spr
 - **Entregas:** Issues #7, #17.
 - **Commits:** `14f52b7`, `c628f41`.
 
-### 🚀 DevOps / Integração (Luis Gustavo)
+### 🛡️ QA (Luis Gustavo)
 - **Foco:** Validação dos cookies e endpoints de Auth integrados ao React.
 - **Entregas:** Testes de integração E2E.
 - **Commits:** `(Revisões de PR)`.
@@ -134,12 +134,12 @@ Consolidar tecnicamente a integração entre o Frontend (React) e o Backend (Spr
 - **Entregas:** Issue #16.
 - **Commits:** `a654efe` (Co-autoria).
 
-### 🛡️ QA (Mariana Andrade)
+### 📝 Docs & Logs (Mariana Andrade)
 - **Foco:** Validação das rotas integradas e revisão técnica da documentação.
 - **Entregas:** Homologação E2E de login.
 - **Commits:** `(Validações manuais)`.
 
-### 📝 Docs & Logs (Arthur)
+### 🚀 DevOps (Arthur)
 - **Foco:** Recuperação médica.
 - **Entregas:** -
 - **Commits:** `(Ausente por motivos de saúde nesta Sprint)`.

@@ -60,7 +60,7 @@ Apesar do atraso nas features principais de negócio (telas de painéis), avanç
 - **Entregas:** Issue #96.
 - **Commits em Destaque:** `98be0a5`, `19eb9b4`, `612910d`.
 
-### ⚙️ Backend (Mateus Alves)
+### ⚙️ Backend (Alana Cristyna)
 - **Foco:** Desenvolvimento das demandas atrasadas e features da Sprint.
 - **Entregas:** Issue #73 (Contratos e Refatoração).
 - **Commits:** `(Revisado em PR e Pair Programming)`.
@@ -70,7 +70,7 @@ Apesar do atraso nas features principais de negócio (telas de painéis), avanç
 - **Entregas:** Issues #101, #102.
 - **Commits:** `(Entregas em andamento/validação)`.
 
-### 🛡️ QA (Alana Cristyna)
+### 🛡️ QA (Mateus Alves)
 - **Foco:** Garantia de qualidade integrada ao Frontend e fluxos visuais.
 - **Entregas:** Validação das Issues #101 e #102.
 - **Commits:** `(Validações em PR)`.

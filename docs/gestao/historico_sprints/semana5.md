@@ -93,7 +93,7 @@ Consolidar a Integração Contínua, finalizar a base de Autenticação com CORS
 - **Entregas:** Issues #16, #17, #18, #73.
 - **Commits:** `88df106` (Contratos de API).
 
-### ⚙️ Backend (Mateus Alves)
+### ⚙️ Backend (Alana Cristyna)
 - **Foco:** Endpoint de login/cadastro, JWT e Upload GCS.
 - **Entregas:** Issues #13, #72.
 - **Commits:** `f45a1c0`, `312b9c2`.
@@ -108,7 +108,7 @@ Consolidar a Integração Contínua, finalizar a base de Autenticação com CORS
 - **Entregas:** Auxílio em infraestrutura.
 - **Commits:** `(Revisões de PR)`.
 
-### 🛡️ QA (Alana Cristyna)
+### 🛡️ QA (Mateus Alves)
 - **Foco:** Testes de integração do fluxo de autenticação e perfis.
 - **Entregas:** Homologação E2E.
 - **Commits:** `(Testes manuais exploratórios)`.
