@@ -50,8 +50,10 @@ function Documentos() {
     }
 
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         loadProjects()
         loadDocuments()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const handleFilter = (e) => {

@@ -12,6 +12,7 @@ function Login(){
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);
         if (params.get('session_expired') === 'true') {
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setErro('Sua sessão expirou. Por favor, faça login novamente.');
         }
     }, []);
