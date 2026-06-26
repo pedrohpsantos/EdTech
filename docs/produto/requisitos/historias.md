@@ -28,7 +28,7 @@ Backlog de histórias de usuário do EdTech, escritas no formato padrão e rastr
 
     - [x] Apenas e-mails `@instituicao.edu.br` são aceitos
 
-**Rastreabilidade:** RF01.1, RF01.6 · **Persona:** Ana · **Sprint:** 2
+**Rastreabilidade:** RF01, RF06 · **Persona:** Ana · **Sprint:** 2
 
 ---
 
@@ -43,7 +43,7 @@ Backlog de histórias de usuário do EdTech, escritas no formato padrão e rastr
     - [x] Login bem-sucedido gera log `LOGIN_SUCCESS`
     - [x] Login falho gera log `LOGIN_FAILED`
 
-**Rastreabilidade:** RF01.2, RF04.1 · **Persona:** Todos · **Sprint:** 2
+**Rastreabilidade:** RF02, RF18 · **Persona:** Todos · **Sprint:** 2
 
 ---
 
@@ -57,7 +57,7 @@ Backlog de histórias de usuário do EdTech, escritas no formato padrão e rastr
     - [x] Requisições subsequentes retornam `401`
     - [x] O logout gera log `LOGOUT`
 
-**Rastreabilidade:** RF01.3, RF04.1 · **Persona:** Todos · **Sprint:** 2
+**Rastreabilidade:** RF03, RF18 · **Persona:** Todos · **Sprint:** 2
 
 ---
 
@@ -76,7 +76,7 @@ Backlog de histórias de usuário do EdTech, escritas no formato padrão e rastr
     - [x] O status inicial é `draft`
     - [x] O upload gera log `UPLOAD_SUCCESS`
 
-**Rastreabilidade:** RF02.1, RF02.2, RF02.3, RF04.2 · **Persona:** Ana · **Sprint:** 3
+**Rastreabilidade:** RF07, RF08, RF09, RF19 · **Persona:** Ana · **Sprint:** 3
 
 ---
 
@@ -92,7 +92,7 @@ Backlog de histórias de usuário do EdTech, escritas no formato padrão e rastr
 
     - [ ] Resposta da API em < 500ms (p95)
 
-**Rastreabilidade:** RF02.4, RNF02.1 · **Persona:** Ana · **Sprint:** 3
+**Rastreabilidade:** RF10, RNF02.1 · **Persona:** Ana · **Sprint:** 3
 
 ---
 
@@ -107,7 +107,7 @@ Backlog de histórias de usuário do EdTech, escritas no formato padrão e rastr
 
     - [ ] O arquivo é servido diretamente do GCS
 
-**Rastreabilidade:** RF02.5, RF04.2 · **Persona:** Ana · **Sprint:** 3
+**Rastreabilidade:** RF11, RF19 · **Persona:** Ana · **Sprint:** 3
 
 ---
 
@@ -123,7 +123,7 @@ Backlog de histórias de usuário do EdTech, escritas no formato padrão e rastr
 
     - [ ] Não exibe projetos de outros orientadores
 
-**Rastreabilidade:** RF03.1, RF03.3 · **Persona:** Carlos · **Sprint:** 4
+**Rastreabilidade:** RF14, RF16 · **Persona:** Carlos · **Sprint:** 4
 
 ---
 
@@ -138,7 +138,7 @@ Backlog de histórias de usuário do EdTech, escritas no formato padrão e rastr
 
     - [ ] Filtra por `project_members` para garantir isolamento
 
-**Rastreabilidade:** RF03.2, RF03.3 · **Persona:** Carlos · **Sprint:** 4
+**Rastreabilidade:** RF15, RF16 · **Persona:** Carlos · **Sprint:** 4
 
 ---
 
@@ -155,7 +155,7 @@ Backlog de histórias de usuário do EdTech, escritas no formato padrão e rastr
 
     - [ ] Logs são imutáveis (sem UPDATE/DELETE)
 
-**Rastreabilidade:** RF04.4, RNF03.2 · **Persona:** Márcia · **Sprint:** 5
+**Rastreabilidade:** RF21, RNF03.2 · **Persona:** Márcia · **Sprint:** 5
 
 ---
 

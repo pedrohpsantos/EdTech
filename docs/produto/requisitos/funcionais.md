@@ -1,4 +1,4 @@
-﻿# :material-format-list-checks: Requisitos Funcionais
+# :material-format-list-checks: Requisitos Funcionais
 
 Especificação dos requisitos funcionais do EdTech, organizados por módulo e rastreáveis às funcionalidades do Lean Inception.
 
@@ -56,7 +56,7 @@ Especificação dos requisitos funcionais do EdTech, organizados por módulo e r
 
 ## Matriz de Rastreabilidade
 
-`mermaid
+```mermaid
 flowchart LR
     subgraph Modulos["Módulos"]
         M01["M01: Autenticação"]
@@ -88,13 +88,13 @@ flowchart LR
     F13 --> P2
     F18 --> P3
 
-`
+```
 
 ---
 
 ## Ciclo de Vida de Tese/Artigo
 
-`mermaid
+```mermaid
 stateDiagram-v2
     [*] --> Rascunho : Upload Inicial
     Rascunho --> Submetido : Confirmação
@@ -103,7 +103,7 @@ stateDiagram-v2
     Em_Revisao --> Rascunho : Rejeitado (Correções)
     Aprovado --> Publicado : Liberação Final
     Publicado --> [*]
-`
+```
 
 ---
 

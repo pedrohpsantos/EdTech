@@ -6,7 +6,7 @@ Aceito e Implementado
 
 ## Contexto
 
-O repositório acadêmico espera receber um grande volume de Artigos e Teses em formato PDF e datasets (CSV, JSON). O tamanho limite estipulado no requisito `RF02.1` é de 50 MB por arquivo. A atual infraestrutura da Instituição não possui instâncias em disco com alta disponibilidade nativa prontas para I/O massivo simultâneo.
+O repositório acadêmico espera receber um grande volume de Artigos e Teses em formato PDF e datasets (CSV, JSON). O tamanho limite estipulado no requisito `RF07` é de 50 MB por arquivo. A atual infraestrutura da Instituição não possui instâncias em disco com alta disponibilidade nativa prontas para I/O massivo simultâneo.
 Além disso, a persistência em disco local se mostrou frágil e inadequada para ambientes efêmeros como Render ou Heroku. A solução anterior com Google Cloud Storage esbarrava em limitações de Billing para ambientes gratuitos/iniciais.
 
 ## Decisão
