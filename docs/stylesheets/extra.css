@@ -39,6 +39,13 @@
   box-shadow: none;
 }
 
+/* Fix mobile search Z-index overlay */
+.md-search__overlay,
+.md-search__inner,
+.md-search-result {
+  z-index: 100 !important;
+}
+
 /* ============================================================
    NAVIGATION TABS — MATCH HEADER TONE
    ============================================================ */
@@ -477,6 +484,22 @@ a.team-card:hover .team-avatar {
    RESPONSIVE
    ============================================================ */
 
+/* Smartwatches / Very Small Screens (up to 360px) */
+@media (max-width: 360px) {
+  .md-hero {
+    padding: 1.5rem 0.5rem;
+  }
+  .md-hero h1 {
+    font-size: 1.35rem;
+  }
+  .md-hero p {
+    font-size: 0.9rem;
+  }
+  .md-typeset .grid.cards > ul > li {
+    padding: 0.8rem;
+  }
+}
+
 /* Mobile Phones (Portrait - up to 480px) */
 @media (max-width: 480px) {
   .md-hero {
@@ -491,11 +514,12 @@ a.team-card:hover .team-avatar {
   }
   .md-hero .hero-actions {
     flex-direction: column;
-    gap: 0.8rem;
+    gap: 1.2rem;
   }
   .md-hero .md-button {
     width: 100%;
     box-sizing: border-box;
+    padding: 0.8rem 1rem;
   }
   .team-grid {
     grid-template-columns: 1fr;
@@ -528,7 +552,7 @@ a.team-card:hover .team-avatar {
 /* Ultrawide / Large Desktops (1200px to 1599px) */
 @media (min-width: 1200px) and (max-width: 1599px) {
   :root {
-    --md-text-container-width: 60rem; /* Expands MkDocs default max-width slightly */
+    --md-text-container-width: 65rem; /* Expands MkDocs default max-width for better reading */
   }
   .md-hero {
     padding: 3.5rem 2.5rem;
@@ -544,7 +568,7 @@ a.team-card:hover .team-avatar {
 /* Super Ultrawide (1600px and up) */
 @media (min-width: 1600px) {
   :root {
-    --md-text-container-width: 75rem; /* Expands significantly for large monitors */
+    --md-text-container-width: 80rem; /* Expands significantly for large monitors */
   }
   .md-hero {
     padding: 4rem 3rem;
