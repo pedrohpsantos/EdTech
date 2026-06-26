@@ -900,34 +900,7 @@ html {
   border-radius: 2px;
 }
 
-/* ============================================================
-   SEARCH BAR VISUAL SHORTCUT [ / ]
-   ============================================================ */
-.md-search__inner {
-  position: relative;
-}
-.md-search__input::placeholder {
-  opacity: 0;
-}
-.md-search__inner::after {
-  content: "Buscar...  [ / ]";
-  position: absolute;
-  top: 50%;
-  left: 3rem;
-  transform: translateY(-50%);
-  color: var(--md-default-fg-color--light);
-  pointer-events: none;
-  transition: opacity 0.3s;
-  font-family: var(--md-text-font-family);
-  font-size: 0.8rem;
-  opacity: 0.7;
-}
-.md-search__input:focus ~ .md-search__inner::after,
-.md-search__input:not(:placeholder-shown) ~ .md-search__inner::after,
-.md-search__input:active ~ .md-search__inner::after {
-  opacity: 0 !important;
-  display: none;
-}
+
 
 /* ============================================================
    MATHJAX ARITHMATEX STYLING
