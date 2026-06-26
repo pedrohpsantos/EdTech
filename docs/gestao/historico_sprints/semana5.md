@@ -123,7 +123,7 @@ Consolidar a Integração Contínua, finalizar a base de Autenticação com CORS
 
 ## Próximos Passos
 
-→ Sprint 6: Concluir as tarefas de auditoria e projeto para finalmente entregar a versão MVP.
+→ [Semana 6 — Infraestrutura, Plugins e Ajuste de Rotas](semana6.md)
 
 ← [Semana 4 — Integração, Rotas e Refinamento de Escopo](semana4.md)
 
