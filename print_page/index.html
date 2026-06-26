@@ -5137,49 +5137,47 @@ O Propósito (Elevator Pitch) que norteia todas as decisões.
 </table>
 <hr>
 <h2 id="produto-requisitos-funcionais-matriz-de-rastreabilidade">Matriz de Rastreabilidade<a class="headerlink" href="#produto-requisitos-funcionais-matriz-de-rastreabilidade" title="Permanent link">¶</a></h2>
-<p>`mermaid
-flowchart LR
+<pre class="mermaid"><code>flowchart LR
     subgraph Modulos["Módulos"]
         M01["M01: Autenticação"]
         M02["M02: Documentos"]
         M03["M03: Orientador"]
         M04["M04: Auditoria"]
-    end</p>
-<pre><code>subgraph Funcionalidades["Funcionalidades"]
-    F01["F01-F06"]
-    F07["F07-F12"]
-    F13["F13-F17"]
-    F18["F18-F22"]
-end
+    end
 
-subgraph Personas["Personas"]
-    P1["Ana"]
-    P2["Carlos"]
-    P3["Márcia"]
-end
+    subgraph Funcionalidades["Funcionalidades"]
+        F01["F01-F06"]
+        F07["F07-F12"]
+        F13["F13-F17"]
+        F18["F18-F22"]
+    end
 
-M01 --&gt; F01
-M02 --&gt; F07
-M03 --&gt; F13
-M04 --&gt; F18
+    subgraph Personas["Personas"]
+        P1["Ana"]
+        P2["Carlos"]
+        P3["Márcia"]
+    end
 
-F01 --&gt; P1
-F07 --&gt; P1
-F13 --&gt; P2
-F18 --&gt; P3
+    M01 --&gt; F01
+    M02 --&gt; F07
+    M03 --&gt; F13
+    M04 --&gt; F18
+
+    F01 --&gt; P1
+    F07 --&gt; P1
+    F13 --&gt; P2
+    F18 --&gt; P3
 </code></pre>
-<p>`</p>
 <hr>
 <h2 id="produto-requisitos-funcionais-ciclo-de-vida-de-teseartigo">Ciclo de Vida de Tese/Artigo<a class="headerlink" href="#produto-requisitos-funcionais-ciclo-de-vida-de-teseartigo" title="Permanent link">¶</a></h2>
-<p><code>mermaid
-stateDiagram-v2
+<pre class="mermaid"><code>stateDiagram-v2
     [*] --&gt; Rascunho : Upload Inicial
     Rascunho --&gt; Submetido : Confirmação
     Submetido --&gt; Em_Revisao : Atribuído ao Orientador
     Em_Revisao --&gt; Aprovado : Aceite
     Em_Revisao --&gt; Rascunho : Rejeitado (Correções)
     Aprovado --&gt; Publicado : Liberação Final
-    Publicado --&gt; [*]</code></p>
+    Publicado --&gt; [*]</code></pre>
 <hr>
 <h2 id="produto-requisitos-funcionais-historico-de-versoes">Histórico de Versões<a class="headerlink" href="#produto-requisitos-funcionais-historico-de-versoes" title="Permanent link">¶</a></h2>
 <table>
@@ -5539,7 +5537,7 @@ stateDiagram-v2
 </li>
 </ul>
 </details>
-<p><strong>Rastreabilidade:</strong> RF01.1, RF01.6 · <strong>Persona:</strong> Ana · <strong>Sprint:</strong> 2</p>
+<p><strong>Rastreabilidade:</strong> RF01, RF06 · <strong>Persona:</strong> Ana · <strong>Sprint:</strong> 2</p>
 <hr>
 <h3 id="produto-requisitos-historias-us02-login-seguro">US02 — Login seguro<a class="headerlink" href="#produto-requisitos-historias-us02-login-seguro" title="Permanent link">¶</a></h3>
 <blockquote>
@@ -5558,7 +5556,7 @@ stateDiagram-v2
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Login falho gera log <code>LOGIN_FAILED</code></li>
 </ul>
 </details>
-<p><strong>Rastreabilidade:</strong> RF01.2, RF04.1 · <strong>Persona:</strong> Todos · <strong>Sprint:</strong> 2</p>
+<p><strong>Rastreabilidade:</strong> RF02, RF18 · <strong>Persona:</strong> Todos · <strong>Sprint:</strong> 2</p>
 <hr>
 <h3 id="produto-requisitos-historias-us03-logout">US03 — Logout<a class="headerlink" href="#produto-requisitos-historias-us03-logout" title="Permanent link">¶</a></h3>
 <blockquote>
@@ -5576,7 +5574,7 @@ stateDiagram-v2
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> O logout gera log <code>LOGOUT</code></li>
 </ul>
 </details>
-<p><strong>Rastreabilidade:</strong> RF01.3, RF04.1 · <strong>Persona:</strong> Todos · <strong>Sprint:</strong> 2</p>
+<p><strong>Rastreabilidade:</strong> RF03, RF18 · <strong>Persona:</strong> Todos · <strong>Sprint:</strong> 2</p>
 <hr>
 <h2 id="produto-requisitos-historias-epico-2-documentos">Épico 2 — Documentos<a class="headerlink" href="#produto-requisitos-historias-epico-2-documentos" title="Permanent link">¶</a></h2>
 <h3 id="produto-requisitos-historias-us04-upload-de-artigo">US04 — Upload de artigo<a class="headerlink" href="#produto-requisitos-historias-us04-upload-de-artigo" title="Permanent link">¶</a></h3>
@@ -5599,7 +5597,7 @@ stateDiagram-v2
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> O upload gera log <code>UPLOAD_SUCCESS</code></li>
 </ul>
 </details>
-<p><strong>Rastreabilidade:</strong> RF02.1, RF02.2, RF02.3, RF04.2 · <strong>Persona:</strong> Ana · <strong>Sprint:</strong> 3</p>
+<p><strong>Rastreabilidade:</strong> RF07, RF08, RF09, RF19 · <strong>Persona:</strong> Ana · <strong>Sprint:</strong> 3</p>
 <hr>
 <h3 id="produto-requisitos-historias-us05-listagem-de-documentos">US05 — Listagem de documentos<a class="headerlink" href="#produto-requisitos-historias-us05-listagem-de-documentos" title="Permanent link">¶</a></h3>
 <blockquote>
@@ -5620,7 +5618,7 @@ stateDiagram-v2
 </li>
 </ul>
 </details>
-<p><strong>Rastreabilidade:</strong> RF02.4, RNF02.1 · <strong>Persona:</strong> Ana · <strong>Sprint:</strong> 3</p>
+<p><strong>Rastreabilidade:</strong> RF10, RNF02.1 · <strong>Persona:</strong> Ana · <strong>Sprint:</strong> 3</p>
 <hr>
 <h3 id="produto-requisitos-historias-us06-download-de-documento">US06 — Download de documento<a class="headerlink" href="#produto-requisitos-historias-us06-download-de-documento" title="Permanent link">¶</a></h3>
 <blockquote>
@@ -5640,7 +5638,7 @@ stateDiagram-v2
 </li>
 </ul>
 </details>
-<p><strong>Rastreabilidade:</strong> RF02.5, RF04.2 · <strong>Persona:</strong> Ana · <strong>Sprint:</strong> 3</p>
+<p><strong>Rastreabilidade:</strong> RF11, RF19 · <strong>Persona:</strong> Ana · <strong>Sprint:</strong> 3</p>
 <hr>
 <h2 id="produto-requisitos-historias-epico-3-orientador">Épico 3 — Orientador<a class="headerlink" href="#produto-requisitos-historias-epico-3-orientador" title="Permanent link">¶</a></h2>
 <h3 id="produto-requisitos-historias-us07-painel-do-orientador">US07 — Painel do orientador<a class="headerlink" href="#produto-requisitos-historias-us07-painel-do-orientador" title="Permanent link">¶</a></h3>
@@ -5659,7 +5657,7 @@ stateDiagram-v2
 </li>
 </ul>
 </details>
-<p><strong>Rastreabilidade:</strong> RF03.1, RF03.3 · <strong>Persona:</strong> Carlos · <strong>Sprint:</strong> 4</p>
+<p><strong>Rastreabilidade:</strong> RF14, RF16 · <strong>Persona:</strong> Carlos · <strong>Sprint:</strong> 4</p>
 <hr>
 <h3 id="produto-requisitos-historias-us08-visualizacao-de-documentos-do-orientando">US08 — Visualização de documentos do orientando<a class="headerlink" href="#produto-requisitos-historias-us08-visualizacao-de-documentos-do-orientando" title="Permanent link">¶</a></h3>
 <blockquote>
@@ -5679,7 +5677,7 @@ stateDiagram-v2
 </li>
 </ul>
 </details>
-<p><strong>Rastreabilidade:</strong> RF03.2, RF03.3 · <strong>Persona:</strong> Carlos · <strong>Sprint:</strong> 4</p>
+<p><strong>Rastreabilidade:</strong> RF15, RF16 · <strong>Persona:</strong> Carlos · <strong>Sprint:</strong> 4</p>
 <hr>
 <h2 id="produto-requisitos-historias-epico-4-auditoria">Épico 4 — Auditoria<a class="headerlink" href="#produto-requisitos-historias-epico-4-auditoria" title="Permanent link">¶</a></h2>
 <h3 id="produto-requisitos-historias-us09-consulta-de-logs">US09 — Consulta de logs<a class="headerlink" href="#produto-requisitos-historias-us09-consulta-de-logs" title="Permanent link">¶</a></h3>
@@ -5700,7 +5698,7 @@ stateDiagram-v2
 </li>
 </ul>
 </details>
-<p><strong>Rastreabilidade:</strong> RF04.4, RNF03.2 · <strong>Persona:</strong> Márcia · <strong>Sprint:</strong> 5</p>
+<p><strong>Rastreabilidade:</strong> RF21, RNF03.2 · <strong>Persona:</strong> Márcia · <strong>Sprint:</strong> 5</p>
 <hr>
 <h2 id="produto-requisitos-historias-resumo-do-backlog">Resumo do Backlog<a class="headerlink" href="#produto-requisitos-historias-resumo-do-backlog" title="Permanent link">¶</a></h2>
 <table>
@@ -6706,7 +6704,7 @@ flowchart LR
 <h2 id="arquitetura-adrs-0001-armazenamento-supabase-s3-status">Status<a class="headerlink" href="#arquitetura-adrs-0001-armazenamento-supabase-s3-status" title="Permanent link">¶</a></h2>
 <p>Aceito e Implementado</p>
 <h2 id="arquitetura-adrs-0001-armazenamento-supabase-s3-contexto">Contexto<a class="headerlink" href="#arquitetura-adrs-0001-armazenamento-supabase-s3-contexto" title="Permanent link">¶</a></h2>
-<p>O repositório acadêmico espera receber um grande volume de Artigos e Teses em formato <abbr title="Portable Document Format">PDF</abbr> e datasets (<abbr title="Comma-Separated Values — Valores Separados por Vírgula">CSV</abbr>, <abbr title="JavaScript Object Notation">JSON</abbr>). O tamanho limite estipulado no requisito <code>RF02.1</code> é de 50 <abbr title="Megabyte">MB</abbr> por arquivo. A atual infraestrutura da Instituição não possui instâncias em disco com alta disponibilidade nativa prontas para I/O massivo simultâneo.
+<p>O repositório acadêmico espera receber um grande volume de Artigos e Teses em formato <abbr title="Portable Document Format">PDF</abbr> e datasets (<abbr title="Comma-Separated Values — Valores Separados por Vírgula">CSV</abbr>, <abbr title="JavaScript Object Notation">JSON</abbr>). O tamanho limite estipulado no requisito <code>RF07</code> é de 50 <abbr title="Megabyte">MB</abbr> por arquivo. A atual infraestrutura da Instituição não possui instâncias em disco com alta disponibilidade nativa prontas para I/O massivo simultâneo.
 Além disso, a persistência em disco local se mostrou frágil e inadequada para ambientes efêmeros como Render ou Heroku. A solução anterior com Google Cloud Storage esbarrava em limitações de Billing para ambientes gratuitos/iniciais.</p>
 <h2 id="arquitetura-adrs-0001-armazenamento-supabase-s3-decisao">Decisão<a class="headerlink" href="#arquitetura-adrs-0001-armazenamento-supabase-s3-decisao" title="Permanent link">¶</a></h2>
 <p>Optou-se por integrar a aplicação backend ao <strong>Supabase Storage</strong> (via <abbr title="Application Programming Interface">API</abbr> compatível com <strong><abbr title="Amazon Web Services">AWS</abbr> S3</strong>) para hospedagem de arquivos binários no momento atual. O banco de dados PostgreSQL armazenará apenas a URI (metadados) do arquivo apontando para a <abbr title="Uniform Resource Locator — Localizador Uniforme de Recursos">URL</abbr> pública do bucket S3.</p>
