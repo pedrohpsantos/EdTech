@@ -48,6 +48,18 @@ Apesar do atraso nas features principais de negócio (telas de painéis), avanç
 | Reuniões e Atas documentadas | 1 (Ata 26/06/2026) |
 
 ---
+## Contribuições da Equipe
+
+| Membro | Frente | Contribuição Principal |
+| :--- | :--- | :--- |
+| **Pedro Henrique** (Tech Lead) | Gestão, Ops e Backend | Revisão técnica, refatoração de infraestrutura, CodeQL e CI/CD |
+| **Alana Cristyna** | QA e Frontend | Foco total em garantia de qualidade integrada ao Frontend |
+| **Luis Gustavo** | DevOps e Backend | Melhoria contínua de esteiras, paralelismo e auxílio backend |
+| **Mateus Alves** | Full Stack | Desenvolvimento das demandas atrasadas e features da Sprint |
+| **Mariana Andrade** | Full Stack | Desenvolvimento das demandas atrasadas e features da Sprint |
+| **Arthur** | Docs & Logs | Modernização do portal MkDocs e ferramentas de comentários |
+
+---
 
 ## Aprendizados e Decisões
 
