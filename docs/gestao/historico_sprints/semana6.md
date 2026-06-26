@@ -87,7 +87,7 @@ Todas as issues críticas da Sprint 6 foram repriorizadas para a Sprint 7, junta
 
 ## Próximos Passos
 
-→ **Sprint 7**: Foco total na entrega do fluxo E2E (Pesquisador → Orientador → Auditor) via ajuda mútua (DevOps+Backend, QA+Frontend) e Deploy na nuvem.
+→ [Semana 7 — Fluxo E2E, Painéis Finais e Deploy MVP](semana7.md)
 
 ← [Semana 5 — Uploads, Autenticação e Integrações GCS](semana5.md)
 
