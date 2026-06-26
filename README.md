@@ -85,8 +85,8 @@ docker compose --env-file infra/.env -f infra/docker-compose.yml down -v
 | Nome | Papel | GitHub |
 | :--- | :--- | :--- |
 | Pedro Henrique P. Santos | Tech Lead | [@pedrohpsantos](https://github.com/pedrohpsantos) |
-| Alana Cristyna F. Dias | Full Stack (QA) | [@alanafeitosa-ui](https://github.com/alanafeitosa-ui) |
-| Arthur Carvalho Leite | Full Stack (DevOps)| [@arthurlleite](https://github.com/arthurlleite) |
+| Alana Cristyna F. Dias | Full Stack | [@alanafeitosa-ui](https://github.com/alanafeitosa-ui) |
+| Arthur Carvalho Leite | Full Stack | [@arthurlleite](https://github.com/arthurlleite) |
 | Luis Gustavo F. Nunes | Full Stack | [@LuisGFNunes](https://github.com/LuisGFNunes) |
 | Mariana S. F. Andrade | Full Stack | [@mariana-farias12](https://github.com/mariana-farias12) |
 | Mateus Alves Araújo | Full Stack | [@mateusaraujo2006](https://github.com/mateusaraujo2006) |
