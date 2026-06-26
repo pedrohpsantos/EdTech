@@ -7,8 +7,10 @@
 [![Deploy MkDocs](https://github.com/pedrohpsantos/EdTech/actions/workflows/ci-docs.yml/badge.svg)](https://github.com/pedrohpsantos/EdTech/actions/workflows/ci-docs.yml)
 [![CI Backend](https://github.com/pedrohpsantos/EdTech/actions/workflows/ci-backend.yml/badge.svg)](https://github.com/pedrohpsantos/EdTech/actions/workflows/ci-backend.yml)
 [![CI Frontend](https://github.com/pedrohpsantos/EdTech/actions/workflows/ci-frontend.yml/badge.svg)](https://github.com/pedrohpsantos/EdTech/actions/workflows/ci-frontend.yml)
-![Python](https://img.shields.io/badge/python-%3E%3D3.11-3776ab?logo=python&logoColor=white)
-![MkDocs Material](https://img.shields.io/badge/docs-MkDocs%20Material-7c4dff?logo=materialformkdocs&logoColor=white)
+![NodeJS](https://img.shields.io/badge/Node.js-%3E%3D24-339933?logo=nodedotjs&logoColor=white)
+![Java](https://img.shields.io/badge/Java-21_LTS-007396?logo=openjdk&logoColor=white)
+![Supabase](https://img.shields.io/badge/Supabase-Database_%26_Storage-3ECF8E?logo=supabase&logoColor=white)
+![MkDocs Material](https://img.shields.io/badge/docs-MkDocs_Material-7c4dff?logo=materialformkdocs&logoColor=white)
 
 Plataforma acadêmica para centralização, gerenciamento e auditoria de publicações científicas, relatórios de pesquisa e datasets — desenvolvida no laboratório **AILAB Makers** (UnB FCTE).
 
@@ -16,27 +18,38 @@ Plataforma acadêmica para centralização, gerenciamento e auditoria de publica
 
 ---
 
-## 📌 Estado Atual do Repositório
+## 📌 Estado Atual do Repositório (Semana 6/7)
 
-O projeto encontra-se atualmente na fase final rumo à **conclusão do MVP (Sprint 6)**.
-- **✅ Concluído:** Documentação (Docs-as-Code), Arquitetura Técnica, Autenticação completa, Upload de Documentos para Supabase Storage e Contratos de API consolidados.
-- **🚧 Em Desenvolvimento:** Interfaces de gestão de projetos, painel do orientador, fluxos de auditoria/logs estruturados e automação E2E.
+O projeto encontra-se atualmente na fase final de entrega e lapidação do **MVP (Sprint 6/7)**.
+- **✅ Concluído:** Arquitetura do Monorepo, Autenticação, Proteção CSRF/JWT, Armazenamento em Supabase (Banco e Buckets S3), Layout UI/UX responsivo (React/Vite).
+- **🚧 Em Desenvolvimento:** Expansão das regras do painel do orientador e lapidação da auditoria final.
 
-Para entender as prioridades atuais e como ajudar na documentação, leia nosso [Guia de Contribuição](CONTRIBUTING.md).
+---
+
+## 🏗️ Estrutura do Monorepo
+
+Nosso repositório abriga tanto a aplicação de interface gráfica quanto a lógica de serviços. Acesse os guias de cada submódulo:
+
+- 🎨 **[Interface (Frontend)](frontend/README.md)**: Aplicação Web feita em React 19 + Vite 8. 
+- ⚙️ **[Serviços (Backend API)](docvault/api/README.md)**: Aplicação RestFul feita em Java 21 + Spring Boot 4.1.0.
+
+*Para visualizar a arquitetura C4 estrutural de alto nível da nossa solução, consulte a aba de Arquitetura no Portal de Documentação (MkDocs).*
 
 ---
 
 ## 🚀 Quick Start (Documentação Local)
+
+Para desenvolvedores e conteudistas que desejam editar a documentação Markdown:
 
 ```bash
 # Clone o repositório
 git clone https://github.com/pedrohpsantos/EdTech.git
 cd EdTech
 
-# Instale as dependências com uv
+# Instale as dependências com o gerenciador UV
 uv sync
 
-# Sirva a documentação localmente
+# Sirva a documentação localmente e veja as mudanças em tempo real
 uv run mkdocs serve
 ```
 
@@ -44,91 +57,57 @@ Acesse `http://127.0.0.1:8000` no navegador.
 
 ---
 
-## Ambiente Local com Docker Compose
+## 🐳 Ambiente Local com Docker Compose
 
-O ambiente de desenvolvimento sobe PostgreSQL 15 e o backend Spring Boot na porta `8080`.
+Subir o ambiente completo de desenvolvimento local com os bancos de dados vinculados é fácil com Docker:
 
 ```bash
-# 1. Copie o arquivo de exemplo
+# 1. Na raiz do projeto, copie o arquivo de variáveis de exemplo
 cp infra/.env.example infra/.env
 
-# 2. Preencha POSTGRES_PASSWORD, JWT_SECRET e defina seu STORAGE_PROVIDER (s3 ou gcs) com as chaves de nuvem em infra/.env
+# 2. Preencha POSTGRES_PASSWORD, JWT_SECRET e chaves do Supabase S3 em infra/.env
 
-# 3. Suba banco e backend
+# 3. Suba o banco e a API de uma só vez (Build Automático)
 docker compose --env-file infra/.env -f infra/docker-compose.yml up --build
 
-# 4. Em outro terminal, acompanhe os logs do backend
+# 4. Acompanhe os logs isolados da API em outra aba (Opcional)
 docker compose --env-file infra/.env -f infra/docker-compose.yml logs -f backend
 ```
 
-Teste o cadastro de pesquisador:
-
-```bash
-curl -i -X POST http://localhost:8080/api/auth/register \
-  -H "Content-Type: application/json" \
-  -d '{
-    "name": "Ana Pesquisadora",
-    "email": "ana.pesquisadora@unb.br",
-    "password": "<senha-local>"
-  }'
-```
-
-Para parar os containers:
-
-```bash
-docker compose --env-file infra/.env -f infra/docker-compose.yml down
-```
-
-Para remover também o volume local do PostgreSQL:
-
+Para derrubar tudo limpo (excluindo volumes do DB local):
 ```bash
 docker compose --env-file infra/.env -f infra/docker-compose.yml down -v
 ```
 
-Nenhum segredo real deve ser salvo em arquivos versionados. O arquivo `infra/.env` fica fora do Git e deve conter apenas valores locais de desenvolvimento.
-
-Se a porta `5432` ja estiver em uso na sua maquina, altere `POSTGRES_PORT` em `infra/.env`.
-O backend continua conectando no PostgreSQL pela rede interna do Compose em `db:5432`.
-
 ---
 
-## Stack Tecnológica
-
-| Camada | Tecnologias |
-| :--- | :--- |
-| **Backend** | Java 21 · Spring Boot 4.1 · Spring Security · JWT · Flyway |
-| **Frontend** | React 19 · Vite 8 · React Router · Axios · Bootstrap 5 |
-| **Cloud / Infra** | Supabase S3 Storage · Cloud SQL (PostgreSQL) · Docker Compose |
-| **Docs & CI** | MkDocs Material · GitHub Actions · uv · JaCoCo |
-
----
-
-## Equipe
+## 👨‍💻 Equipe
 
 | Nome | Papel | GitHub |
 | :--- | :--- | :--- |
 | Pedro Henrique P. Santos | Tech Lead | [@pedrohpsantos](https://github.com/pedrohpsantos) |
-| Alana Cristyna F. Dias | Full Stack | [@alanafeitosa-ui](https://github.com/alanafeitosa-ui) |
-| Arthur Carvalho Leite | Full Stack | [@arthurlleite](https://github.com/arthurlleite) |
+| Alana Cristyna F. Dias | Full Stack (QA) | [@alanafeitosa-ui](https://github.com/alanafeitosa-ui) |
+| Arthur Carvalho Leite | Full Stack (DevOps)| [@arthurlleite](https://github.com/arthurlleite) |
 | Luis Gustavo F. Nunes | Full Stack | [@LuisGFNunes](https://github.com/LuisGFNunes) |
 | Mariana S. F. Andrade | Full Stack | [@mariana-farias12](https://github.com/mariana-farias12) |
 | Mateus Alves Araújo | Full Stack | [@mateusaraujo2006](https://github.com/mateusaraujo2006) |
 
 ---
 
-## Histórico de Versões
+## 📜 Histórico de Versões
 
-| Versão | Data | Descrição | Autor |
-| :---: | :---: | :--- | :--- |
-| `0.1.0` | 10/06/2026 | Fundação da documentação técnica e governança. | Pedro Henrique P. Santos |
-| `0.2.0` | 13/06/2026 | Reestruturação arquitetural da documentação e guias de Desenvolvimento (DevEx). | Pedro Henrique P. Santos |
-
----
-
-## Licença
-
-Projeto acadêmico desenvolvido para fins educacionais no Laboratório de Inteligência Artificial (AILAB).
-O código fonte é disponibilizado sob a [MIT License](LICENSE).
+| Versão | Data | Descrição |
+| :---: | :---: | :--- |
+| `0.1.0` | 10/06/2026 | Fundação da documentação técnica e governança. |
+| `0.2.0` | 13/06/2026 | Reestruturação arquitetural e guias DevEx (MkDocs). |
+| `0.3.0` | 20/06/2026 | Consolidação do Backend (Spring Boot 4.1 + Java 21) e Infra CI. |
+| `0.4.0` | 26/06/2026 | Integração de UI (Vite), Supabase DB/S3 e fechamento do MVP Sprint 6. |
 
 ---
-*Consulte o [Changelog](CHANGELOG.md) para o histórico de versões completo e nossa [Política de Segurança](SECURITY.md) para o fluxo de relato de vulnerabilidades.*
+
+## ⚖️ Licença e Contribuição
+
+Para saber como contribuir (Convenções de Commits, Issues), leia nosso **[Guia de Contribuição](CONTRIBUTING.md)**.
+Consulte o **[Changelog](CHANGELOG.md)** para o histórico de versões completo e nossa **[Política de Segurança](SECURITY.md)** para relato de vulnerabilidades.
+
+Projeto acadêmico desenvolvido no Laboratório de Inteligência Artificial (AILAB). Código disponibilizado sob a [MIT License](LICENSE).
