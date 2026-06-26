@@ -138,11 +138,17 @@
 
 .md-hero .hero-actions {
   margin-top: 1.8rem;
+  position: relative;
+}
+
+/* O Markdown injeta um <p> dentro da div. O flexbox precisa ser nele! */
+.md-hero .hero-actions > p {
   display: flex;
   justify-content: center;
   gap: 1rem;
   flex-wrap: wrap;
-  position: relative;
+  margin: 0;
+  width: 100%;
 }
 
 .md-hero .md-button {
@@ -512,7 +518,7 @@ a.team-card:hover .team-avatar {
   .md-hero p {
     font-size: 0.95rem;
   }
-  .md-hero .hero-actions {
+  .md-hero .hero-actions > p {
     flex-direction: column;
     gap: 1.2rem;
   }
