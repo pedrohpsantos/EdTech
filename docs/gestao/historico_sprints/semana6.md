@@ -44,7 +44,7 @@ Apesar do atraso nas features principais de negócio (telas de painéis), avanç
 
 | Métrica | Valor |
 | :--- | :---: |
-| Issues entregues / concluídas | 4 (Issues #96, #101, #102, #73 parcial) |
+| Issues entregues / concluídas | 4 (Issues #73, #96, #101, #102) |
 | Reuniões e Atas documentadas | 1 (Ata 26/06/2026) |
 
 ---
