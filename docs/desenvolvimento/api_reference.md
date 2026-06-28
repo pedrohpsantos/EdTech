@@ -5,6 +5,8 @@ hide:
   - toc
 ---
 
+# API Reference (Swagger)
+
 <div id="redoc-container"></div>
 
 <script src="https://cdn.redoc.ly/redoc/latest/bundles/redoc.standalone.js"></script>
