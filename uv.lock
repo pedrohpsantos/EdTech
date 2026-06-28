@@ -300,15 +300,15 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "mkdocs-awesome-pages-plugin", specifier = ">=2.9.2" },
-    { name = "mkdocs-git-authors-plugin", specifier = ">=0.9.0" },
+    { name = "mkdocs-awesome-pages-plugin", specifier = ">=2.10.1" },
+    { name = "mkdocs-git-authors-plugin", specifier = ">=0.10.0" },
     { name = "mkdocs-git-revision-date-localized-plugin", specifier = ">=1.5.3" },
     { name = "mkdocs-glightbox", specifier = ">=0.5.2" },
-    { name = "mkdocs-macros-plugin", specifier = ">=1.0.5" },
+    { name = "mkdocs-macros-plugin", specifier = ">=1.5.0" },
     { name = "mkdocs-material", extras = ["imaging"], specifier = ">=9.7.6" },
     { name = "mkdocs-minify-plugin", specifier = ">=0.8.0" },
     { name = "mkdocs-print-site-plugin" },
-    { name = "mkdocs-roamlinks-plugin", specifier = ">=0.2.2" },
+    { name = "mkdocs-roamlinks-plugin", specifier = ">=0.3.2" },
 ]
 
 [[package]]
