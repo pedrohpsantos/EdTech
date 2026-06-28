@@ -10,5 +10,6 @@ public enum AcaoAuditoria {
     DOWNLOAD,            // — download de documento
     DELETE_DOCUMENT,     // — exclusão de documento
     DOCUMENT_APPROVED,   // — orientador aprovou o documento
-    DOCUMENT_REJECTED    // — orientador rejeitou o documento
+    DOCUMENT_REJECTED,   // — orientador rejeitou o documento
+    MEMBER_JOINED        // — membro adicionado ou associado ao projeto
 }
