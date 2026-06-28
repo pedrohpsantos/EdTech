@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 const KONAMI_CODE = [
   'ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown',
@@ -9,8 +9,11 @@ const KONAMI_CODE = [
 export default function useEasterEggs() {
   const [konamiActivated, setKonamiActivated] = useState(false);
   const [hyperdriveActivated, setHyperdriveActivated] = useState(false);
-  const [logoClicks, setLogoClicks] = useState(0);
-  const [keySequence, setKeySequence] = useState([]);
+  const [, setLogoClicks] = useState(0); // Removed unused read
+  const [, setKeySequence] = useState([]); // Removed unused read
+  
+  const clickTimeoutRef = useRef(null);
+  const hyperdriveTimeoutRef = useRef(null);
 
   // Konami Code Listener
   useEffect(() => {
@@ -38,27 +41,32 @@ export default function useEasterEggs() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  // Logo Clicks (Hyperdrive)
-  useEffect(() => {
-    if (logoClicks >= 5) {
-      setHyperdriveActivated(true);
-      // Auto-reset hyperdrive after some time
-      const timer = setTimeout(() => {
-        setHyperdriveActivated(false);
-        setLogoClicks(0);
-      }, 10000);
-      return () => clearTimeout(timer);
-    }
-    
-    // Reset clicks if user stops clicking for 1.5 seconds
-    if (logoClicks > 0) {
-      const timeout = setTimeout(() => setLogoClicks(0), 1500);
-      return () => clearTimeout(timeout);
-    }
-  }, [logoClicks]);
-
+  // Logo Clicks (Hyperdrive) - Logic moved entirely to handler to avoid setState in effect
   const handleLogoClick = () => {
-    setLogoClicks(prev => prev + 1);
+    if (hyperdriveActivated) return; // Ignore clicks if already hyperdrive
+
+    setLogoClicks(prev => {
+      const nextClicks = prev + 1;
+      
+      // Clear idle timeout
+      if (clickTimeoutRef.current) clearTimeout(clickTimeoutRef.current);
+      
+      if (nextClicks >= 5) {
+        setHyperdriveActivated(true);
+        if (hyperdriveTimeoutRef.current) clearTimeout(hyperdriveTimeoutRef.current);
+        hyperdriveTimeoutRef.current = setTimeout(() => {
+          setHyperdriveActivated(false);
+          setLogoClicks(0);
+        }, 10000);
+        return 0;
+      } else {
+        // Set idle timeout to reset clicks if user pauses
+        clickTimeoutRef.current = setTimeout(() => {
+          setLogoClicks(0);
+        }, 1500);
+        return nextClicks;
+      }
+    });
   };
 
   // ASCII Console Message

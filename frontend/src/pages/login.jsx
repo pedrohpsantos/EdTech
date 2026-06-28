@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { useAuth } from "../context/authContext" 
 import ThemeToggle from "../components/themeToggle"
@@ -10,19 +10,15 @@ import styles from "./auth.module.css"
 function Login() {
     const [email, setEmail] = useState('')
     const [senha, setSenha] = useState('')
-    const [erro, setErro] = useState('')
+    const [erro, setErro] = useState(() => {
+        const params = new URLSearchParams(window.location.search);
+        return params.get('session_expired') === 'true' ? 'Sua sessão expirou. Por favor, faça login novamente.' : '';
+    })
     const [showPassword, setShowPassword] = useState(false)
     const navigate = useNavigate()
     const { handleLogin } = useAuth()
     const { konamiActivated, hyperdriveActivated, handleLogoClick } = useEasterEggs()
     const [isShaking, setIsShaking] = useState(false)
-    
-    useEffect(() => {
-        const params = new URLSearchParams(window.location.search);
-        if (params.get('session_expired') === 'true') {
-            setErro('Sua sessão expirou. Por favor, faça login novamente.');
-        }
-    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault()
