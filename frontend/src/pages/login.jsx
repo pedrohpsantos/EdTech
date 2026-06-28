@@ -45,12 +45,24 @@ function Login() {
                 <div className={styles.networkPattern}></div>
                 
                 <div className={styles.leftContent}>
-                    <div className={styles.logo}>EdTech</div>
+                    <div className={styles.logo} style={{ display: 'flex', alignItems: 'center' }}>
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '8px' }}>
+                            <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                            <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                        </svg>
+                        EdTech
+                    </div>
                 </div>
 
                 <div className={styles.leftContent}>
                     <div className={styles.badge}>
-                        <span className={styles.badgeIcon}>🛡️</span> ISO 27001 · LGPD · SOC 2
+                        <span className={styles.badgeIcon}>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '4px', verticalAlign: 'middle' }}>
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                                <path d="M9 12l2 2 4-4"></path>
+                            </svg>
+                        </span> 
+                        ISO 27001 · LGPD · SOC 2
                     </div>
                     <h1 className={styles.headline}>
                         Governança de <br />
@@ -86,6 +98,10 @@ function Login() {
 
                     {/* Header exclusively for mobile */}
                     <div className={styles.mobileHeader}>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '4px' }}>
+                            <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                            <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                        </svg>
                         EdTech
                     </div>
 
