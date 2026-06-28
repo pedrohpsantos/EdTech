@@ -216,6 +216,8 @@
 
 .inputWrapper {
   position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .inputField {
@@ -238,9 +240,7 @@
 
 .passwordToggle {
   position: absolute;
-  right: 8px;
-  top: 50%;
-  transform: translateY(-50%);
+  right: 12px;
   background: none;
   border: none;
   color: var(--text);
@@ -249,7 +249,21 @@
   align-items: center;
   justify-content: center;
   padding: 4px;
-  height: 100%;
+}
+
+.passwordToggle:hover {
+  color: #8b5cf6;
+}
+
+.eyeIcon {
+  width: 18px;
+  height: 18px;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Subtle animation on state change */
+.eyeIcon:active {
+  transform: scale(0.8);
 }
 
 .submitBtn {
