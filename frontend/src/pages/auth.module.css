@@ -32,31 +32,7 @@
   bottom: 0;
   background-image: radial-gradient(circle at 15% 50%, rgba(255, 255, 255, 0.08) 0%, transparent 50%),
                     radial-gradient(circle at 85% 30%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
-  z-index: 1;
 }
-
-/* Animated Network Grid */
-.networkPattern {
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  opacity: 0.12;
-  background-image: 
-    linear-gradient(rgba(255,255,255,0.3) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.3) 1px, transparent 1px);
-  background-size: 60px 60px;
-  transform: perspective(800px) rotateX(60deg) translateY(0);
-  animation: gridMove 15s linear infinite;
-  z-index: 1;
-}
-
-@keyframes gridMove {
-  0% { transform: perspective(800px) rotateX(60deg) translateY(0); }
-  100% { transform: perspective(800px) rotateX(60deg) translateY(60px); }
-}
-
 .leftContent {
   position: relative;
   z-index: 2;

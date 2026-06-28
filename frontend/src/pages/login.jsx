@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { useAuth } from "../context/authContext" 
 import ThemeToggle from "../components/themeToggle"
+import NetworkBackground from "../components/NetworkBackground"
 import styles from "./auth.module.css"
 
 function Login() {
@@ -42,7 +43,7 @@ function Login() {
         <div className={styles.loginWrapper}>
             {/* Left Panel - Branding */}
             <div className={styles.leftPanel}>
-                <div className={styles.networkPattern}></div>
+                <NetworkBackground />
                 
                 <div className={styles.leftContent}>
                     <div className={styles.logo} style={{ display: 'flex', alignItems: 'center' }}>
