@@ -7334,7 +7334,6 @@ Além disso, o sistema conta com um módulo de Auditoria que exige um histórico
         })
         </script>
         </head><body><h1 id="adr-0011-envio-de-e-mails-transacionais-recuperacao-de-senha-via-smtp"><abbr title="Architecture Decision Record — Registro de Decisão Arquitetural">ADR</abbr> 0011: Envio de E-mails Transacionais (Recuperação de Senha) via SMTP<a class="headerlink" href="#arquitetura-adrs-0011-email-recuperacao-senha-smtp-adr-0011-envio-de-e-mails-transacionais-recuperacao-de-senha-via-smtp" title="Permanent link">¶</a></h1>
-<p>Data: 2026-06-28</p>
 <h2 id="arquitetura-adrs-0011-email-recuperacao-senha-smtp-status">Status<a class="headerlink" href="#arquitetura-adrs-0011-email-recuperacao-senha-smtp-status" title="Permanent link">¶</a></h2>
 <p>Aceito</p>
 <h2 id="arquitetura-adrs-0011-email-recuperacao-senha-smtp-contexto">Contexto<a class="headerlink" href="#arquitetura-adrs-0011-email-recuperacao-senha-smtp-contexto" title="Permanent link">¶</a></h2>
@@ -7354,7 +7353,27 @@ Precisamos enviar um código de segurança (OTP - One Time Password) de 6 dígit
 <li>O código não fica acoplado a uma <abbr title="Application Programming Interface">API</abbr> <abbr title="Representational State Transfer">REST</abbr> proprietária de envio (como SendGrid <abbr title="Application Programming Interface">API</abbr> ou <abbr title="Amazon Web Services">AWS</abbr> SES <abbr title="Application Programming Interface">API</abbr>), sendo possível trocar de provedor apenas alterando propriedades SMTP.</li>
 <li><strong>Negativas:</strong> </li>
 <li>Envio SMTP síncrono pode causar lentidão (gargalo) na resposta da <abbr title="Application Programming Interface">API</abbr> se o servidor de e-mail demorar a responder. <strong>Mitigação futura:</strong> O serviço de envio de e-mail pode ser anotado com <code>@Async</code> e executado em uma TaskExecutor pool paralela, ou jogado em uma fila de mensageria (RabbitMQ/Kafka) futuramente. Por enquanto, será síncrono para validação da prova de conceito.</li>
-</ul></body></html></section></section></section>
+</ul>
+<hr>
+<h2 id="arquitetura-adrs-0011-email-recuperacao-senha-smtp-historico-de-versoes">Histórico de Versões<a class="headerlink" href="#arquitetura-adrs-0011-email-recuperacao-senha-smtp-historico-de-versoes" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Versão</th>
+<th style="text-align: center;">Data</th>
+<th style="text-align: left;">Descrição</th>
+<th style="text-align: left;">Autor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><code>1.0</code></td>
+<td style="text-align: center;">28/06/2026</td>
+<td style="text-align: left;">Documento de Registro de Decisão Arquitetural (Envio de E-mails Transacionais)</td>
+<td style="text-align: left;">Antigravity</td>
+</tr>
+</tbody>
+</table></body></html></section></section></section>
                     <section class='print-page md-section' id='section-4' heading-number='4'>
                         <h1>Desenvolvimento (DevEx)<a class='headerlink' href='#section-4' title='Permanent link'></a>
                         </h1>
