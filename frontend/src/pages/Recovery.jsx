@@ -45,7 +45,7 @@ function Recovery() {
                 setErro(res.mensagem || 'Erro ao solicitar código')
                 triggerShake()
             }
-        } catch (err) {
+        } catch {
             setErro('Erro no servidor')
             triggerShake()
         } finally {
@@ -68,7 +68,7 @@ function Recovery() {
                 setErro(res.mensagem || 'Código inválido')
                 triggerShake()
             }
-        } catch (err) {
+        } catch {
             setErro('Erro no servidor')
             triggerShake()
         } finally {
@@ -96,7 +96,7 @@ function Recovery() {
                 setErro(res.mensagem || 'Erro ao redefinir senha')
                 triggerShake()
             }
-        } catch (err) {
+        } catch {
             setErro('Erro no servidor')
             triggerShake()
         } finally {
