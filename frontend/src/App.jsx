@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./pages/login";
 import Register from "./pages/register";
+import Recovery from "./pages/Recovery";
 import Dashboard from "./pages/dashboard";
 import AuthProvider from "./context/authContext";
 import PrivateRoute from "./components/privateRoute";
@@ -16,6 +17,7 @@ function App(){
   <Route path="/" element={<Login/>}/>
   <Route path="/login" element={<Login/>}/>
   <Route path="/register" element={<Register/>}/>
+  <Route path="/recover-password" element={<Recovery/>}/>
   <Route path="/about" element={<About/>}/>
   <Route path="/dashboard" element={
     <PrivateRoute>
