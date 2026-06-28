@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { useAuth } from "../context/authContext" 
 import ThemeToggle from "../components/themeToggle"
-import styles from "./login.module.css"
+import styles from "./auth.module.css"
 
 function Login() {
     const [email, setEmail] = useState('')
