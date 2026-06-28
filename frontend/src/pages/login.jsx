@@ -46,7 +46,7 @@ function Login() {
 
     const formVariants = {
         hidden: { opacity: 0, x: 20 },
-        visible: { opacity: 1, x: 0, transition: { staggerChildren: 0.1, delayChildren: 0.2 } }
+        visible: { opacity: 1, x: 0, transition: { staggerChildren: 0.05, delayChildren: 0.1 } }
     }
 
     const itemVariants = {
@@ -61,7 +61,10 @@ function Login() {
     return (
         <motion.div 
             className={styles.loginWrapper}
-            animate={{ rotate: konamiActivated ? 360 : 0 }}
+            animate={{ 
+                rotate: konamiActivated ? 360 : 0,
+                filter: konamiActivated ? "hue-rotate(180deg) saturate(200%)" : "hue-rotate(0deg) saturate(100%)"
+            }}
             transition={{ duration: 1, ease: "easeInOut" }}
         >
             {/* Left Panel - Branding */}
