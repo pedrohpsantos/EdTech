@@ -1,4 +1,4 @@
-# 11. Envio de E-mails Transacionais (Recuperação de Senha) via SMTP
+# ADR 0011: Envio de E-mails Transacionais (Recuperação de Senha) via SMTP
 
 Data: 2026-06-28
 
