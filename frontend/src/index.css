@@ -74,12 +74,36 @@
   --shadow:
     rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
 }
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
-}
-body{
   background-color: var(--bg) !important;
   color: var(--text) !important;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Micro-animations and polish for interactable elements */
+button, a {
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s ease, opacity 0.2s ease;
+}
+
+button:hover, a:hover {
+  transform: translateY(-1px);
+}
+
+button:active, a:active {
+  transform: translateY(1px);
+}
+
+.table-row {
+  transition: background-color 0.2s ease;
+}
+
+.table-row:hover {
+  background-color: var(--accent-bg);
 }
 
 #root {
