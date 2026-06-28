@@ -2,7 +2,7 @@ package com.edTech.controller;
 
 import com.edTech.dto.ProjectRequestDTO;
 import com.edTech.dto.ProjectResponseDTO;
-import com.edTech.dto.AddProjectMemberDTO;
+import com.edTech.dto.ProjectMemberRequestDTO;
 import com.edTech.model.User;
 import com.edTech.service.ProjectService;
 import org.springframework.http.HttpStatus;
@@ -38,11 +38,11 @@ public class ProjectController {
     @PostMapping("/{projectId}/members")
     public ResponseEntity<Void> addMember(
             @PathVariable UUID projectId,
-            @RequestBody AddProjectMemberDTO dto,
+            @RequestBody(required = false) ProjectMemberRequestDTO dto,
             Authentication authentication
     ) {
-        User user = (User) authentication.getPrincipal();
-        projectService.addMember(projectId, dto, user.getId());
+        User authenticatedUser = (User) authentication.getPrincipal();
+        projectService.addMember(projectId, dto, authenticatedUser);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }
