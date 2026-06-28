@@ -84,7 +84,7 @@ jobs:
       - name: Run Tests
         run: |
           chmod +x mvnw
-          ./mvnw test -T 1C
+          ./mvnw verify
         env: 
           AWS_ACCESS_KEY_ID: dummy_key
           AWS_SECRET_ACCESS_KEY: dummy_secret
@@ -95,11 +95,13 @@ jobs:
           JWT_EXPIRATION_MINUTES: 60
       - name: Upload JaCoCo Report
         uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: jacoco-report
           path: docvault/api/target/site/jacoco
+          if-no-files-found: warn
       - name: Run Mutation Tests (PiTest)
-        run: ./mvnw pitest:mutationCoverage -T 1C
+        run: ./mvnw org.pitest:pitest-maven:mutationCoverage
         env: 
           AWS_ACCESS_KEY_ID: dummy_key
           AWS_SECRET_ACCESS_KEY: dummy_secret
