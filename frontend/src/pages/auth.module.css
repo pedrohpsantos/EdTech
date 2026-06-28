@@ -16,7 +16,7 @@
   position: relative;
   background: linear-gradient(135deg, #1c093a 0%, #3d1482 50%, #1c093a 100%);
   color: white;
-  padding: 2.5rem;
+  padding: 2rem 2.5rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -146,9 +146,11 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 1.5rem;
+  padding: 1rem 1.5rem;
   background-color: #faf9fb;
   overflow-y: auto;
+  /* Hide scrollbar for a cleaner look if it barely overflows */
+  scrollbar-width: thin;
 }
 
 [data-theme="dark"] .rightPanel {
@@ -180,8 +182,8 @@
 
 .welcomeSub {
   color: var(--text);
-  margin-bottom: 1.25rem;
-  font-size: 0.875rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.8rem;
 }
 
 .inputGroup {
@@ -218,12 +220,12 @@
 
 .inputField {
   width: 100%;
-  padding: 8px 12px;
+  padding: 8px 36px 8px 12px;
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: 6px;
   background-color: var(--bg);
   color: var(--text-h);
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   transition: border-color 0.2s, box-shadow 0.2s;
   box-sizing: border-box;
 }
@@ -236,7 +238,7 @@
 
 .passwordToggle {
   position: absolute;
-  right: 12px;
+  right: 8px;
   top: 50%;
   transform: translateY(-50%);
   background: none;
@@ -247,6 +249,7 @@
   align-items: center;
   justify-content: center;
   padding: 4px;
+  height: 100%;
 }
 
 .submitBtn {
@@ -276,7 +279,7 @@
   display: flex;
   align-items: center;
   text-align: center;
-  margin: 1.25rem 0 1rem 0;
+  margin: 1rem 0 0.75rem 0;
 }
 
 .divider::before,
@@ -299,10 +302,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 12px;
+  padding: 6px 12px;
   border: 1px solid var(--border);
-  border-radius: 8px;
-  margin-bottom: 8px;
+  border-radius: 6px;
+  margin-bottom: 6px;
   background-color: var(--bg);
   cursor: pointer;
   transition: all 0.2s;
@@ -370,6 +373,7 @@
 .rowInputs {
   display: flex;
   gap: 12px;
+  align-items: flex-start;
 }
 .rowInputs > * {
   flex: 1;
@@ -404,4 +408,27 @@
     font-size: 1.1rem;
     color: var(--text-h);
   }
+}
+
+/* Smartwatches / Very small devices */
+@media (max-width: 360px) {
+  .rightPanel {
+    padding: 1rem;
+  }
+  .headline { font-size: 1.75rem; }
+  .welcomeTitle { font-size: 1.5rem; }
+  .demoCard { padding: 4px 8px; }
+}
+
+/* Ultrawide / TVs */
+@media (min-width: 1920px) {
+  .formContainer {
+    max-width: 500px;
+    transform: scale(1.2);
+    transform-origin: center;
+  }
+  .leftPanel {
+    padding: 6rem;
+  }
+  .headline { font-size: 4rem; }
 }

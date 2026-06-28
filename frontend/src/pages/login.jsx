@@ -93,7 +93,12 @@ function Login() {
                     <h2 className={styles.welcomeTitle}>Bem-vindo de volta</h2>
                     <p className={styles.welcomeSub}>Entre com suas credenciais institucionais</p>
 
-                    {erro && <div className={styles.errorAlert}>{erro}</div>}
+                    {erro && (
+                        <div className={styles.errorAlert}>
+                            <span style={{ marginRight: '8px' }}>⚠️</span> 
+                            {erro}
+                        </div>
+                    )}
 
                     <div className={styles.inputGroup}>
                         <div className={styles.labelRow}>
