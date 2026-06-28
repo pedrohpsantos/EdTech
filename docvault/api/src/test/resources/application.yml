@@ -1,4 +1,6 @@
 spring:
+  main:
+    allow-bean-definition-overriding: true
   flyway:
     enabled: false
   datasource:
@@ -9,3 +11,14 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create-drop
+  mail:
+    host: localhost
+    port: 2525
+    username: test
+    password: test
+
+s3:
+  access-key: test-access-key
+  secret-key: test-secret-key
+  endpoint: http://localhost:4566
+  region: us-east-1

@@ -65,6 +65,7 @@ public class ProjectControllerTest {
         mockMvc.perform(post("/api/projects")
                 .principal(SecurityContextHolder.getContext().getAuthentication())
                 .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(request)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.title").value("P1"));
@@ -78,7 +79,8 @@ public class ProjectControllerTest {
         when(projectService.listProjectsByUser(mockUser.getId())).thenReturn(Collections.singletonList(response));
 
         mockMvc.perform(get("/api/projects")
-                .principal(SecurityContextHolder.getContext().getAuthentication()))
+                .principal(SecurityContextHolder.getContext().getAuthentication())
+                .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].title").value("P1"));
     }
