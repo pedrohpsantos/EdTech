@@ -1,11 +1,12 @@
 import React from 'react';
 import styles from './networkBackground.module.css';
 
-const NetworkBackground = () => {
+const NetworkBackground = ({ isHyperdrive }) => {
   return (
     <div className={styles.container}>
       <svg 
         className={styles.svgMesh} 
+        style={{ animationDuration: isHyperdrive ? '2s' : '40s' }}
         viewBox="0 0 1000 1000" 
         preserveAspectRatio="xMidYMid slice" 
         xmlns="http://www.w3.org/2000/svg"
