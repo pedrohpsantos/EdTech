@@ -177,7 +177,7 @@ function Login() {
                         <div className={styles.demoArrow}>→</div>
                     </div>
 
-                    <p style={{ textAlign: 'center', marginTop: '1.5rem', fontSize: '0.875rem' }}>
+                    <p style={{ textAlign: 'center', margin: '1rem 0 0 0', fontSize: '0.875rem' }}>
                         Não tem conta? <Link to="/register" className={styles.forgotLink}>Cadastre-se</Link>
                     </p>
                 </div>
