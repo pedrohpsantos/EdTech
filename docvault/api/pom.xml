@@ -156,6 +156,26 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.pitest</groupId>
+                <artifactId>pitest-maven</artifactId>
+                <version>1.15.2</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.pitest</groupId>
+                        <artifactId>pitest-junit5-plugin</artifactId>
+                        <version>1.2.1</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <targetClasses>
+                        <param>com.edTech.service.RecoveryService</param>
+                    </targetClasses>
+                    <targetTests>
+                        <param>com.edTech.service.*Test</param>
+                    </targetTests>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>
