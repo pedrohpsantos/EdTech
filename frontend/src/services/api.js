@@ -124,40 +124,29 @@ export const uploadDocument = async (file, title, projectId, onUploadProgress) =
     }
 };
 
-// --- MOCKS TEMPORÁRIOS PARA RECUPERAÇÃO DE SENHA ---
-// Todo: Substituir por chamadas reais à API (ex: api.post('/api/auth/recovery/request'))
 export const requestPasswordRecovery = async (email) => {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            if (email.includes('@')) {
-                resolve({ sucesso: true, mensagem: 'Código enviado para o seu e-mail.' });
-            } else {
-                reject({ sucesso: false, message: 'E-mail inválido ou não encontrado.' });
-            }
-        }, 1500); // Simula delay de rede
-    }).catch(error => handleApiError(error, error.message));
+    try {
+        const response = await api.post('/api/auth/recovery/request', { email });
+        return { sucesso: true, mensagem: 'Código enviado para o seu e-mail (se cadastrado).' };
+    } catch (error) {
+        return handleApiError(error, 'Erro ao solicitar código de recuperação.');
+    }
 };
 
 export const verifyRecoveryCode = async (email, code) => {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            if (code === '123456') {
-                resolve({ sucesso: true, mensagem: 'Código verificado com sucesso.' });
-            } else {
-                reject({ sucesso: false, message: 'Código inválido ou expirado.' });
-            }
-        }, 1500);
-    }).catch(error => handleApiError(error, error.message));
+    try {
+        const response = await api.post('/api/auth/recovery/verify', { email, code });
+        return { sucesso: true, mensagem: 'Código verificado com sucesso.' };
+    } catch (error) {
+        return handleApiError(error, 'Código inválido ou expirado.');
+    }
 };
 
 export const resetPassword = async (email, code, newPassword) => {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            if (newPassword.length >= 8) {
-                resolve({ sucesso: true, mensagem: 'Senha alterada com sucesso.' });
-            } else {
-                reject({ sucesso: false, message: 'A nova senha não atende aos requisitos.' });
-            }
-        }, 1500);
-    }).catch(error => handleApiError(error, error.message));
+    try {
+        const response = await api.post('/api/auth/recovery/reset', { email, code, newPassword });
+        return { sucesso: true, mensagem: 'Senha alterada com sucesso.' };
+    } catch (error) {
+        return handleApiError(error, 'Erro ao redefinir senha.');
+    }
 };
