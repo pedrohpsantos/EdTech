@@ -21,6 +21,17 @@ spring:
     default-property-inclusion: non_null
   flyway:
     baseline-on-migrate: true
+  mail:
+    host: ${SMTP_HOST:sandbox.smtp.mailtrap.io}
+    port: ${SMTP_PORT:2525}
+    username: ${SMTP_USERNAME:}
+    password: ${SMTP_PASSWORD:}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 
 management:
   endpoints:

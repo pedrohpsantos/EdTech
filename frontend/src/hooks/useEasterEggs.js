@@ -41,7 +41,7 @@ export default function useEasterEggs() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  // Logo Clicks (Hyperdrive) - Logic moved entirely to handler to avoid setState in effect
+  // Logo Clicks (Hyperdrive & F5) - Logic moved entirely to handler to avoid setState in effect
   const handleLogoClick = () => {
     if (hyperdriveActivated) return; // Ignore clicks if already hyperdrive
 
@@ -61,9 +61,15 @@ export default function useEasterEggs() {
         return 0;
       } else {
         // Set idle timeout to reset clicks if user pauses
+        // If they pause exactly on 1 click, refresh page (Easter Egg)
         clickTimeoutRef.current = setTimeout(() => {
-          setLogoClicks(0);
-        }, 1500);
+          setLogoClicks((currentClicks) => {
+              if (currentClicks === 1) {
+                  window.location.reload();
+              }
+              return 0;
+          });
+        }, 1000); // 1 sec pause
         return nextClicks;
       }
     });
