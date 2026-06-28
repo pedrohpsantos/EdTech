@@ -46,9 +46,17 @@ function Login() {
                 
                 <div className={styles.leftContent}>
                     <div className={styles.logo} style={{ display: 'flex', alignItems: 'center' }}>
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '8px' }}>
-                            <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
-                            <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                        <svg width="28" height="28" viewBox="0 0 100 100" style={{ marginRight: '8px' }}>
+                            <line x1="20" y1="25" x2="80" y2="25" stroke="#FFFFFF" strokeWidth="10" strokeLinecap="round" />
+                            <line x1="20" y1="50" x2="55" y2="50" stroke="#FFFFFF" strokeWidth="10" strokeLinecap="round" />
+                            <line x1="20" y1="75" x2="80" y2="75" stroke="#FFFFFF" strokeWidth="10" strokeLinecap="round" />
+                            <line x1="20" y1="25" x2="20" y2="75" stroke="#FFFFFF" strokeWidth="10" strokeLinecap="round" />
+                            <circle cx="20" cy="25" r="8" fill="#FFFFFF" />
+                            <circle cx="80" cy="25" r="8" fill="#FFFFFF" />
+                            <circle cx="20" cy="50" r="8" fill="#FFFFFF" />
+                            <circle cx="55" cy="50" r="8" fill="#FF9100" />
+                            <circle cx="20" cy="75" r="8" fill="#FFFFFF" />
+                            <circle cx="80" cy="75" r="8" fill="#FFFFFF" />
                         </svg>
                         EdTech
                     </div>
@@ -98,9 +106,17 @@ function Login() {
 
                     {/* Header exclusively for mobile */}
                     <div className={styles.mobileHeader}>
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '4px' }}>
-                            <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
-                            <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                        <svg width="24" height="24" viewBox="0 0 100 100" style={{ marginRight: '4px' }}>
+                            <line x1="20" y1="25" x2="80" y2="25" stroke="currentColor" strokeWidth="10" strokeLinecap="round" />
+                            <line x1="20" y1="50" x2="55" y2="50" stroke="currentColor" strokeWidth="10" strokeLinecap="round" />
+                            <line x1="20" y1="75" x2="80" y2="75" stroke="currentColor" strokeWidth="10" strokeLinecap="round" />
+                            <line x1="20" y1="25" x2="20" y2="75" stroke="currentColor" strokeWidth="10" strokeLinecap="round" />
+                            <circle cx="20" cy="25" r="8" fill="currentColor" />
+                            <circle cx="80" cy="25" r="8" fill="currentColor" />
+                            <circle cx="20" cy="50" r="8" fill="currentColor" />
+                            <circle cx="55" cy="50" r="8" fill="#FF9100" />
+                            <circle cx="20" cy="75" r="8" fill="currentColor" />
+                            <circle cx="80" cy="75" r="8" fill="currentColor" />
                         </svg>
                         EdTech
                     </div>
