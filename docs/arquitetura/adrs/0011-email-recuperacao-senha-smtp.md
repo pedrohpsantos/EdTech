@@ -31,4 +31,4 @@ Adotaremos o `spring-boot-starter-mail`, que abstrai o envio de e-mails usando a
 
 | Versão | Data | Descrição | Autor |
 | :---: | :---: | :--- | :--- |
-| `1.0` | 28/06/2026 | Documento de Registro de Decisão Arquitetural (Envio de E-mails Transacionais) | Antigravity |
+| `1.0` | 28/06/2026 | Documento de Registro de Decisão Arquitetural (Envio de E-mails Transacionais) | Pedro Henrique P. Santos |
