@@ -186,10 +186,3 @@ Consolidar tecnicamente a integração entre o Frontend (React) e o Backend (Spr
 | `1.0` | 12/06/2026 | Documentação inicial da Entrega 4 | Pedro Henrique P. Santos |
 | `1.1` | 12/06/2026 | Padronização e adição de tabelas de commits e debito técnico | Pedro Henrique P. Santos |
 | `1.2` | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |
-
-
-## Histórico de Versão
-
-| Versão | Data | Descrição | Autor |
-|--------|------|-----------|-------|
-| 1.0 | 28/06/2026 | Criação e estruturação do documento | Pedro Henrique P. Santos |

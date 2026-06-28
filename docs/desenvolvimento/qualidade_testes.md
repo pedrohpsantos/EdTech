@@ -17,7 +17,7 @@ O nosso pipeline de CI está configurado para executar os testes e extrair a cob
 *(Estes são dados representativos para a Sprint atual baseados na validação da Issue 15).*
 
 
-## Histórico de Versão
+## Histórico de Versões
 
 | Versão | Data | Descrição | Autor |
 |--------|------|-----------|-------|

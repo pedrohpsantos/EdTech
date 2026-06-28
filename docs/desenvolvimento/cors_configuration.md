@@ -161,7 +161,7 @@ Caso o frontend (`app.meusistema.com`) e o backend (`api.outrosistema.com`) resi
 
 ---
 
-## Histórico de Versão
+## Histórico de Versões
 
 | Versão | Data | Descrição | Autor |
 |--------|------|-----------|-------|

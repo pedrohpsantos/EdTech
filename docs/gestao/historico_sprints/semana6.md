@@ -119,10 +119,3 @@ Todas as issues críticas da Sprint 6 foram repriorizadas para a Sprint 7, junta
 | Versão | Data | Descrição | Autor |
 | :---: | :---: | :--- | :--- |
 | `1.0` | 26/06/2026 | Documentação inicial da Entrega 6 | Pedro Henrique P. Santos |
-
-
-## Histórico de Versão
-
-| Versão | Data | Descrição | Autor |
-|--------|------|-----------|-------|
-| 1.0 | 28/06/2026 | Criação e estruturação do documento | Pedro Henrique P. Santos |

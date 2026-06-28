@@ -35,10 +35,3 @@ A antiga pasta de microsserviço de autenticação (`docvault/auth`) foi removid
 | Versão | Data | Descrição | Autor |
 | :---: | :---: | :--- | :--- |
 | `1.0` | 21/06/2026 | Criação do documento | Pedro Henrique P. Santos |
-
-
-## Histórico de Versão
-
-| Versão | Data | Descrição | Autor |
-|--------|------|-----------|-------|
-| 1.0 | 28/06/2026 | Criação e estruturação do documento | Pedro Henrique P. Santos |

@@ -155,10 +155,3 @@ Consolidar a Integração Contínua, finalizar a base de Autenticação com CORS
 | Versão | Data | Descrição | Autor |
 | :---: | :---: | :--- | :--- |
 | `1.0` | 19/06/2026 | Documentação inicial da Entrega 5 | Pedro Henrique P. Santos |
-
-
-## Histórico de Versão
-
-| Versão | Data | Descrição | Autor |
-|--------|------|-----------|-------|
-| 1.0 | 28/06/2026 | Criação e estruturação do documento | Pedro Henrique P. Santos |

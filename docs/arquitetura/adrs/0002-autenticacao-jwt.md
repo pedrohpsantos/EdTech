@@ -37,10 +37,3 @@ Optamos por utilizar **JWT (JSON Web Token)** armazenado exclusivamente em **Coo
 | :---: | :---: | :--- | :--- |
 | `1.0` | 04/06/2026 | Criação do documento | Pedro Henrique P. Santos |
 | `1.1` | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |
-
-
-## Histórico de Versão
-
-| Versão | Data | Descrição | Autor |
-|--------|------|-----------|-------|
-| 1.0 | 28/06/2026 | Criação e estruturação do documento | Pedro Henrique P. Santos |

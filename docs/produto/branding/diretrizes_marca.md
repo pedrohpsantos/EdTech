@@ -95,10 +95,3 @@ Abaixo você confere as amostras dos principais materiais e banners gerados para
 | `1.0` | 09/06/2026 | Consolidação das diretrizes de marca e galeria de assets | Pedro Henrique P. Santos |
 | `1.1` | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |
 
-
-
-## Histórico de Versão
-
-| Versão | Data | Descrição | Autor |
-|--------|------|-----------|-------|
-| 1.0 | 28/06/2026 | Criação e estruturação do documento | Pedro Henrique P. Santos |

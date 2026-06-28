@@ -116,10 +116,3 @@ stateDiagram-v2
 | 1.2 | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |
 | 1.3 | 26/06/2026 | Atualização dos status de entrega com base no MVP | Pedro Henrique P. Santos |
 | 1.4 | 26/06/2026 | Refatoração da notação para numeração contínua | Pedro Henrique P. Santos |
-
-
-## Histórico de Versão
-
-| Versão | Data | Descrição | Autor |
-|--------|------|-----------|-------|
-| 1.0 | 28/06/2026 | Criação e estruturação do documento | Pedro Henrique P. Santos |
