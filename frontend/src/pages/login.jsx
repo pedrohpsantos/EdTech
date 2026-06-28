@@ -180,7 +180,7 @@ function Login() {
                         <motion.div variants={itemVariants} className={styles.inputGroup}>
                             <div className={styles.labelRow}>
                                 <label className={styles.inputLabel}>Senha</label>
-                                <Link to="#" className={styles.forgotLink}>Recuperar senha</Link>
+                                <Link to="/recover-password" className={styles.forgotLink}>Recuperar senha</Link>
                             </div>
                             <div className={styles.inputWrapper}>
                                 <input 
