@@ -35,22 +35,26 @@
   z-index: 1;
 }
 
-/* Pseudo-network pattern */
+/* Animated Network Grid */
 .networkPattern {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  opacity: 0.3;
-  z-index: 1;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  opacity: 0.12;
   background-image: 
-    radial-gradient(circle at 20% 30%, white 2px, transparent 2px),
-    radial-gradient(circle at 80% 20%, white 2px, transparent 2px),
-    radial-gradient(circle at 40% 70%, white 2px, transparent 2px),
-    radial-gradient(circle at 70% 60%, white 2px, transparent 2px),
-    radial-gradient(circle at 10% 80%, white 2px, transparent 2px);
-  background-size: 100% 100%;
+    linear-gradient(rgba(255,255,255,0.3) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.3) 1px, transparent 1px);
+  background-size: 60px 60px;
+  transform: perspective(800px) rotateX(60deg) translateY(0);
+  animation: gridMove 15s linear infinite;
+  z-index: 1;
+}
+
+@keyframes gridMove {
+  0% { transform: perspective(800px) rotateX(60deg) translateY(0); }
+  100% { transform: perspective(800px) rotateX(60deg) translateY(60px); }
 }
 
 .leftContent {
