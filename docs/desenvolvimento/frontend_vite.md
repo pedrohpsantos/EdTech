@@ -52,3 +52,10 @@ Isso permite que você programe como se frontend e backend estivessem no mesmo d
 | `1.0` | 13/06/2026 | Criação do documento de suporte ao DevEx | Pedro Henrique P. Santos |
 | `1.1` | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |
 | `1.2` | 21/06/2026 | Adição da camada de services e dependências-chave | Pedro Henrique P. Santos |
+
+
+## Histórico de Versão
+
+| Versão | Data | Descrição | Autor |
+|--------|------|-----------|-------|
+| 1.0 | 28/06/2026 | Criação e estruturação do documento | Pedro Henrique P. Santos |

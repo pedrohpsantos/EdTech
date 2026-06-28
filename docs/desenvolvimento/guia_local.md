@@ -65,3 +65,10 @@ Se você encontrar erros de CORS durante o desenvolvimento local, certifique-se 
 | :---: | :---: | :--- | :--- |
 | `1.0` | 13/06/2026 | Criação do documento de suporte ao DevEx | Pedro Henrique P. Santos |
 | `1.1` | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |
+
+
+## Histórico de Versão
+
+| Versão | Data | Descrição | Autor |
+|--------|------|-----------|-------|
+| 1.0 | 28/06/2026 | Criação e estruturação do documento | Pedro Henrique P. Santos |

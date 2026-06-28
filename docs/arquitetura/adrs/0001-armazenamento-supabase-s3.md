@@ -40,3 +40,10 @@ Apesar de utilizarmos o Supabase primariamente neste momento, **todo o código e
 | `1.1` | 04/06/2026 | Padronização do formato do documento | Pedro Henrique P. Santos |
 | `1.2` | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |
 | `2.0` | 21/06/2026 | Migração de GCS/Disco Local para Supabase Storage via S3 | Pedro Henrique P. Santos |
+
+
+## Histórico de Versão
+
+| Versão | Data | Descrição | Autor |
+|--------|------|-----------|-------|
+| 1.0 | 28/06/2026 | Criação e estruturação do documento | Pedro Henrique P. Santos |

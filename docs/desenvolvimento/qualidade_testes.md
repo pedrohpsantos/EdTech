@@ -15,3 +15,10 @@ O nosso pipeline de CI está configurado para executar os testes e extrair a cob
 | **Security** | 98% | :material-check-circle: |
 
 *(Estes são dados representativos para a Sprint atual baseados na validação da Issue 15).*
+
+
+## Histórico de Versão
+
+| Versão | Data | Descrição | Autor |
+|--------|------|-----------|-------|
+| 1.0 | 28/06/2026 | Criação e estruturação do documento | Pedro Henrique P. Santos |

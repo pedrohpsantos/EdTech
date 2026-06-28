@@ -63,3 +63,10 @@ Temos apenas **uma única reunião síncrona na semana**, que ocorre todas as se
 | `1.0` | 30/05/2026 | Consolidação inicial dos acordos | Pedro Henrique P. Santos |
 | `1.1` | 04/06/2026 | Refinamento das políticas: adoção de uma ÚNICA reunião síncrona semanal (Sexta) presencial/Discord, formalização das Dailies totalmente assíncronas no Discord e rastreabilidade vital via Atas | Pedro Henrique P. Santos |
 | `1.2` | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |
+
+
+## Histórico de Versão
+
+| Versão | Data | Descrição | Autor |
+|--------|------|-----------|-------|
+| 1.0 | 28/06/2026 | Criação e estruturação do documento | Pedro Henrique P. Santos |

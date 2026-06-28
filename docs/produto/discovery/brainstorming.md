@@ -31,3 +31,10 @@ O resultado do Brainstorming foi organizado através da matriz MoSCoW (Must, Sho
 | `1.0`  | 30/05/2026 | Criação do documento             | Pedro Henrique P. Santos |
 | `1.1`  | 30/05/2026 | Rich Picture com animação e zoom | Pedro Henrique P. Santos |
 | `1.2` | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |
+
+
+## Histórico de Versão
+
+| Versão | Data | Descrição | Autor |
+|--------|------|-----------|-------|
+| 1.0 | 28/06/2026 | Criação e estruturação do documento | Pedro Henrique P. Santos |

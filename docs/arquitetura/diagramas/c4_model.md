@@ -81,3 +81,10 @@ O fluxo principal segue da esquerda para a direita (Usuário → SPA → API →
 | `1.0`  | 30/05/2026 | Diagramas C4 para documentação ágil de mercado | Pedro Henrique P. Santos |
 | `1.1`  | 30/05/2026 | Refinamento visual dos diagramas C4            | Pedro Henrique P. Santos |
 | `1.2` | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |
+
+
+## Histórico de Versão
+
+| Versão | Data | Descrição | Autor |
+|--------|------|-----------|-------|
+| 1.0 | 28/06/2026 | Criação e estruturação do documento | Pedro Henrique P. Santos |
