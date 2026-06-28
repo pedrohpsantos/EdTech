@@ -126,7 +126,7 @@ export const uploadDocument = async (file, title, projectId, onUploadProgress) =
 
 export const requestPasswordRecovery = async (email) => {
     try {
-        const response = await api.post('/api/auth/recovery/request', { email });
+        await api.post('/api/auth/recovery/request', { email });
         return { sucesso: true, mensagem: 'Código enviado para o seu e-mail (se cadastrado).' };
     } catch (error) {
         return handleApiError(error, 'Erro ao solicitar código de recuperação.');
@@ -135,7 +135,7 @@ export const requestPasswordRecovery = async (email) => {
 
 export const verifyRecoveryCode = async (email, code) => {
     try {
-        const response = await api.post('/api/auth/recovery/verify', { email, code });
+        await api.post('/api/auth/recovery/verify', { email, code });
         return { sucesso: true, mensagem: 'Código verificado com sucesso.' };
     } catch (error) {
         return handleApiError(error, 'Código inválido ou expirado.');
@@ -144,7 +144,7 @@ export const verifyRecoveryCode = async (email, code) => {
 
 export const resetPassword = async (email, code, newPassword) => {
     try {
-        const response = await api.post('/api/auth/recovery/reset', { email, code, newPassword });
+        await api.post('/api/auth/recovery/reset', { email, code, newPassword });
         return { sucesso: true, mensagem: 'Senha alterada com sucesso.' };
     } catch (error) {
         return handleApiError(error, 'Erro ao redefinir senha.');
