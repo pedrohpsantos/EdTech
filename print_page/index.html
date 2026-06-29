@@ -7910,38 +7910,10 @@ Qualquer rota protegida passa pelo <code>JwtAuthenticationFilter</code> antes de
         </head><body><h1 id="qualidade-e-testes-jacoco">Qualidade e Testes (JaCoCo)<a class="headerlink" href="#desenvolvimento-qualidade_testes-qualidade-e-testes-jacoco" title="Permanent link">¶</a></h1>
 <p>Esta página centraliza as métricas de qualidade de código do backend.
 O nosso pipeline de CI está configurado para executar os testes e extrair a cobertura usando o <strong>JaCoCo</strong>.</p>
-<div class="admonition tip">
-<p class="admonition-title">Automação</p>
-<p>No futuro, o GitHub Actions substituirá o conteúdo abaixo pelo relatório <abbr title="HyperText Markup Language — Linguagem de Marcação de Hipertexto">HTML</abbr> renderizado do JaCoCo sempre que houver um merge na <code>main</code>.</p>
-</div>
-<h2 id="desenvolvimento-qualidade_testes-cobertura-atual-backend">Cobertura Atual (Backend)<a class="headerlink" href="#desenvolvimento-qualidade_testes-cobertura-atual-backend" title="Permanent link">¶</a></h2>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">Módulo</th>
-<th style="text-align: center;">Cobertura de Linhas</th>
-<th style="text-align: center;">Testes Passando</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;"><strong><abbr title="Application Programming Interface">API</abbr></strong></td>
-<td style="text-align: center;">100%</td>
-<td style="text-align: center;"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2m-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8z"></path></svg></span></td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Service</strong></td>
-<td style="text-align: center;">100%</td>
-<td style="text-align: center;"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2m-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8z"></path></svg></span></td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Security</strong></td>
-<td style="text-align: center;">98%</td>
-<td style="text-align: center;"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2m-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8z"></path></svg></span></td>
-</tr>
-</tbody>
-</table>
-<p><em>(Estes são dados representativos para a Sprint atual baseados na validação da Issue 15).</em></p>
+<h2 id="desenvolvimento-qualidade_testes-relatorio-de-cobertura-jacoco">Relatório de Cobertura (JaCoCo)<a class="headerlink" href="#desenvolvimento-qualidade_testes-relatorio-de-cobertura-jacoco" title="Permanent link">¶</a></h2>
+<iframe src="../../jacoco/index.html" width="100%" height="800px" style="border:none; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);"></iframe>
+
+<p><em>(O relatório acima é gerado automaticamente pelo pipeline de <abbr title="Continuous Integration / Continuous Delivery — Integração Contínua / Entrega Contínua">CI/CD</abbr>)</em></p>
 <h2 id="desenvolvimento-qualidade_testes-historico-de-versoes">Histórico de Versões<a class="headerlink" href="#desenvolvimento-qualidade_testes-historico-de-versoes" title="Permanent link">¶</a></h2>
 <table>
 <thead>
@@ -11756,8 +11728,6 @@ Copie toda a estrutura abaixo para o novo arquivo, preencha os dados e adicione 
         <script src="../javascripts/mathjax.js"></script>
       
         <script src="../javascripts/mobile-nav.js"></script>
-      
-        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       

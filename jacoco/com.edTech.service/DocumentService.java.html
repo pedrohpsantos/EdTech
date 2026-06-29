@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DocumentService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">edtech-api</a> &gt; <a href="index.source.html" class="el_package">com.edTech.service</a> &gt; <span class="el_source">DocumentService.java</span></div><h1>DocumentService.java</h1><pre class="source lang-java linenums">package com.edTech.service;
+
+import com.edTech.dto.DocumentResponseDTO;
+import com.edTech.model.AcaoAuditoria;
+import com.edTech.model.Document;
+import com.edTech.model.DocumentStatus;
+import com.edTech.model.Project;
+import com.edTech.model.User;
+import com.edTech.repository.DocumentRepository;
+import com.edTech.repository.ProjectMemberRepository;
+import com.edTech.repository.ProjectRepository;
+import com.edTech.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+
+import java.io.IOException;
+import java.time.Duration;
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
+import org.apache.tika.Tika;
+
+@Service
+public class DocumentService {
+
+    private final DocumentRepository documentRepository;
+    private final ProjectRepository projectRepository;
+    private final UserRepository userRepository;
+    private final ProjectMemberRepository projectMemberRepository;
+    private final AuditLogService auditLogService;
+    private final StorageService storageService;
+<span class="fc" id="L37">    private final Tika tika = new Tika();</span>
+
+    public DocumentService(DocumentRepository documentRepository, 
+                           ProjectRepository projectRepository, 
+                           UserRepository userRepository, 
+                           ProjectMemberRepository projectMemberRepository, 
+                           AuditLogService auditLogService, 
+<span class="fc" id="L44">                           StorageService storageService) {</span>
+<span class="fc" id="L45">        this.documentRepository = documentRepository;</span>
+<span class="fc" id="L46">        this.projectRepository = projectRepository;</span>
+<span class="fc" id="L47">        this.userRepository = userRepository;</span>
+<span class="fc" id="L48">        this.projectMemberRepository = projectMemberRepository;</span>
+<span class="fc" id="L49">        this.auditLogService = auditLogService;</span>
+<span class="fc" id="L50">        this.storageService = storageService;</span>
+<span class="fc" id="L51">    }</span>
+
+    @Transactional
+    public DocumentResponseDTO uploadDocument(MultipartFile file, String title, UUID projectId, UUID authorId) {
+<span class="nc" id="L55">        User author = userRepository.findById(authorId)</span>
+<span class="nc" id="L56">                .orElseThrow(() -&gt; new RuntimeException(&quot;Author not found&quot;));</span>
+<span class="nc" id="L57">        Project project = projectRepository.findById(projectId)</span>
+<span class="nc" id="L58">                .orElseThrow(() -&gt; new RuntimeException(&quot;Project not found&quot;));</span>
+
+<span class="nc" id="L60">        projectMemberRepository.findByProjectIdAndUserId(projectId, authorId)</span>
+<span class="nc" id="L61">                .orElseThrow(() -&gt; new RuntimeException(&quot;Author is not a member of the project&quot;));</span>
+
+        // Validação de segurança estrita (MIME Type via Tika) mitigação SEC-004
+        try {
+<span class="nc" id="L65">            String detectedType = tika.detect(file.getInputStream());</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">            if (!&quot;application/pdf&quot;.equalsIgnoreCase(detectedType)) {</span>
+<span class="nc" id="L67">                throw new IllegalArgumentException(&quot;Apenas arquivos PDF reais sao permitidos. Tipo detectado: &quot; + detectedType);</span>
+            }
+<span class="nc" id="L69">        } catch (IOException e) {</span>
+<span class="nc" id="L70">            throw new RuntimeException(&quot;Falha ao analisar o conteudo do arquivo&quot;, e);</span>
+<span class="nc" id="L71">        }</span>
+        
+<span class="nc" id="L73">        String contentType = file.getContentType();</span>
+
+        try {
+<span class="nc" id="L76">            String originalFilename = file.getOriginalFilename();</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">            if (originalFilename == null) {</span>
+<span class="nc" id="L78">                throw new IllegalArgumentException(&quot;Filename cannot be null&quot;);</span>
+            }
+            // A chave do objeto no S3
+<span class="nc" id="L81">            String fileKey = UUID.randomUUID() + &quot;_&quot; + originalFilename;</span>
+
+<span class="nc" id="L83">            storageService.uploadFile(file, fileKey, contentType);</span>
+
+<span class="nc" id="L85">            Document document = new Document();</span>
+<span class="nc" id="L86">            document.setTitle(title);</span>
+<span class="nc" id="L87">            document.setFileUrl(fileKey);</span>
+<span class="nc" id="L88">            document.setStatus(DocumentStatus.DRAFT);</span>
+<span class="nc" id="L89">            document.setAuthor(author);</span>
+<span class="nc" id="L90">            document.setProject(project);</span>
+
+<span class="nc" id="L92">            document = documentRepository.save(document);</span>
+
+<span class="nc" id="L94">            auditLogService.logAction(authorId, AcaoAuditoria.UPLOAD_SUCCESS, &quot;Documento anexado no S3: &quot; + title);</span>
+
+<span class="nc" id="L96">            return mapToDTO(document);</span>
+<span class="nc" id="L97">        } catch (IOException e) {</span>
+<span class="nc" id="L98">            throw new RuntimeException(&quot;Failed to read file for upload&quot;);</span>
+<span class="nc" id="L99">        } catch (Exception e) {</span>
+<span class="nc" id="L100">            throw new RuntimeException(&quot;Failed to upload file to S3: &quot; + e.getMessage());</span>
+        }
+    }
+
+    public String getPresignedUrl(UUID documentId, UUID userId) {
+<span class="nc" id="L105">        Document document = documentRepository.findById(documentId)</span>
+<span class="nc" id="L106">                .orElseThrow(() -&gt; new RuntimeException(&quot;Document not found&quot;));</span>
+        
+        // Valida se o usuário tem permissão para acessar o projeto do documento
+<span class="nc" id="L109">        projectMemberRepository.findByProjectIdAndUserId(document.getProject().getId(), userId)</span>
+<span class="nc" id="L110">                .orElseThrow(() -&gt; new RuntimeException(&quot;Access denied: You are not a member of this project&quot;));</span>
+
+        String presignedUrl;
+        try {
+<span class="nc" id="L114">            presignedUrl = storageService.getPresignedUrl(document.getFileUrl());</span>
+<span class="nc" id="L115">        } catch (Exception e) {</span>
+<span class="nc" id="L116">            throw new RuntimeException(&quot;Failed to generate presigned URL&quot;, e);</span>
+<span class="nc" id="L117">        }</span>
+        
+<span class="nc" id="L119">        auditLogService.logAction(userId, AcaoAuditoria.UPLOAD_SUCCESS, &quot;Gerada URL presigned para download: &quot; + document.getTitle());</span>
+<span class="nc" id="L120">        return presignedUrl;</span>
+    }
+
+    public Page&lt;DocumentResponseDTO&gt; listDocumentsByUser(UUID userId, UUID projectId, String title, Pageable pageable) {
+<span class="nc" id="L124">        return documentRepository.findDocumentsByUserIdAndFilters(userId, projectId, title, pageable)</span>
+<span class="nc" id="L125">                .map(this::mapToDTO);</span>
+    }
+
+    @Transactional
+    public void deleteDocument(UUID documentId, UUID userId) {
+<span class="nc" id="L130">        Document document = documentRepository.findById(documentId)</span>
+<span class="nc" id="L131">                .orElseThrow(() -&gt; new RuntimeException(&quot;Document not found&quot;));</span>
+
+<span class="nc bnc" id="L133" title="All 2 branches missed.">        if (!document.getAuthor().getId().equals(userId)) {</span>
+<span class="nc" id="L134">            throw new RuntimeException(&quot;Only the author can delete this document&quot;);</span>
+        }
+<span class="nc bnc" id="L136" title="All 2 branches missed.">        if (document.getStatus() != DocumentStatus.DRAFT) {</span>
+<span class="nc" id="L137">            throw new RuntimeException(&quot;Only DRAFT documents can be deleted&quot;);</span>
+        }
+
+        // Deletar também do S3 poderia ser feito aqui, mas omitido por simplicidade ou soft-delete futuro
+<span class="nc" id="L141">        documentRepository.delete(document);</span>
+<span class="nc" id="L142">        auditLogService.logAction(userId, AcaoAuditoria.DELETE_DOCUMENT, &quot;Documento excluido: &quot; + document.getTitle());</span>
+<span class="nc" id="L143">    }</span>
+
+    private DocumentResponseDTO mapToDTO(Document document) {
+<span class="nc" id="L146">        DocumentResponseDTO dto = new DocumentResponseDTO();</span>
+<span class="nc" id="L147">        dto.setId(document.getId());</span>
+<span class="nc" id="L148">        dto.setTitle(document.getTitle());</span>
+<span class="nc" id="L149">        dto.setFileUrl(document.getFileUrl());</span>
+<span class="nc" id="L150">        dto.setStatus(document.getStatus());</span>
+<span class="nc" id="L151">        dto.setAuthorId(document.getAuthor().getId());</span>
+<span class="nc" id="L152">        dto.setProjectId(document.getProject().getId());</span>
+<span class="nc" id="L153">        dto.setCreatedAt(document.getCreatedAt());</span>
+<span class="nc" id="L154">        return dto;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

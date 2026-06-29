@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">edtech-api</a> &gt; <a href="index.source.html" class="el_package">com.edTech.service</a> &gt; <span class="el_source">UserService.java</span></div><h1>UserService.java</h1><pre class="source lang-java linenums">package com.edTech.service;
+
+import com.edTech.dto.RegisterRequestDTO;
+import com.edTech.model.User;
+import com.edTech.model.UserRole;
+import com.edTech.repository.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Locale;
+
+@Service
+public class UserService {
+
+    private static final String INSTITUTIONAL_DOMAIN = &quot;@unb.br&quot;;
+
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+
+<span class="fc" id="L21">    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {</span>
+<span class="fc" id="L22">        this.userRepository = userRepository;</span>
+<span class="fc" id="L23">        this.passwordEncoder = passwordEncoder;</span>
+<span class="fc" id="L24">    }</span>
+
+    @Transactional(readOnly = true)
+    public User authenticate(String email, String password) {
+<span class="fc" id="L28">        String normalizedEmail = email.trim().toLowerCase(Locale.ROOT);</span>
+<span class="fc" id="L29">        User user = userRepository.findByEmailIgnoreCase(normalizedEmail)</span>
+<span class="fc" id="L30">                .filter(User::isActive)</span>
+<span class="pc" id="L31">                .orElseThrow(() -&gt; new InvalidCredentialsException(&quot;Credenciais inválidas.&quot;));</span>
+
+<span class="pc bpc" id="L33" title="1 of 2 branches missed.">        if (!passwordEncoder.matches(password, user.getPasswordHash())) {</span>
+<span class="nc" id="L34">            throw new InvalidCredentialsException(&quot;Credenciais inválidas.&quot;);</span>
+        }
+
+<span class="fc" id="L37">        return user;</span>
+    }
+
+    @Transactional
+    public User register(RegisterRequestDTO request) {
+<span class="fc" id="L42">        String normalizedEmail = request.email().trim().toLowerCase(Locale.ROOT);</span>
+
+<span class="fc bfc" id="L44" title="All 2 branches covered.">        if (!normalizedEmail.endsWith(INSTITUTIONAL_DOMAIN)) {</span>
+<span class="fc" id="L45">            throw new InvalidInstitutionalEmailException(&quot;O e-mail deve pertencer ao dominio @unb.br.&quot;);</span>
+        }
+
+<span class="fc bfc" id="L48" title="All 2 branches covered.">        if (userRepository.existsByEmailIgnoreCase(normalizedEmail)) {</span>
+<span class="fc" id="L49">            throw new DuplicateEmailException(&quot;E-mail ja cadastrado.&quot;);</span>
+        }
+
+<span class="fc" id="L52">        User user = new User(</span>
+<span class="fc" id="L53">                request.name().trim(),</span>
+                normalizedEmail,
+<span class="fc" id="L55">                passwordEncoder.encode(request.password()),</span>
+                UserRole.RESEARCHER
+        );
+
+<span class="fc" id="L59">        return userRepository.save(user);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

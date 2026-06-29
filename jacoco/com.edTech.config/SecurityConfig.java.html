@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SecurityConfig.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">edtech-api</a> &gt; <a href="index.source.html" class="el_package">com.edTech.config</a> &gt; <span class="el_source">SecurityConfig.java</span></div><h1>SecurityConfig.java</h1><pre class="source lang-java linenums">package com.edTech.config;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.List;
+
+@Configuration
+public class SecurityConfig {
+
+    @Value(&quot;${cors.allowed-origins:http://localhost:5173}&quot;)
+    private String allowedOrigins;
+
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final JwtAuthenticationEntryPoint authenticationEntryPoint;
+
+    public SecurityConfig(
+            JwtAuthenticationFilter jwtAuthenticationFilter,
+            JwtAuthenticationEntryPoint authenticationEntryPoint
+<span class="fc" id="L34">    ) {</span>
+<span class="fc" id="L35">        this.jwtAuthenticationFilter = jwtAuthenticationFilter;</span>
+<span class="fc" id="L36">        this.authenticationEntryPoint = authenticationEntryPoint;</span>
+<span class="fc" id="L37">    }</span>
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+<span class="fc" id="L41">        return http</span>
+<span class="fc" id="L42">                .cors(cors -&gt; cors.configurationSource(corsConfigurationSource()))</span>
+                // API stateless: JWT em cookie HttpOnly com SameSite=Lax, sem sessão server-side.
+<span class="fc" id="L44">                .csrf(csrf -&gt; csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))</span>
+<span class="fc" id="L45">                .httpBasic(AbstractHttpConfigurer::disable)</span>
+<span class="fc" id="L46">                .formLogin(AbstractHttpConfigurer::disable)</span>
+<span class="fc" id="L47">                .sessionManagement(session -&gt; session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))</span>
+<span class="fc" id="L48">                .exceptionHandling(exception -&gt; exception.authenticationEntryPoint(authenticationEntryPoint))</span>
+<span class="fc" id="L49">                .authorizeHttpRequests(auth -&gt; auth</span>
+<span class="fc" id="L50">                        .requestMatchers(HttpMethod.OPTIONS, &quot;/**&quot;).permitAll()</span>
+<span class="fc" id="L51">                        .requestMatchers(HttpMethod.POST, &quot;/api/auth/login&quot;).permitAll()</span>
+<span class="fc" id="L52">                        .requestMatchers(HttpMethod.POST, &quot;/api/auth/register&quot;).permitAll()</span>
+<span class="fc" id="L53">                        .requestMatchers(&quot;/api/**&quot;).authenticated()</span>
+<span class="fc" id="L54">                        .anyRequest().permitAll()</span>
+                )
+<span class="fc" id="L56">                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)</span>
+<span class="fc" id="L57">                .build();</span>
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+<span class="fc" id="L62">        CorsConfiguration configuration = new CorsConfiguration();</span>
+<span class="fc" id="L63">        configuration.setAllowedOrigins(List.of(allowedOrigins.split(&quot;,&quot;)));</span>
+<span class="fc" id="L64">        configuration.setAllowedMethods(List.of(&quot;GET&quot;, &quot;POST&quot;, &quot;PUT&quot;, &quot;DELETE&quot;, &quot;OPTIONS&quot;));</span>
+<span class="fc" id="L65">        configuration.setAllowedHeaders(List.of(&quot;Content-Type&quot;, &quot;Authorization&quot;));</span>
+<span class="fc" id="L66">        configuration.setAllowCredentials(true);</span>
+
+<span class="fc" id="L68">        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();</span>
+<span class="fc" id="L69">        source.registerCorsConfiguration(&quot;/**&quot;, configuration);</span>
+<span class="fc" id="L70">        return source;</span>
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+<span class="fc" id="L75">        return new BCryptPasswordEncoder(12);</span>
+    }
+
+    @Bean
+    public InMemoryUserDetailsManager userDetailsService() {
+<span class="fc" id="L80">        return new InMemoryUserDetailsManager();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
