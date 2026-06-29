@@ -98,7 +98,7 @@ jobs:
         if: always()
         with:
           name: jacoco-report
-          path: docvault/api/target/site/jacoco
+          path: "**/site/jacoco"
           if-no-files-found: warn
       - name: Run Mutation Tests (PiTest)
         run: ./mvnw org.pitest:pitest-maven:mutationCoverage -B
