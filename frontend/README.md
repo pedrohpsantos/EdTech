@@ -23,6 +23,8 @@ Interface de usuário (SPA) da plataforma EdTech, construída para proporcionar 
 | **React Query (TanStack)** | 5.x | Data Fetching, cache e sincronização |
 | **Bootstrap** | 5.3.x | Framework de UI, layout e responsividade |
 | **Axios** | 1.x | Cliente HTTP (com interceptors de segurança) |
+| **Vitest** | 4.x | Framework de testes unitários super-rápido (nativo do Vite) |
+| **Playwright** | 1.x | Testes End-to-End (E2E) |
 
 ---
 
@@ -71,3 +73,4 @@ Por padrão, o Vite rodará em `http://localhost:5173`.
 
 - `npm run build` — Cria a versão otimizada para produção na pasta `dist/`.
 - `npm run lint` — Roda as checagens do ESLint (garantia de qualidade).
+- `npm run test` — Roda os testes unitários via Vitest.

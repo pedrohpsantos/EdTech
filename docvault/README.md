@@ -34,7 +34,7 @@ docvault/
 * **Framework:** React 19
 * **Build Tool:** Vite
 * **Linguagem:** TypeScript
-* **Estilização:** Tailwind CSS + UI Components Modernos
+* **Estilização:** Bootstrap 5 + UI Components Modernos
 * **Qualidade de Código:** ESLint, Vitest, Playwright
 
 ### DevOps & CI/CD
