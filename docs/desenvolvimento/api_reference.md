@@ -1,40 +1,40 @@
 ---
 title: API Reference (Swagger)
-hide:
-  - navigation
-  - toc
 ---
 
 # API Reference (Swagger)
 
-<div id="redoc-container"></div>
-
-<script src="https://cdn.redoc.ly/redoc/latest/bundles/redoc.standalone.js"></script>
+<div id="swagger-ui"></div>
+<link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@5.9.0/swagger-ui.css" />
+<script src="https://unpkg.com/swagger-ui-dist@5.9.0/swagger-ui-bundle.js"></script>
 <script>
-  function renderRedoc() {
-    var container = document.getElementById('redoc-container');
-    if (container && typeof Redoc !== 'undefined') {
-      Redoc.init('../../assets/openapi.json', {
-        theme: {
-          colors: { primary: { main: '#6200ea' } },
-          typography: { fontFamily: 'Inter, sans-serif' }
-        }
-      }, container);
+  function renderSwagger() {
+    var container = document.getElementById('swagger-ui');
+    if (container && typeof SwaggerUIBundle !== 'undefined') {
+      window.ui = SwaggerUIBundle({
+        url: "../../assets/openapi.json",
+        dom_id: '#swagger-ui',
+        deepLinking: true,
+        presets: [
+          SwaggerUIBundle.presets.apis,
+          SwaggerUIBundle.SwaggerUIStandalonePreset
+        ],
+        layout: "BaseLayout"
+      });
     }
   }
 
   if (typeof document$ !== "undefined") {
     document$.subscribe(function() {
-      if (typeof Redoc === 'undefined') {
-        var script = document.querySelector('script[src*="redoc"]');
-        if (script) script.addEventListener('load', renderRedoc);
+      if (typeof SwaggerUIBundle === 'undefined') {
+        var script = document.querySelector('script[src*="swagger-ui-bundle"]');
+        if (script) script.addEventListener('load', renderSwagger);
       } else {
-        // Redoc already loaded, but we need a slight delay to ensure DOM is ready
-        setTimeout(renderRedoc, 100);
+        setTimeout(renderSwagger, 100);
       }
     });
   } else {
-    window.addEventListener('DOMContentLoaded', renderRedoc);
+    window.addEventListener('DOMContentLoaded', renderSwagger);
   }
 </script>
 
