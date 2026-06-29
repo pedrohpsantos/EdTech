@@ -86,12 +86,12 @@ jobs:
           chmod +x mvnw
           ./mvnw verify
         env: 
-          AWS_ACCESS_KEY_ID: dummy_key
-          AWS_SECRET_ACCESS_KEY: dummy_secret
-          S3_ENDPOINT: https://abc.supabase.co/storage/v1/s3
-          S3_REGION: us-east-1
-          S3_BUCKET_NAME: documents
-          JWT_SECRET: supersecretjwtsecretkeyformyspringbootapp123
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          S3_ENDPOINT: ${{ secrets.S3_ENDPOINT }}
+          S3_REGION: ${{ secrets.S3_REGION }}
+          S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
           JWT_EXPIRATION_MINUTES: 60
       - name: Upload JaCoCo Report
         uses: actions/upload-artifact@v4
@@ -103,12 +103,12 @@ jobs:
       - name: Run Mutation Tests (PiTest)
         run: ./mvnw org.pitest:pitest-maven:mutationCoverage
         env: 
-          AWS_ACCESS_KEY_ID: dummy_key
-          AWS_SECRET_ACCESS_KEY: dummy_secret
-          S3_ENDPOINT: https://abc.supabase.co/storage/v1/s3
-          S3_REGION: us-east-1
-          S3_BUCKET_NAME: documents
-          JWT_SECRET: supersecretjwtsecretkeyformyspringbootapp123
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          S3_ENDPOINT: ${{ secrets.S3_ENDPOINT }}
+          S3_REGION: ${{ secrets.S3_REGION }}
+          S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
           JWT_EXPIRATION_MINUTES: 60
 
   # ==========================================

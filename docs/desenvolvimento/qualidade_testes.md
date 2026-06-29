@@ -3,18 +3,11 @@
 Esta página centraliza as métricas de qualidade de código do backend.
 O nosso pipeline de CI está configurado para executar os testes e extrair a cobertura usando o **JaCoCo**.
 
-!!! tip "Automação"
-    No futuro, o GitHub Actions substituirá o conteúdo abaixo pelo relatório HTML renderizado do JaCoCo sempre que houver um merge na `main`.
+## Relatório de Cobertura (JaCoCo)
 
-## Cobertura Atual (Backend)
+<iframe src="../../jacoco/index.html" width="100%" height="800px" style="border:none; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);"></iframe>
 
-| Módulo | Cobertura de Linhas | Testes Passando |
-| :--- | :---: | :---: |
-| **API** | 100% | :material-check-circle: |
-| **Service** | 100% | :material-check-circle: |
-| **Security** | 98% | :material-check-circle: |
-
-*(Estes são dados representativos para a Sprint atual baseados na validação da Issue 15).*
+*(O relatório acima é gerado automaticamente pelo pipeline de CI/CD)*
 
 
 ## Histórico de Versões

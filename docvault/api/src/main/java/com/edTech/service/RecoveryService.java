@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Optional;
-import java.util.Random;
+import java.security.SecureRandom;
 
 @Service
 public class RecoveryService {
@@ -40,7 +40,7 @@ public class RecoveryService {
         if (userOpt.isPresent()) {
             recoveryTokenRepository.deleteByEmail(normalizedEmail); // Limpa tokens antigos
             
-            String code = String.format("%06d", new Random().nextInt(999999));
+            String code = String.format("%06d", new SecureRandom().nextInt(999999));
             RecoveryToken token = new RecoveryToken(code, normalizedEmail, LocalDateTime.now().plusMinutes(15));
             recoveryTokenRepository.save(token);
             

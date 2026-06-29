@@ -23,6 +23,7 @@ import java.time.Duration;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import org.apache.tika.Tika;
 
 @Service
 public class DocumentService {
@@ -33,6 +34,7 @@ public class DocumentService {
     private final ProjectMemberRepository projectMemberRepository;
     private final AuditLogService auditLogService;
     private final StorageService storageService;
+    private final Tika tika = new Tika();
 
     public DocumentService(DocumentRepository documentRepository, 
                            ProjectRepository projectRepository, 
@@ -58,11 +60,17 @@ public class DocumentService {
         projectMemberRepository.findByProjectIdAndUserId(projectId, authorId)
                 .orElseThrow(() -> new RuntimeException("Author is not a member of the project"));
 
-        // Validação de segurança estrita (MIME Type) mitigação SEC-003
-        String contentType = file.getContentType();
-        if (contentType == null || !contentType.equalsIgnoreCase("application/pdf")) {
-            throw new IllegalArgumentException("Apenas arquivos PDF sao permitidos. Tipo recebido: " + contentType);
+        // Validação de segurança estrita (MIME Type via Tika) mitigação SEC-004
+        try {
+            String detectedType = tika.detect(file.getInputStream());
+            if (!"application/pdf".equalsIgnoreCase(detectedType)) {
+                throw new IllegalArgumentException("Apenas arquivos PDF reais sao permitidos. Tipo detectado: " + detectedType);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("Falha ao analisar o conteudo do arquivo", e);
         }
+        
+        String contentType = file.getContentType();
 
         try {
             String originalFilename = file.getOriginalFilename();

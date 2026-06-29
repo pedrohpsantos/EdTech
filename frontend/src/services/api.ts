@@ -1,4 +1,5 @@
-import axios from 'axios';
+import axios, { InternalAxiosRequestConfig } from 'axios';
+import { ApiResponse, User, Project, Document } from '../types';
 
 const BASE_URL = import.meta.env.VITE_API_URL;
 
@@ -15,7 +16,7 @@ const api = axios.create({
 });
 
 // Interceptor para adicionar o token CSRF em requisições que não sejam GET
-api.interceptors.request.use((config) => {
+api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
     if (config.method !== 'get') {
         config.headers['X-XSRF-TOKEN'] = getCsrfToken();
     }
@@ -37,12 +38,12 @@ api.interceptors.response.use(
 );
 
 // Utilitário padrão para tratamento de erros
-const handleApiError = (error, defaultMessage) => {
+const handleApiError = <T = any>(error: any, defaultMessage: string): ApiResponse<T> => {
     const message = error.response?.data?.message || error.message || defaultMessage;
     return { sucesso: false, mensagem: message };
 };
 
-export const login = async (email, senha) => {
+export const login = async (email: string, senha: string): Promise<ApiResponse<any>> => {
     try {
         const resposta = await api.post('/api/auth/login', { email, password: senha });
         return { sucesso: true, dados: resposta.data };
@@ -51,7 +52,7 @@ export const login = async (email, senha) => {
     }
 };
 
-export const register = async (nome, email, senha) => {
+export const register = async (nome: string, email: string, senha: string): Promise<ApiResponse<any>> => {
     try {
         const resposta = await api.post('/api/auth/register', { name: nome, email, password: senha });
         return { sucesso: true, dados: resposta.data };
@@ -60,7 +61,7 @@ export const register = async (nome, email, senha) => {
     }
 };
 
-export const logout = async () => {
+export const logout = async (): Promise<ApiResponse<void>> => {
     try {
         await api.post('/api/auth/logout');
         return { sucesso: true };
@@ -69,7 +70,7 @@ export const logout = async () => {
     }
 };
 
-export const getMe = async () => {
+export const getMe = async (): Promise<ApiResponse<User>> => {
     try {
         const resposta = await api.get('/api/auth/me');
         return { sucesso: true, dados: resposta.data };
@@ -78,7 +79,7 @@ export const getMe = async () => {
     }
 };
 
-export const getProjects = async () => {
+export const getProjects = async (): Promise<ApiResponse<Project[]>> => {
     try {
         const resposta = await api.get('/api/projects');
         return { sucesso: true, dados: resposta.data };
@@ -87,7 +88,7 @@ export const getProjects = async () => {
     }
 };
 
-export const getDocuments = async (projectId, title, page = 0, size = 20) => {
+export const getDocuments = async (projectId?: string, title?: string, page = 0, size = 20): Promise<ApiResponse<any>> => {
     try {
         const resposta = await api.get('/api/documents', {
             params: { projectId, title, page, size }
@@ -98,7 +99,7 @@ export const getDocuments = async (projectId, title, page = 0, size = 20) => {
     }
 };
 
-export const getDownloadUrl = async (documentId) => {
+export const getDownloadUrl = async (documentId: string): Promise<ApiResponse<any>> => {
     try {
         const resposta = await api.get(`/api/documents/${documentId}/download`);
         return { sucesso: true, dados: resposta.data };
@@ -107,7 +108,7 @@ export const getDownloadUrl = async (documentId) => {
     }
 };
 
-export const uploadDocument = async (file, title, projectId, onUploadProgress) => {
+export const uploadDocument = async (file: File, title: string, projectId: string, onUploadProgress?: (progressEvent: any) => void): Promise<ApiResponse<Document>> => {
     try {
         const formData = new FormData();
         formData.append('file', file);
@@ -124,7 +125,7 @@ export const uploadDocument = async (file, title, projectId, onUploadProgress) =
     }
 };
 
-export const requestPasswordRecovery = async (email) => {
+export const requestPasswordRecovery = async (email: string): Promise<ApiResponse<any>> => {
     try {
         await api.post('/api/auth/recovery/request', { email });
         return { sucesso: true, mensagem: 'Código enviado para o seu e-mail (se cadastrado).' };
@@ -133,7 +134,7 @@ export const requestPasswordRecovery = async (email) => {
     }
 };
 
-export const verifyRecoveryCode = async (email, code) => {
+export const verifyRecoveryCode = async (email: string, code: string): Promise<ApiResponse<any>> => {
     try {
         await api.post('/api/auth/recovery/verify', { email, code });
         return { sucesso: true, mensagem: 'Código verificado com sucesso.' };
@@ -142,7 +143,7 @@ export const verifyRecoveryCode = async (email, code) => {
     }
 };
 
-export const resetPassword = async (email, code, newPassword) => {
+export const resetPassword = async (email: string, code: string, newPassword: string): Promise<ApiResponse<any>> => {
     try {
         await api.post('/api/auth/recovery/reset', { email, code, newPassword });
         return { sucesso: true, mensagem: 'Senha alterada com sucesso.' };

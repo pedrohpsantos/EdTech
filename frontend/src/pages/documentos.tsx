@@ -1,111 +1,99 @@
-import { useState, useEffect } from "react"
-import { useNavigate } from "react-router-dom"
-
-import { getDocuments, getProjects, uploadDocument, getDownloadUrl } from "../services/api"
-import ThemeToggle from "../components/themeToggle"
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useProjects } from "../hooks/useProjects";
+import { useDocuments, useUploadDocument, useDownloadUrl } from "../hooks/useDocuments";
+import ThemeToggle from "../components/themeToggle";
+import { Document, Project } from "../types";
 
 function Documentos() {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     
-    const [documents, setDocuments] = useState([])
-    const [projects, setProjects] = useState([])
-    const [filterTitle, setFilterTitle] = useState("")
-    const [filterProjectId, setFilterProjectId] = useState("")
+    // Filtros e Paginação (no RQ)
+    const [filterTitle, setFilterTitle] = useState("");
+    const [filterProjectId, setFilterProjectId] = useState("");
     
-    // Upload state
-    const [uploadTitle, setUploadTitle] = useState("")
-    const [uploadProjectId, setUploadProjectId] = useState("")
-    const [uploadFile, setUploadFile] = useState(null)
-    const [uploadError, setUploadError] = useState("")
-    const [uploadSuccess, setUploadSuccess] = useState("")
-    const [uploadProgress, setUploadProgress] = useState(0)
-    const [isDragging, setIsDragging] = useState(false)
+    // React Query Hooks
+    const { data: projects = [], isLoading: loadingProjects } = useProjects();
+    const { data: documents = [], isLoading: loadingDocs, refetch } = useDocuments(filterProjectId, filterTitle);
+    const { mutateAsync: uploadDoc } = useUploadDocument();
+    const { mutateAsync: getUrl } = useDownloadUrl();
+    
+    // Upload state local (UI)
+    const [uploadTitle, setUploadTitle] = useState("");
+    const [uploadProjectId, setUploadProjectId] = useState("");
+    const [uploadFile, setUploadFile] = useState<File | null>(null);
+    const [uploadError, setUploadError] = useState("");
+    const [uploadSuccess, setUploadSuccess] = useState("");
+    const [uploadProgress, setUploadProgress] = useState(0);
+    const [isDragging, setIsDragging] = useState(false);
 
-    const loadProjects = async () => {
-        const res = await getProjects()
-        if (res.sucesso) {
-            setProjects(res.dados)
-        }
-    }
-
-    const loadDocuments = async () => {
-        const res = await getDocuments(filterProjectId, filterTitle)
-        if (res.sucesso) {
-            setDocuments(res.dados.content || res.dados || [])
-        }
-    }
-
-    const handleDownload = async (docId) => {
-        const res = await getDownloadUrl(docId)
-        if (res.sucesso) {
-            const url = typeof res.dados === 'string' ? res.dados : (res.dados?.url || res.dados?.downloadUrl || res.dados?.fileUrl);
+    const handleDownload = async (docId: string) => {
+        try {
+            const url = await getUrl(docId);
             if (url) {
                 window.open(url, '_blank', 'noopener,noreferrer');
             } else {
                 alert("URL de download não encontrada na resposta.");
             }
-        } else {
-            alert(res.mensagem || "Erro ao obter link de download.");
+        } catch (error: any) {
+            alert(error.message || "Erro ao obter link de download.");
         }
-    }
+    };
 
-    useEffect(() => {
-        // eslint-disable-next-line react-hooks/set-state-in-effect
-        loadProjects()
-        loadDocuments()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    const handleFilter = (e: React.FormEvent) => {
+        e.preventDefault();
+        refetch();
+    };
 
-    const handleFilter = (e) => {
-        e.preventDefault()
-        loadDocuments()
-    }
+    const handleDragOver = (e: React.DragEvent) => {
+        e.preventDefault();
+        setIsDragging(true);
+    };
 
-    const handleDragOver = (e) => {
-        e.preventDefault()
-        setIsDragging(true)
-    }
+    const handleDragLeave = (e: React.DragEvent) => {
+        e.preventDefault();
+        setIsDragging(false);
+    };
 
-    const handleDragLeave = (e) => {
-        e.preventDefault()
-        setIsDragging(false)
-    }
-
-    const handleDrop = (e) => {
-        e.preventDefault()
-        setIsDragging(false)
+    const handleDrop = (e: React.DragEvent) => {
+        e.preventDefault();
+        setIsDragging(false);
         if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-            setUploadFile(e.dataTransfer.files[0])
+            setUploadFile(e.dataTransfer.files[0]);
         }
-    }
+    };
 
-    const handleUpload = async (e) => {
-        e.preventDefault()
-        setUploadError("")
-        setUploadSuccess("")
-        setUploadProgress(0)
+    const handleUpload = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setUploadError("");
+        setUploadSuccess("");
+        setUploadProgress(0);
         
         if (!uploadFile || !uploadTitle || !uploadProjectId) {
-            setUploadError("Por favor, preencha todos os campos do upload.")
-            return
+            setUploadError("Por favor, preencha todos os campos do upload.");
+            return;
         }
 
-        const res = await uploadDocument(uploadFile, uploadTitle, uploadProjectId, (progressEvent) => {
-            const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
-            setUploadProgress(percentCompleted)
-        })
+        try {
+            await uploadDoc({
+                file: uploadFile, 
+                title: uploadTitle, 
+                projectId: uploadProjectId, 
+                onProgress: (progressEvent) => {
+                    const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+                    setUploadProgress(percentCompleted);
+                }
+            });
 
-        if (res.sucesso) {
-            setUploadSuccess("Documento enviado com sucesso!")
-            setUploadTitle("")
-            setUploadFile(null)
-            setTimeout(() => setUploadProgress(0), 3000)
-            loadDocuments()
-        } else {
-            setUploadError(res.mensagem)
-            setUploadProgress(0)
+            setUploadSuccess("Documento enviado com sucesso!");
+            setUploadTitle("");
+            setUploadFile(null);
+            setTimeout(() => setUploadProgress(0), 3000);
+        } catch (error: any) {
+            setUploadError(error.message);
+            setUploadProgress(0);
         }
-    }
+    };
 
     return (
         <div className="container mt-4">
@@ -138,7 +126,7 @@ function Documentos() {
                                 onChange={(e) => setFilterProjectId(e.target.value)}
                             >
                                 <option value="">Todos os Projetos</option>
-                                {projects.map(p => (
+                                {projects.map((p: Project) => (
                                     <option key={p.id} value={p.id}>{p.name}</option>
                                 ))}
                             </select>
@@ -174,7 +162,7 @@ function Documentos() {
                                 onChange={(e) => setUploadProjectId(e.target.value)}
                             >
                                 <option value="">Selecione o Projeto</option>
-                                {projects.map(p => (
+                                {projects.map((p: Project) => (
                                     <option key={p.id} value={p.id}>{p.name}</option>
                                 ))}
                             </select>
@@ -187,7 +175,7 @@ function Documentos() {
                                 onDragLeave={handleDragLeave}
                                 onDrop={handleDrop}
                                 style={{ borderStyle: 'dashed !important', borderWidth: '2px', cursor: 'pointer', transition: 'all 0.3s' }}
-                                onClick={() => document.getElementById('fileInput').click()}
+                                onClick={() => document.getElementById('fileInput')?.click()}
                             >
                                 {uploadFile ? (
                                     <div>
@@ -203,7 +191,11 @@ function Documentos() {
                                     id="fileInput"
                                     type="file" 
                                     className="d-none" 
-                                    onChange={(e) => setUploadFile(e.target.files[0])}
+                                    onChange={(e) => {
+                                        if (e.target.files && e.target.files.length > 0) {
+                                            setUploadFile(e.target.files[0])
+                                        }
+                                    }}
                                     accept=".pdf,.json,.csv"
                                 />
                             </div>
@@ -216,8 +208,8 @@ function Documentos() {
                                         role="progressbar" 
                                         style={{ width: `${uploadProgress}%` }}
                                         aria-valuenow={uploadProgress} 
-                                        aria-valuemin="0" 
-                                        aria-valuemax="100"
+                                        aria-valuemin={0} 
+                                        aria-valuemax={100}
                                     >
                                         {uploadProgress}%
                                     </div>
@@ -235,10 +227,12 @@ function Documentos() {
 
             {/* Document List */}
             <div className="row">
-                {documents.length === 0 ? (
+                {loadingDocs ? (
+                     <div className="col-12 text-center text-muted">Carregando documentos...</div>
+                ) : documents.length === 0 ? (
                     <div className="col-12 text-center text-muted">Nenhum documento encontrado.</div>
                 ) : (
-                    documents.map(doc => (
+                    documents.map((doc: Document) => (
                         <div className="col-md-4 mb-3" key={doc.id}>
                             <div className="card">
                                 <div className="card-body">
@@ -257,7 +251,7 @@ function Documentos() {
                 )}
             </div>
         </div>
-    )
+    );
 }
 
-export default Documentos
+export default Documentos;
