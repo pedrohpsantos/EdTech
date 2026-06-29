@@ -10,8 +10,7 @@ O repositório adota a arquitetura de monorepo para facilitar o controle de vers
 
 ```text
 docvault/
-├── api/           # Backend — regras de negócio, aprovações, auditoria e integração GCS
-└── frontend/      # Interface Web — SPA construída em Vue 3
+└── api/           # Backend — regras de negócio, aprovações, auditoria e integração GCS
 ```
 
 ---
@@ -31,12 +30,12 @@ docvault/
   * SpotBugs & Checkstyle (Análise Estática e Padronização)
 * **Documentação de API:** Swagger / OpenAPI
 
-### Frontend (`frontend/`)
-* **Framework:** Vue 3 (Composition API)
+### Frontend (Raiz do Monorepo: `../frontend/`)
+* **Framework:** React 19
 * **Build Tool:** Vite
 * **Linguagem:** TypeScript
 * **Estilização:** Tailwind CSS + UI Components Modernos
-* **Qualidade de Código:** ESLint, Prettier, Vue TSC
+* **Qualidade de Código:** ESLint, Vitest, Playwright
 
 ### DevOps & CI/CD
 * **Pipeline:** GitHub Actions
@@ -82,9 +81,9 @@ Configure as variáveis de ambiente necessárias para conectar ao banco e ao Goo
 ```
 *Acesse o Swagger em: http://localhost:8080/swagger-ui.html*
 
-### 3. Rodando o Frontend
+### 3. Rodando o Frontend (Raiz)
 ```bash
-cd docvault/frontend
+cd ../frontend
 
 # Instale as dependências
 npm install
