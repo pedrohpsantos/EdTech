@@ -15,6 +15,8 @@ import java.security.SecureRandom;
 
 @Service
 public class RecoveryService {
+    
+    private static final SecureRandom SECURE_RANDOM = new SecureRandom();
 
     private final UserRepository userRepository;
     private final RecoveryTokenRepository recoveryTokenRepository;
@@ -40,7 +42,7 @@ public class RecoveryService {
         if (userOpt.isPresent()) {
             recoveryTokenRepository.deleteByEmail(normalizedEmail); // Limpa tokens antigos
             
-            String code = String.format("%06d", new SecureRandom().nextInt(999999));
+            String code = String.format("%06d", SECURE_RANDOM.nextInt(999999));
             RecoveryToken token = new RecoveryToken(code, normalizedEmail, LocalDateTime.now().plusMinutes(15));
             recoveryTokenRepository.save(token);
             
