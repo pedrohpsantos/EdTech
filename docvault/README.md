@@ -1,83 +1,95 @@
-# EdTech — Monorepo
+# EdTech — DocVault Monorepo
 
-Sistema web para centralização, gerenciamento e auditoria de publicações acadêmicas, relatórios de pesquisa e datasets. Desenvolvido no laboratório **AILAB Makers**.
+Sistema web para centralização, gerenciamento e auditoria de publicações acadêmicas, relatórios de pesquisa e datasets. Desenvolvido para modernizar fluxos de aprovação e garantir rastreabilidade total das operações.
 
 ---
 
 ## Estrutura do Monorepo
 
+O repositório adota a arquitetura de monorepo para facilitar o controle de versão e integração contínua:
+
 ```text
 docvault/
-├── api/           # Backend — regras de negócio, upload, controle de versões e logs
-├── auth/          # Serviço de autenticação — JWT, cookies HttpOnly e Secure
-├── frontend/      # Interface React com componentes por persona
-└── docs/          # Referência à documentação GitPages do projeto
+├── api/           # Backend — regras de negócio, aprovações, auditoria e integração GCS
+└── frontend/      # Interface Web — SPA construída em Vue 3
 ```
 
 ---
 
-## Responsabilidade de Cada Módulo
+## 🛠 Stack Tecnológica Atualizada
 
-| Módulo | Responsabilidade |
-| :--- | :--- |
-| **api/** | Regras de negócio, upload de documentos, controle de versões, logs auditáveis |
-| **auth/** | Autenticação e autorização dos perfis: Pesquisador, Orientador e Admin do Laboratório |
-| **frontend/** | Interface React com componentes reutilizáveis por persona |
-| **docs/** | Documentação técnica publicada via GitHub Pages |
+### Backend (`api/`)
+* **Linguagem:** Java 21
+* **Framework:** Spring Boot 3
+* **Banco de Dados:** PostgreSQL 16 (via Docker / Cloud SQL)
+* **Migrations:** Flyway
+* **Armazenamento de Arquivos:** Google Cloud Storage (GCS)
+* **Qualidade de Código & Testes:** 
+  * JUnit 5 & Mockito (Testes Unitários)
+  * JaCoCo (Cobertura de Código)
+  * PiTest (Testes de Mutação)
+  * SpotBugs & Checkstyle (Análise Estática e Padronização)
+* **Documentação de API:** Swagger / OpenAPI
+
+### Frontend (`frontend/`)
+* **Framework:** Vue 3 (Composition API)
+* **Build Tool:** Vite
+* **Linguagem:** TypeScript
+* **Estilização:** Tailwind CSS + UI Components Modernos
+* **Qualidade de Código:** ESLint, Prettier, Vue TSC
+
+### DevOps & CI/CD
+* **Pipeline:** GitHub Actions
+* **Fluxo:** Unified Pipeline (Lint -> Build -> Test -> Deploy) com verificação estrita de qualidade em Pull Requests.
 
 ---
 
-## Stack Tecnológica
+## ⚙️ Principais Funcionalidades Implementadas
 
-| Camada | Tecnologias |
-| :--- | :--- |
-| **Backend (API)** | Java 17, Spring Boot 3, Spring Security, JWT, Flyway, PostgreSQL |
-| **Autenticação** | Spring Security, JWT, cookies HttpOnly e Secure |
-| **Frontend** | React, Tailwind CSS |
-| **Banco de Dados** | PostgreSQL (Google Cloud SQL) |
-| **Storage** | Google Cloud Storage |
-| **Infraestrutura** | Docker, Google Cloud Run |
-| **Testes** | JUnit 5 |
-| **Observabilidade** | Google Cloud Logging, Python |
+1. **Gestão de Documentos (Lifecycle)**
+   * Fluxo de aprovação em estados: `DRAFT` (Rascunho) ➔ `IN_REVIEW` (Em Análise) ➔ `APPROVED` (Aprovado) ou `REJECTED` (Rejeitado).
+2. **Logs de Auditoria (Audit Trail)**
+   * Sistema inteligente baseado em AOP (Aspect-Oriented Programming) que rastreia e armazena de forma imutável quem fez o quê e quando.
+3. **Google Cloud Storage (GCS)**
+   * Armazenamento escalável e seguro para arquivos PDF e metadados na nuvem do Google.
+4. **API Segura e Documentada**
+   * Endpoints protegidos, documentados de forma nativa e interativa no Swagger UI.
 
 ---
 
-## Como Rodar Localmente
+## 🚀 Como Rodar Localmente
 
-> Instruções detalhadas serão adicionadas conforme os módulos forem implementados.
+### 1. Preparando o Banco de Dados
+A maneira mais fácil de subir o banco é utilizando Docker:
+```bash
+cd infra
+docker-compose up -d
+```
+*Isso vai subir uma instância do PostgreSQL configurada para a aplicação na porta 5432.*
+
+### 2. Rodando o Backend (API)
+```bash
+cd docvault/api
+```
+Configure as variáveis de ambiente necessárias para conectar ao banco e ao Google Cloud Storage (ou utilize o arquivo `.env`/configurações da sua IDE).
 
 ```bash
-# 1. Clone o repositório
-git clone https://github.com/AILAB-MAKERS/EdTech.git
-cd EdTech/docvault
+# Para compilar e rodar os testes
+./mvnw clean verify
 
-# 2. Suba o banco de dados local
-docker compose -f ../infra/docker-compose.yml up -d
-
-# 3. Inicie o serviço de autenticação
-# Veja: auth/README.md
-
-# 4. Inicie a API
-# Veja: api/README.md
-
-# 5. Inicie o frontend
-# Veja: frontend/README.md
+# Para iniciar o Spring Boot
+./mvnw spring-boot:run
 ```
----
+*Acesse o Swagger em: http://localhost:8080/swagger-ui.html*
 
-# React + Vite
+### 3. Rodando o Frontend
+```bash
+cd docvault/frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Instale as dependências
+npm install
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+# Inicie o servidor de desenvolvimento
+npm run dev
+```
+*Acesse o sistema no navegador no endereço informado no terminal (geralmente http://localhost:5173).*
