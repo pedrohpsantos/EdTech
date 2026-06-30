@@ -41,7 +41,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         return HttpMethod.OPTIONS.matches(method)
                 || (HttpMethod.POST.matches(method) && "/api/auth/login".equals(path))
-                || (HttpMethod.POST.matches(method) && "/api/auth/register".equals(path));
+                || (HttpMethod.POST.matches(method) && "/api/auth/register".equals(path))
+                || path.startsWith("/api/auth/recovery/");
     }
 
     @Override
