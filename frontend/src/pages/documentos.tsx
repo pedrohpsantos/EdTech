@@ -1,48 +1,46 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useProjects } from "../hooks/useProjects";
-import { useDocuments, useUploadDocument, useDownloadUrl } from "../hooks/useDocuments";
-import ThemeToggle from "../components/themeToggle";
-import { Document, Project } from "../types";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import DashboardLayout from '../components/layout/DashboardLayout';
+import { useProjects } from '../hooks/useProjects';
+import { useDocuments, useUploadDocument, useDownloadUrl } from '../hooks/useDocuments';
+import { Document } from '../types';
+import '../assets/documentos.css';
 
-function Documentos() {
+const Documentos: React.FC = () => {
     const navigate = useNavigate();
     
-    // Filtros e Paginação (no RQ)
+    // Filtros
     const [filterTitle, setFilterTitle] = useState("");
-    const [filterProjectId, setFilterProjectId] = useState("");
-    
-    // React Query Hooks
-    const { data: projects = [], isLoading: loadingProjects } = useProjects();
-    const { data: documents = [], isLoading: loadingDocs, refetch } = useDocuments(filterProjectId, filterTitle);
-    const { mutateAsync: uploadDoc } = useUploadDocument();
-    const { mutateAsync: getUrl } = useDownloadUrl();
-    
-    // Upload state local (UI)
-    const [uploadTitle, setUploadTitle] = useState("");
-    const [uploadProjectId, setUploadProjectId] = useState("");
-    const [uploadFile, setUploadFile] = useState<File | null>(null);
-    const [uploadError, setUploadError] = useState("");
-    const [uploadSuccess, setUploadSuccess] = useState("");
-    const [uploadProgress, setUploadProgress] = useState(0);
+    const [filterStatus, setFilterStatus] = useState("");
+
+    // Modal State
+    const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
     const [isDragging, setIsDragging] = useState(false);
+    const [uploadFile, setUploadFile] = useState<File | null>(null);
+
+    // React Query Hooks
+    const { data: documents = [], isLoading: loadingDocs } = useDocuments("", filterTitle);
+    const { mutateAsync: getUrl } = useDownloadUrl();
+    const { mutateAsync: uploadDoc } = useUploadDocument();
 
     const handleDownload = async (docId: string) => {
         try {
             const url = await getUrl(docId);
             if (url) {
                 window.open(url, '_blank', 'noopener,noreferrer');
-            } else {
-                alert("URL de download não encontrada na resposta.");
             }
         } catch (error: any) {
             alert(error.message || "Erro ao obter link de download.");
         }
     };
 
-    const handleFilter = (e: React.FormEvent) => {
-        e.preventDefault();
-        refetch();
+    // Modal Handlers
+    const openUploadModal = () => setIsUploadModalOpen(true);
+    
+    const closeUploadModal = () => {
+        setIsUploadModalOpen(false);
+        setUploadFile(null);
+        setIsDragging(false);
     };
 
     const handleDragOver = (e: React.DragEvent) => {
@@ -63,195 +61,243 @@ function Documentos() {
         }
     };
 
-    const handleUpload = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setUploadError("");
-        setUploadSuccess("");
-        setUploadProgress(0);
-        
-        if (!uploadFile || !uploadTitle || !uploadProjectId) {
-            setUploadError("Por favor, preencha todos os campos do upload.");
-            return;
+    const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files.length > 0) {
+            setUploadFile(e.target.files[0]);
         }
+    };
 
-        try {
-            await uploadDoc({
-                file: uploadFile, 
-                title: uploadTitle, 
-                projectId: uploadProjectId, 
-                onProgress: (progressEvent) => {
-                    const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-                    setUploadProgress(percentCompleted);
-                }
-            });
+    // Mocks for prototype UI structure
+    const mockDocuments = [
+        { id: '1', title: 'Metodologia_Qualitativa_v3.pdf', project: 'Análise LGPD', type: 'PDF', size: '2.4 MB', modified: 'Hoje, 14:32', status: 'Em Revisão' },
+        { id: '2', title: 'Dataset_Experimento_A.csv', project: 'Sistemas de IA', type: 'CSV', size: '18.7 MB', modified: 'Ontem, 09:15', status: 'Aprovado' },
+        { id: '3', title: 'Referencial_Teorico_v2.pdf', project: 'Análise LGPD', type: 'PDF', size: '890 KB', modified: '12 Jun 2026', status: 'Submetido' },
+        { id: '4', title: 'config_modelo_final.json', project: 'Sistemas de IA', type: 'JSON', size: '12 KB', modified: '10 Jun 2026', status: 'Rascunho' },
+        { id: '5', title: 'Resultados_Parciais_Q2.pdf', project: 'Bioinformática', type: 'PDF', size: '4.1 MB', modified: '08 Jun 2026', status: 'Aprovado' },
+    ];
 
-            setUploadSuccess("Documento enviado com sucesso!");
-            setUploadTitle("");
-            setUploadFile(null);
-            setTimeout(() => setUploadProgress(0), 3000);
-        } catch (error: any) {
-            setUploadError(error.message);
-            setUploadProgress(0);
+    const getStatusClass = (status: string) => {
+        switch(status) {
+            case 'Em Revisão': return 'status-review';
+            case 'Aprovado': return 'status-approved';
+            case 'Submetido': return 'status-submitted';
+            case 'Rascunho': return 'status-draft';
+            default: return 'status-draft';
+        }
+    };
+
+    const getTypeColor = (type: string) => {
+        switch(type) {
+            case 'PDF': return 'type-pdf';
+            case 'CSV': return 'type-csv';
+            case 'JSON': return 'type-json';
+            default: return 'type-default';
         }
     };
 
     return (
-        <div className="container mt-4">
-            <div className="d-flex justify-content-between align-items-center mb-4">
-                <h1 style={{ color: '#220c46' }}>Documentos</h1>
-                <div>
-                    <button className="btn btn-secondary me-2" onClick={() => navigate('/dashboard')}>Voltar</button>
-                    <ThemeToggle />
+        <DashboardLayout
+            title="Meus Documentos"
+            subtitle=""
+            breadcrumbs={['EdTech', 'Dashboard']}
+        >
+            {/* Top Stats Cards */}
+            <div className="stats-row docs-stats-row mb-4">
+                <div className="stat-card">
+                    <div className="stat-header">
+                        Total de Documentos
+                        <div className="dot-indicator dot-purple"></div>
+                    </div>
+                    <div className="stat-body">
+                        <span className="stat-value">7</span>
+                    </div>
+                </div>
+                <div className="stat-card">
+                    <div className="stat-header">
+                        Em Revisão
+                        <div className="dot-indicator dot-orange"></div>
+                    </div>
+                    <div className="stat-body">
+                        <span className="stat-value">1</span>
+                    </div>
+                </div>
+                <div className="stat-card">
+                    <div className="stat-header">
+                        Aprovados
+                        <div className="dot-indicator dot-green"></div>
+                    </div>
+                    <div className="stat-body">
+                        <span className="stat-value">2</span>
+                    </div>
+                </div>
+                <div className="stat-card">
+                    <div className="stat-header">
+                        Submetidos
+                        <div className="dot-indicator dot-blue"></div>
+                    </div>
+                    <div className="stat-body">
+                        <span className="stat-value">2</span>
+                    </div>
                 </div>
             </div>
 
-            {/* Filter Section */}
-            <div className="card mb-4">
-                <div className="card-header">Filtrar Documentos</div>
-                <div className="card-body">
-                    <form onSubmit={handleFilter} className="row g-3">
-                        <div className="col-md-5">
+            {/* Banner Upload */}
+            <div className="docs-banner-upload">
+                <div className="banner-info">
+                    <span className="banner-subtitle"><i className="bi bi-folder2-open me-2"></i> PROJETO ATIVO: ANÁLISE LGPD</span>
+                    <h2 className="banner-title">Adicionar documento ao projeto</h2>
+                </div>
+                <button className="btn-upload-banner" onClick={openUploadModal}>
+                    <i className="bi bi-upload"></i> Novo Upload (PDF / CSV / JSON)
+                </button>
+            </div>
+
+            {/* Document List Header */}
+            <div className="docs-list-container dashboard-card mt-4">
+                <div className="docs-list-header">
+                    <div className="d-flex align-items-center gap-2">
+                        <h3 className="docs-list-title m-0">Meus Documentos</h3>
+                        <span className="docs-count-badge">7</span>
+                    </div>
+                    <div className="docs-filters">
+                        <div className="search-input-wrapper">
+                            <i className="bi bi-search search-icon"></i>
                             <input 
                                 type="text" 
-                                className="form-control" 
-                                placeholder="Buscar por título" 
+                                className="docs-search-input" 
+                                placeholder="Buscar documento..." 
                                 value={filterTitle}
                                 onChange={(e) => setFilterTitle(e.target.value)}
                             />
                         </div>
-                        <div className="col-md-5">
-                            <select 
-                                className="form-select" 
-                                value={filterProjectId}
-                                onChange={(e) => setFilterProjectId(e.target.value)}
-                            >
-                                <option value="">Todos os Projetos</option>
-                                {projects.map((p: Project) => (
-                                    <option key={p.id} value={p.id}>{p.name}</option>
-                                ))}
-                            </select>
-                        </div>
-                        <div className="col-md-2">
-                            <button type="submit" className="btn btn-primary w-100" style={{ backgroundColor: '#3b1b6d', borderColor: '#3b1b6d' }}>
-                                Filtrar
-                            </button>
-                        </div>
-                    </form>
+                        <select 
+                            className="docs-status-select"
+                            value={filterStatus}
+                            onChange={(e) => setFilterStatus(e.target.value)}
+                        >
+                            <option value="">Todos os status</option>
+                            <option value="Aprovado">Aprovado</option>
+                            <option value="Em Revisão">Em Revisão</option>
+                            <option value="Submetido">Submetido</option>
+                            <option value="Rascunho">Rascunho</option>
+                        </select>
+                    </div>
+                </div>
+
+                {/* Table */}
+                <div className="docs-table-wrapper">
+                    <table className="docs-table">
+                        <thead>
+                            <tr>
+                                <th>DOCUMENTO</th>
+                                <th>PROJETO</th>
+                                <th>TIPO</th>
+                                <th>TAMANHO</th>
+                                <th>MODIFICADO</th>
+                                <th>STATUS</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {mockDocuments.map((doc) => (
+                                <tr key={doc.id}>
+                                    <td>
+                                        <div className="d-flex align-items-center gap-3">
+                                            <div className={`doc-type-icon ${getTypeColor(doc.type)}-bg`}>
+                                                <i className={`bi bi-file-earmark-text ${getTypeColor(doc.type)}-text`}></i>
+                                            </div>
+                                            <span className="doc-title-cell">{doc.title}</span>
+                                        </div>
+                                    </td>
+                                    <td className="text-muted">{doc.project}</td>
+                                    <td>
+                                        <span className={`type-badge ${getTypeColor(doc.type)}-text`}>
+                                            {doc.type}
+                                        </span>
+                                    </td>
+                                    <td className="text-muted">{doc.size}</td>
+                                    <td className="text-muted">
+                                        <i className="bi bi-clock me-1"></i> {doc.modified}
+                                    </td>
+                                    <td>
+                                        <span className={`doc-status ${getStatusClass(doc.status)}`}>
+                                            {doc.status}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div className="table-actions">
+                                            <button className="btn-icon-action" title="Visualizar">
+                                                <i className="bi bi-eye"></i>
+                                            </button>
+                                            <button className="btn-icon-action" title="Download" onClick={() => handleDownload(doc.id)}>
+                                                <i className="bi bi-download"></i>
+                                            </button>
+                                            <button className="btn-icon-action" title="Opções">
+                                                <i className="bi bi-three-dots"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
-            {/* Upload Section */}
-            <div className="card mb-4">
-                <div className="card-header">Enviar Novo Documento</div>
-                <div className="card-body">
-                    {uploadError && <div className="alert alert-danger">{uploadError}</div>}
-                    {uploadSuccess && <div className="alert alert-success">{uploadSuccess}</div>}
-                    <form onSubmit={handleUpload} className="row g-3">
-                        <div className="col-md-4">
-                            <label className="form-label fw-bold">1. Título e Projeto</label>
-                            <input 
-                                type="text" 
-                                className="form-control mb-3" 
-                                placeholder="Título do Documento" 
-                                value={uploadTitle}
-                                onChange={(e) => setUploadTitle(e.target.value)}
-                            />
-                            <select 
-                                className="form-select mb-3" 
-                                value={uploadProjectId}
-                                onChange={(e) => setUploadProjectId(e.target.value)}
-                            >
-                                <option value="">Selecione o Projeto</option>
-                                {projects.map((p: Project) => (
-                                    <option key={p.id} value={p.id}>{p.name}</option>
-                                ))}
-                            </select>
+            {/* Upload Modal Overlay */}
+            {isUploadModalOpen && (
+                <div className="modal-overlay" onClick={closeUploadModal}>
+                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                        <div className="modal-header">
+                            <div className="modal-title-group">
+                                <h3 className="modal-title">Novo Upload</h3>
+                                <p className="modal-subtitle">PDF, CSV ou JSON - máx. 50 MB</p>
+                            </div>
+                            <button className="btn-close-modal" onClick={closeUploadModal}>
+                                <i className="bi bi-x-lg"></i>
+                            </button>
                         </div>
-                        <div className="col-md-8">
-                            <label className="form-label fw-bold">2. Arquivo (Drag & Drop)</label>
+                        
+                        <div className="modal-body">
                             <div 
-                                className={`border rounded p-4 text-center ${isDragging ? 'border-primary bg-light' : 'border-secondary'}`}
+                                className={`upload-area ${isDragging ? 'dragging' : ''}`}
                                 onDragOver={handleDragOver}
                                 onDragLeave={handleDragLeave}
                                 onDrop={handleDrop}
-                                style={{ borderStyle: 'dashed !important', borderWidth: '2px', cursor: 'pointer', transition: 'all 0.3s' }}
-                                onClick={() => document.getElementById('fileInput')?.click()}
+                                onClick={() => document.getElementById('modalFileInput')?.click()}
                             >
-                                {uploadFile ? (
-                                    <div>
-                                        <p className="mb-1 fw-bold text-success">Arquivo selecionado: {uploadFile.name}</p>
-                                        <small className="text-muted">Clique ou arraste outro para alterar</small>
-                                    </div>
-                                ) : (
-                                    <div>
-                                        <p className="mb-1">Arraste e solte o PDF aqui ou clique para selecionar</p>
-                                    </div>
-                                )}
+                                <div className="upload-icon-circle">
+                                    <i className="bi bi-upload"></i>
+                                </div>
+                                <p className="upload-main-text">
+                                    {uploadFile ? uploadFile.name : 'Arraste e solte ou clique para selecionar'}
+                                </p>
+                                <p className="upload-sub-text">
+                                    Formatos: .pdf, .csv, .json
+                                </p>
                                 <input 
-                                    id="fileInput"
+                                    id="modalFileInput"
                                     type="file" 
                                     className="d-none" 
-                                    onChange={(e) => {
-                                        if (e.target.files && e.target.files.length > 0) {
-                                            setUploadFile(e.target.files[0])
-                                        }
-                                    }}
+                                    onChange={handleFileInput}
                                     accept=".pdf,.json,.csv"
                                 />
                             </div>
                         </div>
-                        {uploadProgress > 0 && (
-                            <div className="col-12 mt-3">
-                                <div className="progress" style={{ height: '20px' }}>
-                                    <div 
-                                        className="progress-bar progress-bar-striped progress-bar-animated bg-success" 
-                                        role="progressbar" 
-                                        style={{ width: `${uploadProgress}%` }}
-                                        aria-valuenow={uploadProgress} 
-                                        aria-valuemin={0} 
-                                        aria-valuemax={100}
-                                    >
-                                        {uploadProgress}%
-                                    </div>
-                                </div>
-                            </div>
-                        )}
-                        <div className="col-12 text-end mt-3">
-                            <button type="submit" className="btn btn-success" disabled={uploadProgress > 0 && uploadProgress < 100} style={{ backgroundColor: '#3b1b6d', borderColor: '#3b1b6d' }}>
-                                {uploadProgress > 0 && uploadProgress < 100 ? 'Enviando...' : 'Fazer Upload'}
+
+                        <div className="modal-footer">
+                            <button className="btn-modal-cancel" onClick={closeUploadModal}>
+                                Cancelar
+                            </button>
+                            <button className="btn-modal-submit" disabled={!uploadFile}>
+                                Enviar Arquivo
                             </button>
                         </div>
-                    </form>
+                    </div>
                 </div>
-            </div>
-
-            {/* Document List */}
-            <div className="row">
-                {loadingDocs ? (
-                     <div className="col-12 text-center text-muted">Carregando documentos...</div>
-                ) : documents.length === 0 ? (
-                    <div className="col-12 text-center text-muted">Nenhum documento encontrado.</div>
-                ) : (
-                    documents.map((doc: Document) => (
-                        <div className="col-md-4 mb-3" key={doc.id}>
-                            <div className="card">
-                                <div className="card-body">
-                                    <h5 className="card-title">{doc.title}</h5>
-                                    <h6 className="card-subtitle mb-2 text-muted">Status: {doc.status}</h6>
-                                    <p className="card-text">
-                                        Data: {new Date(doc.createdAt).toLocaleDateString()}
-                                    </p>
-                                    <button onClick={() => handleDownload(doc.id)} className="btn btn-outline-primary btn-sm">
-                                        Baixar / Visualizar
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    ))
-                )}
-            </div>
-        </div>
+            )}
+        </DashboardLayout>
     );
-}
+};
 
 export default Documentos;
