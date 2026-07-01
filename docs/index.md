@@ -171,7 +171,7 @@ Tecnologias selecionadas para robustez, segurança e escalabilidade em ambiente 
 
 | Camada | Tecnologias |
 | :--- | :--- |
-| **Frontend** | HTML5, CSS3, JavaScript Vanilla, Bootstrap 5, React |
+| **Frontend** | HTML5, CSS Puro (Design System), Bootstrap 5 (Grid), React 19, Vite 8 |
 | **Backend** | Java 21, Spring Boot 4.1, Spring Security, JWT (`HttpOnly` + `Secure`) |
 | **Banco de Dados & Storage** | Google Cloud SQL for PostgreSQL, Supabase S3 Object Storage, Flyway |
 | **Infraestrutura & DevOps** | Docker, Google Cloud Run |
@@ -243,7 +243,8 @@ Time multidisciplinar do AILAB Makers.
 
 | Versão | Data | Descrição | Autor |
 | :---: | :---: | :--- | :--- |
-| `1.0` | 29/05/2026 | Criação do documento | Pedro Henrique P. Santos |
-| `1.1` | 04/06/2026 | Adição da secção Início Rápido e melhorias visuais | Pedro Henrique P. Santos |
-| `1.2` | 13/06/2026 | Reestruturação arquitetural da documentação e introdução de guias DevEx | Pedro Henrique P. Santos |
-| `1.3` | 21/06/2026 | Atualização da Stack Tecnológica (Java 21, Spring 4.1, S3) | Pedro Henrique P. Santos |
+| `0.1.0` | 10/06/2026 | Fundação da documentação técnica e governança. | Pedro Henrique P. Santos |
+| `0.2.0` | 13/06/2026 | Reestruturação arquitetural da documentação e introdução de guias DevEx. | Pedro Henrique P. Santos |
+| `0.3.0` | 20/06/2026 | Consolidação do Backend (Spring Boot 4.1 + Java 21) e Infra CI. | Pedro Henrique P. Santos |
+| `0.4.0` | 26/06/2026 | Integração de UI (Vite), Supabase DB/S3 e fechamento do MVP Sprint 6. | Pedro Henrique P. Santos |
+| `0.5.0` | 01/07/2026 | Refinamento Premium de UX/UI (Animações, Design System CSS Puro, Trilha de Pesquisa). | Pedro Henrique P. Santos |

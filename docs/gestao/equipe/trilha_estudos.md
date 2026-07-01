@@ -26,7 +26,7 @@ Sabemos que a equipe está em formação ("crua"), por isso cada trilha foi dese
 
 - **Efeitos Colaterais:** Como carregar dados ao abrir a tela usando `useEffect`.
 
-- **Tailwind CSS:** Como estilizar os componentes rapidamente usando as classes utilitárias do Tailwind.
+- **CSS Puro e Design System:** Como estruturar estilos robustos usando variáveis nativas (`--var`), Flexbox, Grid e criar temas claros/escuros sem depender de frameworks como Tailwind.
 
 ###  Nível 3: O Padrão EdTech
 

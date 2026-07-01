@@ -12,7 +12,8 @@ A interface de usuário é uma **SPA** desenvolvida em **React 19.x** com estili
 | Tecnologia | Função |
 | :--- | :--- |
 | **HTML5/CSS3** | Estrutura semântica e estilização base |
-| **Bootstrap 5** | Sistema de grid e layout <!-- TODO: confirmar com o time se Bootstrap ainda é usado ou se foi removido --> |
+| **Bootstrap 5** | Sistema de grid e layout (estritamente estrutural) |
+| **CSS Puro** | Design System proprietário, variáveis dinâmicas e tipografia |
 | **React 19.x** | Biblioteca de interfaces de usuário |
 
 ### Camada Servidora (Backend)
