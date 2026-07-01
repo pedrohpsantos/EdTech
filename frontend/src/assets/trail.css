@@ -222,6 +222,15 @@
     flex-shrink: 0;
 }
 
+.timeline-icon::before {
+    content: '';
+    position: absolute;
+    top: -2px; left: -2px; right: -2px; bottom: -2px;
+    background-color: var(--bg);
+    border-radius: 50%;
+    z-index: -1;
+}
+
 .timeline-icon.success { border-color: var(--ed-status-success); color: var(--ed-status-success); background-color: rgba(16, 185, 129, 0.1); }
 .timeline-icon.info { border-color: var(--ed-status-info); color: var(--ed-status-info); background-color: rgba(59, 130, 246, 0.1); }
 .timeline-icon.warning { border-color: var(--ed-orange); color: var(--ed-orange); background-color: rgba(245, 158, 11, 0.1); }

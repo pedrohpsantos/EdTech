@@ -83,7 +83,7 @@ const Dashboard: React.FC = () => {
                     {/* Recent Documents */}
                     <div className="dashboard-card">
                         <div className="card-header-flex">
-                            <h3 className="card-title">Progresso da Pesquisa</h3>
+                            <h3 className="card-title">Documentos Recentes</h3>
                             <span className="card-action-link">Workspace</span>
                         </div>
                         <div className="doc-list">
@@ -117,38 +117,6 @@ const Dashboard: React.FC = () => {
                                     <span className="doc-name ms-2" style={{fontWeight: 500}}>config_modelo_final.json</span>
                                 </div>
                                 <span className="doc-status status-draft">Rascunho</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="grid-right">
-                    {/* Compliance Score */}
-                    <div className="dashboard-card">
-                        <div className="card-header-flex" style={{paddingBottom: '10px', border: 'none'}}>
-                            <div>
-                                <div className="card-title">Pontuação de Conformidade</div>
-                                <div className="card-title-muted mt-1">LGPD · Integridade · Rastreabilidade</div>
-                            </div>
-                        </div>
-                        <div className="score-content">
-                            <div className="score-circle">
-                                <span className="score-number">92</span>
-                                <span className="score-label-small">PONTOS</span>
-                            </div>
-                            <div className="score-breakdown">
-                                <div className="breakdown-item">
-                                    <span>Anonimização</span>
-                                    <span className="breakdown-status-ok">OK</span>
-                                </div>
-                                <div className="breakdown-item">
-                                    <span>Consentimento</span>
-                                    <span className="breakdown-status-ok">OK</span>
-                                </div>
-                                <div className="breakdown-item">
-                                    <span>Versionamento</span>
-                                    <span className="breakdown-status-warn">Parcial</span>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -190,6 +158,39 @@ const Dashboard: React.FC = () => {
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <div className="grid-right">
+                    {/* Compliance Score */}
+                    <div className="dashboard-card">
+                        <div className="card-header-flex" style={{paddingBottom: '10px', border: 'none'}}>
+                            <div>
+                                <div className="card-title">Pontuação de Conformidade</div>
+                                <div className="card-title-muted mt-1">LGPD · Integridade · Rastreabilidade</div>
+                            </div>
+                        </div>
+                        <div className="score-content">
+                            <div className="score-circle">
+                                <span className="score-number">92</span>
+                                <span className="score-label-small">PONTOS</span>
+                            </div>
+                            <div className="score-breakdown">
+                                <div className="breakdown-item">
+                                    <span>Anonimização</span>
+                                    <span className="breakdown-status-ok">OK</span>
+                                </div>
+                                <div className="breakdown-item">
+                                    <span>Consentimento</span>
+                                    <span className="breakdown-status-ok">OK</span>
+                                </div>
+                                <div className="breakdown-item">
+                                    <span>Versionamento</span>
+                                    <span className="breakdown-status-warn">Parcial</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
 
                     {/* Activity Feed */}
                     <div className="dashboard-card">
