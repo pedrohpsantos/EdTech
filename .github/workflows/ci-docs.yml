@@ -9,6 +9,7 @@ on:
       - 'mkdocs.yml'
       - 'pyproject.toml'
       - '.github/workflows/ci-docs.yml'
+      - 'docvault/api/**'
   workflow_dispatch:
 
 permissions:
