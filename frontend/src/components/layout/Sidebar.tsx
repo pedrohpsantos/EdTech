@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../../context/authContext';
-import viteLogo from '../../assets/vite.svg';
+import logo from '../../assets/svgs/logo-white.svg';
 import '../../assets/dashboard.css';
 
 const Sidebar: React.FC = () => {
@@ -11,7 +11,7 @@ const Sidebar: React.FC = () => {
         <aside className="sidebar-container">
             <div className="sidebar-header">
                 <div className="logo-section">
-                    <img src={viteLogo} alt="EdTech Logo" style={{ width: '32px', height: '32px' }} />
+                    <img src={logo} alt="EdTech Logo" style={{ height: '32px' }} />
                     <span className="logo-text">EdTech</span>
                 </div>
                 <div className="role-badge">
