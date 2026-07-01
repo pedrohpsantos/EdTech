@@ -34,10 +34,7 @@ const Topbar: React.FC<TopbarProps> = ({ title, subtitle, breadcrumbs }) => {
                         ))}
                     </div>
                 )}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }} onClick={() => navigate(-1)}>
-                    <i className="bi bi-arrow-left-short" style={{ fontSize: '24px', color: 'var(--ed-text-muted)' }}></i>
-                    <h1 className="page-title">{title}</h1>
-                </div>
+                <h1 className="page-title">{title}</h1>
                 {subtitle && <p className="page-subtitle">{subtitle}</p>}
             </div>
             <div className="topbar-right">
