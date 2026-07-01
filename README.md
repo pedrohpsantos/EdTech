@@ -20,7 +20,7 @@ Plataforma acadêmica para centralização, gerenciamento e auditoria de publica
 ## 📌 Estado Atual do Repositório (Semana 6/7)
 
 O projeto encontra-se atualmente na fase final de entrega e lapidação do **MVP (Sprint 6/7)**.
-- **✅ Concluído:** Arquitetura do Monorepo, Autenticação, Proteção CSRF/JWT, Armazenamento em Supabase (Banco e Buckets S3), Layout UI/UX responsivo (React/Vite).
+- **✅ Concluído:** Arquitetura do Monorepo, Autenticação, Proteção CSRF/JWT, Infraestrutura Multi-Cloud (Google Cloud Storage/SQL/Cloud Run e Vercel), Layout UI/UX responsivo (React/Vite).
 - **🚧 Em Desenvolvimento:** Expansão das regras do painel do orientador e lapidação da auditoria final.
 
 ---

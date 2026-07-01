@@ -1,0 +1,63 @@
+name: Deploy Backend to Cloud Run
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'docvault/api/**'
+      - '.github/workflows/deploy-backend.yml'
+  workflow_dispatch:
+
+env:
+  PROJECT_ID: edtech-api-storage
+  REGION: southamerica-east1
+  SERVICE_NAME: edtech-backend
+  IMAGE: southamerica-east1-docker.pkg.dev/edtech-api-storage/cloud-run-source-deploy/edtech-backend
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - id: 'auth'
+        name: Authenticate to Google Cloud
+        uses: 'google-github-actions/auth@v2'
+        with:
+          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+
+      - name: Configure Docker
+        run: gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev
+
+      - name: Build and Push Container
+        run: |-
+          cd docvault/api
+          docker build -t ${{ env.IMAGE }}:${{ github.sha }} .
+          docker push ${{ env.IMAGE }}:${{ github.sha }}
+
+      - name: Deploy to Cloud Run
+        id: deploy
+        uses: google-github-actions/deploy-cloudrun@v2
+        with:
+          service: ${{ env.SERVICE_NAME }}
+          region: ${{ env.REGION }}
+          image: ${{ env.IMAGE }}:${{ github.sha }}
+          env_vars: |
+            SPRING_PROFILES_ACTIVE=prod
+            STORAGE_PROVIDER=gcs
+            GCP_PROJECT_ID=${{ env.PROJECT_ID }}
+            GCP_BUCKET_NAME=edtech-storage-prod
+          secrets: |
+            SPRING_DATASOURCE_URL=SPRING_DATASOURCE_URL:latest
+            SPRING_DATASOURCE_USERNAME=SPRING_DATASOURCE_USERNAME:latest
+            SPRING_DATASOURCE_PASSWORD=SPRING_DATASOURCE_PASSWORD:latest
+            JWT_SECRET=JWT_SECRET:latest
+
+      - name: Show Output
+        run: echo ${{ steps.deploy.outputs.url }}

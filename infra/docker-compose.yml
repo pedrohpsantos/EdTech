@@ -35,13 +35,19 @@ services:
       JWT_SECRET: ${JWT_SECRET:?JWT_SECRET deve ser definido em infra/.env}
       JWT_EXPIRATION_MINUTES: ${JWT_EXPIRATION_MINUTES:-60}
       JWT_COOKIE_SECURE: ${JWT_COOKIE_SECURE:-true}
+      STORAGE_PROVIDER: ${STORAGE_PROVIDER}
       AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
       AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
       S3_ENDPOINT: ${S3_ENDPOINT}
       S3_REGION: ${S3_REGION}
       S3_BUCKET_NAME: ${S3_BUCKET_NAME}
+      GCP_PROJECT_ID: ${GCP_PROJECT_ID}
+      GCP_BUCKET_NAME: ${GCP_BUCKET_NAME}
+      GCP_CREDENTIALS_LOCATION: ${GCP_CREDENTIALS_LOCATION}
     ports:
       - "${BACKEND_PORT:-8080}:8080"
+    volumes:
+      - ./gcp-credentials.json:/app/gcp-credentials.json:ro
     healthcheck:
       test: ["CMD-SHELL", "wget -qO- http://localhost:8080/actuator/health | grep -q 'UP'"]
       interval: 10s

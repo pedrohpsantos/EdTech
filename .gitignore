@@ -31,3 +31,4 @@ site/
 # Infraestrutura
 .env
 infra/.env
+infra/gcp-credentials.json
