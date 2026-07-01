@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JwtAuthenticationFilter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">edtech-api</a> &gt; <a href="index.source.html" class="el_package">com.edTech.config</a> &gt; <span class="el_source">JwtAuthenticationFilter.java</span></div><h1>JwtAuthenticationFilter.java</h1><pre class="source lang-java linenums">package com.edTech.config;
+
+import com.edTech.model.User;
+import com.edTech.repository.UserRepository;
+import com.edTech.service.JwtService;
+import io.jsonwebtoken.JwtException;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Component;
+import org.springframework.web.filter.OncePerRequestFilter;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
+
+@Component
+public class JwtAuthenticationFilter extends OncePerRequestFilter {
+
+    private static final String TOKEN_COOKIE_NAME = &quot;token&quot;;
+
+    private final JwtService jwtService;
+    private final UserRepository userRepository;
+
+<span class="fc" id="L32">    public JwtAuthenticationFilter(JwtService jwtService, UserRepository userRepository) {</span>
+<span class="fc" id="L33">        this.jwtService = jwtService;</span>
+<span class="fc" id="L34">        this.userRepository = userRepository;</span>
+<span class="fc" id="L35">    }</span>
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+<span class="fc" id="L39">        String path = request.getServletPath();</span>
+<span class="fc" id="L40">        String method = request.getMethod();</span>
+
+<span class="pc bpc" id="L42" title="1 of 2 branches missed.">        return HttpMethod.OPTIONS.matches(method)</span>
+<span class="pc bpc" id="L43" title="1 of 4 branches missed.">                || (HttpMethod.POST.matches(method) &amp;&amp; &quot;/api/auth/login&quot;.equals(path))</span>
+<span class="pc bpc" id="L44" title="1 of 4 branches missed.">                || (HttpMethod.POST.matches(method) &amp;&amp; &quot;/api/auth/register&quot;.equals(path))</span>
+<span class="pc bpc" id="L45" title="1 of 2 branches missed.">                || path.startsWith(&quot;/api/auth/recovery/&quot;);</span>
+    }
+
+    @Override
+    protected void doFilterInternal(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            FilterChain filterChain
+    ) throws ServletException, IOException {
+<span class="fc" id="L54">        Optional&lt;String&gt; token = extractToken(request);</span>
+
+<span class="fc bfc" id="L56" title="All 2 branches covered.">        if (token.isEmpty()) {</span>
+<span class="fc" id="L57">            filterChain.doFilter(request, response);</span>
+<span class="fc" id="L58">            return;</span>
+        }
+
+        try {
+<span class="fc" id="L62">            String email = jwtService.extractSubject(token.get());</span>
+<span class="pc bpc" id="L63" title="2 of 4 branches missed.">            if (email != null &amp;&amp; SecurityContextHolder.getContext().getAuthentication() == null) {</span>
+<span class="fc" id="L64">                userRepository.findByEmailIgnoreCase(email)</span>
+<span class="fc" id="L65">                        .filter(User::isActive)</span>
+<span class="fc" id="L66">                        .filter(user -&gt; jwtService.isValid(token.get(), user))</span>
+<span class="fc" id="L67">                        .ifPresent(user -&gt; authenticateUser(request, user));</span>
+            }
+<span class="fc" id="L69">        } catch (JwtException | IllegalArgumentException exception) {</span>
+<span class="fc" id="L70">            SecurityContextHolder.clearContext();</span>
+<span class="fc" id="L71">        }</span>
+
+<span class="fc" id="L73">        filterChain.doFilter(request, response);</span>
+<span class="fc" id="L74">    }</span>
+
+    private Optional&lt;String&gt; extractToken(HttpServletRequest request) {
+<span class="fc" id="L77">        Cookie[] cookies = request.getCookies();</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">        if (cookies == null) {</span>
+<span class="fc" id="L79">            return Optional.empty();</span>
+        }
+
+<span class="pc bpc" id="L82" title="1 of 2 branches missed.">        for (Cookie cookie : cookies) {</span>
+<span class="pc bpc" id="L83" title="2 of 4 branches missed.">            if (TOKEN_COOKIE_NAME.equals(cookie.getName()) &amp;&amp; !cookie.getValue().isBlank()) {</span>
+<span class="fc" id="L84">                return Optional.of(cookie.getValue());</span>
+            }
+        }
+
+<span class="nc" id="L88">        return Optional.empty();</span>
+    }
+
+    private void authenticateUser(HttpServletRequest request, User user) {
+<span class="fc" id="L92">        var authorities = List.of(new SimpleGrantedAuthority(&quot;ROLE_&quot; + user.getRole().name()));</span>
+<span class="fc" id="L93">        var authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);</span>
+<span class="fc" id="L94">        authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));</span>
+<span class="fc" id="L95">        SecurityContextHolder.getContext().setAuthentication(authentication);</span>
+<span class="fc" id="L96">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

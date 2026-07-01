@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RateLimitFilter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">edtech-api</a> &gt; <a href="index.source.html" class="el_package">com.edTech.security</a> &gt; <span class="el_source">RateLimitFilter.java</span></div><h1>RateLimitFilter.java</h1><pre class="source lang-java linenums">package com.edTech.security;
+
+import io.github.bucket4j.Bandwidth;
+import io.github.bucket4j.Bucket;
+import io.github.bucket4j.Refill;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
+import org.springframework.web.filter.OncePerRequestFilter;
+
+import java.io.IOException;
+import java.time.Duration;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+@Component
+<span class="fc" id="L20">public class RateLimitFilter extends OncePerRequestFilter {</span>
+
+<span class="fc" id="L22">    private final Map&lt;String, Bucket&gt; cache = new ConcurrentHashMap&lt;&gt;();</span>
+
+    private Bucket createNewBucket() {
+        // Limit: 5 requests per minute
+<span class="nc" id="L26">        Refill refill = Refill.intervally(5, Duration.ofMinutes(1));</span>
+<span class="nc" id="L27">        Bandwidth limit = Bandwidth.classic(5, refill);</span>
+<span class="nc" id="L28">        return Bucket.builder().addLimit(limit).build();</span>
+    }
+
+    private Bucket resolveBucket(String clientIp) {
+<span class="nc" id="L32">        return cache.computeIfAbsent(clientIp, k -&gt; createNewBucket());</span>
+    }
+
+    @Override
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws ServletException, IOException {
+
+<span class="nc" id="L39">        String path = request.getRequestURI();</span>
+        
+        // Aplica o rate limit apenas para rotas de autenticacao e recuperacao
+<span class="nc bnc" id="L42" title="All 2 branches missed.">        if (path.startsWith(&quot;/api/auth/&quot;)) {</span>
+<span class="nc" id="L43">            String clientIp = request.getRemoteAddr();</span>
+<span class="nc" id="L44">            Bucket bucket = resolveBucket(clientIp);</span>
+
+<span class="nc bnc" id="L46" title="All 2 branches missed.">            if (bucket.tryConsume(1)) {</span>
+<span class="nc" id="L47">                filterChain.doFilter(request, response);</span>
+            } else {
+<span class="nc" id="L49">                response.setStatus(HttpStatus.TOO_MANY_REQUESTS.value());</span>
+<span class="nc" id="L50">                response.getWriter().write(&quot;Too many requests. Please try again later.&quot;);</span>
+<span class="nc" id="L51">                return;</span>
+            }
+<span class="nc" id="L53">        } else {</span>
+<span class="nc" id="L54">            filterChain.doFilter(request, response);</span>
+        }
+<span class="nc" id="L56">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
