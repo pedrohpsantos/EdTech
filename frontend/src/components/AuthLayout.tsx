@@ -95,11 +95,15 @@ export default function AuthLayout({ children, title, subtitle }: { children: Re
                 variants={formVariants}
                 initial="hidden"
                 animate="visible"
+                style={{ position: 'relative' }}
             >
+                <div style={{ position: 'absolute', top: '24px', right: '24px' }}>
+                    <ThemeToggle />
+                </div>
+                
                 <div className={styles.formContainer}>
-                    <motion.div variants={itemVariants} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <motion.div variants={itemVariants} style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center' }}>
                         <h4 className={styles.acessoLabel}>Acesso à Plataforma</h4>
-                        <ThemeToggle />
                     </motion.div>
 
                     <motion.h2 variants={itemVariants} className={styles.welcomeTitle}>{title}</motion.h2>
