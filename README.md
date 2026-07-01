@@ -17,11 +17,12 @@ Plataforma acadêmica para centralização, gerenciamento e auditoria de publica
 
 ---
 
-## 📌 Estado Atual do Repositório (Semana 6/7)
+## 📌 Estado Atual do Repositório (Semana 7/7)
 
-O projeto encontra-se atualmente na fase final de entrega e lapidação do **MVP (Sprint 6/7)**.
+O projeto encontra-se atualmente na fase final de entrega e lapidação do **MVP (Sprint 7/7)**.
 - **✅ Concluído:** Arquitetura do Monorepo, Autenticação, Proteção CSRF/JWT, Infraestrutura Multi-Cloud (Google Cloud Storage/SQL/Cloud Run e Vercel), Layout UI/UX responsivo (React/Vite).
-- **🚧 Em Desenvolvimento:** Expansão das regras do painel do orientador e lapidação da auditoria final.
+- **✅ Concluído (Frontend UI):** Tradução nativa para Português, Design System em CSS Puro (Zero Tailwind, uso estrito de Bootstrap apenas para grid), implementação da "Trilha de Pesquisa" (Logs de Auditoria Visuais) e Skeleton Loadings premium para visualização de documentos.
+- **🚧 Em Desenvolvimento:** Integração final das APIs REST do Backend com as chamadas assíncronas do Frontend.
 
 ---
 
@@ -29,7 +30,7 @@ O projeto encontra-se atualmente na fase final de entrega e lapidação do **MVP
 
 Nosso repositório abriga tanto a aplicação de interface gráfica quanto a lógica de serviços. Acesse os guias de cada submódulo:
 
-- 🎨 **[Interface (Frontend)](frontend/README.md)**: Aplicação Web feita em React 19 + Vite 8. 
+- 🎨 **[Interface (Frontend)](frontend/README.md)**: Aplicação Web feita em React 19 + Vite 8 (Estilização em CSS Puro e layout Bootstrap).
 - ⚙️ **[Serviços (Backend API)](docvault/api/README.md)**: Aplicação RestFul feita em Java 21 + Spring Boot 4.1.0.
 
 *Para visualizar a arquitetura C4 estrutural de alto nível da nossa solução, consulte a aba de Arquitetura no Portal de Documentação (MkDocs).*
@@ -101,6 +102,7 @@ docker compose --env-file infra/.env -f infra/docker-compose.yml down -v
 | `0.2.0` | 13/06/2026 | Reestruturação arquitetural e guias DevEx (MkDocs). |
 | `0.3.0` | 20/06/2026 | Consolidação do Backend (Spring Boot 4.1 + Java 21) e Infra CI. |
 | `0.4.0` | 26/06/2026 | Integração de UI (Vite), Supabase DB/S3 e fechamento do MVP Sprint 6. |
+| `0.5.0` | 01/07/2026 | Refinamento Premium de UX/UI (Animações, Design System CSS Puro, Tela de Trilha de Pesquisa). |
 
 ---
 
