@@ -21,7 +21,7 @@ jobs:
 
     steps:
       - name: Checkout do código
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
@@ -36,7 +36,7 @@ jobs:
           enable-cache: true
 
       - name: Cache do MkDocs
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: .cache
           key: mkdocs-cache-${{ hashFiles('mkdocs.yml') }}

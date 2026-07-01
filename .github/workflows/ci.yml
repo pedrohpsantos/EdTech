@@ -24,7 +24,7 @@ jobs:
       run:
         working-directory: docvault/api
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Set up JDK 21
         uses: actions/setup-java@v5
         with:
@@ -44,7 +44,7 @@ jobs:
       run:
         working-directory: docvault/api
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Set up JDK 21
         uses: actions/setup-java@v5
         with:
@@ -56,7 +56,7 @@ jobs:
           chmod +x mvnw
           ./mvnw clean compile -T 1C -B
       - name: Upload Build Target
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: backend-target
           path: docvault/api/target/
@@ -77,7 +77,7 @@ jobs:
       JWT_SECRET: ${{ secrets.JWT_SECRET }}
       JWT_EXPIRATION_MINUTES: 60
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Set up JDK 21
         uses: actions/setup-java@v5
         with:
@@ -85,7 +85,7 @@ jobs:
           distribution: 'temurin'
           cache: maven
       - name: Download Build Target
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: backend-target
           path: docvault/api/target/
@@ -94,7 +94,7 @@ jobs:
           chmod +x mvnw
           ./mvnw verify -B
       - name: Upload JaCoCo Report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         if: always()
         with:
           name: jacoco-report
@@ -113,7 +113,7 @@ jobs:
       run:
         working-directory: frontend
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Set up Node 24
         uses: actions/setup-node@v4
         with:
@@ -133,7 +133,7 @@ jobs:
       run:
         working-directory: frontend
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Set up Node 24
         uses: actions/setup-node@v4
         with:
@@ -153,7 +153,7 @@ jobs:
       run:
         working-directory: frontend
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Set up Node 24
         uses: actions/setup-node@v4
         with:
@@ -186,7 +186,7 @@ jobs:
       SERVICE_NAME: edtech-backend
       IMAGE: southamerica-east1-docker.pkg.dev/edtech-storage-501117/cloud-run-source-deploy/edtech-backend
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       
       # ==================================
       # DEPLOY FRONTEND (FIREBASE)
@@ -212,7 +212,7 @@ jobs:
       # ==================================
       - id: 'auth'
         name: Authenticate to Google Cloud
-        uses: 'google-github-actions/auth@v2'
+        uses: 'google-github-actions/auth@v3'
         with:
           credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
 
