@@ -968,3 +968,9 @@ html {
     max-width: 2560px;
   }
 }
+
+/* Center tables when inside align="center" */
+div[align="center"] .md-typeset__table {
+  margin-left: auto;
+  margin-right: auto;
+}
