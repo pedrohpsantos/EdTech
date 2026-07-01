@@ -80,57 +80,6 @@ const Dashboard: React.FC = () => {
             {/* Main Grid */}
             <div className="dashboard-grid">
                 <div className="grid-left">
-                    {/* Pending Reviews */}
-                    <div className="dashboard-card">
-                        <div className="card-header-flex">
-                            <h3 className="card-title">Revisões Pendentes</h3>
-                            <a className="card-action-link">Ver todas</a>
-                        </div>
-                        <div className="doc-list">
-                            <div className="doc-item">
-                                <div className="doc-info">
-                                    <div className="doc-icon type-pdf-bg type-pdf-text"><i className="bi bi-file-earmark-pdf"></i></div>
-                                    <div className="doc-details">
-                                        <span className="doc-name">Metodologia_Qualitativa_v3.pdf</span>
-                                        <span className="doc-meta">Renata Silva · Análise LGPD</span>
-                                    </div>
-                                </div>
-                                <div className="doc-actions">
-                                    <span className="time-badge"><i className="bi bi-clock"></i> 2 dias</span>
-                                    <button className="btn-outline-action">Revisar</button>
-                                </div>
-                            </div>
-                            
-                            <div className="doc-item">
-                                <div className="doc-info">
-                                    <div className="doc-icon type-pdf-bg type-pdf-text"><i className="bi bi-file-earmark-pdf"></i></div>
-                                    <div className="doc-details">
-                                        <span className="doc-name">Resultados_Parciais_q2.pdf</span>
-                                        <span className="doc-meta">João Mendes · Bioinformática</span>
-                                    </div>
-                                </div>
-                                <div className="doc-actions">
-                                    <span className="time-badge muted"><i className="bi bi-clock"></i> 1 dia</span>
-                                    <button className="btn-outline-action">Revisar</button>
-                                </div>
-                            </div>
-
-                            <div className="doc-item">
-                                <div className="doc-info">
-                                    <div className="doc-icon type-json-bg type-json-text"><i className="bi bi-code-slash"></i></div>
-                                    <div className="doc-details">
-                                        <span className="doc-name">analise_estatistica_q2.json</span>
-                                        <span className="doc-meta">Renata Silva · Análise LGPD</span>
-                                    </div>
-                                </div>
-                                <div className="doc-actions">
-                                    <span className="time-badge muted"><i className="bi bi-clock"></i> 4 h</span>
-                                    <button className="btn-outline-action">Revisar</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                     {/* Recent Documents */}
                     <div className="dashboard-card">
                         <div className="card-header-flex">
