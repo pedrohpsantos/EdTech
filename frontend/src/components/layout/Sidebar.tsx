@@ -10,8 +10,8 @@ const Sidebar: React.FC = () => {
         <aside className="sidebar-container">
             <div className="sidebar-header">
                 <div className="logo-section">
-                    <div className="logo-icon">E</div>
-                    <span className="logo-text">RESEARCH TRAIL</span>
+                    <img src="/favicon.svg" alt="EdTech Logo" style={{ width: '32px', height: '32px' }} />
+                    <span className="logo-text">EdTech</span>
                 </div>
                 <div className="role-badge">
                     <span className="badge-dot"></span>
@@ -24,11 +24,11 @@ const Sidebar: React.FC = () => {
                     <h6 className="nav-section-title">GERAL</h6>
                     <nav className="nav-links">
                         <NavLink to="/dashboard" className={({ isActive }) => `nav-link-item ${isActive ? 'active' : ''}`}>
-                            <i className="bi bi-grid-1x2"></i> Overview
+                            <i className="bi bi-grid"></i> Overview
                             <i className="bi bi-chevron-right ms-auto arrow-icon"></i>
                         </NavLink>
                         <NavLink to="/documentos" className={({ isActive }) => `nav-link-item ${isActive ? 'active' : ''}`}>
-                            <i className="bi bi-folder2-open"></i> Research Workspace
+                            <i className="bi bi-folder"></i> Research Workspace
                         </NavLink>
                     </nav>
                 </div>
@@ -37,7 +37,7 @@ const Sidebar: React.FC = () => {
                     <h6 className="nav-section-title">INTELIGÊNCIA</h6>
                     <nav className="nav-links">
                         <NavLink to="/trail" className={({ isActive }) => `nav-link-item ${isActive ? 'active' : ''}`}>
-                            <i className="bi bi-magic"></i> Research Trail
+                            <i className="bi bi-diagram-3"></i> Research Trail
                         </NavLink>
                     </nav>
                 </div>
