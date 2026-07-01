@@ -240,8 +240,33 @@
 }
 
 .btn-icon-action:hover {
-    background-color: var(--border);
-    color: var(--ed-text-dark);
+    background-color: var(--ed-hover);
+    color: var(--ed-text-light);
+}
+
+/* Premium Toast Notification */
+.premium-toast {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    background-color: var(--bg);
+    border: 1px solid var(--ed-purple-main);
+    color: var(--ed-text-light);
+    padding: 16px 24px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 12px 24px rgba(126, 76, 203, 0.2);
+    font-size: 14px;
+    font-weight: 500;
+    z-index: 1000;
+    animation: fadeInUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.premium-toast i {
+    font-size: 18px;
+    color: var(--ed-purple-main);
 }
 
 /* -------------------------------------------------------------

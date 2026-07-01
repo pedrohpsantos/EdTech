@@ -17,14 +17,21 @@ const Documentos: React.FC = () => {
     const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
     const [isDragging, setIsDragging] = useState(false);
     const [uploadFile, setUploadFile] = useState<File | null>(null);
+    const [toastMessage, setToastMessage] = useState("");
 
     // React Query Hooks
     const { data: documents = [], isLoading: loadingDocs } = useDocuments("", filterTitle);
     const { mutateAsync: getUrl } = useDownloadUrl();
     const { mutateAsync: uploadDoc } = useUploadDocument();
 
+    const showToast = (message: string) => {
+        setToastMessage(message);
+        setTimeout(() => setToastMessage(""), 3000);
+    };
+
     const handleDownload = async (docId: string) => {
         try {
+            showToast("Iniciando download...");
             const url = await getUrl(docId);
             if (url) {
                 window.open(url, '_blank', 'noopener,noreferrer');
@@ -32,6 +39,14 @@ const Documentos: React.FC = () => {
         } catch (error: any) {
             alert(error.message || "Erro ao obter link de download.");
         }
+    };
+
+    const handleView = (docName: string) => {
+        showToast(`Abrindo visualização de: ${docName}`);
+    };
+
+    const handleOptions = (docName: string) => {
+        showToast(`Carregando opções para: ${docName}`);
     };
 
     // Modal Handlers
@@ -226,13 +241,13 @@ const Documentos: React.FC = () => {
                                     </td>
                                     <td>
                                         <div className="table-actions">
-                                            <button className="btn-icon-action" title="Visualizar">
+                                            <button className="btn-icon-action" title="Visualizar" onClick={() => handleView(doc.name)}>
                                                 <i className="bi bi-eye"></i>
                                             </button>
                                             <button className="btn-icon-action" title="Download" onClick={() => handleDownload(doc.id)}>
                                                 <i className="bi bi-download"></i>
                                             </button>
-                                            <button className="btn-icon-action" title="Opções">
+                                            <button className="btn-icon-action" title="Opções" onClick={() => handleOptions(doc.name)}>
                                                 <i className="bi bi-three-dots"></i>
                                             </button>
                                         </div>
@@ -294,6 +309,14 @@ const Documentos: React.FC = () => {
                             </button>
                         </div>
                     </div>
+                </div>
+            )}
+
+            {/* Premium Toast Notification */}
+            {toastMessage && (
+                <div className="premium-toast">
+                    <i className="bi bi-info-circle"></i>
+                    <span>{toastMessage}</span>
                 </div>
             )}
         </DashboardLayout>
