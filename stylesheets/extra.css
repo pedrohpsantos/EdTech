@@ -946,3 +946,25 @@ html {
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
+
+/* -------------------------------------------------------------------------
+ * LARGE DISPLAY OPTIMIZATIONS (Ultrawides & TVs)
+ * Expand the max-width of MkDocs from the default 1220px to utilize more space
+ * ------------------------------------------------------------------------- */
+@media screen and (min-width: 1600px) {
+  .md-grid {
+    max-width: 1600px;
+  }
+}
+
+@media screen and (min-width: 1920px) {
+  .md-grid {
+    max-width: 1920px;
+  }
+}
+
+@media screen and (min-width: 2560px) {
+  .md-grid {
+    max-width: 2560px;
+  }
+}
