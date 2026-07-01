@@ -181,10 +181,10 @@ jobs:
       contents: 'read'
       id-token: 'write'
     env:
-      PROJECT_ID: edtech-api-storage
+      PROJECT_ID: edtech-storage-501117
       REGION: southamerica-east1
       SERVICE_NAME: edtech-backend
-      IMAGE: southamerica-east1-docker.pkg.dev/edtech-api-storage/cloud-run-source-deploy/edtech-backend
+      IMAGE: southamerica-east1-docker.pkg.dev/edtech-storage-501117/cloud-run-source-deploy/edtech-backend
     steps:
       - uses: actions/checkout@v4
       
@@ -236,7 +236,7 @@ jobs:
             SPRING_PROFILES_ACTIVE=prod
             STORAGE_PROVIDER=gcs
             GCP_PROJECT_ID=${{ env.PROJECT_ID }}
-            GCP_BUCKET_NAME=edtech-storage-prod
+            GCP_BUCKET_NAME=edtech-vault-storage
           secrets: |
             SPRING_DATASOURCE_URL=SPRING_DATASOURCE_URL:latest
             SPRING_DATASOURCE_USERNAME=SPRING_DATASOURCE_USERNAME:latest
