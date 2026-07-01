@@ -1756,6 +1756,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../arquitetura/adrs/0012-firebase-hosting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ADR 0012: Adoção do Firebase Hosting para o Frontend
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -3383,6 +3411,17 @@
     <span class="md-ellipsis">
       
         3.4.11 ADR 0011: Envio de E-mails Transacionais (Recuperação de Senha) via SMTP
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#arquitetura-adrs-0012-firebase-hosting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4.12 ADR 0012: Adoção do Firebase Hosting para o Frontend
       
     </span>
   </a>
@@ -7383,6 +7422,51 @@ Precisamos enviar um código de segurança (OTP - One Time Password) de 6 dígit
 <td style="text-align: left;">Pedro Henrique P. Santos</td>
 </tr>
 </tbody>
+</table></body></html></section><section class="print-page" id="arquitetura-adrs-0012-firebase-hosting" heading-number="3.4.12"><html><head>
+        <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            remove_material_navigation();remove_mkdocs_theme_navigation();generate_toc();
+        })
+        </script>
+        </head><body><h1 id="adr-0012-adocao-do-firebase-hosting-para-o-frontend"><abbr title="Architecture Decision Record — Registro de Decisão Arquitetural">ADR</abbr> 0012: Adoção do Firebase Hosting para o Frontend<a class="headerlink" href="#arquitetura-adrs-0012-firebase-hosting-adr-0012-adocao-do-firebase-hosting-para-o-frontend" title="Permanent link">¶</a></h1>
+<h2 id="arquitetura-adrs-0012-firebase-hosting-status">Status<a class="headerlink" href="#arquitetura-adrs-0012-firebase-hosting-status" title="Permanent link">¶</a></h2>
+<p>Aceito</p>
+<h2 id="arquitetura-adrs-0012-firebase-hosting-contexto">Contexto<a class="headerlink" href="#arquitetura-adrs-0012-firebase-hosting-contexto" title="Permanent link">¶</a></h2>
+<p>A plataforma foi dividida em um monólito modular para o backend (<abbr title="Application Programming Interface">API</abbr>) e uma aplicação <abbr title="Single Page Application">SPA</abbr> (Single Page Application) para o frontend (<abbr title="Architecture Decision Record — Registro de Decisão Arquitetural">ADR</abbr> 0006). Enquanto o backend precisa de processamento dinâmico e recursos computacionais em contêineres (Cloud Run - <abbr title="Architecture Decision Record — Registro de Decisão Arquitetural">ADR</abbr> 0003), o frontend gerado (construído em React/Vite) consiste apenas em arquivos estáticos (<abbr title="HyperText Markup Language — Linguagem de Marcação de Hipertexto">HTML</abbr>, <abbr title="Cascading Style Sheets — Folhas de Estilo em Cascata">CSS</abbr> e JavaScript) e não necessita de capacidade computacional contínua em servidor, pois a execução ocorre no navegador do usuário.
+Hospedar arquivos estáticos em instâncias de contêiner ou máquinas virtuais introduziria sobrecarga de infraestrutura, além de não usufruir de distribuições em borda (CDN) de forma nativa e econômica.</p>
+<h2 id="arquitetura-adrs-0012-firebase-hosting-decisao">Decisão<a class="headerlink" href="#arquitetura-adrs-0012-firebase-hosting-decisao" title="Permanent link">¶</a></h2>
+<p>Optamos por utilizar o <strong>Firebase Hosting</strong> como plataforma para hospedar o frontend da aplicação (<abbr title="Single Page Application">SPA</abbr>).</p>
+<h2 id="arquitetura-adrs-0012-firebase-hosting-consequencias">Consequências<a class="headerlink" href="#arquitetura-adrs-0012-firebase-hosting-consequencias" title="Permanent link">¶</a></h2>
+<h3 id="arquitetura-adrs-0012-firebase-hosting-positivas">Positivas<a class="headerlink" href="#arquitetura-adrs-0012-firebase-hosting-positivas" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Distribuição Global (CDN Automática):</strong> O Firebase armazena em cache o conteúdo estático nas bordas globais, reduzindo a latência consideravelmente, independentemente de onde o usuário (aluno/pesquisador) acessar a aplicação.</li>
+<li><strong>Certificado SSL Gratuito:</strong> O Firebase Hosting provê o provisionamento automático de certificados SSL, dispensando operações manuais.</li>
+<li><strong>Custo Efetivo:</strong> Para o tráfego esperado, a hospedagem de estáticos cobrirá totalmente a entrega, reduzindo severamente os custos em comparação a manter um servidor Node/Nginx rodando.</li>
+<li><strong>Integração <abbr title="Continuous Integration / Continuous Delivery — Integração Contínua / Entrega Contínua">CI/CD</abbr>:</strong> A publicação via GitHub Actions é nativamente suportada e de fácil manutenção (<code>action-hosting-deploy</code>).</li>
+</ul>
+<h3 id="arquitetura-adrs-0012-firebase-hosting-negativas-riscos">Negativas / Riscos<a class="headerlink" href="#arquitetura-adrs-0012-firebase-hosting-negativas-riscos" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Vendor Lock-in (Ecossistema Google):</strong> Aumenta o grau de dependência da suíte do Google (já adotada para o backend via Google Cloud). Contudo, a migração para outra CDN (ex: <abbr title="Amazon Web Services">AWS</abbr> S3+CloudFront, Cloudflare Pages ou Vercel) seria de baixíssima complexidade caso necessária no futuro.</li>
+</ul>
+<hr>
+<h2 id="arquitetura-adrs-0012-firebase-hosting-historico-de-versoes">Histórico de Versões<a class="headerlink" href="#arquitetura-adrs-0012-firebase-hosting-historico-de-versoes" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Versão</th>
+<th style="text-align: center;">Data</th>
+<th style="text-align: left;">Descrição</th>
+<th style="text-align: left;">Autor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><code>1.0</code></td>
+<td style="text-align: center;">01/07/2026</td>
+<td style="text-align: left;">Criação do documento</td>
+<td style="text-align: left;">Pedro Henrique P. Santos</td>
+</tr>
+</tbody>
 </table></body></html></section></section></section>
                     <section class='print-page md-section' id='section-4' heading-number='4'>
                         <h1>Desenvolvimento (DevEx)<a class='headerlink' href='#section-4' title='Permanent link'></a>
@@ -7610,13 +7694,10 @@ Qualquer rota protegida passa pelo <code>JwtAuthenticationFilter</code> antes de
 <p>Existem fluxos independentes:</p>
 <ol>
 <li>
-<p><strong>Frontend CI (<code>ci-frontend.yml</code>)</strong>: Baixa as dependências Node e roda o comando de build do Vite.</p>
+<p><strong>Unified <abbr title="Continuous Integration / Continuous Delivery — Integração Contínua / Entrega Contínua">CI/CD</abbr> (<code>ci.yml</code>)</strong>: Compila o código Java, roda todos os testes unitários (<code>mvn verify</code>), roda lint/build/test no Frontend, e faz o deploy de ambos para Produção caso a branch seja a <code>main</code>.</p>
 </li>
 <li>
-<p><strong>Backend CI (<code>ci-backend.yml</code>)</strong>: Compila o código Java, roda todos os testes unitários (<code>mvn verify</code>) e expõe relatórios.</p>
-</li>
-<li>
-<p><strong>Docs CI (<code>ci-docs.yml</code>)</strong>: Publica automaticamente esta documentação (MkDocs) para o GitHub Pages (rodando sempre que há alterações na branch <code>main</code>).</p>
+<p><strong>Docs CI (<code>ci-docs.yml</code>)</strong>: Publica automaticamente esta documentação (MkDocs) para o GitHub Pages. Disparada em alterações na <code>main</code> dentro da pasta <code>docs/</code> ou em modificações no backend que afetem relatórios de cobertura.</p>
 </li>
 </ol>
 <h2 id="desenvolvimento-ci_cd-regras-de-protecao">Regras de Proteção<a class="headerlink" href="#desenvolvimento-ci_cd-regras-de-protecao" title="Permanent link">¶</a></h2>
@@ -7629,8 +7710,22 @@ Qualquer rota protegida passa pelo <code>JwtAuthenticationFilter</code> antes de
 <p>Os jobs de CI (Backend e Frontend) passaram com a bolinha verde (sem quebrar a build ou testes).</p>
 </li>
 </ul>
-<h2 id="desenvolvimento-ci_cd-processo-de-deploy-em-producao">Processo de Deploy em Produção<a class="headerlink" href="#desenvolvimento-ci_cd-processo-de-deploy-em-producao" title="Permanent link">¶</a></h2>
-<p>De acordo com o <abbr title="Architecture Decision Record — Registro de Decisão Arquitetural">ADR</abbr> 0003, o deploy das partes ativas do sistema (Frontend e Backend) ocorrerão via Google Cloud Run de forma conteinerizada. (Documentação de instruções manuais de deploy ainda a ser elaborada nas próximas fases).</p>
+<h2 id="desenvolvimento-ci_cd-processo-de-deploy-em-producao-automatico">Processo de Deploy em Produção (Automático)<a class="headerlink" href="#desenvolvimento-ci_cd-processo-de-deploy-em-producao-automatico" title="Permanent link">¶</a></h2>
+<p>De acordo com o <abbr title="Architecture Decision Record — Registro de Decisão Arquitetural">ADR</abbr> 0003, o deploy das partes ativas do sistema ocorre de forma automatizada pelo <strong>GitHub Actions</strong> (<code>ci.yml</code>):</p>
+<h3 id="desenvolvimento-ci_cd-frontend">Frontend<a class="headerlink" href="#desenvolvimento-ci_cd-frontend" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Provedor</strong>: Firebase Hosting</li>
+<li><strong><abbr title="Google Cloud Platform">GCP</abbr> Project <abbr title="Identifier — Identificador">ID</abbr></strong>: <code>edtech-academic</code></li>
+<li><strong>Gatilho</strong>: Job <code>deploy</code> no GitHub Actions após sucesso nos testes, autenticado pela secret <code>FIREBASE_SERVICE_ACCOUNT_EDTECH</code>.</li>
+</ul>
+<h3 id="desenvolvimento-ci_cd-backend">Backend<a class="headerlink" href="#desenvolvimento-ci_cd-backend" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Provedor</strong>: Google Cloud Run</li>
+<li><strong><abbr title="Google Cloud Platform">GCP</abbr> Project <abbr title="Identifier — Identificador">ID</abbr></strong>: <code>edtech-storage-501117</code></li>
+<li><strong>Registry Docker</strong>: Google Artifact Registry (repositório: <code>cloud-run-source-deploy</code> em <code>southamerica-east1</code>).</li>
+<li><strong>Bucket de Armazenamento</strong>: <code>edtech-vault-storage</code>.</li>
+<li><strong>Segurança (Secret Manager)</strong>: No ambiente de produção, o Cloud Run não consome variáveis de ambiente do repositório, mas busca dados sensíveis (como <code>SPRING_DATASOURCE_URL</code>, senhas do banco e <code>JWT_SECRET</code>) diretamente do Google Cloud Secret Manager.</li>
+</ul>
 <hr>
 <h2 id="desenvolvimento-ci_cd-historico-de-versoes">Histórico de Versões<a class="headerlink" href="#desenvolvimento-ci_cd-historico-de-versoes" title="Permanent link">¶</a></h2>
 <table>
@@ -11558,6 +11653,8 @@ Copie toda a estrutura abaixo para o novo arquivo, preencha os dados e adicione 
 .print-site-enumerate-headings #arquitetura-adrs-0010-monolito-modular > h1:before { content: '3.4.10 ' }
 
 .print-site-enumerate-headings #arquitetura-adrs-0011-email-recuperacao-senha-smtp > h1:before { content: '3.4.11 ' }
+
+.print-site-enumerate-headings #arquitetura-adrs-0012-firebase-hosting > h1:before { content: '3.4.12 ' }
 
 .print-site-enumerate-headings #section-4 > h1:before { content: '4 ' }
 .print-site-enumerate-headings #desenvolvimento-guia_local > h1:before { content: '4.1 ' }
