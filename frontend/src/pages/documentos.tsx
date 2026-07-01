@@ -98,8 +98,8 @@ const Documentos: React.FC = () => {
     return (
         <DashboardLayout
             title="Meus Documentos"
-            subtitle=""
-            breadcrumbs={['EdTech', 'Dashboard']}
+            subtitle="Gerencie seus arquivos de pesquisa e acompanhe submissões"
+            breadcrumbs={['EdTech', 'Área de Pesquisa']}
         >
             {/* Top Stats Cards */}
             <div className="stats-row docs-stats-row mb-4">

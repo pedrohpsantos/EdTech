@@ -23,9 +23,9 @@ const ResearchTrail: React.FC = () => {
 
     return (
         <DashboardLayout
-            title="Research Trail"
+            title="Trilha de Pesquisa"
             subtitle="Histórico imutável de decisões, versões e evidências auditáveis"
-            breadcrumbs={['EdTech', 'Research Trail']}
+            breadcrumbs={['EdTech', 'Trilha de Pesquisa']}
             customTopbarElement={
                 <div className="trail-topbar-badge">
                     <i className="bi bi-shield-check"></i> Trilha assinada

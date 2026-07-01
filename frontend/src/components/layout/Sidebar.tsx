@@ -22,34 +22,36 @@ const Sidebar: React.FC = () => {
 
             <div className="sidebar-scrollable">
                 <div className="nav-section">
-                    <h6 className="nav-section-title">GERAL</h6>
-                    <nav className="nav-links">
+                    <span className="nav-section-title">GERAL</span>
+                    <div className="nav-links">
                         <NavLink to="/dashboard" className={({ isActive }) => `nav-link-item ${isActive ? 'active' : ''}`}>
-                            <i className="bi bi-grid"></i> Overview
-                            <i className="bi bi-chevron-right ms-auto arrow-icon"></i>
+                            <i className="bi bi-grid-1x2"></i> Visão Geral
+                            <i className="bi bi-chevron-right arrow-icon ms-auto"></i>
                         </NavLink>
                         <NavLink to="/documentos" className={({ isActive }) => `nav-link-item ${isActive ? 'active' : ''}`}>
-                            <i className="bi bi-folder"></i> Research Workspace
+                            <i className="bi bi-folder2-open"></i> Área de Pesquisa
+                            <i className="bi bi-chevron-right arrow-icon ms-auto"></i>
                         </NavLink>
-                    </nav>
+                    </div>
                 </div>
 
                 <div className="nav-section">
-                    <h6 className="nav-section-title">INTELIGÊNCIA</h6>
-                    <nav className="nav-links">
+                    <span className="nav-section-title">INTELIGÊNCIA</span>
+                    <div className="nav-links">
                         <NavLink to="/trail" className={({ isActive }) => `nav-link-item ${isActive ? 'active' : ''}`}>
-                            <i className="bi bi-diagram-3"></i> Research Trail
+                            <i className="bi bi-diagram-3"></i> Trilha de Pesquisa
+                            <i className="bi bi-chevron-right arrow-icon ms-auto"></i>
                         </NavLink>
-                    </nav>
+                    </div>
                 </div>
 
                 <div className="nav-section">
-                    <h6 className="nav-section-title">GOVERNANÇA</h6>
-                    <nav className="nav-links">
+                    <span className="nav-section-title">GOVERNANÇA</span>
+                    <div className="nav-links">
                         <NavLink to="/settings" className={({ isActive }) => `nav-link-item ${isActive ? 'active' : ''}`}>
-                            <i className="bi bi-gear"></i> Settings
+                            <i className="bi bi-gear"></i> Configurações
                         </NavLink>
-                    </nav>
+                    </div>
                 </div>
             </div>
 

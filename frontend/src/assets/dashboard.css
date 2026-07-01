@@ -624,6 +624,11 @@ body:has(.dashboard-layout) #root {
     gap: 6px;
 }
 
+.time-badge.muted {
+    color: var(--ed-text-muted);
+    background-color: var(--border);
+}
+
 .btn-outline-action {
     background: transparent;
     border: 1px solid var(--border);

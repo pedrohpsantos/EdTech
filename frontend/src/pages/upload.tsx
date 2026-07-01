@@ -84,7 +84,7 @@ const Upload: React.FC = () => {
         <DashboardLayout
             title={`Bom dia, ${firstName}`}
             subtitle="Adicione novos metadados e envie arquivos para os seus projetos"
-            breadcrumbs={['EdTech', 'Upload']}
+            breadcrumbs={['EdTech', 'Enviar Documento']}
         >
             <div className="dashboard-card" style={{ padding: '32px', backgroundColor: 'var(--bg)', border: '1px solid var(--border)' }}>
                 {uploadError && (

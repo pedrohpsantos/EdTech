@@ -12,15 +12,15 @@ const Dashboard: React.FC = () => {
         <DashboardLayout
             title={`Bom dia, ${firstName}`}
             subtitle="Resumo executivo da sua atividade de pesquisa e governança"
-            breadcrumbs={['EdTech', 'Overview']}
+            breadcrumbs={['EdTech', 'Visão Geral']}
         >
             {/* Stats Row */}
             <div className="stats-row">
                 <div className="stat-card">
-                    <div className="stat-header">
+                    <span className="stat-header">
                         Documentos ativos
                         <i className="bi bi-file-earmark-text stat-icon"></i>
-                    </div>
+                    </span>
                     <div className="stat-body">
                         <span className="stat-value">24</span>
                         <span className="stat-trend trend-up">+3</span>
@@ -39,10 +39,10 @@ const Dashboard: React.FC = () => {
                 </div>
 
                 <div className="stat-card">
-                    <div className="stat-header">
-                        Compliance Score
-                        <i className="bi bi-shield-check stat-icon text-success"></i>
-                    </div>
+                    <span className="stat-header">
+                        Pontuação de Conformidade
+                        <i className="bi bi-shield-check stat-icon"></i>
+                    </span>
                     <div className="stat-body">
                         <span className="stat-value">92%</span>
                         <span className="stat-trend trend-up">+4 pts</span>
@@ -50,10 +50,10 @@ const Dashboard: React.FC = () => {
                 </div>
 
                 <div className="stat-card">
-                    <div className="stat-header">
+                    <span className="stat-header">
                         Progresso da pesquisa
-                        <i className="bi bi-graph-up stat-icon text-primary"></i>
-                    </div>
+                        <i className="bi bi-graph-up stat-icon"></i>
+                    </span>
                     <div className="stat-body">
                         <span className="stat-value">68%</span>
                         <span className="stat-trend trend-neutral">no prazo</span>
@@ -83,13 +83,13 @@ const Dashboard: React.FC = () => {
                     {/* Pending Reviews */}
                     <div className="dashboard-card">
                         <div className="card-header-flex">
-                            <span className="card-title">Pending Reviews</span>
-                            <span className="card-action-link">Ver todas</span>
+                            <h3 className="card-title">Revisões Pendentes</h3>
+                            <a className="card-action-link">Ver todas</a>
                         </div>
                         <div className="doc-list">
                             <div className="doc-item">
                                 <div className="doc-info">
-                                    <div className="doc-icon"><i className="bi bi-file-earmark-pdf"></i></div>
+                                    <div className="doc-icon type-pdf-bg type-pdf-text"><i className="bi bi-file-earmark-pdf"></i></div>
                                     <div className="doc-details">
                                         <span className="doc-name">Metodologia_Qualitativa_v3.pdf</span>
                                         <span className="doc-meta">Renata Silva · Análise LGPD</span>
@@ -103,28 +103,28 @@ const Dashboard: React.FC = () => {
                             
                             <div className="doc-item">
                                 <div className="doc-info">
-                                    <div className="doc-icon"><i className="bi bi-file-earmark-pdf"></i></div>
+                                    <div className="doc-icon type-pdf-bg type-pdf-text"><i className="bi bi-file-earmark-pdf"></i></div>
                                     <div className="doc-details">
                                         <span className="doc-name">Resultados_Parciais_q2.pdf</span>
                                         <span className="doc-meta">João Mendes · Bioinformática</span>
                                     </div>
                                 </div>
                                 <div className="doc-actions">
-                                    <span className="time-badge text-muted" style={{backgroundColor: '#f4f3ec', color: '#6b6375'}}><i className="bi bi-clock"></i> 1 dia</span>
+                                    <span className="time-badge muted"><i className="bi bi-clock"></i> 1 dia</span>
                                     <button className="btn-outline-action">Revisar</button>
                                 </div>
                             </div>
 
                             <div className="doc-item">
                                 <div className="doc-info">
-                                    <div className="doc-icon"><i className="bi bi-file-earmark-code"></i></div>
+                                    <div className="doc-icon type-json-bg type-json-text"><i className="bi bi-code-slash"></i></div>
                                     <div className="doc-details">
                                         <span className="doc-name">analise_estatistica_q2.json</span>
                                         <span className="doc-meta">Renata Silva · Análise LGPD</span>
                                     </div>
                                 </div>
                                 <div className="doc-actions">
-                                    <span className="time-badge text-muted" style={{backgroundColor: '#f4f3ec', color: '#6b6375'}}><i className="bi bi-clock"></i> 4 h</span>
+                                    <span className="time-badge muted"><i className="bi bi-clock"></i> 4 h</span>
                                     <button className="btn-outline-action">Revisar</button>
                                 </div>
                             </div>
@@ -134,7 +134,7 @@ const Dashboard: React.FC = () => {
                     {/* Recent Documents */}
                     <div className="dashboard-card">
                         <div className="card-header-flex">
-                            <span className="card-title">Recent Documents</span>
+                            <h3 className="card-title">Progresso da Pesquisa</h3>
                             <span className="card-action-link">Workspace</span>
                         </div>
                         <div className="doc-list">
