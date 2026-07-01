@@ -9,11 +9,9 @@ Toda abertura de um `Pull Request` ou envio para a branch `develop` engatilha no
 Existem fluxos independentes:
 
 
-1. **Frontend CI (`ci-frontend.yml`)**: Baixa as dependências Node e roda o comando de build do Vite.
+1. **Unified CI/CD (`ci.yml`)**: Compila o código Java, roda todos os testes unitários (`mvn verify`), roda lint/build/test no Frontend, e faz o deploy de ambos para Produção caso a branch seja a `main`.
 
-2. **Backend CI (`ci-backend.yml`)**: Compila o código Java, roda todos os testes unitários (`mvn verify`) e expõe relatórios.
-
-3. **Docs CI (`ci-docs.yml`)**: Publica automaticamente esta documentação (MkDocs) para o GitHub Pages (rodando sempre que há alterações na branch `main`).
+2. **Docs CI (`ci-docs.yml`)**: Publica automaticamente esta documentação (MkDocs) para o GitHub Pages. Disparada em alterações na `main` dentro da pasta `docs/` ou em modificações no backend que afetem relatórios de cobertura.
 
 ## Regras de Proteção
 
@@ -23,9 +21,21 @@ A branch `develop` possui regras (Branch Protection Rules) no repositório. O "M
 
 - Os jobs de CI (Backend e Frontend) passaram com a bolinha verde (sem quebrar a build ou testes).
 
-## Processo de Deploy em Produção
+## Processo de Deploy em Produção (Automático)
 
-De acordo com o ADR 0003, o deploy das partes ativas do sistema (Frontend e Backend) ocorrerão via Google Cloud Run de forma conteinerizada. (Documentação de instruções manuais de deploy ainda a ser elaborada nas próximas fases).
+De acordo com o ADR 0003, o deploy das partes ativas do sistema ocorre de forma automatizada pelo **GitHub Actions** (`ci.yml`):
+
+### Frontend
+- **Provedor**: Firebase Hosting
+- **GCP Project ID**: `edtech-academic`
+- **Gatilho**: Job `deploy` no GitHub Actions após sucesso nos testes, autenticado pela secret `FIREBASE_SERVICE_ACCOUNT_EDTECH`.
+
+### Backend
+- **Provedor**: Google Cloud Run
+- **GCP Project ID**: `edtech-storage-501117`
+- **Registry Docker**: Google Artifact Registry (repositório: `cloud-run-source-deploy` em `southamerica-east1`).
+- **Bucket de Armazenamento**: `edtech-vault-storage`.
+- **Segurança (Secret Manager)**: No ambiente de produção, o Cloud Run não consome variáveis de ambiente do repositório, mas busca dados sensíveis (como `SPRING_DATASOURCE_URL`, senhas do banco e `JWT_SECRET`) diretamente do Google Cloud Secret Manager.
 
 ---
 

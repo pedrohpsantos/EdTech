@@ -11,3 +11,4 @@ nav:
   - 0009-mkdocs.md
   - 0010-monolito-modular.md
   - 0011-email-recuperacao-senha-smtp.md
+  - 0012-firebase-hosting.md
