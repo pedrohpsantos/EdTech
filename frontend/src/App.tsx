@@ -12,6 +12,7 @@ const Dashboard = React.lazy(() => import("./pages/dashboard"));
 const Documentos = React.lazy(() => import("./pages/documentos"));
 const Trail = React.lazy(() => import("./pages/trail"));
 const Upload = React.lazy(() => import("./pages/upload"));
+const Settings = React.lazy(() => import("./pages/settings"));
 const About = React.lazy(() => import("./pages/About"));
 
 const queryClient = new QueryClient();
@@ -52,6 +53,10 @@ function App(){
             <Route path="/trail" element={
               <PrivateRoute>
                 <Trail/>
+              </PrivateRoute>}/>
+            <Route path="/settings" element={
+              <PrivateRoute>
+                <Settings/>
               </PrivateRoute>}/>
             <Route path="*" element={<NotFound />} />
           </Routes>
