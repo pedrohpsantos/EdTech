@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import AuthProvider from "./context/authContext";
 import PrivateRoute from "./components/privateRoute";
-import Footer from "./components/Footer";
 
 // Lazy load rotas
 const Login = React.lazy(() => import("./pages/login"));
@@ -57,7 +56,6 @@ function App(){
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
-        <Footer />
       </div>
     </BrowserRouter>
   </AuthProvider>

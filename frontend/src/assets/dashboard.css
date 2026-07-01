@@ -783,3 +783,17 @@ body:has(.dashboard-layout) #root {
     font-size: 11px;
     color: var(--ed-text-muted);
 }
+
+/* Responsive Upload Grid */
+.upload-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+}
+
+@media (max-width: 992px) {
+    .upload-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+}
