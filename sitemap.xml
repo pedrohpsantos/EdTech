@@ -2,230 +2,230 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-07-01</lastmod>
     </url>
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/404/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-07-01</lastmod>
     </url>
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/_glossary/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-07-01</lastmod>
     </url>
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/_snippets/version_header/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-07-01</lastmod>
     </url>
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/arquitetura/design_tecnico/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-07-01</lastmod>
     </url>
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/arquitetura/adrs/0001-armazenamento-supabase-s3/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-07-01</lastmod>
     </url>
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/arquitetura/adrs/0002-autenticacao-jwt/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-07-01</lastmod>
     </url>
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/arquitetura/adrs/0003-cloud-run/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-07-01</lastmod>
     </url>
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/arquitetura/adrs/0004-postgresql/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-07-01</lastmod>
     </url>
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/arquitetura/adrs/0005-spring-boot/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-07-01</lastmod>
     </url>
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/arquitetura/adrs/0006-spa-api/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-07-01</lastmod>
     </url>
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/arquitetura/adrs/0007-flyway/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-07-01</lastmod>
     </url>
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/arquitetura/adrs/0008-github-actions/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-07-01</lastmod>
     </url>
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/arquitetura/adrs/0009-mkdocs/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-07-01</lastmod>
     </url>
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/arquitetura/adrs/0010-monolito-modular/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-07-01</lastmod>
     </url>
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/arquitetura/adrs/0011-email-recuperacao-senha-smtp/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-07-01</lastmod>
     </url>
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/arquitetura/diagramas/c4_model/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-07-01</lastmod>
     </url>
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/arquitetura/diagramas/dados/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-07-01</lastmod>
     </url>
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/arquitetura/infraestrutura/nuvem/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-07-01</lastmod>
     </url>
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/arquitetura/infraestrutura/seguranca_app/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-07-01</lastmod>
     </url>
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/desenvolvimento/api_reference/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-07-01</lastmod>
     </url>
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/desenvolvimento/backend_spring/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-07-01</lastmod>
     </url>
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/desenvolvimento/ci_cd/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-07-01</lastmod>
     </url>
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/desenvolvimento/cors_configuration/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-07-01</lastmod>
     </url>
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/desenvolvimento/frontend_vite/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-07-01</lastmod>
     </url>
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/desenvolvimento/guia_local/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-07-01</lastmod>
     </url>
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/desenvolvimento/qualidade_testes/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-07-01</lastmod>
     </url>
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/gestao/agile/dor_dod/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-07-01</lastmod>
     </url>
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/gestao/agile/team_agreements/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-07-01</lastmod>
     </url>
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/gestao/equipe/rotacoes/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-07-01</lastmod>
     </url>
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/gestao/equipe/trilha_estudos/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-07-01</lastmod>
     </url>
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/gestao/historico_sprints/semana1/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-07-01</lastmod>
     </url>
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/gestao/historico_sprints/semana2/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-07-01</lastmod>
     </url>
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/gestao/historico_sprints/semana3/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-07-01</lastmod>
     </url>
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/gestao/historico_sprints/semana4/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-07-01</lastmod>
     </url>
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/gestao/historico_sprints/semana5/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-07-01</lastmod>
     </url>
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/gestao/historico_sprints/semana6/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-07-01</lastmod>
     </url>
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/gestao/planejamento/cronograma/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-07-01</lastmod>
     </url>
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/gestao/planejamento/roadmap/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-07-01</lastmod>
     </url>
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/gestao/reunioes/ata-05-06-2026/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-07-01</lastmod>
     </url>
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/gestao/reunioes/ata-12-06-2026/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-07-01</lastmod>
     </url>
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/gestao/reunioes/ata-19-06-2026/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-07-01</lastmod>
     </url>
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/gestao/reunioes/ata-26-06-2026/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-07-01</lastmod>
     </url>
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/gestao/reunioes/ata-29-05-2026/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-07-01</lastmod>
     </url>
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/gestao/reunioes/atas/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-07-01</lastmod>
     </url>
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/produto/branding/design_system/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-07-01</lastmod>
     </url>
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/produto/branding/diretrizes_marca/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-07-01</lastmod>
     </url>
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/produto/branding/identidade_visual/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-07-01</lastmod>
     </url>
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/produto/discovery/brainstorming/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-07-01</lastmod>
     </url>
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/produto/discovery/jornadas/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-07-01</lastmod>
     </url>
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/produto/discovery/personas/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-07-01</lastmod>
     </url>
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/produto/requisitos/funcionais/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-07-01</lastmod>
     </url>
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/produto/requisitos/historias/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-07-01</lastmod>
     </url>
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/produto/requisitos/nao-funcionais/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-07-01</lastmod>
     </url>
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/produto/strategy/canvas_mvp/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-07-01</lastmod>
     </url>
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/produto/strategy/matriz_e_nao_e/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-07-01</lastmod>
     </url>
     <url>
          <loc>https://pedrohpsantos.github.io/EdTech/produto/strategy/visao/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-07-01</lastmod>
     </url>
 </urlset>
