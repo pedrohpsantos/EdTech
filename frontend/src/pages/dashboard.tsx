@@ -1,7 +1,9 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import DashboardLayout from '../components/layout/DashboardLayout';
 
 const Dashboard: React.FC = () => {
+    const navigate = useNavigate();
     return (
         <DashboardLayout
             title="Overview"
@@ -66,7 +68,7 @@ const Dashboard: React.FC = () => {
                         <span className="alert-desc">2 documentos têm seções de metodologia incompletas e 1 dataset precisa de anonimização LGPD antes da submissão.</span>
                     </div>
                 </div>
-                <button className="btn-alert">
+                <button className="btn-alert" onClick={() => navigate('/alertas')}>
                     <i className="bi bi-arrow-right-short"></i> Ver detalhes
                 </button>
             </div>

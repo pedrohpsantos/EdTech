@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/authContext';
 import ThemeToggle from '../themeToggle';
 
@@ -10,6 +11,7 @@ interface TopbarProps {
 
 const Topbar: React.FC<TopbarProps> = ({ title, subtitle, breadcrumbs }) => {
     const { user } = useAuth();
+    const navigate = useNavigate();
     const firstName = user?.name?.split(' ')[0] || 'Usuário';
 
     return (
@@ -27,7 +29,7 @@ const Topbar: React.FC<TopbarProps> = ({ title, subtitle, breadcrumbs }) => {
                 <p className="topbar-subtitle">{subtitle}</p>
             </div>
             <div className="topbar-right">
-                <button className="btn-upload">
+                <button className="btn-upload" onClick={() => navigate('/upload')}>
                     <i className="bi bi-upload"></i> Enviar documento
                 </button>
                 <div className="topbar-actions">
