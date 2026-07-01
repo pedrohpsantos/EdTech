@@ -16,6 +16,7 @@ const Documentos: React.FC = () => {
     // Modal State
     const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
     const [previewDoc, setPreviewDoc] = useState<Document | null>(null);
+    const [isPreviewLoading, setIsPreviewLoading] = useState(false);
     const [isDragging, setIsDragging] = useState(false);
     const [uploadFile, setUploadFile] = useState<File | null>(null);
     const [toastMessage, setToastMessage] = useState("");
@@ -44,6 +45,10 @@ const Documentos: React.FC = () => {
 
     const handleView = (doc: Document) => {
         setPreviewDoc(doc);
+        setIsPreviewLoading(true);
+        setTimeout(() => {
+            setIsPreviewLoading(false);
+        }, 2000);
     };
 
     const closePreviewModal = () => {
@@ -343,21 +348,46 @@ const Documentos: React.FC = () => {
                         
                         <div className="preview-modal-body">
                             <div className="dummy-document-viewer">
-                                <div className="dummy-page">
-                                    <div className="dummy-line title"></div>
-                                    <div className="dummy-line"></div>
-                                    <div className="dummy-line"></div>
-                                    <div className="dummy-line"></div>
-                                    <div className="dummy-line short"></div>
-                                    
-                                    <div className="dummy-image">
-                                        <i className="bi bi-image" style={{ fontSize: '48px', color: 'rgba(255,255,255,0.1)' }}></i>
-                                    </div>
+                                {isPreviewLoading ? (
+                                    <div className="dummy-page loading-shimmer">
+                                        <div className="dummy-line title"></div>
+                                        <div className="dummy-line"></div>
+                                        <div className="dummy-line"></div>
+                                        <div className="dummy-line"></div>
+                                        <div className="dummy-line short"></div>
+                                        
+                                        <div className="dummy-image">
+                                            <i className="bi bi-image" style={{ fontSize: '48px', color: 'rgba(255,255,255,0.1)' }}></i>
+                                        </div>
 
-                                    <div className="dummy-line"></div>
-                                    <div className="dummy-line"></div>
-                                    <div className="dummy-line short"></div>
-                                </div>
+                                        <div className="dummy-line"></div>
+                                        <div className="dummy-line"></div>
+                                        <div className="dummy-line short"></div>
+                                    </div>
+                                ) : (
+                                    <div className="dummy-page document-content">
+                                        <h2 style={{ color: 'var(--ed-text-dark)', marginBottom: '24px' }}>{previewDoc.name}</h2>
+                                        <p style={{ color: '#4a4a4a', lineHeight: '1.6', marginBottom: '16px' }}>
+                                            Este é um documento de visualização fictício para o arquivo selecionado.
+                                            Na versão final do sistema conectado ao Storage, aqui será renderizado o conteúdo nativo
+                                            do arquivo (PDF Viewer integrado, tabela de dados CSV ou renderizador JSON).
+                                        </p>
+                                        <p style={{ color: '#4a4a4a', lineHeight: '1.6', marginBottom: '16px' }}>
+                                            A plataforma EdTech garante acesso seguro e auditado. Todas as ações de visualização
+                                            são registradas nos logs de segurança da <strong>Trilha de Pesquisa</strong>.
+                                        </p>
+                                        
+                                        <div style={{ backgroundColor: 'var(--code-bg)', padding: '24px', borderRadius: '8px', border: '1px solid var(--border)', marginTop: '32px' }}>
+                                            <h4 style={{ color: 'var(--ed-purple-main)', marginTop: 0, marginBottom: '12px' }}>Detalhes do Arquivo</h4>
+                                            <ul style={{ listStyleType: 'none', padding: 0, margin: 0, color: 'var(--ed-text-muted)', fontSize: '14px' }}>
+                                                <li style={{ marginBottom: '8px' }}><strong>ID do Registro:</strong> {previewDoc.id}</li>
+                                                <li style={{ marginBottom: '8px' }}><strong>Projeto / Workpace:</strong> {previewDoc.project}</li>
+                                                <li style={{ marginBottom: '8px' }}><strong>Tamanho Identificado:</strong> {previewDoc.size}</li>
+                                                <li><strong>Status de Conformidade:</strong> <span style={{ color: 'var(--ed-green-main)' }}>Validado</span></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>
