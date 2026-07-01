@@ -16,16 +16,29 @@ const Topbar: React.FC<TopbarProps> = ({ title, subtitle, breadcrumbs }) => {
     return (
         <header className="topbar-container">
             <div className="topbar-left">
-                <div className="breadcrumbs">
-                    {breadcrumbs.map((crumb, idx) => (
-                        <span key={idx}>
-                            {crumb}
-                            {idx < breadcrumbs.length - 1 && <span className="breadcrumb-separator"><i className="bi bi-chevron-right"></i></span>}
-                        </span>
-                    ))}
+                {breadcrumbs && (
+                    <div className="breadcrumbs">
+                        {breadcrumbs.map((crumb, index) => (
+                            <span key={index}>
+                                {index > 0 && <span className="breadcrumb-separator">
+                                    <i className="bi bi-chevron-right"></i>
+                                </span>}
+                                {index === 0 ? (
+                                    <span className="breadcrumb-item" onClick={() => navigate('/dashboard')} style={{ cursor: 'pointer', transition: 'color 0.2s' }}>
+                                        {crumb}
+                                    </span>
+                                ) : (
+                                    <span className="breadcrumb-item active">{crumb}</span>
+                                )}
+                            </span>
+                        ))}
+                    </div>
+                )}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }} onClick={() => navigate(-1)}>
+                    <i className="bi bi-arrow-left-short" style={{ fontSize: '24px', color: 'var(--ed-text-muted)' }}></i>
+                    <h1 className="page-title">{title}</h1>
                 </div>
-                <h1 className="topbar-title">{title}</h1>
-                <p className="topbar-subtitle">{subtitle}</p>
+                {subtitle && <p className="page-subtitle">{subtitle}</p>}
             </div>
             <div className="topbar-right">
                 <button className="btn-upload" onClick={() => navigate('/upload')}>

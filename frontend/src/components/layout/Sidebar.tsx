@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../../context/authContext';
 import logo from '../../assets/svgs/logo-white.svg';
@@ -6,11 +6,21 @@ import '../../assets/dashboard.css';
 
 const Sidebar: React.FC = () => {
     const { user, handleLogout } = useAuth();
+    const [clickCount, setClickCount] = useState(0);
+
+    const handleLogoClick = () => {
+        const newCount = clickCount + 1;
+        setClickCount(newCount);
+        if (newCount === 7) {
+            alert("🎉 Easter Egg Encontrado! Bem-vindo ao laboratório secreto da EdTech AILAB Makers!");
+            setClickCount(0);
+        }
+    };
 
     return (
         <aside className="sidebar-container">
             <div className="sidebar-header">
-                <div className="logo-section">
+                <div className="logo-section" onClick={handleLogoClick} style={{ cursor: 'pointer' }}>
                     <img src={logo} alt="EdTech Logo" style={{ height: '32px' }} />
                     <span className="logo-text">EdTech</span>
                 </div>
