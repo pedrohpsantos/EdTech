@@ -203,7 +203,7 @@ jobs:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_EDTECH }}'
           channelId: live
-          projectId: edtech-academic
+          projectId: edtech-storage-501117
         env:
           FIREBASE_CLI_EXPERIMENTS: webframeworks
 
