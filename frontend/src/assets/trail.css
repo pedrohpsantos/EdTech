@@ -179,17 +179,17 @@
 
 .timeline-container {
     position: relative;
-    padding-left: 20px;
 }
 
 .timeline-container::before {
     content: '';
     position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 27px;
+    top: 16px;
+    bottom: 16px;
+    left: 15px;
     width: 2px;
     background-color: var(--border);
+    z-index: 1;
 }
 
 .timeline-event {
@@ -219,7 +219,7 @@
     font-size: 14px;
     z-index: 2;
     position: relative;
-    margin-top: 2px;
+    flex-shrink: 0;
 }
 
 .timeline-icon.success { border-color: var(--ed-status-success); color: var(--ed-status-success); background-color: rgba(16, 185, 129, 0.1); }

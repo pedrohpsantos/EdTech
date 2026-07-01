@@ -33,10 +33,10 @@
 }
 
 [data-theme="dark"] {
-    --ed-bg-main: #0B0F19;
-    --ed-text-dark: #F9FAFB;
-    --ed-text-muted: #9CA3AF;
-    --ed-card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+    --ed-bg-main: #0B0E14; /* Escuro profundo */
+    --ed-text-dark: #FFFFFF; /* Branco puro para alto contraste */
+    --ed-text-muted: #A1A1AA; /* Cinza claro bem legível */
+    --ed-card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.4);
 }
 
 /* -------------------------------------------------------------

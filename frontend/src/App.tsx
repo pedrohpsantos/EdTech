@@ -13,7 +13,6 @@ const Dashboard = React.lazy(() => import("./pages/dashboard"));
 const Documentos = React.lazy(() => import("./pages/documentos"));
 const Trail = React.lazy(() => import("./pages/trail"));
 const Upload = React.lazy(() => import("./pages/upload"));
-const Alertas = React.lazy(() => import("./pages/alertas"));
 const About = React.lazy(() => import("./pages/About"));
 
 const queryClient = new QueryClient();
@@ -50,10 +49,6 @@ function App(){
             <Route path="/upload" element={
               <PrivateRoute>
                 <Upload/>
-              </PrivateRoute>}/>
-            <Route path="/alertas" element={
-              <PrivateRoute>
-                <Alertas/>
               </PrivateRoute>}/>
             <Route path="/trail" element={
               <PrivateRoute>

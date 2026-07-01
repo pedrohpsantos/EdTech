@@ -4,9 +4,13 @@ import DashboardLayout from '../components/layout/DashboardLayout';
 import { useProjects } from '../hooks/useProjects';
 import { useUploadDocument } from '../hooks/useDocuments';
 import { Project } from '../types';
+import { useAuth } from '../context/authContext';
 
 const Upload: React.FC = () => {
     const navigate = useNavigate();
+    const { user } = useAuth();
+    const firstName = user?.name?.split(' ')[0] || 'Usuário';
+
     const { data: projects = [] } = useProjects();
     const { mutateAsync: uploadDoc } = useUploadDocument();
 
@@ -78,11 +82,11 @@ const Upload: React.FC = () => {
 
     return (
         <DashboardLayout
-            title="Enviar Documento"
+            title={`Bom dia, ${firstName}`}
             subtitle="Adicione novos metadados e envie arquivos para os seus projetos"
             breadcrumbs={['EdTech', 'Upload']}
         >
-            <div className="dashboard-card" style={{ padding: '32px' }}>
+            <div className="dashboard-card" style={{ padding: '32px', backgroundColor: 'var(--bg)', border: '1px solid var(--border)' }}>
                 {uploadError && (
                     <div className="governance-alert" style={{ background: 'var(--ed-status-danger)', marginBottom: '24px' }}>
                         <div className="alert-content">
@@ -111,22 +115,22 @@ const Upload: React.FC = () => {
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '40px' }}>
                         {/* Coluna 1: Metadados */}
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                            <h4 style={{ fontSize: '16px', fontWeight: 600, color: 'var(--ed-purple-dark)', marginBottom: '8px' }}>1. Metadados do Documento</h4>
+                            <h4 style={{ fontSize: '15px', fontWeight: 600, color: 'var(--ed-purple-light)', opacity: 0.9, marginBottom: '8px' }}>1. Metadados do Documento</h4>
                             
                             <div className="form-group">
-                                <label style={{ display: 'block', fontSize: '13px', fontWeight: 500, marginBottom: '8px', color: 'var(--ed-text-dark)' }}>Título do Documento *</label>
+                                <label style={{ display: 'block', fontSize: '13px', fontWeight: 600, marginBottom: '8px', color: 'var(--ed-text-dark)' }}>Título do Documento *</label>
                                 <input 
                                     type="text" 
                                     className="docs-search-input" 
                                     placeholder="Ex: Metodologia Qualitativa v3" 
                                     value={uploadTitle}
                                     onChange={(e) => setUploadTitle(e.target.value)}
-                                    style={{ paddingLeft: '12px' }}
+                                    style={{ paddingLeft: '12px', paddingRight: '12px' }}
                                 />
                             </div>
 
                             <div className="form-group">
-                                <label style={{ display: 'block', fontSize: '13px', fontWeight: 500, marginBottom: '8px', color: 'var(--ed-text-dark)' }}>Projeto de Pesquisa *</label>
+                                <label style={{ display: 'block', fontSize: '13px', fontWeight: 600, marginBottom: '8px', color: 'var(--ed-text-dark)' }}>Projeto de Pesquisa *</label>
                                 <select 
                                     className="docs-status-select" 
                                     style={{ width: '100%' }}
@@ -141,7 +145,7 @@ const Upload: React.FC = () => {
                             </div>
 
                             <div className="form-group">
-                                <label style={{ display: 'block', fontSize: '13px', fontWeight: 500, marginBottom: '8px', color: 'var(--ed-text-dark)' }}>Categoria</label>
+                                <label style={{ display: 'block', fontSize: '13px', fontWeight: 600, marginBottom: '8px', color: 'var(--ed-text-dark)' }}>Categoria</label>
                                 <select 
                                     className="docs-status-select" 
                                     style={{ width: '100%' }}
@@ -158,21 +162,21 @@ const Upload: React.FC = () => {
                             </div>
 
                             <div className="form-group">
-                                <label style={{ display: 'block', fontSize: '13px', fontWeight: 500, marginBottom: '8px', color: 'var(--ed-text-dark)' }}>Tags (separadas por vírgula)</label>
+                                <label style={{ display: 'block', fontSize: '13px', fontWeight: 600, marginBottom: '8px', color: 'var(--ed-text-dark)' }}>Tags (separadas por vírgula)</label>
                                 <input 
                                     type="text" 
                                     className="docs-search-input" 
                                     placeholder="Ex: LGPD, IA, Dados Sensíveis" 
                                     value={uploadTags}
                                     onChange={(e) => setUploadTags(e.target.value)}
-                                    style={{ paddingLeft: '12px' }}
+                                    style={{ paddingLeft: '12px', paddingRight: '12px' }}
                                 />
                             </div>
                         </div>
 
                         {/* Coluna 2: Arquivo */}
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                            <h4 style={{ fontSize: '16px', fontWeight: 600, color: 'var(--ed-purple-dark)', marginBottom: '8px' }}>2. Arquivo do Documento</h4>
+                            <h4 style={{ fontSize: '15px', fontWeight: 600, color: 'var(--ed-purple-light)', opacity: 0.9, marginBottom: '8px' }}>2. Arquivo do Documento</h4>
                             
                             <div 
                                 className={`upload-area ${isDragging ? 'dragging' : ''}`}
@@ -180,18 +184,18 @@ const Upload: React.FC = () => {
                                 onDragLeave={handleDragLeave}
                                 onDrop={handleDrop}
                                 onClick={() => document.getElementById('advancedFileInput')?.click()}
-                                style={{ flex: 1, minHeight: '250px', justifyContent: 'center' }}
+                                style={{ flex: 1, minHeight: '250px', justifyContent: 'center', backgroundColor: 'transparent' }}
                             >
-                                <div className="upload-icon-circle" style={{ width: '64px', height: '64px', fontSize: '28px' }}>
+                                <div style={{ fontSize: '24px', color: 'var(--ed-text-dark)', marginBottom: '16px' }}>
                                     {uploadFile ? <i className="bi bi-file-earmark-check"></i> : <i className="bi bi-cloud-arrow-up"></i>}
                                 </div>
-                                <p className="upload-main-text" style={{ fontSize: '16px' }}>
+                                <p className="upload-main-text" style={{ fontSize: '14px', color: 'var(--ed-text-dark)', fontWeight: 500 }}>
                                     {uploadFile ? uploadFile.name : 'Arraste e solte seu arquivo aqui'}
                                 </p>
-                                <p className="upload-sub-text" style={{ fontSize: '13px', marginTop: '8px' }}>
+                                <p className="upload-sub-text" style={{ fontSize: '13px', marginTop: '4px', color: 'var(--ed-text-muted)' }}>
                                     ou clique para procurar no seu computador
                                 </p>
-                                <p className="upload-sub-text" style={{ fontSize: '12px', marginTop: '16px', opacity: 0.7 }}>
+                                <p className="upload-sub-text" style={{ fontSize: '11px', marginTop: '16px', color: 'var(--ed-text-muted)' }}>
                                     Formatos suportados: .pdf, .csv, .json (Máx. 50MB)
                                 </p>
                                 <input 
@@ -221,7 +225,7 @@ const Upload: React.FC = () => {
                         <button type="button" className="btn-modal-cancel" onClick={() => navigate(-1)} style={{ flex: 'none', padding: '12px 32px' }}>
                             Cancelar
                         </button>
-                        <button type="submit" className="btn-modal-submit" disabled={!uploadFile || uploadProgress > 0} style={{ flex: 'none', padding: '12px 48px' }}>
+                        <button type="submit" className="btn-modal-submit" disabled={!uploadFile || uploadProgress > 0} style={{ flex: 'none', padding: '12px 48px', backgroundColor: uploadFile ? 'var(--ed-purple-main)' : 'rgba(255,255,255,0.05)', color: uploadFile ? 'white' : 'var(--ed-text-muted)', border: 'none' }}>
                             {uploadProgress > 0 && uploadProgress < 100 ? 'Enviando...' : 'Confirmar Envio'}
                         </button>
                     </div>

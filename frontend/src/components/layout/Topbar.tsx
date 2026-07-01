@@ -12,7 +12,6 @@ interface TopbarProps {
 const Topbar: React.FC<TopbarProps> = ({ title, subtitle, breadcrumbs }) => {
     const { user } = useAuth();
     const navigate = useNavigate();
-    const firstName = user?.name?.split(' ')[0] || 'Usuário';
 
     return (
         <header className="topbar-container">
@@ -25,7 +24,7 @@ const Topbar: React.FC<TopbarProps> = ({ title, subtitle, breadcrumbs }) => {
                         </span>
                     ))}
                 </div>
-                <h1 className="topbar-title">Bom dia, {firstName}</h1>
+                <h1 className="topbar-title">{title}</h1>
                 <p className="topbar-subtitle">{subtitle}</p>
             </div>
             <div className="topbar-right">

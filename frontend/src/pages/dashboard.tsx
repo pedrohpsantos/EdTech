@@ -1,12 +1,16 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import DashboardLayout from '../components/layout/DashboardLayout';
+import { useAuth } from '../context/authContext';
 
 const Dashboard: React.FC = () => {
     const navigate = useNavigate();
+    const { user } = useAuth();
+    const firstName = user?.name?.split(' ')[0] || 'Usuário';
+
     return (
         <DashboardLayout
-            title="Overview"
+            title={`Bom dia, ${firstName}`}
             subtitle="Resumo executivo da sua atividade de pesquisa e governança"
             breadcrumbs={['EdTech', 'Overview']}
         >
@@ -68,7 +72,7 @@ const Dashboard: React.FC = () => {
                         <span className="alert-desc">2 documentos têm seções de metodologia incompletas e 1 dataset precisa de anonimização LGPD antes da submissão.</span>
                     </div>
                 </div>
-                <button className="btn-alert" onClick={() => navigate('/alertas')}>
+                <button className="btn-alert" onClick={() => navigate('/trail')}>
                     <i className="bi bi-arrow-right-short"></i> Ver detalhes
                 </button>
             </div>

@@ -4,8 +4,6 @@ import '../assets/trail.css';
 
 const ResearchTrail: React.FC = () => {
     // For demo purposes, we'll use local state to switch between "list mode" and "detail mode"
-    // However, the screenshot shows the list ALWAYS at the top, and the details BELOW it.
-    // We will render both just like the screenshot.
     const [selectedDocId, setSelectedDocId] = useState<string>('1');
 
     const documents = [
@@ -34,6 +32,29 @@ const ResearchTrail: React.FC = () => {
                 </div>
             }
         >
+            {/* GOVERNANCE ALERTS (Mixed in as requested) */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', marginBottom: '32px' }}>
+                <div className="governance-alert" style={{ background: 'var(--ed-status-danger)', margin: 0 }}>
+                    <div className="alert-content">
+                        <div className="alert-icon" style={{ backgroundColor: 'rgba(255,255,255,0.2)' }}><i className="bi bi-shield-lock"></i></div>
+                        <div className="alert-text-container">
+                            <span className="alert-title text-white">ALTO RISCO (1)</span>
+                            <span className="alert-desc text-white">Anonimização de dados LGPD obrigatória antes do envio para a Nuvem.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="governance-alert" style={{ background: 'var(--ed-orange)', margin: 0 }}>
+                    <div className="alert-content">
+                        <div className="alert-icon" style={{ backgroundColor: 'rgba(255,255,255,0.2)' }}><i className="bi bi-journal-x"></i></div>
+                        <div className="alert-text-container">
+                            <span className="alert-title text-white">ATENÇÃO (2)</span>
+                            <span className="alert-desc text-white">Documentos detectados com seções de metodologia incompletas.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             {/* List Section */}
             <div className="trail-doc-list">
                 <div className="trail-doc-list-header">
