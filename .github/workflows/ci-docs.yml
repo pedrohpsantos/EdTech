@@ -69,7 +69,13 @@ jobs:
         run: uv sync
 
       - name: Verificar links quebrados (Strict Build)
+        env:
+          NO_MKDOCS_2_WARNING: "true"
+          PYTHONWARNINGS: "ignore::DeprecationWarning"
         run: uv run mkdocs build --strict
 
       - name: Deploy para GitHub Pages
+        env:
+          NO_MKDOCS_2_WARNING: "true"
+          PYTHONWARNINGS: "ignore::DeprecationWarning"
         run: uv run mkdocs gh-deploy --force
