@@ -298,7 +298,7 @@ body:has(.dashboard-layout) #root {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    padding: 24px 40px;
+    padding: 24px 40px 8px 40px;
     background-color: var(--ed-bg-main);
 }
 
@@ -410,7 +410,7 @@ body:has(.dashboard-layout) #root {
  * DASHBOARD CONTENT
  * ------------------------------------------------------------- */
 .main-content {
-    padding: 0 40px 40px 40px;
+    padding: 16px 40px 40px 40px;
     overflow-y: auto;
     flex: 1;
     animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
