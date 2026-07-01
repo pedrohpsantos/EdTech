@@ -8,6 +8,10 @@ const Settings: React.FC = () => {
     const [reviewEmails, setReviewEmails] = useState(true);
     const [strictLgpd, setStrictLgpd] = useState(true);
 
+    const userName = user?.name || "Usuário";
+    const userEmail = user?.email || "usuario@edtech.com";
+    const userInitials = userName.split(' ').map((n: string) => n[0]).join('').substring(0, 2).toUpperCase();
+
     return (
         <DashboardLayout
             title="Configurações"
@@ -19,10 +23,10 @@ const Settings: React.FC = () => {
                 <div className="settings-card">
                     <h3 className="settings-section-title">Perfil</h3>
                     <div className="settings-profile-row">
-                        <div className="settings-avatar">RS</div>
+                        <div className="settings-avatar">{userInitials}</div>
                         <div className="settings-profile-info">
-                            <span className="profile-name">Dra. Renata Silva</span>
-                            <span className="profile-email">renata.silva@usp.br</span>
+                            <span className="profile-name">{userName}</span>
+                            <span className="profile-email">{userEmail}</span>
                         </div>
                         <div className="settings-profile-actions">
                             <span className="settings-badge-role">Pesquisador</span>

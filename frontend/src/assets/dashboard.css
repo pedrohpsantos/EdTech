@@ -287,6 +287,17 @@ body:has(.dashboard-layout) #root {
     font-size: 10px;
 }
 
+.breadcrumb-item {
+    color: var(--ed-text-muted);
+}
+.breadcrumb-item:hover {
+    color: var(--ed-purple-main);
+}
+.breadcrumb-item.active {
+    color: var(--ed-purple-main);
+    font-weight: 500;
+}
+
 .topbar-title {
     font-size: 24px !important;
     font-weight: 700 !important;
