@@ -127,14 +127,14 @@ const Dashboard: React.FC = () => {
                     <div className="dashboard-card">
                         <div className="card-header-flex" style={{paddingBottom: '10px', border: 'none'}}>
                             <div>
-                                <div className="card-title">Compliance Score</div>
+                                <div className="card-title">Pontuação de Conformidade</div>
                                 <div className="card-title-muted mt-1">LGPD · Integridade · Rastreabilidade</div>
                             </div>
                         </div>
                         <div className="score-content">
                             <div className="score-circle">
                                 <span className="score-number">92</span>
-                                <span className="score-label-small">SCORE</span>
+                                <span className="score-label-small">PONTOS</span>
                             </div>
                             <div className="score-breakdown">
                                 <div className="breakdown-item">
@@ -156,7 +156,7 @@ const Dashboard: React.FC = () => {
                     {/* Research Progress */}
                     <div className="dashboard-card">
                         <div className="card-header-flex" style={{paddingBottom: '10px', border: 'none'}}>
-                            <div className="card-title">Research Progress</div>
+                            <div className="card-title">Progresso da Pesquisa</div>
                         </div>
                         <div className="progress-content">
                             <div className="progress-item">
@@ -194,7 +194,7 @@ const Dashboard: React.FC = () => {
                     {/* Activity Feed */}
                     <div className="dashboard-card">
                         <div className="card-header-flex" style={{paddingBottom: '10px', border: 'none'}}>
-                            <div className="card-title">Activity Feed</div>
+                            <div className="card-title">Atividades Recentes</div>
                         </div>
                         <div className="activity-feed-content">
                             <div className="activity-item">
