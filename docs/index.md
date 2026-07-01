@@ -169,6 +169,8 @@ O sistema atende três perfis distintos, cada um com permissões e visões espec
 Tecnologias selecionadas para robustez, segurança e escalabilidade em ambiente acadêmico.
 </p>
 
+<div align="center" markdown>
+
 | Camada | Tecnologias |
 | :--- | :--- |
 | **Frontend** | HTML5, CSS Puro (Design System), Bootstrap 5 (Grid), React 19, Vite 8 |
@@ -178,7 +180,9 @@ Tecnologias selecionadas para robustez, segurança e escalabilidade em ambiente 
 | **CI/CD & Qualidade** | GitHub Actions, JUnit, Python 3.11 (scripts de telemetria - Pós-MVP) |
 | **Documentação** | MkDocs + Material for MkDocs |
 
-[:material-arrow-right: Ver detalhes completos da arquitetura](arquitetura/diagramas/c4_model.md){ .md-button }
+[:material-arrow-right: Ver detalhes completos da arquitetura](arquitetura/diagramas/c4_model.md){ .md-button style="margin-top: 1rem;" }
+
+</div>
 
 ---
 
