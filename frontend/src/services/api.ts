@@ -28,8 +28,8 @@ api.interceptors.response.use(
     (response) => response,
     (error) => {
         if (error.response && error.response.status === 401) {
-            // Ignorar redirect no próprio login
-            if (!error.config.url.includes('/api/auth/login')) {
+            // Ignorar redirect no próprio login e no endpoint de checagem de sessão
+            if (!error.config.url.includes('/api/auth/login') && !error.config.url.includes('/api/auth/me')) {
                 window.location.href = '/login?session_expired=true';
             }
         }
