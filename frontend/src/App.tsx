@@ -11,6 +11,7 @@ const Register = React.lazy(() => import("./pages/register"));
 const Recovery = React.lazy(() => import("./pages/Recovery"));
 const Dashboard = React.lazy(() => import("./pages/dashboard"));
 const Documentos = React.lazy(() => import("./pages/documentos"));
+const Trail = React.lazy(() => import("./pages/trail"));
 const Upload = React.lazy(() => import("./pages/upload"));
 const Alertas = React.lazy(() => import("./pages/alertas"));
 const About = React.lazy(() => import("./pages/About"));
@@ -53,6 +54,10 @@ function App(){
             <Route path="/alertas" element={
               <PrivateRoute>
                 <Alertas/>
+              </PrivateRoute>}/>
+            <Route path="/trail" element={
+              <PrivateRoute>
+                <Trail/>
               </PrivateRoute>}/>
             <Route path="*" element={<NotFound />} />
           </Routes>
