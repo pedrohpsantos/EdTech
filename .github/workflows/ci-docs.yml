@@ -58,7 +58,11 @@ jobs:
       - name: Integrar JaCoCo na Documentação
         run: |
           mkdir -p docs/jacoco
-          cp -r docvault/api/target/site/jacoco/* docs/jacoco/
+          if [ -d "docvault/api/target/site/jacoco" ]; then
+            cp -r docvault/api/target/site/jacoco/* docs/jacoco/ || true
+          else
+            echo "Nenhum relatório JaCoCo encontrado (talvez não existam testes). Pulando."
+          fi
 
       - name: Instalar dependências
         run: uv sync
