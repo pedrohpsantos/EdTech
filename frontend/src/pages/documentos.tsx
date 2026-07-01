@@ -32,15 +32,23 @@ const Documentos: React.FC = () => {
     };
 
     const handleDownload = async (docId: string) => {
+        showToast("Iniciando download seguro...");
+        
+        // Simulação do download para ambiente de protótipo/UI
+        setTimeout(() => {
+            showToast("Download finalizado com sucesso!");
+        }, 1500);
+        
+        /* Implementação real (comentada até o backend estar pronto)
         try {
-            showToast("Iniciando download...");
             const url = await getUrl(docId);
             if (url) {
                 window.open(url, '_blank', 'noopener,noreferrer');
             }
         } catch (error: any) {
-            alert(error.message || "Erro ao obter link de download.");
+            showToast("Aviso: Backend não conectado. " + (error.message || "Erro ao obter link."));
         }
+        */
     };
 
     const handleView = (doc: Document) => {
