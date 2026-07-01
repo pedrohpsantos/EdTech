@@ -159,7 +159,7 @@ body:has(.dashboard-layout) #root {
     justify-content: space-between;
     padding: 16px 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    transition: background-color 0.2s ease, padding-left 0.2s ease, padding-right 0.2s ease;
+    transition: background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), padding-left 0.3s cubic-bezier(0.16, 1, 0.3, 1), padding-right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     border-radius: 8px;
 }
 
@@ -175,7 +175,7 @@ body:has(.dashboard-layout) #root {
     justify-content: space-between;
     padding: 16px 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    transition: background-color 0.2s ease, padding-left 0.2s ease, padding-right 0.2s ease;
+    transition: background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), padding-left 0.3s cubic-bezier(0.16, 1, 0.3, 1), padding-right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     border-radius: 8px;
 }
 .review-card:hover {
@@ -195,7 +195,7 @@ body:has(.dashboard-layout) #root {
     text-decoration: none;
     font-size: 14px;
     font-weight: 500;
-    transition: all 0.2s ease;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .nav-link-item:hover, .nav-link-item.active {
@@ -215,7 +215,7 @@ body:has(.dashboard-layout) #root {
 .nav-link-item .arrow-icon {
     font-size: 12px;
     opacity: 0;
-    transition: opacity 0.2s;
+    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .nav-link-item:hover .arrow-icon,
@@ -435,7 +435,7 @@ body:has(.dashboard-layout) #root {
     flex-direction: column;
     gap: 12px;
     border: 1px solid var(--border);
-    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s ease;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .stat-card:hover {
     transform: translateY(-4px);

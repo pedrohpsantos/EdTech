@@ -15,6 +15,7 @@ const Documentos: React.FC = () => {
 
     // Modal State
     const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
+    const [previewDoc, setPreviewDoc] = useState<Document | null>(null);
     const [isDragging, setIsDragging] = useState(false);
     const [uploadFile, setUploadFile] = useState<File | null>(null);
     const [toastMessage, setToastMessage] = useState("");
@@ -41,8 +42,12 @@ const Documentos: React.FC = () => {
         }
     };
 
-    const handleView = (docName: string) => {
-        showToast(`Abrindo visualização de: ${docName}`);
+    const handleView = (doc: Document) => {
+        setPreviewDoc(doc);
+    };
+
+    const closePreviewModal = () => {
+        setPreviewDoc(null);
     };
 
     const handleOptions = (docName: string) => {
@@ -241,7 +246,7 @@ const Documentos: React.FC = () => {
                                     </td>
                                     <td>
                                         <div className="table-actions">
-                                            <button className="btn-icon-action" title="Visualizar" onClick={() => handleView(doc.name)}>
+                                            <button className="btn-icon-action" title="Visualizar" onClick={() => handleView(doc)}>
                                                 <i className="bi bi-eye"></i>
                                             </button>
                                             <button className="btn-icon-action" title="Download" onClick={() => handleDownload(doc.id)}>
@@ -307,6 +312,53 @@ const Documentos: React.FC = () => {
                             <button className="btn-modal-submit" disabled={!uploadFile}>
                                 Enviar Arquivo
                             </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Document Preview Modal */}
+            {previewDoc && (
+                <div className="modal-overlay" onClick={closePreviewModal} style={{ zIndex: 1050 }}>
+                    <div className="preview-modal-content" onClick={(e) => e.stopPropagation()}>
+                        <div className="preview-modal-header">
+                            <div className="d-flex align-items-center gap-3">
+                                <span className={`type-badge ${getTypeColor(previewDoc.type)}-text`}>
+                                    {previewDoc.type}
+                                </span>
+                                <div>
+                                    <h3 className="m-0" style={{ fontSize: '18px', color: 'var(--ed-text-light)' }}>{previewDoc.name}</h3>
+                                    <span style={{ fontSize: '12px', color: 'var(--ed-text-muted)' }}>{previewDoc.size} • {previewDoc.project}</span>
+                                </div>
+                            </div>
+                            <div className="d-flex gap-2">
+                                <button className="btn-icon-action" onClick={() => handleDownload(previewDoc.id)}>
+                                    <i className="bi bi-download"></i>
+                                </button>
+                                <button className="btn-icon-action" onClick={closePreviewModal}>
+                                    <i className="bi bi-x-lg"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div className="preview-modal-body">
+                            <div className="dummy-document-viewer">
+                                <div className="dummy-page">
+                                    <div className="dummy-line title"></div>
+                                    <div className="dummy-line"></div>
+                                    <div className="dummy-line"></div>
+                                    <div className="dummy-line"></div>
+                                    <div className="dummy-line short"></div>
+                                    
+                                    <div className="dummy-image">
+                                        <i className="bi bi-image" style={{ fontSize: '48px', color: 'rgba(255,255,255,0.1)' }}></i>
+                                    </div>
+
+                                    <div className="dummy-line"></div>
+                                    <div className="dummy-line"></div>
+                                    <div className="dummy-line short"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
