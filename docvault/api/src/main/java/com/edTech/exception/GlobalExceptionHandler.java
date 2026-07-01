@@ -20,17 +20,17 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<Map<String, String>> handleRuntimeException(RuntimeException ex) {
-        // Log the exception internally (omitted for simplicity, but auditLog could be used here)
+        ex.printStackTrace();
         Map<String, String> response = new HashMap<>();
-        response.put("error", "An internal error occurred. Please try again later.");
-        // Oculta a mensagem de stacktrace real para o usuario
+        response.put("error", "Runtime error: " + ex.getMessage());
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, String>> handleGenericException(Exception ex) {
+        ex.printStackTrace();
         Map<String, String> response = new HashMap<>();
-        response.put("error", "An unexpected error occurred.");
+        response.put("error", "Internal error: " + ex.getMessage());
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

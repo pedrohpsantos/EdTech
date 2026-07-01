@@ -11,7 +11,7 @@ public record RegisterRequestDTO(
 
         @NotBlank(message = "E-mail é obrigatório")
         @Email(message = "E-mail inválido")
-        @Pattern(regexp = ".+@unb\\.br$", message = "E-mail deve ser do domínio UNB")
+        @Pattern(regexp = "^.+@(unb\\.br|.+\\.unb\\.br)$", message = "E-mail deve ser do domínio UNB")
         @Size(max = 180)
         String email,
 

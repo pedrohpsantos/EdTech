@@ -41,8 +41,8 @@ public class UserService {
     public User register(RegisterRequestDTO request) {
         String normalizedEmail = request.email().trim().toLowerCase(Locale.ROOT);
 
-        if (!normalizedEmail.endsWith(INSTITUTIONAL_DOMAIN)) {
-            throw new InvalidInstitutionalEmailException("O e-mail deve pertencer ao dominio @unb.br.");
+        if (!normalizedEmail.endsWith("@unb.br") && !normalizedEmail.endsWith(".unb.br")) {
+            throw new InvalidInstitutionalEmailException("O e-mail deve pertencer ao dominio unb.br.");
         }
 
         if (userRepository.existsByEmailIgnoreCase(normalizedEmail)) {
