@@ -17,8 +17,7 @@ edtech-api,com.edTech.dto,ResetPasswordDTO,12,0,0,0,1,0,1,0,1,0
 edtech-api,com.edTech.service,DuplicateEmailException,0,4,0,0,0,2,0,1,0,1
 edtech-api,com.edTech.service,JwtService,19,87,4,4,4,26,5,6,1,6
 edtech-api,com.edTech.service,AuditLogService,33,6,0,0,6,3,2,1,2,1
-edtech-api,com.edTech.service,S3StorageServiceImpl,46,9,0,0,17,4,2,1,2,1
-edtech-api,com.edTech.service,GcsStorageServiceImpl,54,0,0,0,15,0,4,0,4,0
+edtech-api,com.edTech.service,GcsStorageServiceImpl,48,6,0,0,12,3,3,1,3,1
 edtech-api,com.edTech.service,UserService,10,82,2,6,1,19,3,5,1,3
 edtech-api,com.edTech.service,InvalidInstitutionalEmailException,0,4,0,0,0,2,0,1,0,1
 edtech-api,com.edTech.service,DocumentService,285,26,8,0,61,9,15,1,11,1
@@ -29,7 +28,6 @@ edtech-api,com.edTech.service,RecoveryService,2,140,4,8,1,31,4,7,0,5
 edtech-api,com.edTech.exception,GlobalExceptionHandler,54,3,0,0,11,1,3,1,3,1
 edtech-api,com.edTech,EdTechApplication,5,3,0,0,2,1,1,1,1,1
 edtech-api,com.edTech.config,JwtAuthenticationFilter,6,161,9,17,1,36,9,11,0,7
-edtech-api,com.edTech.config,S3Config,40,72,4,4,10,17,4,3,0,3
 edtech-api,com.edTech.config,SecurityConfig,0,164,0,0,0,32,0,10,0,10
 edtech-api,com.edTech.config,GcsConfig,32,0,4,0,9,0,4,0,2,0
 edtech-api,com.edTech.config,JwtAuthenticationEntryPoint,0,24,0,0,0,8,0,2,0,2

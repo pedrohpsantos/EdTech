@@ -4,7 +4,6 @@ import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -12,7 +11,6 @@ import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 @Service
-@ConditionalOnProperty(name = &quot;storage.provider&quot;, havingValue = &quot;gcs&quot;)
 public class GcsStorageServiceImpl implements StorageService {
 
     private final Storage storage;
@@ -20,32 +18,32 @@ public class GcsStorageServiceImpl implements StorageService {
     @Value(&quot;${gcp.bucket}&quot;)
     private String bucketName;
 
-<span class="nc" id="L23">    public GcsStorageServiceImpl(Storage storage) {</span>
-<span class="nc" id="L24">        this.storage = storage;</span>
-<span class="nc" id="L25">    }</span>
+<span class="fc" id="L21">    public GcsStorageServiceImpl(Storage storage) {</span>
+<span class="fc" id="L22">        this.storage = storage;</span>
+<span class="fc" id="L23">    }</span>
 
     @Override
     public void uploadFile(MultipartFile file, String fileKey, String contentType) throws Exception {
-<span class="nc" id="L29">        BlobId blobId = BlobId.of(bucketName, fileKey);</span>
-<span class="nc" id="L30">        BlobInfo blobInfo = BlobInfo.newBuilder(blobId)</span>
-<span class="nc" id="L31">                .setContentType(contentType)</span>
-<span class="nc" id="L32">                .build();</span>
-<span class="nc" id="L33">        storage.create(blobInfo, file.getBytes());</span>
-<span class="nc" id="L34">    }</span>
+<span class="nc" id="L27">        BlobId blobId = BlobId.of(bucketName, fileKey);</span>
+<span class="nc" id="L28">        BlobInfo blobInfo = BlobInfo.newBuilder(blobId)</span>
+<span class="nc" id="L29">                .setContentType(contentType)</span>
+<span class="nc" id="L30">                .build();</span>
+<span class="nc" id="L31">        storage.create(blobInfo, file.getBytes());</span>
+<span class="nc" id="L32">    }</span>
 
     @Override
     public String getPresignedUrl(String fileKey) throws Exception {
-<span class="nc" id="L38">        BlobId blobId = BlobId.of(bucketName, fileKey);</span>
-<span class="nc" id="L39">        URL signedUrl = storage.signUrl(</span>
-<span class="nc" id="L40">                blobInfoForPresigned(blobId),</span>
+<span class="nc" id="L36">        BlobId blobId = BlobId.of(bucketName, fileKey);</span>
+<span class="nc" id="L37">        URL signedUrl = storage.signUrl(</span>
+<span class="nc" id="L38">                blobInfoForPresigned(blobId),</span>
                 15, TimeUnit.MINUTES,
-<span class="nc" id="L42">                Storage.SignUrlOption.withV4Signature()</span>
+<span class="nc" id="L40">                Storage.SignUrlOption.withV4Signature()</span>
         );
-<span class="nc" id="L44">        return signedUrl.toString();</span>
+<span class="nc" id="L42">        return signedUrl.toString();</span>
     }
 
     private BlobInfo blobInfoForPresigned(BlobId blobId) {
-<span class="nc" id="L48">        return BlobInfo.newBuilder(blobId).build();</span>
+<span class="nc" id="L46">        return BlobInfo.newBuilder(blobId).build();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
