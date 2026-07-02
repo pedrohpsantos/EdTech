@@ -233,7 +233,9 @@ jobs:
           service: ${{ env.SERVICE_NAME }}
           region: ${{ env.REGION }}
           image: ${{ env.IMAGE }}:${{ github.sha }}
-          flags: '--memory=1024Mi --add-cloudsql-instances=${{ env.PROJECT_ID }}:${{ env.REGION }}:edtech-db-dev'
+          flags: '--allow-unauthenticated --memory=1024Mi --add-cloudsql-instances=${{ env.PROJECT_ID }}:${{ env.REGION }}:edtech-db-dev'
+          secrets_update_strategy: clear
+          env_vars_update_strategy: overwrite
           env_vars: |
             SPRING_PROFILES_ACTIVE=prod
             STORAGE_PROVIDER=gcs
@@ -243,6 +245,8 @@ jobs:
             SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME }}
             SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD }}
             JWT_SECRET=${{ secrets.JWT_SECRET }}
+            SPRING_JPA_HIBERNATE_DDL_AUTO=update
+            CORS_ALLOWED_ORIGINS=https://edtech-storage-501117.web.app
 
       - name: Show Output
         run: echo ${{ steps.deploy-cr.outputs.url }}
