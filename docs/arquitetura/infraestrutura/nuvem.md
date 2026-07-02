@@ -6,14 +6,15 @@ A topologia cloud do projeto adota uma **estratégia 100% nativa no Google Cloud
 
 ```mermaid
 flowchart TB
+    %%{init: {"flowchart": {"nodeSpacing": 60, "rankSpacing": 80}}}%%
     User["Usuário"]
     Internet["Internet"]
 
-    subgraph GCP["Google Cloud Platform e Firebase"]
-        Firebase["Firebase Hosting (Frontend React/Vite)"]
-        Run["Cloud Run (Backend Spring Boot)"]
-        SQL["Cloud SQL (PostgreSQL)"]
-        Storage["Cloud Storage (Bucket PDFs)"]
+    subgraph GCP["Google Cloud Platform & Firebase"]
+        Firebase["Firebase Hosting<br>(Frontend React/Vite)"]
+        Run["Cloud Run<br>(Backend Spring Boot)"]
+        SQL["Cloud SQL<br>(PostgreSQL)"]
+        Storage["Cloud Storage<br>(Bucket PDFs)"]
     end
 
     User --> Internet
