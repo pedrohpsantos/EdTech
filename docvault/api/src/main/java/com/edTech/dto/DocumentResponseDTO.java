@@ -12,6 +12,7 @@ public class DocumentResponseDTO {
     private UUID authorId;
     private UUID projectId;
     private ZonedDateTime createdAt;
+    private String feedback;
 
     // Getters and Setters
     public UUID getId() { return id; }
@@ -34,4 +35,7 @@ public class DocumentResponseDTO {
 
     public ZonedDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(ZonedDateTime createdAt) { this.createdAt = createdAt; }
+
+    public String getFeedback() { return feedback; }
+    public void setFeedback(String feedback) { this.feedback = feedback; }
 }

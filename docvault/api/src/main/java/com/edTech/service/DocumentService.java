@@ -1,10 +1,12 @@
 package com.edTech.service;
 
 import com.edTech.dto.DocumentResponseDTO;
+import com.edTech.dto.DocumentStatusUpdateDTO;
 import com.edTech.model.AcaoAuditoria;
 import com.edTech.model.Document;
 import com.edTech.model.DocumentStatus;
 import com.edTech.model.Project;
+import com.edTech.model.ProjectRole;
 import com.edTech.model.User;
 import com.edTech.repository.DocumentRepository;
 import com.edTech.repository.ProjectMemberRepository;
@@ -152,6 +154,7 @@ public class DocumentService {
         dto.setAuthorId(document.getAuthor().getId());
         dto.setProjectId(document.getProject().getId());
         dto.setCreatedAt(document.getCreatedAt());
+        dto.setFeedback(document.getFeedback());
         return dto;
     }
     @Transactional
@@ -170,6 +173,7 @@ public class DocumentService {
             throw new RuntimeException("Document is not pending review");
         }
         document.setStatus(newStatus);
+        document.setFeedback(feedback);
         Document savedDocument = documentRepository.save(document);
         AcaoAuditoria acao = (newStatus == DocumentStatus.APPROVED) ? AcaoAuditoria.DOCUMENT_APPROVED : AcaoAuditoria.DOCUMENT_REJECTED;
         String details = "Status alterado para " + newStatus + ".Feedback: " + (feedback != null && !feedback.trim().isEmpty() ? feedback : "Sem feedback");

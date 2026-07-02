@@ -62,15 +62,15 @@ public class DocumentController {
         documentService.deleteDocument(id, user.getId());
         return ResponseEntity.noContent().build();
     }
+
     @PatchMapping("/{id}/status")
-    public ResponseEntity<DocumentResponseDTO> reviewDocument(
+    public ResponseEntity<DocumentResponseDTO> updateDocumentStatus(
             @PathVariable UUID id,
-            @RequestBody UpdateDocumentStatusRequest request, 
-            Authentication authentication) {
+            @RequestBody com.edTech.dto.DocumentStatusUpdateDTO dto,
+            Authentication authentication
+    ) {
         User user = (User) authentication.getPrincipal();
-        UUID reviewerId = user.getId();
-        DocumentStatus newStatus = DocumentStatus.valueOf(request.status());
-        DocumentResponseDTO response = documentService.reviewDocument(id, reviewerId, newStatus, request.feedback());
+        DocumentResponseDTO response = documentService.reviewDocument(id, user.getId(), dto.getStatus(), dto.getFeedback());
         return ResponseEntity.ok(response);
-        }
+    }
 }
