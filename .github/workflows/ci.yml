@@ -230,7 +230,7 @@ jobs:
           service: ${{ env.SERVICE_NAME }}
           region: ${{ env.REGION }}
           image: ${{ env.IMAGE }}:${{ github.sha }}
-          flags: '--memory=1024Mi --add-cloudsql-instances=${{ env.PROJECT_ID }}:${{ env.REGION }}:edtech-db'
+          flags: '--memory=1024Mi --add-cloudsql-instances=${{ env.PROJECT_ID }}:${{ env.REGION }}:edtech-db-dev'
           env_vars: |
             SPRING_PROFILES_ACTIVE=prod
             STORAGE_PROVIDER=gcs
