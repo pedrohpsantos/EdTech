@@ -234,6 +234,8 @@ jobs:
           region: ${{ env.REGION }}
           image: ${{ env.IMAGE }}:${{ github.sha }}
           flags: '--memory=1024Mi --add-cloudsql-instances=${{ env.PROJECT_ID }}:${{ env.REGION }}:edtech-db-dev'
+          secrets_update_strategy: clear
+          env_vars_update_strategy: overwrite
           env_vars: |
             SPRING_PROFILES_ACTIVE=prod
             STORAGE_PROVIDER=gcs
