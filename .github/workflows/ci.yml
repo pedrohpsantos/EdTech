@@ -69,11 +69,6 @@ jobs:
       run:
         working-directory: docvault/api
     env:
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      S3_ENDPOINT: ${{ secrets.S3_ENDPOINT }}
-      S3_REGION: ${{ secrets.S3_REGION }}
-      S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
       JWT_SECRET: ${{ secrets.JWT_SECRET }}
       JWT_EXPIRATION_MINUTES: 60
     steps:
@@ -233,6 +228,7 @@ jobs:
           service: ${{ env.SERVICE_NAME }}
           region: ${{ env.REGION }}
           image: ${{ env.IMAGE }}:${{ github.sha }}
+          flags: '--add-cloudsql-instances=${{ env.PROJECT_ID }}:${{ env.REGION }}:edtech-db'
           env_vars: |
             SPRING_PROFILES_ACTIVE=prod
             STORAGE_PROVIDER=gcs
