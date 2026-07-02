@@ -5,8 +5,8 @@ A topologia cloud do projeto adota uma **estratégia 100% nativa no Google Cloud
 ## Diagrama de Implantação (Google Cloud & Firebase)
 
 ```mermaid
+%%{init: {"flowchart": {"nodeSpacing": 60, "rankSpacing": 80}}}%%
 flowchart TB
-    %%{init: {"flowchart": {"nodeSpacing": 60, "rankSpacing": 80}}}%%
     User["Usuário"]
     Internet["Internet"]
 
