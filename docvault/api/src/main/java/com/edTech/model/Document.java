@@ -22,6 +22,9 @@ public class Document {
     @Column(nullable = false)
     private DocumentStatus status = DocumentStatus.DRAFT;
 
+    @Column(columnDefinition = "TEXT")
+    private String feedback;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id", nullable = false)
     private User author;
@@ -59,6 +62,9 @@ public class Document {
 
     public DocumentStatus getStatus() { return status; }
     public void setStatus(DocumentStatus status) { this.status = status; }
+
+    public String getFeedback() { return feedback; }
+    public void setFeedback(String feedback) { this.feedback = feedback; }
 
     public User getAuthor() { return author; }
     public void setAuthor(User author) { this.author = author; }

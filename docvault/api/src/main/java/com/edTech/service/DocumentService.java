@@ -1,22 +1,25 @@
 package com.edTech.service;
 
 import com.edTech.dto.DocumentResponseDTO;
+import com.edTech.dto.DocumentStatusUpdateDTO;
 import com.edTech.model.AcaoAuditoria;
 import com.edTech.model.Document;
 import com.edTech.model.DocumentStatus;
 import com.edTech.model.Project;
+import com.edTech.model.ProjectRole;
 import com.edTech.model.User;
 import com.edTech.repository.DocumentRepository;
 import com.edTech.repository.ProjectMemberRepository;
 import com.edTech.repository.ProjectRepository;
 import com.edTech.repository.UserRepository;
+import com.edTech.model.ProjectMember;
+import com.edTech.model.ProjectRole;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
 
 import java.io.IOException;
 import java.time.Duration;
@@ -151,6 +154,30 @@ public class DocumentService {
         dto.setAuthorId(document.getAuthor().getId());
         dto.setProjectId(document.getProject().getId());
         dto.setCreatedAt(document.getCreatedAt());
+        dto.setFeedback(document.getFeedback());
         return dto;
+    }
+    @Transactional
+    public DocumentResponseDTO reviewDocument(UUID documentId, UUID reviewerId, DocumentStatus newStatus, String feedback){
+        if (newStatus != DocumentStatus.APPROVED && newStatus != DocumentStatus.REJECTED){
+            throw new IllegalArgumentException("Status inválido. Apenas APPROVED ou REJECTED são permitidos na revisão.");
+        }
+        Document document = documentRepository.findById(documentId)
+            .orElseThrow(() -> new RuntimeException("Document not found"));
+        ProjectMember member = projectMemberRepository.findByProjectIdAndUserId(document.getProject().getId(), reviewerId)
+            .orElseThrow(() -> new RuntimeException("Acess denied: You are not a member of this project"));
+        if (member.getRole() != ProjectRole.ADVISOR){
+            throw new RuntimeException("Acess denied: Only an ADVISOR can review documents");
+        }
+        if (document.getStatus() != DocumentStatus.PENDING_REVIEW){
+            throw new RuntimeException("Document is not pending review");
+        }
+        document.setStatus(newStatus);
+        document.setFeedback(feedback);
+        Document savedDocument = documentRepository.save(document);
+        AcaoAuditoria acao = (newStatus == DocumentStatus.APPROVED) ? AcaoAuditoria.DOCUMENT_APPROVED : AcaoAuditoria.DOCUMENT_REJECTED;
+        String details = "Status alterado para " + newStatus + ".Feedback: " + (feedback != null && !feedback.trim().isEmpty() ? feedback : "Sem feedback");
+        auditLogService.logAction(reviewerId, acao, details);
+        return mapToDTO(savedDocument);
     }
 }

@@ -11,6 +11,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import com.edTech.model.DocumentStatus;
+import com.edTech.dto.UpdateDocumentStatusRequest;
+import com.edTech.model.ProjectMember;
+import com.edTech.model.ProjectRole;
 
 import java.util.UUID;
 
@@ -57,5 +61,16 @@ public class DocumentController {
         User user = (User) authentication.getPrincipal();
         documentService.deleteDocument(id, user.getId());
         return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<DocumentResponseDTO> updateDocumentStatus(
+            @PathVariable UUID id,
+            @RequestBody com.edTech.dto.DocumentStatusUpdateDTO dto,
+            Authentication authentication
+    ) {
+        User user = (User) authentication.getPrincipal();
+        DocumentResponseDTO response = documentService.reviewDocument(id, user.getId(), dto.getStatus(), dto.getFeedback());
+        return ResponseEntity.ok(response);
     }
 }
