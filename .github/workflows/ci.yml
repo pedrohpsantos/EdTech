@@ -226,6 +226,12 @@ jobs:
           docker build -t ${{ env.IMAGE }}:${{ github.sha }} .
           docker push ${{ env.IMAGE }}:${{ github.sha }}
 
+      - name: Remove Old Secrets
+        run: |
+          gcloud run services update ${{ env.SERVICE_NAME }} \
+            --region ${{ env.REGION }} \
+            --remove-secrets=SPRING_DATASOURCE_URL,SPRING_DATASOURCE_USERNAME,SPRING_DATASOURCE_PASSWORD,JWT_SECRET || true
+
       - name: Deploy to Cloud Run
         id: deploy-cr
         uses: google-github-actions/deploy-cloudrun@v2
