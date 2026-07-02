@@ -6553,7 +6553,7 @@ flowchart TB
     User["Usuário"]
     Internet["Internet"]
 
-    subgraph GCP["Google Cloud Platform e Firebase"]
+    subgraph GCP["Google Cloud Platform &amp; Firebase"]
         Firebase["Firebase Hosting&lt;br&gt;(Frontend React/Vite)"]
         Run["Cloud Run&lt;br&gt;(Backend Spring Boot)"]
         SQL["Cloud SQL&lt;br&gt;(PostgreSQL)"]
@@ -6563,8 +6563,8 @@ flowchart TB
     User --&gt; Internet
     Internet --&gt; Firebase
     Internet --&gt; Run
-    Run --&gt;|JDBC (Socket)| SQL
-    Run --&gt;|API/gRPC| Storage</code></pre>
+    Run --&gt;|"JDBC (Socket)"| SQL
+    Run --&gt;|"API/gRPC"| Storage</code></pre>
 <h2 id="arquitetura-infraestrutura-nuvem-beneficios-da-topologia">Benefícios da Topologia<a class="headerlink" href="#arquitetura-infraestrutura-nuvem-beneficios-da-topologia" title="Permanent link">¶</a></h2>
 <h3 id="arquitetura-infraestrutura-nuvem-ecossistema-google-cloud">Ecossistema Google Cloud<a class="headerlink" href="#arquitetura-infraestrutura-nuvem-ecossistema-google-cloud" title="Permanent link">¶</a></h3>
 <ul>
