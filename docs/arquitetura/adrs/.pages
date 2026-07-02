@@ -1,5 +1,6 @@
 title: Decisões Técnicas (ADRs)
 nav:
+  - 0001-armazenamento-google-cloud.md
   - 0002-autenticacao-jwt.md
   - 0003-cloud-run.md
   - 0004-postgresql.md

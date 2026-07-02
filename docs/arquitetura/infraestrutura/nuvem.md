@@ -6,7 +6,6 @@ A topologia cloud do projeto adota uma **estratégia 100% nativa no Google Cloud
 
 ```mermaid
 flowchart TB
-    %%{init: {"flowchart": {"nodeSpacing": 60, "rankSpacing": 80}}}%%
     User["Usuário"]
     Internet["Internet"]
 
