@@ -10,7 +10,7 @@ flowchart TB
     User["Usuário"]
     Internet["Internet"]
 
-    subgraph GCP["Google Cloud Platform e Firebase"]
+    subgraph GCP["Google Cloud Platform & Firebase"]
         Firebase["Firebase Hosting<br>(Frontend React/Vite)"]
         Run["Cloud Run<br>(Backend Spring Boot)"]
         SQL["Cloud SQL<br>(PostgreSQL)"]
@@ -20,8 +20,8 @@ flowchart TB
     User --> Internet
     Internet --> Firebase
     Internet --> Run
-    Run -->|JDBC (Socket)| SQL
-    Run -->|API/gRPC| Storage
+    Run -->|"JDBC (Socket)"| SQL
+    Run -->|"API/gRPC"| Storage
 ```
 
 ## Benefícios da Topologia
