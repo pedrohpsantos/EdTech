@@ -1455,6 +1455,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../arquitetura/adrs/0001-armazenamento-google-cloud/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ADR 0001: Armazenamento em Nuvem Nativo (Google Cloud)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../arquitetura/adrs/0002-autenticacao-jwt/" class="md-nav__link">
         
   
@@ -3269,10 +3297,21 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#arquitetura-adrs-0001-armazenamento-google-cloud" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4.1 ADR 0001: Armazenamento em Nuvem Nativo (Google Cloud)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#arquitetura-adrs-0002-autenticacao-jwt" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.4.1 ADR 0002: Autenticação baseada em JWT com cookies HttpOnly
+        3.4.2 ADR 0002: Autenticação baseada em JWT com cookies HttpOnly
       
     </span>
   </a>
@@ -3283,7 +3322,7 @@
   <a href="#arquitetura-adrs-0003-cloud-run" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.4.2 ADR 0003: Adoção de Google Cloud Run (Serverless)
+        3.4.3 ADR 0003: Adoção de Google Cloud Run (Serverless)
       
     </span>
   </a>
@@ -3294,7 +3333,7 @@
   <a href="#arquitetura-adrs-0004-postgresql" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.4.3 ADR 0004: Escolha do Banco de Dados Relacional (PostgreSQL)
+        3.4.4 ADR 0004: Escolha do Banco de Dados Relacional (PostgreSQL)
       
     </span>
   </a>
@@ -3305,7 +3344,7 @@
   <a href="#arquitetura-adrs-0005-spring-boot" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.4.4 ADR 0005: Framework Backend (Spring Boot + Java 17)
+        3.4.5 ADR 0005: Framework Backend (Spring Boot + Java 17)
       
     </span>
   </a>
@@ -3316,7 +3355,7 @@
   <a href="#arquitetura-adrs-0006-spa-api" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.4.5 ADR 0006: Separação de API e Frontend (SPA)
+        3.4.6 ADR 0006: Separação de API e Frontend (SPA)
       
     </span>
   </a>
@@ -3327,7 +3366,7 @@
   <a href="#arquitetura-adrs-0007-flyway" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.4.6 ADR 0007: Versionamento de Banco de Dados com Flyway
+        3.4.7 ADR 0007: Versionamento de Banco de Dados com Flyway
       
     </span>
   </a>
@@ -3338,7 +3377,7 @@
   <a href="#arquitetura-adrs-0008-github-actions" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.4.7 ADR 0008: Integração e Entrega Contínuas com GitHub Actions
+        3.4.8 ADR 0008: Integração e Entrega Contínuas com GitHub Actions
       
     </span>
   </a>
@@ -3349,7 +3388,7 @@
   <a href="#arquitetura-adrs-0009-mkdocs" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.4.8 ADR 0009: Docs-as-Code com MkDocs e Material
+        3.4.9 ADR 0009: Docs-as-Code com MkDocs e Material
       
     </span>
   </a>
@@ -3360,7 +3399,7 @@
   <a href="#arquitetura-adrs-0010-monolito-modular" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.4.9 ADR 0010: Adoção de Arquitetura Monolítica Modular vs. Microsserviços
+        3.4.10 ADR 0010: Adoção de Arquitetura Monolítica Modular vs. Microsserviços
       
     </span>
   </a>
@@ -3371,7 +3410,7 @@
   <a href="#arquitetura-adrs-0011-email-recuperacao-senha-smtp" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.4.10 ADR 0011: Envio de E-mails Transacionais (Recuperação de Senha) via SMTP
+        3.4.11 ADR 0011: Envio de E-mails Transacionais (Recuperação de Senha) via SMTP
       
     </span>
   </a>
@@ -3382,7 +3421,7 @@
   <a href="#arquitetura-adrs-0012-firebase-hosting" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.4.11 ADR 0012: Adoção do Firebase Hosting para o Frontend
+        3.4.12 ADR 0012: Adoção do Firebase Hosting para o Frontend
       
     </span>
   </a>
@@ -6509,7 +6548,6 @@ erDiagram
 <p>A topologia cloud do projeto adota uma <strong>estratégia 100% nativa no Google Cloud</strong>, utilizando serviços gerenciados e serverless.</p>
 <h2 id="arquitetura-infraestrutura-nuvem-diagrama-de-implantacao-google-cloud-firebase">Diagrama de Implantação (Google Cloud &amp; Firebase)<a class="headerlink" href="#arquitetura-infraestrutura-nuvem-diagrama-de-implantacao-google-cloud-firebase" title="Permanent link">¶</a></h2>
 <pre class="mermaid"><code>flowchart TB
-    %%{init: {"flowchart": {"nodeSpacing": 60, "rankSpacing": 80}}}%%
     User["Usuário"]
     Internet["Internet"]
 
@@ -6724,7 +6762,72 @@ flowchart LR
                     <section class='print-page md-section' id='section-3-4' heading-number='3.4'>
                         <h1>Decisões Técnicas (ADRs)<a class='headerlink' href='#section-3-4' title='Permanent link'></a>
                         </h1>
-                    <section class="print-page" id="arquitetura-adrs-0002-autenticacao-jwt" heading-number="3.4.1"><html><head>
+                    <section class="print-page" id="arquitetura-adrs-0001-armazenamento-google-cloud" heading-number="3.4.1"><html><head>
+        <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            remove_material_navigation();remove_mkdocs_theme_navigation();generate_toc();
+        })
+        </script>
+        </head><body><h1 id="adr-0001-armazenamento-em-nuvem-nativo-google-cloud"><abbr title="Architecture Decision Record — Registro de Decisão Arquitetural">ADR</abbr> 0001: Armazenamento em Nuvem Nativo (Google Cloud)<a class="headerlink" href="#arquitetura-adrs-0001-armazenamento-google-cloud-adr-0001-armazenamento-em-nuvem-nativo-google-cloud" title="Permanent link">¶</a></h1>
+<h2 id="arquitetura-adrs-0001-armazenamento-google-cloud-status">Status<a class="headerlink" href="#arquitetura-adrs-0001-armazenamento-google-cloud-status" title="Permanent link">¶</a></h2>
+<p>Aceito e Implementado</p>
+<h2 id="arquitetura-adrs-0001-armazenamento-google-cloud-contexto">Contexto<a class="headerlink" href="#arquitetura-adrs-0001-armazenamento-google-cloud-contexto" title="Permanent link">¶</a></h2>
+<p>O repositório acadêmico espera receber um grande volume de Artigos e Teses em formato <abbr title="Portable Document Format">PDF</abbr> e datasets (<abbr title="Comma-Separated Values — Valores Separados por Vírgula">CSV</abbr>, <abbr title="JavaScript Object Notation">JSON</abbr>). O tamanho limite estipulado no requisito <code>RF07</code> é de 50 <abbr title="Megabyte">MB</abbr> por arquivo. A atual infraestrutura da Instituição não possui instâncias em disco com alta disponibilidade nativa prontas para I/O massivo simultâneo.
+Além disso, a persistência em disco local se mostrou frágil e inadequada para ambientes efêmeros. Soluções alternativas de terceiros foram testadas, mas divergiam da estratégia institucional de consolidação tecnológica.</p>
+<h2 id="arquitetura-adrs-0001-armazenamento-google-cloud-decisao">Decisão<a class="headerlink" href="#arquitetura-adrs-0001-armazenamento-google-cloud-decisao" title="Permanent link">¶</a></h2>
+<p>Optou-se por consolidar a infraestrutura de armazenamento e banco de dados no ecossistema nativo do <strong>Google Cloud Platform (<abbr title="Google Cloud Platform">GCP</abbr>)</strong>. Os arquivos binários serão armazenados no <strong>Google Cloud Storage (<abbr title="Google Cloud Storage">GCS</abbr>)</strong>, enquanto os dados relacionais residirão no <strong>Google Cloud <abbr title="Structured Query Language">SQL</abbr> (PostgreSQL)</strong>, com o frontend distribuído via <strong>Firebase Hosting</strong>.</p>
+<p>A aplicação backend (Cloud Run) fará comunicação direta com as APIs nativas do Google Cloud, eliminando integrações e bibliotecas de terceiros (como S3 <abbr title="Software Development Kit — Kit de Desenvolvimento de Software">SDK</abbr>) e garantindo maior performance e coesão de segurança através da <abbr title="Virtual Private Cloud">VPC</abbr> do <abbr title="Google Cloud Platform">GCP</abbr>.</p>
+<h2 id="arquitetura-adrs-0001-armazenamento-google-cloud-consequencias">Consequências<a class="headerlink" href="#arquitetura-adrs-0001-armazenamento-google-cloud-consequencias" title="Permanent link">¶</a></h2>
+<h3 id="arquitetura-adrs-0001-armazenamento-google-cloud-positivas">Positivas<a class="headerlink" href="#arquitetura-adrs-0001-armazenamento-google-cloud-positivas" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Ecossistema Unificado:</strong> Facilidade no gerenciamento de faturamento, infraestrutura e segurança com a centralização no <abbr title="Google Cloud Platform">GCP</abbr>.</li>
+<li><strong>Segurança Nativa (IAM):</strong> Autenticação <em>passwordless</em> entre os serviços (Cloud Run para <abbr title="Google Cloud Storage">GCS</abbr> e Cloud <abbr title="Structured Query Language">SQL</abbr>) baseada em Service Accounts padrão do Google Cloud.</li>
+<li><strong>Desempenho:</strong> Comunicação na rede interna de alta velocidade do Google entre a <abbr title="Application Programming Interface">API</abbr>, o banco e o storage, desonerando conexões externas.</li>
+<li><strong>Escalabilidade:</strong> O <abbr title="Google Cloud Storage">GCS</abbr> absorve 100% da carga de tráfego estático, evitando engarrafamentos no tráfego da <abbr title="Application Programming Interface">API</abbr>.</li>
+</ul>
+<h3 id="arquitetura-adrs-0001-armazenamento-google-cloud-negativas-riscos">Negativas / Riscos<a class="headerlink" href="#arquitetura-adrs-0001-armazenamento-google-cloud-negativas-riscos" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Lock-in:</strong> Dependência completa da infraestrutura do Google Cloud (<abbr title="Google Cloud Platform">GCP</abbr>/Firebase) e de suas bibliotecas nativas, dificultando a migração pontual para outros provedores (<abbr title="Amazon Web Services">AWS</abbr>/Azure) sem refatoração.</li>
+<li><strong>Complexidade de IAM:</strong> Requer curva de aprendizado inicial para gerenciar permissões no painel do <abbr title="Google Cloud Platform">GCP</abbr>.</li>
+</ul>
+<hr>
+<h2 id="arquitetura-adrs-0001-armazenamento-google-cloud-historico-de-versoes">Histórico de Versões<a class="headerlink" href="#arquitetura-adrs-0001-armazenamento-google-cloud-historico-de-versoes" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Versão</th>
+<th style="text-align: center;">Data</th>
+<th style="text-align: left;">Descrição</th>
+<th style="text-align: left;">Autor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><code>1.0</code></td>
+<td style="text-align: center;">30/05/2026</td>
+<td style="text-align: left;">Documento de Registro de Decisão Arquitetural (<abbr title="Google Cloud Storage">GCS</abbr> inicial)</td>
+<td style="text-align: left;">Pedro Henrique P. Santos</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>1.1</code></td>
+<td style="text-align: center;">04/06/2026</td>
+<td style="text-align: left;">Padronização do formato do documento</td>
+<td style="text-align: left;">Pedro Henrique P. Santos</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>2.0</code></td>
+<td style="text-align: center;">21/06/2026</td>
+<td style="text-align: left;">Transição temporária de Storage (removido)</td>
+<td style="text-align: left;">Pedro Henrique P. Santos</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>3.0</code></td>
+<td style="text-align: center;">01/07/2026</td>
+<td style="text-align: left;">Consolidação final no ecossistema nativo Google Cloud e Firebase</td>
+<td style="text-align: left;">Pedro Henrique P. Santos</td>
+</tr>
+</tbody>
+</table></body></html></section><section class="print-page" id="arquitetura-adrs-0002-autenticacao-jwt" heading-number="3.4.2"><html><head>
         <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function () {
             remove_material_navigation();remove_mkdocs_theme_navigation();generate_toc();
@@ -6785,7 +6888,7 @@ A adoção de <abbr title="JavaScript Object Notation">JSON</abbr> Web Tokens (<
 <td style="text-align: left;">Pedro Henrique P. Santos</td>
 </tr>
 </tbody>
-</table></body></html></section><section class="print-page" id="arquitetura-adrs-0003-cloud-run" heading-number="3.4.2"><html><head>
+</table></body></html></section><section class="print-page" id="arquitetura-adrs-0003-cloud-run" heading-number="3.4.3"><html><head>
         <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function () {
             remove_material_navigation();remove_mkdocs_theme_navigation();generate_toc();
@@ -6846,7 +6949,7 @@ Manter servidores virtuais (VMs) tradicionais rodando 24/7 geraria custos desnec
 <td style="text-align: left;">Pedro Henrique P. Santos</td>
 </tr>
 </tbody>
-</table></body></html></section><section class="print-page" id="arquitetura-adrs-0004-postgresql" heading-number="3.4.3"><html><head>
+</table></body></html></section><section class="print-page" id="arquitetura-adrs-0004-postgresql" heading-number="3.4.4"><html><head>
         <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function () {
             remove_material_navigation();remove_mkdocs_theme_navigation();generate_toc();
@@ -6907,7 +7010,7 @@ Além disso, o sistema conta com um módulo de Auditoria que exige um histórico
 <td style="text-align: left;">Pedro Henrique P. Santos</td>
 </tr>
 </tbody>
-</table></body></html></section><section class="print-page" id="arquitetura-adrs-0005-spring-boot" heading-number="3.4.4"><html><head>
+</table></body></html></section><section class="print-page" id="arquitetura-adrs-0005-spring-boot" heading-number="3.4.5"><html><head>
         <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function () {
             remove_material_navigation();remove_mkdocs_theme_navigation();generate_toc();
@@ -6967,7 +7070,7 @@ Além disso, o sistema conta com um módulo de Auditoria que exige um histórico
 <td style="text-align: left;">Pedro Henrique P. Santos</td>
 </tr>
 </tbody>
-</table></body></html></section><section class="print-page" id="arquitetura-adrs-0006-spa-api" heading-number="3.4.5"><html><head>
+</table></body></html></section><section class="print-page" id="arquitetura-adrs-0006-spa-api" heading-number="3.4.6"><html><head>
         <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function () {
             remove_material_navigation();remove_mkdocs_theme_navigation();generate_toc();
@@ -7031,7 +7134,7 @@ Além disso, o sistema conta com um módulo de Auditoria que exige um histórico
 <td style="text-align: left;">Pedro Henrique P. Santos</td>
 </tr>
 </tbody>
-</table></body></html></section><section class="print-page" id="arquitetura-adrs-0007-flyway" heading-number="3.4.6"><html><head>
+</table></body></html></section><section class="print-page" id="arquitetura-adrs-0007-flyway" heading-number="3.4.7"><html><head>
         <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function () {
             remove_material_navigation();remove_mkdocs_theme_navigation();generate_toc();
@@ -7091,7 +7194,7 @@ Além disso, o sistema conta com um módulo de Auditoria que exige um histórico
 <td style="text-align: left;">Pedro Henrique P. Santos</td>
 </tr>
 </tbody>
-</table></body></html></section><section class="print-page" id="arquitetura-adrs-0008-github-actions" heading-number="3.4.7"><html><head>
+</table></body></html></section><section class="print-page" id="arquitetura-adrs-0008-github-actions" heading-number="3.4.8"><html><head>
         <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function () {
             remove_material_navigation();remove_mkdocs_theme_navigation();generate_toc();
@@ -7146,7 +7249,7 @@ Além disso, o sistema conta com um módulo de Auditoria que exige um histórico
 <td style="text-align: left;">Pedro Henrique P. Santos</td>
 </tr>
 </tbody>
-</table></body></html></section><section class="print-page" id="arquitetura-adrs-0009-mkdocs" heading-number="3.4.8"><html><head>
+</table></body></html></section><section class="print-page" id="arquitetura-adrs-0009-mkdocs" heading-number="3.4.9"><html><head>
         <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function () {
             remove_material_navigation();remove_mkdocs_theme_navigation();generate_toc();
@@ -7201,7 +7304,7 @@ Além disso, o sistema conta com um módulo de Auditoria que exige um histórico
 <td style="text-align: left;">Pedro Henrique P. Santos</td>
 </tr>
 </tbody>
-</table></body></html></section><section class="print-page" id="arquitetura-adrs-0010-monolito-modular" heading-number="3.4.9"><html><head>
+</table></body></html></section><section class="print-page" id="arquitetura-adrs-0010-monolito-modular" heading-number="3.4.10"><html><head>
         <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function () {
             remove_material_navigation();remove_mkdocs_theme_navigation();generate_toc();
@@ -7252,7 +7355,7 @@ Além disso, o sistema conta com um módulo de Auditoria que exige um histórico
 <td style="text-align: left;">Pedro Henrique P. Santos</td>
 </tr>
 </tbody>
-</table></body></html></section><section class="print-page" id="arquitetura-adrs-0011-email-recuperacao-senha-smtp" heading-number="3.4.10"><html><head>
+</table></body></html></section><section class="print-page" id="arquitetura-adrs-0011-email-recuperacao-senha-smtp" heading-number="3.4.11"><html><head>
         <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function () {
             remove_material_navigation();remove_mkdocs_theme_navigation();generate_toc();
@@ -7298,7 +7401,7 @@ Precisamos enviar um código de segurança (OTP - One Time Password) de 6 dígit
 <td style="text-align: left;">Pedro Henrique P. Santos</td>
 </tr>
 </tbody>
-</table></body></html></section><section class="print-page" id="arquitetura-adrs-0012-firebase-hosting" heading-number="3.4.11"><html><head>
+</table></body></html></section><section class="print-page" id="arquitetura-adrs-0012-firebase-hosting" heading-number="3.4.12"><html><head>
         <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function () {
             remove_material_navigation();remove_mkdocs_theme_navigation();generate_toc();
@@ -11508,27 +11611,29 @@ Copie toda a estrutura abaixo para o novo arquivo, preencha os dados e adicione 
 .print-site-enumerate-headings #arquitetura-infraestrutura-seguranca_app > h1:before { content: '3.3.2 ' }
 
 .print-site-enumerate-headings #section-3-4 > h1:before { content: '3.4 ' }
-.print-site-enumerate-headings #arquitetura-adrs-0002-autenticacao-jwt > h1:before { content: '3.4.1 ' }
+.print-site-enumerate-headings #arquitetura-adrs-0001-armazenamento-google-cloud > h1:before { content: '3.4.1 ' }
 
-.print-site-enumerate-headings #arquitetura-adrs-0003-cloud-run > h1:before { content: '3.4.2 ' }
+.print-site-enumerate-headings #arquitetura-adrs-0002-autenticacao-jwt > h1:before { content: '3.4.2 ' }
 
-.print-site-enumerate-headings #arquitetura-adrs-0004-postgresql > h1:before { content: '3.4.3 ' }
+.print-site-enumerate-headings #arquitetura-adrs-0003-cloud-run > h1:before { content: '3.4.3 ' }
 
-.print-site-enumerate-headings #arquitetura-adrs-0005-spring-boot > h1:before { content: '3.4.4 ' }
+.print-site-enumerate-headings #arquitetura-adrs-0004-postgresql > h1:before { content: '3.4.4 ' }
 
-.print-site-enumerate-headings #arquitetura-adrs-0006-spa-api > h1:before { content: '3.4.5 ' }
+.print-site-enumerate-headings #arquitetura-adrs-0005-spring-boot > h1:before { content: '3.4.5 ' }
 
-.print-site-enumerate-headings #arquitetura-adrs-0007-flyway > h1:before { content: '3.4.6 ' }
+.print-site-enumerate-headings #arquitetura-adrs-0006-spa-api > h1:before { content: '3.4.6 ' }
 
-.print-site-enumerate-headings #arquitetura-adrs-0008-github-actions > h1:before { content: '3.4.7 ' }
+.print-site-enumerate-headings #arquitetura-adrs-0007-flyway > h1:before { content: '3.4.7 ' }
 
-.print-site-enumerate-headings #arquitetura-adrs-0009-mkdocs > h1:before { content: '3.4.8 ' }
+.print-site-enumerate-headings #arquitetura-adrs-0008-github-actions > h1:before { content: '3.4.8 ' }
 
-.print-site-enumerate-headings #arquitetura-adrs-0010-monolito-modular > h1:before { content: '3.4.9 ' }
+.print-site-enumerate-headings #arquitetura-adrs-0009-mkdocs > h1:before { content: '3.4.9 ' }
 
-.print-site-enumerate-headings #arquitetura-adrs-0011-email-recuperacao-senha-smtp > h1:before { content: '3.4.10 ' }
+.print-site-enumerate-headings #arquitetura-adrs-0010-monolito-modular > h1:before { content: '3.4.10 ' }
 
-.print-site-enumerate-headings #arquitetura-adrs-0012-firebase-hosting > h1:before { content: '3.4.11 ' }
+.print-site-enumerate-headings #arquitetura-adrs-0011-email-recuperacao-senha-smtp > h1:before { content: '3.4.11 ' }
+
+.print-site-enumerate-headings #arquitetura-adrs-0012-firebase-hosting > h1:before { content: '3.4.12 ' }
 
 .print-site-enumerate-headings #section-4 > h1:before { content: '4 ' }
 .print-site-enumerate-headings #desenvolvimento-guia_local > h1:before { content: '4.1 ' }
