@@ -6549,14 +6549,15 @@ erDiagram
 <p>A topologia cloud do projeto adota uma <strong>estratégia 100% nativa no Google Cloud</strong>, utilizando serviços gerenciados e serverless.</p>
 <h2 id="arquitetura-infraestrutura-nuvem-diagrama-de-implantacao-google-cloud-firebase">Diagrama de Implantação (Google Cloud &amp; Firebase)<a class="headerlink" href="#arquitetura-infraestrutura-nuvem-diagrama-de-implantacao-google-cloud-firebase" title="Permanent link">¶</a></h2>
 <pre class="mermaid"><code>flowchart TB
+    %%{init: {"flowchart": {"nodeSpacing": 60, "rankSpacing": 80}}}%%
     User["Usuário"]
     Internet["Internet"]
 
-    subgraph GCP["Google Cloud Platform e Firebase"]
-        Firebase["Firebase Hosting (Frontend React/Vite)"]
-        Run["Cloud Run (Backend Spring Boot)"]
-        SQL["Cloud SQL (PostgreSQL)"]
-        Storage["Cloud Storage (Bucket PDFs)"]
+    subgraph GCP["Google Cloud Platform &amp; Firebase"]
+        Firebase["Firebase Hosting&lt;br&gt;(Frontend React/Vite)"]
+        Run["Cloud Run&lt;br&gt;(Backend Spring Boot)"]
+        SQL["Cloud SQL&lt;br&gt;(PostgreSQL)"]
+        Storage["Cloud Storage&lt;br&gt;(Bucket PDFs)"]
     end
 
     User --&gt; Internet
