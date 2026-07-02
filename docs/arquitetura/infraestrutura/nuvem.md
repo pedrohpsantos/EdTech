@@ -9,11 +9,11 @@ flowchart TB
     User["Usuário"]
     Internet["Internet"]
 
-    subgraph GCP["Google Cloud Platform & Firebase"]
-        Firebase["Firebase Hosting<br>(Frontend React/Vite)"]
-        Run["Cloud Run<br>(Backend Spring Boot)"]
-        SQL["Cloud SQL<br>(PostgreSQL)"]
-        Storage["Cloud Storage<br>(Bucket PDFs)"]
+    subgraph GCP["Google Cloud Platform e Firebase"]
+        Firebase["Firebase Hosting\n(Frontend React/Vite)"]
+        Run["Cloud Run\n(Backend Spring Boot)"]
+        SQL["Cloud SQL\n(PostgreSQL)"]
+        Storage["Cloud Storage\n(Bucket PDFs)"]
     end
 
     User --> Internet
