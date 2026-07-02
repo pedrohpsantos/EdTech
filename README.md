@@ -8,7 +8,8 @@
 [![CI Pipeline](https://github.com/pedrohpsantos/EdTech/actions/workflows/ci.yml/badge.svg)](https://github.com/pedrohpsantos/EdTech/actions/workflows/ci.yml)
 ![NodeJS](https://img.shields.io/badge/Node.js-%3E%3D24-339933?logo=nodedotjs&logoColor=white)
 ![Java](https://img.shields.io/badge/Java-21_LTS-007396?logo=openjdk&logoColor=white)
-![Supabase](https://img.shields.io/badge/Supabase-Database_%26_Storage-3ECF8E?logo=supabase&logoColor=white)
+![Google Cloud](https://img.shields.io/badge/GoogleCloud-SQL_%26_Run-4285F4?logo=googlecloud&logoColor=white)
+![Firebase](https://img.shields.io/badge/Firebase-Hosting-FFCA28?logo=firebase&logoColor=white)
 ![MkDocs Material](https://img.shields.io/badge/docs-MkDocs_Material-7c4dff?logo=materialformkdocs&logoColor=white)
 
 Plataforma acadêmica para centralização, gerenciamento e auditoria de publicações científicas, relatórios de pesquisa e datasets — desenvolvida no laboratório **AILAB Makers** (UnB FCTE).
@@ -20,7 +21,7 @@ Plataforma acadêmica para centralização, gerenciamento e auditoria de publica
 ## 📌 Estado Atual do Repositório (Semana 7/7)
 
 O projeto encontra-se atualmente na fase final de entrega e lapidação do **MVP (Sprint 7/7)**.
-- **✅ Concluído:** Arquitetura do Monorepo, Autenticação, Proteção CSRF/JWT, Infraestrutura Multi-Cloud (Google Cloud Storage/SQL/Cloud Run e Vercel), Layout UI/UX responsivo (React/Vite).
+- **✅ Concluído:** Arquitetura do Monorepo, Autenticação, Proteção CSRF/JWT, Infraestrutura 100% Google Cloud (Cloud Storage, Cloud SQL, Cloud Run) e Firebase Hosting para Frontend, Layout UI/UX responsivo (React/Vite).
 - **✅ Concluído (Frontend UI):** Tradução nativa para Português, Design System em CSS Puro (Zero Tailwind, uso estrito de Bootstrap apenas para grid), implementação da "Trilha de Pesquisa" (Logs de Auditoria Visuais) e Skeleton Loadings premium para visualização de documentos.
 - **🚧 Em Desenvolvimento:** Integração final das APIs REST do Backend com as chamadas assíncronas do Frontend.
 
@@ -65,7 +66,7 @@ Subir o ambiente completo de desenvolvimento local com os bancos de dados vincul
 # 1. Na raiz do projeto, copie o arquivo de variáveis de exemplo
 cp infra/.env.example infra/.env
 
-# 2. Preencha POSTGRES_PASSWORD, JWT_SECRET e chaves do Supabase S3 em infra/.env
+# 2. Preencha POSTGRES_PASSWORD e JWT_SECRET em infra/.env
 
 # 3. Suba o banco e a API de uma só vez (Build Automático)
 docker compose --env-file infra/.env -f infra/docker-compose.yml up --build
@@ -101,7 +102,7 @@ docker compose --env-file infra/.env -f infra/docker-compose.yml down -v
 | `0.1.0` | 10/06/2026 | Fundação da documentação técnica e governança. |
 | `0.2.0` | 13/06/2026 | Reestruturação arquitetural e guias DevEx (MkDocs). |
 | `0.3.0` | 20/06/2026 | Consolidação do Backend (Spring Boot 4.1 + Java 21) e Infra CI. |
-| `0.4.0` | 26/06/2026 | Integração de UI (Vite), Supabase DB/S3 e fechamento do MVP Sprint 6. |
+| `0.4.0` | 26/06/2026 | Integração de UI (Vite), Google Cloud SQL/Storage e fechamento do MVP Sprint 6. |
 | `0.5.0` | 01/07/2026 | Refinamento Premium de UX/UI (Animações, Design System CSS Puro, Tela de Trilha de Pesquisa). |
 
 ---

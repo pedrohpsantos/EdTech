@@ -78,7 +78,7 @@ Pesquisadores precisam de um lugar seguro, organizado e auditável para armazena
 
     ---
 
-    Google Cloud Run com banco gerenciado (Cloud SQL for PostgreSQL) e storage distribuído multi-cloud (Supabase S3 e GCS).
+    Google Cloud Run com banco gerenciado (Cloud SQL for PostgreSQL) e storage nativo (Google Cloud Storage), com Frontend servido no Firebase Hosting.
 
 </div>
 
@@ -175,8 +175,8 @@ Tecnologias selecionadas para robustez, segurança e escalabilidade em ambiente 
 | :--- | :--- |
 | **Frontend** | HTML5, CSS Puro (Design System), Bootstrap 5 (Grid), React 19, Vite 8 |
 | **Backend** | Java 21, Spring Boot 4.1, Spring Security, JWT (`HttpOnly` + `Secure`) |
-| **Banco de Dados & Storage** | Google Cloud SQL for PostgreSQL, Supabase S3 Object Storage, Flyway |
-| **Infraestrutura & DevOps** | Docker, Google Cloud Run |
+| **Banco de Dados & Storage** | Google Cloud SQL for PostgreSQL, Google Cloud Storage, Flyway |
+| **Infraestrutura & DevOps** | Docker, Google Cloud Run, Firebase Hosting |
 | **CI/CD & Qualidade** | GitHub Actions, JUnit, Python 3.11 (scripts de telemetria - Pós-MVP) |
 | **Documentação** | MkDocs + Material for MkDocs |
 
@@ -250,5 +250,5 @@ Time multidisciplinar do AILAB Makers.
 | `0.1.0` | 10/06/2026 | Fundação da documentação técnica e governança. | Pedro Henrique P. Santos |
 | `0.2.0` | 13/06/2026 | Reestruturação arquitetural da documentação e introdução de guias DevEx. | Pedro Henrique P. Santos |
 | `0.3.0` | 20/06/2026 | Consolidação do Backend (Spring Boot 4.1 + Java 21) e Infra CI. | Pedro Henrique P. Santos |
-| `0.4.0` | 26/06/2026 | Integração de UI (Vite), Supabase DB/S3 e fechamento do MVP Sprint 6. | Pedro Henrique P. Santos |
+| `0.4.0` | 26/06/2026 | Integração de UI (Vite), Google Cloud SQL/Storage e fechamento do MVP Sprint 6. | Pedro Henrique P. Santos |
 | `0.5.0` | 01/07/2026 | Refinamento Premium de UX/UI (Animações, Design System CSS Puro, Trilha de Pesquisa). | Pedro Henrique P. Santos |

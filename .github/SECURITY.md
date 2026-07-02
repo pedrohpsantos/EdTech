@@ -10,7 +10,7 @@ O projeto é atualmente suportado com as seguintes versões mínimas e configura
 | :--- | :--- |
 | **Backend** | Java 21 LTS / Spring Boot 4.1.x |
 | **Frontend** | React 19.x / Vite 8.x |
-| **Banco de Dados** | PostgreSQL 15 (Supabase) |
+| **Banco de Dados** | PostgreSQL 15 (Google Cloud SQL) |
 | **Gerenciamento (Docs)** | Python 3.11+ via `uv` |
 
 ## Reportando Vulnerabilidades

@@ -7,17 +7,17 @@ O formato baseia-se em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0
 ## [0.2.0] - 2026-06-21
 
 ### Added
-- Integração com Supabase Storage via AWS S3 SDK para upload de documentos.
+- Integração nativa com Google Cloud Storage para upload de documentos.
 - Migrations Flyway V1–V7 cobrindo users, projects, project_members, documents e audit_logs.
 - Endpoints de Projetos (CRUD) e Documentos (Upload, Listagem, Exclusão).
 - Suíte de testes de integração com AuthController, JwtService e UserService.
 - Configuração CORS completa com documentação de produção.
 - Página de documentos no frontend com filtros por título e projeto.
-- ADR 0001 atualizada para estratégia dual Supabase + GCS (fallback).
+- ADR 0001 atualizada para estratégia cloud-native com GCS.
 
 ### Changed
 - Upgrade de Spring Boot 3.3.6 → 4.1.0 (major version).
-- Migração do armazenamento de GCS/disco local para Supabase Storage (S3).
+- Consolidação do armazenamento em Google Cloud Storage (GCS).
 - SameSite do cookie JWT alterado de `Strict` para `Lax`.
 
 ### Fixed

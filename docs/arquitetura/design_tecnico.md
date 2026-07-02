@@ -84,7 +84,7 @@ sequenceDiagram
     participant P as Pesquisadora
     participant F as Frontend
     participant B as Backend
-    participant S as Storage (Supabase S3)
+    participant S as Storage (Cloud Storage)
     participant A as Auditoria
 
     P->>F: Submete Arquivo PDF

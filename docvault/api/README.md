@@ -1,13 +1,13 @@
 # api/ — Backend do EdTech
 
-Backend principal do EdTech, responsável pelas regras de negócio, upload de documentos (S3), controle de versões, segurança robusta com JWT/CSRF e geração de logs de auditoria imutáveis (Supabase RLS).
+Backend principal do EdTech, responsável pelas regras de negócio, upload de documentos (Cloud Storage), controle de versões, segurança robusta com JWT/CSRF e geração de logs de auditoria imutáveis.
 
 ---
 
 ## 🎯 Responsabilidade
 
 - Receber, validar e processar requisições HTTP do frontend.
-- Gerenciar upload de PDFs e datasets via Cloud Storage (Supabase).
+- Gerenciar upload de PDFs e datasets via Google Cloud Storage.
 - Controlar papéis e acessos granulares (Pesquisador, Orientador, Auditor).
 - Gerar Logs Inalteráveis de todas as operações sensíveis (inseridos sob RLS estrito).
 - Expor contratos de API coesos e bem estruturados.
@@ -22,7 +22,7 @@ Backend principal do EdTech, responsável pelas regras de negócio, upload de do
 | **Spring Boot** | 4.1.x | Framework web, injeção de dependência e Data JPA |
 | **Spring Security** | 6.x | Proteção de rotas, controle CORS e mitigação CSRF |
 | **Flyway** | 10.x | Versionamento e migrações do banco de dados relacional |
-| **PostgreSQL** | 15+ | Banco hospedado via Supabase (com Row Level Security) |
+| **PostgreSQL** | 15+ | Banco hospedado via Google Cloud SQL |
 | **Mockito / JUnit 5**| 5.x | Suíte de testes unitários e de integração |
 
 ---
@@ -42,9 +42,9 @@ api/src/main/java/com/docvault/
 
 ---
 
-## 🔒 Segurança e Conexão (Supabase)
+## 🔒 Segurança e Conexão
 
-O Backend conecta ao PostgreSQL usando a string **Admin/Service Role** do Supabase. Como a política de RLS (Row Level Security) bloqueia todo acesso anônimo diretamente na API pública do Supabase, nosso Spring Boot atua como um escudo protetor e orquestrador de regras.
+O Backend conecta ao PostgreSQL de forma nativa e protegida na VPC do Google Cloud. Como as instâncias de banco de dados não possuem IP público, nosso Spring Boot (Cloud Run) atua como um escudo protetor através do Cloud SQL Auth Proxy, processando requisições REST públicas e orquestrando as regras de negócio via JWT.
 
 1. **Autenticação:** Cookies `HttpOnly`, `SameSite=Strict`.
 2. **Proteção:** Ativação dupla de segurança utilizando token Anti-CSRF (`XSRF-TOKEN`).
