@@ -245,6 +245,7 @@ jobs:
             SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME }}
             SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD }}
             JWT_SECRET=${{ secrets.JWT_SECRET }}
+            SPRING_JPA_HIBERNATE_DDL_AUTO=update
 
       - name: Show Output
         run: echo ${{ steps.deploy-cr.outputs.url }}
