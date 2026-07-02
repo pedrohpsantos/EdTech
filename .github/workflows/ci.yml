@@ -182,6 +182,8 @@ jobs:
           npm run build
           echo ${{ github.sha }} > dist/version.txt
         working-directory: ./frontend
+        env:
+          VITE_API_URL: https://edtech-backend-shv6qbpf4q-rj.a.run.app
       - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
         # Continue on error so a duplicate release doesn't mark the whole workflow as failed
