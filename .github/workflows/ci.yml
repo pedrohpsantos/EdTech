@@ -239,11 +239,10 @@ jobs:
             STORAGE_PROVIDER=gcs
             GCP_PROJECT_ID=${{ env.PROJECT_ID }}
             GCP_BUCKET_NAME=edtech-vault-storage
-          secrets: |
-            SPRING_DATASOURCE_URL=SPRING_DATASOURCE_URL:latest
-            SPRING_DATASOURCE_USERNAME=SPRING_DATASOURCE_USERNAME:latest
-            SPRING_DATASOURCE_PASSWORD=SPRING_DATASOURCE_PASSWORD:latest
-            JWT_SECRET=JWT_SECRET:latest
+            SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL }}
+            SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME }}
+            SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD }}
+            JWT_SECRET=${{ secrets.JWT_SECRET }}
 
       - name: Show Output
         run: echo ${{ steps.deploy-cr.outputs.url }}
