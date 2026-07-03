@@ -17,11 +17,11 @@ edtech-api,com.edTech.dto,RegisterRequestDTO,0,12,0,0,0,1,0,1,0,1
 edtech-api,com.edTech.dto,ResetPasswordDTO,12,0,0,0,1,0,1,0,1,0
 edtech-api,com.edTech.service,DuplicateEmailException,0,4,0,0,0,2,0,1,0,1
 edtech-api,com.edTech.service,JwtService,19,87,4,4,4,26,5,6,1,6
-edtech-api,com.edTech.service,AuditLogService,33,6,0,0,6,3,2,1,2,1
-edtech-api,com.edTech.service,GcsStorageServiceImpl,48,6,0,0,12,3,3,1,3,1
+edtech-api,com.edTech.service,AuditLogService,72,10,8,0,17,4,7,2,3,2
+edtech-api,com.edTech.service,GcsStorageServiceImpl,59,6,0,0,15,3,4,1,4,1
 edtech-api,com.edTech.service,UserService,10,82,2,6,1,19,3,5,1,3
 edtech-api,com.edTech.service,InvalidInstitutionalEmailException,0,4,0,0,0,2,0,1,0,1
-edtech-api,com.edTech.service,DocumentService,390,26,22,0,79,9,25,1,14,1
+edtech-api,com.edTech.service,DocumentService,404,26,22,0,83,9,25,1,14,1
 edtech-api,com.edTech.service,ProjectService,126,105,14,0,22,30,12,4,5,4
 edtech-api,com.edTech.service,EmailService,22,3,0,0,7,1,1,1,1,1
 edtech-api,com.edTech.service,InvalidCredentialsException,4,0,0,0,2,0,1,0,1,0
@@ -37,6 +37,7 @@ edtech-api,com.edTech.security,RateLimitFilter,63,8,4,0,16,2,6,1,4,1
 edtech-api,com.edTech.controller,DocumentController,73,6,0,0,12,3,5,1,5,1
 edtech-api,com.edTech.controller,ProjectController,14,31,0,0,3,7,1,3,1,3
 edtech-api,com.edTech.controller,AuthController,73,85,4,0,20,23,6,5,4,5
+edtech-api,com.edTech.controller,DashboardController,48,6,0,0,9,3,1,1,1,1
 edtech-api,com.edTech.controller,ApiExceptionHandler,18,21,0,0,4,5,2,3,2,3
 edtech-api,com.edTech.model,ProjectMember,27,15,0,0,9,4,8,4,8,4
 edtech-api,com.edTech.model,AuditLog,75,3,0,0,31,1,16,1,16,1

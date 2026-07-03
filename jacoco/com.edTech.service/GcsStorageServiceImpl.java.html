@@ -45,5 +45,11 @@ public class GcsStorageServiceImpl implements StorageService {
     private BlobInfo blobInfoForPresigned(BlobId blobId) {
 <span class="nc" id="L46">        return BlobInfo.newBuilder(blobId).build();</span>
     }
+
+    @Override
+    public void deleteFile(String fileKey) throws Exception {
+<span class="nc" id="L51">        BlobId blobId = BlobId.of(bucketName, fileKey);</span>
+<span class="nc" id="L52">        storage.delete(blobId);</span>
+<span class="nc" id="L53">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

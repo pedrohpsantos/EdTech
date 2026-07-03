@@ -55,7 +55,7 @@ public class SecurityConfig {
 <span class="fc" id="L55">                        .requestMatchers(HttpMethod.POST, &quot;/api/auth/register&quot;).permitAll()</span>
 <span class="fc" id="L56">                        .requestMatchers(&quot;/api/auth/recovery/**&quot;).permitAll()</span>
 <span class="fc" id="L57">                        .requestMatchers(&quot;/api/**&quot;).authenticated()</span>
-<span class="fc" id="L58">                        .anyRequest().permitAll()</span>
+<span class="fc" id="L58">                        .anyRequest().denyAll()</span>
                 )
 <span class="fc" id="L60">                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)</span>
 <span class="fc" id="L61">                .build();</span>

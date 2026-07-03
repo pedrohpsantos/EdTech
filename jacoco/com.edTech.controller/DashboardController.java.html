@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DashboardController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">edtech-api</a> &gt; <a href="index.source.html" class="el_package">com.edTech.controller</a> &gt; <span class="el_source">DashboardController.java</span></div><h1>DashboardController.java</h1><pre class="source lang-java linenums">package com.edTech.controller;
+
+import com.edTech.model.User;
+import com.edTech.repository.DocumentRepository;
+import com.edTech.model.DocumentStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.HashMap;
+import java.util.Map;
+
+@RestController
+@RequestMapping(&quot;/api/dashboard&quot;)
+public class DashboardController {
+
+    private final DocumentRepository documentRepository;
+
+<span class="fc" id="L21">    public DashboardController(DocumentRepository documentRepository) {</span>
+<span class="fc" id="L22">        this.documentRepository = documentRepository;</span>
+<span class="fc" id="L23">    }</span>
+
+    @GetMapping(&quot;/stats&quot;)
+    public ResponseEntity&lt;Map&lt;String, Object&gt;&gt; getStats(Authentication authentication) {
+<span class="nc" id="L27">        User user = (User) authentication.getPrincipal();</span>
+        
+<span class="nc" id="L29">        long totalDocs = documentRepository.countDocumentsByUserId(user.getId());</span>
+<span class="nc" id="L30">        long pendingReviewDocs = documentRepository.countDocumentsByUserIdAndStatus(user.getId(), DocumentStatus.PENDING_REVIEW);</span>
+        
+<span class="nc" id="L32">        Map&lt;String, Object&gt; stats = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L33">        stats.put(&quot;activeDocuments&quot;, totalDocs);</span>
+<span class="nc" id="L34">        stats.put(&quot;pendingReview&quot;, pendingReviewDocs);</span>
+<span class="nc" id="L35">        stats.put(&quot;complianceScore&quot;, 92); // TODO: Implementar lógica de conformidade real</span>
+<span class="nc" id="L36">        stats.put(&quot;researchProgress&quot;, 68); // TODO: Implementar lógica de progresso real</span>
+        
+<span class="nc" id="L38">        return ResponseEntity.ok(stats);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

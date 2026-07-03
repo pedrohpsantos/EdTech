@@ -140,45 +140,51 @@ public class DocumentService {
 <span class="nc" id="L140">            throw new RuntimeException(&quot;Only DRAFT documents can be deleted&quot;);</span>
         }
 
-        // Deletar também do S3 poderia ser feito aqui, mas omitido por simplicidade ou soft-delete futuro
-<span class="nc" id="L144">        documentRepository.delete(document);</span>
-<span class="nc" id="L145">        auditLogService.logAction(userId, AcaoAuditoria.DELETE_DOCUMENT, &quot;Documento excluido: &quot; + document.getTitle());</span>
-<span class="nc" id="L146">    }</span>
+        // Deletar o arquivo físico no GCS para conformidade com a LGPD
+        try {
+<span class="nc" id="L145">            storageService.deleteFile(document.getFileUrl());</span>
+<span class="nc" id="L146">        } catch (Exception e) {</span>
+<span class="nc" id="L147">            throw new RuntimeException(&quot;Erro ao excluir arquivo físico: &quot; + e.getMessage());</span>
+<span class="nc" id="L148">        }</span>
+        
+<span class="nc" id="L150">        documentRepository.delete(document);</span>
+<span class="nc" id="L151">        auditLogService.logAction(userId, AcaoAuditoria.DELETE_DOCUMENT, &quot;Documento excluido: &quot; + document.getTitle());</span>
+<span class="nc" id="L152">    }</span>
 
     private DocumentResponseDTO mapToDTO(Document document) {
-<span class="nc" id="L149">        DocumentResponseDTO dto = new DocumentResponseDTO();</span>
-<span class="nc" id="L150">        dto.setId(document.getId());</span>
-<span class="nc" id="L151">        dto.setTitle(document.getTitle());</span>
-<span class="nc" id="L152">        dto.setFileUrl(document.getFileUrl());</span>
-<span class="nc" id="L153">        dto.setStatus(document.getStatus());</span>
-<span class="nc" id="L154">        dto.setAuthorId(document.getAuthor().getId());</span>
-<span class="nc" id="L155">        dto.setProjectId(document.getProject().getId());</span>
-<span class="nc" id="L156">        dto.setCreatedAt(document.getCreatedAt());</span>
-<span class="nc" id="L157">        dto.setFeedback(document.getFeedback());</span>
-<span class="nc" id="L158">        return dto;</span>
+<span class="nc" id="L155">        DocumentResponseDTO dto = new DocumentResponseDTO();</span>
+<span class="nc" id="L156">        dto.setId(document.getId());</span>
+<span class="nc" id="L157">        dto.setTitle(document.getTitle());</span>
+<span class="nc" id="L158">        dto.setFileUrl(document.getFileUrl());</span>
+<span class="nc" id="L159">        dto.setStatus(document.getStatus());</span>
+<span class="nc" id="L160">        dto.setAuthorId(document.getAuthor().getId());</span>
+<span class="nc" id="L161">        dto.setProjectId(document.getProject().getId());</span>
+<span class="nc" id="L162">        dto.setCreatedAt(document.getCreatedAt());</span>
+<span class="nc" id="L163">        dto.setFeedback(document.getFeedback());</span>
+<span class="nc" id="L164">        return dto;</span>
     }
     @Transactional
     public DocumentResponseDTO reviewDocument(UUID documentId, UUID reviewerId, DocumentStatus newStatus, String feedback){
-<span class="nc bnc" id="L162" title="All 4 branches missed.">        if (newStatus != DocumentStatus.APPROVED &amp;&amp; newStatus != DocumentStatus.REJECTED){</span>
-<span class="nc" id="L163">            throw new IllegalArgumentException(&quot;Status inválido. Apenas APPROVED ou REJECTED são permitidos na revisão.&quot;);</span>
+<span class="nc bnc" id="L168" title="All 4 branches missed.">        if (newStatus != DocumentStatus.APPROVED &amp;&amp; newStatus != DocumentStatus.REJECTED){</span>
+<span class="nc" id="L169">            throw new IllegalArgumentException(&quot;Status inválido. Apenas APPROVED ou REJECTED são permitidos na revisão.&quot;);</span>
         }
-<span class="nc" id="L165">        Document document = documentRepository.findById(documentId)</span>
-<span class="nc" id="L166">            .orElseThrow(() -&gt; new RuntimeException(&quot;Document not found&quot;));</span>
-<span class="nc" id="L167">        ProjectMember member = projectMemberRepository.findByProjectIdAndUserId(document.getProject().getId(), reviewerId)</span>
-<span class="nc" id="L168">            .orElseThrow(() -&gt; new RuntimeException(&quot;Acess denied: You are not a member of this project&quot;));</span>
-<span class="nc bnc" id="L169" title="All 2 branches missed.">        if (member.getRole() != ProjectRole.ADVISOR){</span>
-<span class="nc" id="L170">            throw new RuntimeException(&quot;Acess denied: Only an ADVISOR can review documents&quot;);</span>
+<span class="nc" id="L171">        Document document = documentRepository.findById(documentId)</span>
+<span class="nc" id="L172">            .orElseThrow(() -&gt; new RuntimeException(&quot;Document not found&quot;));</span>
+<span class="nc" id="L173">        ProjectMember member = projectMemberRepository.findByProjectIdAndUserId(document.getProject().getId(), reviewerId)</span>
+<span class="nc" id="L174">            .orElseThrow(() -&gt; new RuntimeException(&quot;Acess denied: You are not a member of this project&quot;));</span>
+<span class="nc bnc" id="L175" title="All 2 branches missed.">        if (member.getRole() != ProjectRole.ADVISOR){</span>
+<span class="nc" id="L176">            throw new RuntimeException(&quot;Acess denied: Only an ADVISOR can review documents&quot;);</span>
         }
-<span class="nc bnc" id="L172" title="All 2 branches missed.">        if (document.getStatus() != DocumentStatus.PENDING_REVIEW){</span>
-<span class="nc" id="L173">            throw new RuntimeException(&quot;Document is not pending review&quot;);</span>
+<span class="nc bnc" id="L178" title="All 2 branches missed.">        if (document.getStatus() != DocumentStatus.PENDING_REVIEW){</span>
+<span class="nc" id="L179">            throw new RuntimeException(&quot;Document is not pending review&quot;);</span>
         }
-<span class="nc" id="L175">        document.setStatus(newStatus);</span>
-<span class="nc" id="L176">        document.setFeedback(feedback);</span>
-<span class="nc" id="L177">        Document savedDocument = documentRepository.save(document);</span>
-<span class="nc bnc" id="L178" title="All 2 branches missed.">        AcaoAuditoria acao = (newStatus == DocumentStatus.APPROVED) ? AcaoAuditoria.DOCUMENT_APPROVED : AcaoAuditoria.DOCUMENT_REJECTED;</span>
-<span class="nc bnc" id="L179" title="All 4 branches missed.">        String details = &quot;Status alterado para &quot; + newStatus + &quot;.Feedback: &quot; + (feedback != null &amp;&amp; !feedback.trim().isEmpty() ? feedback : &quot;Sem feedback&quot;);</span>
-<span class="nc" id="L180">        auditLogService.logAction(reviewerId, acao, details);</span>
-<span class="nc" id="L181">        return mapToDTO(savedDocument);</span>
+<span class="nc" id="L181">        document.setStatus(newStatus);</span>
+<span class="nc" id="L182">        document.setFeedback(feedback);</span>
+<span class="nc" id="L183">        Document savedDocument = documentRepository.save(document);</span>
+<span class="nc bnc" id="L184" title="All 2 branches missed.">        AcaoAuditoria acao = (newStatus == DocumentStatus.APPROVED) ? AcaoAuditoria.DOCUMENT_APPROVED : AcaoAuditoria.DOCUMENT_REJECTED;</span>
+<span class="nc bnc" id="L185" title="All 4 branches missed.">        String details = &quot;Status alterado para &quot; + newStatus + &quot;.Feedback: &quot; + (feedback != null &amp;&amp; !feedback.trim().isEmpty() ? feedback : &quot;Sem feedback&quot;);</span>
+<span class="nc" id="L186">        auditLogService.logAction(reviewerId, acao, details);</span>
+<span class="nc" id="L187">        return mapToDTO(savedDocument);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
