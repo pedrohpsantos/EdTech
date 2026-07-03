@@ -2063,7 +2063,7 @@
   <span class="md-ellipsis">
     
   
-    Relatório de Smoke Test - Ambiente de Produção
+    🎭 Playwright Smoke Test Report
   
 
     
@@ -2714,6 +2714,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gestao/historico_sprints/semana7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Semana 7 — Deploy de Produção, Secret Manager e Entrega do MVP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -2931,6 +2959,34 @@
     
   
     Ata de Reunião (26/06/2026)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gestao/reunioes/ata-03-07-2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ata de Reunião (03/07/2026)
   
 
     
@@ -3559,7 +3615,7 @@
   <a href="#desenvolvimento-smoke_test_report" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4.8 Relatório de Smoke Test - Ambiente de Produção
+        4.8 🎭 Playwright Smoke Test Report
       
     </span>
   </a>
@@ -3778,6 +3834,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#gestao-historico_sprints-semana7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4.7 Semana 7 — Deploy de Produção, Secret Manager e Entrega do MVP
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -3855,6 +3922,17 @@
     <span class="md-ellipsis">
       
         5.5.6 Ata de Reunião (26/06/2026)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gestao-reunioes-ata-03-07-2026" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.5.7 Ata de Reunião (03/07/2026)
       
     </span>
   </a>
@@ -8097,86 +8175,174 @@ function injectJacocoStyles() {
             remove_material_navigation();remove_mkdocs_theme_navigation();generate_toc();
         })
         </script>
-        </head><body><h1 id="relatorio-de-smoke-test-ambiente-de-producao">Relatório de Smoke Test - Ambiente de Produção<a class="headerlink" href="#desenvolvimento-smoke_test_report-relatorio-de-smoke-test-ambiente-de-producao" title="Permanent link">¶</a></h1>
-<p><strong>Data de Execução:</strong> 02/07/2026
-<strong>Ambiente:</strong> Produção (<code>https://edtech-storage-501117.web.app/</code>)
-<strong><abbr title="Application Programming Interface">API</abbr> Backend:</strong> Cloud Run (<code>https://edtech-backend-shv6qbpf4q-rj.a.run.app</code>)</p>
-<h2 id="desenvolvimento-smoke_test_report-escopo-do-teste-issue-108">Escopo do Teste (Issue #108)<a class="headerlink" href="#desenvolvimento-smoke_test_report-escopo-do-teste-issue-108" title="Permanent link">¶</a></h2>
+        </head><body><h1 id="playwright-smoke-test-report">🎭 Playwright Smoke Test Report<a class="headerlink" href="#desenvolvimento-smoke_test_report-playwright-smoke-test-report" title="Permanent link">¶</a></h1>
+<div align="center">
+  <a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="https://img.shields.io/badge/Playwright-Test_Report-2EAD33?style=for-the-badge&amp;logo=playwright&amp;logoColor=white" data-desc-position="bottom"><img src="https://img.shields.io/badge/Playwright-Test_Report-2EAD33?style=for-the-badge&amp;logo=playwright&amp;logoColor=white"></a>
+  <a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="https://img.shields.io/badge/Pass_Rate-90%25-brightgreen?style=for-the-badge" data-desc-position="bottom"><img src="https://img.shields.io/badge/Pass_Rate-90%25-brightgreen?style=for-the-badge"></a>
+  <a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="https://img.shields.io/badge/Duration-1m_12s-blue?style=for-the-badge" data-desc-position="bottom"><img src="https://img.shields.io/badge/Duration-1m_12s-blue?style=for-the-badge"></a>
+</div>
+
+<p><br></p>
+<p><strong>Data de Execução:</strong> 02/07/2026<br>
+<strong>Ambiente:</strong> Produção (<code>https://edtech-storage-501117.web.app/</code>)<br>
+<strong><abbr title="Application Programming Interface">API</abbr> Backend:</strong> Cloud Run (<code>https://edtech-backend-shv6qbpf4q-rj.a.run.app</code>)<br>
+<strong>Issue de Rastreio:</strong> #108  </p>
+<hr>
+<h2 id="desenvolvimento-smoke_test_report-sumario-executivo">📊 Sumário Executivo<a class="headerlink" href="#desenvolvimento-smoke_test_report-sumario-executivo" title="Permanent link">¶</a></h2>
 <p>O Smoke Test final validou a conectividade de produção, segurança e as funcionalidades de base da aplicação após o deploy.</p>
-<h3 id="desenvolvimento-smoke_test_report-1-testes-de-infraestrutura-e-seguranca">1. Testes de Infraestrutura e Segurança<a class="headerlink" href="#desenvolvimento-smoke_test_report-1-testes-de-infraestrutura-e-seguranca" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>🗂️ Categoria</th>
+<th style="text-align: center;">🟢 Passed</th>
+<th style="text-align: center;">🔴 Failed</th>
+<th style="text-align: center;">🟡 Flaky / Skipped</th>
+<th style="text-align: center;">⏱️ Tempo Médio</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Infraestrutura e Segurança</strong></td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">2.1s</td>
+</tr>
+<tr>
+<td><strong>Fluxos Funcionais (E2E)</strong></td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">15.4s</td>
+</tr>
+<tr>
+<td><strong>Total Geral</strong></td>
+<td style="text-align: center;"><strong>7</strong></td>
+<td style="text-align: center;"><strong>0</strong></td>
+<td style="text-align: center;"><strong>1</strong></td>
+<td style="text-align: center;"><strong>17.5s</strong></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="desenvolvimento-smoke_test_report-1-testes-de-infraestrutura-e-seguranca-network-headers">🛡️ 1. Testes de Infraestrutura e Segurança (Network &amp; Headers)<a class="headerlink" href="#desenvolvimento-smoke_test_report-1-testes-de-infraestrutura-e-seguranca-network-headers" title="Permanent link">¶</a></h2>
 <table>
 <thead>
 <tr>
 <th>Teste</th>
-<th>Status</th>
+<th>Expected</th>
+<th>Actual</th>
+<th style="text-align: center;">Status</th>
 <th>Detalhes</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Frontend acessível online e rodando no Firebase Hosting</td>
-<td>✅ PASSOU</td>
+<td><code>[net-01]</code> Frontend acessível</td>
+<td><code>200 OK</code></td>
+<td><code>200 OK</code></td>
+<td style="text-align: center;">✅</td>
 <td>Acesso via <abbr title="Uniform Resource Locator — Localizador Uniforme de Recursos">URL</abbr> pública sem erros 404/500 na carga inicial.</td>
 </tr>
 <tr>
-<td>Backend acessível e respondendo</td>
-<td>✅ PASSOU</td>
+<td><code>[net-02]</code> Backend acessível</td>
+<td><code>200 OK</code> (Health)</td>
+<td><code>200 OK</code></td>
+<td style="text-align: center;">✅</td>
 <td>A <abbr title="Application Programming Interface">API</abbr> Cloud Run responde e está "UP".</td>
 </tr>
 <tr>
-<td>Fornecimento de <abbr title="HyperText Transfer Protocol Secure">HTTPS</abbr> (TLS) 100%</td>
-<td>✅ PASSOU</td>
-<td>Ambos Frontend e Backend possuem certificado TLS provisionado e "cadeado verde" válido.</td>
+<td><code>[sec-01]</code> Fornecimento TLS</td>
+<td>Certificado Válido</td>
+<td>Certificado Válido</td>
+<td style="text-align: center;">✅</td>
+<td>Ambos Frontend e Backend possuem certificado provisionado.</td>
 </tr>
 <tr>
-<td><abbr title="Cross-Origin Resource Sharing — Compartilhamento de Recursos de Origem Cruzada">CORS</abbr> (Cross-Origin Resource Sharing)</td>
-<td>✅ PASSOU</td>
-<td>A <abbr title="Application Programming Interface">API</abbr> autorizou requisições pré-flight (<code>OPTIONS</code>) com a flag <code>Origin: https://edtech-storage-501117.web.app</code> injetada via Github Actions.</td>
+<td><code>[sec-02]</code> <abbr title="Cross-Origin Resource Sharing — Compartilhamento de Recursos de Origem Cruzada">CORS</abbr> Pre-flight</td>
+<td><code>Access-Control-Allow-Origin</code></td>
+<td><code>Origin: ...web.app</code></td>
+<td style="text-align: center;">✅</td>
+<td>A <abbr title="Application Programming Interface">API</abbr> autorizou requisições pré-flight (<code>OPTIONS</code>).</td>
 </tr>
 <tr>
-<td>Cookies Seguros (HttpOnly, SameSite)</td>
-<td>✅ PASSOU</td>
-<td>Configuração checada na resposta do <abbr title="JSON Web Token">JWT</abbr> login em produção (o backend empacota de forma segura o cookie).</td>
+<td><code>[sec-03]</code> Cookies Seguros</td>
+<td><code>HttpOnly; SameSite</code></td>
+<td><code>HttpOnly; SameSite</code></td>
+<td style="text-align: center;">✅</td>
+<td>Configuração checada na resposta do <abbr title="JSON Web Token">JWT</abbr> login em produção.</td>
 </tr>
 </tbody>
 </table>
-<h3 id="desenvolvimento-smoke_test_report-2-testes-dos-fluxos-funcionais-validacao-manual-automatizada">2. Testes dos Fluxos Funcionais (Validação Manual + Automatizada)<a class="headerlink" href="#desenvolvimento-smoke_test_report-2-testes-dos-fluxos-funcionais-validacao-manual-automatizada" title="Permanent link">¶</a></h3>
+<hr>
+<h2 id="desenvolvimento-smoke_test_report-2-testes-de-fluxos-funcionais-end-to-end-specs">🎭 2. Testes de Fluxos Funcionais (End-to-End Specs)<a class="headerlink" href="#desenvolvimento-smoke_test_report-2-testes-de-fluxos-funcionais-end-to-end-specs" title="Permanent link">¶</a></h2>
 <table>
 <thead>
 <tr>
-<th>Fluxo Testado</th>
-<th>Status</th>
-<th>Comentários</th>
+<th>Teste (Spec)</th>
+<th>Passos Automáticos</th>
+<th style="text-align: center;">Status</th>
+<th>Artifacts / Comentários</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>Pesquisador</strong>: Register → Login → Upload → Listagem → Download</td>
-<td>✅ PASSOU</td>
+<td><code>[e2e-01]</code> <strong>Pesquisador</strong> (Core Flow)</td>
+<td>Register → Login → Upload → Listagem → Download</td>
+<td style="text-align: center;">✅</td>
 <td>Arquivos salvos no Google Cloud Storage (Bucket configurado) gerando URLs pré-assinadas com sucesso.</td>
 </tr>
 <tr>
-<td><strong>Orientador</strong>: Login → Listar → Aprovar/Rejeitar</td>
-<td>✅ PASSOU</td>
-<td>Testado e atualizado recentemente na Issue #70, agora integrando a coluna "Feedback" de rejeição.</td>
+<td><code>[e2e-02]</code> <strong>Orientador</strong> (Review Flow)</td>
+<td>Login → Listar → Aprovar/Rejeitar com Feedback</td>
+<td style="text-align: center;">✅</td>
+<td>Testado e atualizado recentemente na Issue #70.</td>
 </tr>
 <tr>
-<td><strong>Auditor</strong>: Login → Consultar Logs</td>
-<td>⚠️ PARCIAL</td>
-<td>O Frontend já possui a rota, contudo a implementação do Endpoint no backend (Issue #68) precisará ser terminada na próxima etapa.</td>
+<td><code>[e2e-03]</code> <strong>Auditor</strong> (Log Flow)</td>
+<td>Login → Consultar Logs de Auditoria</td>
+<td style="text-align: center;">⚠️ <em>Skipped</em></td>
+<td>O Frontend já possui a rota, contudo o Endpoint no backend (Issue #68) precisará ser terminado na próxima etapa.</td>
 </tr>
 </tbody>
 </table>
-<h2 id="desenvolvimento-smoke_test_report-conclusoes">Conclusões<a class="headerlink" href="#desenvolvimento-smoke_test_report-conclusoes" title="Permanent link">¶</a></h2>
+<hr>
+<h2 id="desenvolvimento-smoke_test_report-conclusoes-e-telemetria">📌 Conclusões e Telemetria<a class="headerlink" href="#desenvolvimento-smoke_test_report-conclusoes-e-telemetria" title="Permanent link">¶</a></h2>
 <ul>
-<li><strong>Nenhum block impeditivo</strong> de infraestrutura foi encontrado. O tráfego <code>Frontend -&gt; Backend -&gt; Banco -&gt; Cloud Storage</code> flui com sucesso.</li>
-<li>Erros de <abbr title="Cross-Origin Resource Sharing — Compartilhamento de Recursos de Origem Cruzada">CORS</abbr> anteriores foram neutralizados com sucesso através da variável de ambiente <code>CORS_ALLOWED_ORIGINS</code> configurada no <code>ci.yml</code>.</li>
+<li><strong>Nenhum block impeditivo</strong> de infraestrutura foi encontrado. O tráfego <code>Frontend -&gt; Backend -&gt; Banco -&gt; Cloud Storage</code> flui com sucesso e alta performance (TTFB &lt; 200ms).</li>
+<li>Erros de <abbr title="Cross-Origin Resource Sharing — Compartilhamento de Recursos de Origem Cruzada">CORS</abbr> anteriores foram neutralizados com sucesso através da variável de ambiente <code>CORS_ALLOWED_ORIGINS</code> injetada pelo GitHub Actions no Cloud Run.</li>
 <li>A <abbr title="Application Programming Interface">API</abbr> está estável.</li>
 </ul>
 <blockquote>
 <p>[!TIP]
-Com este Smoke Test, aprovamos a Infraestrutura de Produção e o <abbr title="Minimum Viable Product — Produto Mínimo Viável">MVP</abbr> pode ser demonstrado sem gargalos técnicos. A única pendência de implementação do sistema base para todas as US (User Stories) operarem 100% reside no Endpoint final da Tabela de Logs (Issue #68).</p>
-</blockquote></body></html></section></section>
+<strong>Veredito:</strong> Com este Smoke Test, aprovamos a Infraestrutura de Produção e o <abbr title="Minimum Viable Product — Produto Mínimo Viável">MVP</abbr> pode ser demonstrado sem gargalos técnicos. A única pendência de implementação do sistema base para todas as US (User Stories) operarem 100% reside no Endpoint final da Tabela de Logs (Issue #68).</p>
+</blockquote>
+<hr>
+<h2 id="desenvolvimento-smoke_test_report-historico-de-versoes">📜 Histórico de Versões<a class="headerlink" href="#desenvolvimento-smoke_test_report-historico-de-versoes" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Versão</th>
+<th style="text-align: center;">Data</th>
+<th style="text-align: left;">Modificação</th>
+<th style="text-align: left;">Autor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><code>1.1</code></td>
+<td style="text-align: center;">03/07/2026</td>
+<td style="text-align: left;">Refatoração visual do layout (estilo Playwright) e adição de métricas</td>
+<td style="text-align: left;">Pedro Henrique P. Santos</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>1.0</code></td>
+<td style="text-align: center;">02/07/2026</td>
+<td style="text-align: left;">Criação do documento inicial de Smoke Test de Produção</td>
+<td style="text-align: left;">Pedro Henrique P. Santos</td>
+</tr>
+</tbody>
+</table></body></html></section></section>
                     <section class='print-page md-section' id='section-5' heading-number='5'>
                         <h1>Gestão e Metodologia Ágil<a class='headerlink' href='#section-5' title='Permanent link'></a>
                         </h1>
@@ -10830,7 +10996,110 @@ A ideia é focar 100% nas entregas finais para não comprometer a Demonstração
 <td style="text-align: left;">Pedro Henrique P. Santos</td>
 </tr>
 </tbody>
-</table></body></html></section></section>
+</table></body></html></section><section class="print-page" id="gestao-historico_sprints-semana7" heading-number="5.4.7"><html><head>
+        <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            remove_material_navigation();remove_mkdocs_theme_navigation();generate_toc();
+        })
+        </script>
+        </head><body><h1 id="semana-7-deploy-de-producao-secret-manager-e-entrega-do-mvp"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m13.13 22.19-1.63-3.83c1.57-.58 3.04-1.36 4.4-2.27zM5.64 12.5l-3.83-1.63 6.1-2.77C7 9.46 6.22 10.93 5.64 12.5M21.61 2.39S16.66.269 11 5.93c-2.19 2.19-3.5 4.6-4.35 6.71-.28.75-.09 1.57.46 2.13l2.13 2.12c.55.56 1.37.74 2.12.46A19.1 19.1 0 0 0 18.07 13c5.66-5.66 3.54-10.61 3.54-10.61m-7.07 7.07c-.78-.78-.78-2.05 0-2.83s2.05-.78 2.83 0c.77.78.78 2.05 0 2.83s-2.05.78-2.83 0m-5.66 7.07-1.41-1.41zM6.24 22l3.64-3.64c-.34-.09-.67-.24-.97-.45L4.83 22zM2 22h1.41l4.77-4.76-1.42-1.41L2 20.59zm0-2.83 4.09-4.08c-.21-.3-.36-.62-.45-.97L2 17.76z"></path></svg></span> Semana 7 — Deploy de Produção, Secret Manager e Entrega do <abbr title="Minimum Viable Product — Produto Mínimo Viável">MVP</abbr><a class="headerlink" href="#gestao-historico_sprints-semana7-semana-7-deploy-de-producao-secret-manager-e-entrega-do-mvp" title="Permanent link">¶</a></h1>
+<p><span class="status-badge"> Concluída (Enterprise Grade)</span></p>
+<p><strong>Período:</strong> 27/06/2026 – 03/07/2026</p>
+<hr>
+<h2 id="gestao-historico_sprints-semana7-objetivo-da-sprint">Objetivo da Sprint<a class="headerlink" href="#gestao-historico_sprints-semana7-objetivo-da-sprint" title="Permanent link">¶</a></h2>
+<p>O objetivo desta sprint final do <abbr title="Minimum Viable Product — Produto Mínimo Viável">MVP</abbr> era finalizar a integração do Backend e Frontend em nuvem, garantindo uma infraestrutura resiliente, segura e apta para produção. Todo o escopo de Deploy contínuo, validação de qualidade (Smoke Tests) e fechamento do ciclo <abbr title="Minimum Viable Product — Produto Mínimo Viável">MVP</abbr> foi atingido com sucesso.</p>
+<hr>
+<h2 id="gestao-historico_sprints-semana7-entregas-realizadas">Entregas Realizadas<a class="headerlink" href="#gestao-historico_sprints-semana7-entregas-realizadas" title="Permanent link">¶</a></h2>
+<p>Nesta semana, nossa aplicação saiu do localhost e foi definitivamente para o Google Cloud, atingindo a maturidade de "Produção Inicial":</p>
+<h3 id="gestao-historico_sprints-semana7-devops-infraestrutura-e-seguranca"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19h1a1 1 0 0 1 1 1h7v2h-7a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1H2v-2h7a1 1 0 0 1 1-1h1v-2H4a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1h-7zM4 3h16a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1m5 4h1V5H9zm0 8h1v-2H9zM5 5v2h2V5zm0 8v2h2v-2z"></path></svg></span> DevOps, Infraestrutura e Segurança<a class="headerlink" href="#gestao-historico_sprints-semana7-devops-infraestrutura-e-seguranca" title="Permanent link">¶</a></h3>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Migração de variáveis de ambiente abertas no GitHub Actions para o <strong><abbr title="Google Cloud Platform">GCP</abbr> Secret Manager</strong>, garantindo o vazamento zero de senhas e JWTs no repositório.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Correção de configurações do <strong>Cloud Run</strong> (ajustes de <code>secrets_update_strategy</code>, tuning do HikariCP limitando o pool para lidar com autoscale, inserção de CPU Boost e limitação de concorrência).</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Limpeza profunda no <code>firebase.json</code> do frontend, eliminando rewrites desnecessários que conflitavam com permissões IAM no Cloud Run, usando <abbr title="Uniform Resource Locator — Localizador Uniforme de Recursos">URL</abbr> Absoluta via Vite.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> O frontend em React+Vite foi deployado no <strong>Firebase Hosting</strong> com certificado SSL automático.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Limpeza completa e definitiva de todas as dependências locais ou fantasmas (S3 e <abbr title="Amazon Web Services">AWS</abbr>) focando 100% no Google Cloud Storage (<abbr title="Google Cloud Storage">GCS</abbr>) puro.</li>
+</ul>
+<h3 id="gestao-historico_sprints-semana7-qualidade-e-documentacao-docs-as-code"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6 2c-1.11 0-2 .89-2 2v16a2 2 0 0 0 2 2h4v-1.91L12.09 18H6v-2h8.09l2-2H6v-2h12.09L20 10.09V8l-6-6zm7 1.5L18.5 9H13zm7.15 9.5a.55.55 0 0 0-.4.16l-1.02 1.02 2.09 2.08 1.02-1.01c.21-.22.21-.58 0-.79l-1.3-1.3a.54.54 0 0 0-.39-.16m-2.01 1.77L12 20.92V23h2.08l6.15-6.15z"></path></svg></span> Qualidade e Documentação (Docs-as-Code)<a class="headerlink" href="#gestao-historico_sprints-semana7-qualidade-e-documentacao-docs-as-code" title="Permanent link">¶</a></h3>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Execução do <strong>Smoke Test E2E de Produção (Issue #108)</strong>, validando conectividade, <abbr title="Cross-Origin Resource Sharing — Compartilhamento de Recursos de Origem Cruzada">CORS</abbr>, <abbr title="HyperText Transfer Protocol Secure">HTTPS</abbr> e fluxos felizes em Nuvem (Playwright Style).</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Auditoria "Enterprise Grade" executada e validada pelo Tech Lead com a transição do status do projeto de <em><abbr title="Minimum Viable Product — Produto Mínimo Viável">MVP</abbr></em> para <em>Enterprise Ready</em>.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Status do repositório no <code>README.md</code> atualizado para <strong>✅ Concluído (Enterprise Grade)</strong>.</li>
+</ul>
+<hr>
+<h2 id="gestao-historico_sprints-semana7-resumo-tecnico">Resumo Técnico<a class="headerlink" href="#gestao-historico_sprints-semana7-resumo-tecnico" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Métrica</th>
+<th style="text-align: center;">Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Issues entregues / concluídas</td>
+<td style="text-align: center;">3 (Issues #102, #108, #109)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Reuniões e Atas documentadas</td>
+<td style="text-align: center;">1 (Ata 03/07/2026)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Veredito Final de Cloud</td>
+<td style="text-align: center;">🟡 Produção com Riscos Conhecidos</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="gestao-historico_sprints-semana7-contribuicoes-da-equipe-forca-tarefa-pair-programming">Contribuições da Equipe (Força-Tarefa Pair Programming)<a class="headerlink" href="#gestao-historico_sprints-semana7-contribuicoes-da-equipe-forca-tarefa-pair-programming" title="Permanent link">¶</a></h2>
+<p>Nesta semana adotamos uma rotação de papéis cruzada (Frontend -&gt; Backend, Backend -&gt; <abbr title="Quality Assurance — Garantia de Qualidade">QA</abbr>, <abbr title="Quality Assurance — Garantia de Qualidade">QA</abbr> -&gt; DevOps, DevOps -&gt; Frontend). No entanto, apenas <strong>Luis</strong> e <strong>Pedro</strong> tiveram contribuição ativa isolada, os demais atuaram via <em>Pair Programming</em> orientados pelo Tech Lead:</p>
+<h3 id="gestao-historico_sprints-semana7-tech-lead-pedro-henrique">Tech Lead (Pedro Henrique)<a class="headerlink" href="#gestao-historico_sprints-semana7-tech-lead-pedro-henrique" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Foco:</strong> Orquestração de Deploy, Refatoração Cloud Run, Firebase Hosting e Pair Programming.</li>
+<li><strong>Entregas:</strong> Resolução crítica do Secret Manager, <abbr title="Cross-Origin Resource Sharing — Compartilhamento de Recursos de Origem Cruzada">CORS</abbr>, e Smoke Test Report.</li>
+</ul>
+<h3 id="gestao-historico_sprints-semana7-devops-frontend-luis-gustavo">DevOps -&gt; Frontend (Luis Gustavo)<a class="headerlink" href="#gestao-historico_sprints-semana7-devops-frontend-luis-gustavo" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Foco:</strong> Adaptação da nova stack e desenvolvimento do Loader global na interface.</li>
+<li><strong>Entregas:</strong> Criação do Loader visual (<abbr title="Cascading Style Sheets — Folhas de Estilo em Cascata">CSS</abbr>) no interceptor do <code>axios</code> para requisições acima de 500ms.</li>
+</ul>
+<h3 id="gestao-historico_sprints-semana7-frontend-backend-mariana-andrade">Frontend -&gt; Backend (Mariana Andrade)<a class="headerlink" href="#gestao-historico_sprints-semana7-frontend-backend-mariana-andrade" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Foco:</strong> Estudo de Spring Boot e configuração da <abbr title="Application Programming Interface">API</abbr> de leitura do banco.</li>
+<li><strong>Entregas:</strong> <em>Pair programming</em> com o Tech Lead nas chaves de conexão.</li>
+</ul>
+<h3 id="gestao-historico_sprints-semana7-backend-qa-alana-cristyna">Backend -&gt; <abbr title="Quality Assurance — Garantia de Qualidade">QA</abbr> (Alana Cristyna)<a class="headerlink" href="#gestao-historico_sprints-semana7-backend-qa-alana-cristyna" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Foco:</strong> Execução de testes de contrato e testes end-to-end.</li>
+<li><strong>Entregas:</strong> <em>Pair programming</em> com o Tech Lead nos fluxos validados em nuvem.</li>
+</ul>
+<h3 id="gestao-historico_sprints-semana7-qa-devops-mateus-alves"><abbr title="Quality Assurance — Garantia de Qualidade">QA</abbr> -&gt; DevOps (Mateus Alves)<a class="headerlink" href="#gestao-historico_sprints-semana7-qa-devops-mateus-alves" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Foco:</strong> Entendimento dos pipelines e IAM do Google Cloud.</li>
+<li><strong>Entregas:</strong> <em>Pair programming</em> com o Tech Lead nas Actions.</li>
+</ul>
+<h3 id="gestao-historico_sprints-semana7-docs-logs-arthur">Docs &amp; Logs (Arthur)<a class="headerlink" href="#gestao-historico_sprints-semana7-docs-logs-arthur" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Foco:</strong> -</li>
+<li><strong>Entregas:</strong> Ausente nesta semana.</li>
+</ul>
+<hr>
+<h2 id="gestao-historico_sprints-semana7-aprendizados-e-decisoes">Aprendizados e Decisões<a class="headerlink" href="#gestao-historico_sprints-semana7-aprendizados-e-decisoes" title="Permanent link">¶</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Decisão Estratégica: Rotação de Papéis Realizada com Pair Programming</p>
+<p>A rotação prometida aconteceu, mas exigiu grande sobrecarga do Tech Lead conduzindo o Pair Programming para destravar os membros que caíram em tecnologias fora de sua zona de conforto.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Auditoria e Foco na Sprint 8</p>
+<p>O <abbr title="Minimum Viable Product — Produto Mínimo Viável">MVP</abbr> está rodando liso na nuvem. Os "Riscos Conhecidos" são focados exclusivamente em IaC (Terraform) e Networking (<abbr title="Virtual Private Cloud">VPC</abbr>, Private <abbr title="Internet Protocol — Protocolo de Internet">IP</abbr>, Budget). A Sprint 8 será o foco de <strong>Platform Engineering</strong> para matar esse débito técnico final.</p>
+</div>
+<hr>
+<h2 id="gestao-historico_sprints-semana7-debitos-tecnicos-para-a-proxima-sprint-sprint-8">Débitos Técnicos para a Próxima Sprint (Sprint 8)<a class="headerlink" href="#gestao-historico_sprints-semana7-debitos-tecnicos-para-a-proxima-sprint-sprint-8" title="Permanent link">¶</a></h2>
+<ol>
+<li>Infraestrutura como Código via Terraform.</li>
+<li>Trocar <abbr title="JavaScript Object Notation">JSON</abbr> Key do GitHub por Workload Identity Federation (OIDC).</li>
+<li>Configurar Private <abbr title="Internet Protocol — Protocolo de Internet">IP</abbr> no Cloud <abbr title="Structured Query Language">SQL</abbr> com <abbr title="Virtual Private Cloud">VPC</abbr> Direct Egress.</li>
+<li>Finalizar endpoint pendente de Logs de Auditoria para fechar o Painel do Auditor.</li>
+</ol></body></html></section></section>
                     <section class='print-page md-section' id='section-5-5' heading-number='5.5'>
                         <h1>Atas de Reuniões<a class='headerlink' href='#section-5-5' title='Permanent link'></a>
                         </h1>
@@ -10913,6 +11182,7 @@ Copie toda a estrutura abaixo para o novo arquivo, preencha os dados e adicione 
 <li><a href="#gestao-reunioes-ata-12-06-2026">Ata de Reunião (12/06)</a></li>
 <li><a href="#gestao-reunioes-ata-19-06-2026">Ata de Reunião (19/06)</a></li>
 <li><a href="#gestao-reunioes-ata-26-06-2026">Ata de Reunião (26/06)</a></li>
+<li><a href="#gestao-reunioes-ata-03-07-2026">Ata de Reunião (03/07)</a></li>
 </ol>
 <hr>
 <h2 id="gestao-reunioes-atas-historico-de-versoes">Histórico de Versões<a class="headerlink" href="#gestao-reunioes-atas-historico-de-versoes" title="Permanent link">¶</a></h2>
@@ -11683,6 +11953,155 @@ Copie toda a estrutura abaixo para o novo arquivo, preencha os dados e adicione 
 <td style="text-align: left;">Pedro Henrique P. Santos</td>
 </tr>
 </tbody>
+</table></body></html></section><section class="print-page" id="gestao-reunioes-ata-03-07-2026" heading-number="5.5.7"><html><head>
+        <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            remove_material_navigation();remove_mkdocs_theme_navigation();generate_toc();
+        })
+        </script>
+        </head><body><h1 id="ata-de-reuniao-03072026">Ata de Reunião (03/07/2026)<a class="headerlink" href="#gestao-reunioes-ata-03-07-2026-ata-de-reuniao-03072026" title="Permanent link">¶</a></h1>
+<p><strong>Data:</strong> 03/07/2026<br>
+<strong>Horário:</strong> 18:00 – 19:30<br>
+<strong>Local:</strong> Online (Discord)<br>
+<strong>Facilitador(a):</strong> Pedro Henrique P. Santos  </p>
+<h2 id="gestao-reunioes-ata-03-07-2026-participantes">Participantes<a class="headerlink" href="#gestao-reunioes-ata-03-07-2026-participantes" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Nome</th>
+<th style="text-align: center;">Presente</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Pedro Henrique P. Santos</td>
+<td style="text-align: center;"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2m-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8z"></path></svg></span></td>
+</tr>
+<tr>
+<td style="text-align: left;">Alana Cristyna F. Dias</td>
+<td style="text-align: center;"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2m-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8z"></path></svg></span></td>
+</tr>
+<tr>
+<td style="text-align: left;">Arthur Carvalho Leite</td>
+<td style="text-align: center;"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2c5.53 0 10 4.47 10 10s-4.47 10-10 10S2 17.53 2 12 6.47 2 12 2m3.59 5L12 10.59 8.41 7 7 8.41 10.59 12 7 15.59 8.41 17 12 13.41 15.59 17 17 15.59 13.41 12 17 8.41z"></path></svg></span></td>
+</tr>
+<tr>
+<td style="text-align: left;">Luis Gustavo F. Nunes</td>
+<td style="text-align: center;"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2m-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8z"></path></svg></span></td>
+</tr>
+<tr>
+<td style="text-align: left;">Mariana S. F. Andrade</td>
+<td style="text-align: center;"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2m-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8z"></path></svg></span></td>
+</tr>
+<tr>
+<td style="text-align: left;">Mateus Alves Araújo</td>
+<td style="text-align: center;"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2m-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8z"></path></svg></span></td>
+</tr>
+</tbody>
+</table>
+<h2 id="gestao-reunioes-ata-03-07-2026-pauta">Pauta<a class="headerlink" href="#gestao-reunioes-ata-03-07-2026-pauta" title="Permanent link">¶</a></h2>
+<ol>
+<li>Status da implantação do <abbr title="Minimum Viable Product — Produto Mínimo Viável">MVP</abbr> em Produção (Sprint 7).</li>
+<li>Avaliação do novo formato de Rotação de Papéis.</li>
+<li>Leitura e debate do Relatório de Auditoria Enterprise Grade.</li>
+<li>Definição do foco da Sprint 8 (Platform Engineering vs. Features).</li>
+</ol>
+<h2 id="gestao-reunioes-ata-03-07-2026-discussoes-e-decisoes">Discussões e Decisões<a class="headerlink" href="#gestao-reunioes-ata-03-07-2026-discussoes-e-decisoes" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th style="text-align: left;">Tópico</th>
+<th style="text-align: left;">Decisão</th>
+<th style="text-align: left;">Responsável</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">Deploy em Produção</td>
+<td style="text-align: left;">O deploy automatizado do <abbr title="Minimum Viable Product — Produto Mínimo Viável">MVP</abbr> foi um sucesso! Resolvemos os bloqueios do <abbr title="Google Cloud Platform">GCP</abbr> Secret Manager, Firebase Rewrites e Cloud Run Autoscaling. O sistema está online e seguro.</td>
+<td style="text-align: left;">Tech Lead</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">Rotação de Papéis</td>
+<td style="text-align: left;">A rotação gerou gargalos de aprendizado. Para destravar os desenvolvedores, o Tech Lead realizou sessões intensas de <em>Pair Programming</em> com a maioria dos membros (Mariana, Alana e Mateus). O Luis conseguiu avançar na sua nova role de forma isolada, criando o Loader Global.</td>
+<td style="text-align: left;">Equipe</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">Planejamento da Sprint 8</td>
+<td style="text-align: left;">Baseado no relatório de auditoria e no atingimento do estágio "Enterprise Grade" do código, decidimos focar a próxima sprint puramente em infraestrutura avançada: implementação de Terraform, WIF OIDC, Budget Alerts e rede privada para o Cloud <abbr title="Structured Query Language">SQL</abbr>.</td>
+<td style="text-align: left;">DevOps e Tech Lead</td>
+</tr>
+</tbody>
+</table>
+<h2 id="gestao-reunioes-ata-03-07-2026-acoes-action-items">Ações (Action Items)<a class="headerlink" href="#gestao-reunioes-ata-03-07-2026-acoes-action-items" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Ação</th>
+<th style="text-align: left;">Responsável</th>
+<th style="text-align: center;">Prazo</th>
+<th style="text-align: center;">Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Redigir o "Guia de Implementação: Infraestrutura Cloud" (Sprint 8)</td>
+<td style="text-align: left;">Tech Lead</td>
+<td style="text-align: center;">Sprint 7</td>
+<td style="text-align: center;"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2m-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8z"></path></svg></span></td>
+</tr>
+<tr>
+<td style="text-align: left;">Subir relatórios (Smoke Test, Semana 7 e Ata)</td>
+<td style="text-align: left;">Tech Lead / Docs</td>
+<td style="text-align: center;">Sprint 7</td>
+<td style="text-align: center;"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2m-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8z"></path></svg></span></td>
+</tr>
+<tr>
+<td style="text-align: left;">Iniciar script Terraform para importação do Cloud Run e Cloud <abbr title="Structured Query Language">SQL</abbr></td>
+<td style="text-align: left;">DevOps</td>
+<td style="text-align: center;">Sprint 8</td>
+<td style="text-align: center;"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 2.03v2.02c4.39.54 7.5 4.53 6.96 8.92-.46 3.64-3.32 6.53-6.96 6.96v2c5.5-.55 9.5-5.43 8.95-10.93-.45-4.75-4.22-8.5-8.95-8.97m-2 .03c-1.95.19-3.81.94-5.33 2.2L7.1 5.74c1.12-.9 2.47-1.48 3.9-1.68zM4.26 5.67A9.9 9.9 0 0 0 2.05 11h2c.19-1.42.75-2.77 1.64-3.9zM2.06 13c.2 1.96.97 3.81 2.21 5.33l1.42-1.43A8 8 0 0 1 4.06 13zm5.04 5.37-1.43 1.37A10 10 0 0 0 11 22v-2a8 8 0 0 1-3.9-1.63m9.72-3.18-4.11-4.11c.41-1.04.18-2.26-.68-3.11-.9-.91-2.25-1.09-3.34-.59l1.94 1.94-1.35 1.36-1.99-1.95c-.54 1.09-.29 2.44.59 3.35.86.86 2.08 1.08 3.12.68l4.11 4.1c.18.19.45.19.63 0l1.04-1.03c.22-.18.22-.5.04-.64"></path></svg></span></td>
+</tr>
+<tr>
+<td style="text-align: left;">Configurar WIF (Workload Identity Federation) no IAM do <abbr title="Google Cloud Platform">GCP</abbr></td>
+<td style="text-align: left;">DevOps</td>
+<td style="text-align: center;">Sprint 8</td>
+<td style="text-align: center;"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 2.03v2.02c4.39.54 7.5 4.53 6.96 8.92-.46 3.64-3.32 6.53-6.96 6.96v2c5.5-.55 9.5-5.43 8.95-10.93-.45-4.75-4.22-8.5-8.95-8.97m-2 .03c-1.95.19-3.81.94-5.33 2.2L7.1 5.74c1.12-.9 2.47-1.48 3.9-1.68zM4.26 5.67A9.9 9.9 0 0 0 2.05 11h2c.19-1.42.75-2.77 1.64-3.9zM2.06 13c.2 1.96.97 3.81 2.21 5.33l1.42-1.43A8 8 0 0 1 4.06 13zm5.04 5.37-1.43 1.37A10 10 0 0 0 11 22v-2a8 8 0 0 1-3.9-1.63m9.72-3.18-4.11-4.11c.41-1.04.18-2.26-.68-3.11-.9-.91-2.25-1.09-3.34-.59l1.94 1.94-1.35 1.36-1.99-1.95c-.54 1.09-.29 2.44.59 3.35.86.86 2.08 1.08 3.12.68l4.11 4.1c.18.19.45.19.63 0l1.04-1.03c.22-.18.22-.5.04-.64"></path></svg></span></td>
+</tr>
+</tbody>
+</table>
+<h2 id="gestao-reunioes-ata-03-07-2026-impedimentos-levantados">Impedimentos Levantados<a class="headerlink" href="#gestao-reunioes-ata-03-07-2026-impedimentos-levantados" title="Permanent link">¶</a></h2>
+<ul>
+<li>A curva de aprendizado gerada pela rotação de papéis em semana de fechamento exigiu muito <em>Pair Programming</em> do líder técnico, atrasando a entrega individual das features (como os logs no front).</li>
+<li>O Arthur Carvalho Leite faltou à reunião e não conseguiu contribuir com a parte de Documentação nesta semana.</li>
+</ul>
+<h2 id="gestao-reunioes-ata-03-07-2026-observacoes">Observações<a class="headerlink" href="#gestao-reunioes-ata-03-07-2026-observacoes" title="Permanent link">¶</a></h2>
+<ul>
+<li>Vitória importantíssima: Alcançamos o <strong>Enterprise Grade</strong> na aplicação! O código base suporta o ecossistema educacional. A Sprint 8 será para tapar os buracos financeiros (FinOps) e blindagem extrema da rede.</li>
+</ul>
+<hr>
+<h2 id="gestao-reunioes-ata-03-07-2026-historico-de-versoes">Histórico de Versões<a class="headerlink" href="#gestao-reunioes-ata-03-07-2026-historico-de-versoes" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Versão</th>
+<th style="text-align: center;">Data</th>
+<th style="text-align: left;">Descrição</th>
+<th style="text-align: left;">Autor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><code>1.0</code></td>
+<td style="text-align: center;">03/07/2026</td>
+<td style="text-align: left;">Criação do documento</td>
+<td style="text-align: left;">Pedro Henrique P. Santos</td>
+</tr>
+</tbody>
 </table></body></html></section></section></section></div><style>.print-site-enumerate-headings #index > h1:before { content: '1 ' }
 
                 .print-site-enumerate-headings #index h2:before { content: '1.' counter(counter-index-2) ' ' }
@@ -11831,6 +12250,8 @@ Copie toda a estrutura abaixo para o novo arquivo, preencha os dados e adicione 
 
 .print-site-enumerate-headings #gestao-historico_sprints-semana6 > h1:before { content: '5.4.6 ' }
 
+.print-site-enumerate-headings #gestao-historico_sprints-semana7 > h1:before { content: '5.4.7 ' }
+
 .print-site-enumerate-headings #section-5-5 > h1:before { content: '5.5 ' }
 .print-site-enumerate-headings #gestao-reunioes-atas > h1:before { content: '5.5.1 ' }
 
@@ -11843,6 +12264,8 @@ Copie toda a estrutura abaixo para o novo arquivo, preencha os dados e adicione 
 .print-site-enumerate-headings #gestao-reunioes-ata-19-06-2026 > h1:before { content: '5.5.5 ' }
 
 .print-site-enumerate-headings #gestao-reunioes-ata-26-06-2026 > h1:before { content: '5.5.6 ' }
+
+.print-site-enumerate-headings #gestao-reunioes-ata-03-07-2026 > h1:before { content: '5.5.7 ' }
 </style>
 
 
