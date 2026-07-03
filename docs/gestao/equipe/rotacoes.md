@@ -1,4 +1,4 @@
-# :material-account-switch: Papéis e Rotações
+﻿# Papéis e Rotações
 
 Estrutura organizacional da equipe EdTech, com papéis definidos por função e plano de rotação para desenvolvimento full-stack.
 
@@ -220,3 +220,4 @@ Antes de solicitar revisão, todo PR deve cumprir:
 | `1.0`  | 29/05/2026 | Criação do documento              | Pedro Henrique P. Santos |
 | `1.1`  | 30/05/2026 | Processo de PR com branch develop | Pedro Henrique P. Santos |
 | `1.2` | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |
+

@@ -1,9 +1,9 @@
----
+﻿---
 hide:
   - toc
 ---
 
-# :material-test-tube: Relatório de Testes E2E (Smoke Tests)
+# Relatório de Testes E2E (Smoke Tests)
 
 Abaixo você encontra o relatório executivo (Allure Report) interativo, contendo todos os detalhes dos nossos testes E2E e de integração em produção.
 
@@ -24,3 +24,4 @@ Abaixo você encontra o relatório executivo (Allure Report) interativo, contend
 |--------|------|-----------|-------|
 | 1.0 | 02/07/2026 | Criação e estruturação do documento (Playwright Nativo) | Pedro Henrique P. Santos |
 | 1.1 | 03/07/2026 | Integração com Allure Report via Actions | Pedro Henrique P. Santos |
+

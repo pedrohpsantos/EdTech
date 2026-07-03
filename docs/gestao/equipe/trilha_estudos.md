@@ -1,4 +1,4 @@
-# :material-road-variant: Trilha de Estudos por Função
+﻿# Trilha de Estudos por Função
 
 Como a equipe utilizará um esquema de rotações para atuar como **Full Stack**, criamos esta trilha de estudos focada no desenvolvimento gradativo. 
 
@@ -147,3 +147,4 @@ Sabemos que a equipe está em formação ("crua"), por isso cada trilha foi dese
 | `1.0` | 29/05/2026 | Recuperação da Trilha de Estudos para o EdTech | Pedro Henrique P. Santos |
 | `1.1` | 30/05/2026 | Expansão da trilha (Do Básico ao Padrão EdTech) para desenvolvedores iniciantes | Pedro Henrique P. Santos |
 | `1.2` | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |
+

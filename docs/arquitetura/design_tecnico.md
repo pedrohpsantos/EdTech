@@ -1,4 +1,4 @@
-# :material-server-network: Design Técnico (Baixo Nível)
+﻿# Design Técnico (Baixo Nível)
 
 Enquanto o **C4 Model** descreve *o que* as partes fazem, este documento detalha *como* as partes interagem no nível de código e dados.
 
@@ -104,3 +104,4 @@ sequenceDiagram
 | :---: | :---: | :--- | :--- |
 | `1.0` | 30/05/2026 | Criação do documento | Pedro Henrique P. Santos |
 | `1.1` | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |
+

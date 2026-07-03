@@ -1,4 +1,4 @@
-﻿# :material-shield-check: Qualidade e Testes (JaCoCo)
+﻿# Qualidade e Testes (JaCoCo)
 
 Esta página centraliza as métricas de qualidade de código do backend.
 O nosso pipeline de CI está configurado para executar os testes e extrair a cobertura usando o **JaCoCo**.
@@ -46,4 +46,5 @@ function injectJacocoStyles() {
 | Versão | Data | Descrição | Autor |
 |--------|------|-----------|-------|
 | 1.0 | 28/06/2026 | Criação e estruturação do documento | Pedro Henrique P. Santos |
+
 

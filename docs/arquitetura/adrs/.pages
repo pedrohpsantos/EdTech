@@ -1,4 +1,4 @@
-title: ':material-text-box-check: Decisões Técnicas (ADRs)'
+﻿title: 'Decisões Técnicas (ADRs)'
 nav:
   - 0001-armazenamento-google-cloud.md
   - 0002-autenticacao-jwt.md
@@ -12,3 +12,4 @@ nav:
   - 0010-monolito-modular.md
   - 0011-email-recuperacao-senha-smtp.md
   - 0012-firebase-hosting.md
+

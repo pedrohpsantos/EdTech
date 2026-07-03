@@ -1,4 +1,4 @@
-# :material-compare-horizontal: É / Não É / Faz / Não Faz
+﻿# É / Não É / Faz / Não Faz
 
 Alinhamento de expectativas sobre os limites e o escopo do EdTech.
 
@@ -90,3 +90,4 @@ flowchart LR
 | :---: | :---: | :--- | :--- |
 | `1.0` | 30/05/2026 | Criação do documento | Pedro Henrique P. Santos |
 | `1.1` | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |
+

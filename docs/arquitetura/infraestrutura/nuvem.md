@@ -1,4 +1,4 @@
-# :material-cloud: Arquitetura de Nuvem
+﻿# Arquitetura de Nuvem
 
 A topologia cloud do projeto adota uma **estratégia 100% nativa no Google Cloud**, utilizando serviços gerenciados e serverless.
 
@@ -44,3 +44,4 @@ flowchart TB
 | `1.0` | 30/05/2026 | Criação do documento | Pedro Henrique P. Santos |
 | `1.1` | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |
 | `2.0` | 21/06/2026 | Inclusão do Supabase como provedor primário e GCP como fallback | Pedro Henrique P. Santos |
+

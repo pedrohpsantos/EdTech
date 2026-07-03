@@ -1,4 +1,4 @@
-title: ':material-history: Histórico de Sprints'
+﻿title: 'Histórico de Sprints'
 nav:
   - semana1.md
   - semana2.md
@@ -7,3 +7,4 @@ nav:
   - semana5.md
   - semana6.md
   - semana7.md
+

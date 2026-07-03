@@ -1,4 +1,4 @@
-﻿# :material-palette: Identidade Visual
+﻿# Identidade Visual
 
 <div align="center" markdown="1">
   ![EdTech Logo](../../assets/svgs/logo.svg){ width="250" }
@@ -64,4 +64,5 @@ O **EdTech** surge como uma camada de governança acadêmica.
 | :---: | :---: | :--- | :--- |
 | `1.0` | 09/06/2026 | Criação da identidade visual e storytelling | Pedro Henrique P. Santos |
 | `1.1` | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |
+
 

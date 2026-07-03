@@ -1,4 +1,4 @@
-# :material-brain: Brainstorming e Priorização
+﻿# Brainstorming e Priorização
 
 O levantamento focado no usuário nos afastou de criar features genéricas (como "Rede Social Acadêmica" ou "Chat") e mirou diretamente no fluxo transacional de envio, restrição e aprovação de documentos em nuvem.
 
@@ -31,3 +31,4 @@ O resultado do Brainstorming foi organizado através da matriz MoSCoW (Must, Sho
 | `1.0`  | 30/05/2026 | Criação do documento             | Pedro Henrique P. Santos |
 | `1.1`  | 30/05/2026 | Rich Picture com animação e zoom | Pedro Henrique P. Santos |
 | `1.2` | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |
+

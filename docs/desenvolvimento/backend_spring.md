@@ -1,4 +1,4 @@
-﻿# :material-server: Backend e API (Spring Boot)
+﻿# Backend e API (Spring Boot)
 
 O backend do EdTech atua como uma API RESTful independente, empacotada e orquestrada via **Spring Boot 4.1**.
 
@@ -37,4 +37,5 @@ Toda evolução do banco de dados (novas tabelas, colunas, chaves estrangeiras) 
 | :---: | :---: | :--- | :--- |
 | `1.0` | 13/06/2026 | Criação do documento de suporte ao DevEx | Pedro Henrique P. Santos |
 | `1.1` | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |
+
 

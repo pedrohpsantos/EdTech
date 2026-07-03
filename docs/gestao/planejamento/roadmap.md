@@ -1,4 +1,4 @@
-# :material-map-legend: Product Roadmap (Now / Next / Later)
+﻿# Product Roadmap (Now / Next / Later)
 
 Na EdTech, adotamos o framework **Now / Next / Later** para guiar a evolução macro do desenvolvimento sem cair na armadilha do microgerenciamento de cronograma.
 
@@ -57,3 +57,4 @@ timeline
 | `1.0` | 30/05/2026 | Substituição de Gantt Acadêmico pelo Now/Next/Later | Pedro Henrique P. Santos |
 | `1.1` | 04/06/2026 | Atualização refletindo novas ADRs e prioridades arquiteturais | Pedro Henrique P. Santos |
 | `1.2` | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |
+

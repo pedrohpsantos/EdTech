@@ -1,4 +1,4 @@
----
+﻿---
 date: 2026-06-05
 authors:
   - pedrohpsantos
@@ -7,7 +7,7 @@ categories:
 hide:
   - footer
 ---
-# :material-rocket-launch: Semana 2 — Lean Inception, Requisitos e Arquitetura
+# Semana 2 — Lean Inception, Requisitos e Arquitetura
 
 <span class="status-badge"> Concluída</span>
 
@@ -124,4 +124,5 @@ Executar o Lean Inception completo, levantar e especificar todos os requisitos d
 | :---: | :---: | :--- | :--- |
 | `1.0` | 29/05/2026 | Criação do documento | Pedro Henrique P. Santos |
 | `1.1` | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |
+
 

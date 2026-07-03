@@ -1,4 +1,4 @@
----
+﻿---
 date: 2026-06-19
 authors:
   - pedrohpsantos
@@ -7,7 +7,7 @@ categories:
 hide:
   - footer
 ---
-# :material-rocket-launch: Semana 5 — Uploads, Autenticação e Integrações GCS
+# Semana 5 — Uploads, Autenticação e Integrações GCS
 
 <span class="status-badge"> Concluída</span>
 
@@ -157,4 +157,5 @@ Consolidar a Integração Contínua, finalizar a base de Autenticação com CORS
 | Versão | Data | Descrição | Autor |
 | :---: | :---: | :--- | :--- |
 | `1.0` | 19/06/2026 | Documentação inicial da Entrega 5 | Pedro Henrique P. Santos |
+
 

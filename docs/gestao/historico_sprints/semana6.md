@@ -1,4 +1,4 @@
----
+﻿---
 date: 2026-06-26
 authors:
   - pedrohpsantos
@@ -7,7 +7,7 @@ categories:
 hide:
   - footer
 ---
-# :material-rocket-launch: Semana 6 — Infraestrutura, Plugins e Ajuste de Rotas
+# Semana 6 — Infraestrutura, Plugins e Ajuste de Rotas
 
 <span class="status-badge"> Parcialmente Concluída</span>
 
@@ -121,4 +121,5 @@ Todas as issues críticas da Sprint 6 foram repriorizadas para a Sprint 7, junta
 | Versão | Data | Descrição | Autor |
 | :---: | :---: | :--- | :--- |
 | `1.0` | 26/06/2026 | Documentação inicial da Entrega 6 | Pedro Henrique P. Santos |
+
 

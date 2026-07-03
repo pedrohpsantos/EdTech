@@ -1,4 +1,4 @@
-# :material-check-all: DoR & DoD (Critérios de Aceite)
+﻿# DoR & DoD (Critérios de Aceite)
 
 Para garantir a qualidade nas entregas ágeis do projeto EdTech, substituímos pesados checklists de inspeção e Casos de Uso por contratos claros de transição de status para as Histórias de Usuário.
 
@@ -57,3 +57,4 @@ Uma funcionalidade desenvolvida só pode ser dada como concluída (Muda para **D
 | `1.0` | 30/05/2026 | Definição inicial do DoR e DoD do projeto | Pedro Henrique P. Santos |
 | `1.1` | 04/06/2026 | Inclusão de garantias de arquitetura, Flyway, CI/CD e Docs-as-Code (ADRs) | Pedro Henrique P. Santos |
 | `1.2` | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |
+
