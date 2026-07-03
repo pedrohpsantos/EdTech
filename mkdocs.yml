@@ -5,6 +5,8 @@ site_url: https://pedrohpsantos.github.io/EdTech/
 repo_url: https://github.com/pedrohpsantos/EdTech
 repo_name: pedrohpsantos/EdTech
 edit_uri: edit/main/docs/
+exclude_docs: |
+  README.md
 
 copyright: "© 2026 AILAB Makers — UnB FCTE"
 
