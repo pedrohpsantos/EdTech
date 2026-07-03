@@ -142,7 +142,7 @@ public class DocumentService {
 
         // Deletar o arquivo físico no GCS para conformidade com a LGPD
         try {
-            storageService.deleteFile(document.getFileKey());
+            storageService.deleteFile(document.getFileUrl());
         } catch (Exception e) {
             throw new RuntimeException("Erro ao excluir arquivo físico: " + e.getMessage());
         }
