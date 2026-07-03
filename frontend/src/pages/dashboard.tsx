@@ -8,6 +8,23 @@ const Dashboard: React.FC = () => {
     const { user } = useAuth();
     const firstName = user?.name?.split(' ')[0] || 'Usuário';
 
+    if (user?.role && user.role !== 'RESEARCHER') {
+        return (
+            <DashboardLayout
+                title="Página não encontrada"
+                subtitle="A rota que você tentou acessar não existe ou não está disponível para o seu perfil."
+                breadcrumbs={['EdTech', '404']}
+            >
+                <div style={{ padding: '4rem 2rem', textAlign: 'center' }}>
+                    <i className="bi bi-exclamation-triangle" style={{ fontSize: '3rem', color: 'var(--ed-orange)' }}></i>
+                    <h2 style={{ marginTop: '1rem', color: 'var(--text-main)' }}>Painel indisponível</h2>
+                    <p style={{ color: 'var(--text-muted)' }}>O painel para o seu perfil de {user.role === 'ADVISOR' ? 'Orientador' : 'Auditor'} ainda está em desenvolvimento.</p>
+                    <button className="btn-primary mt-4" onClick={() => navigate('/')}>Voltar para o início</button>
+                </div>
+            </DashboardLayout>
+        );
+    }
+
     return (
         <DashboardLayout
             title={`Bom dia, ${firstName}`}
