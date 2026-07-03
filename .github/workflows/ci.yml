@@ -235,7 +235,7 @@ jobs:
           service: ${{ env.SERVICE_NAME }}
           region: ${{ env.REGION }}
           image: ${{ env.IMAGE }}:${{ github.sha }}
-          flags: '--allow-unauthenticated --memory=1024Mi --add-cloudsql-instances=${{ env.PROJECT_ID }}:${{ env.REGION }}:edtech-db-dev'
+          flags: '--allow-unauthenticated --memory=1024Mi --max-instances=5 --cpu-boost --add-cloudsql-instances=${{ env.PROJECT_ID }}:${{ env.REGION }}:edtech-db-dev'
           secrets_update_strategy: clear
           env_vars_update_strategy: overwrite
           env_vars: |
