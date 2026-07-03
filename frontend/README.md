@@ -1,76 +1,69 @@
-# frontend/ — UI do EdTech
+# 🎨 EdTech Frontend (SPA)
 
-Interface de usuário (SPA) da plataforma EdTech, construída para proporcionar uma experiência fluida, responsiva e segura para pesquisadores, orientadores e auditores.
-
----
-
-## 🎯 Responsabilidade
-
-- Consumir as APIs seguras do backend de forma eficiente.
-- Gerenciar o estado global e cache das listagens (artigos, painéis, auditoria).
-- Lidar com os formulários de upload e controle de acesso baseado em roles (Pesquisador/Orientador/Auditor).
-- Aplicar proteção no roteamento e enviar os tokens de segurança (`X-XSRF-TOKEN`).
+Bem-vindo ao módulo de **Interface de Usuário** da plataforma EdTech. Esta Single Page Application (SPA) foi projetada para garantir performance, usabilidade e integração segura com o nosso Backend Restful.
 
 ---
 
-## 🛠️ Stack Tecnológica
+## 🎯 Objetivo
 
-| Tecnologia | Versão | Função |
-| :--- | :---: | :--- |
-| **React** | 19.x | Biblioteca principal de renderização |
-| **Vite** | 8.x | Bundler super-rápido de build e dev server |
-| **React Router** | 7.x | Gerenciamento de rotas e navegação |
-| **React Query (TanStack)** | 5.x | Data Fetching, cache e sincronização |
-| **Bootstrap** | 5.3.x | Framework de UI, layout e responsividade |
-| **Axios** | 1.x | Cliente HTTP (com interceptors de segurança) |
-| **Vitest** | 4.x | Framework de testes unitários super-rápido (nativo do Vite) |
-| **Playwright** | 1.x | Testes End-to-End (E2E) |
+Fornecer uma interface moderna, reativa e acessível para as personas do sistema:
+- **Pesquisador:** Acesso rápido ao upload de arquivos e ingressos em projetos.
+- **Orientador:** Dashboard de gestão, listagem de artefatos e fluxos de aprovação.
+- **Auditor:** Telas focadas em rastreabilidade de eventos e visualização de *Logs Imutáveis*.
 
 ---
 
-## 📂 Arquitetura do Diretório
+## 🛠️ Tecnologias Utilizadas
+
+A base do frontend foi escolhida para alinhar agilidade de desenvolvimento com alta performance de compilação:
+
+| Tecnologia | Função na Aplicação |
+| :--- | :--- |
+| **React 19** | Biblioteca declarativa e baseada em componentes para UI. |
+| **Vite 8** | Bundler extremamente rápido, substituindo Webpack. |
+| **React Router 7** | Orquestração de Rotas Privadas e baseadas em Permissões (Roles). |
+| **React Query** | (*TanStack Query*) Gestão eficiente do estado do servidor e cache HTTP. |
+| **Vanilla CSS & Bootstrap**| Estilização customizada em *Pure CSS* e uso do Bootstrap exclusivamente para grid responsivo, abolindo a sobrecarga do Tailwind. |
+| **Axios** | Cliente HTTP configurado com Interceptors para captura de headers e tokens. |
+
+---
+
+## 🔒 Mecanismos de Segurança (Frontend)
+
+Visando os padrões *Enterprise Grade*, este frontend **não armazena Tokens no LocalStorage**. 
+Toda a comunicação de autenticação ocorre via cookies `HttpOnly` com proteção Cross-Site Request Forgery (CSRF).
+
+O arquivo `/src/services/api.ts` implementa *Interceptors* que leem o cookie neutro enviado pelo Spring Boot e reempacotam o token no cabeçalho estrito `X-XSRF-TOKEN`, garantindo imunidade de ponta a ponta.
+
+---
+
+## 📂 Arquitetura de Diretórios
 
 ```text
 frontend/src/
-├── components/     # Componentes de UI reutilizáveis (NavBar, Modals, Loaders)
-├── pages/          # Páginas inteiras correspondentes às rotas (Login, Dashboard, Documentos)
-├── services/       # Módulo de chamadas de API (api.js centralizado com Axios)
-├── utils/          # Funções utilitárias e helpers
-├── App.jsx         # Orquestrador de Rotas
-└── main.jsx        # Ponto de entrada (Montagem do React DOM)
+├── components/     # Componentes de UI modulares (Botões, Modals, Loaders)
+├── pages/          # Telas completas que compõem a hierarquia de rotas
+├── services/       # Instâncias Axios e camadas de chamadas para a API
+├── utils/          # Helpers de formatação (datas, tamanhos de arquivos)
+├── App.tsx         # Configuração central de rotas e Context Providers
+└── main.tsx        # Ponto de entrada (Montagem do React Tree)
 ```
 
 ---
 
-## 🔒 Segurança Embutida
+## 🚀 Como Executar
 
-Esta aplicação não armazena tokens sensíveis no `localStorage`.  
-O login devolve um cookie JWT `HttpOnly` com flag `SameSite=Strict`.
+### Pré-Requisitos
+- Node.js (Versão 20 LTS ou superior)
+- NPM
 
-O frontend é configurado para, a cada requisição, ler automaticamente o cookie neutro `XSRF-TOKEN` enviado pelo Spring Boot e reempacotá-lo no cabeçalho `X-XSRF-TOKEN`. Isso mitiga integralmente ataques de **Cross-Site Request Forgery (CSRF)** e é feito pelo nosso *Axios Interceptor* configurado no `services/api.js`.
+### Passos
+1. Entre na pasta: `cd frontend`
+2. Instale os pacotes: `npm install`
+3. Execute o servidor de desenvolvimento: `npm run dev`
 
----
-
-## 🚀 Como Rodar Localmente
-
-Certifique-se de estar com o **Node.js 24+** (ou mínimo 20 LTS).
-
+Para emular o build de produção localmente, utilize:
 ```bash
-# 1. Entre no diretório do frontend
-cd frontend
-
-# 2. Instale as dependências atualizadas
-npm install
-
-# 3. Rode o servidor de desenvolvimento
-npm run dev
+npm run build
+npm run preview
 ```
-
-Por padrão, o Vite rodará em `http://localhost:5173`.  
-*Atenção: Você precisará que o backend (Spring Boot) esteja rodando em `localhost:8080` para testar logins e requisições.*
-
-### Scripts Adicionais
-
-- `npm run build` — Cria a versão otimizada para produção na pasta `dist/`.
-- `npm run lint` — Roda as checagens do ESLint (garantia de qualidade).
-- `npm run test` — Roda os testes unitários via Vitest.
