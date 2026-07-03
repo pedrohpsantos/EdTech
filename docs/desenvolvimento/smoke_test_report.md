@@ -13,6 +13,13 @@
 **API Backend:** Cloud Run (`https://edtech-backend-shv6qbpf4q-rj.a.run.app`)  
 **Issue de Rastreio:** #108  
 
+<div class="grid cards" markdown>
+- :material-chart-pie: **Relatório Interativo Completo**
+    ---
+    Veja o histórico, gráficos, tempo de execução e capturas de tela das falhas diretamente no Allure Report oficial gerado pela esteira de CI.
+    [Acessar Allure Report 🚀](../allure/index.html){ .md-button .md-button--primary }
+</div>
+
 ---
 
 ## 📊 Sumário Executivo

@@ -65,6 +65,26 @@ jobs:
             echo "Nenhum relatório JaCoCo encontrado (talvez não existam testes). Pulando."
           fi
 
+      - name: Setup Node.js (E2E)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Instalar Dependências e Playwright
+        working-directory: frontend
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+
+      - name: Executar Smoke Tests (Allure)
+        working-directory: frontend
+        run: npx playwright test e2e/production-smoke.spec.ts || true
+
+      - name: Gerar Allure Report
+        working-directory: frontend
+        run: |
+          npx allure generate allure-results -o ../docs/allure --clean
+
       - name: Instalar dependências
         run: uv sync
 
