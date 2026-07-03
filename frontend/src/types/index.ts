@@ -2,7 +2,7 @@ export interface User {
   id: string;
   name: string;
   email: string;
-  roles?: string[];
+  role?: string;
 }
 
 export interface Project {
