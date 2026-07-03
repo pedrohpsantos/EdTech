@@ -7,3 +7,4 @@ nav:
   - cors_configuration.md
   - api_reference.md
   - qualidade_testes.md
+  - smoke_test_report.md
