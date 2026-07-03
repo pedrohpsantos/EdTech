@@ -45,4 +45,10 @@ public class GcsStorageServiceImpl implements StorageService {
     private BlobInfo blobInfoForPresigned(BlobId blobId) {
         return BlobInfo.newBuilder(blobId).build();
     }
+
+    @Override
+    public void deleteFile(String fileKey) throws Exception {
+        BlobId blobId = BlobId.of(bucketName, fileKey);
+        storage.delete(blobId);
+    }
 }

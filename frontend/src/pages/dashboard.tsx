@@ -1,12 +1,29 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DashboardLayout from '../components/layout/DashboardLayout';
 import { useAuth } from '../context/authContext';
+import { getDashboardStats } from '../services/api';
 
 const Dashboard: React.FC = () => {
     const navigate = useNavigate();
     const { user } = useAuth();
     const firstName = user?.name?.split(' ')[0] || 'Usuário';
+    
+    const [stats, setStats] = useState({
+        activeDocuments: 0,
+        pendingReview: 0,
+        complianceScore: 0,
+        researchProgress: 0
+    });
+
+    useEffect(() => {
+        if (user?.role === 'RESEARCHER') {
+            getDashboardStats().then(data => {
+                if (data) setStats(data);
+            }).catch(err => console.error("Erro ao carregar estatísticas:", err));
+        }
+    }, [user]);
+
 
     if (user?.role && user.role !== 'RESEARCHER') {
         return (
@@ -39,8 +56,8 @@ const Dashboard: React.FC = () => {
                         <i className="bi bi-file-earmark-text stat-icon"></i>
                     </span>
                     <div className="stat-body">
-                        <span className="stat-value">24</span>
-                        <span className="stat-trend trend-up">+3</span>
+                        <span className="stat-value">{stats.activeDocuments}</span>
+                        <span className="stat-trend trend-neutral">Total</span>
                     </div>
                 </div>
 
@@ -50,8 +67,8 @@ const Dashboard: React.FC = () => {
                         <i className="bi bi-clock stat-icon"></i>
                     </div>
                     <div className="stat-body">
-                        <span className="stat-value">5</span>
-                        <span className="stat-trend trend-down">-1</span>
+                        <span className="stat-value">{stats.pendingReview}</span>
+                        <span className="stat-trend trend-neutral">Pendentes</span>
                     </div>
                 </div>
 
@@ -61,8 +78,8 @@ const Dashboard: React.FC = () => {
                         <i className="bi bi-shield-check stat-icon"></i>
                     </span>
                     <div className="stat-body">
-                        <span className="stat-value">92%</span>
-                        <span className="stat-trend trend-up">+4 pts</span>
+                        <span className="stat-value">{stats.complianceScore}%</span>
+                        <span className="stat-trend trend-up">Bom</span>
                     </div>
                 </div>
 
@@ -72,8 +89,8 @@ const Dashboard: React.FC = () => {
                         <i className="bi bi-graph-up stat-icon"></i>
                     </span>
                     <div className="stat-body">
-                        <span className="stat-value">68%</span>
-                        <span className="stat-trend trend-neutral">no prazo</span>
+                        <span className="stat-value">{stats.researchProgress}%</span>
+                        <span className="stat-trend trend-neutral">Em andamento</span>
                     </div>
                 </div>
             </div>

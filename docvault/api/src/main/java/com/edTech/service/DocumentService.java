@@ -140,7 +140,13 @@ public class DocumentService {
             throw new RuntimeException("Only DRAFT documents can be deleted");
         }
 
-        // Deletar também do S3 poderia ser feito aqui, mas omitido por simplicidade ou soft-delete futuro
+        // Deletar o arquivo físico no GCS para conformidade com a LGPD
+        try {
+            storageService.deleteFile(document.getFileKey());
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao excluir arquivo físico: " + e.getMessage());
+        }
+        
         documentRepository.delete(document);
         auditLogService.logAction(userId, AcaoAuditoria.DELETE_DOCUMENT, "Documento excluido: " + document.getTitle());
     }

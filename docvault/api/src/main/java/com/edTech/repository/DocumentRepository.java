@@ -18,4 +18,10 @@ public interface DocumentRepository extends JpaRepository<Document, UUID> {
            "AND (:projectId IS NULL OR d.project.id = :projectId) " +
            "AND (:title IS NULL OR LOWER(d.title) LIKE LOWER(CONCAT('%', :title, '%')))")
     Page<Document> findDocumentsByUserIdAndFilters(@Param("userId") UUID userId, @Param("projectId") UUID projectId, @Param("title") String title, Pageable pageable);
+
+    @Query("SELECT COUNT(d) FROM Document d JOIN ProjectMember pm ON d.project.id = pm.project.id WHERE pm.user.id = :userId")
+    long countDocumentsByUserId(@Param("userId") UUID userId);
+
+    @Query("SELECT COUNT(d) FROM Document d JOIN ProjectMember pm ON d.project.id = pm.project.id WHERE pm.user.id = :userId AND d.status = :status")
+    long countDocumentsByUserIdAndStatus(@Param("userId") UUID userId, @Param("status") com.edTech.model.DocumentStatus status);
 }

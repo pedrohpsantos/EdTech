@@ -94,7 +94,7 @@ public class AuthController {
         ResponseCookie clearedCookie = ResponseCookie.from("token", "")
                 .httpOnly(true)
                 .secure(secureCookie)
-                .sameSite("None")
+                .sameSite("Lax")
                 .path("/")
                 .maxAge(0)
                 .build();
@@ -114,7 +114,7 @@ public class AuthController {
         return ResponseCookie.from("token", token)
                 .httpOnly(true)
                 .secure(secureCookie)
-                .sameSite("None")
+                .sameSite("Lax")
                 .path("/")
                 .maxAge(Duration.ofMinutes(jwtExpirationMinutes))
                 .build();

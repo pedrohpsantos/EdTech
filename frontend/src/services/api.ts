@@ -1,7 +1,7 @@
 import axios, { InternalAxiosRequestConfig } from 'axios';
 import { ApiResponse, User, Project, Document } from '../types';
 
-const BASE_URL = import.meta.env.VITE_API_URL;
+const BASE_URL = '/api';
 
 const getCsrfToken = () => {
     const value = `; ${document.cookie}`;
@@ -134,6 +134,11 @@ export const getDownloadUrl = async (documentId: string): Promise<ApiResponse<an
     } catch (error) {
         return handleApiError(error, 'Erro ao gerar link de download seguro.');
     }
+};
+
+export const getDashboardStats = async (): Promise<any> => {
+    const response = await api.get('/dashboard/stats');
+    return response.data;
 };
 
 export const uploadDocument = async (file: File, title: string, projectId: string, onUploadProgress?: (progressEvent: any) => void): Promise<ApiResponse<Document>> => {
