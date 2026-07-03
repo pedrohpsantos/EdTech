@@ -2049,6 +2049,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../desenvolvimento/smoke_test_report/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Relatório de Smoke Test - Ambiente de Produção
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -3521,6 +3549,17 @@
     <span class="md-ellipsis">
       
         4.7 Qualidade e Testes (JaCoCo)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#desenvolvimento-smoke_test_report" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.8 Relatório de Smoke Test - Ambiente de Produção
       
     </span>
   </a>
@@ -8052,7 +8091,92 @@ function injectJacocoStyles() {
 <td>Pedro Henrique P. Santos</td>
 </tr>
 </tbody>
-</table></body></html></section></section>
+</table></body></html></section><section class="print-page" id="desenvolvimento-smoke_test_report" heading-number="4.8"><html><head>
+        <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            remove_material_navigation();remove_mkdocs_theme_navigation();generate_toc();
+        })
+        </script>
+        </head><body><h1 id="relatorio-de-smoke-test-ambiente-de-producao">Relatório de Smoke Test - Ambiente de Produção<a class="headerlink" href="#desenvolvimento-smoke_test_report-relatorio-de-smoke-test-ambiente-de-producao" title="Permanent link">¶</a></h1>
+<p><strong>Data de Execução:</strong> 02/07/2026
+<strong>Ambiente:</strong> Produção (<code>https://edtech-storage-501117.web.app/</code>)
+<strong><abbr title="Application Programming Interface">API</abbr> Backend:</strong> Cloud Run (<code>https://edtech-backend-shv6qbpf4q-rj.a.run.app</code>)</p>
+<h2 id="desenvolvimento-smoke_test_report-escopo-do-teste-issue-108">Escopo do Teste (Issue #108)<a class="headerlink" href="#desenvolvimento-smoke_test_report-escopo-do-teste-issue-108" title="Permanent link">¶</a></h2>
+<p>O Smoke Test final validou a conectividade de produção, segurança e as funcionalidades de base da aplicação após o deploy.</p>
+<h3 id="desenvolvimento-smoke_test_report-1-testes-de-infraestrutura-e-seguranca">1. Testes de Infraestrutura e Segurança<a class="headerlink" href="#desenvolvimento-smoke_test_report-1-testes-de-infraestrutura-e-seguranca" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Teste</th>
+<th>Status</th>
+<th>Detalhes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Frontend acessível online e rodando no Firebase Hosting</td>
+<td>✅ PASSOU</td>
+<td>Acesso via <abbr title="Uniform Resource Locator — Localizador Uniforme de Recursos">URL</abbr> pública sem erros 404/500 na carga inicial.</td>
+</tr>
+<tr>
+<td>Backend acessível e respondendo</td>
+<td>✅ PASSOU</td>
+<td>A <abbr title="Application Programming Interface">API</abbr> Cloud Run responde e está "UP".</td>
+</tr>
+<tr>
+<td>Fornecimento de <abbr title="HyperText Transfer Protocol Secure">HTTPS</abbr> (TLS) 100%</td>
+<td>✅ PASSOU</td>
+<td>Ambos Frontend e Backend possuem certificado TLS provisionado e "cadeado verde" válido.</td>
+</tr>
+<tr>
+<td><abbr title="Cross-Origin Resource Sharing — Compartilhamento de Recursos de Origem Cruzada">CORS</abbr> (Cross-Origin Resource Sharing)</td>
+<td>✅ PASSOU</td>
+<td>A <abbr title="Application Programming Interface">API</abbr> autorizou requisições pré-flight (<code>OPTIONS</code>) com a flag <code>Origin: https://edtech-storage-501117.web.app</code> injetada via Github Actions.</td>
+</tr>
+<tr>
+<td>Cookies Seguros (HttpOnly, SameSite)</td>
+<td>✅ PASSOU</td>
+<td>Configuração checada na resposta do <abbr title="JSON Web Token">JWT</abbr> login em produção (o backend empacota de forma segura o cookie).</td>
+</tr>
+</tbody>
+</table>
+<h3 id="desenvolvimento-smoke_test_report-2-testes-dos-fluxos-funcionais-validacao-manual-automatizada">2. Testes dos Fluxos Funcionais (Validação Manual + Automatizada)<a class="headerlink" href="#desenvolvimento-smoke_test_report-2-testes-dos-fluxos-funcionais-validacao-manual-automatizada" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Fluxo Testado</th>
+<th>Status</th>
+<th>Comentários</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Pesquisador</strong>: Register → Login → Upload → Listagem → Download</td>
+<td>✅ PASSOU</td>
+<td>Arquivos salvos no Google Cloud Storage (Bucket configurado) gerando URLs pré-assinadas com sucesso.</td>
+</tr>
+<tr>
+<td><strong>Orientador</strong>: Login → Listar → Aprovar/Rejeitar</td>
+<td>✅ PASSOU</td>
+<td>Testado e atualizado recentemente na Issue #70, agora integrando a coluna "Feedback" de rejeição.</td>
+</tr>
+<tr>
+<td><strong>Auditor</strong>: Login → Consultar Logs</td>
+<td>⚠️ PARCIAL</td>
+<td>O Frontend já possui a rota, contudo a implementação do Endpoint no backend (Issue #68) precisará ser terminada na próxima etapa.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="desenvolvimento-smoke_test_report-conclusoes">Conclusões<a class="headerlink" href="#desenvolvimento-smoke_test_report-conclusoes" title="Permanent link">¶</a></h2>
+<ul>
+<li><strong>Nenhum block impeditivo</strong> de infraestrutura foi encontrado. O tráfego <code>Frontend -&gt; Backend -&gt; Banco -&gt; Cloud Storage</code> flui com sucesso.</li>
+<li>Erros de <abbr title="Cross-Origin Resource Sharing — Compartilhamento de Recursos de Origem Cruzada">CORS</abbr> anteriores foram neutralizados com sucesso através da variável de ambiente <code>CORS_ALLOWED_ORIGINS</code> configurada no <code>ci.yml</code>.</li>
+<li>A <abbr title="Application Programming Interface">API</abbr> está estável.</li>
+</ul>
+<blockquote>
+<p>[!TIP]
+Com este Smoke Test, aprovamos a Infraestrutura de Produção e o <abbr title="Minimum Viable Product — Produto Mínimo Viável">MVP</abbr> pode ser demonstrado sem gargalos técnicos. A única pendência de implementação do sistema base para todas as US (User Stories) operarem 100% reside no Endpoint final da Tabela de Logs (Issue #68).</p>
+</blockquote></body></html></section></section>
                     <section class='print-page md-section' id='section-5' heading-number='5'>
                         <h1>Gestão e Metodologia Ágil<a class='headerlink' href='#section-5' title='Permanent link'></a>
                         </h1>
@@ -11672,6 +11796,11 @@ Copie toda a estrutura abaixo para o novo arquivo, preencha os dados e adicione 
 
                 .print-site-enumerate-headings #desenvolvimento-qualidade_testes h2:before { content: '4.7.' counter(counter-desenvolvimento-qualidade_testes-2) ' ' }
                 .print-site-enumerate-headings #desenvolvimento-qualidade_testes h2 {  counter-increment: counter-desenvolvimento-qualidade_testes-2 }
+            
+.print-site-enumerate-headings #desenvolvimento-smoke_test_report > h1:before { content: '4.8 ' }
+
+                .print-site-enumerate-headings #desenvolvimento-smoke_test_report h2:before { content: '4.8.' counter(counter-desenvolvimento-smoke_test_report-2) ' ' }
+                .print-site-enumerate-headings #desenvolvimento-smoke_test_report h2 {  counter-increment: counter-desenvolvimento-smoke_test_report-2 }
             
 .print-site-enumerate-headings #section-5 > h1:before { content: '5 ' }
 .print-site-enumerate-headings #section-5-1 > h1:before { content: '5.1 ' }
