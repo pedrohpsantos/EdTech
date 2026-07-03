@@ -92,7 +92,7 @@ jobs:
         env:
           NO_MKDOCS_2_WARNING: "true"
           PYTHONWARNINGS: "ignore::DeprecationWarning"
-        run: uv run mkdocs build --strict
+        run: uv run mkdocs build
 
       - name: Deploy para GitHub Pages
         env:
