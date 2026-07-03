@@ -1,4 +1,4 @@
-title: ':material-code-tags: Desenvolvimento'
+﻿title: 'Desenvolvimento'
 nav:
   - guia_local.md
   - frontend_vite.md
@@ -8,3 +8,4 @@ nav:
   - api_reference.md
   - qualidade_testes.md
   - smoke_test_report.md
+
