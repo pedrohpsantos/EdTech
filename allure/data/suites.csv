@@ -1,3 +1,3 @@
 "DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
-"","584","CORS configurado corretamente no Backend","chromium","2026-07-03","passed","2026-07-03","Production Smoke Test","production-smoke.spec.ts","",""
-"","615","A aplicação frontend está acessível e HTTPS (TLS) é forçado","chromium","2026-07-03","passed","2026-07-03","Production Smoke Test","production-smoke.spec.ts","",""
+"","471","A aplicação frontend está acessível e HTTPS (TLS) é forçado","chromium","2026-07-03","passed","2026-07-03","Production Smoke Test","production-smoke.spec.ts","",""
+"","540","CORS configurado corretamente no Backend","chromium","2026-07-03","passed","2026-07-03","Production Smoke Test","production-smoke.spec.ts","",""
