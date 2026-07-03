@@ -1,4 +1,4 @@
-#  Design System
+﻿# :material-palette-swatch: Design System
 
 Nosso Design System é construído para transmitir segurança, tecnologia e sofisticação.
 
@@ -98,3 +98,4 @@ Sombras sutis tingidas com o **Deep Purple** para evitar o aspecto "sujo" de som
 | :---: | :---: | :--- | :--- |
 | `1.0` | 09/06/2026 | Documentação do Design System e Tokens | Pedro Henrique P. Santos |
 | `1.1` | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |
+

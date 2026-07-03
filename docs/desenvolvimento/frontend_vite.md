@@ -1,4 +1,4 @@
-# Setup e Arquitetura Frontend (Vite + React)
+﻿# :material-monitor: Setup e Arquitetura Frontend (Vite + React)
 
 O frontend do EdTech é construído utilizando **React** e empacotado através do **Vite**, garantindo uma experiência de desenvolvimento excepcionalmente ágil graças ao Hot Module Replacement (HMR).
 
@@ -52,3 +52,4 @@ Isso permite que você programe como se frontend e backend estivessem no mesmo d
 | `1.0` | 13/06/2026 | Criação do documento de suporte ao DevEx | Pedro Henrique P. Santos |
 | `1.1` | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |
 | `1.2` | 21/06/2026 | Adição da camada de services e dependências-chave | Pedro Henrique P. Santos |
+

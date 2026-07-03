@@ -1,4 +1,4 @@
-# Pipeline CI/CD e Deploy
+﻿# :material-rocket-launch: Pipeline CI/CD e Deploy
 
 A integração e entrega contínua do projeto ocorrem através do **GitHub Actions**.
 
@@ -45,3 +45,4 @@ De acordo com o ADR 0003, o deploy das partes ativas do sistema ocorre de forma 
 | :---: | :---: | :--- | :--- |
 | `1.0` | 13/06/2026 | Criação do documento de suporte ao DevEx | Pedro Henrique P. Santos |
 | `1.1` | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |
+
