@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import AuthProvider from "./context/authContext";
 import PrivateRoute from "./components/privateRoute";
+import GlobalLoader from "./components/GlobalLoader";
 
 // Lazy load rotas
 const Login = React.lazy(() => import("./pages/login"));
@@ -31,6 +32,7 @@ function App(){
   <AuthProvider>
     <BrowserRouter>
       <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100svh' }}>
+        <GlobalLoader />
         <Suspense fallback={<div style={{ padding: '2rem', textAlign: 'center' }}>Carregando...</div>}>
           <Routes>
             <Route path="/" element={<Login/>}/>

@@ -15,18 +15,46 @@ const api = axios.create({
     withCredentials: true, // Substitui 'credentials: include'
 });
 
-// Interceptor para adicionar o token CSRF em requisições que não sejam GET
+let activeRequests = 0;
+let loaderTimeout: number | null = null;
+
+const showLoader = () => {
+    activeRequests++;
+    if (activeRequests === 1) {
+        loaderTimeout = window.setTimeout(() => {
+            window.dispatchEvent(new Event('showLoader'));
+        }, 500); // Show loader only if request takes more than 500ms
+    }
+};
+
+const hideLoader = () => {
+    activeRequests = Math.max(0, activeRequests - 1);
+    if (activeRequests === 0) {
+        if (loaderTimeout !== null) {
+            window.clearTimeout(loaderTimeout);
+            loaderTimeout = null;
+        }
+        window.dispatchEvent(new Event('hideLoader'));
+    }
+};
+
+// Interceptor para adicionar o token CSRF e mostrar o loader
 api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
+    showLoader();
     if (config.method !== 'get') {
         config.headers['X-XSRF-TOKEN'] = getCsrfToken();
     }
     return config;
 });
 
-// Interceptor para tratamento de sessão expirada (401)
+// Interceptor para tratamento de sessão expirada (401) e esconder o loader
 api.interceptors.response.use(
-    (response) => response,
+    (response) => {
+        hideLoader();
+        return response;
+    },
     (error) => {
+        hideLoader();
         if (error.response && error.response.status === 401) {
             // Ignorar redirect no próprio login e no endpoint de checagem de sessão
             if (!error.config.url.includes('/api/auth/login') && !error.config.url.includes('/api/auth/me')) {
