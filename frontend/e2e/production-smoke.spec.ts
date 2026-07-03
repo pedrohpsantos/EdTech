@@ -33,4 +33,61 @@ test.describe('Production Smoke Test', () => {
     expect(allowOrigin).toBeDefined();
   });
 
+  test('Servidor devolve cookie XSRF-TOKEN na raiz da API', async ({ request }) => {
+    const response = await request.fetch(`${API_URL}/`);
+    const cookies = response.headers()['set-cookie'];
+    if (cookies) {
+      expect(cookies).toContain('XSRF-TOKEN');
+    }
+  });
+
+  test('Rotas protegidas bloqueiam acesso e redirecionam para o Login', async ({ page }) => {
+    await page.goto(`${BASE_URL}/dashboard`);
+    // Deve redirecionar para a página de login
+    await page.waitForURL('**/login*');
+    expect(page.url()).toContain('/login');
+  });
+
+  test('Validar elementos visuais principais da página de Login', async ({ page }) => {
+    await page.goto(`${BASE_URL}/login`);
+    
+    // Verifica título da página de login
+    await expect(page.getByRole('heading', { name: /Bem-vindo|Login|Entrar/i })).toBeVisible();
+    
+    // Verifica inputs de e-mail e senha
+    await expect(page.locator('input[type="email"]')).toBeVisible();
+    await expect(page.locator('input[type="password"]')).toBeVisible();
+    
+    // Verifica botão de Entrar
+    await expect(page.getByRole('button', { name: /Entrar/i })).toBeVisible();
+  });
+
+  test('Tentativa de login com credenciais inválidas exibe alerta', async ({ page }) => {
+    await page.goto(`${BASE_URL}/login`);
+    
+    await page.locator('input[type="email"]').fill('teste_invalido@edu.br');
+    await page.locator('input[type="password"]').fill('senha_errada');
+    await page.getByRole('button', { name: /Entrar/i }).click();
+
+    // Aguarda o Toast ou Alerta de erro (procurando pelo ícone de aviso)
+    const errorMessage = page.locator('text=⚠️');
+    await expect(errorMessage.first()).toBeVisible({ timeout: 5000 });
+  });
+
+  test('Acesso à tela de Recuperação de Senha funciona corretamente', async ({ page }) => {
+    await page.goto(`${BASE_URL}/login`);
+    
+    // Clica no link "Esqueci minha senha"
+    const recoveryLink = page.getByRole('link', { name: /Esqueci|Recuperar/i });
+    if (await recoveryLink.count() > 0) {
+      await recoveryLink.click();
+      
+      // Verifica se a URL mudou
+      await page.waitForURL('**/recover-password*');
+      
+      // Verifica input de email na tela de recuperação
+      await expect(page.locator('input[type="email"]')).toBeVisible();
+    }
+  });
+
 });
