@@ -51,48 +51,48 @@ public class AuditLog {
     }
 
     public void setUserId(UUID userId) {
-<span class="nc" id="L54">        this.userId = userId;</span>
-<span class="nc" id="L55">    }</span>
+<span class="fc" id="L54">        this.userId = userId;</span>
+<span class="fc" id="L55">    }</span>
 
     public AcaoAuditoria getAction() {
 <span class="nc" id="L58">        return action;</span>
     }
 
     public void setAction(AcaoAuditoria action) {
-<span class="nc" id="L62">        this.action = action;</span>
-<span class="nc" id="L63">    }</span>
+<span class="fc" id="L62">        this.action = action;</span>
+<span class="fc" id="L63">    }</span>
 
     public String getResourceType() {
 <span class="nc" id="L66">        return resourceType;</span>
     }
 
     public void setResourceType(String resourceType) {
-<span class="nc" id="L70">        this.resourceType = resourceType;</span>
-<span class="nc" id="L71">    }</span>
+<span class="fc" id="L70">        this.resourceType = resourceType;</span>
+<span class="fc" id="L71">    }</span>
 
     public UUID getResourceId() {
 <span class="nc" id="L74">        return resourceId;</span>
     }
 
     public void setResourceId(UUID resourceId) {
-<span class="nc" id="L78">        this.resourceId = resourceId;</span>
-<span class="nc" id="L79">    }</span>
+<span class="fc" id="L78">        this.resourceId = resourceId;</span>
+<span class="fc" id="L79">    }</span>
 
     public String getIpAddress() {
-<span class="nc" id="L82">        return ipAddress;</span>
+<span class="fc" id="L82">        return ipAddress;</span>
     }
 
     public void setIpAddress(String ipAddress) {
-<span class="nc" id="L86">        this.ipAddress = ipAddress;</span>
-<span class="nc" id="L87">    }</span>
+<span class="fc" id="L86">        this.ipAddress = ipAddress;</span>
+<span class="fc" id="L87">    }</span>
 
     public String getDetails() {
 <span class="nc" id="L90">        return details;</span>
     }
 
     public void setDetails(String details) {
-<span class="nc" id="L94">        this.details = details;</span>
-<span class="nc" id="L95">    }</span>
+<span class="fc" id="L94">        this.details = details;</span>
+<span class="fc" id="L95">    }</span>
 
     public LocalDateTime getCreatedAt() {
 <span class="nc" id="L98">        return createdAt;</span>
@@ -100,18 +100,18 @@ public class AuditLog {
 
 <span class="fc" id="L101">    public AuditLog() {}</span>
 
-<span class="nc" id="L103">    public AuditLog(UUID userId, AcaoAuditoria action, String resourceType, UUID resourceId, String ipAddress, String details) {</span>
-<span class="nc" id="L104">        setUserId(userId);</span>
-<span class="nc" id="L105">        setAction(action);</span>
-<span class="nc" id="L106">        setResourceType(resourceType);</span>
-<span class="nc" id="L107">        setResourceId(resourceId);</span>
-<span class="nc" id="L108">        setIpAddress(ipAddress);</span>
-<span class="nc" id="L109">        setDetails(details);</span>
-<span class="nc" id="L110">        onCreate();</span>
-<span class="nc" id="L111">    }</span>
+<span class="fc" id="L103">    public AuditLog(UUID userId, AcaoAuditoria action, String resourceType, UUID resourceId, String ipAddress, String details) {</span>
+<span class="fc" id="L104">        setUserId(userId);</span>
+<span class="fc" id="L105">        setAction(action);</span>
+<span class="fc" id="L106">        setResourceType(resourceType);</span>
+<span class="fc" id="L107">        setResourceId(resourceId);</span>
+<span class="fc" id="L108">        setIpAddress(ipAddress);</span>
+<span class="fc" id="L109">        setDetails(details);</span>
+<span class="fc" id="L110">        onCreate();</span>
+<span class="fc" id="L111">    }</span>
 
     private void onCreate() {
-<span class="nc" id="L114">        this.createdAt = LocalDateTime.now();</span>
-<span class="nc" id="L115">    }</span>
+<span class="fc" id="L114">        this.createdAt = LocalDateTime.now();</span>
+<span class="fc" id="L115">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

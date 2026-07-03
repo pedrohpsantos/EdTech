@@ -22,34 +22,34 @@ public class AuditLogService{
 
     private String getClientIp() {
         try {
-<span class="nc" id="L25">            ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();</span>
-<span class="nc bnc" id="L26" title="All 2 branches missed.">            if (attributes != null) {</span>
-<span class="nc" id="L27">                HttpServletRequest request = attributes.getRequest();</span>
-<span class="nc" id="L28">                String xForwardedFor = request.getHeader(&quot;X-Forwarded-For&quot;);</span>
-<span class="nc bnc" id="L29" title="All 4 branches missed.">                if (xForwardedFor != null &amp;&amp; !xForwardedFor.isEmpty()) {</span>
-<span class="nc" id="L30">                    return xForwardedFor.split(&quot;,&quot;)[0].trim();</span>
+<span class="fc" id="L25">            ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();</span>
+<span class="fc bfc" id="L26" title="All 2 branches covered.">            if (attributes != null) {</span>
+<span class="fc" id="L27">                HttpServletRequest request = attributes.getRequest();</span>
+<span class="fc" id="L28">                String xForwardedFor = request.getHeader(&quot;X-Forwarded-For&quot;);</span>
+<span class="pc bpc" id="L29" title="1 of 4 branches missed.">                if (xForwardedFor != null &amp;&amp; !xForwardedFor.isEmpty()) {</span>
+<span class="fc" id="L30">                    return xForwardedFor.split(&quot;,&quot;)[0].trim();</span>
                 }
-<span class="nc" id="L32">                return request.getRemoteAddr();</span>
+<span class="fc" id="L32">                return request.getRemoteAddr();</span>
             }
 <span class="nc" id="L34">        } catch (Exception ignored) {</span>
-<span class="nc" id="L35">        }</span>
-<span class="nc" id="L36">        return &quot;UNKNOWN&quot;;</span>
+<span class="fc" id="L35">        }</span>
+<span class="fc" id="L36">        return &quot;UNKNOWN&quot;;</span>
     }
 
     public AuditLog log(AcaoAuditoria action, UUID userId, String resourceType, UUID resourceId, String ip, String details){
         try {
-<span class="nc bnc" id="L41" title="All 2 branches missed.">            String clientIp = ip != null ? ip : getClientIp();</span>
-<span class="nc" id="L42">            AuditLog auditLog = new AuditLog(userId, action, resourceType, resourceId, clientIp, details);</span>
-<span class="nc" id="L43">            return auditLogRepository.save(auditLog);</span>
+<span class="fc bfc" id="L41" title="All 2 branches covered.">            String clientIp = ip != null ? ip : getClientIp();</span>
+<span class="fc" id="L42">            AuditLog auditLog = new AuditLog(userId, action, resourceType, resourceId, clientIp, details);</span>
+<span class="fc" id="L43">            return auditLogRepository.save(auditLog);</span>
         }
-<span class="nc" id="L45">        catch (Exception e) {</span>
-<span class="nc" id="L46">            log.error(&quot;Erro em salvar o log da auditoria: {}&quot;, e.getMessage(), e);</span>
-<span class="nc" id="L47">            return null;</span>
+<span class="fc" id="L45">        catch (Exception e) {</span>
+<span class="fc" id="L46">            log.error(&quot;Erro em salvar o log da auditoria: {}&quot;, e.getMessage(), e);</span>
+<span class="fc" id="L47">            return null;</span>
         }
     }
 
     public AuditLog logAction(UUID userId, AcaoAuditoria action, String details) {
-<span class="nc" id="L52">        return log(action, userId, null, null, null, details);</span>
+<span class="fc" id="L52">        return log(action, userId, null, null, null, details);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
