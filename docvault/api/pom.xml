@@ -192,10 +192,10 @@
                 </dependencies>
                 <configuration>
                     <targetClasses>
-                        <param>com.edTech.service.RecoveryService</param>
+                        <param>com.edTech.*</param>
                     </targetClasses>
                     <targetTests>
-                        <param>com.edTech.service.*Test</param>
+                        <param>com.edTech.*Test</param>
                     </targetTests>
                     <jvmArgs>
                         <value>-Xmx1024m</value>
