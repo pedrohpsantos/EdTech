@@ -68,9 +68,6 @@ jobs:
     defaults:
       run:
         working-directory: docvault/api
-    env:
-      JWT_SECRET: ${{ secrets.JWT_SECRET }}
-      JWT_EXPIRATION_MINUTES: 60
     steps:
       - uses: actions/checkout@v7
       - name: Set up JDK 21
