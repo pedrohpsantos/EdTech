@@ -36,7 +36,7 @@ api/src/main/java/com/docvault/
 ├── repository/     # Queries ao banco via Spring Data JPA
 ├── model/          # Entidades mapeadas ao PostgreSQL (@Entity)
 ├── dto/            # Objetos de Transferência de Dados (request/response)
-├── config/         # Beans (SecurityConfig, Flyway, AWS S3 / GCS, Web)
+├── config/         # Beans (SecurityConfig, Flyway, GCS, Web)
 └── audit/          # Lógica de Logs de Auditoria injetada transversalmente
 ```
 
