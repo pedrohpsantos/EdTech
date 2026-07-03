@@ -30,13 +30,7 @@
       }
     ],
     "rewrites": [
-      {
-        "source": "/api/**",
-        "run": {
-          "serviceId": "edtech-backend",
-          "region": "southamerica-east1"
-        }
-      },
+
       {
         "source": "**",
         "destination": "/index.html"
