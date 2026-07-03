@@ -94,7 +94,7 @@ public class AuthController {
 <span class="nc" id="L94">        ResponseCookie clearedCookie = ResponseCookie.from(&quot;token&quot;, &quot;&quot;)</span>
 <span class="nc" id="L95">                .httpOnly(true)</span>
 <span class="nc" id="L96">                .secure(secureCookie)</span>
-<span class="nc" id="L97">                .sameSite(&quot;Lax&quot;)</span>
+<span class="nc" id="L97">                .sameSite(&quot;None&quot;)</span>
 <span class="nc" id="L98">                .path(&quot;/&quot;)</span>
 <span class="nc" id="L99">                .maxAge(0)</span>
 <span class="nc" id="L100">                .build();</span>
@@ -114,7 +114,7 @@ public class AuthController {
 <span class="fc" id="L114">        return ResponseCookie.from(&quot;token&quot;, token)</span>
 <span class="fc" id="L115">                .httpOnly(true)</span>
 <span class="fc" id="L116">                .secure(secureCookie)</span>
-<span class="fc" id="L117">                .sameSite(&quot;Lax&quot;)</span>
+<span class="fc" id="L117">                .sameSite(&quot;None&quot;)</span>
 <span class="fc" id="L118">                .path(&quot;/&quot;)</span>
 <span class="fc" id="L119">                .maxAge(Duration.ofMinutes(jwtExpirationMinutes))</span>
 <span class="fc" id="L120">                .build();</span>
