@@ -4,6 +4,8 @@ authors:
   - pedrohpsantos
 categories:
   - Sprint
+hide:
+  - footer
 ---
 # :material-rocket-launch: Semana 1 — Setup e Fundação
 
@@ -112,3 +114,4 @@ Estabelecer toda a fundação do projeto: repositório, pipeline de CI/CD, ambie
 | :---: | :---: | :--- | :--- |
 | `1.0` | 29/05/2026 | Criação do documento | Pedro Henrique P. Santos |
 | `1.1` | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |
+

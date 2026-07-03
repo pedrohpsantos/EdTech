@@ -4,6 +4,10 @@ authors:
   - pedrohpsantos
 categories:
   - Sprint
+hide:
+  - footer
+hide:
+  - footer
 ---
 # :material-rocket-launch: Semana 7 — Deploy de Produção, Secret Manager e Entrega do MVP
 
@@ -88,7 +92,20 @@ Nesta semana adotamos uma rotação de papéis cruzada (Frontend -> Backend, Bac
 
 ## Débitos Técnicos para a Próxima Sprint (Sprint 8)
 
-1. Infraestrutura como Código via Terraform.
-2. Trocar JSON Key do GitHub por Workload Identity Federation (OIDC).
-3. Configurar Private IP no Cloud SQL com VPC Direct Egress.
-4. Finalizar endpoint pendente de Logs de Auditoria para fechar o Painel do Auditor.
+As tarefas prioritárias para a próxima Sprint foram repriorizadas, juntando-se às tarefas finais de IaC e segurança:
+
+| Item | Descrição | Impacto |
+| :---: | :--- | :--- |
+| #1 | Infraestrutura como Código via Terraform. | Crítico — Escalabilidade |
+| #2 | Trocar JSON Key do GitHub por Workload Identity Federation (OIDC). | Alto — Segurança |
+| #3 | Configurar Private IP no Cloud SQL com VPC Direct Egress. | Crítico — Segurança |
+| #68 | Finalizar endpoint pendente de Logs de Auditoria para fechar o Painel do Auditor. | Alto — Negócio |
+
+---
+
+## Histórico de Versões
+
+| Versão | Data | Descrição | Autor |
+|--------|------|-----------|-------|
+| 1.0 | 03/07/2026 | Criação do documento de fechamento da Sprint 7 | Pedro Henrique P. Santos |
+
