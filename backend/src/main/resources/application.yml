@@ -42,6 +42,9 @@ management:
     health:
       probes:
         enabled: true
+  health:
+    mail:
+      enabled: false
 
 jwt:
   secret: ${JWT_SECRET:}

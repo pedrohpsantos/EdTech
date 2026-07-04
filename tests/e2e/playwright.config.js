@@ -18,7 +18,7 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: 'npm run dev --prefix ../frontend',
+    command: 'npm run dev --prefix ../../frontend',
     url: 'http://localhost:5173',
     reuseExistingServer: !process.env.CI,
   },

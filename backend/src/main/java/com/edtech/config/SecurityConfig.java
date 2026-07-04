@@ -60,6 +60,8 @@ public class SecurityConfig {
                     .permitAll()
                     .requestMatchers("/api/auth/recovery/**")
                     .permitAll()
+                    .requestMatchers("/actuator/**")
+                    .permitAll()
                     .requestMatchers("/api/**")
                     .authenticated()
                     .anyRequest()

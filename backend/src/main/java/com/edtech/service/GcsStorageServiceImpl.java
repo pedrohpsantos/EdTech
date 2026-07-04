@@ -6,11 +6,13 @@ import com.google.cloud.storage.Storage;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 /** Documentação para GcsStorageServiceImpl. */
 @Service
+@ConditionalOnProperty(name = "storage.provider", havingValue = "gcs", matchIfMissing = true)
 public class GcsStorageServiceImpl implements StorageService {
 
   private final Storage storage;
