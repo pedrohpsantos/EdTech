@@ -7617,18 +7617,18 @@ cp<span class="w"> </span>infra/.env.example<span class="w"> </span>infra/.env
 </div>
 </div>
 </div>
-<blockquote>
-<p>[!IMPORTANT]
-<strong>Edite o arquivo <code>infra/.env</code>!</strong> Você deve preencher os valores das chaves <code>POSTGRES_PASSWORD</code> e <code>JWT_SECRET</code> com qualquer senha forte local antes de prosseguir.</p>
-</blockquote>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p><strong>Edite o arquivo <code>infra/.env</code>!</strong> Você deve preencher os valores das chaves <code>POSTGRES_PASSWORD</code> e <code>JWT_SECRET</code> com qualquer senha forte local antes de prosseguir.</p>
+</div>
 <h3 id="desenvolvimento-guia_local-2-rodando-o-projeto">2. Rodando o Projeto<a class="headerlink" href="#desenvolvimento-guia_local-2-rodando-o-projeto" title="Permanent link">¶</a></h3>
 <p>Com o Docker em execução, inicie toda a stack com um único comando:</p>
 <div class="highlight"><pre><span></span><code>docker<span class="w"> </span>compose<span class="w"> </span>--env-file<span class="w"> </span>infra/.env<span class="w"> </span>-f<span class="w"> </span>infra/docker-compose.yml<span class="w"> </span>up<span class="w"> </span>-d
 </code></pre></div>
-<blockquote>
-<p>[!TIP]
-A flag <code>-d</code> roda os containers em <em>detached mode</em> (segundo plano). Se for sua primeira vez, o Docker irá baixar (pull) as imagens do Java e do Node e construir o projeto. Isso pode demorar entre 2 a 5 minutos.</p>
-</blockquote>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>A flag <code>-d</code> roda os containers em <em>detached mode</em> (segundo plano). Se for sua primeira vez, o Docker irá baixar (pull) as imagens do Java e do Node e construir o projeto. Isso pode demorar entre 2 a 5 minutos.</p>
+</div>
 <hr>
 <h2 id="desenvolvimento-guia_local-verificando-a-instalacao"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m23 12-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68zm-13 5-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9z"></path></svg></span> Verificando a Instalação<a class="headerlink" href="#desenvolvimento-guia_local-verificando-a-instalacao" title="Permanent link">¶</a></h2>
 <p>Após a conclusão do build, você pode checar se todos os serviços estão saudáveis:</p>
@@ -7642,17 +7642,37 @@ A flag <code>-d</code> roda os containers em <em>detached mode</em> (segundo pla
 </ul>
 <hr>
 <h2 id="desenvolvimento-guia_local-troubleshooting-problemas-comuns"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19.79 15.41c.95-2.17.95-4.66 0-6.82l-2.74 1.24c.6 1.38.6 2.95.01 4.34zm-4.37-11.2a8.54 8.54 0 0 0-6.83 0l1.24 2.73c1.39-.59 2.96-.59 4.35.01zM4.21 8.58a8.56 8.56 0 0 0 0 6.84l2.74-1.25c-.6-1.38-.6-2.96 0-4.35zm4.38 11.21a8.5 8.5 0 0 0 6.83-.01l-1.24-2.73a5.5 5.5 0 0 1-4.34.01zM12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2m0 6a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4"></path></svg></span> Troubleshooting (Problemas Comuns)<a class="headerlink" href="#desenvolvimento-guia_local-troubleshooting-problemas-comuns" title="Permanent link">¶</a></h2>
-<blockquote>
-<p>[!WARNING]
-<strong>Erro de portas em uso (Bind for 0.0.0.0:5432 failed)</strong><br>
-Se o PostgreSQL não subir, você provavelmente já tem outro banco rodando na porta 5432 localmente. Altere a porta no arquivo <code>infra/.env</code> editando a variável <code>POSTGRES_PORT</code>.</p>
-<p>[!NOTE]
-<strong>Como eu paro os containers?</strong><br>
-Para desligar a infraestrutura sem apagar os dados do banco de dados, rode:<br>
+<div class="admonition warning">
+<p class="admonition-title">Erro de portas em uso (Bind for 0.0.0.0:5432 failed)</p>
+<p>Se o PostgreSQL não subir, você provavelmente já tem outro banco rodando na porta 5432 localmente. Altere a porta no arquivo <code>infra/.env</code> editando a variável <code>POSTGRES_PORT</code>.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Como eu paro os containers?</p>
+<p>Para desligar a infraestrutura sem apagar os dados do banco de dados, rode:<br>
 <code>docker compose -f infra/docker-compose.yml stop</code><br>
 Para desligar e <strong>apagar</strong> todos os dados, rode:<br>
 <code>docker compose -f infra/docker-compose.yml down -v</code></p>
-</blockquote></body></html></section><section class="print-page" id="desenvolvimento-frontend_vite" heading-number="4.2"><html><head>
+</div>
+<hr>
+<h2 id="desenvolvimento-guia_local-historico-de-versoes">Histórico de Versões<a class="headerlink" href="#desenvolvimento-guia_local-historico-de-versoes" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Versão</th>
+<th style="text-align: center;">Data</th>
+<th style="text-align: left;">Descrição</th>
+<th style="text-align: left;">Autor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><code>1.0</code></td>
+<td style="text-align: center;">04/07/2026</td>
+<td style="text-align: left;">Criação do guia interativo de Onboarding e Setup 1-Click</td>
+<td style="text-align: left;">Pedro Henrique P. Santos</td>
+</tr>
+</tbody>
+</table></body></html></section><section class="print-page" id="desenvolvimento-frontend_vite" heading-number="4.2"><html><head>
         <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function () {
             remove_material_navigation();remove_mkdocs_theme_navigation();generate_toc();
