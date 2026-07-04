@@ -1,8 +1,8 @@
-﻿---
+---
 title: 'API Reference (Swagger)'
 ---
 
-# :material-api: API Reference (Swagger)
+# :material-code-json: API Reference (Swagger)
 
 <div id="swagger-ui"></div>
 <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@5.9.0/swagger-ui.css" />
