@@ -1,5 +1,6 @@
 ﻿---
-title: 'Semana 5 — Uploads, Autenticação e Integrações GCS'---
+title: 'Semana 5 — Uploads, Autenticação e Integrações GCS'
+---
 # :material-rocket-launch: Semana 5 — Uploads, Autenticação e Integrações GCS
 
 <span class="status-badge"> Concluída</span>

@@ -1,5 +1,6 @@
 ﻿---
-title: 'Semana 2 — Lean Inception, Requisitos e Arquitetura'---
+title: 'Semana 2 — Lean Inception, Requisitos e Arquitetura'
+---
 # :material-rocket-launch: Semana 2 — Lean Inception, Requisitos e Arquitetura
 
 <span class="status-badge"> Concluída</span>

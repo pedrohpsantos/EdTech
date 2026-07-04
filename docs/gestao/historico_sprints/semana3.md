@@ -1,5 +1,6 @@
 ﻿---
-title: 'Semana 3 — Implementação da Autenticação e Estrutura Base'---
+title: 'Semana 3 — Implementação da Autenticação e Estrutura Base'
+---
 # :material-rocket-launch: Semana 3 — Implementação da Autenticação e Estrutura Base
 
 <span class="status-badge"> Concluída</span>

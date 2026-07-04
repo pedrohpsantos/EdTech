@@ -1,5 +1,6 @@
 ﻿---
-title: 'Semana 6 — Infraestrutura, Plugins e Ajuste de Rotas'---
+title: 'Semana 6 — Infraestrutura, Plugins e Ajuste de Rotas'
+---
 # :material-rocket-launch: Semana 6 — Infraestrutura, Plugins e Ajuste de Rotas
 
 <span class="status-badge"> Parcialmente Concluída</span>
