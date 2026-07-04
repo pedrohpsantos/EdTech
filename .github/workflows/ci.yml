@@ -34,7 +34,7 @@ jobs:
       - name: Run Lint / Code Style Check
         run: |
           chmod +x mvnw
-          ./mvnw validate -B
+          ./mvnw compile checkstyle:check spotbugs:check -B
 
   build-backend:
     name: Build Backend
@@ -81,12 +81,12 @@ jobs:
         with:
           name: backend-target
           path: docvault/api/target/
-      - name: Run Tests
+      - name: Run Tests & Coverage
         run: |
           chmod +x mvnw
           ./mvnw verify -B
       - name: Upload JaCoCo Report
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: jacoco-report
@@ -94,6 +94,8 @@ jobs:
           if-no-files-found: warn
       - name: Run Mutation Tests (PiTest)
         run: ./mvnw org.pitest:pitest-maven:mutationCoverage -B
+      - name: Run Security Audit (OWASP)
+        run: ./mvnw org.owasp:dependency-check-maven:check -B
 
   # ==========================================
   #                 FRONTEND
@@ -116,6 +118,10 @@ jobs:
         run: npm ci
       - name: Run lint
         run: npm run lint
+      - name: Run Type Check
+        run: npm run type-check
+      - name: Run Security Audit
+        run: npm run security-audit
 
   build-frontend:
     name: Build Frontend
@@ -135,7 +141,16 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Build
-        run: npm run build
+        run: |
+          npm run build
+          echo ${{ github.sha }} > dist/version.txt
+        env:
+          VITE_API_URL: https://edtech-backend-shv6qbpf4q-rj.a.run.app
+      - name: Upload Frontend Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-dist
+          path: frontend/dist/
 
   test-frontend:
     name: Test Frontend
@@ -171,16 +186,11 @@ jobs:
     if: github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v7
-      - name: Install Frontend Dependencies
-        run: npm ci
-        working-directory: ./frontend
-      - name: Build React App
-        run: |
-          npm run build
-          echo ${{ github.sha }} > dist/version.txt
-        working-directory: ./frontend
-        env:
-          VITE_API_URL: https://edtech-backend-shv6qbpf4q-rj.a.run.app
+      - name: Download Frontend Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: frontend-dist
+          path: frontend/dist/
       - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
         # Continue on error so a duplicate release doesn't mark the whole workflow as failed
@@ -219,10 +229,16 @@ jobs:
       - name: Configure Docker
         run: gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev
 
+      - name: Download Build Target
+        uses: actions/download-artifact@v4
+        with:
+          name: backend-target
+          path: docvault/api/target/
+
       - name: Build and Push Container
         run: |-
           cd docvault/api
-          docker build -t ${{ env.IMAGE }}:${{ github.sha }} .
+          docker build -f Dockerfile.ci -t ${{ env.IMAGE }}:${{ github.sha }} .
           docker push ${{ env.IMAGE }}:${{ github.sha }}
 
       - name: Deploy to Cloud Run

@@ -6,9 +6,11 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "lint": "eslint .",
+    "lint": "eslint . --max-warnings=0",
+    "type-check": "tsc --noEmit",
+    "security-audit": "npm audit --audit-level=high",
     "preview": "vite preview",
-    "test": "vitest run"
+    "test": "vitest run --coverage"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.101.2",
