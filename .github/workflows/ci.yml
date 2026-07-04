@@ -1,4 +1,4 @@
-name: CI / CD (Unified)
+name: CI / CD
 
 on:
   push:
@@ -101,7 +101,6 @@ jobs:
           key: nvd-data-${{ github.run_id }}
           restore-keys: |
             nvd-data-
-          save-always: true
       - name: Run Security Audit (OWASP)
         env:
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
