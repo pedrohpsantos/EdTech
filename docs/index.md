@@ -12,7 +12,7 @@ hide:
     Uma plataforma inteligente para laboratórios universitários e programas de pós-graduação.
   </p>
   
-  <div class="hero-cta" markdown>
+  <div class="hero-cta" markdown="1">
 
   [Explorar o MVP :material-rocket-launch:](produto/strategy/canvas_mvp/){ .md-button .md-button--primary }
   [Ver Entregas :material-package-variant-closed:](gestao/historico_sprints/Semana%201/){ .md-button }
@@ -53,6 +53,16 @@ Pesquisadores precisam de um lugar seguro, organizado e auditável para armazena
   
     ---
     Logs inalteráveis de logins, uploads, downloads e tentativas de acesso negadas. Tudo gravado no banco de dados.
+
+- :material-api: **API RESTful Escalável**
+  
+    ---
+    Arquitetura robusta em Spring Boot 4.1 construída para escalar, integrando perfeitamente Frontend e serviços de nuvem.
+
+- :material-google-cloud: **Infraestrutura Cloud-Native**
+  
+    ---
+    Deploy automatizado via CI/CD no Google Cloud Run, garantindo alta disponibilidade e custos otimizados sob demanda.
 
 </div>
 
