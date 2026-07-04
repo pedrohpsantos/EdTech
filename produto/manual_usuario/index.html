@@ -26,7 +26,7 @@
     
     
       
-        <title>Manual do Usuário - EdTech — Repositório Acadêmico</title>
+        <title>Manual do Usuário e Fluxos - EdTech — Repositório Acadêmico</title>
       
     
     
@@ -72,7 +72,7 @@
     
   
 <meta property="og:type" content="website">
-<meta property="og:title" content="Manual do Usuário - EdTech — Repositório Acadêmico">
+<meta property="og:title" content="Manual do Usuário e Fluxos - EdTech — Repositório Acadêmico">
 <meta property="og:description" content="Documentação oficial do projeto EdTech — Plataforma de centralização, gerenciamento e auditoria de publicações acadêmicas. AILAB Makers — UnB FCTE.">
 <meta property="og:image" content="https://pedrohpsantos.github.io/EdTech/assets/images/social/produto/manual_usuario.png">
 <meta property="og:image:type" content="image/png">
@@ -80,7 +80,7 @@
 <meta property="og:image:height" content="630">
 <meta property="og:url" content="https://pedrohpsantos.github.io/EdTech/produto/manual_usuario/">
 <meta property="twitter:card" content="summary_large_image">
-<meta property="twitter:title" content="Manual do Usuário - EdTech — Repositório Acadêmico">
+<meta property="twitter:title" content="Manual do Usuário e Fluxos - EdTech — Repositório Acadêmico">
 <meta property="twitter:description" content="Documentação oficial do projeto EdTech — Plataforma de centralização, gerenciamento e auditoria de publicações acadêmicas. AILAB Makers — UnB FCTE.">
 <meta property="twitter:image" content="https://pedrohpsantos.github.io/EdTech/assets/images/social/produto/manual_usuario.png">
 <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
@@ -147,7 +147,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Manual do Usuário
+              Manual do Usuário e Fluxos
             
           </span>
         </div>
@@ -265,7 +265,7 @@
   
     
   
-  Home
+  EdTech
 
       </a>
     </li>
@@ -440,7 +440,7 @@
   <span class="md-ellipsis">
     
   
-    Home
+    EdTech
   
 
     
@@ -1263,7 +1263,7 @@
   <span class="md-ellipsis">
     
   
-    C4 model
+    C4 Model (Contexto e Containers)
   
 
     
@@ -1409,7 +1409,7 @@
   <span class="md-ellipsis">
     
   
-    Seguranca app
+    AppSec e Segurança
   
 
     
@@ -1904,7 +1904,7 @@
   <span class="md-ellipsis">
     
   
-    Guia de Setup Local (Onboarding)
+    Guia Rápido de Onboarding
   
 
     
@@ -3206,6 +3206,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#historico-de-versoes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Histórico de Versões
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -3241,10 +3252,10 @@
 <h3 id="12-upload-de-documentos">1.2 Upload de Documentos<a class="headerlink" href="#12-upload-de-documentos" title="Permanent link">¶</a></h3>
 <p>Na tela de envio (Upload), o pesquisador pode selecionar um arquivo <abbr title="Portable Document Format">PDF</abbr> (Tese, Artigo, Dataset) e vinculá-lo a um Projeto.</p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/imgs/pesquisador_upload.png" data-desc-position="bottom"><img alt="Upload de Documentos" src="../../assets/imgs/pesquisador_upload.png"></a></p>
-<blockquote>
-<p>[!TIP]
-Apenas documentos em <abbr title="Portable Document Format">PDF</abbr> e planilhas <abbr title="Comma-Separated Values — Valores Separados por Vírgula">CSV</abbr>/XLSX são permitidos no momento. Arquivos executáveis serão rejeitados pela auditoria de segurança de upload.</p>
-</blockquote>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Apenas documentos em <abbr title="Portable Document Format">PDF</abbr> e planilhas <abbr title="Comma-Separated Values — Valores Separados por Vírgula">CSV</abbr>/XLSX são permitidos no momento. Arquivos executáveis serão rejeitados pela auditoria de segurança de upload.</p>
+</div>
 <hr>
 <h2 id="2-fluxo-do-orientador-professorgestor">2. Fluxo do Orientador (Professor/Gestor)<a class="headerlink" href="#2-fluxo-do-orientador-professorgestor" title="Permanent link">¶</a></h2>
 <p>O <strong>Orientador</strong> é o usuário responsável por validar as entregas do Pesquisador e assegurar a qualidade científica.</p>
@@ -3253,10 +3264,10 @@ Apenas documentos em <abbr title="Portable Document Format">PDF</abbr> e planilh
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/imgs/orientador_dashboard.png" data-desc-position="bottom"><img alt="Dashboard do Orientador" src="../../assets/imgs/orientador_dashboard.png"></a></p>
 <h3 id="22-aprovacao-de-documentos">2.2 Aprovação de Documentos<a class="headerlink" href="#22-aprovacao-de-documentos" title="Permanent link">¶</a></h3>
 <p>Acessando a lista de documentos em revisão, o Orientador pode visualizar um <em>preview</em> rápido do arquivo e utilizar os botões de ação para <strong>Aprovar</strong>, <strong>Solicitar Alterações</strong> ou <strong>Rejeitar</strong>.</p>
-<blockquote>
-<p>[!WARNING]
-Uma vez aprovado, o documento é selado no banco de dados com um hash SHA-256 e qualquer modificação futura gerará uma nova versão.</p>
-</blockquote>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Uma vez aprovado, o documento é selado no banco de dados com um hash SHA-256 e qualquer modificação futura gerará uma nova versão.</p>
+</div>
 <hr>
 <h2 id="3-fluxo-do-auditor-membro-lgpdcomite-etica">3. Fluxo do Auditor (Membro <abbr title="Lei Geral de Proteção de Dados Pessoais">LGPD</abbr>/Comitê Ética)<a class="headerlink" href="#3-fluxo-do-auditor-membro-lgpdcomite-etica" title="Permanent link">¶</a></h2>
 <p>O <strong>Auditor</strong> possui acesso exclusivo e restrito apenas à visão de rastreabilidade do sistema.</p>
@@ -3265,10 +3276,10 @@ Uma vez aprovado, o documento é selado no banco de dados com um hash SHA-256 e 
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/imgs/auditor_logs.png" data-desc-position="bottom"><img alt="Painel do Auditor" src="../../assets/imgs/auditor_logs.png"></a></p>
 <h3 id="32-exportacao-de-trilha-de-auditoria">3.2 Exportação de Trilha de Auditoria<a class="headerlink" href="#32-exportacao-de-trilha-de-auditoria" title="Permanent link">¶</a></h3>
 <p>A tabela permite aplicar filtros por intervalo de data, usuário e tipo de ação. Posteriormente, a tabela pode ser exportada para auditorias externas (compliance).</p>
-<blockquote>
-<p>[!NOTE]
-Os logs não podem ser apagados ou modificados nem por usuários com perfil de Administrador.</p>
-</blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Os logs não podem ser apagados ou modificados nem por usuários com perfil de Administrador.</p>
+</div>
 <hr>
 <h2 id="4-matriz-de-permissoes-e-controle-de-acesso-rbac">4. Matriz de Permissões e Controle de Acesso (<abbr title="Role-Based Access Control — Controle de Acesso Baseado em Papéis">RBAC</abbr>)<a class="headerlink" href="#4-matriz-de-permissoes-e-controle-de-acesso-rbac" title="Permanent link">¶</a></h2>
 <p>Para garantir o isolamento e segurança da plataforma, as ações são restritas aos papéis de cada usuário, conforme tabela abaixo:</p>
@@ -3298,6 +3309,32 @@ Os logs não podem ser apagados ou modificados nem por usuários com perfil de A
 </tr>
 </tbody>
 </table>
+<hr>
+<h2 id="historico-de-versoes">Histórico de Versões<a class="headerlink" href="#historico-de-versoes" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Versão</th>
+<th style="text-align: center;">Data</th>
+<th style="text-align: left;">Descrição</th>
+<th style="text-align: left;">Autor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><code>1.0</code></td>
+<td style="text-align: center;">04/07/2026</td>
+<td style="text-align: left;">Refatoração inicial da documentação</td>
+<td style="text-align: left;">Pedro Henrique P. Santos</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>2.0</code></td>
+<td style="text-align: center;">04/07/2026</td>
+<td style="text-align: left;">Revisão profunda, correção de metadados e melhorias visuais</td>
+<td style="text-align: left;">Pedro Henrique P. Santos</td>
+</tr>
+</tbody>
+</table>
 
 
 
@@ -3318,7 +3355,7 @@ Os logs não podem ser apagados ou modificados nem por usuários com perfil de A
     <span class="md-icon" title="Última atualização">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="4 de julho de 2026 15:31:48 UTC">4 de julho de 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="4 de julho de 2026 15:53:21 UTC">4 de julho de 2026</span>
   </span>
 
     
