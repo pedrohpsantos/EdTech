@@ -20,6 +20,8 @@
     <properties>
         <java.version>21</java.version>
         <jacocoArgLine></jacocoArgLine>
+        <protobuf.version>4.35.1</protobuf.version>
+        <protobuf-java.version>4.35.1</protobuf-java.version>
     </properties>
 
     <dependencies>
@@ -260,6 +262,9 @@
                 <configuration>
                     <failBuildOnCVSS>7</failBuildOnCVSS>
                     <nvdApiKey>${env.NVD_API_KEY}</nvdApiKey>
+                    <suppressionFiles>
+                        <suppressionFile>suppression.xml</suppressionFile>
+                    </suppressionFiles>
                 </configuration>
             </plugin>
             <plugin>

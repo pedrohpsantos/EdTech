@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.3.xsd">
+    <suppress>
+        <notes><![CDATA[
+        Suppressing unpatchable vulnerabilities in OpenTelemetry alpha dependencies pulled by GCP SDK.
+        These are transient dependencies and the risk is accepted until GCP releases an updated BOM.
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/io\.opentelemetry\..*@.*$</packageUrl>
+        <cve>CVE-2026-24051</cve>
+        <cve>CVE-2026-39883</cve>
+        <cve>CVE-2026-29181</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[
+        Suppressing Tomcat CVEs (CVE-2026-55276, CVE-2026-53434, CVE-2026-53404) for tomcat-embed-core
+        until Spring Boot updates its managed dependencies to a patched Tomcat version.
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.apache\.tomcat\.embed/tomcat-embed-core@.*$</packageUrl>
+        <cve>CVE-2026-55276</cve>
+        <cve>CVE-2026-53434</cve>
+        <cve>CVE-2026-53404</cve>
+    </suppress>
+</suppressions>
