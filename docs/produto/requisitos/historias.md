@@ -89,12 +89,12 @@ Backlog de histórias de usuário do EdTech, escritas no formato padrão e rastr
 > **Como** pesquisadora, **quero** ver uma lista dos meus documentos, **para que** eu possa gerenciar meus rascunhos e submissões.
 
 ??? note "Critérios de Aceitação"
-    - [ ] A lista é filtrada por `author_id = user.id`
-    - [ ] Exibe título, tipo, status e data de upload
+    - [x] A lista é filtrada por `author_id = user.id`
+    - [x] Exibe título, tipo, status e data de upload
 
-    - [ ] Pesquisador não vê documentos de outros autores
+    - [x] Pesquisador não vê documentos de outros autores
 
-    - [ ] Resposta da API em < 500ms (p95)
+    - [x] Resposta da API em < 500ms (p95)
 
 **Rastreabilidade:** RF10, RNF02.1 · **Persona:** Ana · **Sprint:** 3
 
@@ -105,11 +105,11 @@ Backlog de histórias de usuário do EdTech, escritas no formato padrão e rastr
 > **Como** pesquisadora, **quero** baixar meus documentos, **para que** eu possa acessá-los offline.
 
 ??? note "Critérios de Aceitação"
-    - [ ] Apenas o autor ou orientador vinculado pode baixar
+    - [x] Apenas o autor ou orientador vinculado pode baixar
 
-    - [ ] O download gera log de auditoria
+    - [x] O download gera log de auditoria
 
-    - [ ] O arquivo é servido diretamente do GCS
+    - [x] O arquivo é servido diretamente do GCS
 
 **Rastreabilidade:** RF11, RF19 · **Persona:** Ana · **Sprint:** 3
 
@@ -122,10 +122,10 @@ Backlog de histórias de usuário do EdTech, escritas no formato padrão e rastr
 > **Como** orientador, **quero** visualizar todos os projetos que supervisiono, **para que** eu acompanhe o progresso dos meus orientandos.
 
 ??? note "Critérios de Aceitação"
-    - [ ] Lista projetos onde `project_members.user_id = orientador.id`
-    - [ ] Exibe contagem de documentos por projeto
+    - [x] Lista projetos onde `project_members.user_id = orientador.id`
+    - [x] Exibe contagem de documentos por projeto
 
-    - [ ] Não exibe projetos de outros orientadores
+    - [x] Não exibe projetos de outros orientadores
 
 **Rastreabilidade:** RF14, RF16 · **Persona:** Carlos · **Sprint:** 4
 
@@ -136,11 +136,11 @@ Backlog de histórias de usuário do EdTech, escritas no formato padrão e rastr
 > **Como** orientador, **quero** ver os documentos dos pesquisadores vinculados, **para que** eu possa revisá-los e dar feedback.
 
 ??? note "Critérios de Aceitação"
-    - [ ] Exibe documentos de todos os membros do projeto
+    - [x] Exibe documentos de todos os membros do projeto
 
-    - [ ] Permite visualização inline ou download
+    - [x] Permite visualização inline ou download
 
-    - [ ] Filtra por `project_members` para garantir isolamento
+    - [x] Filtra por `project_members` para garantir isolamento
 
 **Rastreabilidade:** RF15, RF16 · **Persona:** Carlos · **Sprint:** 4
 
@@ -153,11 +153,11 @@ Backlog de histórias de usuário do EdTech, escritas no formato padrão e rastr
 > **Como** auditora, **quero** consultar os logs de auditoria com filtros, **para que** eu possa investigar ações específicas no sistema.
 
 ??? note "Critérios de Aceitação"
-    - [ ] Filtros por ação, data, usuário e recurso
+    - [x] Filtros por ação, data, usuário e recurso
 
-    - [ ] Exibe IP, user-agent e timestamp
+    - [x] Exibe IP, user-agent e timestamp
 
-    - [ ] Logs são imutáveis (sem UPDATE/DELETE)
+    - [x] Logs são imutáveis (sem UPDATE/DELETE)
 
 **Rastreabilidade:** RF21, RNF03.2 · **Persona:** Márcia · **Sprint:** 5
 
@@ -168,10 +168,10 @@ Backlog de histórias de usuário do EdTech, escritas no formato padrão e rastr
 | Épico | Histórias | Concluídas | Em andamento | Pendentes |
 | :--- | :---: | :---: | :---: | :---: |
 | Autenticação | 3 | 3 | 0 | 0 |
-| Documentos | 3 | 1 | 1 | 1 |
-| Orientador | 2 | 0 | 1 | 1 |
-| Auditoria | 1 | 0 | 1 | 0 |
-| **Total** | **9** | **4** | **3** | **2** |
+| Documentos | 3 | 3 | 0 | 0 |
+| Orientador | 2 | 2 | 0 | 0 |
+| Auditoria | 1 | 1 | 0 | 0 |
+| **Total** | **9** | **9** | **0** | **0** |
 
 
 ---

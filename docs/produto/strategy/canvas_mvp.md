@@ -55,8 +55,8 @@ Definição do Produto Mínimo Viável (MVP) do EdTech — o menor conjunto de f
 
     ---
 
-    - **Sprints necessárias:** 4 (Sprint 1 + Sprint 2 + Sprint 3 + Sprint 4)
-    - **Duração estimada:** 4 semanas
+    - **Sprints necessárias:** 8 (Sprints 1 a 8)
+    - **Duração estimada:** 8 semanas
 
     - **Infra:** Google Cloud (free tier)
 

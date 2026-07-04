@@ -81,7 +81,6 @@ plugins:
       lang: pt
   - awesome-pages
   - macros
-  - roamlinks
   - git-authors
   - glightbox
   - social:

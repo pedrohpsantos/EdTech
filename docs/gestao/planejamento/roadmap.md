@@ -11,36 +11,30 @@ Na EdTech, adotamos o framework **Now / Next / Later** para guiar a evolução m
 ```mermaid
 timeline
     title Product Roadmap Macro (Now / Next / Later)
-    NOW (Atuando) : Fundação de Arquitetura (SPA + API) : Segurança (JWT) : Pipeline CI/CD (Actions) : Deploy Serverless (Cloud Run)
-    NEXT (Próximos) : Upload de Documentos (GCS) : Painel do Orientador : Auditoria de Logs
-    LATER (Futuro) : Relatórios Avançados (Auditora) : Antiplágio com ML : Integração Moodle/SIGAA
+    NOW (Atuando) : Testes E2E (Playwright) : Platform Engineering : Infra as Code : Manutenção S8
+    NEXT (Próximos) : Relatórios Avançados (Auditora) : Antiplágio Experimental (ML)
+    LATER (Futuro) : Integração Moodle/SIGAA : SSO Institucional
 ```
 
 </div>
 
-##  NOW (Atuando Agora)
-**Foco:** Fundações de arquitetura, segurança, estabilidade do MVP e Integração Contínua.
+##  NOW (Atuando Agora - Sprint 8)
+**Foco:** Engenharia de Plataforma, automação total de testes e estabilidade.
 
 
-- Configuração de CI/CD via GitHub Actions e infraestrutura Serverless no Google Cloud Run (`ADR 0003`, `ADR 0008`).
+- Configuração final de Testes E2E via Playwright (`ADR 0010`).
 
-- Setup da API REST em Spring Boot (`ADR 0005`) separada do Frontend SPA em React (`ADR 0006`).
+- Refinamentos na documentação arquitetural e DevOps.
 
-- Implementação da Autenticação via JWT com cookies HttpOnly para proteção contra XSS (`ADR 0002`).
-
-- Setup do cluster PostgreSQL e versionamento de esquema com Flyway (`ADR 0004`, `ADR 0007`).
-
-- Estabelecimento do Docs-as-Code com MkDocs (`ADR 0009`).
+- Monitoramento ativo de segurança e correções de dívida técnica.
 
 ##  NEXT (Próximos Passos)
-**Foco:** Completude do Fluxo de Usuário (Pesquisador e Orientador) com o armazenamento funcional.
+**Foco:** Ferramentas Avançadas e Automação de Análises.
 
 
-- Integração completa ao Google Cloud Storage (`ADR 0001`) para upload seguro de artigos e relatórios (Alana).
+- Criação de relatórios automatizados (exportação CSV/PDF) para a auditoria de acesso.
 
-- Dashboard de acompanhamento e validação de submissões para Orientadores/Administradores (Arthur).
-
-- Geração da base de `audit_logs` inalterável, cobrindo todos os eventos sensíveis do sistema (Mariana).
+- Suporte experimental a Machine Learning para classificar a similaridade dos Artigos Submetidos (Antiplágio interno).
 
 ##  LATER (Futuro)
 **Foco:** Visão expandida, integrações e inteligência.

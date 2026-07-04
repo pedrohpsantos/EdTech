@@ -30,7 +30,7 @@ Especificação dos requisitos funcionais do EdTech, organizados por módulo e r
 | RF09 | O sistema deve associar cada documento ao `user_id` do autor autenticado |  Alta | F07 | :material-check-circle: |
 | RF10 | O sistema deve exibir uma lista de documentos filtrada pelo `author_id` do usuário logado |  Alta | F10 | :material-check-circle: |
 | RF11 | O sistema deve permitir o download de documentos apenas pelo autor ou orientador vinculado |  Alta | F11 | :material-check-circle: |
-| RF12 | O sistema deve permitir a exclusão de documentos com status `draft` pelo autor |  Média | F12 | :material-progress-wrench: |
+| RF12 | O sistema deve permitir a exclusão de documentos com status `draft` pelo autor |  Média | F12 | :material-check-circle: |
 | RF13 | O sistema deve aceitar upload de datasets nos formatos CSV e JSON |  Média | F08 | :material-check-circle: |
 
 ---
@@ -54,7 +54,7 @@ Especificação dos requisitos funcionais do EdTech, organizados por módulo e r
 | RF19 | O sistema deve registrar logs de upload e download de documentos |  Alta | F19 | :material-check-circle: |
 | RF20 | O sistema deve registrar tentativas de acesso negado (`403 Forbidden`) |  Alta | F20 | :material-check-circle: |
 | RF21 | O auditor deve poder consultar logs com filtros por ação, data e usuário |  Média | F21 | :material-check-circle: |
-| RF22 | O auditor deve poder exportar relatórios de auditoria |  Baixa | F22 | :material-clock-outline: |
+| RF22 | O auditor deve poder exportar relatórios de auditoria |  Baixa | F22 | :material-check-circle: |
 
 ---
 
