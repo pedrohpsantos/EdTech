@@ -8,74 +8,119 @@ import java.util.UUID;
 @Table(name = &quot;documents&quot;)
 <span class="fc" id="L9">public class Document {</span>
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.UUID)
+  private UUID id;
 
-    @Column(nullable = false, length = 120)
-    private String title;
+  @Column(nullable = false, length = 120)
+  private String title;
 
-    @Column(name = &quot;file_url&quot;, nullable = false, columnDefinition = &quot;TEXT&quot;)
-    private String fileUrl;
+  @Column(name = &quot;file_url&quot;, nullable = false, columnDefinition = &quot;TEXT&quot;)
+  private String fileUrl;
 
-<span class="fc" id="L21">    @Enumerated(EnumType.STRING)</span>
-    @Column(nullable = false)
-    private DocumentStatus status = DocumentStatus.DRAFT;
+<span class="fc" id="L21">  @Enumerated(EnumType.STRING)</span>
+  @Column(nullable = false)
+  private DocumentStatus status = DocumentStatus.DRAFT;
 
-    @Column(columnDefinition = &quot;TEXT&quot;)
-    private String feedback;
+  @Column(columnDefinition = &quot;TEXT&quot;)
+  private String feedback;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = &quot;author_id&quot;, nullable = false)
-    private User author;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = &quot;author_id&quot;, nullable = false)
+  private User author;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = &quot;project_id&quot;, nullable = false)
-    private Project project;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = &quot;project_id&quot;, nullable = false)
+  private Project project;
 
-    @Column(name = &quot;created_at&quot;, nullable = false, updatable = false)
-    private ZonedDateTime createdAt;
+  @Column(name = &quot;created_at&quot;, nullable = false, updatable = false)
+  private ZonedDateTime createdAt;
 
-    @Column(name = &quot;updated_at&quot;, nullable = false)
-    private ZonedDateTime updatedAt;
+  @Column(name = &quot;updated_at&quot;, nullable = false)
+  private ZonedDateTime updatedAt;
 
-    @PrePersist
-    protected void onCreate() {
-<span class="nc" id="L44">        this.createdAt = ZonedDateTime.now();</span>
-<span class="nc" id="L45">        this.updatedAt = ZonedDateTime.now();</span>
-<span class="nc" id="L46">    }</span>
+  @PrePersist
+  protected void onCreate() {
+<span class="nc" id="L44">    this.createdAt = ZonedDateTime.now();</span>
+<span class="nc" id="L45">    this.updatedAt = ZonedDateTime.now();</span>
+<span class="nc" id="L46">  }</span>
 
-    @PreUpdate
-    protected void onUpdate() {
-<span class="nc" id="L50">        this.updatedAt = ZonedDateTime.now();</span>
-<span class="nc" id="L51">    }</span>
+  @PreUpdate
+  protected void onUpdate() {
+<span class="nc" id="L50">    this.updatedAt = ZonedDateTime.now();</span>
+<span class="nc" id="L51">  }</span>
 
-    // Getters and Setters
-<span class="fc" id="L54">    public UUID getId() { return id; }</span>
-<span class="fc" id="L55">    public void setId(UUID id) { this.id = id; }</span>
+  // Getters and Setters
+  public UUID getId() {
+<span class="fc" id="L55">    return id;</span>
+  }
 
-<span class="fc" id="L57">    public String getTitle() { return title; }</span>
-<span class="fc" id="L58">    public void setTitle(String title) { this.title = title; }</span>
+  public void setId(UUID id) {
+<span class="fc" id="L59">    this.id = id;</span>
+<span class="fc" id="L60">  }</span>
 
-<span class="fc" id="L60">    public String getFileUrl() { return fileUrl; }</span>
-<span class="fc" id="L61">    public void setFileUrl(String fileUrl) { this.fileUrl = fileUrl; }</span>
+  public String getTitle() {
+<span class="fc" id="L63">    return title;</span>
+  }
 
-<span class="fc" id="L63">    public DocumentStatus getStatus() { return status; }</span>
-<span class="fc" id="L64">    public void setStatus(DocumentStatus status) { this.status = status; }</span>
+  public void setTitle(String title) {
+<span class="fc" id="L67">    this.title = title;</span>
+<span class="fc" id="L68">  }</span>
 
-<span class="fc" id="L66">    public String getFeedback() { return feedback; }</span>
-<span class="fc" id="L67">    public void setFeedback(String feedback) { this.feedback = feedback; }</span>
+  public String getFileUrl() {
+<span class="fc" id="L71">    return fileUrl;</span>
+  }
 
-<span class="fc" id="L69">    public User getAuthor() { return author; }</span>
-<span class="fc" id="L70">    public void setAuthor(User author) { this.author = author; }</span>
+  public void setFileUrl(String fileUrl) {
+<span class="fc" id="L75">    this.fileUrl = fileUrl;</span>
+<span class="fc" id="L76">  }</span>
 
-<span class="fc" id="L72">    public Project getProject() { return project; }</span>
-<span class="fc" id="L73">    public void setProject(Project project) { this.project = project; }</span>
+  public DocumentStatus getStatus() {
+<span class="fc" id="L79">    return status;</span>
+  }
 
-<span class="fc" id="L75">    public ZonedDateTime getCreatedAt() { return createdAt; }</span>
-<span class="nc" id="L76">    public void setCreatedAt(ZonedDateTime createdAt) { this.createdAt = createdAt; }</span>
+  public void setStatus(DocumentStatus status) {
+<span class="fc" id="L83">    this.status = status;</span>
+<span class="fc" id="L84">  }</span>
 
-<span class="nc" id="L78">    public ZonedDateTime getUpdatedAt() { return updatedAt; }</span>
-<span class="nc" id="L79">    public void setUpdatedAt(ZonedDateTime updatedAt) { this.updatedAt = updatedAt; }</span>
+  public String getFeedback() {
+<span class="fc" id="L87">    return feedback;</span>
+  }
+
+  public void setFeedback(String feedback) {
+<span class="fc" id="L91">    this.feedback = feedback;</span>
+<span class="fc" id="L92">  }</span>
+
+  public User getAuthor() {
+<span class="fc" id="L95">    return author;</span>
+  }
+
+  public void setAuthor(User author) {
+<span class="fc" id="L99">    this.author = author;</span>
+<span class="fc" id="L100">  }</span>
+
+  public Project getProject() {
+<span class="fc" id="L103">    return project;</span>
+  }
+
+  public void setProject(Project project) {
+<span class="fc" id="L107">    this.project = project;</span>
+<span class="fc" id="L108">  }</span>
+
+  public ZonedDateTime getCreatedAt() {
+<span class="fc" id="L111">    return createdAt;</span>
+  }
+
+  public void setCreatedAt(ZonedDateTime createdAt) {
+<span class="nc" id="L115">    this.createdAt = createdAt;</span>
+<span class="nc" id="L116">  }</span>
+
+  public ZonedDateTime getUpdatedAt() {
+<span class="nc" id="L119">    return updatedAt;</span>
+  }
+
+  public void setUpdatedAt(ZonedDateTime updatedAt) {
+<span class="nc" id="L123">    this.updatedAt = updatedAt;</span>
+<span class="nc" id="L124">  }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

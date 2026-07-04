@@ -1,55 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AuditLogService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">edtech-api</a> &gt; <a href="index.source.html" class="el_package">com.edTech.service</a> &gt; <span class="el_source">AuditLogService.java</span></div><h1>AuditLogService.java</h1><pre class="source lang-java linenums">package com.edTech.service;
 
-import java.util.UUID;
-import com.edTech.model.AuditLog;
 import com.edTech.model.AcaoAuditoria;
+import com.edTech.model.AuditLog;
 import com.edTech.repository.AuditLogRepository;
-import org.springframework.stereotype.Service;
+import jakarta.servlet.http.HttpServletRequest;
+import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import jakarta.servlet.http.HttpServletRequest;
 
 @Service
-public class AuditLogService{
-<span class="fc" id="L16">    private static final Logger log = LoggerFactory.getLogger(AuditLogService.class);</span>
-    private final AuditLogRepository auditLogRepository;
+public class AuditLogService {
+<span class="fc" id="L16">  private static final Logger log = LoggerFactory.getLogger(AuditLogService.class);</span>
+  private final AuditLogRepository auditLogRepository;
 
-<span class="fc" id="L19">    public AuditLogService(AuditLogRepository auditLogRepository) {</span>
-<span class="fc" id="L20">        this.auditLogRepository = auditLogRepository;</span>
-<span class="fc" id="L21">    }</span>
+<span class="fc" id="L19">  public AuditLogService(AuditLogRepository auditLogRepository) {</span>
+<span class="fc" id="L20">    this.auditLogRepository = auditLogRepository;</span>
+<span class="fc" id="L21">  }</span>
 
-    private String getClientIp() {
-        try {
-<span class="fc" id="L25">            ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();</span>
-<span class="fc bfc" id="L26" title="All 2 branches covered.">            if (attributes != null) {</span>
-<span class="fc" id="L27">                HttpServletRequest request = attributes.getRequest();</span>
-<span class="fc" id="L28">                String xForwardedFor = request.getHeader(&quot;X-Forwarded-For&quot;);</span>
-<span class="pc bpc" id="L29" title="1 of 4 branches missed.">                if (xForwardedFor != null &amp;&amp; !xForwardedFor.isEmpty()) {</span>
-<span class="fc" id="L30">                    return xForwardedFor.split(&quot;,&quot;)[0].trim();</span>
-                }
-<span class="fc" id="L32">                return request.getRemoteAddr();</span>
-            }
-<span class="nc" id="L34">        } catch (Exception ignored) {</span>
-<span class="fc" id="L35">        }</span>
-<span class="fc" id="L36">        return &quot;UNKNOWN&quot;;</span>
-    }
-
-    public AuditLog log(AcaoAuditoria action, UUID userId, String resourceType, UUID resourceId, String ip, String details){
-        try {
-<span class="fc bfc" id="L41" title="All 2 branches covered.">            String clientIp = ip != null ? ip : getClientIp();</span>
-<span class="fc" id="L42">            AuditLog auditLog = new AuditLog(userId, action, resourceType, resourceId, clientIp, details);</span>
-<span class="fc" id="L43">            return auditLogRepository.save(auditLog);</span>
+  private String getClientIp() {
+    try {
+      ServletRequestAttributes attributes =
+<span class="fc" id="L26">          (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();</span>
+<span class="fc bfc" id="L27" title="All 2 branches covered.">      if (attributes != null) {</span>
+<span class="fc" id="L28">        HttpServletRequest request = attributes.getRequest();</span>
+<span class="fc" id="L29">        String xForwardedFor = request.getHeader(&quot;X-Forwarded-For&quot;);</span>
+<span class="pc bpc" id="L30" title="1 of 4 branches missed.">        if (xForwardedFor != null &amp;&amp; !xForwardedFor.isEmpty()) {</span>
+<span class="fc" id="L31">          return xForwardedFor.split(&quot;,&quot;)[0].trim();</span>
         }
-<span class="fc" id="L45">        catch (Exception e) {</span>
-<span class="fc" id="L46">            log.error(&quot;Erro em salvar o log da auditoria: {}&quot;, e.getMessage(), e);</span>
-<span class="fc" id="L47">            return null;</span>
-        }
-    }
+<span class="fc" id="L33">        return request.getRemoteAddr();</span>
+      }
+<span class="nc" id="L35">    } catch (Exception ignored) {</span>
+<span class="fc" id="L36">    }</span>
+<span class="fc" id="L37">    return &quot;UNKNOWN&quot;;</span>
+  }
 
-    public AuditLog logAction(UUID userId, AcaoAuditoria action, String details) {
-<span class="fc" id="L52">        return log(action, userId, null, null, null, details);</span>
+  public AuditLog log(
+      AcaoAuditoria action,
+      UUID userId,
+      String resourceType,
+      UUID resourceId,
+      String ip,
+      String details) {
+    try {
+<span class="fc bfc" id="L48" title="All 2 branches covered.">      String clientIp = ip != null ? ip : getClientIp();</span>
+<span class="fc" id="L49">      AuditLog auditLog = new AuditLog(userId, action, resourceType, resourceId, clientIp, details);</span>
+<span class="fc" id="L50">      return auditLogRepository.save(auditLog);</span>
+<span class="fc" id="L51">    } catch (Exception e) {</span>
+<span class="fc" id="L52">      log.error(&quot;Erro em salvar o log da auditoria: {}&quot;, e.getMessage(), e);</span>
+<span class="fc" id="L53">      return null;</span>
     }
+  }
+
+  public AuditLog logAction(UUID userId, AcaoAuditoria action, String details) {
+<span class="fc" id="L58">    return log(action, userId, null, null, null, details);</span>
+  }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

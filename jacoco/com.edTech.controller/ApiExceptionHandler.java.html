@@ -14,30 +14,29 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 <span class="fc" id="L15">public class ApiExceptionHandler {</span>
 
-    @ExceptionHandler(DuplicateEmailException.class)
-    public ResponseEntity&lt;ErrorResponse&gt; handleDuplicateEmail(DuplicateEmailException exception) {
-<span class="fc" id="L19">        return ResponseEntity.status(HttpStatus.CONFLICT)</span>
-<span class="fc" id="L20">                .body(new ErrorResponse(&quot;email_already_registered&quot;, exception.getMessage()));</span>
-    }
+  @ExceptionHandler(DuplicateEmailException.class)
+  public ResponseEntity&lt;ErrorResponse&gt; handleDuplicateEmail(DuplicateEmailException exception) {
+<span class="fc" id="L19">    return ResponseEntity.status(HttpStatus.CONFLICT)</span>
+<span class="fc" id="L20">        .body(new ErrorResponse(&quot;email_already_registered&quot;, exception.getMessage()));</span>
+  }
 
-    @ExceptionHandler(InvalidInstitutionalEmailException.class)
-    public ResponseEntity&lt;ErrorResponse&gt; handleInvalidInstitutionalEmail(
-            InvalidInstitutionalEmailException exception
-    ) {
-<span class="nc" id="L27">        return ResponseEntity.badRequest()</span>
-<span class="nc" id="L28">                .body(new ErrorResponse(&quot;invalid_institutional_email&quot;, exception.getMessage()));</span>
-    }
+  @ExceptionHandler(InvalidInstitutionalEmailException.class)
+  public ResponseEntity&lt;ErrorResponse&gt; handleInvalidInstitutionalEmail(
+      InvalidInstitutionalEmailException exception) {
+<span class="nc" id="L26">    return ResponseEntity.badRequest()</span>
+<span class="nc" id="L27">        .body(new ErrorResponse(&quot;invalid_institutional_email&quot;, exception.getMessage()));</span>
+  }
 
-    @ExceptionHandler(InvalidCredentialsException.class)
-    public ResponseEntity&lt;ErrorResponse&gt; handleInvalidCredentials() {
-<span class="nc" id="L33">        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)</span>
-<span class="nc" id="L34">                .body(new ErrorResponse(&quot;invalid_credentials&quot;, &quot;Credenciais inválidas.&quot;));</span>
-    }
+  @ExceptionHandler(InvalidCredentialsException.class)
+  public ResponseEntity&lt;ErrorResponse&gt; handleInvalidCredentials() {
+<span class="nc" id="L32">    return ResponseEntity.status(HttpStatus.UNAUTHORIZED)</span>
+<span class="nc" id="L33">        .body(new ErrorResponse(&quot;invalid_credentials&quot;, &quot;Credenciais inválidas.&quot;));</span>
+  }
 
-    @ExceptionHandler({MethodArgumentNotValidException.class, ConstraintViolationException.class})
-    public ResponseEntity&lt;ErrorResponse&gt; handleValidationException(Exception exception) {
-<span class="fc" id="L39">        return ResponseEntity.badRequest()</span>
-<span class="fc" id="L40">                .body(new ErrorResponse(&quot;invalid_request&quot;, &quot;Verifique os dados enviados.&quot;));</span>
-    }
+  @ExceptionHandler({MethodArgumentNotValidException.class, ConstraintViolationException.class})
+  public ResponseEntity&lt;ErrorResponse&gt; handleValidationException(Exception exception) {
+<span class="fc" id="L38">    return ResponseEntity.badRequest()</span>
+<span class="fc" id="L39">        .body(new ErrorResponse(&quot;invalid_request&quot;, &quot;Verifique os dados enviados.&quot;));</span>
+  }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

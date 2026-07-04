@@ -4,26 +4,51 @@ import java.time.ZonedDateTime;
 import java.util.UUID;
 
 <span class="fc" id="L6">public class ProjectResponseDTO {</span>
-    private UUID id;
-    private String title;
-    private String description;
-    private UUID advisorId;
-    private ZonedDateTime createdAt;
+  private UUID id;
+  private String title;
+  private String description;
+  private UUID advisorId;
+  private ZonedDateTime createdAt;
 
-    // Getters and Setters
-<span class="fc" id="L14">    public UUID getId() { return id; }</span>
-<span class="fc" id="L15">    public void setId(UUID id) { this.id = id; }</span>
+  // Getters and Setters
+  public UUID getId() {
+<span class="fc" id="L15">    return id;</span>
+  }
 
-<span class="fc" id="L17">    public String getTitle() { return title; }</span>
-<span class="fc" id="L18">    public void setTitle(String title) { this.title = title; }</span>
+  public void setId(UUID id) {
+<span class="fc" id="L19">    this.id = id;</span>
+<span class="fc" id="L20">  }</span>
 
-<span class="fc" id="L20">    public String getDescription() { return description; }</span>
-<span class="fc" id="L21">    public void setDescription(String description) { this.description = description; }</span>
+  public String getTitle() {
+<span class="fc" id="L23">    return title;</span>
+  }
 
-<span class="fc" id="L23">    public UUID getAdvisorId() { return advisorId; }</span>
-<span class="fc" id="L24">    public void setAdvisorId(UUID advisorId) { this.advisorId = advisorId; }</span>
+  public void setTitle(String title) {
+<span class="fc" id="L27">    this.title = title;</span>
+<span class="fc" id="L28">  }</span>
 
-<span class="fc" id="L26">    public ZonedDateTime getCreatedAt() { return createdAt; }</span>
-<span class="fc" id="L27">    public void setCreatedAt(ZonedDateTime createdAt) { this.createdAt = createdAt; }</span>
+  public String getDescription() {
+<span class="fc" id="L31">    return description;</span>
+  }
+
+  public void setDescription(String description) {
+<span class="fc" id="L35">    this.description = description;</span>
+<span class="fc" id="L36">  }</span>
+
+  public UUID getAdvisorId() {
+<span class="fc" id="L39">    return advisorId;</span>
+  }
+
+  public void setAdvisorId(UUID advisorId) {
+<span class="fc" id="L43">    this.advisorId = advisorId;</span>
+<span class="fc" id="L44">  }</span>
+
+  public ZonedDateTime getCreatedAt() {
+<span class="fc" id="L47">    return createdAt;</span>
+  }
+
+  public void setCreatedAt(ZonedDateTime createdAt) {
+<span class="fc" id="L51">    this.createdAt = createdAt;</span>
+<span class="fc" id="L52">  }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

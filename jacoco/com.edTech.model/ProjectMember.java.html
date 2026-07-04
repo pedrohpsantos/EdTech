@@ -8,44 +8,69 @@ import java.util.UUID;
 @Table(name = &quot;project_members&quot;)
 <span class="fc" id="L9">public class ProjectMember {</span>
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.UUID)
+  private UUID id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = &quot;project_id&quot;, nullable = false)
-    private Project project;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = &quot;project_id&quot;, nullable = false)
+  private Project project;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = &quot;user_id&quot;, nullable = false)
-    private User user;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = &quot;user_id&quot;, nullable = false)
+  private User user;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private ProjectRole role;
+  @Enumerated(EnumType.STRING)
+  @Column(nullable = false)
+  private ProjectRole role;
 
-    @Column(name = &quot;joined_at&quot;, nullable = false, updatable = false)
-    private ZonedDateTime joinedAt;
+  @Column(name = &quot;joined_at&quot;, nullable = false, updatable = false)
+  private ZonedDateTime joinedAt;
 
-    @PrePersist
-    protected void onCreate() {
-<span class="nc" id="L32">        this.joinedAt = ZonedDateTime.now();</span>
-<span class="nc" id="L33">    }</span>
+  @PrePersist
+  protected void onCreate() {
+<span class="nc" id="L32">    this.joinedAt = ZonedDateTime.now();</span>
+<span class="nc" id="L33">  }</span>
 
-    // Getters and Setters
-<span class="nc" id="L36">    public UUID getId() { return id; }</span>
-<span class="nc" id="L37">    public void setId(UUID id) { this.id = id; }</span>
+  // Getters and Setters
+  public UUID getId() {
+<span class="nc" id="L37">    return id;</span>
+  }
 
-<span class="nc" id="L39">    public Project getProject() { return project; }</span>
-<span class="fc" id="L40">    public void setProject(Project project) { this.project = project; }</span>
+  public void setId(UUID id) {
+<span class="nc" id="L41">    this.id = id;</span>
+<span class="nc" id="L42">  }</span>
 
-<span class="nc" id="L42">    public User getUser() { return user; }</span>
-<span class="fc" id="L43">    public void setUser(User user) { this.user = user; }</span>
+  public Project getProject() {
+<span class="nc" id="L45">    return project;</span>
+  }
 
-<span class="fc" id="L45">    public ProjectRole getRole() { return role; }</span>
-<span class="fc" id="L46">    public void setRole(ProjectRole role) { this.role = role; }</span>
+  public void setProject(Project project) {
+<span class="fc" id="L49">    this.project = project;</span>
+<span class="fc" id="L50">  }</span>
 
-<span class="nc" id="L48">    public ZonedDateTime getJoinedAt() { return joinedAt; }</span>
-<span class="nc" id="L49">    public void setJoinedAt(ZonedDateTime joinedAt) { this.joinedAt = joinedAt; }</span>
+  public User getUser() {
+<span class="nc" id="L53">    return user;</span>
+  }
+
+  public void setUser(User user) {
+<span class="fc" id="L57">    this.user = user;</span>
+<span class="fc" id="L58">  }</span>
+
+  public ProjectRole getRole() {
+<span class="fc" id="L61">    return role;</span>
+  }
+
+  public void setRole(ProjectRole role) {
+<span class="fc" id="L65">    this.role = role;</span>
+<span class="fc" id="L66">  }</span>
+
+  public ZonedDateTime getJoinedAt() {
+<span class="nc" id="L69">    return joinedAt;</span>
+  }
+
+  public void setJoinedAt(ZonedDateTime joinedAt) {
+<span class="nc" id="L73">    this.joinedAt = joinedAt;</span>
+<span class="nc" id="L74">  }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

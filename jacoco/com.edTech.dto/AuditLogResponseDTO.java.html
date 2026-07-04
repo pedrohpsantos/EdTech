@@ -4,19 +4,17 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 /**
- * Payload de resposta para a listagem paginada de logs de auditoria.
- * Usado no endpoint {@code GET /api/audit-logs}.
+ * Payload de resposta para a listagem paginada de logs de auditoria. Usado no endpoint {@code GET
+ * /api/audit-logs}.
  */
 <span class="nc" id="L10">public record AuditLogResponseDTO(</span>
-        UUID id,
-        UUID userId,
-        String userName,
-        String action,
-        String resourceType,
-        UUID resourceId,
-        String ipAddress,
-        String details,
-        LocalDateTime createdAt
-) {
-}
+    UUID id,
+    UUID userId,
+    String userName,
+    String action,
+    String resourceType,
+    UUID resourceId,
+    String ipAddress,
+    String details,
+    LocalDateTime createdAt) {}
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

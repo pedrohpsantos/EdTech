@@ -4,59 +4,60 @@ import com.edTech.dto.RegisterRequestDTO;
 import com.edTech.model.User;
 import com.edTech.model.UserRole;
 import com.edTech.repository.UserRepository;
+import java.util.Locale;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Locale;
-
 @Service
 public class UserService {
 
-    private static final String INSTITUTIONAL_DOMAIN = &quot;@unb.br&quot;;
+  private static final String INSTITUTIONAL_DOMAIN = &quot;@unb.br&quot;;
 
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
+  private final UserRepository userRepository;
+  private final PasswordEncoder passwordEncoder;
 
-<span class="fc" id="L21">    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {</span>
-<span class="fc" id="L22">        this.userRepository = userRepository;</span>
-<span class="fc" id="L23">        this.passwordEncoder = passwordEncoder;</span>
-<span class="fc" id="L24">    }</span>
+<span class="fc" id="L20">  public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {</span>
+<span class="fc" id="L21">    this.userRepository = userRepository;</span>
+<span class="fc" id="L22">    this.passwordEncoder = passwordEncoder;</span>
+<span class="fc" id="L23">  }</span>
 
-    @Transactional(readOnly = true)
-    public User authenticate(String email, String password) {
-<span class="fc" id="L28">        String normalizedEmail = email.trim().toLowerCase(Locale.ROOT);</span>
-<span class="fc" id="L29">        User user = userRepository.findByEmailIgnoreCase(normalizedEmail)</span>
-<span class="fc" id="L30">                .filter(User::isActive)</span>
-<span class="pc" id="L31">                .orElseThrow(() -&gt; new InvalidCredentialsException(&quot;Credenciais inválidas.&quot;));</span>
+  @Transactional(readOnly = true)
+  public User authenticate(String email, String password) {
+<span class="fc" id="L27">    String normalizedEmail = email.trim().toLowerCase(Locale.ROOT);</span>
+<span class="fc" id="L28">    User user =</span>
+        userRepository
+<span class="fc" id="L30">            .findByEmailIgnoreCase(normalizedEmail)</span>
+<span class="fc" id="L31">            .filter(User::isActive)</span>
+<span class="pc" id="L32">            .orElseThrow(() -&gt; new InvalidCredentialsException(&quot;Credenciais inválidas.&quot;));</span>
 
-<span class="pc bpc" id="L33" title="1 of 2 branches missed.">        if (!passwordEncoder.matches(password, user.getPasswordHash())) {</span>
-<span class="nc" id="L34">            throw new InvalidCredentialsException(&quot;Credenciais inválidas.&quot;);</span>
-        }
-
-<span class="fc" id="L37">        return user;</span>
+<span class="pc bpc" id="L34" title="1 of 2 branches missed.">    if (!passwordEncoder.matches(password, user.getPasswordHash())) {</span>
+<span class="nc" id="L35">      throw new InvalidCredentialsException(&quot;Credenciais inválidas.&quot;);</span>
     }
 
-    @Transactional
-    public User register(RegisterRequestDTO request) {
-<span class="fc" id="L42">        String normalizedEmail = request.email().trim().toLowerCase(Locale.ROOT);</span>
+<span class="fc" id="L38">    return user;</span>
+  }
 
-<span class="pc bpc" id="L44" title="1 of 4 branches missed.">        if (!normalizedEmail.endsWith(&quot;@unb.br&quot;) &amp;&amp; !normalizedEmail.endsWith(&quot;.unb.br&quot;)) {</span>
-<span class="fc" id="L45">            throw new InvalidInstitutionalEmailException(&quot;O e-mail deve pertencer ao dominio unb.br.&quot;);</span>
-        }
+  @Transactional
+  public User register(RegisterRequestDTO request) {
+<span class="fc" id="L43">    String normalizedEmail = request.email().trim().toLowerCase(Locale.ROOT);</span>
 
-<span class="fc bfc" id="L48" title="All 2 branches covered.">        if (userRepository.existsByEmailIgnoreCase(normalizedEmail)) {</span>
-<span class="fc" id="L49">            throw new DuplicateEmailException(&quot;E-mail ja cadastrado.&quot;);</span>
-        }
-
-<span class="fc" id="L52">        User user = new User(</span>
-<span class="fc" id="L53">                request.name().trim(),</span>
-                normalizedEmail,
-<span class="fc" id="L55">                passwordEncoder.encode(request.password()),</span>
-                UserRole.RESEARCHER
-        );
-
-<span class="fc" id="L59">        return userRepository.save(user);</span>
+<span class="pc bpc" id="L45" title="1 of 4 branches missed.">    if (!normalizedEmail.endsWith(&quot;@unb.br&quot;) &amp;&amp; !normalizedEmail.endsWith(&quot;.unb.br&quot;)) {</span>
+<span class="fc" id="L46">      throw new InvalidInstitutionalEmailException(&quot;O e-mail deve pertencer ao dominio unb.br.&quot;);</span>
     }
+
+<span class="fc bfc" id="L49" title="All 2 branches covered.">    if (userRepository.existsByEmailIgnoreCase(normalizedEmail)) {</span>
+<span class="fc" id="L50">      throw new DuplicateEmailException(&quot;E-mail ja cadastrado.&quot;);</span>
+    }
+
+<span class="fc" id="L53">    User user =</span>
+        new User(
+<span class="fc" id="L55">            request.name().trim(),</span>
+            normalizedEmail,
+<span class="fc" id="L57">            passwordEncoder.encode(request.password()),</span>
+            UserRole.RESEARCHER);
+
+<span class="fc" id="L60">    return userRepository.save(user);</span>
+  }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

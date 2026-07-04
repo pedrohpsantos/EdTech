@@ -3,13 +3,23 @@
 import java.util.UUID;
 
 <span class="nc" id="L5">public class ProjectMemberRequestDTO {</span>
-    private UUID userId;
-    private String role; // defaults to RESEARCHER
+  private UUID userId;
+  private String role; // defaults to RESEARCHER
 
-<span class="nc" id="L9">    public UUID getUserId() { return userId; }</span>
-<span class="nc" id="L10">    public void setUserId(UUID userId) { this.userId = userId; }</span>
+  public UUID getUserId() {
+<span class="nc" id="L10">    return userId;</span>
+  }
 
-<span class="nc" id="L12">    public String getRole() { return role; }</span>
-<span class="nc" id="L13">    public void setRole(String role) { this.role = role; }</span>
+  public void setUserId(UUID userId) {
+<span class="nc" id="L14">    this.userId = userId;</span>
+<span class="nc" id="L15">  }</span>
+
+  public String getRole() {
+<span class="nc" id="L18">    return role;</span>
+  }
+
+  public void setRole(String role) {
+<span class="nc" id="L22">    this.role = role;</span>
+<span class="nc" id="L23">  }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

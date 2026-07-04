@@ -5,38 +5,78 @@ import java.time.ZonedDateTime;
 import java.util.UUID;
 
 <span class="fc" id="L7">public class DocumentResponseDTO {</span>
-    private UUID id;
-    private String title;
-    private String fileUrl;
-    private DocumentStatus status;
-    private UUID authorId;
-    private UUID projectId;
-    private ZonedDateTime createdAt;
-    private String feedback;
+  private UUID id;
+  private String title;
+  private String fileUrl;
+  private DocumentStatus status;
+  private UUID authorId;
+  private UUID projectId;
+  private ZonedDateTime createdAt;
+  private String feedback;
 
-    // Getters and Setters
-<span class="fc" id="L18">    public UUID getId() { return id; }</span>
-<span class="fc" id="L19">    public void setId(UUID id) { this.id = id; }</span>
+  // Getters and Setters
+  public UUID getId() {
+<span class="fc" id="L19">    return id;</span>
+  }
 
-<span class="fc" id="L21">    public String getTitle() { return title; }</span>
-<span class="fc" id="L22">    public void setTitle(String title) { this.title = title; }</span>
+  public void setId(UUID id) {
+<span class="fc" id="L23">    this.id = id;</span>
+<span class="fc" id="L24">  }</span>
 
-<span class="fc" id="L24">    public String getFileUrl() { return fileUrl; }</span>
-<span class="fc" id="L25">    public void setFileUrl(String fileUrl) { this.fileUrl = fileUrl; }</span>
+  public String getTitle() {
+<span class="fc" id="L27">    return title;</span>
+  }
 
-<span class="fc" id="L27">    public DocumentStatus getStatus() { return status; }</span>
-<span class="fc" id="L28">    public void setStatus(DocumentStatus status) { this.status = status; }</span>
+  public void setTitle(String title) {
+<span class="fc" id="L31">    this.title = title;</span>
+<span class="fc" id="L32">  }</span>
 
-<span class="fc" id="L30">    public UUID getAuthorId() { return authorId; }</span>
-<span class="fc" id="L31">    public void setAuthorId(UUID authorId) { this.authorId = authorId; }</span>
+  public String getFileUrl() {
+<span class="fc" id="L35">    return fileUrl;</span>
+  }
 
-<span class="fc" id="L33">    public UUID getProjectId() { return projectId; }</span>
-<span class="fc" id="L34">    public void setProjectId(UUID projectId) { this.projectId = projectId; }</span>
+  public void setFileUrl(String fileUrl) {
+<span class="fc" id="L39">    this.fileUrl = fileUrl;</span>
+<span class="fc" id="L40">  }</span>
 
-<span class="fc" id="L36">    public ZonedDateTime getCreatedAt() { return createdAt; }</span>
-<span class="fc" id="L37">    public void setCreatedAt(ZonedDateTime createdAt) { this.createdAt = createdAt; }</span>
+  public DocumentStatus getStatus() {
+<span class="fc" id="L43">    return status;</span>
+  }
 
-<span class="fc" id="L39">    public String getFeedback() { return feedback; }</span>
-<span class="fc" id="L40">    public void setFeedback(String feedback) { this.feedback = feedback; }</span>
+  public void setStatus(DocumentStatus status) {
+<span class="fc" id="L47">    this.status = status;</span>
+<span class="fc" id="L48">  }</span>
+
+  public UUID getAuthorId() {
+<span class="fc" id="L51">    return authorId;</span>
+  }
+
+  public void setAuthorId(UUID authorId) {
+<span class="fc" id="L55">    this.authorId = authorId;</span>
+<span class="fc" id="L56">  }</span>
+
+  public UUID getProjectId() {
+<span class="fc" id="L59">    return projectId;</span>
+  }
+
+  public void setProjectId(UUID projectId) {
+<span class="fc" id="L63">    this.projectId = projectId;</span>
+<span class="fc" id="L64">  }</span>
+
+  public ZonedDateTime getCreatedAt() {
+<span class="fc" id="L67">    return createdAt;</span>
+  }
+
+  public void setCreatedAt(ZonedDateTime createdAt) {
+<span class="fc" id="L71">    this.createdAt = createdAt;</span>
+<span class="fc" id="L72">  }</span>
+
+  public String getFeedback() {
+<span class="fc" id="L75">    return feedback;</span>
+  }
+
+  public void setFeedback(String feedback) {
+<span class="fc" id="L79">    this.feedback = feedback;</span>
+<span class="fc" id="L80">  }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

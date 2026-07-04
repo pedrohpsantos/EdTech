@@ -4,20 +4,15 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-<span class="fc" id="L7">public record RegisterRequestDTO(</span>
-        @NotBlank(message = &quot;Nome é obrigatório&quot;)
-        @Size(max = 120)
-        String name,
 
-        @NotBlank(message = &quot;E-mail é obrigatório&quot;)
+<span class="fc" id="L8">public record RegisterRequestDTO(</span>
+    @NotBlank(message = &quot;Nome é obrigatório&quot;) @Size(max = 120) String name,
+    @NotBlank(message = &quot;E-mail é obrigatório&quot;)
         @Email(message = &quot;E-mail inválido&quot;)
-        @Pattern(regexp = &quot;^.+@(unb\\.br|.+\\.unb\\.br)$&quot;, message = &quot;E-mail deve ser do domínio UNB&quot;)
+        @Pattern(
+            regexp = &quot;^.+@(unb\\.br|.+\\.unb\\.br)$&quot;,
+            message = &quot;E-mail deve ser do domínio UNB&quot;)
         @Size(max = 180)
         String email,
-
-        @NotBlank(message = &quot;A senha é obrigatória&quot;)
-        @Size(min = 8, max = 120)
-        String password
-) {
-}
+    @NotBlank(message = &quot;A senha é obrigatória&quot;) @Size(min = 8, max = 120) String password) {}
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

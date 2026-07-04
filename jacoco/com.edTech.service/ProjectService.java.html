@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ProjectService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">edtech-api</a> &gt; <a href="index.source.html" class="el_package">com.edTech.service</a> &gt; <span class="el_source">ProjectService.java</span></div><h1>ProjectService.java</h1><pre class="source lang-java linenums">package com.edTech.service;
 
+import com.edTech.dto.ProjectMemberRequestDTO;
 import com.edTech.dto.ProjectRequestDTO;
 import com.edTech.dto.ProjectResponseDTO;
-import com.edTech.dto.ProjectMemberRequestDTO;
+import com.edTech.model.AcaoAuditoria;
 import com.edTech.model.Project;
 import com.edTech.model.ProjectMember;
 import com.edTech.model.ProjectRole;
@@ -10,104 +11,116 @@ import com.edTech.model.User;
 import com.edTech.repository.ProjectMemberRepository;
 import com.edTech.repository.ProjectRepository;
 import com.edTech.repository.UserRepository;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import com.edTech.model.AcaoAuditoria;
-
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ProjectService {
 
-    private final ProjectRepository projectRepository;
-    private final ProjectMemberRepository projectMemberRepository;
-    private final UserRepository userRepository;
-    private final AuditLogService auditLogService;
+  private final ProjectRepository projectRepository;
+  private final ProjectMemberRepository projectMemberRepository;
+  private final UserRepository userRepository;
+  private final AuditLogService auditLogService;
 
-<span class="fc" id="L29">    public ProjectService(ProjectRepository projectRepository, ProjectMemberRepository projectMemberRepository, UserRepository userRepository, AuditLogService auditLogService) {</span>
-<span class="fc" id="L30">        this.projectRepository = projectRepository;</span>
-<span class="fc" id="L31">        this.projectMemberRepository = projectMemberRepository;</span>
-<span class="fc" id="L32">        this.userRepository = userRepository;</span>
-<span class="fc" id="L33">        this.auditLogService = auditLogService;</span>
-<span class="fc" id="L34">    }</span>
+  public ProjectService(
+      ProjectRepository projectRepository,
+      ProjectMemberRepository projectMemberRepository,
+      UserRepository userRepository,
+<span class="fc" id="L32">      AuditLogService auditLogService) {</span>
+<span class="fc" id="L33">    this.projectRepository = projectRepository;</span>
+<span class="fc" id="L34">    this.projectMemberRepository = projectMemberRepository;</span>
+<span class="fc" id="L35">    this.userRepository = userRepository;</span>
+<span class="fc" id="L36">    this.auditLogService = auditLogService;</span>
+<span class="fc" id="L37">  }</span>
 
-    @Transactional
-    public ProjectResponseDTO createProject(ProjectRequestDTO request, UUID advisorId) {
-<span class="fc" id="L38">        User advisor = userRepository.findById(advisorId)</span>
-<span class="pc" id="L39">                .orElseThrow(() -&gt; new RuntimeException(&quot;User not found&quot;));</span>
+  @Transactional
+  public ProjectResponseDTO createProject(ProjectRequestDTO request, UUID advisorId) {
+<span class="fc" id="L41">    User advisor =</span>
+        userRepository
+<span class="fc" id="L43">            .findById(advisorId)</span>
+<span class="pc" id="L44">            .orElseThrow(() -&gt; new RuntimeException(&quot;User not found&quot;));</span>
 
-<span class="fc" id="L41">        Project project = new Project();</span>
-<span class="fc" id="L42">        project.setTitle(request.getTitle());</span>
-<span class="fc" id="L43">        project.setDescription(request.getDescription());</span>
-<span class="fc" id="L44">        project.setAdvisor(advisor);</span>
+<span class="fc" id="L46">    Project project = new Project();</span>
+<span class="fc" id="L47">    project.setTitle(request.getTitle());</span>
+<span class="fc" id="L48">    project.setDescription(request.getDescription());</span>
+<span class="fc" id="L49">    project.setAdvisor(advisor);</span>
 
-<span class="fc" id="L46">        project = projectRepository.save(project);</span>
+<span class="fc" id="L51">    project = projectRepository.save(project);</span>
 
-<span class="fc" id="L48">        ProjectMember member = new ProjectMember();</span>
-<span class="fc" id="L49">        member.setProject(project);</span>
-<span class="fc" id="L50">        member.setUser(advisor);</span>
-<span class="fc" id="L51">        member.setRole(ProjectRole.ADVISOR);</span>
-<span class="fc" id="L52">        projectMemberRepository.save(member);</span>
+<span class="fc" id="L53">    ProjectMember member = new ProjectMember();</span>
+<span class="fc" id="L54">    member.setProject(project);</span>
+<span class="fc" id="L55">    member.setUser(advisor);</span>
+<span class="fc" id="L56">    member.setRole(ProjectRole.ADVISOR);</span>
+<span class="fc" id="L57">    projectMemberRepository.save(member);</span>
 
-<span class="fc" id="L54">        return mapToDTO(project);</span>
+<span class="fc" id="L59">    return mapToDTO(project);</span>
+  }
+
+  public List&lt;ProjectResponseDTO&gt; listProjectsByUser(UUID userId) {
+<span class="fc" id="L63">    return projectRepository.findProjectsByUserId(userId).stream()</span>
+<span class="fc" id="L64">        .map(this::mapToDTO)</span>
+<span class="fc" id="L65">        .collect(Collectors.toList());</span>
+  }
+
+  @Transactional
+  public void addMember(UUID projectId, ProjectMemberRequestDTO dto, User authenticatedUser) {
+<span class="nc" id="L70">    Project project =</span>
+        projectRepository
+<span class="nc" id="L72">            .findById(projectId)</span>
+<span class="nc" id="L73">            .orElseThrow(() -&gt; new RuntimeException(&quot;Project not found&quot;));</span>
+
+    UUID targetUserId =
+<span class="nc bnc" id="L76" title="All 4 branches missed.">        (dto != null &amp;&amp; dto.getUserId() != null) ? dto.getUserId() : authenticatedUser.getId();</span>
+
+    // Se o usuário que está tentando associar alguém for diferente do alvo, ele deve ser ADVISOR do
+    // projeto.
+<span class="nc bnc" id="L80" title="All 2 branches missed.">    if (!targetUserId.equals(authenticatedUser.getId())) {</span>
+<span class="nc" id="L81">      ProjectMember advisorMember =</span>
+          projectMemberRepository
+<span class="nc" id="L83">              .findByProjectIdAndUserId(projectId, authenticatedUser.getId())</span>
+<span class="nc" id="L84">              .orElseThrow(</span>
+<span class="nc" id="L85">                  () -&gt; new RuntimeException(&quot;User is not part of the project to add members&quot;));</span>
+
+<span class="nc bnc" id="L87" title="All 2 branches missed.">      if (advisorMember.getRole() != ProjectRole.ADVISOR) {</span>
+<span class="nc" id="L88">        throw new RuntimeException(&quot;Only ADVISORS can add other members&quot;);</span>
+      }
     }
 
-    public List&lt;ProjectResponseDTO&gt; listProjectsByUser(UUID userId) {
-<span class="fc" id="L58">        return projectRepository.findProjectsByUserId(userId)</span>
-<span class="fc" id="L59">                .stream()</span>
-<span class="fc" id="L60">                .map(this::mapToDTO)</span>
-<span class="fc" id="L61">                .collect(Collectors.toList());</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">    if (projectMemberRepository.findByProjectIdAndUserId(projectId, targetUserId).isPresent()) {</span>
+<span class="nc" id="L93">      throw new RuntimeException(&quot;User is already a member of this project&quot;);</span>
     }
 
-    @Transactional
-    public void addMember(UUID projectId, ProjectMemberRequestDTO dto, User authenticatedUser) {
-<span class="nc" id="L66">        Project project = projectRepository.findById(projectId)</span>
-<span class="nc" id="L67">                .orElseThrow(() -&gt; new RuntimeException(&quot;Project not found&quot;));</span>
+<span class="nc" id="L96">    User newUser =</span>
+        userRepository
+<span class="nc" id="L98">            .findById(targetUserId)</span>
+<span class="nc" id="L99">            .orElseThrow(() -&gt; new RuntimeException(&quot;User not found&quot;));</span>
 
-<span class="nc bnc" id="L69" title="All 4 branches missed.">        UUID targetUserId = (dto != null &amp;&amp; dto.getUserId() != null) ? dto.getUserId() : authenticatedUser.getId();</span>
+    String roleStr =
+<span class="nc bnc" id="L102" title="All 4 branches missed.">        (dto != null &amp;&amp; dto.getRole() != null) ? dto.getRole().toUpperCase() : &quot;RESEARCHER&quot;;</span>
 
-        // Se o usuário que está tentando associar alguém for diferente do alvo, ele deve ser ADVISOR do projeto.
-<span class="nc bnc" id="L72" title="All 2 branches missed.">        if (!targetUserId.equals(authenticatedUser.getId())) {</span>
-<span class="nc" id="L73">            ProjectMember advisorMember = projectMemberRepository.findByProjectIdAndUserId(projectId, authenticatedUser.getId())</span>
-<span class="nc" id="L74">                    .orElseThrow(() -&gt; new RuntimeException(&quot;User is not part of the project to add members&quot;));</span>
+<span class="nc" id="L104">    ProjectMember newMember = new ProjectMember();</span>
+<span class="nc" id="L105">    newMember.setProject(project);</span>
+<span class="nc" id="L106">    newMember.setUser(newUser);</span>
+<span class="nc" id="L107">    newMember.setRole(ProjectRole.valueOf(roleStr));</span>
+<span class="nc" id="L108">    projectMemberRepository.save(newMember);</span>
 
-<span class="nc bnc" id="L76" title="All 2 branches missed.">            if (advisorMember.getRole() != ProjectRole.ADVISOR) {</span>
-<span class="nc" id="L77">                throw new RuntimeException(&quot;Only ADVISORS can add other members&quot;);</span>
-            }
-        }
+<span class="nc" id="L110">    auditLogService.logAction(</span>
+<span class="nc" id="L111">        authenticatedUser.getId(),</span>
+        AcaoAuditoria.MEMBER_JOINED,
+<span class="nc" id="L113">        &quot;User &quot; + newUser.getEmail() + &quot; joined project &quot; + project.getTitle());</span>
+<span class="nc" id="L114">  }</span>
 
-<span class="nc bnc" id="L81" title="All 2 branches missed.">        if (projectMemberRepository.findByProjectIdAndUserId(projectId, targetUserId).isPresent()) {</span>
-<span class="nc" id="L82">            throw new RuntimeException(&quot;User is already a member of this project&quot;);</span>
-        }
-
-<span class="nc" id="L85">        User newUser = userRepository.findById(targetUserId)</span>
-<span class="nc" id="L86">                .orElseThrow(() -&gt; new RuntimeException(&quot;User not found&quot;));</span>
-
-<span class="nc bnc" id="L88" title="All 4 branches missed.">        String roleStr = (dto != null &amp;&amp; dto.getRole() != null) ? dto.getRole().toUpperCase() : &quot;RESEARCHER&quot;;</span>
-
-<span class="nc" id="L90">        ProjectMember newMember = new ProjectMember();</span>
-<span class="nc" id="L91">        newMember.setProject(project);</span>
-<span class="nc" id="L92">        newMember.setUser(newUser);</span>
-<span class="nc" id="L93">        newMember.setRole(ProjectRole.valueOf(roleStr));</span>
-<span class="nc" id="L94">        projectMemberRepository.save(newMember);</span>
-
-<span class="nc" id="L96">        auditLogService.logAction(</span>
-<span class="nc" id="L97">                authenticatedUser.getId(),</span>
-                AcaoAuditoria.MEMBER_JOINED,
-<span class="nc" id="L99">                &quot;User &quot; + newUser.getEmail() + &quot; joined project &quot; + project.getTitle()</span>
-        );
-<span class="nc" id="L101">    }</span>
-
-    private ProjectResponseDTO mapToDTO(Project project) {
-<span class="fc" id="L104">        ProjectResponseDTO dto = new ProjectResponseDTO();</span>
-<span class="fc" id="L105">        dto.setId(project.getId());</span>
-<span class="fc" id="L106">        dto.setTitle(project.getTitle());</span>
-<span class="fc" id="L107">        dto.setDescription(project.getDescription());</span>
-<span class="fc" id="L108">        dto.setAdvisorId(project.getAdvisor().getId());</span>
-<span class="fc" id="L109">        dto.setCreatedAt(project.getCreatedAt());</span>
-<span class="fc" id="L110">        return dto;</span>
-    }
+  private ProjectResponseDTO mapToDTO(Project project) {
+<span class="fc" id="L117">    ProjectResponseDTO dto = new ProjectResponseDTO();</span>
+<span class="fc" id="L118">    dto.setId(project.getId());</span>
+<span class="fc" id="L119">    dto.setTitle(project.getTitle());</span>
+<span class="fc" id="L120">    dto.setDescription(project.getDescription());</span>
+<span class="fc" id="L121">    dto.setAdvisorId(project.getAdvisor().getId());</span>
+<span class="fc" id="L122">    dto.setCreatedAt(project.getCreatedAt());</span>
+<span class="fc" id="L123">    return dto;</span>
+  }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

@@ -9,23 +9,25 @@ import org.springframework.stereotype.Service;
 @Service
 <span class="fc" id="L10">public class EmailService {</span>
 
-    @Autowired
-    private JavaMailSender mailSender;
+  @Autowired private JavaMailSender mailSender;
 
-    @Async
-    public void sendRecoveryEmail(String toEmail, String otpCode) {
-<span class="nc" id="L17">        SimpleMailMessage message = new SimpleMailMessage();</span>
-<span class="nc" id="L18">        message.setFrom(&quot;noreply@edtech.com&quot;);</span>
-<span class="nc" id="L19">        message.setTo(toEmail);</span>
-<span class="nc" id="L20">        message.setSubject(&quot;Código de Recuperação de Senha - EdTech&quot;);</span>
-<span class="nc" id="L21">        message.setText(&quot;Olá,\n\n&quot;</span>
-                + &quot;Você solicitou a recuperação da sua senha na EdTech.\n&quot;
-                + &quot;Seu código de segurança (OTP) de 6 dígitos é: &quot; + otpCode + &quot;\n\n&quot;
-                + &quot;Este código é válido por 15 minutos.\n&quot;
-                + &quot;Se você não solicitou isso, ignore este e-mail.\n\n&quot;
-                + &quot;Equipe EdTech&quot;);
+  @Async
+  public void sendRecoveryEmail(String toEmail, String otpCode) {
+<span class="nc" id="L16">    SimpleMailMessage message = new SimpleMailMessage();</span>
+<span class="nc" id="L17">    message.setFrom(&quot;noreply@edtech.com&quot;);</span>
+<span class="nc" id="L18">    message.setTo(toEmail);</span>
+<span class="nc" id="L19">    message.setSubject(&quot;Código de Recuperação de Senha - EdTech&quot;);</span>
+<span class="nc" id="L20">    message.setText(</span>
+        &quot;Olá,\n\n&quot;
+            + &quot;Você solicitou a recuperação da sua senha na EdTech.\n&quot;
+            + &quot;Seu código de segurança (OTP) de 6 dígitos é: &quot;
+            + otpCode
+            + &quot;\n\n&quot;
+            + &quot;Este código é válido por 15 minutos.\n&quot;
+            + &quot;Se você não solicitou isso, ignore este e-mail.\n\n&quot;
+            + &quot;Equipe EdTech&quot;);
 
-<span class="nc" id="L28">        mailSender.send(message);</span>
-<span class="nc" id="L29">    }</span>
+<span class="nc" id="L30">    mailSender.send(message);</span>
+<span class="nc" id="L31">  }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

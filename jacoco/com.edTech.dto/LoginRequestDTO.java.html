@@ -5,13 +5,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 <span class="fc" id="L7">public record LoginRequestDTO(</span>
-        @NotBlank(message = &quot;O email é obrigatório&quot;)
+    @NotBlank(message = &quot;O email é obrigatório&quot;)
         @Email(message = &quot;O email deve ser válido&quot;)
         @Size(max = 180)
         String email,
-        @NotBlank(message = &quot;A senha é obrigatória&quot;)
-        @Size(min = 8, max = 120)
-        String password
-) {
-}
+    @NotBlank(message = &quot;A senha é obrigatória&quot;) @Size(min = 8, max = 120) String password) {}
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
