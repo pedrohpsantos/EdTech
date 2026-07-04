@@ -1,65 +1,49 @@
----
-title: '📄 EdTech Docs (Docs-as-Code)'
----
+# 📚 EdTech Docs — Os Manuais e Crônicas
 
-# 📄 EdTech Docs (Docs-as-Code)
+![MkDocs](https://img.shields.io/badge/MkDocs-Material-526CFE?style=for-the-badge&logo=markdown&logoColor=white)
+![Docs as Code](https://img.shields.io/badge/Docs-as--Code-ffb142?style=for-the-badge)
+![Knowledge Base](https://img.shields.io/badge/Knowledge-Base-purple?style=for-the-badge)
 
-Este módulo hospeda toda a infraestrutura de documentação do sistema EdTech (Manuais, Arquitetura, Requisitos e Relatórios de Sprints). Seguimos rigorosamente a filosofia **Docs-as-Code**, em que a documentação é tratada, versionada e revisada com o mesmo rigor do código-fonte.
+> *"Achegue-se, jovem aprendiz. Sou o Bibliotecário deste ecossistema. Código que funciona hoje, será o legado enigmático de amanhã se não for documentado. Aqui nós preservamos o conhecimento: desde mapas estruturais arquitetônicos (C4 Model) até os registros de decisões imutáveis (ADRs). Nós tratamos a documentação com o mesmo rigor de um código em produção."* 🪶
 
----
+Bem-vindo ao acervo de sabedoria do EdTech. Utilizamos a filosofia **Docs-as-Code**, o que significa que nossa documentação oficial vive e evolui junto com o código, versionada no Git, revisada em PRs e construída estaticamente através do **MkDocs**.
 
-## 🎯 Objetivo
+## 📖 O Catálogo da Biblioteca
 
-Criar uma Fonte Única de Verdade (*Single Source of Truth*) para toda a equipe de engenharia e stakeholders. 
-A documentação não vive isolada em ferramentas terceiras; ela coabita com a base de código e evolui automaticamente nos processos de Integração Contínua (CI).
+Nesta pasta, você encontrará relíquias valiosas:
 
----
-
-## 🛠️ Stack Tecnológica
-
-| Tecnologia | Função na Aplicação |
-| :--- | :--- |
-| **MkDocs** | Gerador estático de documentação oficial em Python. |
-| **Material for MkDocs** | Framework visual premium, que entrega temas reativos, modo noturno nativo, busca e interatividade nativa. |
-| **Markdown** | Linguagem de marcação utilizada para a escrita limpa e portável de todos os documentos. |
-| **Giscus** | Sistema de comentários e discussões injetado nativamente na documentação integrado ao GitHub Discussions. |
-| **GitHub Pages** | Hospedagem estática automatizada para o portal da documentação gerada no CI/CD. |
+- **`/docs` (Diretório Raiz do MkDocs):** Os arquivos Markdown que compõem o portal oficial, organizados de forma semântica.
+- **`/docs/adrs` (Architecture Decision Records):** O diário histórico das grandes decisões. Por que escolhemos PostgreSQL em vez de Mongo? Por que Java em vez de Go? A resposta mora lá.
+- **`/docs/assets`:** Imagens, diagramas gerados pelo PlantUML/Mermaid, logotipos e toda mídia visual que ajuda a contar nossas histórias.
+- **`mkdocs.yml` (na raiz do projeto):** O índice mestre que instrui o gerador de sites sobre como construir nossa biblioteca.
 
 ---
 
-## 📂 Arquitetura do Diretório
+## 🏗️ Lendo e Escrevendo Novos Capítulos
 
-```text
-docs/
-├── assets/         # Arquivos estáticos (Imagens estáticas, ícones, banners)
-├── desenvolvimento/# Guias focados nos engenheiros de software (Padrões, Smoke Tests, IaC)
-├── gestao/         # Relatórios de Sprint, Planejamento e Atas de Reunião
-├── produto/        # Requisitos funcionais (RFs), Não Funcionais (RNFs) e Arquitetura C4
-└── index.md        # A página inicial da documentação
+Qualquer pessoa pode (e deve!) contribuir para o conhecimento. Se você adicionou uma nova rota na API, ou um novo hook no Frontend, escreva sobre isso.
+
+Para escrever e visualizar a documentação como um portal web localmente na sua máquina, utilize o script do Python (`uv` / `pip`):
+
+```bash
+# Navegue até a raiz do projeto (fora desta pasta)
+cd ..
+
+# Caso não tenha o ambiente Python configurado, instale as dependências:
+pip install -r requirements.txt # Ou confie nos scripts de automação se existirem.
+
+# Inicie o servidor do MkDocs
+mkdocs serve
 ```
-*(O arquivo `mkdocs.yml` de configuração global se encontra na raiz do projeto)*
+
+Acesse `http://localhost:8000` no seu navegador. O servidor será atualizado automaticamente sempre que você salvar um arquivo Markdown (Hot Reloading).
 
 ---
 
-## 🚀 Como Executar e Contribuir Localmente
+## 📜 Os 3 Mandamentos do Cronista
 
-Como a documentação é feita com Python/MkDocs, aconselha-se o uso do instalador super-rápido `uv`.
+1. **Seja Claro e Atemporal:** Evite gírias ou informações que envelhecem rápido demais ("Na semana passada corrigimos um bug..."). Escreva pensando no desenvolvedor que lerá isso daqui a 3 anos.
+2. **Desenhe Diagramas:** Um diagrama Mermaid.js ou PlantUML vale mais que mil palavras de explicação de endpoints.
+3. **Use Alertas (Admonitions):** Utilize as caixas de dicas `!!! tip` ou `!!! warning` do MkDocs Material para dar destaque a regras vitais.
 
-1. Na raiz do repositório, faça o sync para instalar as dependências:
-   ```bash
-   uv sync
-   ```
-2. Inicialize o servidor e faça edições visuais em "Live Reload" (Hot Reloading):
-   ```bash
-   uv run mkdocs serve
-   ```
-3. O portal subirá localmente em `http://127.0.0.1:8000`.
-
-
----
-
-## Histórico de Versões
-
-| Versão | Data | Descrição | Autor |
-| :---: | :---: | :--- | :--- |
-| `2.0` | 04/07/2026 | Revisão profunda, correção de metadados e melhorias visuais | Pedro Henrique P. Santos |
+> *Lembre-se: O código diz o 'COMO'. A documentação diz o 'POR QUÊ'. Vá e escreva a nossa história.*

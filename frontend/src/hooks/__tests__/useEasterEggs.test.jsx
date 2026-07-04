@@ -1,6 +1,6 @@
 import { renderHook, act } from '@testing-library/react';
 import useEasterEggs from '../useEasterEggs';
-import { vi } from 'vitest';
+import { vi, describe, beforeEach, afterEach, test, expect } from 'vitest';
 
 describe('useEasterEggs hook', () => {
   beforeEach(() => {

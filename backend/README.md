@@ -1,74 +1,64 @@
-# ⚙️ EdTech Backend (API Restful)
+# ⚙️ EdTech Backend — O Núcleo
 
-Este módulo abrange a **Inteligência Central** da plataforma EdTech. O backend atua como um escudo protetor para o Banco de Dados (PostgreSQL) e o sistema de arquivos distribuído na nuvem, encarregando-se da pesada lógica de governança.
+![Java](https://img.shields.io/badge/Java-21_LTS-007396?style=for-the-badge&logo=openjdk&logoColor=white)
+![Spring Boot](https://img.shields.io/badge/Spring_Boot-4.1-6DB33F?style=for-the-badge&logo=springboot&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
+![Security](https://img.shields.io/badge/Security-Strict-red?style=for-the-badge&logo=springsecurity)
 
----
+> *"Bem-vindo. Eu sou o Guardião deste sistema. Aqui, os dados entram estruturados e saem validados. Se você está procurando rotas não documentadas ou endpoints sem segurança, está no lugar errado. Tudo aqui exige credenciais, tipagem estática rigorosa e tratamento impecável de exceções."* 🛡️
 
-## 🎯 Objetivo
+Bem-vindo ao serviço RESTful que suporta todo o EdTech. Este é um ambiente governado por regras estritas, performance e segurança. Adotamos o Spring Boot 4.1 rodando na JVM (Java 21 LTS). Nenhuma requisição avança sem ser escrutinada pelo nosso filtro JWT.
 
-Garantir o isolamento e controle absoluto sobre os dados da pesquisa acadêmica. Suas premissas são:
-- Receber, desempacotar e injetar de forma segura datasets e PDFs em *Object Storages*.
-- Garantir a autorização correta mediante tokens JWT em rotas públicas e privadas.
-- Auditar ininterruptamente **todas** as ações (CRUDS), garantindo a existência de *Logs Imutáveis* necessários para o "Painel do Auditor".
+## 🏗️ Arquitetura e Engenharia
 
----
+Não gostamos de código "macarrão". A estrutura deste serviço é meticulosamente dividida em camadas lógicas:
 
-## 🛠️ Tecnologias Utilizadas
-
-Para garantir a robustez de uma aplicação *Enterprise Grade*, o ecossistema Spring foi adotado por completo:
-
-| Tecnologia | Função na Aplicação |
-| :--- | :--- |
-| **Java 21 LTS** | Linguagem principal. Utiliza a potência do *Project Loom (Virtual Threads)* para concorrência de alta escala em limites curtos de hardware. |
-| **Spring Boot 4.1.x** | Framework base, injeção de dependência e servidor Tomcat embutido. |
-| **Spring Security 6.x**| Segurança de APIs (Filtros de JWT, Headers CORS estritos e Anti-CSRF). |
-| **Spring Data JPA** | ORM (Hibernate) abstrato para comunicação fluida com o banco. |
-| **Flyway 10.x** | *Database Migration Tool* para versionamento declarativo das tabelas. |
-| **Google Cloud SDK** | Cliente nativo para integrações Cloud (Cloud Storage SDK). |
-| **JUnit 5 & Mockito** | Frameworks de testes (Unitários e de Integração) garantindo confiabilidade. |
+- **Controllers (`/controller`):** As portas do castelo. Tudo o que entra aqui é imediatamente sanitizado e validado (Bean Validation). Nada de lixo entra, nada de lixo sai.
+- **Services (`/service`):** Onde as regras de negócios residem. Isolamos lógicas complexas e transações de banco de dados. 
+- **Repositories (`/repository`):** Os arquivistas. Acesso limpo via Spring Data JPA ao PostgreSQL.
+- **Configurações (`/config`):** A estrutura que sustenta a segurança e conectividade em nuvem (CORS, JWT, Beans).
 
 ---
 
-## 🔒 Governança e Arquitetura de Nuvem
+## 🔒 Segurança em Primeiro Lugar
 
-O Backend é compilado no formato "Uber-Jar" (ou "Fat Jar") e encapsulado numa imagem Docker otimizada.
+Se você quer apenas bater num endpoint, prepare-se para ser barrado com um `403 Forbidden` a menos que tenha a chave (JWT).
 
-**Tolerância a Falhas e Isolamento:**
-Esta API hospeda-se em um serviço escalável (Google Cloud Run) atuando com rede privada. Os dados repousam num banco *PostgreSQL* Cloud SQL invisível ao mundo exterior. Apenas a API, portando o *Google Cloud SQL Auth Proxy*, é capaz de injetar queries no banco.
+1. **Tokens Assinados (HMAC-256):** Somente nós sabemos como gerar o token e validar assinaturas. Sem chave vazada, sem acesso.
+2. **CORS Rígido:** Nós não aceitamos origens genéricas (nada de `*`). Apenas o frontend mapeado tem permissão para consumir nossos recursos.
+3. **Auditoria:** Toda operação de upload no `GCS` (Google Cloud Storage) é controlada e autenticada.
 
 ---
 
-## 📂 Arquitetura do Diretório
+## 🛠️ Como Iniciar o Núcleo (Localmente)
 
-```text
-api/src/main/java/com/docvault/
-├── config/         # Beans e injeções primárias (CloudStorage, Flyway, WebSecurity)
-├── controller/     # Endpoints HTTP (REST)
-├── dto/            # Data Transfer Objects para requests/responses JSON
-├── model/          # Classes e mapeamento de Entidades (JPA/Hibernate)
-├── repository/     # Interfaces de Queries estendendo JpaRepository
-├── service/        # Camada de transações e lógicas de negócios complexas
-└── audit/          # Implementação transversal para salvar rastros irrefutáveis
+Se você precisa debugar algo ou desenvolver uma nova feature, siga este ritual:
+
+### Pré-requisitos
+- JDK 21 (Não negocie, é 21).
+- Maven 3.9+
+- Banco de dados PostgreSQL rodando (pode usar o Docker da pasta infra).
+
+### Execução Padrão
+
+```bash
+# 1. Tenha certeza de que suas variáveis locais estão no lugar.
+# Se faltar alguma configuração no application.yml, o sistema irá gritar.
+
+# 2. Instale as dependências
+mvn clean install -DskipTests
+
+# 3. Levante o serviço
+mvn spring-boot:run
 ```
 
+Ou, como eu prefiro, deixe que a infraestrutura cuide disso via Docker Compose (na raiz do repositório).
+
 ---
 
-## 🚀 Como Executar
+## 🧪 Testes
 
-### Pré-Requisitos
-- Java 21 (JDK 21)
-- Maven
-- Banco PostgreSQL (Recomendado via Docker Compose da raiz)
+*"Inocente até que se prove que não compila."* 
+Não adicione endpoints sem escrever testes unitários ou de integração apropriados. Nós usamos JUnit 5. Faça o seu dever de casa antes de abrir um PR.
 
-### Passos Locais
-
-1. Na pasta raiz do monorepo, inicie o banco de dados:
-   ```bash
-   docker-compose up -d db
-   ```
-2. Acesse a pasta do backend e rode com o *Maven Wrapper*:
-   ```bash
-   cd docvault/api
-   ./mvnw spring-boot:run
-   ```
-3. A API inicializará na porta padrão `8080`.
+Se encontrar algum erro interno `500`, a culpa possivelmente é sua. Verifique seus logs de stacktrace (que nós, cuidadosamente, registramos) e tente novamente.

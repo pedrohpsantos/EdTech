@@ -1,68 +1,49 @@
-# Guia de Contribuição — EdTech
+# 🤝 Como Contribuir para o EdTech
 
-Bem-vindo ao projeto EdTech do AILAB Makers (UnB FCTE)! Este documento é a fonte de verdade para a configuração do ambiente e o fluxo de trabalho da equipe.
+> *"Olá! Seja muito bem-vindo ao projeto EdTech. Eu sou o Mentor Amigável. Fico extremamente feliz que você queira contribuir conosco. Quer você esteja resolvendo um bug crítico, consertando um erro de digitação na documentação ou propondo uma arquitetura nova, sua ajuda é muito valiosa! Puxe uma cadeira, pegue um café e vamos codar juntos."* ☕
 
-## 1. Pré-requisitos
+Para garantirmos que o repositório se mantenha organizado e que seus Pull Requests (PRs) sejam aprovados rapidamente, peço que você siga algumas regras simples.
 
-Para contribuir com o projeto, você precisa ter as seguintes ferramentas instaladas:
-- **Java**: 21 LTS (Backend)
-- **Node.js**: 20.x ou superior (Frontend Vite)
-- **Python**: 3.11 ou superior (Documentação MkDocs)
-- **uv**: Gerenciador de pacotes Python
-- **Docker**: Engine e Docker Compose (Banco de dados e serviços isolados)
+## 🧭 O Caminho do Contribuidor
 
-## 2. Estágio Atual do Projeto e Contribuições
+1. **Encontre um Problema:** Procure na aba de *Issues* por tarefas com as tags `good first issue` ou `help wanted`. Se quiser propor algo novo, abra uma issue primeiro para discutirmos a ideia!
+2. **Faça um Fork:** Crie a sua própria cópia do repositório.
+3. **Crie uma Branch:** Não commite diretamente na sua `main`. Crie uma branch descritiva (ex: `feat/login-page` ou `fix/jwt-validation`).
+4. **Code com Cuidado:** Siga os padrões do projeto. Se você mexeu no backend, garanta que o Maven (`mvn test`) ainda sorri para você. Se mexeu no frontend, verifique se não quebrou o layout.
+5. **Abra o Pull Request:** Preencha o nosso template de PR com carinho. O robô revisor do GitHub Actions passará para verificar seu código.
 
-O repositório EdTech encontra-se na fase de **fundação de governança e arquitetura técnica**. A estrutura de documentação está madura e consolidada através do paradigma *Docs-as-Code*. Contudo, os módulos de aplicação (Backend Java e Frontend React) estão em desenvolvimento ativo de scaffolding.
+---
 
-### 2.1 O que aceitamos neste momento:
-- Adição ou melhoria na documentação técnica (MkDocs).
-- Propostas de revisão ou detalhamento de Arquitetura (novas ADRs, aprimoramento do C4 Model).
-- Melhorias na clareza dos requisitos de produto, jornadas de usuário e personas.
-- Ajustes editoriais, correção de links e consistência narrativa.
+## 📝 Regras de Ouro: Conventional Commits
 
-### 2.2 Diretrizes de Contribuição:
-- Pull Requests de código devem seguir os contratos de API documentados em `docs/desenvolvimento/api_endpoints.md`.
-- Novas features devem ter uma issue vinculada e seguir o fluxo de branches descrito abaixo.
-- Toda alteração de código deve passar pelos testes automatizados e pelo lint local.
+Nós amamos automação! E para que a automação funcione, precisamos que o histórico do Git seja limpo. Seus commits **devem** seguir o formato do [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/):
 
-## 3. Setup da Documentação Local (MkDocs)
-Para rodar o site de documentação localmente e visualizar suas edições:
-```bash
-# Na raiz do projeto, instale as dependências com uv
-uv sync
-
-# Sirva a documentação localmente
-uv run mkdocs serve
+```text
+<tipo>[escopo opcional]: <descrição breve>
 ```
-Acesse `http://127.0.0.1:8000` no navegador.
 
-## 4. Fluxo de Branches
+**Tipos permitidos:**
+- `feat:` Nova funcionalidade (Isso geralmente gera uma versão nova minor).
+- `fix:` Correção de bug (Gera uma versão patch).
+- `docs:` Mudanças apenas na documentação (READMEs, MkDocs).
+- `chore:` Tarefas de manutenção ou atualização de pacotes (ex: `chore(deps): update vite`).
+- `refactor:` Refatoração de código que não adiciona funcionalidade nem corrige bug.
+- `test:` Adição ou correção de testes E2E / Unitários.
+- `style:` Formatação de código (tabs, espaços), sem mudança lógica.
 
-Adotamos a seguinte estrutura de ramificações:
-- `main`: Branch de produção, contendo apenas código estável.
-- `develop`: Branch principal de desenvolvimento, alvo dos PRs de features.
-- Prefixos de ramificações temporárias:
-  - `feat/`: para novas funcionalidades (ex: `feat/filtro-orientador`)
-  - `fix/`: para correção de bugs (ex: `fix/login-pesquisador`)
-  - `docs/`: para adições na documentação MkDocs
-  - `chore/`: para tarefas de infraestrutura ou manutenção (ex: dependabot, lint)
+**Exemplo Perfeito:**
+`feat(auth): adiciona fluxo de login com validacao JWT`
 
-## 4. Padrões de Commit (Conventional Commits)
+*Se o seu commit for apenas `ajustes` ou `arrumei o bug`, meu amigo... eu terei que pedir amavelmente para você reescrever o histórico (rebase).* 😅
 
-Nossos títulos e mensagens de commit devem seguir as regras do **Conventional Commits**. Exemplos no contexto do EdTech:
-- `feat(publicacoes): adicionar filtro por orientador`
-- `fix(auth): corrigir expiração de sessão para perfil Pesquisador`
-- `docs(adr): registrar decisão de uso do Flyway`
-- `refactor(api): melhorar tratamento de erros no upload`
-- `test(auth): cobrir geração de JWT`
-- `chore(deps): atualizar versão do vite`
+---
 
-## 5. Pull Requests (PR)
+## 🏗️ Padrões de Código
 
-Nosso repositório exige que cada PR preencha um Checklist (já disponibilizado automaticamente via `PULL_REQUEST_TEMPLATE.md`). No template, você precisará:
-- Informar a motivação (Contexto) da mudança.
-- Checar se o código atende às regras de isolamento de dados (onde aplicável) e ausência de senhas hardcoded.
-- Executar os testes e o lint locais. 
+- **Backend (Java):** Usamos a convenção oficial do Google/Spring. Nomes de variáveis em `camelCase`, classes em `PascalCase`. Tipagem estrita.
+- **Frontend (React):** Componentes sempre em `PascalCase`. Usamos CSS puro para estilos organizados.
+- **Documentação:** Mantenha um tom profissional mas acolhedor. Arquivos sempre em formato Markdown (`.md`).
 
-Ao abrir o PR, verifique minuciosamente as políticas da seção de "Validação e Qualidade".
+## 💬 Precisa de Ajuda?
+
+Se travar em alguma etapa de configuração (o Docker às vezes tem vida própria), abra uma issue com a tag `question` ou marque os mantenedores. Nós não mordemos! E lembre-se: todo Mestre Sênior um dia já foi um Estagiário que quebrou a produção. O importante é aprender. 🚀

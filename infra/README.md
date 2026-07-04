@@ -1,55 +1,56 @@
-# ☁️ EdTech Infraestrutura e Nuvem (DevOps)
+# ☁️ EdTech Infra — O Chão de Fábrica
 
-Este módulo (pasta `infra`) centraliza todos os manifestos, scripts de pipeline e definições de arquitetura necessários para colocar e manter a aplicação EdTech funcionando em produção e nos ambientes locais de forma robusta e transparente.
+![Docker](https://img.shields.io/badge/Docker-24.0-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+![Google Cloud](https://img.shields.io/badge/GCP-Cloud_Run-4285F4?style=for-the-badge&logo=googlecloud&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Data-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
+![Uptime](https://img.shields.io/badge/Uptime-99.99%25-brightgreen?style=for-the-badge)
 
----
+> *"Silêncio no terminal. Eu sou o Mestre das Nuvens. Enquanto o frontend desenha botões bonitos e o backend discute sobre injeção de dependências, sou eu quem garante que a infraestrutura não pegue fogo de madrugada. Se os containers sobem, se o banco persiste e se a rede respira... é graças a este diretório."* 🌩️
 
-## 🎯 Objetivo
+Bem-vindo ao coração operacional do EdTech. Este diretório (`/infra`) contém todas as plantas arquitetônicas (Infrastructure as Code) para orquestrar os serviços. Nós não configuramos servidores clicando em botões em painéis web; nós escrevemos código, damos `up` e deixamos o Docker fazer a mágica pesada.
 
-Eliminar a fricção entre desenvolvimento e operação, aderindo firmemente aos princípios de **Infraestrutura como Código (IaC)** e *Platform Engineering*.
+## 📦 O Que Vive Aqui?
 
-Através desta pasta, nós:
-- Padronizamos o ambiente de desenvolvimento local usando contêineres (*Docker Compose*).
-- Concentramos variáveis de ambiente unificadas (sem *hardcoded secrets*).
-- Planejamos a evolução de implantação em nuvem (Terraform, Manifestos K8s, Scripts).
-
----
-
-## 🛠️ Tecnologias e Ferramentas
-
-| Tecnologia | Função na Aplicação |
-| :--- | :--- |
-| **Docker Engine** | Isolamento e padronização do ambiente local (Banco de dados, Serviços). |
-| **Docker Compose** | Orquestração simplificada de contêineres locais para rápida configuração. |
-| **Google Cloud (GCP)** | O provedor de nuvem adotado como padrão arquitetural deste monorepo (Cloud Run, Cloud SQL, Secret Manager). |
-| **GitHub Actions** | Motor padrão para integração contínua (CI) e entrega contínua (CD), declarado na pasta `.github/workflows`. |
+- **`docker-compose.yml`**: A nossa "partitura". Ele sabe como construir o Backend, servir o Frontend via Nginx, e levantar o PostgreSQL sem que você precise instalar nada além do Docker.
+- **`.env.example`**: O esqueleto dos segredos. (Lembre-se: *NUNCA* commite o `.env` verdadeiro ou eu pessoalmente cancelarei seus acessos de PR).
+- **`init.sql`** (Se aplicável): Os scripts de inicialização que ensinam o banco de dados recém-criado quem ele é e a qual mestre ele serve.
 
 ---
 
-## 📂 Arquitetura do Diretório
+## 🛠️ O Ritual de Inicialização (Local)
 
-```text
-infra/
-├── .env.example       # Template com as variáveis de ambiente necessárias para rodar o app
-├── docker-compose.yml # Orquestração do banco PostgreSQL e PgAdmin para desenvolvimento
-└── banco/             # (Futuro) Arquivos e Dumps iniciais
-```
+Para que toda a aplicação ganhe vida na sua máquina de desenvolvimento de forma isolada, siga as instruções precisas:
+
+1. **Copie o mapa dos segredos:**
+   ```bash
+   cp .env.example .env
+   # Edite o .env se precisar ajustar senhas ou apontar para um provedor de storage em nuvem.
+   ```
+
+2. **Acenda as Fornalhas:**
+   ```bash
+   docker compose up --build -d
+   ```
+   *O parâmetro `-d` (detached) garante que o seu terminal continue livre para outras tarefas, enquanto a infraestrutura roda silenciosamente no fundo.*
+
+3. **Verifique os Motores (Logs):**
+   ```bash
+   docker compose logs -f backend
+   # Se vir "Started EdTechApplication", você teve sucesso.
+   ```
+
+4. **Desligando o Reator:**
+   ```bash
+   docker compose down
+   # Se quiser destruir tudo (inclusive o volume de dados), adicione -v. Use com cautela!
+   ```
 
 ---
 
-## 🚀 Guia de Desenvolvimento Local
+## ☁️ A Fronteira Final (Deploy e Produção)
 
-Nós utilizamos a orquestração via Docker para eliminar problemas como *"na minha máquina funciona"*. 
+No mundo real (Produção), nós não rodamos via `docker compose` numa máquina virtual solta. Nós exportamos essas imagens para o **Google Cloud Registry** e as operamos via **Cloud Run** de forma escalável e Serverless. 
 
-Para levantar a infraestrutura de apoio (PostgreSQL), basta rodar na raiz do projeto (onde se localiza um link simbólico ou executando direto nesta pasta):
+As variáveis de ambiente de produção vivem trancafiadas a sete chaves no *Google Secret Manager*. Se precisar alterar alguma rota de rede ou variável crítica de prod, certifique-se de falar comigo (ou ler os manuais do Terraform/GCP antes).
 
-```bash
-docker-compose up -d
-```
-
-### Setup Inicial (Variáveis de Ambiente)
-Duplique o arquivo `.env.example` para `.env` e preencha as variáveis de ambiente base:
-```bash
-cp infra/.env.example infra/.env
-```
-*(Nota: O arquivo `.env` definitivo está devidamente incluído no `.gitignore` por razões de segurança.)*
+> **Aviso do Operador Sênior:** *A infraestrutura é resiliente, mas não à prova de desenvolvedores descuidados. Se um container seu crashar em produção por falta de memória (OOMKilled), eu estarei de olho nos logs.* 👀

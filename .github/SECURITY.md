@@ -1,38 +1,38 @@
-# Política de Segurança — EdTech
+# 🔒 Política de Segurança do EdTech
 
-Este repositório acadêmico do laboratório **AILAB Makers (UnB FCTE)** segue diretrizes de segurança no tratamento de dados e vulnerabilidades.
+![Security Level](https://img.shields.io/badge/Security-Maximum-red?style=for-the-badge&logo=springsecurity)
+![SWAT](https://img.shields.io/badge/Response_Team-Active-black?style=for-the-badge)
 
-## Versões Suportadas
+> *"Atenção! Você entrou na área restrita. Nós somos o Time SWAT deste projeto. Nossa missão não é debater arquitetura ou design de botões, nossa missão é evitar que dados acadêmicos sensíveis caiam nas mãos erradas. Se você encontrou uma brecha nas defesas, fique calmo, não grite em público e siga os protocolos de extração silenciosa detalhados abaixo. Nós resolvemos rápido e resolvemos pesado."* 🚁
 
-O projeto é atualmente suportado com as seguintes versões mínimas e configurações:
+A segurança dos dados é a fundação do EdTech. Por tratarmos de relatórios científicos, dados de laboratórios e auditorias institucionais, levamos vulnerabilidades extremamente a sério.
 
-| Camada | Tecnologia |
-| :--- | :--- |
-| **Backend** | Java 21 LTS / Spring Boot 4.1.x |
-| **Frontend** | React 19.x / Vite 8.x |
-| **Banco de Dados** | PostgreSQL 15 (Google Cloud SQL) |
-| **Gerenciamento (Docs)** | Python 3.11+ via `uv` |
+## 🛡️ Versões Suportadas
 
-## Reportando Vulnerabilidades
+Nós fornecemos atualizações e patches de segurança ativamente para as versões listadas abaixo. Se você estiver usando uma versão não suportada, faça o upgrade imediatamente.
 
-> [!CAUTION]
-> **NÃO ABRA UMA ISSUE PÚBLICA** para relatar falhas de segurança que afetem a autenticação (JWT), auditoria ou isolamento de dados (autores/orientadores).
-
-Relate vulnerabilidades exclusivamente via **GitHub Security Advisories** (na aba `Security` > `Advisories` deste repositório) para um envio privado e criptografado direto à equipe.
-Como *fallback*, contate o Tech Lead diretamente pelo perfil do GitHub associado ao projeto.
-
-### O que esperar após o relato?
-
-1. **Confirmação:** Nosso time fará o possível para responder acusando o recebimento em até **7 dias úteis**.
-2. **Triagem e Correção:** O relato será classificado em criticidade e a equipe desenvolverá um patch confidencial na branch interna.
-3. **Divulgação Responsável:** Após o patch ser testado e integrado aos ambientes principais (com a trilha de auditoria devidamente reforçada), a vulnerabilidade será divulgada publicamente com os devidos créditos a quem a relatou.
+| Versão | Suportada? |
+| :---: | :---: |
+| >= 1.0.x | ✅ Sim |
+| < 1.0.0 (Betas) | ❌ Não |
 
 ---
 
-## Nossas Práticas de Segurança (Enterprise Grade)
+## 🚨 Como Reportar uma Vulnerabilidade (Protocolo Silencioso)
 
-- **Armazenamento de Segredos:** Todas as credenciais de produção estão armazenadas no **Google Secret Manager**. Nenhuma chave sensível deve ser comitada neste repositório.
-- **Autenticação Segura:** Utilizamos JWT armazenado exclusivamente em cookies `HttpOnly` e `Secure`, mitigando ataques de XSS e dificultando a extração do token pelo lado cliente.
-- **Auditoria de Eventos:** A plataforma mantém um log imutável de todas as ações de upload, download, login e falhas de acesso, disponível apenas para o perfil Auditor.
-- **Análise Estática e Dependências:** Pipelines de CI estão configurados com análises de SAST e `dependency-check` para bloquear a implantação de artefatos vulneráveis.
-- **Validação de Uploads:** Somente extensões permitidas (PDF, CSV, XLSX) podem ser enviadas, e qualquer tentativa de enviar executáveis será bloqueada ativamente pela camada da API.
+**ATENÇÃO: NUNCA crie uma Issue pública no GitHub para reportar uma vulnerabilidade crítica de segurança.** Fazer isso expõe a falha (Zero-Day) antes que possamos criar um patch, colocando o sistema em risco imediato.
+
+Se você encontrou uma vulnerabilidade, siga os passos de extração:
+
+1. **Gere um Relatório Tático:** Descreva o problema, o impacto, os passos para reproduzir a falha e, se possível, sugira uma mitigação ou um PoC (Proof of Concept).
+2. **Envio Confidencial:** Utilize a aba [Security Advisories](https://docs.github.com/en/code-security/security-advisories/guidance-on-reporting-and-writing-information-about-vulnerabilities/privately-reporting-a-security-vulnerability) do próprio GitHub no repositório EdTech para submeter um reporte privado. 
+3. Se não encontrar o botão no GitHub, mande um sinal cifrado por e-mail para a nossa liderança de segurança: `security@edtech.invalid`.
+
+### O Que Acontece Depois?
+
+- **Recepção:** A SWAT acusará o recebimento do seu reporte em até 48 horas.
+- **Investigação:** Avaliaremos a gravidade, escopo e impacto (CVSS).
+- **Patch:** Desenvolveremos o patch e faremos o deploy silenciosamente nos sistemas em produção.
+- **Reconhecimento:** Se a vulnerabilidade for válida e inédita, faremos um anúncio público de segurança creditando você pelo achado (se você desejar).
+
+Nós agradecemos seu esforço de chapéu-branco (*white-hat*) para manter nossa comunidade segura. Câmbio, desligo! 🔫

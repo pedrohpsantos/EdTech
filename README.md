@@ -2,7 +2,7 @@
   <img src="docs/assets/imgs/banner-github.png" alt="EdTech Banner" width="100%">
 </div>
 
-# EdTech — Plataforma Acadêmica e Repositório Científico
+# EdTech — O Ecossistema Acadêmico e Repositório Científico
 
 [![Deploy MkDocs](https://github.com/pedrohpsantos/EdTech/actions/workflows/ci-docs.yml/badge.svg)](https://github.com/pedrohpsantos/EdTech/actions/workflows/ci-docs.yml)
 [![CI Pipeline](https://github.com/pedrohpsantos/EdTech/actions/workflows/ci.yml/badge.svg)](https://github.com/pedrohpsantos/EdTech/actions/workflows/ci.yml)
@@ -11,103 +11,87 @@
 ![Google Cloud](https://img.shields.io/badge/GCP-Cloud_Run_%26_SQL-4285F4?logo=googlecloud&logoColor=white)
 ![Firebase](https://img.shields.io/badge/Firebase-Hosting-FFCA28?logo=firebase&logoColor=white)
 
-**EdTech** é uma solução de software completa (Monorepo) desenvolvida para digitalizar, armazenar e auditar publicações, relatórios científicos e datasets de laboratórios acadêmicos. Construído sob rígidos padrões de segurança (Enterprise Grade), oferece rastreabilidade e governança de dados ponta a ponta.
+*"Eu sou o Arquiteto. Criei o EdTech."* 🕴️ — Olá! Seja muito bem-vindo ao coração do nosso monorepo. Se você está aqui, é porque busca a verdade (ou pelo menos um código limpo e uma infraestrutura resiliente).
+
+**EdTech** é uma solução de software Enterprise-Grade, um monorepo meticulosamente orquestrado para digitalizar, armazenar e auditar publicações, relatórios científicos e datasets de laboratórios acadêmicos. Nós construímos sistemas não apenas para funcionar, mas para escalar com perfeição e rastreabilidade ponta a ponta.
 
 > **📖 Portal Oficial da Documentação (Docs-as-Code):** [pedrohpsantos.github.io/EdTech](https://pedrohpsantos.github.io/EdTech/)
 
 ---
 
-## 🎯 Objetivo e Visão
+## 🎯 O Grande Plano (Visão)
 
-O principal objetivo do EdTech é modernizar laboratórios acadêmicos substituindo processos baseados em planilhas e drives compartilhados inseguros por um **Repositório Centralizado e Auditável**. 
+O objetivo principal do EdTech é erradicar o caos. Chega de pen drives perdidos, planilhas sobrescritas e e-mails como sistema de versionamento. Substituímos isso por um **Repositório Centralizado e Auditável**, onde cada byte de dado é tratado com o rigor de uma operação cirúrgica.
 
-- **Transparência:** Todas as operações críticas geram logs de auditoria imutáveis.
-- **Eficiência:** Orientadores aprovam publicações diretamente pelo painel.
-- **Segurança:** Acesso controlado via JWT, proteção Anti-CSRF e tráfego HTTPS 100% isolado na nuvem.
+- **Transparência Absoluta:** O que acontece no laboratório, fica imutavelmente logado na nuvem.
+- **Governança:** Controles estritos de acesso. O Orientador é a chave mestra.
+- **Segurança de Outro Mundo:** JWT rotativo, defesas Anti-CSRF e HTTPS isolado. Não deixe as portas abertas.
 
 ---
 
-## 🏗️ Estrutura do Monorepo
+## 🏗️ O Mapa do Tesouro (Estrutura do Monorepo)
 
-O repositório adota a arquitetura de monorepo para facilitar a integração, rastreamento de issues e implantação via CI/CD. 
+Como um bom maestro, dividi este projeto em domínios de responsabilidade estrita. Cada pasta tem uma alma e um propósito. E, claro, uma documentação com sua própria personalidade esperando por você:
 
-Navegue pela documentação específica de cada módulo:
-
-| Módulo | Descrição | Stack Principal |
+| Módulo | A Alma (O que faz) | Stack de Poder |
 | :--- | :--- | :--- |
-| **[🎨 Frontend (UI)](frontend/README.md)** | Single Page Application (SPA) responsiva para a interação dos usuários. | React 19, Vite 8, React Query |
-| **[⚙️ Backend (API)](docvault/api/README.md)** | Serviços RESTful para regras de negócio, persistência e auditoria. | Java 21, Spring Boot 4.1 |
-| **[☁️ Infraestrutura (IaC)](infra/README.md)** | Configurações de Nuvem, Banco de Dados, CI/CD e Secrets. | Google Cloud, Docker, GitHub Actions |
-| **[📄 Documentação (Docs)](docs/README.md)** | Diretório central da documentação (C4 Model, Manuais, FinOps). | MkDocs Material, Markdown |
+| **[🎨 Frontend (UI)](frontend/README.md)** | SPA vibrante e responsiva. *A interface é o rosto da nossa operação.* | React 19, Vite 8, Tailwind (Brincadeira, Vanilla css!) |
+| **[⚙️ Backend (API)](backend/README.md)** | A engrenagem implacável. *Sem o backend, não há sistema.* | Java 21, Spring Boot 4.1 |
+| **[☁️ Infraestrutura](infra/README.md)** | O chão de fábrica na nuvem. *Se a nuvem cair, nós a levantamos.* | GCP, Docker, Docker Compose |
+| **[📄 Documentação](docs/README.md)** | Nossa biblioteca de Alexandria. *Código não documentado não existe.* | MkDocs Material |
+| **[🤖 Scripts](scripts/README.md)** | Os ninjas da automação. *Atalhos para o trabalho sujo.* | Bash, Python, JS |
+| **[🕵️ Testes](tests/README.md)** | O detetive da qualidade. *Nenhum bug escapa à inspeção.* | Playwright, K6 |
 
 ---
 
-## 🛡️ Status Atual do Projeto
+## 🛡️ Telemetria e Status
 
-O projeto encontra-se em **produção**, operando na nuvem do Google Cloud Platform, mas continua recebendo novas integrações de segurança.
+Nós operamos na nuvem do Google (GCP), mas mantemos as luzes acesas localmente.
 
-| Status | Funcionalidade |
+| Status | Diretriz de Operação |
 | :---: | :--- |
-| ✅ | Infraestrutura de Autenticação JWT e CORS configurada |
-| ✅ | CI/CD (GitHub Actions) com validação de testes e build no Cloud Run |
-| ✅ | Modelagem do Banco (PostgreSQL) automatizada via Flyway |
-| ✅ | Dashboard do Pesquisador (Upload de Artigos via GCS) |
-| ✅ | Rastreabilidade e Auditoria de eventos |
-| 🚧 | Integração completa com ferramentas de SAST (Dependency Check) |
-| 🚧 | Painel Analítico do Orientador (Métricas do Laboratório) |
+| ✅ | Autenticação JWT e malha de CORS configurada |
+| ✅ | CI/CD Implacável (GitHub Actions + Cloud Run) |
+| ✅ | Modelagem via Flyway (Migrações como Código) |
+| ✅ | Armazenamento dinâmico (GCS em prod, Local no dev) |
+| 🚧 | Integração profunda com SAST e Dependency Check |
+| 🚧 | Painel de controle analítico do Orientador |
 
 ---
 
-## 🔐 Variáveis de Ambiente
+## 🚀 O Despertar (Quick Start Local)
 
-Para o ambiente local, copie o arquivo `.env.example` para `.env` e configure os valores básicos. Em produção, esses valores são protegidos pelo Google Secret Manager.
+Para orquestrar tudo isso na sua máquina, você só precisa de **Docker**. Eu escondi as complexidades para que você só precise de *um único comando* para dar vida ao ecossistema.
 
-| Variável | Padrão (Local) | Descrição |
-| :--- | :--- | :--- |
-| `POSTGRES_USER` | `postgres` | Usuário do banco de dados (Container Docker) |
-| `POSTGRES_PASSWORD` | `postgres` | Senha do banco de dados |
-| `POSTGRES_DB` | `edtech_db` | Nome do banco |
-| `JWT_SECRET` | `secret_super_seguro_para_jwt...` | Chave HMAC de 256-bits para assinatura de tokens (trocar em prod) |
-| `GCP_PROJECT_ID` | `(vazio)` | ID do projeto no Google Cloud (Necessário para GCS) |
-| `FRONTEND_URL` | `http://localhost:5173` | URL do frontend autorizada no CORS da API |
-
----
-
-## 🚀 Quick Start (Desenvolvimento Local - 1 Click)
-
-### 1. Requisitos
-- **Docker e Docker Compose**
-
-### 2. Levantando o Ambiente (Mágico)
-
-Com a arquitetura unificada, você pode subir o Banco de Dados, Backend (Spring Boot) e Frontend (React/Vite) com apenas um comando:
+### A Mágica de 1 Clique
 
 ```bash
-# Clone o repositório
+# Siga o coelho branco (Clone o repositório)
 git clone https://github.com/pedrohpsantos/EdTech.git
 cd EdTech
 
-# Configure as variáveis locais
-cp .env.example .env
+# Pegue a pílula vermelha (Variáveis locais)
+cp infra/.env.example infra/.env
 
-# Suba todo o ecossistema
-docker compose up --build
+# Acorde o sistema
+cd infra
+docker compose up --build -d
 ```
 
-A aplicação web estará disponível em `http://localhost:5173`.
-A API do Backend estará disponível em `http://localhost:8080`.
+- **Frontend (A Matrix visual):** `http://localhost:5173`
+- **Backend (O Núcleo):** `http://localhost:8080`
 
 ---
 
-## 📝 Regras de Contribuição (Conventional Commits)
+## 🤝 Comunidade e As Leis Universais
 
-Nós adotamos o padrão **Conventional Commits** para manter o histórico do Git limpo e automatizar as releases.
-Seus commits devem seguir estritamente o formato: `<tipo>[escopo opcional]: <descrição>`
+Nós seguimos regras. A anarquia não escala. Por isso, ao se juntar ao projeto, certifique-se de conhecer nossos pilares:
 
-- `feat:` Nova funcionalidade
-- `fix:` Correção de bug
-- `docs:` Mudanças apenas na documentação
-- `chore:` Tarefas de manutenção ou dependências (ex: `chore(deps): update packages`)
-- `refactor:` Refatoração de código que não adiciona feature nem corrige bug
+- 📖 **[Como Contribuir (CONTRIBUTING)](.github/CONTRIBUTING.md):** O manual do bom cidadão EdTech.
+- 📜 **[Código de Conduta](.github/CODE_OF_CONDUCT.md):** Respeito mútuo não é opcional.
+- 🔒 **[Segurança (SECURITY)](.github/SECURITY.md):** Como reportar uma vulnerabilidade (antes que ela quebre tudo).
+- ⚖️ **[Licença (LICENSE)](LICENSE):** MIT. Livre, mas com responsabilidade.
 
-Exemplo: `feat(auth): adiciona fluxo de login com JWT`
+E sobre commits... use **Conventional Commits**. Mantenha o histórico limpo, ou os scripts de CI irão te julgar silenciosamente.
+
+> *Dica: Se você não sabe o que fazer a seguir, olhe a aba de Issues. Sempre há uma anomalia precisando de um desenvolvedor habilidoso.*

@@ -15,6 +15,10 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'jsdom',
+    css: true,
+    env: {
+      VITE_API_URL: 'http://localhost:8080'
+    },
     setupFiles: './src/setupTests.js',
     exclude: ['node_modules', 'dist', '.idea', '.git', '.cache', 'e2e/**'],
     coverage: {
