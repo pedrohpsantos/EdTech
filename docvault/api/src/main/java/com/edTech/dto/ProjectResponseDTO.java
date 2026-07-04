@@ -4,25 +4,50 @@ import java.time.ZonedDateTime;
 import java.util.UUID;
 
 public class ProjectResponseDTO {
-    private UUID id;
-    private String title;
-    private String description;
-    private UUID advisorId;
-    private ZonedDateTime createdAt;
+  private UUID id;
+  private String title;
+  private String description;
+  private UUID advisorId;
+  private ZonedDateTime createdAt;
 
-    // Getters and Setters
-    public UUID getId() { return id; }
-    public void setId(UUID id) { this.id = id; }
+  // Getters and Setters
+  public UUID getId() {
+    return id;
+  }
 
-    public String getTitle() { return title; }
-    public void setTitle(String title) { this.title = title; }
+  public void setId(UUID id) {
+    this.id = id;
+  }
 
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
+  public String getTitle() {
+    return title;
+  }
 
-    public UUID getAdvisorId() { return advisorId; }
-    public void setAdvisorId(UUID advisorId) { this.advisorId = advisorId; }
+  public void setTitle(String title) {
+    this.title = title;
+  }
 
-    public ZonedDateTime getCreatedAt() { return createdAt; }
-    public void setCreatedAt(ZonedDateTime createdAt) { this.createdAt = createdAt; }
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+  public UUID getAdvisorId() {
+    return advisorId;
+  }
+
+  public void setAdvisorId(UUID advisorId) {
+    this.advisorId = advisorId;
+  }
+
+  public ZonedDateTime getCreatedAt() {
+    return createdAt;
+  }
+
+  public void setCreatedAt(ZonedDateTime createdAt) {
+    this.createdAt = createdAt;
+  }
 }

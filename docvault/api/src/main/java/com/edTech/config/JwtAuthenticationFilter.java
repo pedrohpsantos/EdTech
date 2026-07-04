@@ -9,6 +9,9 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,81 +20,76 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
-
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    private static final String TOKEN_COOKIE_NAME = "token";
+  private static final String TOKEN_COOKIE_NAME = "token";
 
-    private final JwtService jwtService;
-    private final UserRepository userRepository;
+  private final JwtService jwtService;
+  private final UserRepository userRepository;
 
-    public JwtAuthenticationFilter(JwtService jwtService, UserRepository userRepository) {
-        this.jwtService = jwtService;
-        this.userRepository = userRepository;
+  public JwtAuthenticationFilter(JwtService jwtService, UserRepository userRepository) {
+    this.jwtService = jwtService;
+    this.userRepository = userRepository;
+  }
+
+  @Override
+  protected boolean shouldNotFilter(HttpServletRequest request) {
+    String path = request.getServletPath();
+    String method = request.getMethod();
+
+    return HttpMethod.OPTIONS.matches(method)
+        || (HttpMethod.POST.matches(method) && "/api/auth/login".equals(path))
+        || (HttpMethod.POST.matches(method) && "/api/auth/register".equals(path))
+        || path.startsWith("/api/auth/recovery/");
+  }
+
+  @Override
+  protected void doFilterInternal(
+      HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+      throws ServletException, IOException {
+    Optional<String> token = extractToken(request);
+
+    if (token.isEmpty()) {
+      filterChain.doFilter(request, response);
+      return;
     }
 
-    @Override
-    protected boolean shouldNotFilter(HttpServletRequest request) {
-        String path = request.getServletPath();
-        String method = request.getMethod();
-
-        return HttpMethod.OPTIONS.matches(method)
-                || (HttpMethod.POST.matches(method) && "/api/auth/login".equals(path))
-                || (HttpMethod.POST.matches(method) && "/api/auth/register".equals(path))
-                || path.startsWith("/api/auth/recovery/");
+    try {
+      String email = jwtService.extractSubject(token.get());
+      if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+        userRepository
+            .findByEmailIgnoreCase(email)
+            .filter(User::isActive)
+            .filter(user -> jwtService.isValid(token.get(), user))
+            .ifPresent(user -> authenticateUser(request, user));
+      }
+    } catch (JwtException | IllegalArgumentException exception) {
+      SecurityContextHolder.clearContext();
     }
 
-    @Override
-    protected void doFilterInternal(
-            HttpServletRequest request,
-            HttpServletResponse response,
-            FilterChain filterChain
-    ) throws ServletException, IOException {
-        Optional<String> token = extractToken(request);
+    filterChain.doFilter(request, response);
+  }
 
-        if (token.isEmpty()) {
-            filterChain.doFilter(request, response);
-            return;
-        }
-
-        try {
-            String email = jwtService.extractSubject(token.get());
-            if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                userRepository.findByEmailIgnoreCase(email)
-                        .filter(User::isActive)
-                        .filter(user -> jwtService.isValid(token.get(), user))
-                        .ifPresent(user -> authenticateUser(request, user));
-            }
-        } catch (JwtException | IllegalArgumentException exception) {
-            SecurityContextHolder.clearContext();
-        }
-
-        filterChain.doFilter(request, response);
+  private Optional<String> extractToken(HttpServletRequest request) {
+    Cookie[] cookies = request.getCookies();
+    if (cookies == null) {
+      return Optional.empty();
     }
 
-    private Optional<String> extractToken(HttpServletRequest request) {
-        Cookie[] cookies = request.getCookies();
-        if (cookies == null) {
-            return Optional.empty();
-        }
-
-        for (Cookie cookie : cookies) {
-            if (TOKEN_COOKIE_NAME.equals(cookie.getName()) && !cookie.getValue().isBlank()) {
-                return Optional.of(cookie.getValue());
-            }
-        }
-
-        return Optional.empty();
+    for (Cookie cookie : cookies) {
+      if (TOKEN_COOKIE_NAME.equals(cookie.getName()) && !cookie.getValue().isBlank()) {
+        return Optional.of(cookie.getValue());
+      }
     }
 
-    private void authenticateUser(HttpServletRequest request, User user) {
-        var authorities = List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole().name()));
-        var authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);
-        authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-    }
+    return Optional.empty();
+  }
+
+  private void authenticateUser(HttpServletRequest request, User user) {
+    var authorities = List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole().name()));
+    var authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);
+    authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+    SecurityContextHolder.getContext().setAuthentication(authentication);
+  }
 }

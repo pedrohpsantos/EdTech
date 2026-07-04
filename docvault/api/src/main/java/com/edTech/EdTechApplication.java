@@ -8,7 +8,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @EnableAsync
 public class EdTechApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(EdTechApplication.class, args);
-    }
+  public static void main(String[] args) {
+    SpringApplication.run(EdTechApplication.class, args);
+  }
 }

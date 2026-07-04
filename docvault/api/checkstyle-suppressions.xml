@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE suppressions PUBLIC
+    "-//Checkstyle//DTD SuppressionFilter Configuration 1.2//EN"
+    "https://checkstyle.org/dtds/suppressions_1_2.dtd">
+<suppressions>
+    <suppress checks="JavadocPackage" files=".*"/>
+    <suppress checks="MissingJavadocMethod" files=".*"/>
+    <suppress checks="MissingJavadocType" files=".*"/>
+    <suppress checks="PackageName" files=".*"/>
+    <suppress checks="AbbreviationAsWordInName" files=".*"/>
+    <suppress checks="DesignForExtension" files=".*"/>
+    <suppress checks="AvoidStarImport" files=".*"/>
+    <suppress checks="LineLength" files=".*"/>
+    <suppress checks="LocalVariableName" files=".*"/>
+    <suppress checks="EmptyCatchBlock" files=".*"/>
+</suppressions>

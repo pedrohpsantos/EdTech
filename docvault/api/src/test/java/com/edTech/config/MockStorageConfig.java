@@ -11,9 +11,9 @@ import org.springframework.context.annotation.Profile;
 @Profile("test")
 public class MockStorageConfig {
 
-    @Bean
-    @Primary
-    public Storage googleCloudStorage() {
-        return Mockito.mock(Storage.class);
-    }
+  @Bean
+  @Primary
+  public Storage googleCloudStorage() {
+    return Mockito.mock(Storage.class);
+  }
 }

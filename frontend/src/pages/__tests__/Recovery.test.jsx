@@ -2,7 +2,7 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import Recovery from '../Recovery';
 import { requestPasswordRecovery, verifyRecoveryCode, resetPassword } from '../../services/api';
-import { vi } from 'vitest';
+import { vi, describe, beforeEach, test, expect } from 'vitest';
 
 // Mock da API para isolar o teste (Unitário)
 vi.mock('../../services/api', () => ({
@@ -15,6 +15,7 @@ vi.mock('../../services/api', () => ({
 vi.mock('framer-motion', () => {
     const React = require('react');
     const filterProps = (props) => {
+        // eslint-disable-next-line no-unused-vars
         const { whileHover, whileTap, initial, animate, variants, transition, ...rest } = props;
         return rest;
     };

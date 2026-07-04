@@ -5,37 +5,77 @@ import java.time.ZonedDateTime;
 import java.util.UUID;
 
 public class DocumentResponseDTO {
-    private UUID id;
-    private String title;
-    private String fileUrl;
-    private DocumentStatus status;
-    private UUID authorId;
-    private UUID projectId;
-    private ZonedDateTime createdAt;
-    private String feedback;
+  private UUID id;
+  private String title;
+  private String fileUrl;
+  private DocumentStatus status;
+  private UUID authorId;
+  private UUID projectId;
+  private ZonedDateTime createdAt;
+  private String feedback;
 
-    // Getters and Setters
-    public UUID getId() { return id; }
-    public void setId(UUID id) { this.id = id; }
+  // Getters and Setters
+  public UUID getId() {
+    return id;
+  }
 
-    public String getTitle() { return title; }
-    public void setTitle(String title) { this.title = title; }
+  public void setId(UUID id) {
+    this.id = id;
+  }
 
-    public String getFileUrl() { return fileUrl; }
-    public void setFileUrl(String fileUrl) { this.fileUrl = fileUrl; }
+  public String getTitle() {
+    return title;
+  }
 
-    public DocumentStatus getStatus() { return status; }
-    public void setStatus(DocumentStatus status) { this.status = status; }
+  public void setTitle(String title) {
+    this.title = title;
+  }
 
-    public UUID getAuthorId() { return authorId; }
-    public void setAuthorId(UUID authorId) { this.authorId = authorId; }
+  public String getFileUrl() {
+    return fileUrl;
+  }
 
-    public UUID getProjectId() { return projectId; }
-    public void setProjectId(UUID projectId) { this.projectId = projectId; }
+  public void setFileUrl(String fileUrl) {
+    this.fileUrl = fileUrl;
+  }
 
-    public ZonedDateTime getCreatedAt() { return createdAt; }
-    public void setCreatedAt(ZonedDateTime createdAt) { this.createdAt = createdAt; }
+  public DocumentStatus getStatus() {
+    return status;
+  }
 
-    public String getFeedback() { return feedback; }
-    public void setFeedback(String feedback) { this.feedback = feedback; }
+  public void setStatus(DocumentStatus status) {
+    this.status = status;
+  }
+
+  public UUID getAuthorId() {
+    return authorId;
+  }
+
+  public void setAuthorId(UUID authorId) {
+    this.authorId = authorId;
+  }
+
+  public UUID getProjectId() {
+    return projectId;
+  }
+
+  public void setProjectId(UUID projectId) {
+    this.projectId = projectId;
+  }
+
+  public ZonedDateTime getCreatedAt() {
+    return createdAt;
+  }
+
+  public void setCreatedAt(ZonedDateTime createdAt) {
+    this.createdAt = createdAt;
+  }
+
+  public String getFeedback() {
+    return feedback;
+  }
+
+  public void setFeedback(String feedback) {
+    this.feedback = feedback;
+  }
 }
