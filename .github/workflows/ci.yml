@@ -94,6 +94,17 @@ jobs:
           if-no-files-found: warn
       - name: Run Mutation Tests (PiTest)
         run: ./mvnw org.pitest:pitest-maven:mutationCoverage -B
+      - name: Run Security Audit (OWASP)
+        continue-on-error: true # Permite que a pipeline continue se a NVD bloquear o IP por falta de API Key (comum em Runners do GitHub)
+        env:
+          NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
+        run: |
+          if [ -z "$NVD_API_KEY" ]; then
+            echo "Aviso: NVD_API_KEY não encontrada nos secrets. Usando modo de fallback para evitar quebra da build por rate limit (403/404)."
+            ./mvnw org.owasp:dependency-check-maven:check -B -Ddependency-check.nvdApiDelay=16000 || true
+          else
+            ./mvnw org.owasp:dependency-check-maven:check -B -Ddependency-check.nvdApiKey=$NVD_API_KEY
+          fi
 
   # ==========================================
   #                 FRONTEND
