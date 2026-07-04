@@ -25,56 +25,57 @@ public final class JwtService {
   public JwtService(
       @Value(&quot;${jwt.secret:}&quot;) String secret,
 <span class="fc" id="L27">      @Value(&quot;${jwt.expiration-minutes:60}&quot;) long expirationMinutes) {</span>
-<span class="fc" id="L28">    org.springframework.util.Assert.hasText(secret, &quot;JWT_SECRET deve ser definido para autenticação.&quot;);</span>
-<span class="fc" id="L29">    this.secretKey = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));</span>
-<span class="fc" id="L30">    this.expiration = Duration.ofMinutes(expirationMinutes);</span>
-<span class="fc" id="L31">  }</span>
+<span class="fc" id="L28">    org.springframework.util.Assert.hasText(secret,</span>
+        &quot;JWT_SECRET deve ser definido para autenticação.&quot;);
+<span class="fc" id="L30">    this.secretKey = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));</span>
+<span class="fc" id="L31">    this.expiration = Duration.ofMinutes(expirationMinutes);</span>
+<span class="fc" id="L32">  }</span>
 
   /** Documentação para o método generateToken. */
   public String generateToken(User user) {
-<span class="fc" id="L35">    return generateToken(user, expiration);</span>
+<span class="fc" id="L36">    return generateToken(user, expiration);</span>
   }
 
   /** Documentação para o método generateToken. */
   public String generateToken(User user, Duration tokenTtl) {
-<span class="fc" id="L40">    Instant now = Instant.now();</span>
-<span class="fc" id="L41">    Instant expiresAt = now.plus(tokenTtl);</span>
+<span class="fc" id="L41">    Instant now = Instant.now();</span>
+<span class="fc" id="L42">    Instant expiresAt = now.plus(tokenTtl);</span>
 
-<span class="fc" id="L43">    return Jwts.builder()</span>
-<span class="fc" id="L44">        .subject(user.getEmail())</span>
-<span class="fc" id="L45">        .claim(&quot;uid&quot;, user.getId().toString())</span>
-<span class="fc" id="L46">        .claim(&quot;role&quot;, user.getRole().name())</span>
-<span class="fc" id="L47">        .issuedAt(Date.from(now))</span>
-<span class="fc" id="L48">        .expiration(Date.from(expiresAt))</span>
-<span class="fc" id="L49">        .signWith(secretKey)</span>
-<span class="fc" id="L50">        .compact();</span>
+<span class="fc" id="L44">    return Jwts.builder()</span>
+<span class="fc" id="L45">        .subject(user.getEmail())</span>
+<span class="fc" id="L46">        .claim(&quot;uid&quot;, user.getId().toString())</span>
+<span class="fc" id="L47">        .claim(&quot;role&quot;, user.getRole().name())</span>
+<span class="fc" id="L48">        .issuedAt(Date.from(now))</span>
+<span class="fc" id="L49">        .expiration(Date.from(expiresAt))</span>
+<span class="fc" id="L50">        .signWith(secretKey)</span>
+<span class="fc" id="L51">        .compact();</span>
   }
 
   /** Documentação para o método extractSubject. */
   public String extractSubject(String token) {
-<span class="fc" id="L55">    return validateToken(token).getSubject();</span>
+<span class="fc" id="L56">    return validateToken(token).getSubject();</span>
   }
 
   /** Documentação para o método getUserIdFromToken. */
   public UUID getUserIdFromToken(String token) {
-<span class="nc" id="L60">    Claims claims = validateToken(token);</span>
-<span class="nc" id="L61">    String uidStr = claims.get(&quot;uid&quot;, String.class);</span>
-<span class="nc" id="L62">    return UUID.fromString(uidStr);</span>
+<span class="nc" id="L61">    Claims claims = validateToken(token);</span>
+<span class="nc" id="L62">    String uidStr = claims.get(&quot;uid&quot;, String.class);</span>
+<span class="nc" id="L63">    return UUID.fromString(uidStr);</span>
   }
 
   /** Documentação para o método isValid. */
   public boolean isValid(String token, User user) {
     try {
-<span class="fc" id="L68">      String subject = extractSubject(token);</span>
-<span class="pc bpc" id="L69" title="2 of 4 branches missed.">      return subject != null &amp;&amp; subject.equalsIgnoreCase(user.getEmail());</span>
-<span class="fc" id="L70">    } catch (JwtException | IllegalArgumentException exception) {</span>
-<span class="fc" id="L71">      return false;</span>
+<span class="fc" id="L69">      String subject = extractSubject(token);</span>
+<span class="pc bpc" id="L70" title="2 of 4 branches missed.">      return subject != null &amp;&amp; subject.equalsIgnoreCase(user.getEmail());</span>
+<span class="fc" id="L71">    } catch (JwtException | IllegalArgumentException exception) {</span>
+<span class="fc" id="L72">      return false;</span>
     }
   }
 
   /** Documentação para o método validateToken. */
   public Claims validateToken(String token) {
-<span class="fc" id="L77">    return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload();</span>
+<span class="fc" id="L78">    return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload();</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
