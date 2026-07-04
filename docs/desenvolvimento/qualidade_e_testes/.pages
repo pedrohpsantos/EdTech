@@ -1,0 +1,4 @@
+title: 'Qualidade e Testes'
+nav:
+  - qualidade_testes.md
+  - smoke_test_report.md

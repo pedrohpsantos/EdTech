@@ -1,7 +1,6 @@
-﻿title: 'Arquitetura de Software'
+title: 'Arquitetura de Software'
 nav:
   - design_tecnico.md
   - diagramas
-  - infraestrutura
-  - adrs
-
+  - decisoes_adrs
+  - nuvem_e_seguranca

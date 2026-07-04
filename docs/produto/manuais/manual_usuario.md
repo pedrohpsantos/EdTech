@@ -18,7 +18,7 @@ Para iniciar, o pesquisador deve realizar seu cadastro informando e-mail, senha 
 ### 1.2 Upload de Documentos
 Na tela de envio (Upload), o pesquisador pode selecionar um arquivo PDF (Tese, Artigo, Dataset) e vinculá-lo a um Projeto.
 
-![Upload de Documentos](../assets/imgs/pesquisador_upload.png)
+![Upload pelo Pesquisador](../../assets/imgs/pesquisador_upload.png)
 
 !!! tip
     Apenas documentos em PDF e planilhas CSV/XLSX são permitidos no momento. Arquivos executáveis serão rejeitados pela auditoria de segurança de upload.
@@ -32,7 +32,7 @@ O **Orientador** é o usuário responsável por validar as entregas do Pesquisad
 ### 2.1 Dashboard de Acompanhamento
 O painel do orientador apresenta métricas executivas, como a quantidade de documentos pendentes de revisão e o score de conformidade dos projetos em andamento.
 
-![Dashboard do Orientador](../assets/imgs/orientador_dashboard.png)
+![Dashboard do Orientador](../../assets/imgs/orientador_dashboard.png)
 
 ### 2.2 Aprovação de Documentos
 Acessando a lista de documentos em revisão, o Orientador pode visualizar um *preview* rápido do arquivo e utilizar os botões de ação para **Aprovar**, **Solicitar Alterações** ou **Rejeitar**.
@@ -49,7 +49,7 @@ O **Auditor** possui acesso exclusivo e restrito apenas à visão de rastreabili
 ### 3.1 Tabela de Logs e Rastreabilidade
 O Auditor pode pesquisar qualquer evento que tenha ocorrido no ciclo de vida de um documento, incluindo visualizações, downloads, edições de metadados e aprovações.
 
-![Painel do Auditor](../assets/imgs/auditor_logs.png)
+![Logs do Auditor](../../assets/imgs/auditor_logs.png)
 
 ### 3.2 Exportação de Trilha de Auditoria
 A tabela permite aplicar filtros por intervalo de data, usuário e tipo de ação. Posteriormente, a tabela pode ser exportada para auditorias externas (compliance).

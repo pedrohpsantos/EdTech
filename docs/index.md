@@ -16,8 +16,8 @@ hide:
   
   <div class="hero-cta" markdown="1">
 
-  [Explorar o MVP :material-rocket-launch:](produto/strategy/canvas_mvp/){ .md-button .md-button--primary }
-  [Ver Entregas :material-package-variant-closed:](gestao/historico_sprints/Semana%201/){ .md-button }
+  [Explorar o MVP :material-rocket-launch:](produto/estrategia_e_descoberta/canvas_mvp/){ .md-button .md-button--primary }
+  [Ver Entregas :material-package-variant-closed:](gestao/sprints/Semana%201/){ .md-button }
 
   </div>
 

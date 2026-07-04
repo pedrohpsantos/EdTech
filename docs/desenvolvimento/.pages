@@ -1,11 +1,6 @@
-﻿title: 'Desenvolvimento'
+title: 'Desenvolvimento'
 nav:
-  - guia_local.md
-  - frontend_vite.md
-  - backend_spring.md
-  - ci_cd.md
-  - cors_configuration.md
-  - api_reference.md
-  - qualidade_testes.md
-  - smoke_test_report.md
-
+  - setup_local
+  - api
+  - devops
+  - qualidade_e_testes

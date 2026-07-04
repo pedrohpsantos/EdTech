@@ -37,7 +37,7 @@ flowchart TB
 - **Cloud Storage:** Separa o armazenamento de grandes volumes binários (PDFs) do banco relacional, garantindo performance nas requisições textuais (APIs) da aplicação.
 
 !!! info "Decisão Arquitetural"
-    Consulte a [ADR 0001](../adrs/0001-armazenamento-google-cloud.md) para detalhes completos da consolidação da infraestrutura.
+    Como o projeto já contava com [Decisão Técnica #0001](../decisoes_adrs/0001-armazenamento-google-cloud.md) apontando para o GCP, optou-se por consolidar a hospedagem da API no **Google Cloud Run**, uma plataforma serverless e moderna.
 
 ---
 

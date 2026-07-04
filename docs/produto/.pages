@@ -1,7 +1,6 @@
-﻿title: 'Produto e Negócio'
+title: 'Produto e Negócio'
 nav:
-  - discovery
-  - strategy
+  - estrategia_e_descoberta
+  - design_e_ux
   - requisitos
-  - branding
-
+  - manuais

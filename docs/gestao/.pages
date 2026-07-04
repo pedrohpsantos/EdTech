@@ -1,8 +1,6 @@
-﻿title: 'Gestão e Metodologia Ágil'
+title: 'Gestão e Metodologia'
 nav:
   - planejamento
-  - agile
-  - equipe
-  - historico_sprints
-  - reunioes
-
+  - sprints
+  - metodologia_e_time
+  - atas
