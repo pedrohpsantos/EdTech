@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DashboardLayout from '../components/layout/DashboardLayout';
-import { useProjects } from '../hooks/useProjects';
+import { _useProjects } from '../hooks/useProjects';
 import { useDocuments, useUploadDocument, useDownloadUrl } from '../hooks/useDocuments';
 import { Document } from '../types';
 import '../assets/documentos.css';
 
 const Documentos: React.FC = () => {
-  const navigate = useNavigate();
+  const _navigate = useNavigate();
 
   // Filtros
   const [filterTitle, setFilterTitle] = useState('');
@@ -22,9 +22,9 @@ const Documentos: React.FC = () => {
   const [toastMessage, setToastMessage] = useState('');
 
   // React Query Hooks
-  const { data: documents = [], isLoading: loadingDocs } = useDocuments('', filterTitle);
+  const { data: _documents = [], isLoading: _loadingDocs } = useDocuments('', filterTitle);
   const { mutateAsync: getUrl } = useDownloadUrl();
-  const { mutateAsync: uploadDoc } = useUploadDocument();
+  const { mutateAsync: _uploadDoc } = useUploadDocument();
 
   const showToast = (message: string) => {
     setToastMessage(message);

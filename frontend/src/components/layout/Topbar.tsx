@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/authContext';
+// import { useAuth } from '../../context/authContext';
 import ThemeToggle from '../themeToggle';
 
 interface TopbarProps {
@@ -11,7 +11,7 @@ interface TopbarProps {
 }
 
 const Topbar: React.FC<TopbarProps> = ({ title, subtitle, breadcrumbs, customTopbarElement }) => {
-  const { user } = useAuth();
+  // const { user } = useAuth();
   const navigate = useNavigate();
   const [showNotifications, setShowNotifications] = useState(false);
 

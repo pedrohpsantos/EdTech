@@ -100,10 +100,7 @@ function Recovery() {
     }
   };
 
-  const formVariants = {
-    hidden: { opacity: 0, x: 20 },
-    visible: { opacity: 1, x: 0, transition: { staggerChildren: 0.05, delayChildren: 0.1 } },
-  };
+
 
   const itemVariants = {
     hidden: { opacity: 0, y: 15 },
