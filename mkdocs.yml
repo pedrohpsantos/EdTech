@@ -66,6 +66,7 @@ extra:
 extra_javascript:
   - javascripts/mathjax.js
   - javascripts/mobile-nav.js
+  - javascripts/easter-egg.js
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
 
 extra_css:
