@@ -117,10 +117,16 @@ jobs:
           while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
             if [ -z "$NVD_API_KEY" ]; then
               echo "NVD_API_KEY ausente. Executando sem chave (Maior chance de Rate Limit)... Tentativa $(($RETRY_COUNT+1))/$MAX_RETRIES"
-              ./mvnw org.owasp:dependency-check-maven:check -B -Ddependency-check.nvdApiDelay=16000 && SUCCESS=1 && break
+              if ./mvnw org.owasp:dependency-check-maven:check -B -Ddependency-check.nvdApiDelay=16000; then
+                SUCCESS=1
+                break
+              fi
             else
               echo "NVD_API_KEY encontrada. Executando com chave... Tentativa $(($RETRY_COUNT+1))/$MAX_RETRIES"
-              ./mvnw org.owasp:dependency-check-maven:check -B -Ddependency-check.nvdApiKey=$NVD_API_KEY -Ddependency-check.nvdApiDelay=8000 && SUCCESS=1 && break
+              if ./mvnw org.owasp:dependency-check-maven:check -B -Ddependency-check.nvdApiKey=$NVD_API_KEY -Ddependency-check.nvdApiDelay=8000; then
+                SUCCESS=1
+                break
+              fi
             fi
             
             RETRY_COUNT=$(($RETRY_COUNT+1))
