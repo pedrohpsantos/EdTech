@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: docvault/api
+        working-directory: backend
     steps:
       - uses: actions/checkout@v7
       - name: Set up JDK 21
@@ -42,7 +42,7 @@ jobs:
     needs: lint-backend
     defaults:
       run:
-        working-directory: docvault/api
+        working-directory: backend
     steps:
       - uses: actions/checkout@v7
       - name: Set up JDK 21
@@ -59,7 +59,7 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: backend-target
-          path: docvault/api/target/
+          path: backend/target/
   
   test-backend:
     name: Test Backend
@@ -67,7 +67,7 @@ jobs:
     needs: build-backend
     defaults:
       run:
-        working-directory: docvault/api
+        working-directory: backend
     steps:
       - uses: actions/checkout@v7
       - name: Set up JDK 21
@@ -80,7 +80,7 @@ jobs:
         uses: actions/download-artifact@v8
         with:
           name: backend-target
-          path: docvault/api/target/
+          path: backend/target/
       - name: Run Tests & Coverage
         run: |
           chmod +x mvnw

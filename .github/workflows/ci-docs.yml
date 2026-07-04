@@ -9,7 +9,7 @@ on:
       - 'mkdocs.yml'
       - 'pyproject.toml'
       - '.github/workflows/ci-docs.yml'
-      - 'docvault/api/**'
+      - 'backend/**'
   workflow_dispatch:
 
 permissions:
@@ -51,7 +51,7 @@ jobs:
           cache: maven
 
       - name: Gerar Relatório JaCoCo
-        working-directory: docvault/api
+        working-directory: backend
         run: |
           chmod +x mvnw
           ./mvnw clean test jacoco:report
@@ -59,8 +59,8 @@ jobs:
       - name: Integrar JaCoCo na Documentação
         run: |
           mkdir -p docs/jacoco
-          if [ -d "docvault/api/target/site/jacoco" ]; then
-            cp -r docvault/api/target/site/jacoco/* docs/jacoco/ || true
+          if [ -d "backend/target/site/jacoco" ]; then
+            cp -r backend/target/site/jacoco/* docs/jacoco/ || true
           else
             echo "Nenhum relatório JaCoCo encontrado (talvez não existam testes). Pulando."
           fi

@@ -1,0 +1,15 @@
+{
+  "name": "edtech-tests",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test:e2e": "playwright test -c e2e/playwright.config.js",
+    "test:e2e:ui": "playwright test -c e2e/playwright.config.js --ui"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.61.1",
+    "allure-commandline": "^2.43.0",
+    "allure-playwright": "^3.10.2"
+  }
+}

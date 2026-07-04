@@ -20,7 +20,7 @@ services:
 
   backend:
     build:
-      context: ../docvault/api
+      context: ../backend
       dockerfile: Dockerfile
     container_name: edtech-backend
     depends_on:
