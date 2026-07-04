@@ -25,9 +25,7 @@ public final class JwtService {
   public JwtService(
       @Value("${jwt.secret:}") String secret,
       @Value("${jwt.expiration-minutes:60}") long expirationMinutes) {
-    if (secret == null || secret.isBlank()) {
-      throw new IllegalStateException("JWT_SECRET deve ser definido para autenticação.");
-    }
+    org.springframework.util.Assert.hasText(secret, "JWT_SECRET deve ser definido para autenticação.");
     this.secretKey = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
     this.expiration = Duration.ofMinutes(expirationMinutes);
   }
