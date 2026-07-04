@@ -1,9 +1,16 @@
 import { useState, useEffect, useRef } from 'react';
 
 const KONAMI_CODE = [
-  'ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown',
-  'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight',
-  'b', 'a'
+  'ArrowUp',
+  'ArrowUp',
+  'ArrowDown',
+  'ArrowDown',
+  'ArrowLeft',
+  'ArrowRight',
+  'ArrowLeft',
+  'ArrowRight',
+  'b',
+  'a',
 ];
 
 export default function useEasterEggs() {
@@ -11,7 +18,7 @@ export default function useEasterEggs() {
   const [hyperdriveActivated, setHyperdriveActivated] = useState(false);
   const [, setLogoClicks] = useState(0); // Removed unused read
   const [, setKeySequence] = useState([]); // Removed unused read
-  
+
   const clickTimeoutRef = useRef(null);
   const hyperdriveTimeoutRef = useRef(null);
 
@@ -20,10 +27,10 @@ export default function useEasterEggs() {
     const handleKeyDown = (e) => {
       setKeySequence((prev) => {
         const nextSeq = [...prev, e.key].slice(-10); // Keep last 10 keystrokes
-        
+
         // Check if matches exactly
-        const isMatch = nextSeq.every((key, index) => 
-          key.toLowerCase() === KONAMI_CODE[index].toLowerCase()
+        const isMatch = nextSeq.every(
+          (key, index) => key.toLowerCase() === KONAMI_CODE[index].toLowerCase(),
         );
 
         if (isMatch && nextSeq.length === KONAMI_CODE.length) {
@@ -32,7 +39,7 @@ export default function useEasterEggs() {
           setTimeout(() => setKonamiActivated(false), 5000);
           return [];
         }
-        
+
         return nextSeq;
       });
     };
@@ -45,12 +52,12 @@ export default function useEasterEggs() {
   const handleLogoClick = () => {
     if (hyperdriveActivated) return; // Ignore clicks if already hyperdrive
 
-    setLogoClicks(prev => {
+    setLogoClicks((prev) => {
       const nextClicks = prev + 1;
-      
+
       // Clear idle timeout
       if (clickTimeoutRef.current) clearTimeout(clickTimeoutRef.current);
-      
+
       if (nextClicks >= 5) {
         setHyperdriveActivated(true);
         if (hyperdriveTimeoutRef.current) clearTimeout(hyperdriveTimeoutRef.current);
@@ -64,10 +71,10 @@ export default function useEasterEggs() {
         // If they pause exactly on 1 click, refresh page (Easter Egg)
         clickTimeoutRef.current = setTimeout(() => {
           setLogoClicks((currentClicks) => {
-              if (currentClicks === 1) {
-                  window.location.reload();
-              }
-              return 0;
+            if (currentClicks === 1) {
+              window.location.reload();
+            }
+            return 0;
           });
         }, 1000); // 1 sec pause
         return nextClicks;
@@ -78,12 +85,12 @@ export default function useEasterEggs() {
   // ASCII Console Message
   useEffect(() => {
     console.log(
-      "%c🚀 BEM-VINDO À GOVERNANÇA EDTECH! 🚀", 
-      "color: #8b5cf6; font-size: 20px; font-weight: bold; background: #1c093a; padding: 10px; border-radius: 5px;"
+      '%c🚀 BEM-VINDO À GOVERNANÇA EDTECH! 🚀',
+      'color: #8b5cf6; font-size: 20px; font-weight: bold; background: #1c093a; padding: 10px; border-radius: 5px;',
     );
     console.log(
-      "%cVocê encontrou nosso terminal secreto. Se você está lendo isso, tem olho clínico para detalhes. 😉", 
-      "color: #10b981; font-size: 14px;"
+      '%cVocê encontrou nosso terminal secreto. Se você está lendo isso, tem olho clínico para detalhes. 😉',
+      'color: #10b981; font-size: 14px;',
     );
     console.log(
       `
@@ -93,7 +100,7 @@ export default function useEasterEggs() {
      |  __| / _\` || |/ _ \\/ __| '_ \\ 
      | |___| (_| || |  __/ (__| | | |
      |______\\__,_||_|\\___|\\___|_| |_|
-      `
+      `,
     );
   }, []);
 

@@ -225,44 +225,14 @@ jobs:
   # ==========================================
   #                 DEPLOY
   # ==========================================
-  deploy-frontend:
-    name: Deploy Frontend (Firebase)
+  trigger-cloud-build:
+    name: Trigger Cloud Build (CD)
     runs-on: ubuntu-latest
-    needs: test-frontend
-    if: github.ref == 'refs/heads/main'
-    steps:
-      - uses: actions/checkout@v7
-      - name: Download Frontend Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: frontend-dist
-          path: frontend/dist/
-      - name: Deploy to Firebase Hosting
-        uses: FirebaseExtended/action-hosting-deploy@v0
-        # Continue on error so a duplicate release doesn't mark the whole workflow as failed
-        continue-on-error: true
-        with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_EDTECH }}'
-          channelId: live
-          projectId: edtech-storage-501117
-          entryPoint: ./frontend
-        env:
-          FIREBASE_CLI_EXPERIMENTS: webframeworks
-
-  deploy-backend:
-    name: Deploy Backend (Cloud Run)
-    runs-on: ubuntu-latest
-    needs: test-backend
+    needs: [test-frontend, test-backend]
     if: github.ref == 'refs/heads/main'
     permissions:
       contents: 'read'
       id-token: 'write'
-    env:
-      PROJECT_ID: edtech-storage-501117
-      REGION: southamerica-east1
-      SERVICE_NAME: edtech-backend
-      IMAGE: southamerica-east1-docker.pkg.dev/edtech-storage-501117/cloud-run-source-deploy/edtech-backend
     steps:
       - uses: actions/checkout@v7
       
@@ -271,44 +241,11 @@ jobs:
         uses: 'google-github-actions/auth@v3'
         with:
           credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+          
+      - name: Setup Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
 
-      - name: Configure Docker
-        run: gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev
-
-      - name: Download Build Target
-        uses: actions/download-artifact@v4
-        with:
-          name: backend-target
-          path: docvault/api/target/
-
-      - name: Build and Push Container
-        run: |-
-          cd docvault/api
-          docker build -f Dockerfile.ci -t ${{ env.IMAGE }}:${{ github.sha }} .
-          docker push ${{ env.IMAGE }}:${{ github.sha }}
-
-      - name: Deploy to Cloud Run
-        id: deploy-cr
-        uses: google-github-actions/deploy-cloudrun@v2
-        with:
-          service: ${{ env.SERVICE_NAME }}
-          region: ${{ env.REGION }}
-          image: ${{ env.IMAGE }}:${{ github.sha }}
-          flags: '--allow-unauthenticated --memory=1024Mi --max-instances=5 --cpu-boost --add-cloudsql-instances=${{ env.PROJECT_ID }}:${{ env.REGION }}:edtech-db-dev'
-          secrets_update_strategy: overwrite
-          env_vars_update_strategy: overwrite
-          env_vars: |
-            SPRING_PROFILES_ACTIVE=prod
-            STORAGE_PROVIDER=gcs
-            GCP_PROJECT_ID=${{ env.PROJECT_ID }}
-            GCP_BUCKET_NAME=edtech-vault-storage
-            SPRING_JPA_HIBERNATE_DDL_AUTO=validate
-            CORS_ALLOWED_ORIGINS=https://edtech-storage-501117.web.app
-          secrets: |
-            SPRING_DATASOURCE_URL=SPRING_DATASOURCE_URL:latest
-            SPRING_DATASOURCE_USERNAME=SPRING_DATASOURCE_USERNAME:latest
-            SPRING_DATASOURCE_PASSWORD=SPRING_DATASOURCE_PASSWORD:latest
-            JWT_SECRET=JWT_SECRET:latest
-
-      - name: Show Output
-        run: echo ${{ steps.deploy-cr.outputs.url }}
+      - name: Trigger Cloud Build CD
+        run: |
+          gcloud builds submit --config infra/cloudbuild.yaml \
+            --substitutions=_FIREBASE_SA_SECRET=FIREBASE_SERVICE_ACCOUNT_EDTECH,COMMIT_SHA=${{ github.sha }} .

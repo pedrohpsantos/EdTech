@@ -1,118 +1,132 @@
 .global-loader-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(13, 14, 21, 0.6); /* Translucent dark background */
-    backdrop-filter: blur(8px); /* Nice blur effect */
-    z-index: 9999;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    animation: fadeIn 0.3s ease-in-out;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(13, 14, 21, 0.6); /* Translucent dark background */
+  backdrop-filter: blur(8px); /* Nice blur effect */
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.3s ease-in-out;
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; backdrop-filter: blur(0px); }
-    to { opacity: 1; backdrop-filter: blur(8px); }
+  from {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+  }
+  to {
+    opacity: 1;
+    backdrop-filter: blur(8px);
+  }
 }
 
 .global-loader-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Folding Cube Animation */
 .cube-wrapper {
-    position: relative;
-    width: 60px;
-    height: 60px;
-    margin: 0 auto;
+  position: relative;
+  width: 60px;
+  height: 60px;
+  margin: 0 auto;
 }
 
 .cube-folding {
-    width: 50px;
-    height: 50px;
-    display: inline-block;
-    transform: rotate(45deg);
-    font-size: 0;
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  transform: rotate(45deg);
+  font-size: 0;
 }
 
 .cube-folding span {
-    position: relative;
-    width: 25px;
-    height: 25px;
-    transform: scale(1.1);
-    display: inline-block;
+  position: relative;
+  width: 25px;
+  height: 25px;
+  transform: scale(1.1);
+  display: inline-block;
 }
 
 .cube-folding span::before {
-    content: '';
-    background-color: var(--ed-orange, #f58a07);
-    position: absolute;
-    left: 0;
-    top: 0;
-    display: block;
-    width: 25px;
-    height: 25px;
-    transform-origin: 100% 100%;
-    animation: folding 2.5s infinite linear both;
+  content: '';
+  background-color: var(--ed-orange, #f58a07);
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: block;
+  width: 25px;
+  height: 25px;
+  transform-origin: 100% 100%;
+  animation: folding 2.5s infinite linear both;
 }
 
 .cube-folding .leaf2 {
-    transform: rotateZ(90deg) scale(1.1);
+  transform: rotateZ(90deg) scale(1.1);
 }
 .cube-folding .leaf2::before {
-    animation-delay: 0.3s;
-    background-color: var(--ed-purple, #6f2dbd);
+  animation-delay: 0.3s;
+  background-color: var(--ed-purple, #6f2dbd);
 }
 
 .cube-folding .leaf3 {
-    transform: rotateZ(270deg) scale(1.1);
+  transform: rotateZ(270deg) scale(1.1);
 }
 .cube-folding .leaf3::before {
-    animation-delay: 0.9s;
-    background-color: var(--ed-purple-light, #a663cc);
+  animation-delay: 0.9s;
+  background-color: var(--ed-purple-light, #a663cc);
 }
 
 .cube-folding .leaf4 {
-    transform: rotateZ(180deg) scale(1.1);
+  transform: rotateZ(180deg) scale(1.1);
 }
 .cube-folding .leaf4::before {
-    animation-delay: 0.6s;
-    background-color: var(--text-main, #ffffff);
+  animation-delay: 0.6s;
+  background-color: var(--text-main, #ffffff);
 }
 
 @keyframes folding {
-    0%, 10% {
-        transform: perspective(140px) rotateX(-180deg);
-        opacity: 0;
-    }
-    25%, 75% {
-        transform: perspective(140px) rotateX(0deg);
-        opacity: 1;
-    }
-    90%, 100% {
-        transform: perspective(140px) rotateY(180deg);
-        opacity: 0;
-    }
+  0%,
+  10% {
+    transform: perspective(140px) rotateX(-180deg);
+    opacity: 0;
+  }
+  25%,
+  75% {
+    transform: perspective(140px) rotateX(0deg);
+    opacity: 1;
+  }
+  90%,
+  100% {
+    transform: perspective(140px) rotateY(180deg);
+    opacity: 0;
+  }
 }
 
 .loading-text {
-    display: block;
-    margin-top: 25px;
-    color: var(--text-main, #ffffff);
-    font-size: 14px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    font-weight: 600;
-    animation: text-pulse 1.5s ease-in-out infinite alternate;
+  display: block;
+  margin-top: 25px;
+  color: var(--text-main, #ffffff);
+  font-size: 14px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 600;
+  animation: text-pulse 1.5s ease-in-out infinite alternate;
 }
 
 @keyframes text-pulse {
-    0% { opacity: 0.5; }
-    100% { opacity: 1; text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
+  0% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  }
 }

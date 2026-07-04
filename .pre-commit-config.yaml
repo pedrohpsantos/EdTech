@@ -12,6 +12,22 @@ repos:
       - id: markdownlint-cli2
         args: ["--config", ".markdownlint-cli2.jsonc"]
 
+  - repo: local
+    hooks:
+      - id: oxlint
+        name: oxlint
+        entry: bash -c 'cd frontend && npx oxlint@latest --deny-warnings'
+        language: system
+        types_or: [javascript, jsx, ts, tsx]
+        files: ^frontend/
+
+      - id: prettier
+        name: prettier
+        entry: bash -c 'cd frontend && npx prettier --write "src/**/*.{js,jsx,ts,tsx,css,md}"'
+        language: system
+        types_or: [javascript, jsx, ts, tsx, css, markdown]
+        files: ^frontend/
+
 # ----------------------------------------------------------------------
 # COMO CONFIGURAR LOCALMENTE
 # Certifique-se de ter o Python 3.11+ instalado e ative seu venv (se usar).

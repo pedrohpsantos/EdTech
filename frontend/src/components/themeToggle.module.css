@@ -25,12 +25,12 @@
   transform: rotate(15deg) scale(1.1);
 }
 
-[data-theme="dark"] .toggleBtn {
+[data-theme='dark'] .toggleBtn {
   background: rgba(255, 255, 255, 0.05);
   border-color: rgba(255, 255, 255, 0.1);
   color: #e2e8f0;
 }
 
-[data-theme="dark"] .toggleBtn:hover {
+[data-theme='dark'] .toggleBtn:hover {
   background: rgba(255, 255, 255, 0.1);
 }

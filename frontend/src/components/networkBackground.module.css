@@ -17,8 +17,16 @@
 }
 
 @keyframes floatMesh {
-  0% { transform: scale(1) translate(0, 0) rotate(0deg); }
-  33% { transform: scale(1.05) translate(2%, 2%) rotate(1deg); }
-  66% { transform: scale(1.02) translate(-1%, 3%) rotate(-1deg); }
-  100% { transform: scale(1.08) translate(-2%, -1%) rotate(0.5deg); }
+  0% {
+    transform: scale(1) translate(0, 0) rotate(0deg);
+  }
+  33% {
+    transform: scale(1.05) translate(2%, 2%) rotate(1deg);
+  }
+  66% {
+    transform: scale(1.02) translate(-1%, 3%) rotate(-1deg);
+  }
+  100% {
+    transform: scale(1.08) translate(-2%, -1%) rotate(0.5deg);
+  }
 }

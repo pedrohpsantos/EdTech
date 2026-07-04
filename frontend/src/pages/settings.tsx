@@ -4,94 +4,113 @@ import '../assets/settings.css';
 import { useAuth } from '../context/authContext';
 
 const Settings: React.FC = () => {
-    const { user } = useAuth();
-    const [reviewEmails, setReviewEmails] = useState(true);
-    const [strictLgpd, setStrictLgpd] = useState(true);
+  const { user } = useAuth();
+  const [reviewEmails, setReviewEmails] = useState(true);
+  const [strictLgpd, setStrictLgpd] = useState(true);
 
-    const userName = user?.name || "Usuário";
-    const userEmail = user?.email || "usuario@edtech.com";
-    const userInitials = userName.split(' ').map((n: string) => n[0]).join('').substring(0, 2).toUpperCase();
+  const userName = user?.name || 'Usuário';
+  const userEmail = user?.email || 'usuario@edtech.com';
+  const userInitials = userName
+    .split(' ')
+    .map((n: string) => n[0])
+    .join('')
+    .substring(0, 2)
+    .toUpperCase();
 
-    return (
-        <DashboardLayout
-            title="Configurações"
-            subtitle="Perfil, preferências de IA e governança"
-            breadcrumbs={['EdTech', 'Configurações']}
-        >
-            <div className="settings-container">
-                {/* Perfil */}
-                <div className="settings-card">
-                    <h3 className="settings-section-title">Perfil</h3>
-                    <div className="settings-profile-row">
-                        <div className="settings-avatar">{userInitials}</div>
-                        <div className="settings-profile-info">
-                            <span className="profile-name">{userName}</span>
-                            <span className="profile-email">{userEmail}</span>
-                        </div>
-                        <div className="settings-profile-actions">
-                            <span className="settings-badge-role">Pesquisador</span>
-                            <button className="btn-outline">Editar perfil</button>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Notificações */}
-                <div className="settings-card">
-                    <h3 className="settings-section-title">Notificações</h3>
-                    
-                    <div className="settings-item">
-                        <div className="settings-item-icon bg-purple-light">
-                            <i className="bi bi-bell"></i>
-                        </div>
-                        <div className="settings-item-content">
-                            <span className="settings-item-title">E-mails de revisão</span>
-                            <span className="settings-item-desc">Receber e-mail quando documentos forem revisados ou comentados</span>
-                        </div>
-                        <div className="settings-item-action">
-                            <label className="ed-switch">
-                                <input type="checkbox" checked={reviewEmails} onChange={(e) => setReviewEmails(e.target.checked)} />
-                                <span className="ed-slider"></span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <div className="settings-item no-border">
-                        <div className="settings-item-icon bg-purple-light">
-                            <i className="bi bi-person"></i>
-                        </div>
-                        <div className="settings-item-content">
-                            <span className="settings-item-title">Menções e atribuições</span>
-                            <span className="settings-item-desc">Notificar quando você for mencionado em uma trilha</span>
-                        </div>
-                        <div className="settings-item-action">
-                            <span className="settings-badge-active">Ativo</span>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Governança */}
-                <div className="settings-card">
-                    <h3 className="settings-section-title">Governança</h3>
-                    
-                    <div className="settings-item no-border">
-                        <div className="settings-item-icon bg-purple-light">
-                            <i className="bi bi-shield-check"></i>
-                        </div>
-                        <div className="settings-item-content">
-                            <span className="settings-item-title">Modo LGPD estrito</span>
-                            <span className="settings-item-desc">Bloquear submissões com dados pessoais não anonimizados</span>
-                        </div>
-                        <div className="settings-item-action">
-                            <label className="ed-switch">
-                                <input type="checkbox" checked={strictLgpd} onChange={(e) => setStrictLgpd(e.target.checked)} />
-                                <span className="ed-slider"></span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
+  return (
+    <DashboardLayout
+      title="Configurações"
+      subtitle="Perfil, preferências de IA e governança"
+      breadcrumbs={['EdTech', 'Configurações']}
+    >
+      <div className="settings-container">
+        {/* Perfil */}
+        <div className="settings-card">
+          <h3 className="settings-section-title">Perfil</h3>
+          <div className="settings-profile-row">
+            <div className="settings-avatar">{userInitials}</div>
+            <div className="settings-profile-info">
+              <span className="profile-name">{userName}</span>
+              <span className="profile-email">{userEmail}</span>
             </div>
-        </DashboardLayout>
-    );
+            <div className="settings-profile-actions">
+              <span className="settings-badge-role">Pesquisador</span>
+              <button className="btn-outline">Editar perfil</button>
+            </div>
+          </div>
+        </div>
+
+        {/* Notificações */}
+        <div className="settings-card">
+          <h3 className="settings-section-title">Notificações</h3>
+
+          <div className="settings-item">
+            <div className="settings-item-icon bg-purple-light">
+              <i className="bi bi-bell"></i>
+            </div>
+            <div className="settings-item-content">
+              <span className="settings-item-title">E-mails de revisão</span>
+              <span className="settings-item-desc">
+                Receber e-mail quando documentos forem revisados ou comentados
+              </span>
+            </div>
+            <div className="settings-item-action">
+              <label className="ed-switch">
+                <input
+                  type="checkbox"
+                  checked={reviewEmails}
+                  onChange={(e) => setReviewEmails(e.target.checked)}
+                />
+                <span className="ed-slider"></span>
+              </label>
+            </div>
+          </div>
+
+          <div className="settings-item no-border">
+            <div className="settings-item-icon bg-purple-light">
+              <i className="bi bi-person"></i>
+            </div>
+            <div className="settings-item-content">
+              <span className="settings-item-title">Menções e atribuições</span>
+              <span className="settings-item-desc">
+                Notificar quando você for mencionado em uma trilha
+              </span>
+            </div>
+            <div className="settings-item-action">
+              <span className="settings-badge-active">Ativo</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Governança */}
+        <div className="settings-card">
+          <h3 className="settings-section-title">Governança</h3>
+
+          <div className="settings-item no-border">
+            <div className="settings-item-icon bg-purple-light">
+              <i className="bi bi-shield-check"></i>
+            </div>
+            <div className="settings-item-content">
+              <span className="settings-item-title">Modo LGPD estrito</span>
+              <span className="settings-item-desc">
+                Bloquear submissões com dados pessoais não anonimizados
+              </span>
+            </div>
+            <div className="settings-item-action">
+              <label className="ed-switch">
+                <input
+                  type="checkbox"
+                  checked={strictLgpd}
+                  onChange={(e) => setStrictLgpd(e.target.checked)}
+                />
+                <span className="ed-slider"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </DashboardLayout>
+  );
 };
 
 export default Settings;

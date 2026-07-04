@@ -8,30 +8,30 @@ import { vi, describe, beforeEach, test, expect } from 'vitest';
 vi.mock('../../services/api', () => ({
   requestPasswordRecovery: vi.fn(),
   verifyRecoveryCode: vi.fn(),
-  resetPassword: vi.fn()
+  resetPassword: vi.fn(),
 }));
 
 // Mock do framer-motion para evitar erros de animação no JSDOM
 vi.mock('framer-motion', () => {
-    const React = require('react');
-    const filterProps = (props) => {
-        const rest = { ...props };
-        delete rest.whileHover;
-        delete rest.whileTap;
-        delete rest.initial;
-        delete rest.animate;
-        delete rest.variants;
-        delete rest.transition;
-        return rest;
-    };
-    return {
-        motion: {
-            div: React.forwardRef((props, ref) => <div ref={ref} {...filterProps(props)} />),
-            h2: React.forwardRef((props, ref) => <h2 ref={ref} {...filterProps(props)} />),
-            p: React.forwardRef((props, ref) => <p ref={ref} {...filterProps(props)} />),
-            button: React.forwardRef((props, ref) => <button ref={ref} {...filterProps(props)} />)
-        }
-    };
+  const React = require('react');
+  const filterProps = (props) => {
+    const rest = { ...props };
+    delete rest.whileHover;
+    delete rest.whileTap;
+    delete rest.initial;
+    delete rest.animate;
+    delete rest.variants;
+    delete rest.transition;
+    return rest;
+  };
+  return {
+    motion: {
+      div: React.forwardRef((props, ref) => <div ref={ref} {...filterProps(props)} />),
+      h2: React.forwardRef((props, ref) => <h2 ref={ref} {...filterProps(props)} />),
+      p: React.forwardRef((props, ref) => <p ref={ref} {...filterProps(props)} />),
+      button: React.forwardRef((props, ref) => <button ref={ref} {...filterProps(props)} />),
+    },
+  };
 });
 
 describe('Recovery Component - Unit Tests', () => {
@@ -43,12 +43,12 @@ describe('Recovery Component - Unit Tests', () => {
     render(
       <MemoryRouter>
         <Recovery />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
-    
+
     // Verifica se o título do passo 1 está presente
     expect(screen.getByText('Esqueceu a senha?')).toBeInTheDocument();
-    
+
     // Verifica o campo de input
     const emailInput = screen.getByPlaceholderText('seu.nome@universidade.br');
     expect(emailInput).toBeInTheDocument();
@@ -60,37 +60,40 @@ describe('Recovery Component - Unit Tests', () => {
     render(
       <MemoryRouter>
         <Recovery />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
-    
+
     const emailInput = screen.getByPlaceholderText('seu.nome@universidade.br');
     const submitBtn = screen.getByRole('button', { name: /Continuar/i });
-    
+
     fireEvent.change(emailInput, { target: { value: 'teste@unb.br' } });
     fireEvent.click(submitBtn);
-    
+
     expect(requestPasswordRecovery).toHaveBeenCalledWith('teste@unb.br');
-    
+
     await waitFor(() => {
       expect(screen.getByText('Verificação de Código')).toBeInTheDocument();
     });
   });
 
   test('Exibe erro se a API retornar falha no Passo 1', async () => {
-    requestPasswordRecovery.mockResolvedValueOnce({ sucesso: false, mensagem: 'E-mail não encontrado' });
+    requestPasswordRecovery.mockResolvedValueOnce({
+      sucesso: false,
+      mensagem: 'E-mail não encontrado',
+    });
 
     render(
       <MemoryRouter>
         <Recovery />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
-    
+
     const emailInput = screen.getByPlaceholderText('seu.nome@universidade.br');
     const submitBtn = screen.getByRole('button', { name: /Continuar/i });
-    
+
     fireEvent.change(emailInput, { target: { value: 'errado@unb.br' } });
     fireEvent.click(submitBtn);
-    
+
     await waitFor(() => {
       expect(screen.getByText(/E-mail não encontrado/i)).toBeInTheDocument();
     });
@@ -100,21 +103,27 @@ describe('Recovery Component - Unit Tests', () => {
     requestPasswordRecovery.mockResolvedValueOnce({ sucesso: true, mensagem: 'Código enviado' });
     verifyRecoveryCode.mockResolvedValueOnce({ sucesso: true, mensagem: 'Código validado' });
 
-    render(<MemoryRouter><Recovery /></MemoryRouter>);
-    
+    render(
+      <MemoryRouter>
+        <Recovery />
+      </MemoryRouter>,
+    );
+
     // Passa pelo Passo 1
-    fireEvent.change(screen.getByPlaceholderText('seu.nome@universidade.br'), { target: { value: 'teste@unb.br' } });
+    fireEvent.change(screen.getByPlaceholderText('seu.nome@universidade.br'), {
+      target: { value: 'teste@unb.br' },
+    });
     fireEvent.click(screen.getByRole('button', { name: /Continuar/i }));
-    
+
     await waitFor(() => expect(screen.getByText('Verificação de Código')).toBeInTheDocument());
-    
+
     // Passo 2
     const codeInput = screen.getByPlaceholderText('123456');
     fireEvent.change(codeInput, { target: { value: '000000' } });
     fireEvent.click(screen.getByRole('button', { name: /Continuar/i }));
-    
+
     expect(verifyRecoveryCode).toHaveBeenCalledWith('teste@unb.br', '000000');
-    
+
     await waitFor(() => {
       expect(screen.getByRole('heading', { name: 'Nova Senha' })).toBeInTheDocument();
     });
@@ -124,15 +133,23 @@ describe('Recovery Component - Unit Tests', () => {
     requestPasswordRecovery.mockResolvedValueOnce({ sucesso: true });
     verifyRecoveryCode.mockResolvedValueOnce({ sucesso: false, mensagem: 'Código inválido' });
 
-    render(<MemoryRouter><Recovery /></MemoryRouter>);
-    
-    fireEvent.change(screen.getByPlaceholderText('seu.nome@universidade.br'), { target: { value: 'teste@unb.br' } });
+    render(
+      <MemoryRouter>
+        <Recovery />
+      </MemoryRouter>,
+    );
+
+    fireEvent.change(screen.getByPlaceholderText('seu.nome@universidade.br'), {
+      target: { value: 'teste@unb.br' },
+    });
     fireEvent.click(screen.getByRole('button', { name: /Continuar/i }));
-    await waitFor(() => expect(screen.getByRole('heading', { name: 'Verificação de Código' })).toBeInTheDocument());
-    
+    await waitFor(() =>
+      expect(screen.getByRole('heading', { name: 'Verificação de Código' })).toBeInTheDocument(),
+    );
+
     fireEvent.change(screen.getByPlaceholderText('123456'), { target: { value: '999999' } });
     fireEvent.click(screen.getByRole('button', { name: /Continuar/i }));
-    
+
     await waitFor(() => {
       expect(screen.getByText(/Código inválido/i)).toBeInTheDocument();
     });
@@ -143,27 +160,37 @@ describe('Recovery Component - Unit Tests', () => {
     verifyRecoveryCode.mockResolvedValueOnce({ sucesso: true });
     resetPassword.mockResolvedValueOnce({ sucesso: true });
 
-    render(<MemoryRouter><Recovery /></MemoryRouter>);
-    
+    render(
+      <MemoryRouter>
+        <Recovery />
+      </MemoryRouter>,
+    );
+
     // Go to step 2
-    fireEvent.change(screen.getByPlaceholderText('seu.nome@universidade.br'), { target: { value: 'teste@unb.br' } });
+    fireEvent.change(screen.getByPlaceholderText('seu.nome@universidade.br'), {
+      target: { value: 'teste@unb.br' },
+    });
     fireEvent.click(screen.getByRole('button', { name: /Continuar/i }));
-    await waitFor(() => expect(screen.getByRole('heading', { name: 'Verificação de Código' })).toBeInTheDocument());
-    
+    await waitFor(() =>
+      expect(screen.getByRole('heading', { name: 'Verificação de Código' })).toBeInTheDocument(),
+    );
+
     // Go to step 3
     fireEvent.change(screen.getByPlaceholderText('123456'), { target: { value: '000000' } });
     fireEvent.click(screen.getByRole('button', { name: /Continuar/i }));
-    await waitFor(() => expect(screen.getByRole('heading', { name: 'Nova Senha' })).toBeInTheDocument());
+    await waitFor(() =>
+      expect(screen.getByRole('heading', { name: 'Nova Senha' })).toBeInTheDocument(),
+    );
 
     // Fill passwords
     const passInputs = screen.getAllByPlaceholderText('••••••••');
     fireEvent.change(passInputs[0], { target: { value: 'novaSenha123' } });
     fireEvent.change(passInputs[1], { target: { value: 'novaSenha123' } });
-    
+
     fireEvent.click(screen.getByRole('button', { name: /Redefinir Senha/i }));
-    
+
     expect(resetPassword).toHaveBeenCalledWith('teste@unb.br', '000000', 'novaSenha123');
-    
+
     await waitFor(() => {
       expect(screen.getByText(/Senha redefinida com sucesso!/i)).toBeInTheDocument();
     });
@@ -173,22 +200,32 @@ describe('Recovery Component - Unit Tests', () => {
     requestPasswordRecovery.mockResolvedValueOnce({ sucesso: true });
     verifyRecoveryCode.mockResolvedValueOnce({ sucesso: true });
 
-    render(<MemoryRouter><Recovery /></MemoryRouter>);
-    
+    render(
+      <MemoryRouter>
+        <Recovery />
+      </MemoryRouter>,
+    );
+
     // Go to step 3
-    fireEvent.change(screen.getByPlaceholderText('seu.nome@universidade.br'), { target: { value: 'teste@unb.br' } });
+    fireEvent.change(screen.getByPlaceholderText('seu.nome@universidade.br'), {
+      target: { value: 'teste@unb.br' },
+    });
     fireEvent.click(screen.getByRole('button', { name: /Continuar/i }));
-    await waitFor(() => expect(screen.getByRole('heading', { name: 'Verificação de Código' })).toBeInTheDocument());
+    await waitFor(() =>
+      expect(screen.getByRole('heading', { name: 'Verificação de Código' })).toBeInTheDocument(),
+    );
     fireEvent.change(screen.getByPlaceholderText('123456'), { target: { value: '000000' } });
     fireEvent.click(screen.getByRole('button', { name: /Continuar/i }));
-    await waitFor(() => expect(screen.getByRole('heading', { name: 'Nova Senha' })).toBeInTheDocument());
+    await waitFor(() =>
+      expect(screen.getByRole('heading', { name: 'Nova Senha' })).toBeInTheDocument(),
+    );
 
     const passInputs = screen.getAllByPlaceholderText('••••••••');
     fireEvent.change(passInputs[0], { target: { value: 'novaSenha123' } });
     fireEvent.change(passInputs[1], { target: { value: 'senhaDiferente' } });
-    
+
     fireEvent.click(screen.getByRole('button', { name: /Redefinir Senha/i }));
-    
+
     await waitFor(() => {
       expect(screen.getByText(/As senhas não coincidem./i)).toBeInTheDocument();
     });
@@ -198,29 +235,39 @@ describe('Recovery Component - Unit Tests', () => {
     requestPasswordRecovery.mockResolvedValueOnce({ sucesso: true });
     verifyRecoveryCode.mockResolvedValueOnce({ sucesso: true });
 
-    render(<MemoryRouter><Recovery /></MemoryRouter>);
-    
+    render(
+      <MemoryRouter>
+        <Recovery />
+      </MemoryRouter>,
+    );
+
     // Go to step 3
-    fireEvent.change(screen.getByPlaceholderText('seu.nome@universidade.br'), { target: { value: 'teste@unb.br' } });
+    fireEvent.change(screen.getByPlaceholderText('seu.nome@universidade.br'), {
+      target: { value: 'teste@unb.br' },
+    });
     fireEvent.click(screen.getByRole('button', { name: /Continuar/i }));
-    await waitFor(() => expect(screen.getByRole('heading', { name: 'Verificação de Código' })).toBeInTheDocument());
+    await waitFor(() =>
+      expect(screen.getByRole('heading', { name: 'Verificação de Código' })).toBeInTheDocument(),
+    );
     fireEvent.change(screen.getByPlaceholderText('123456'), { target: { value: '000000' } });
     fireEvent.click(screen.getByRole('button', { name: /Continuar/i }));
-    await waitFor(() => expect(screen.getByRole('heading', { name: 'Nova Senha' })).toBeInTheDocument());
+    await waitFor(() =>
+      expect(screen.getByRole('heading', { name: 'Nova Senha' })).toBeInTheDocument(),
+    );
 
     const toggleBtns = screen.getAllByRole('button', { name: /Mostrar/i });
     const passInputs = screen.getAllByPlaceholderText('••••••••');
-    
+
     // Initially passwords are hidden (type="password")
     expect(passInputs[0]).toHaveAttribute('type', 'password');
     expect(passInputs[1]).toHaveAttribute('type', 'password');
-    
+
     // Toggle first password
     fireEvent.click(toggleBtns[0]);
     expect(passInputs[0]).toHaveAttribute('type', 'text');
     fireEvent.click(toggleBtns[0]);
     expect(passInputs[0]).toHaveAttribute('type', 'password');
-    
+
     // Toggle second password
     fireEvent.click(toggleBtns[1]);
     expect(passInputs[1]).toHaveAttribute('type', 'text');
@@ -231,16 +278,24 @@ describe('Recovery Component - Unit Tests', () => {
   test('Passo 2: Volta para o Passo 1 ao clicar em Alterar e-mail', async () => {
     requestPasswordRecovery.mockResolvedValueOnce({ sucesso: true });
 
-    render(<MemoryRouter><Recovery /></MemoryRouter>);
-    
+    render(
+      <MemoryRouter>
+        <Recovery />
+      </MemoryRouter>,
+    );
+
     // Go to step 2
-    fireEvent.change(screen.getByPlaceholderText('seu.nome@universidade.br'), { target: { value: 'teste@unb.br' } });
+    fireEvent.change(screen.getByPlaceholderText('seu.nome@universidade.br'), {
+      target: { value: 'teste@unb.br' },
+    });
     fireEvent.click(screen.getByRole('button', { name: /Continuar/i }));
-    await waitFor(() => expect(screen.getByRole('heading', { name: 'Verificação de Código' })).toBeInTheDocument());
-    
+    await waitFor(() =>
+      expect(screen.getByRole('heading', { name: 'Verificação de Código' })).toBeInTheDocument(),
+    );
+
     // Click Alterar e-mail
     fireEvent.click(screen.getByRole('button', { name: /Alterar e-mail/i }));
-    
+
     // Check if we are back at step 1
     await waitFor(() => {
       expect(screen.getByRole('heading', { name: 'Esqueceu a senha?' })).toBeInTheDocument();

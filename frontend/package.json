@@ -6,11 +6,13 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "lint": "eslint . --max-warnings=0",
+    "lint": "npm run lint:oxlint && eslint . --max-warnings=0",
     "type-check": "tsc --noEmit",
     "security-audit": "npm audit --audit-level=high",
     "preview": "vite preview",
-    "test": "vitest run --coverage"
+    "test": "vitest run --coverage",
+    "lint:oxlint": "oxlint .",
+    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,css,md}\""
   },
   "dependencies": {
     "@tanstack/react-query": "^5.101.2",
@@ -36,10 +38,13 @@
     "allure-commandline": "^2.43.0",
     "allure-playwright": "^3.10.2",
     "eslint": "^10.5.0",
+    "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.3",
     "globals": "^17.6.0",
     "jsdom": "^29.1.1",
+    "oxlint": "^1.72.0",
+    "prettier": "^3.9.4",
     "typescript": "^6.0.3",
     "vite": "^8.0.12",
     "vitest": "^4.1.9"

@@ -13,6 +13,10 @@ RUN npm ci
 # Copiar o restante do código
 COPY . .
 
+# Receber variável de ambiente em build-time (Melhoria HealthTech)
+ARG VITE_API_URL
+ENV VITE_API_URL=$VITE_API_URL
+
 # Construir a aplicação (Vite)
 RUN npm run build
 

@@ -42,34 +42,44 @@ Navegue pela documentação específica de cada módulo:
 
 ---
 
-## 🚀 Quick Start (Desenvolvimento Local)
+## 🚀 Quick Start (Desenvolvimento Local - 1 Click)
 
 ### 1. Requisitos
 - **Docker e Docker Compose**
-- **Node.js 20+**
-- **Java 21** e **Maven**
 
-### 2. Levantando o Ambiente
+### 2. Levantando o Ambiente (Mágico)
+
+Com a arquitetura unificada, você pode subir o Banco de Dados, Backend (Spring Boot) e Frontend (React/Vite) com apenas um comando:
 
 ```bash
 # Clone o repositório
 git clone https://github.com/pedrohpsantos/EdTech.git
 cd EdTech
 
-# Suba a infraestrutura base de dados (PostgreSQL local)
-docker-compose up -d db
+# Configure as variáveis locais
+cp .env.example .env
 
-# Instale dependências e inicie o Frontend
-cd frontend
-npm install
-npm run dev
-
-# Instale dependências e inicie a API Backend (em outro terminal)
-cd ../docvault/api
-./mvnw spring-boot:run
+# Suba todo o ecossistema
+docker compose up --build
 ```
 
 A aplicação web estará disponível em `http://localhost:5173`.
+A API do Backend estará disponível em `http://localhost:8080`.
+
+---
+
+## 📝 Regras de Contribuição (Conventional Commits)
+
+Nós adotamos o padrão **Conventional Commits** para manter o histórico do Git limpo e automatizar as releases.
+Seus commits devem seguir estritamente o formato: `<tipo>[escopo opcional]: <descrição>`
+
+- `feat:` Nova funcionalidade
+- `fix:` Correção de bug
+- `docs:` Mudanças apenas na documentação
+- `chore:` Tarefas de manutenção ou dependências (ex: `chore(deps): update packages`)
+- `refactor:` Refatoração de código que não adiciona feature nem corrige bug
+
+Exemplo: `feat(auth): adiciona fluxo de login com JWT`
 
 ---
 

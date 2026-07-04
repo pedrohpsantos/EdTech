@@ -24,14 +24,15 @@
 }
 
 .leftPanel::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: radial-gradient(circle at 15% 50%, rgba(255, 255, 255, 0.08) 0%, transparent 50%),
-                    radial-gradient(circle at 85% 30%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+  background-image:
+    radial-gradient(circle at 15% 50%, rgba(255, 255, 255, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 85% 30%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
 }
 .leftContent {
   position: relative;
@@ -133,7 +134,7 @@
   scrollbar-width: thin;
 }
 
-[data-theme="dark"] .rightPanel {
+[data-theme='dark'] .rightPanel {
   background-color: #16171d;
 }
 
@@ -208,7 +209,9 @@
   background-color: var(--bg);
   color: var(--text-h);
   font-size: 0.85rem;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
   box-sizing: border-box;
 }
 
@@ -261,7 +264,9 @@
   align-items: center;
   gap: 8px;
   margin-top: 0.5rem;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
 }
 
 .submitBtn:hover {
@@ -322,9 +327,15 @@
   border-radius: 50%;
 }
 
-.dotPurple { background-color: #8b5cf6; }
-.dotOrange { background-color: #f97316; }
-.dotGreen { background-color: #10b981; }
+.dotPurple {
+  background-color: #8b5cf6;
+}
+.dotOrange {
+  background-color: #f97316;
+}
+.dotGreen {
+  background-color: #10b981;
+}
 
 .demoText h4 {
   margin: 0;
@@ -354,7 +365,7 @@
   font-size: 0.8rem;
   text-align: center;
 }
-[data-theme="dark"] .errorAlert {
+[data-theme='dark'] .errorAlert {
   background-color: rgba(220, 38, 38, 0.2);
   border-color: #dc2626;
   color: #fca5a5;
@@ -409,9 +420,15 @@
   .rightPanel {
     padding: 1rem;
   }
-  .headline { font-size: 1.75rem; }
-  .welcomeTitle { font-size: 1.5rem; }
-  .demoCard { padding: 4px 8px; }
+  .headline {
+    font-size: 1.75rem;
+  }
+  .welcomeTitle {
+    font-size: 1.5rem;
+  }
+  .demoCard {
+    padding: 4px 8px;
+  }
 }
 
 /* Ultrawide / TVs */
@@ -424,5 +441,7 @@
   .leftPanel {
     padding: 6rem;
   }
-  .headline { font-size: 4rem; }
+  .headline {
+    font-size: 4rem;
+  }
 }
