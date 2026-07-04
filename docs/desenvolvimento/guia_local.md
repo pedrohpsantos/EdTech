@@ -41,8 +41,8 @@ Primeiro, você precisa criar as chaves de ambiente copiando o arquivo de exempl
     cp infra/.env.example infra/.env
     ```
 
-> [!IMPORTANT]
-> **Edite o arquivo `infra/.env`!** Você deve preencher os valores das chaves `POSTGRES_PASSWORD` e `JWT_SECRET` com qualquer senha forte local antes de prosseguir.
+!!! important
+    **Edite o arquivo `infra/.env`!** Você deve preencher os valores das chaves `POSTGRES_PASSWORD` e `JWT_SECRET` com qualquer senha forte local antes de prosseguir.
 
 ### 2. Rodando o Projeto
 
@@ -52,8 +52,8 @@ Com o Docker em execução, inicie toda a stack com um único comando:
 docker compose --env-file infra/.env -f infra/docker-compose.yml up -d
 ```
 
-> [!TIP]
-> A flag `-d` roda os containers em *detached mode* (segundo plano). Se for sua primeira vez, o Docker irá baixar (pull) as imagens do Java e do Node e construir o projeto. Isso pode demorar entre 2 a 5 minutos.
+!!! tip
+    A flag `-d` roda os containers em *detached mode* (segundo plano). Se for sua primeira vez, o Docker irá baixar (pull) as imagens do Java e do Node e construir o projeto. Isso pode demorar entre 2 a 5 minutos.
 
 ---
 
@@ -75,13 +75,19 @@ Se tudo estiver correto, você poderá acessar:
 
 ## :material-lifebuoy: Troubleshooting (Problemas Comuns)
 
-> [!WARNING]
-> **Erro de portas em uso (Bind for 0.0.0.0:5432 failed)**  
-> Se o PostgreSQL não subir, você provavelmente já tem outro banco rodando na porta 5432 localmente. Altere a porta no arquivo `infra/.env` editando a variável `POSTGRES_PORT`.
+!!! warning "Erro de portas em uso (Bind for 0.0.0.0:5432 failed)"
+    Se o PostgreSQL não subir, você provavelmente já tem outro banco rodando na porta 5432 localmente. Altere a porta no arquivo `infra/.env` editando a variável `POSTGRES_PORT`.
 
-> [!NOTE]
-> **Como eu paro os containers?**  
-> Para desligar a infraestrutura sem apagar os dados do banco de dados, rode:  
-> `docker compose -f infra/docker-compose.yml stop`  
-> Para desligar e **apagar** todos os dados, rode:  
-> `docker compose -f infra/docker-compose.yml down -v`
+!!! note "Como eu paro os containers?"
+    Para desligar a infraestrutura sem apagar os dados do banco de dados, rode:  
+    `docker compose -f infra/docker-compose.yml stop`  
+    Para desligar e **apagar** todos os dados, rode:  
+    `docker compose -f infra/docker-compose.yml down -v`
+
+---
+
+## Histórico de Versões
+
+| Versão | Data | Descrição | Autor |
+| :---: | :---: | :--- | :--- |
+| `1.0` | 04/07/2026 | Criação do guia interativo de Onboarding e Setup 1-Click | Pedro Henrique P. Santos |
