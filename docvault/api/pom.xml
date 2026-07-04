@@ -11,7 +11,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>com.edTech</groupId>
+    <groupId>com.edtech</groupId>
     <artifactId>edtech-api</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>edtech-api</name>
@@ -218,10 +218,10 @@
                 </dependencies>
                 <configuration>
                     <targetClasses>
-                        <param>com.edTech.*</param>
+                        <param>com.edtech.*</param>
                     </targetClasses>
                     <targetTests>
-                        <param>com.edTech.*Test</param>
+                        <param>com.edtech.*Test</param>
                     </targetTests>
                     <mutationThreshold>40</mutationThreshold>
                     <coverageThreshold>40</coverageThreshold>
@@ -238,9 +238,9 @@
                 <version>3.3.1</version>
                 <configuration>
                     <configLocation>google_checks.xml</configLocation>
-                    <suppressionsLocation>checkstyle-suppressions.xml</suppressionsLocation>
                     <consoleOutput>true</consoleOutput>
                     <failsOnError>true</failsOnError>
+                    <violationSeverity>warning</violationSeverity>
                     <linkXRef>false</linkXRef>
                 </configuration>
             </plugin>

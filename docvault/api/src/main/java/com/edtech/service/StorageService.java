@@ -1,0 +1,12 @@
+package com.edtech.service;
+
+import org.springframework.web.multipart.MultipartFile;
+
+/** Documentação para StorageService. */
+public interface StorageService {
+  void uploadFile(MultipartFile file, String fileKey, String contentType) throws Exception;
+
+  String getPresignedUrl(String fileKey) throws Exception;
+
+  void deleteFile(String fileKey) throws Exception;
+}

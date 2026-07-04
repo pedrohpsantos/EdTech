@@ -95,15 +95,38 @@ jobs:
       - name: Run Mutation Tests (PiTest)
         run: ./mvnw org.pitest:pitest-maven:mutationCoverage -B
       - name: Run Security Audit (OWASP)
-        continue-on-error: true # Permite que a pipeline continue se a NVD bloquear o IP por falta de API Key (comum em Runners do GitHub)
         env:
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
         run: |
-          if [ -z "$NVD_API_KEY" ]; then
-            echo "Aviso: NVD_API_KEY não encontrada nos secrets. Usando modo de fallback para evitar quebra da build por rate limit (403/404)."
-            ./mvnw org.owasp:dependency-check-maven:check -B -Ddependency-check.nvdApiDelay=16000 || true
+          chmod +x mvnw
+          echo "Iniciando auditoria de segurança estrita. Falhas bloquearão a pipeline."
+          
+          # Tentativas máximas para tolerar a instabilidade da NVD API
+          MAX_RETRIES=3
+          RETRY_COUNT=0
+          SUCCESS=0
+          
+          while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
+            if [ -z "$NVD_API_KEY" ]; then
+              echo "NVD_API_KEY ausente. Executando sem chave (Maior chance de Rate Limit)... Tentativa $(($RETRY_COUNT+1))/$MAX_RETRIES"
+              ./mvnw org.owasp:dependency-check-maven:check -B -Ddependency-check.nvdApiDelay=16000 && SUCCESS=1 && break
+            else
+              echo "NVD_API_KEY encontrada. Executando com chave... Tentativa $(($RETRY_COUNT+1))/$MAX_RETRIES"
+              ./mvnw org.owasp:dependency-check-maven:check -B -Ddependency-check.nvdApiKey=$NVD_API_KEY -Ddependency-check.nvdApiDelay=8000 && SUCCESS=1 && break
+            fi
+            
+            RETRY_COUNT=$(($RETRY_COUNT+1))
+            if [ $RETRY_COUNT -lt $MAX_RETRIES ]; then
+              echo "Falha na comunicação com a NVD (403/404). Aguardando 30 segundos antes de tentar novamente..."
+              sleep 30
+            fi
+          done
+          
+          if [ $SUCCESS -eq 0 ]; then
+            echo "Auditoria de segurança falhou após $MAX_RETRIES tentativas. Bloqueando a pipeline!"
+            exit 1
           else
-            ./mvnw org.owasp:dependency-check-maven:check -B -Ddependency-check.nvdApiKey=$NVD_API_KEY
+            echo "Auditoria de segurança concluída com sucesso."
           fi
 
   # ==========================================

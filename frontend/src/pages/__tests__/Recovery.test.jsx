@@ -15,8 +15,13 @@ vi.mock('../../services/api', () => ({
 vi.mock('framer-motion', () => {
     const React = require('react');
     const filterProps = (props) => {
-        // eslint-disable-next-line no-unused-vars
-        const { whileHover, whileTap, initial, animate, variants, transition, ...rest } = props;
+        const rest = { ...props };
+        delete rest.whileHover;
+        delete rest.whileTap;
+        delete rest.initial;
+        delete rest.animate;
+        delete rest.variants;
+        delete rest.transition;
         return rest;
     };
     return {
