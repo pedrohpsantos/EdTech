@@ -8,14 +8,15 @@ interface DashboardLayoutProps {
     title: string;
     subtitle: string;
     breadcrumbs: string[];
+    customTopbarElement?: ReactNode;
 }
 
-const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, title, subtitle, breadcrumbs }) => {
+const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, title, subtitle, breadcrumbs, customTopbarElement }) => {
     return (
         <div className="dashboard-layout">
             <Sidebar />
             <div className="main-content-wrapper">
-                <Topbar title={title} subtitle={subtitle} breadcrumbs={breadcrumbs} />
+                <Topbar title={title} subtitle={subtitle} breadcrumbs={breadcrumbs} customTopbarElement={customTopbarElement} />
                 <main className="main-content">
                     {children}
                 </main>

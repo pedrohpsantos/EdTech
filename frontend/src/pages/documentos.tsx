@@ -95,12 +95,12 @@ const Documentos: React.FC = () => {
     };
 
     // Mocks for prototype UI structure
-    const mockDocuments = [
-        { id: '1', title: 'Metodologia_Qualitativa_v3.pdf', project: 'Análise LGPD', type: 'PDF', size: '2.4 MB', modified: 'Hoje, 14:32', status: 'Em Revisão' },
-        { id: '2', title: 'Dataset_Experimento_A.csv', project: 'Sistemas de IA', type: 'CSV', size: '18.7 MB', modified: 'Ontem, 09:15', status: 'Aprovado' },
-        { id: '3', title: 'Referencial_Teorico_v2.pdf', project: 'Análise LGPD', type: 'PDF', size: '890 KB', modified: '12 Jun 2026', status: 'Submetido' },
-        { id: '4', title: 'config_modelo_final.json', project: 'Sistemas de IA', type: 'JSON', size: '12 KB', modified: '10 Jun 2026', status: 'Rascunho' },
-        { id: '5', title: 'Resultados_Parciais_Q2.pdf', project: 'Bioinformática', type: 'PDF', size: '4.1 MB', modified: '08 Jun 2026', status: 'Aprovado' },
+    const mockDocuments: Document[] = [
+        { id: '1', title: 'Metodologia_Qualitativa_v3.pdf', project: 'Análise LGPD', type: 'PDF', size: '2.4 MB', modified: 'Hoje, 14:32', status: 'Em Revisão', createdAt: new Date().toISOString() },
+        { id: '2', title: 'Dataset_Experimento_A.csv', project: 'Sistemas de IA', type: 'CSV', size: '18.7 MB', modified: 'Ontem, 09:15', status: 'Aprovado', createdAt: new Date().toISOString() },
+        { id: '3', title: 'Referencial_Teorico_v2.pdf', project: 'Análise LGPD', type: 'PDF', size: '890 KB', modified: '12 Jun 2026', status: 'Submetido', createdAt: new Date().toISOString() },
+        { id: '4', title: 'config_modelo_final.json', project: 'Sistemas de IA', type: 'JSON', size: '12 KB', modified: '10 Jun 2026', status: 'Rascunho', createdAt: new Date().toISOString() },
+        { id: '5', title: 'Resultados_Parciais_Q2.pdf', project: 'Bioinformática', type: 'PDF', size: '4.1 MB', modified: '08 Jun 2026', status: 'Aprovado', createdAt: new Date().toISOString() },
     ];
 
     const getStatusClass = (status: string) => {
@@ -253,13 +253,13 @@ const Documentos: React.FC = () => {
                                     </td>
                                     <td>
                                         <div className="table-actions">
-                                            <button className="btn-icon-action" title="Visualizar" onClick={() => handleView(doc)}>
+                                            <button className="btn-icon-action" title="Visualizar" onClick={() => handleView(doc as Document)}>
                                                 <i className="bi bi-eye"></i>
                                             </button>
                                             <button className="btn-icon-action" title="Download" onClick={() => handleDownload(doc.id)}>
                                                 <i className="bi bi-download"></i>
                                             </button>
-                                            <button className="btn-icon-action" title="Opções" onClick={() => handleOptions(doc.name)}>
+                                            <button className="btn-icon-action" title="Opções" onClick={() => handleOptions(doc.title)}>
                                                 <i className="bi bi-three-dots"></i>
                                             </button>
                                         </div>
@@ -334,7 +334,7 @@ const Documentos: React.FC = () => {
                                     {previewDoc.type}
                                 </span>
                                 <div>
-                                    <h3 className="m-0" style={{ fontSize: '18px', color: 'var(--ed-text-light)' }}>{previewDoc.name}</h3>
+                                    <h3 className="m-0" style={{ fontSize: '18px', color: 'var(--ed-text-light)' }}>{previewDoc.title}</h3>
                                     <span style={{ fontSize: '12px', color: 'var(--ed-text-muted)' }}>{previewDoc.size} • {previewDoc.project}</span>
                                 </div>
                             </div>
@@ -368,7 +368,7 @@ const Documentos: React.FC = () => {
                                     </div>
                                 ) : (
                                     <div className="dummy-page document-content">
-                                        <h2 style={{ color: 'var(--ed-text-dark)', marginBottom: '24px' }}>{previewDoc.name}</h2>
+                                        <h2 style={{ color: 'var(--ed-text-dark)', marginBottom: '24px' }}>{previewDoc.title}</h2>
                                         <p style={{ color: '#4a4a4a', lineHeight: '1.6', marginBottom: '16px' }}>
                                             Este é um documento de visualização fictício para o arquivo selecionado.
                                             Na versão final do sistema conectado ao Storage, aqui será renderizado o conteúdo nativo

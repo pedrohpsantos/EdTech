@@ -17,6 +17,10 @@ export interface Document {
   status: string;
   createdAt: string;
   downloadUrl?: string;
+  project?: string;
+  type?: string;
+  size?: string;
+  modified?: string;
 }
 
 export interface ApiResponse<T> {

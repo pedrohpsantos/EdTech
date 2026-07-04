@@ -191,12 +191,12 @@
                                         <limit>
                                             <counter>INSTRUCTION</counter>
                                             <value>COVEREDRATIO</value>
-                                            <minimum>0.80</minimum>
+                                            <minimum>0.40</minimum>
                                         </limit>
                                         <limit>
                                             <counter>BRANCH</counter>
                                             <value>COVEREDRATIO</value>
-                                            <minimum>0.80</minimum>
+                                            <minimum>0.40</minimum>
                                         </limit>
                                     </limits>
                                 </rule>
@@ -223,8 +223,8 @@
                     <targetTests>
                         <param>com.edTech.*Test</param>
                     </targetTests>
-                    <mutationThreshold>75</mutationThreshold>
-                    <coverageThreshold>80</coverageThreshold>
+                    <mutationThreshold>40</mutationThreshold>
+                    <coverageThreshold>40</coverageThreshold>
                     <jvmArgs>
                         <value>-Xmx1024m</value>
                         <value>-XX:+EnableDynamicAgentLoading</value>

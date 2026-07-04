@@ -7,9 +7,10 @@ interface TopbarProps {
     title: string;
     subtitle: string;
     breadcrumbs: string[];
+    customTopbarElement?: React.ReactNode;
 }
 
-const Topbar: React.FC<TopbarProps> = ({ title, subtitle, breadcrumbs }) => {
+const Topbar: React.FC<TopbarProps> = ({ title, subtitle, breadcrumbs, customTopbarElement }) => {
     const { user } = useAuth();
     const navigate = useNavigate();
     const [showNotifications, setShowNotifications] = useState(false);
@@ -39,6 +40,7 @@ const Topbar: React.FC<TopbarProps> = ({ title, subtitle, breadcrumbs }) => {
                 {subtitle && <p className="page-subtitle">{subtitle}</p>}
             </div>
             <div className="topbar-right">
+                {customTopbarElement}
                 <button className="btn-upload" onClick={() => navigate('/upload')}>
                     <i className="bi bi-upload"></i> Enviar documento
                 </button>
