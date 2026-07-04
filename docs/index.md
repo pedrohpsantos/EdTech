@@ -1,5 +1,8 @@
 ---
 title: 'EdTech'
+hide:
+  - navigation
+  - toc
 ---
 
 <div class="animated-hero">
@@ -9,9 +12,11 @@ title: 'EdTech'
     Uma plataforma inteligente para laboratórios universitários e programas de pós-graduação.
   </p>
   
-  <div class="hero-cta">
-    <a href="produto/strategy/canvas_mvp/" class="md-button md-button--primary">Explorar o MVP 🚀</a>
-    <a href="gestao/historico_sprints/Semana 1/" class="md-button">Ver Entregas 📦</a>
+  <div class="hero-cta" markdown>
+
+  [Explorar o MVP :material-rocket-launch:](produto/strategy/canvas_mvp/){ .md-button .md-button--primary }
+  [Ver Entregas :material-package-variant-closed:](gestao/historico_sprints/Semana%201/){ .md-button }
+
   </div>
 </div>
 
