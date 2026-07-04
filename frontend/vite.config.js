@@ -15,12 +15,18 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'jsdom',
-    css: true,
-    env: {
-      VITE_API_URL: 'http://localhost:8080'
-    },
+    css: false,
     setupFiles: './src/setupTests.js',
     exclude: ['node_modules', 'dist', '.idea', '.git', '.cache', 'e2e/**'],
+    moduleNameMapper: {
+      '\\.(css|less|scss|sass)$': '<rootDir>/src/__mocks__/fileMock.js',
+    },
+    define: {
+      'import.meta.env.VITE_API_URL': JSON.stringify('http://localhost:8080'),
+      'import.meta.env.MODE': JSON.stringify('test'),
+      'import.meta.env.DEV': JSON.stringify(false),
+      'import.meta.env.PROD': JSON.stringify(false),
+    },
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
@@ -33,3 +39,4 @@ export default defineConfig({
     }
   },
 })
+
