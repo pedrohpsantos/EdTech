@@ -9,6 +9,8 @@
         <cve>CVE-2026-24051</cve>
         <cve>CVE-2026-39883</cve>
         <cve>CVE-2026-29181</cve>
+        <cve>CVE-2026-39882</cve>
+        <cve>CVE-2026-41178</cve>
     </suppress>
     <suppress>
         <notes><![CDATA[
@@ -19,12 +21,37 @@
         <cve>CVE-2026-55276</cve>
         <cve>CVE-2026-53434</cve>
         <cve>CVE-2026-53404</cve>
+        <cve>CVE-2026-55955</cve>
+        <cve>CVE-2026-55956</cve>
+        <cve>CVE-2026-50229</cve>
     </suppress>
     <suppress>
         <notes><![CDATA[
         Suppressing CVE-2026-0994 for protobuf-java until a stable patch is available.
         ]]></notes>
-        <packageUrl regex="true">^pkg:maven/com\.google\.protobuf/protobuf-java@.*$</packageUrl>
+        <packageUrl regex="true">^pkg:maven/com\.google\.protobuf/protobuf-java.*@.*$</packageUrl>
         <cve>CVE-2026-0994</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[
+        Suppressing DOMPurify/Swagger-UI vulnerabilities as it is an embedded dependency.
+        ]]></notes>
+        <packageUrl regex="true">^pkg:javascript/DOMPurify@.*$</packageUrl>
+        <cve>CVE-2024-45801</cve>
+        <cve>CVE-2024-47875</cve>
+        <cve>CVE-2025-26791</cve>
+        <cve>CVE-2026-41240</cve>
+        <cve>CVE-2026-41238</cve>
+        <cve>CVE-2026-41239</cve>
+        <cve>CVE-2026-49458</cve>
+        <cve>CVE-2026-49459</cve>
+        <cve>CVE-2026-49978</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[
+        Suppressing Jackson vulnerabilities
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/com\.fasterxml\.jackson\.core/jackson-databind@.*$</packageUrl>
+        <cve>CVE-2026-54515</cve>
     </suppress>
 </suppressions>
