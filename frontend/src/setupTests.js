@@ -1,12 +1,21 @@
 import '@testing-library/jest-dom';
 
-// Garante que import.meta.env nunca seja undefined nos testes
-if (typeof import.meta.env === 'undefined') {
-  Object.defineProperty(import.meta, 'env', {
-    value: { VITE_API_URL: 'http://localhost:8080', MODE: 'test', DEV: false, PROD: false },
-  });
-}
-
+// Injeta import.meta.env para todos os testes (Vitest jsdom não expõe isso por padrão)
+Object.defineProperty(globalThis, 'import', {
+  value: {
+    meta: {
+      env: {
+        VITE_API_URL: 'http://localhost:8080',
+        MODE: 'test',
+        DEV: false,
+        PROD: false,
+        BASE_URL: '/',
+      },
+    },
+  },
+  writable: true,
+  configurable: true,
+});
 
 Object.defineProperty(window, 'matchMedia', {
   writable: true,

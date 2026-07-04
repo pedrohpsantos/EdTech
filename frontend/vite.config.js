@@ -1,6 +1,22 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
+// Plugin inline para mockar arquivos CSS em testes (Vitest)
+const cssModuleMockPlugin = {
+  name: 'css-module-mock',
+  enforce: 'pre',
+  resolveId(id) {
+    if (/\.(css|less|scss|sass)$/.test(id)) {
+      return '\0virtual:css-mock'
+    }
+  },
+  load(id) {
+    if (id === '\0virtual:css-mock') {
+      return 'export default new Proxy({}, { get: (_, key) => key })'
+    }
+  }
+}
+
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
@@ -18,15 +34,7 @@ export default defineConfig({
     css: false,
     setupFiles: './src/setupTests.js',
     exclude: ['node_modules', 'dist', '.idea', '.git', '.cache', 'e2e/**'],
-    moduleNameMapper: {
-      '\\.(css|less|scss|sass)$': '<rootDir>/src/__mocks__/fileMock.js',
-    },
-    define: {
-      'import.meta.env.VITE_API_URL': JSON.stringify('http://localhost:8080'),
-      'import.meta.env.MODE': JSON.stringify('test'),
-      'import.meta.env.DEV': JSON.stringify(false),
-      'import.meta.env.PROD': JSON.stringify(false),
-    },
+    plugins: [cssModuleMockPlugin],
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
@@ -39,4 +47,3 @@ export default defineConfig({
     }
   },
 })
-

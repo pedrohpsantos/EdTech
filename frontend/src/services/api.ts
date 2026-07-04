@@ -1,7 +1,7 @@
 import axios, { InternalAxiosRequestConfig } from 'axios';
 import { ApiResponse, User, Project, Document } from '../types';
 
-const BASE_URL = import.meta.env.VITE_API_URL || '';
+const BASE_URL = import.meta.env?.VITE_API_URL ?? '';
 
 const getCsrfToken = () => {
   const value = `; ${document.cookie}`;
