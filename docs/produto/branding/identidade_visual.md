@@ -1,4 +1,4 @@
-﻿---
+---
 title: 'Identidade Visual'
 ---
 
@@ -68,5 +68,6 @@ O **EdTech** surge como uma camada de governança acadêmica.
 | :---: | :---: | :--- | :--- |
 | `1.0` | 09/06/2026 | Criação da identidade visual e storytelling | Pedro Henrique P. Santos |
 | `1.1` | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |
+| `2.0` | 04/07/2026 | Revisão profunda, correção de metadados e melhorias visuais | Pedro Henrique P. Santos |
 
 

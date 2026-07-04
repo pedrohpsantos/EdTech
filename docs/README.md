@@ -1,3 +1,7 @@
+---
+title: '📄 EdTech Docs (Docs-as-Code)'
+---
+
 # 📄 EdTech Docs (Docs-as-Code)
 
 Este módulo hospeda toda a infraestrutura de documentação do sistema EdTech (Manuais, Arquitetura, Requisitos e Relatórios de Sprints). Seguimos rigorosamente a filosofia **Docs-as-Code**, em que a documentação é tratada, versionada e revisada com o mesmo rigor do código-fonte.
@@ -50,3 +54,12 @@ Como a documentação é feita com Python/MkDocs, aconselha-se o uso do instalad
    uv run mkdocs serve
    ```
 3. O portal subirá localmente em `http://127.0.0.1:8000`.
+
+
+---
+
+## Histórico de Versões
+
+| Versão | Data | Descrição | Autor |
+| :---: | :---: | :--- | :--- |
+| `2.0` | 04/07/2026 | Revisão profunda, correção de metadados e melhorias visuais | Pedro Henrique P. Santos |

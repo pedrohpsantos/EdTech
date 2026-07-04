@@ -1,4 +1,4 @@
-﻿---
+---
 title: 'Arquitetura de Dados'
 ---
 
@@ -59,4 +59,5 @@ Utilizamos a ferramenta **Flyway** atrelada ao build do Spring Boot. Nenhum scri
 | `1.0`  | 30/05/2026 | Criação do documento                      | Pedro Henrique P. Santos |
 | `1.1`  | 30/05/2026 | ERD simplificado com foco em legibilidade | Pedro Henrique P. Santos |
 | `1.2` | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |
+| `2.0` | 04/07/2026 | Revisão profunda, correção de metadados e melhorias visuais | Pedro Henrique P. Santos |
 

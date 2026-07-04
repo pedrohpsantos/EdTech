@@ -1,4 +1,4 @@
-﻿---
+---
 title: 'Design System'
 ---
 
@@ -27,28 +27,28 @@ A assinatura visual do produto é **Deep Purple** com contrastes em **Amber**.
   <div style="text-align: center;"><div style="width: 80px; height: 80px; background-color: #FFE0B2; border-radius: 12px; margin-bottom: 8px; border: 1px solid #ddd;"></div><b>Accent 100</b><br/><code>#FFE0B2</code></div>
 </div>
 
-###  Temas (Background & Surfaces)
+###  Temas (Plano de Fundo & Superfícies)
 
-=== "Light Theme"
+=== "Tema Claro"
     Ideal para leitura de documentos e painéis claros.
 
     
-    * **Background:** `<div style="display:inline-block; width:15px; height:15px; background:#F7F7FB; border:1px solid #ccc; border-radius:3px; vertical-align:middle;"></div> #F7F7FB`
-    * **Surface:** `<div style="display:inline-block; width:15px; height:15px; background:#FFFFFF; border:1px solid #ccc; border-radius:3px; vertical-align:middle;"></div> #FFFFFF`
-    * **Border:** `<div style="display:inline-block; width:15px; height:15px; background:#E6E1F0; border-radius:3px; vertical-align:middle;"></div> #E6E1F0`
-    * **Text Primary:** `<div style="display:inline-block; width:15px; height:15px; background:#1F1630; border-radius:3px; vertical-align:middle;"></div> #1F1630`
-    * **Text Secondary:** `<div style="display:inline-block; width:15px; height:15px; background:#5F5670; border-radius:3px; vertical-align:middle;"></div> #5F5670`
+    * **Plano de Fundo:** `<div style="display:inline-block; width:15px; height:15px; background:#F7F7FB; border:1px solid #ccc; border-radius:3px; vertical-align:middle;"></div> #F7F7FB`
+    * **Superfície:** `<div style="display:inline-block; width:15px; height:15px; background:#FFFFFF; border:1px solid #ccc; border-radius:3px; vertical-align:middle;"></div> #FFFFFF`
+    * **Borda:** `<div style="display:inline-block; width:15px; height:15px; background:#E6E1F0; border-radius:3px; vertical-align:middle;"></div> #E6E1F0`
+    * **Texto Principal:** `<div style="display:inline-block; width:15px; height:15px; background:#1F1630; border-radius:3px; vertical-align:middle;"></div> #1F1630`
+    * **Texto Secundário:** `<div style="display:inline-block; width:15px; height:15px; background:#5F5670; border-radius:3px; vertical-align:middle;"></div> #5F5670`
 
-=== "Dark Theme"
+=== "Tema Escuro"
     Para foco profundo, logs técnicos e dashboards.
 
     
-    * **Background:** `<div style="display:inline-block; width:15px; height:15px; background:#0F0B1A; border-radius:3px; vertical-align:middle;"></div> #0F0B1A`
-    * **Surface:** `<div style="display:inline-block; width:15px; height:15px; background:#171124; border-radius:3px; vertical-align:middle;"></div> #171124`
-    * **Surface Elevated:** `<div style="display:inline-block; width:15px; height:15px; background:#211935; border-radius:3px; vertical-align:middle;"></div> #211935`
-    * **Border:** `<div style="display:inline-block; width:15px; height:15px; background:#352A52; border-radius:3px; vertical-align:middle;"></div> #352A52`
-    * **Text Primary:** `<div style="display:inline-block; width:15px; height:15px; background:#F5F2FF; border-radius:3px; vertical-align:middle;"></div> #F5F2FF`
-    * **Text Secondary:** `<div style="display:inline-block; width:15px; height:15px; background:#B9B1CC; border-radius:3px; vertical-align:middle;"></div> #B9B1CC`
+    * **Plano de Fundo:** `<div style="display:inline-block; width:15px; height:15px; background:#0F0B1A; border-radius:3px; vertical-align:middle;"></div> #0F0B1A`
+    * **Superfície:** `<div style="display:inline-block; width:15px; height:15px; background:#171124; border-radius:3px; vertical-align:middle;"></div> #171124`
+    * **Superfície Elevada:** `<div style="display:inline-block; width:15px; height:15px; background:#211935; border-radius:3px; vertical-align:middle;"></div> #211935`
+    * **Borda:** `<div style="display:inline-block; width:15px; height:15px; background:#352A52; border-radius:3px; vertical-align:middle;"></div> #352A52`
+    * **Texto Principal:** `<div style="display:inline-block; width:15px; height:15px; background:#F5F2FF; border-radius:3px; vertical-align:middle;"></div> #F5F2FF`
+    * **Texto Secundário:** `<div style="display:inline-block; width:15px; height:15px; background:#B9B1CC; border-radius:3px; vertical-align:middle;"></div> #B9B1CC`
 
 ---
 
@@ -76,7 +76,7 @@ A tipografia é essencial para equilibrar o design moderno com a densidade técn
 --spacing-3: 24px;
 ```
 
-###  Border Radius
+###  Borda Radius
 ```css
 --radius-sm: 8px;      /* Cards pequenos e botões */
 --radius-md: 12px;     /* Modais e containers médios */
@@ -85,7 +85,7 @@ A tipografia é essencial para equilibrar o design moderno com a densidade técn
 --radius-pill: 999px;  /* Badges e Tags */
 ```
 
-###  Shadows
+###  Sombras
 Sombras sutis tingidas com o **Deep Purple** para evitar o aspecto "sujo" de sombras pretas tradicionais.
 
 ```css
@@ -102,5 +102,6 @@ Sombras sutis tingidas com o **Deep Purple** para evitar o aspecto "sujo" de som
 | :---: | :---: | :--- | :--- |
 | `1.0` | 09/06/2026 | Documentação do Design System e Tokens | Pedro Henrique P. Santos |
 | `1.1` | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |
+| `2.0` | 04/07/2026 | Revisão profunda, correção de metadados e melhorias visuais | Pedro Henrique P. Santos |
 
 

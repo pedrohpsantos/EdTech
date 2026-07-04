@@ -1,6 +1,7 @@
 ---
 title: 'Semana 7 — Deploy de Produção, Secret Manager e Entrega do MVP'
 ---
+
 # :material-rocket-launch: Semana 7 — Deploy de Produção, Secret Manager e Entrega do MVP
 
 <span class="status-badge"> Concluída (Enterprise Grade)</span>
@@ -100,5 +101,6 @@ As tarefas prioritárias para a próxima Sprint foram repriorizadas, juntando-se
 | Versão | Data | Descrição | Autor |
 |--------|------|-----------|-------|
 | 1.0 | 03/07/2026 | Criação do documento de fechamento da Sprint 7 | Pedro Henrique P. Santos |
+| `2.0` | 04/07/2026 | Revisão profunda, correção de metadados e melhorias visuais | Pedro Henrique P. Santos |
 
 

@@ -1,4 +1,4 @@
-﻿---
+---
 title: 'Requisitos Não Funcionais'
 ---
 
@@ -99,4 +99,5 @@ flowchart TD
 | :---: | :---: | :--- | :--- |
 | `1.0` | 29/05/2026 | Criação do documento | Pedro Henrique P. Santos |
 | `1.1` | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |
+| `2.0` | 04/07/2026 | Revisão profunda, correção de metadados e melhorias visuais | Pedro Henrique P. Santos |
 

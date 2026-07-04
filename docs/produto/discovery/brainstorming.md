@@ -1,4 +1,4 @@
-﻿---
+---
 title: 'Brainstorming e Priorização'
 ---
 
@@ -35,4 +35,5 @@ O resultado do Brainstorming foi organizado através da matriz MoSCoW (Must, Sho
 | `1.0`  | 30/05/2026 | Criação do documento             | Pedro Henrique P. Santos |
 | `1.1`  | 30/05/2026 | Rich Picture com animação e zoom | Pedro Henrique P. Santos |
 | `1.2` | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |
+| `2.0` | 04/07/2026 | Revisão profunda, correção de metadados e melhorias visuais | Pedro Henrique P. Santos |
 

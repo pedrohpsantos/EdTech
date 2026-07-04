@@ -1,6 +1,7 @@
 ---
 title: 'Semana 4 — Integração, Rotas e Refinamento de Escopo'
 ---
+
 # :material-rocket-launch: Semana 4 — Integração, Rotas e Refinamento de Escopo
 
 <span class="status-badge"> Concluída</span>
@@ -182,5 +183,6 @@ Consolidar tecnicamente a integração entre o Frontend (React) e o Backend (Spr
 | `1.0` | 12/06/2026 | Documentação inicial da Entrega 4 | Pedro Henrique P. Santos |
 | `1.1` | 12/06/2026 | Padronização e adição de tabelas de commits e debito técnico | Pedro Henrique P. Santos |
 | `1.2` | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |
+| `2.0` | 04/07/2026 | Revisão profunda, correção de metadados e melhorias visuais | Pedro Henrique P. Santos |
 
 

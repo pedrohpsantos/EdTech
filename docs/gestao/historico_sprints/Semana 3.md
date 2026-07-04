@@ -1,6 +1,7 @@
 ---
 title: 'Semana 3 — Implementação da Autenticação e Estrutura Base'
 ---
+
 # :material-rocket-launch: Semana 3 — Implementação da Autenticação e Estrutura Base
 
 <span class="status-badge"> Concluída</span>
@@ -281,5 +282,6 @@ Iniciar a implementação do MVP do EdTech com foco em três frentes paralelas: 
 | :---: | :---: | :--- | :--- |
 | `1.0`  | 05/06/2026 | Criação do documento                | Pedro Henrique P. Santos |
 | `1.1` | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |
+| `2.0` | 04/07/2026 | Revisão profunda, correção de metadados e melhorias visuais | Pedro Henrique P. Santos |
 
 

@@ -1,15 +1,6 @@
 ---
-description: EdTech — Plataforma acadêmica para centralização, gerenciamento e auditoria de publicações científicas.
-hide:
-
-  - navigation
-
-  - toc
+title: 'EdTech'
 ---
-
-<div class="md-hero" markdown>
-
-<span class="hero-badge"> Em Desenvolvimento — AILAB Makers</span>
 
 # EdTech
 
@@ -254,4 +245,5 @@ Time multidisciplinar do AILAB Makers.
 | `0.3.0` | 20/06/2026 | Consolidação do Backend (Spring Boot 4.1 + Java 21) e Infra CI. | Pedro Henrique P. Santos |
 | `0.4.0` | 26/06/2026 | Integração de UI (Vite), Google Cloud SQL/Storage e fechamento do MVP Sprint 6. | Pedro Henrique P. Santos |
 | `0.5.0` | 01/07/2026 | Refinamento Premium de UX/UI (Animações, Design System CSS Puro, Trilha de Pesquisa). | Pedro Henrique P. Santos |
+| `2.0` | 04/07/2026 | Revisão profunda, correção de metadados e melhorias visuais | Pedro Henrique P. Santos |
 <!-- trigger deploy -->

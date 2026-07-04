@@ -1,6 +1,7 @@
 ---
 title: 'Semana 5 — Uploads, Autenticação e Integrações GCS'
 ---
+
 # :material-rocket-launch: Semana 5 — Uploads, Autenticação e Integrações GCS
 
 <span class="status-badge"> Concluída</span>
@@ -151,5 +152,6 @@ Consolidar a Integração Contínua, finalizar a base de Autenticação com CORS
 | Versão | Data | Descrição | Autor |
 | :---: | :---: | :--- | :--- |
 | `1.0` | 19/06/2026 | Documentação inicial da Entrega 5 | Pedro Henrique P. Santos |
+| `2.0` | 04/07/2026 | Revisão profunda, correção de metadados e melhorias visuais | Pedro Henrique P. Santos |
 
 

@@ -23,4 +23,5 @@ Abaixo você encontra o relatório executivo (Allure Report) interativo, contend
 |--------|------|-----------|-------|
 | 1.0 | 02/07/2026 | Criação e estruturação do documento (Playwright Nativo) | Pedro Henrique P. Santos |
 | 1.1 | 03/07/2026 | Integração com Allure Report via Actions | Pedro Henrique P. Santos |
+| `2.0` | 04/07/2026 | Revisão profunda, correção de metadados e melhorias visuais | Pedro Henrique P. Santos |
 
