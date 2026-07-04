@@ -106,7 +106,7 @@ Todas as issues críticas da Sprint 6 foram repriorizadas para a Sprint 7, junta
 
 → **Semana 7**: Fluxo E2E, Painéis Finais e Deploy MVP
 
-← [Semana 5 — Uploads, Autenticação e Integrações GCS](semana5.md)
+← [Semana 5 — Uploads, Autenticação e Integrações GCS](Semana%205.md)
 
 ---
 

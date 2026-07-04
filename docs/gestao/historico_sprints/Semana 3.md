@@ -269,9 +269,9 @@ Iniciar a implementação do MVP do EdTech com foco em três frentes paralelas: 
 
 ## Próximos Passos
 
-→ [Semana 4 — Integração, Rotas e Refinamento de Escopo](semana4.md)
+→ [Semana 4 — Integração, Rotas e Refinamento de Escopo](Semana%204.md)
 
-← [Semana 2 — Lean Inception, Requisitos e Arquitetura](semana2.md)
+← [Semana 2 — Lean Inception, Requisitos e Arquitetura](Semana%202.md)
 
 ---
 

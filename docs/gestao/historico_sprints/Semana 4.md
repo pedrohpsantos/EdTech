@@ -171,7 +171,7 @@ Consolidar tecnicamente a integração entre o Frontend (React) e o Backend (Spr
 
 → Sprint 5: Iniciar Fase 3 (Upload de Documentos, Flyway e Contratos de API).
 
-← [Semana 3 — Implementação da Autenticação e Estrutura Base](semana3.md)
+← [Semana 3 — Implementação da Autenticação e Estrutura Base](Semana%203.md)
 
 ---
 

@@ -140,9 +140,9 @@ Consolidar a Integração Contínua, finalizar a base de Autenticação com CORS
 
 ## Próximos Passos
 
-→ [Semana 6 — Infraestrutura, Plugins e Ajuste de Rotas](semana6.md)
+→ [Semana 6 — Infraestrutura, Plugins e Ajuste de Rotas](Semana%206.md)
 
-← [Semana 4 — Integração, Rotas e Refinamento de Escopo](semana4.md)
+← [Semana 4 — Integração, Rotas e Refinamento de Escopo](Semana%204.md)
 
 ---
 

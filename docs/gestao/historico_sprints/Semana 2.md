@@ -105,9 +105,9 @@ Executar o Lean Inception completo, levantar e especificar todos os requisitos d
 
 ## Próximos Passos
 
-→ [Semana 3](semana3.md): início da implementação do MVP.
+→ [Semana 3](Semana%203.md): início da implementação do MVP.
 
-← [Semana 1 — Setup e Fundação](semana1.md)
+← [Semana 1 — Setup e Fundação](Semana%201.md)
 
 
 ---

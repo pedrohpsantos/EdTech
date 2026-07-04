@@ -18,7 +18,7 @@ Plataforma acadêmica para centralização, gerenciamento e auditoria de publica
 <div class="hero-actions" markdown>
 
 [Explorar MVP :material-star-shooting:](produto/strategy/canvas_mvp.md){ .md-button .md-button--primary }
-[Ver Entregas :material-rocket-launch:](gestao/historico_sprints/semana1.md){ .md-button }
+[Ver Entregas :material-rocket-launch:](gestao/historico_sprints/Semana%201.md){ .md-button }
 
 </div>
 

@@ -97,7 +97,7 @@ Estabelecer toda a fundação do projeto: repositório, pipeline de CI/CD, ambie
 
 ## Próximos Passos
 
-→ [Semana 2 — Lean Inception, Requisitos e Arquitetura](semana2.md)
+→ [Semana 2 — Lean Inception, Requisitos e Arquitetura](Semana%202.md)
 
 
 ---
