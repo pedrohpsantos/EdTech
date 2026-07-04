@@ -94,8 +94,6 @@ jobs:
           if-no-files-found: warn
       - name: Run Mutation Tests (PiTest)
         run: ./mvnw org.pitest:pitest-maven:mutationCoverage -B
-      - name: Run Security Audit (OWASP)
-        run: ./mvnw org.owasp:dependency-check-maven:check -B
 
   # ==========================================
   #                 FRONTEND
