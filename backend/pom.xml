@@ -266,6 +266,9 @@
                 <configuration>
                     <failBuildOnCVSS>7</failBuildOnCVSS>
                     <nvdApiKey>${env.NVD_API_KEY}</nvdApiKey>
+                    <!-- Sonatype OSS Index falha com erros de rede no CI (GitHub Actions) -->
+                    <!-- O NVD CVE Analyzer cobre a mesma função de forma mais confiável -->
+                    <ossindexAnalyzerEnabled>false</ossindexAnalyzerEnabled>
                     <suppressionFiles>
                         <suppressionFile>suppression.xml</suppressionFile>
                     </suppressionFiles>
