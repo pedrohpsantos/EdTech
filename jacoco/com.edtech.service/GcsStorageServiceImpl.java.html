@@ -6,11 +6,13 @@ import com.google.cloud.storage.Storage;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 /** Documentação para GcsStorageServiceImpl. */
 @Service
+@ConditionalOnProperty(name = &quot;storage.provider&quot;, havingValue = &quot;gcs&quot;, matchIfMissing = true)
 public class GcsStorageServiceImpl implements StorageService {
 
   private final Storage storage;
@@ -19,37 +21,37 @@ public class GcsStorageServiceImpl implements StorageService {
   private String bucketName;
 
   /** Documentação para o método GcsStorageServiceImpl. */
-<span class="fc" id="L22">  public GcsStorageServiceImpl(Storage storage) {</span>
-<span class="fc" id="L23">    this.storage = storage;</span>
-<span class="fc" id="L24">  }</span>
+<span class="nc" id="L24">  public GcsStorageServiceImpl(Storage storage) {</span>
+<span class="nc" id="L25">    this.storage = storage;</span>
+<span class="nc" id="L26">  }</span>
 
   @Override
   public void uploadFile(MultipartFile file, String fileKey, String contentType) throws Exception {
-<span class="nc" id="L28">    BlobId blobId = BlobId.of(bucketName, fileKey);</span>
-<span class="nc" id="L29">    BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType(contentType).build();</span>
-<span class="nc" id="L30">    storage.create(blobInfo, file.getBytes());</span>
-<span class="nc" id="L31">  }</span>
+<span class="nc" id="L30">    BlobId blobId = BlobId.of(bucketName, fileKey);</span>
+<span class="nc" id="L31">    BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType(contentType).build();</span>
+<span class="nc" id="L32">    storage.create(blobInfo, file.getBytes());</span>
+<span class="nc" id="L33">  }</span>
 
   @Override
   public String getPresignedUrl(String fileKey) throws Exception {
-<span class="nc" id="L35">    BlobId blobId = BlobId.of(bucketName, fileKey);</span>
-<span class="nc" id="L36">    URL signedUrl =</span>
-<span class="nc" id="L37">        storage.signUrl(</span>
-<span class="nc" id="L38">            blobInfoForPresigned(blobId),</span>
+<span class="nc" id="L37">    BlobId blobId = BlobId.of(bucketName, fileKey);</span>
+<span class="nc" id="L38">    URL signedUrl =</span>
+<span class="nc" id="L39">        storage.signUrl(</span>
+<span class="nc" id="L40">            blobInfoForPresigned(blobId),</span>
             15,
             TimeUnit.MINUTES,
-<span class="nc" id="L41">            Storage.SignUrlOption.withV4Signature());</span>
-<span class="nc" id="L42">    return signedUrl.toString();</span>
+<span class="nc" id="L43">            Storage.SignUrlOption.withV4Signature());</span>
+<span class="nc" id="L44">    return signedUrl.toString();</span>
   }
 
   private BlobInfo blobInfoForPresigned(BlobId blobId) {
-<span class="nc" id="L46">    return BlobInfo.newBuilder(blobId).build();</span>
+<span class="nc" id="L48">    return BlobInfo.newBuilder(blobId).build();</span>
   }
 
   @Override
   public void deleteFile(String fileKey) throws Exception {
-<span class="nc" id="L51">    BlobId blobId = BlobId.of(bucketName, fileKey);</span>
-<span class="nc" id="L52">    storage.delete(blobId);</span>
-<span class="nc" id="L53">  }</span>
+<span class="nc" id="L53">    BlobId blobId = BlobId.of(bucketName, fileKey);</span>
+<span class="nc" id="L54">    storage.delete(blobId);</span>
+<span class="nc" id="L55">  }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

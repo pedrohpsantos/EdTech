@@ -3,9 +3,10 @@ edtech-api,com.edtech.service,InvalidCredentialsException,4,0,0,0,2,0,1,0,1,0
 edtech-api,com.edtech.service,DocumentService,158,272,11,11,32,76,20,6,10,5
 edtech-api,com.edtech.service,UserService,10,82,2,6,1,20,3,5,1,3
 edtech-api,com.edtech.service,InvalidInstitutionalEmailException,0,4,0,0,0,2,0,1,0,1
-edtech-api,com.edtech.service,GcsStorageServiceImpl,59,6,0,0,14,3,4,1,4,1
+edtech-api,com.edtech.service,GcsStorageServiceImpl,65,0,0,0,17,0,5,0,5,0
 edtech-api,com.edtech.service,AuditLogService,5,81,1,7,2,20,1,8,0,5
 edtech-api,com.edtech.service,JwtService,14,85,2,2,3,22,3,6,1,6
+edtech-api,com.edtech.service,LocalStorageServiceImpl,15,7,0,0,5,2,3,2,3,2
 edtech-api,com.edtech.service,ProjectService,126,105,14,0,26,30,12,4,5,4
 edtech-api,com.edtech.service,DuplicateEmailException,0,4,0,0,0,2,0,1,0,1
 edtech-api,com.edtech.service,RecoveryService,2,140,4,8,1,34,4,7,0,5
@@ -27,7 +28,7 @@ edtech-api,com.edtech.dto,ProjectRequestDto,0,17,0,0,0,7,0,5,0,5
 edtech-api,com.edtech.dto,UpdateDocumentStatusRequest,9,0,0,0,1,0,1,0,1,0
 edtech-api,com.edtech.dto,LoginResponseDto,15,0,0,0,1,0,1,0,1,0
 edtech-api,com.edtech.config,WebMvcConfig,0,4,0,0,0,2,0,2,0,2
-edtech-api,com.edtech.config,SecurityConfig,0,164,0,0,0,39,0,10,0,10
+edtech-api,com.edtech.config,SecurityConfig,0,173,0,0,0,41,0,10,0,10
 edtech-api,com.edtech.config,JwtAuthenticationEntryPoint,0,24,0,0,0,7,0,2,0,2
 edtech-api,com.edtech.config,GcsConfig,32,0,4,0,9,0,4,0,2,0
 edtech-api,com.edtech.config,JwtAuthenticationFilter,6,161,9,17,1,37,9,11,0,7
