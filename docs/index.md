@@ -5,8 +5,10 @@ hide:
   - toc
 ---
 
-<div class="animated-hero">
+<div class="animated-hero" markdown="1">
+
   <h1 class="hero-title">Pesquisa Segura,<br>Auditoria Transparente.</h1>
+  
   <p class="hero-subtitle">
     O EdTech digitaliza e protege o fluxo de produções acadêmicas de ponta a ponta. 
     Uma plataforma inteligente para laboratórios universitários e programas de pós-graduação.
@@ -18,6 +20,7 @@ hide:
   [Ver Entregas :material-package-variant-closed:](gestao/historico_sprints/Semana%201/){ .md-button }
 
   </div>
+
 </div>
 
 ---
