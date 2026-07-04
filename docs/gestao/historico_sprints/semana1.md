@@ -1,4 +1,4 @@
-﻿---
+---
 title: 'Semana 1 — Setup e Fundação'
 ---
 # :material-rocket-launch: Semana 1 — Setup e Fundação

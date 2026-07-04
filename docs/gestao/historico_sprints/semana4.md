@@ -1,4 +1,4 @@
-﻿---
+---
 title: 'Semana 4 — Integração, Rotas e Refinamento de Escopo'
 ---
 # :material-rocket-launch: Semana 4 — Integração, Rotas e Refinamento de Escopo
