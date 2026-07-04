@@ -83,7 +83,7 @@ jobs:
       - name: Gerar Allure Report
         working-directory: frontend
         run: |
-          npx allure generate allure-results -o ../docs/allure --clean
+          npx allure-commandline generate allure-results -o ../docs/allure --clean
 
       - name: Instalar dependências
         run: uv sync

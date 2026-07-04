@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DashboardLayout from '../components/layout/DashboardLayout';
-import { _useProjects } from '../hooks/useProjects';
 import { useDocuments, useUploadDocument, useDownloadUrl } from '../hooks/useDocuments';
 import { Document } from '../types';
 import '../assets/documentos.css';
