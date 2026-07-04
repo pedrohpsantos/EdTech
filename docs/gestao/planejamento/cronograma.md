@@ -1,4 +1,8 @@
-﻿# Cronograma e Sprints
+﻿---
+title: 'Cronograma e Sprints'
+---
+
+# :material-calendar-check: Cronograma e Sprints
 
 Planejamento de desenvolvimento do EdTech, organizado em sprints semanais com entregas incrementais.
 

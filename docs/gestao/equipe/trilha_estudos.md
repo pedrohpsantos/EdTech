@@ -1,4 +1,8 @@
-﻿# Trilha de Estudos por Função
+﻿---
+title: 'Trilha de Estudos por Função'
+---
+
+# :material-road-variant: Trilha de Estudos por Função
 
 Como a equipe utilizará um esquema de rotações para atuar como **Full Stack**, criamos esta trilha de estudos focada no desenvolvimento gradativo. 
 

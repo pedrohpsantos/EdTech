@@ -1,4 +1,8 @@
-# ADR 0001: Armazenamento em Nuvem Nativo (Google Cloud)
+﻿---
+title: 'ADR 0001: Armazenamento em Nuvem Nativo (Google Cloud)'
+---
+
+# :material-text-box-check: ADR 0001: Armazenamento em Nuvem Nativo (Google Cloud)
 
 ## Status
 
@@ -39,3 +43,5 @@ A aplicação backend (Cloud Run) fará comunicação direta com as APIs nativas
 | `1.1` | 04/06/2026 | Padronização do formato do documento | Pedro Henrique P. Santos |
 | `2.0` | 21/06/2026 | Transição temporária de Storage (removido) | Pedro Henrique P. Santos |
 | `3.0` | 01/07/2026 | Consolidação final no ecossistema nativo Google Cloud e Firebase | Pedro Henrique P. Santos |
+
+

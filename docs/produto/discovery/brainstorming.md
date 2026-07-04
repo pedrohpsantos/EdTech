@@ -1,4 +1,8 @@
-﻿# Brainstorming e Priorização
+﻿---
+title: 'Brainstorming e Priorização'
+---
+
+# :material-brain: Brainstorming e Priorização
 
 O levantamento focado no usuário nos afastou de criar features genéricas (como "Rede Social Acadêmica" ou "Chat") e mirou diretamente no fluxo transacional de envio, restrição e aprovação de documentos em nuvem.
 

@@ -1,4 +1,8 @@
-﻿# Design Técnico (Baixo Nível)
+﻿---
+title: 'Design Técnico (Baixo Nível)'
+---
+
+# :material-server-network: Design Técnico (Baixo Nível)
 
 Enquanto o **C4 Model** descreve *o que* as partes fazem, este documento detalha *como* as partes interagem no nível de código e dados.
 

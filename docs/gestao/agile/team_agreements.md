@@ -1,4 +1,8 @@
-﻿# Acordos do Time (Team Agreements)
+﻿---
+title: 'Acordos do Time (Team Agreements)'
+---
+
+# :material-handshake: Acordos do Time (Team Agreements)
 
 Para mantermos a coesão de um time distribuído e garantirmos a evolução sadia da plataforma EdTech, a nossa Squad opera baseada em clareza, automação e registro rigoroso de decisões.
 

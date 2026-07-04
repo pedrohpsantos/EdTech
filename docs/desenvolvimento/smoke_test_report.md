@@ -1,9 +1,7 @@
 ﻿---
-hide:
-  - toc
----
+title: 'Relatório de Testes E2E (Smoke Tests)'---
 
-# Relatório de Testes E2E (Smoke Tests)
+# :material-test-tube: Relatório de Testes E2E (Smoke Tests)
 
 Abaixo você encontra o relatório executivo (Allure Report) interativo, contendo todos os detalhes dos nossos testes E2E e de integração em produção.
 

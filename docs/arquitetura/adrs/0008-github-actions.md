@@ -1,4 +1,8 @@
-# ADR 0008: Integração e Entrega Contínuas com GitHub Actions
+﻿---
+title: 'ADR 0008: Integração e Entrega Contínuas com GitHub Actions'
+---
+
+# :material-text-box-check: ADR 0008: Integração e Entrega Contínuas com GitHub Actions
 
 ## Status
 
@@ -34,3 +38,5 @@ Adotamos o **GitHub Actions** como nossa plataforma oficial de Integração Cont
 | :---: | :---: | :--- | :--- |
 | `1.0` | 04/06/2026 | Criação do documento | Pedro Henrique P. Santos |
 | `1.1` | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |
+
+

@@ -1,4 +1,8 @@
-﻿# Atas de Reunião
+﻿---
+title: 'Atas de Reunião'
+---
+
+# :material-clipboard-text: Atas de Reunião
 
 Template padrão para registro das reuniões da equipe EdTech. Copie a estrutura abaixo para cada nova reunião.
 

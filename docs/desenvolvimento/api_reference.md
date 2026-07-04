@@ -1,8 +1,8 @@
 ﻿---
-title: API Reference (Swagger)
+title: 'API Reference (Swagger)'
 ---
 
-# API Reference (Swagger)
+# :material-api: API Reference (Swagger)
 
 <div id="swagger-ui"></div>
 <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@5.9.0/swagger-ui.css" />
@@ -44,4 +44,6 @@ title: API Reference (Swagger)
 | Versão | Data | Descrição | Autor |
 |--------|------|-----------|-------|
 | 1.0 | 28/06/2026 | Criação e estruturação do documento | Pedro Henrique P. Santos |
+
+
 

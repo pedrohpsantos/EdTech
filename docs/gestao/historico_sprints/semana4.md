@@ -1,13 +1,6 @@
 ﻿---
-date: 2026-06-15
-authors:
-  - pedrohpsantos
-categories:
-  - Sprint
-hide:
-  - footer
----
-# Semana 4 — Integração, Rotas e Refinamento de Escopo
+title: 'Semana 4 — Integração, Rotas e Refinamento de Escopo'---
+# :material-rocket-launch: Semana 4 — Integração, Rotas e Refinamento de Escopo
 
 <span class="status-badge"> Concluída</span>
 

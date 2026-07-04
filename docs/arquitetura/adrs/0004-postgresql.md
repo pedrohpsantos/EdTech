@@ -1,4 +1,8 @@
-# ADR 0004: Escolha do Banco de Dados Relacional (PostgreSQL)
+﻿---
+title: 'ADR 0004: Escolha do Banco de Dados Relacional (PostgreSQL)'
+---
+
+# :material-text-box-check: ADR 0004: Escolha do Banco de Dados Relacional (PostgreSQL)
 
 ## Status
 
@@ -37,3 +41,5 @@ Optamos por usar **PostgreSQL**, hospedado no **Google Cloud SQL**.
 | :---: | :---: | :--- | :--- |
 | `1.0` | 04/06/2026 | Criação do documento | Pedro Henrique P. Santos |
 | `1.1` | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |
+
+

@@ -1,8 +1,7 @@
 ﻿---
-description: Segurança e AppSec — Threat Model, Matriz de Acesso RBAC e Controles de Segurança.
----
+title: 'AppSec e Segurança'---
 
-# AppSec e Segurança
+# :material-shield-lock: AppSec e Segurança
 
 A proteção do EdTech gira em torno de duas engrenagens centrais: Autenticação Restrita (JWT em cookies) e Log de Auditoria irrefutável.
 

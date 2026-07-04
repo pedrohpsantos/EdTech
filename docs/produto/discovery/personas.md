@@ -1,4 +1,8 @@
-﻿# Personas do Usuário
+﻿---
+title: 'Personas do Usuário'
+---
+
+# :material-account-group: Personas do Usuário
 
 As personas orientam as Histórias de Usuário, as jornadas e as decisões de arquitetura e design do EdTech. Elas foram construídas com base no perfil típico de pesquisadores e docentes universitários.
 

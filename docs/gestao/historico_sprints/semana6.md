@@ -1,13 +1,6 @@
 ﻿---
-date: 2026-06-26
-authors:
-  - pedrohpsantos
-categories:
-  - Sprint
-hide:
-  - footer
----
-# Semana 6 — Infraestrutura, Plugins e Ajuste de Rotas
+title: 'Semana 6 — Infraestrutura, Plugins e Ajuste de Rotas'---
+# :material-rocket-launch: Semana 6 — Infraestrutura, Plugins e Ajuste de Rotas
 
 <span class="status-badge"> Parcialmente Concluída</span>
 

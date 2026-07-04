@@ -1,4 +1,8 @@
-﻿# É / Não É / Faz / Não Faz
+﻿---
+title: 'É / Não É / Faz / Não Faz'
+---
+
+# :material-compare-horizontal: É / Não É / Faz / Não Faz
 
 Alinhamento de expectativas sobre os limites e o escopo do EdTech.
 

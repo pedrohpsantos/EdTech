@@ -1,4 +1,8 @@
-# ADR 0005: Framework Backend (Spring Boot + Java 17)
+﻿---
+title: 'ADR 0005: Framework Backend (Spring Boot + Java 17)'
+---
+
+# :material-text-box-check: ADR 0005: Framework Backend (Spring Boot + Java 17)
 
 ## Status
 
@@ -36,3 +40,5 @@ Optamos por utilizar **Java 17** com **Spring Boot 3**.
 | :---: | :---: | :--- | :--- |
 | `1.0` | 04/06/2026 | Criação do documento | Pedro Henrique P. Santos |
 | `1.1` | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |
+
+

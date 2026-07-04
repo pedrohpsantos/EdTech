@@ -1,4 +1,8 @@
-﻿# Histórias de Usuário
+﻿---
+title: 'Histórias de Usuário'
+---
+
+# :material-book-open-variant: Histórias de Usuário
 
 Backlog de histórias de usuário do EdTech, escritas no formato padrão e rastreáveis aos requisitos funcionais e personas.
 

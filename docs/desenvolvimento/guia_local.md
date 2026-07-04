@@ -1,4 +1,8 @@
-﻿# Guia de Setup Local (Onboarding)
+﻿---
+title: 'Guia de Setup Local (Onboarding)'
+---
+
+# :material-book-open-page-variant: Guia de Setup Local (Onboarding)
 
 Bem-vindo ao projeto EdTech! Siga este guia para configurar sua máquina e rodar o projeto localmente em poucos minutos.
 

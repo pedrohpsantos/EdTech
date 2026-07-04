@@ -1,4 +1,8 @@
-﻿# Backend e API (Spring Boot)
+﻿---
+title: 'Backend e API (Spring Boot)'
+---
+
+# :material-server: Backend e API (Spring Boot)
 
 O backend do EdTech atua como uma API RESTful independente, empacotada e orquestrada via **Spring Boot 4.1**.
 

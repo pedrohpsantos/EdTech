@@ -1,4 +1,8 @@
-# ADR 0011: Envio de E-mails Transacionais (Recuperação de Senha) via SMTP
+﻿---
+title: 'ADR 0011: Envio de E-mails Transacionais (Recuperação de Senha) via SMTP'
+---
+
+# :material-text-box-check: ADR 0011: Envio de E-mails Transacionais (Recuperação de Senha) via SMTP
 
 ## Status
 
@@ -32,3 +36,5 @@ Adotaremos o `spring-boot-starter-mail`, que abstrai o envio de e-mails usando a
 | Versão | Data | Descrição | Autor |
 | :---: | :---: | :--- | :--- |
 | `1.0` | 28/06/2026 | Documento de Registro de Decisão Arquitetural (Envio de E-mails Transacionais) | Pedro Henrique P. Santos |
+
+

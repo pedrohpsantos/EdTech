@@ -1,4 +1,8 @@
-﻿# Visão e Escopo do Produto
+﻿---
+title: 'Visão e Escopo do Produto'
+---
+
+# :material-bullseye-arrow: Visão e Escopo do Produto
 
 <div class="section-heading" markdown>
 

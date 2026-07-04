@@ -1,4 +1,8 @@
-﻿# Arquitetura de Dados
+﻿---
+title: 'Arquitetura de Dados'
+---
+
+# :material-database: Arquitetura de Dados
 
 A camada de persistência garante os pilares de confidencialidade e trilha de autoria. O sistema não permite apagar dados de auditoria e garante forte integridade referencial.
 

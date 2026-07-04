@@ -1,4 +1,8 @@
-﻿# Canvas MVP
+﻿---
+title: 'Canvas MVP'
+---
+
+# :material-diamond-stone: Canvas MVP
 
 Definição do Produto Mínimo Viável (MVP) do EdTech — o menor conjunto de funcionalidades que entrega valor real aos usuários.
 

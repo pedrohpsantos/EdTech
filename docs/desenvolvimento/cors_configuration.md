@@ -1,4 +1,8 @@
-﻿# Configuração CORS — DocVault
+﻿---
+title: 'Configuração CORS — DocVault'
+---
+
+# :material-security: Configuração CORS — DocVault
 
 Este documento detalha a configuração de Cross-Origin Resource Sharing (CORS) adotada no projeto DocVault, cobrindo os aspectos de comunicação entre o frontend (Vite/React) e o backend (Spring Boot), além de especificidades para os ambientes de desenvolvimento e produção.
 
@@ -168,4 +172,6 @@ Caso o frontend (`app.meusistema.com`) e o backend (`api.outrosistema.com`) resi
 | `1.0` | 30/05/2026 | Criação do documento | Pedro Henrique P. Santos |
 | `1.1` | 30/05/2026 | Refino do threat model e estilos visuais | Pedro Henrique P. Santos |
 | `1.2` | 13/06/2026 | Reestruturação e movido para a trilha DevEx | Pedro Henrique P. Santos |
+
+
 

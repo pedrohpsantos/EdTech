@@ -1,13 +1,6 @@
 ﻿---
-date: 2026-06-12
-authors:
-  - pedrohpsantos
-categories:
-  - Sprint
-hide:
-  - footer
----
-# Semana 3 — Implementação da Autenticação e Estrutura Base
+title: 'Semana 3 — Implementação da Autenticação e Estrutura Base'---
+# :material-rocket-launch: Semana 3 — Implementação da Autenticação e Estrutura Base
 
 <span class="status-badge"> Concluída</span>
 

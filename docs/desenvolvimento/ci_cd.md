@@ -1,4 +1,8 @@
-﻿# Pipeline CI/CD e Deploy
+﻿---
+title: 'Pipeline CI/CD e Deploy'
+---
+
+# :material-rocket-launch: Pipeline CI/CD e Deploy
 
 A integração e entrega contínua do projeto ocorrem através do **GitHub Actions**.
 

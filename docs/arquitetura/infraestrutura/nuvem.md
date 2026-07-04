@@ -1,4 +1,8 @@
-﻿# Arquitetura de Nuvem
+﻿---
+title: 'Arquitetura de Nuvem'
+---
+
+# :material-cloud: Arquitetura de Nuvem
 
 A topologia cloud do projeto adota uma **estratégia 100% nativa no Google Cloud**, utilizando serviços gerenciados e serverless.
 

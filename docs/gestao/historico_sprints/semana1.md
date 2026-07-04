@@ -1,13 +1,6 @@
 ﻿---
-date: 2026-05-29
-authors:
-  - pedrohpsantos
-categories:
-  - Sprint
-hide:
-  - footer
----
-# Semana 1 — Setup e Fundação
+title: 'Semana 1 — Setup e Fundação'---
+# :material-rocket-launch: Semana 1 — Setup e Fundação
 
 <span class="status-badge"> Concluída</span>
 

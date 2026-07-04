@@ -1,4 +1,8 @@
-# ADR 0012: Adoção do Firebase Hosting para o Frontend
+﻿---
+title: 'ADR 0012: Adoção do Firebase Hosting para o Frontend'
+---
+
+# :material-text-box-check: ADR 0012: Adoção do Firebase Hosting para o Frontend
 
 ## Status
 
@@ -33,3 +37,5 @@ Optamos por utilizar o **Firebase Hosting** como plataforma para hospedar o fron
 | Versão | Data | Descrição | Autor |
 | :---: | :---: | :--- | :--- |
 | `1.0` | 01/07/2026 | Criação do documento | Pedro Henrique P. Santos |
+
+

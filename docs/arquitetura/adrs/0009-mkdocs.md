@@ -1,4 +1,8 @@
-# ADR 0009: Docs-as-Code com MkDocs e Material
+﻿---
+title: 'ADR 0009: Docs-as-Code com MkDocs e Material'
+---
+
+# :material-text-box-check: ADR 0009: Docs-as-Code com MkDocs e Material
 
 ## Status
 
@@ -34,3 +38,5 @@ Decidimos adotar a filosofia **Docs-as-Code (Documentação como Código)**, uti
 | :---: | :---: | :--- | :--- |
 | `1.0` | 04/06/2026 | Criação do documento | Pedro Henrique P. Santos |
 | `1.1` | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |
+
+

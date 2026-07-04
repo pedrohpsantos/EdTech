@@ -1,4 +1,8 @@
-# ADR 0003: Adoção de Google Cloud Run (Serverless)
+﻿---
+title: 'ADR 0003: Adoção de Google Cloud Run (Serverless)'
+---
+
+# :material-text-box-check: ADR 0003: Adoção de Google Cloud Run (Serverless)
 
 ## Status
 
@@ -37,3 +41,5 @@ Optamos por hospedar o backend da aplicação utilizando o **Google Cloud Run**,
 | :---: | :---: | :--- | :--- |
 | `1.0` | 04/06/2026 | Criação do documento | Pedro Henrique P. Santos |
 | `1.1` | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |
+
+

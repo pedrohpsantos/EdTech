@@ -1,4 +1,8 @@
-﻿# Identidade Visual
+﻿---
+title: 'Identidade Visual'
+---
+
+# :material-palette: Identidade Visual
 
 <div align="center" markdown="1">
   ![EdTech Logo](../../assets/svgs/logo.svg){ width="250" }

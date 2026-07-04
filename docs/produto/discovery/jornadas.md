@@ -1,4 +1,8 @@
-﻿# Mapeamento de Jornadas (User Journey)
+﻿---
+title: 'Mapeamento de Jornadas (User Journey)'
+---
+
+# :material-map-marker-path: Mapeamento de Jornadas (User Journey)
 
 Abaixo estão os fluxos principais que cada persona percorre ao utilizar o EdTech, desenhados durante os workshops de Discovery.
 

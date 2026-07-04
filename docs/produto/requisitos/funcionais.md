@@ -1,4 +1,8 @@
-﻿# Requisitos Funcionais
+﻿---
+title: 'Requisitos Funcionais'
+---
+
+# :material-format-list-checks: Requisitos Funcionais
 
 Especificação dos requisitos funcionais do EdTech, organizados por módulo e rastreáveis às funcionalidades do Lean Inception.
 

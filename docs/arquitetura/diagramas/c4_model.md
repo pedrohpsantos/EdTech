@@ -1,8 +1,7 @@
 ﻿---
-description: C4 Model do EdTech — Diagramas de Contexto e Container da arquitetura do sistema.
----
+title: 'C4 Model (Contexto e Containers)'---
 
-# C4 Model (Contexto e Containers)
+# :material-vector-arrange-below: C4 Model (Contexto e Containers)
 
 O projeto adota o **C4 Model** (desenvolvido por Simon Brown), uma taxonomia padrão de mercado para visualização de arquitetura de software de forma clara para desenvolvedores e stakeholders de negócios.
 

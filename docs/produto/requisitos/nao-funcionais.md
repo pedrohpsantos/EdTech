@@ -1,4 +1,8 @@
-﻿# Requisitos Não Funcionais
+﻿---
+title: 'Requisitos Não Funcionais'
+---
+
+# :material-shield-check: Requisitos Não Funcionais
 
 Restrições de qualidade, desempenho, segurança e operação que o EdTech deve atender.
 

@@ -1,15 +1,6 @@
 ﻿---
-date: 2026-07-03
-authors:
-  - pedrohpsantos
-categories:
-  - Sprint
-hide:
-  - footer
-hide:
-  - footer
----
-# Semana 7 — Deploy de Produção, Secret Manager e Entrega do MVP
+title: 'Semana 7 — Deploy de Produção, Secret Manager e Entrega do MVP'---
+# :material-rocket-launch: Semana 7 — Deploy de Produção, Secret Manager e Entrega do MVP
 
 <span class="status-badge"> Concluída (Enterprise Grade)</span>
 

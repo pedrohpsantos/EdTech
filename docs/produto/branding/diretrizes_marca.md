@@ -1,4 +1,8 @@
-﻿# Diretrizes da Marca
+﻿---
+title: 'Diretrizes da Marca'
+---
+
+# :material-book-open: Diretrizes da Marca
 
 <div align="center" markdown="1">
   ![EdTech Logo](../../assets/svgs/logo.svg){ width="200" style="margin-bottom: 20px;" }

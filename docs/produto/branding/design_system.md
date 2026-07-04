@@ -1,4 +1,8 @@
-﻿# Design System
+﻿---
+title: 'Design System'
+---
+
+# :material-palette-swatch: Design System
 
 Nosso Design System é construído para transmitir segurança, tecnologia e sofisticação.
 

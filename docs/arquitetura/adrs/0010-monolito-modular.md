@@ -1,4 +1,8 @@
-# ADR 0010: Adoção de Arquitetura Monolítica Modular vs. Microsserviços
+﻿---
+title: 'ADR 0010: Adoção de Arquitetura Monolítica Modular vs. Microsserviços'
+---
+
+# :material-text-box-check: ADR 0010: Adoção de Arquitetura Monolítica Modular vs. Microsserviços
 
 ## Status
 Aceito
@@ -35,3 +39,5 @@ A antiga pasta de microsserviço de autenticação (`docvault/auth`) foi removid
 | Versão | Data | Descrição | Autor |
 | :---: | :---: | :--- | :--- |
 | `1.0` | 21/06/2026 | Criação do documento | Pedro Henrique P. Santos |
+
+

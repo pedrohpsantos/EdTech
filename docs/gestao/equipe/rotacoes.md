@@ -1,4 +1,8 @@
-﻿# Papéis e Rotações
+﻿---
+title: 'Papéis e Rotações'
+---
+
+# :material-account-switch: Papéis e Rotações
 
 Estrutura organizacional da equipe EdTech, com papéis definidos por função e plano de rotação para desenvolvimento full-stack.
 
