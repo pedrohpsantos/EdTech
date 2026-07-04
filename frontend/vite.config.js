@@ -1,27 +1,9 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// Plugin que mocka CSS imports durante testes Vitest (process.env.VITEST é definido pelo runner)
-// Isso previne SyntaxError quando o JSDOM tenta parsear arquivos .css como JavaScript
-const vitestCssMock = {
-  name: 'vitest-css-mock',
-  enforce: 'pre',
-  resolveId(id) {
-    if (process.env.VITEST && /\.(css|less|scss|sass)(\?.*)?$/.test(id)) {
-      return '\0vitest-css-mock:' + id
-    }
-  },
-  load(id) {
-    if (id.startsWith('\0vitest-css-mock:')) {
-      // Retorna um módulo JS válido que age como CSS Module object
-      return 'export default new Proxy({}, { get: (_, key) => typeof key === "string" ? key : undefined })'
-    }
-  }
-}
-
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), vitestCssMock],
+  plugins: [react()],
   server: {
     proxy: {
       '/api': {
@@ -33,7 +15,9 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'jsdom',
-    css: false,
+    // css: true processa CSS Modules nativamente no Vitest (retorna objeto com class names)
+    // Antes falhava por import.meta.env undefined — agora resolvido com optional chaining em api.ts
+    css: true,
     setupFiles: './src/setupTests.js',
     exclude: ['node_modules', 'dist', '.idea', '.git', '.cache', 'e2e/**'],
     coverage: {
