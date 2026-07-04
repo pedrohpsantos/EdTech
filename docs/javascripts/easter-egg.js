@@ -2,42 +2,21 @@
  * EdTech Documentation - Original Easter Eggs
  */
 
-// EASTER EGG 1: O "Panic Mode" (Susto Acadêmico)
-// Acionado digitando: p a n i c o
-let panicCode = 'panico';
-let panicBuffer = '';
+// Os Easter Eggs agora são acionados exclusivamente digitando os comandos na Barra de Pesquisa,
+// evitando conflitos com atalhos de teclado nativos do MkDocs (como f, s, p, n).
 
-// EASTER EGG 2: Caffeine Rush
-// Acionado digitando: c a f e
-let coffeeCode = 'cafe';
-let coffeeBuffer = '';
-
-document.addEventListener('keydown', (e) => {
-  if (e.target.tagName.toLowerCase() === 'input' || e.target.tagName.toLowerCase() === 'textarea') return;
-
-  const key = e.key.toLowerCase();
-  
-  // Buffer for Panic
-  panicBuffer += key;
-  if (panicBuffer.length > panicCode.length) {
-    panicBuffer = panicBuffer.slice(-panicCode.length);
-  }
-  if (panicBuffer === panicCode) {
-    triggerAcademicPanic();
-    panicBuffer = '';
-  }
-
-  // Buffer for Coffee
-  coffeeBuffer += key;
-  if (coffeeBuffer.length > coffeeCode.length) {
-    coffeeBuffer = coffeeBuffer.slice(-coffeeCode.length);
-  }
-  if (coffeeBuffer === coffeeCode) {
-    triggerCaffeineRush();
-    coffeeBuffer = '';
+document.addEventListener('input', (e) => {
+  if (e.target.matches('.md-search__input')) {
+    const val = e.target.value.toLowerCase().trim();
+    if (val === 'panico' || val === 'pânico') {
+      e.target.value = ''; // Limpa a barra
+      triggerAcademicPanic();
+    } else if (val === 'cafe' || val === 'café') {
+      e.target.value = '';
+      triggerCaffeineRush();
+    }
   }
 });
-
 function triggerAcademicPanic() {
   const overlay = document.createElement('div');
   overlay.style.position = 'fixed';
@@ -73,17 +52,17 @@ function triggerAcademicPanic() {
     style.id = 'shake-style';
     style.innerHTML = `
       @keyframes panicShake {
-        0% { transform: translate(1px, 1px) rotate(0deg); }
-        10% { transform: translate(-1px, -2px) rotate(-1deg); }
-        20% { transform: translate(-3px, 0px) rotate(1deg); }
-        30% { transform: translate(3px, 2px) rotate(0deg); }
-        40% { transform: translate(1px, -1px) rotate(1deg); }
-        50% { transform: translate(-1px, 2px) rotate(-1deg); }
-        60% { transform: translate(-3px, 1px) rotate(0deg); }
-        70% { transform: translate(3px, 1px) rotate(-1deg); }
-        80% { transform: translate(-1px, -1px) rotate(1deg); }
-        90% { transform: translate(1px, 2px) rotate(0deg); }
-        100% { transform: translate(1px, -2px) rotate(-1deg); }
+        0% { transform: translate(0.5px, 0.5px) rotate(0deg); }
+        10% { transform: translate(-0.5px, -1px) rotate(-0.5deg); }
+        20% { transform: translate(-1.5px, 0px) rotate(0.5deg); }
+        30% { transform: translate(1.5px, 1px) rotate(0deg); }
+        40% { transform: translate(0.5px, -0.5px) rotate(0.5deg); }
+        50% { transform: translate(-0.5px, 1px) rotate(-0.5deg); }
+        60% { transform: translate(-1.5px, 0.5px) rotate(0deg); }
+        70% { transform: translate(1.5px, 0.5px) rotate(-0.5deg); }
+        80% { transform: translate(-0.5px, -0.5px) rotate(0.5deg); }
+        90% { transform: translate(0.5px, 1px) rotate(0deg); }
+        100% { transform: translate(0.5px, -1px) rotate(-0.5deg); }
       }
       .panic-mode {
         animation: panicShake 0.1s infinite;
@@ -152,28 +131,31 @@ function triggerCaffeineRush() {
   
   document.body.classList.add('caffeine-mode');
   
-  for (let i = 0; i < 30; i++) {
-    setTimeout(() => {
-      const mug = document.createElement('div');
-      mug.innerText = '☕';
-      mug.style.position = 'fixed';
-      mug.style.fontSize = (Math.random() * 40 + 30) + 'px';
-      mug.style.left = (Math.random() * 100) + 'vw';
-      mug.style.bottom = '-100px';
-      mug.style.zIndex = '9999';
-      mug.style.transition = 'all 1.5s ease-out';
-      document.body.appendChild(mug);
-      
-      requestAnimationFrame(() => {
-        mug.style.bottom = '120vh';
-        mug.style.transform = 'rotate(' + (Math.random() * 720 - 360) + 'deg) scale(' + (Math.random() * 1.5 + 0.5) + ')';
-      });
-      
-      setTimeout(() => mug.remove(), 2000);
-    }, i * 150);
-  }
+  // Atraso de 1.5s antes da chuva de café para primeiro ver a vibração e saturação
+  setTimeout(() => {
+    for (let i = 0; i < 30; i++) {
+      setTimeout(() => {
+        const mug = document.createElement('div');
+        mug.innerText = '☕';
+        mug.style.position = 'fixed';
+        mug.style.fontSize = (Math.random() * 40 + 30) + 'px';
+        mug.style.left = (Math.random() * 100) + 'vw';
+        mug.style.bottom = '-100px';
+        mug.style.zIndex = '9999';
+        mug.style.transition = 'all 1.5s ease-out';
+        document.body.appendChild(mug);
+        
+        requestAnimationFrame(() => {
+          mug.style.bottom = '120vh';
+          mug.style.transform = 'rotate(' + (Math.random() * 720 - 360) + 'deg) scale(' + (Math.random() * 1.5 + 0.5) + ')';
+        });
+        
+        setTimeout(() => mug.remove(), 2000);
+      }, i * 150);
+    }
+  }, 1500);
   
   setTimeout(() => {
     document.body.classList.remove('caffeine-mode');
-  }, 5000);
+  }, 7500);
 }
