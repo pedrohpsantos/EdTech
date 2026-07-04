@@ -1,0 +1,7 @@
+name: "EdTech CodeQL config"
+
+paths-ignore:
+  - 'frontend/coverage'
+  - 'frontend/dist'
+  - '**/node_modules'
+  - '**/target'
