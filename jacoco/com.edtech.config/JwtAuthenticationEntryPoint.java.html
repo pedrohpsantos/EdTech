@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JwtAuthenticationEntryPoint.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">edtech-api</a> &gt; <a href="index.source.html" class="el_package">com.edtech.config</a> &gt; <span class="el_source">JwtAuthenticationEntryPoint.java</span></div><h1>JwtAuthenticationEntryPoint.java</h1><pre class="source lang-java linenums">package com.edtech.config;
+
+import com.edtech.dto.ErrorResponse;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.stereotype.Component;
+
+/** Documentação para JwtAuthenticationEntryPoint. */
+@Component
+public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
+
+  /** Documentação para o método JwtAuthenticationEntryPoint. */
+<span class="fc" id="L19">  public JwtAuthenticationEntryPoint() {}</span>
+
+  @Override
+  public void commence(
+      HttpServletRequest request,
+      HttpServletResponse response,
+      AuthenticationException authException)
+      throws IOException {
+<span class="fc" id="L27">    response.setStatus(HttpStatus.UNAUTHORIZED.value());</span>
+<span class="fc" id="L28">    response.setContentType(MediaType.APPLICATION_JSON_VALUE);</span>
+<span class="fc" id="L29">    ObjectMapper objectMapper = new ObjectMapper();</span>
+<span class="fc" id="L30">    objectMapper.writeValue(</span>
+<span class="fc" id="L31">        response.getWriter(), new ErrorResponse(&quot;unauthorized&quot;, &quot;Autenticação necessária.&quot;));</span>
+<span class="fc" id="L32">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

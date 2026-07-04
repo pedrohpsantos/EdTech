@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Project.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">edtech-api</a> &gt; <a href="index.source.html" class="el_package">com.edtech.model</a> &gt; <span class="el_source">Project.java</span></div><h1>Project.java</h1><pre class="source lang-java linenums">package com.edtech.model;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
+import jakarta.persistence.Table;
+import java.time.ZonedDateTime;
+import java.util.UUID;
+
+/** Documentação para Project. */
+@Entity
+@Table(name = &quot;projects&quot;)
+<span class="fc" id="L20">public class Project {</span>
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.UUID)
+  private UUID id;
+
+  @Column(nullable = false, length = 120)
+  private String title;
+
+  @Column(nullable = false, columnDefinition = &quot;TEXT&quot;)
+  private String description;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = &quot;advisor_id&quot;)
+  private User advisor;
+
+  @Column(name = &quot;created_at&quot;, nullable = false, updatable = false)
+  private ZonedDateTime createdAt;
+
+  @Column(name = &quot;updated_at&quot;, nullable = false)
+  private ZonedDateTime updatedAt;
+
+  @PrePersist
+  protected void onCreate() {
+<span class="nc" id="L44">    this.createdAt = ZonedDateTime.now();</span>
+<span class="nc" id="L45">    this.updatedAt = ZonedDateTime.now();</span>
+<span class="nc" id="L46">  }</span>
+
+  @PreUpdate
+  protected void onUpdate() {
+<span class="nc" id="L50">    this.updatedAt = ZonedDateTime.now();</span>
+<span class="nc" id="L51">  }</span>
+
+  // Getters and Setters
+  /** Documentação para o método getId. */
+  public UUID getId() {
+<span class="fc" id="L56">    return id;</span>
+  }
+
+  /** Documentação para o método setId. */
+  public void setId(UUID id) {
+<span class="fc" id="L61">    this.id = id;</span>
+<span class="fc" id="L62">  }</span>
+
+  /** Documentação para o método getTitle. */
+  public String getTitle() {
+<span class="fc" id="L66">    return title;</span>
+  }
+
+  /** Documentação para o método setTitle. */
+  public void setTitle(String title) {
+<span class="fc" id="L71">    this.title = title;</span>
+<span class="fc" id="L72">  }</span>
+
+  /** Documentação para o método getDescription. */
+  public String getDescription() {
+<span class="fc" id="L76">    return description;</span>
+  }
+
+  /** Documentação para o método setDescription. */
+  public void setDescription(String description) {
+<span class="fc" id="L81">    this.description = description;</span>
+<span class="fc" id="L82">  }</span>
+
+  /** Documentação para o método getAdvisor. */
+  public User getAdvisor() {
+<span class="fc" id="L86">    return advisor;</span>
+  }
+
+  /** Documentação para o método setAdvisor. */
+  public void setAdvisor(User advisor) {
+<span class="fc" id="L91">    this.advisor = advisor;</span>
+<span class="fc" id="L92">  }</span>
+
+  /** Documentação para o método getCreatedAt. */
+  public ZonedDateTime getCreatedAt() {
+<span class="fc" id="L96">    return createdAt;</span>
+  }
+
+  /** Documentação para o método setCreatedAt. */
+  public void setCreatedAt(ZonedDateTime createdAt) {
+<span class="nc" id="L101">    this.createdAt = createdAt;</span>
+<span class="nc" id="L102">  }</span>
+
+  /** Documentação para o método getUpdatedAt. */
+  public ZonedDateTime getUpdatedAt() {
+<span class="nc" id="L106">    return updatedAt;</span>
+  }
+
+  /** Documentação para o método setUpdatedAt. */
+  public void setUpdatedAt(ZonedDateTime updatedAt) {
+<span class="nc" id="L111">    this.updatedAt = updatedAt;</span>
+<span class="nc" id="L112">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

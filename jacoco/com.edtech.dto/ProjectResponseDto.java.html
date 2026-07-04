@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ProjectResponseDto.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">edtech-api</a> &gt; <a href="index.source.html" class="el_package">com.edtech.dto</a> &gt; <span class="el_source">ProjectResponseDto.java</span></div><h1>ProjectResponseDto.java</h1><pre class="source lang-java linenums">package com.edtech.dto;
+
+import java.time.ZonedDateTime;
+import java.util.UUID;
+
+/** Documentação para ProjectResponseDto. */
+<span class="fc" id="L7">public class ProjectResponseDto {</span>
+  private UUID id;
+  private String title;
+  private String description;
+  private UUID advisorId;
+  private ZonedDateTime createdAt;
+
+  // Getters and Setters
+  /** Documentação para o método getId. */
+  public UUID getId() {
+<span class="fc" id="L17">    return id;</span>
+  }
+
+  /** Documentação para o método setId. */
+  public void setId(UUID id) {
+<span class="fc" id="L22">    this.id = id;</span>
+<span class="fc" id="L23">  }</span>
+
+  /** Documentação para o método getTitle. */
+  public String getTitle() {
+<span class="fc" id="L27">    return title;</span>
+  }
+
+  /** Documentação para o método setTitle. */
+  public void setTitle(String title) {
+<span class="fc" id="L32">    this.title = title;</span>
+<span class="fc" id="L33">  }</span>
+
+  /** Documentação para o método getDescription. */
+  public String getDescription() {
+<span class="fc" id="L37">    return description;</span>
+  }
+
+  /** Documentação para o método setDescription. */
+  public void setDescription(String description) {
+<span class="fc" id="L42">    this.description = description;</span>
+<span class="fc" id="L43">  }</span>
+
+  /** Documentação para o método getAdvisorId. */
+  public UUID getAdvisorId() {
+<span class="fc" id="L47">    return advisorId;</span>
+  }
+
+  /** Documentação para o método setAdvisorId. */
+  public void setAdvisorId(UUID advisorId) {
+<span class="fc" id="L52">    this.advisorId = advisorId;</span>
+<span class="fc" id="L53">  }</span>
+
+  /** Documentação para o método getCreatedAt. */
+  public ZonedDateTime getCreatedAt() {
+<span class="fc" id="L57">    return createdAt;</span>
+  }
+
+  /** Documentação para o método setCreatedAt. */
+  public void setCreatedAt(ZonedDateTime createdAt) {
+<span class="fc" id="L62">    this.createdAt = createdAt;</span>
+<span class="fc" id="L63">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

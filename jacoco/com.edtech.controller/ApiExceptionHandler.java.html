@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ApiExceptionHandler.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">edtech-api</a> &gt; <a href="index.source.html" class="el_package">com.edtech.controller</a> &gt; <span class="el_source">ApiExceptionHandler.java</span></div><h1>ApiExceptionHandler.java</h1><pre class="source lang-java linenums">package com.edtech.controller;
+
+import com.edtech.dto.ErrorResponse;
+import com.edtech.service.DuplicateEmailException;
+import com.edtech.service.InvalidCredentialsException;
+import com.edtech.service.InvalidInstitutionalEmailException;
+import jakarta.validation.ConstraintViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+/** Documentação para ApiExceptionHandler. */
+@RestControllerAdvice
+<span class="fc" id="L16">public class ApiExceptionHandler {</span>
+
+  @ExceptionHandler(DuplicateEmailException.class)
+  public ResponseEntity&lt;ErrorResponse&gt; handleDuplicateEmail(DuplicateEmailException exception) {
+<span class="fc" id="L20">    return ResponseEntity.status(HttpStatus.CONFLICT)</span>
+<span class="fc" id="L21">        .body(new ErrorResponse(&quot;email_already_registered&quot;, exception.getMessage()));</span>
+  }
+
+  @ExceptionHandler(InvalidInstitutionalEmailException.class)
+  public ResponseEntity&lt;ErrorResponse&gt; handleInvalidInstitutionalEmail(
+      InvalidInstitutionalEmailException exception) {
+<span class="nc" id="L27">    return ResponseEntity.badRequest()</span>
+<span class="nc" id="L28">        .body(new ErrorResponse(&quot;invalid_institutional_email&quot;, exception.getMessage()));</span>
+  }
+
+  @ExceptionHandler(InvalidCredentialsException.class)
+  public ResponseEntity&lt;ErrorResponse&gt; handleInvalidCredentials() {
+<span class="nc" id="L33">    return ResponseEntity.status(HttpStatus.UNAUTHORIZED)</span>
+<span class="nc" id="L34">        .body(new ErrorResponse(&quot;invalid_credentials&quot;, &quot;Credenciais inválidas.&quot;));</span>
+  }
+
+  @ExceptionHandler({MethodArgumentNotValidException.class, ConstraintViolationException.class})
+  public ResponseEntity&lt;ErrorResponse&gt; handleValidationException(Exception exception) {
+<span class="fc" id="L39">    return ResponseEntity.badRequest()</span>
+<span class="fc" id="L40">        .body(new ErrorResponse(&quot;invalid_request&quot;, &quot;Verifique os dados enviados.&quot;));</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

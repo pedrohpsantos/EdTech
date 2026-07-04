@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DocumentController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">edtech-api</a> &gt; <a href="index.source.html" class="el_package">com.edtech.controller</a> &gt; <span class="el_source">DocumentController.java</span></div><h1>DocumentController.java</h1><pre class="source lang-java linenums">package com.edtech.controller;
+
+import com.edtech.dto.DocumentResponseDto;
+import com.edtech.model.User;
+import com.edtech.service.DocumentService;
+import java.util.UUID;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
+/** Documentação para DocumentController. */
+@RestController
+@RequestMapping(&quot;/api/documents&quot;)
+public class DocumentController {
+
+  private final DocumentService documentService;
+
+  /** Documentação para o método DocumentController. */
+<span class="fc" id="L32">  public DocumentController(DocumentService documentService) {</span>
+<span class="fc" id="L33">    this.documentService = documentService;</span>
+<span class="fc" id="L34">  }</span>
+
+  /** Documentação. */
+  @PostMapping(consumes = &quot;multipart/form-data&quot;)
+  public ResponseEntity&lt;DocumentResponseDto&gt; uploadDocument(
+      @RequestParam(&quot;file&quot;) MultipartFile file,
+      @RequestParam(&quot;title&quot;) String title,
+      @RequestParam(&quot;projectId&quot;) UUID projectId,
+      Authentication authentication) {
+<span class="fc" id="L43">    User user = (User) authentication.getPrincipal();</span>
+<span class="fc" id="L44">    return ResponseEntity.status(HttpStatus.CREATED)</span>
+<span class="fc" id="L45">        .body(documentService.uploadDocument(file, title, projectId, user.getId()));</span>
+  }
+
+  /** Documentação. */
+  @GetMapping
+  public ResponseEntity&lt;Page&lt;DocumentResponseDto&gt;&gt; listDocuments(
+      @RequestParam(required = false) UUID projectId,
+      @RequestParam(required = false) String title,
+      @PageableDefault(size = 20) Pageable pageable,
+      Authentication authentication) {
+<span class="nc" id="L55">    User user = (User) authentication.getPrincipal();</span>
+<span class="nc" id="L56">    return ResponseEntity.ok(</span>
+<span class="nc" id="L57">        documentService.listDocumentsByUser(user.getId(), projectId, title, pageable));</span>
+  }
+
+  @GetMapping(&quot;/{id}/download&quot;)
+  public ResponseEntity&lt;String&gt; downloadDocument(
+      @PathVariable UUID id, Authentication authentication) {
+<span class="nc" id="L63">    User user = (User) authentication.getPrincipal();</span>
+<span class="nc" id="L64">    return ResponseEntity.ok(documentService.getPresignedUrl(id, user.getId()));</span>
+  }
+
+  /** Documentação. */
+  @DeleteMapping(&quot;/{id}&quot;)
+  public ResponseEntity&lt;Void&gt; deleteDocument(@PathVariable UUID id, Authentication authentication) {
+<span class="fc" id="L70">    User user = (User) authentication.getPrincipal();</span>
+<span class="fc" id="L71">    documentService.deleteDocument(id, user.getId());</span>
+<span class="fc" id="L72">    return ResponseEntity.noContent().build();</span>
+  }
+
+  /** Documentação. */
+  @PatchMapping(&quot;/{id}/status&quot;)
+  public ResponseEntity&lt;DocumentResponseDto&gt; updateDocumentStatus(
+      @PathVariable UUID id,
+      @RequestBody com.edtech.dto.DocumentStatusUpdateDto dto,
+      Authentication authentication) {
+<span class="fc" id="L81">    User user = (User) authentication.getPrincipal();</span>
+<span class="fc" id="L82">    DocumentResponseDto response =</span>
+<span class="fc" id="L83">        documentService.reviewDocument(id, user.getId(), dto.getStatus(), dto.getFeedback());</span>
+<span class="fc" id="L84">    return ResponseEntity.ok(response);</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

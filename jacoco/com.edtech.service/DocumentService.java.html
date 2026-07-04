@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DocumentService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">edtech-api</a> &gt; <a href="index.source.html" class="el_package">com.edtech.service</a> &gt; <span class="el_source">DocumentService.java</span></div><h1>DocumentService.java</h1><pre class="source lang-java linenums">package com.edtech.service;
+
+import com.edtech.dto.DocumentResponseDto;
+import com.edtech.model.AcaoAuditoria;
+import com.edtech.model.Document;
+import com.edtech.model.DocumentStatus;
+import com.edtech.model.Project;
+import com.edtech.model.ProjectMember;
+import com.edtech.model.ProjectRole;
+import com.edtech.model.User;
+import com.edtech.repository.DocumentRepository;
+import com.edtech.repository.ProjectMemberRepository;
+import com.edtech.repository.ProjectRepository;
+import com.edtech.repository.UserRepository;
+import java.io.IOException;
+import java.util.UUID;
+import org.apache.tika.Tika;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+/** Documentação para DocumentService. */
+@Service
+public class DocumentService {
+
+  private final DocumentRepository documentRepository;
+  private final ProjectRepository projectRepository;
+  private final UserRepository userRepository;
+  private final ProjectMemberRepository projectMemberRepository;
+  private final AuditLogService auditLogService;
+  private final StorageService storageService;
+<span class="fc" id="L34">  private final Tika tika = new Tika();</span>
+
+  /** Documentação. */
+  public DocumentService(
+      DocumentRepository documentRepository,
+      ProjectRepository projectRepository,
+      UserRepository userRepository,
+      ProjectMemberRepository projectMemberRepository,
+      AuditLogService auditLogService,
+<span class="fc" id="L43">      StorageService storageService) {</span>
+<span class="fc" id="L44">    this.documentRepository = documentRepository;</span>
+<span class="fc" id="L45">    this.projectRepository = projectRepository;</span>
+<span class="fc" id="L46">    this.userRepository = userRepository;</span>
+<span class="fc" id="L47">    this.projectMemberRepository = projectMemberRepository;</span>
+<span class="fc" id="L48">    this.auditLogService = auditLogService;</span>
+<span class="fc" id="L49">    this.storageService = storageService;</span>
+<span class="fc" id="L50">  }</span>
+
+  /** Documentação. */
+  @Transactional
+  public DocumentResponseDto uploadDocument(
+      MultipartFile file, String title, UUID projectId, UUID authorId) {
+<span class="fc" id="L56">    User author =</span>
+        userRepository
+<span class="fc" id="L58">            .findById(authorId)</span>
+<span class="pc" id="L59">            .orElseThrow(() -&gt; new RuntimeException(&quot;Author not found&quot;));</span>
+<span class="fc" id="L60">    Project project =</span>
+        projectRepository
+<span class="fc" id="L62">            .findById(projectId)</span>
+<span class="pc" id="L63">            .orElseThrow(() -&gt; new RuntimeException(&quot;Project not found&quot;));</span>
+
+<span class="fc" id="L65">    projectMemberRepository</span>
+<span class="fc" id="L66">        .findByProjectIdAndUserId(projectId, authorId)</span>
+<span class="pc" id="L67">        .orElseThrow(() -&gt; new RuntimeException(&quot;Author is not a member of the project&quot;));</span>
+
+    // Validação de segurança estrita (MIME Type via Tika) mitigação SEC-004
+    try {
+<span class="fc" id="L71">      String detectedType = tika.detect(file.getInputStream());</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">      if (!&quot;application/pdf&quot;.equalsIgnoreCase(detectedType)) {</span>
+<span class="fc" id="L73">        throw new IllegalArgumentException(</span>
+            &quot;Apenas arquivos PDF reais sao permitidos. Tipo detectado: &quot; + detectedType);
+      }
+<span class="nc" id="L76">    } catch (IOException e) {</span>
+<span class="nc" id="L77">      throw new RuntimeException(&quot;Falha ao analisar o conteudo do arquivo&quot;, e);</span>
+<span class="fc" id="L78">    }</span>
+
+<span class="fc" id="L80">    String contentType = file.getContentType();</span>
+
+    try {
+<span class="fc" id="L83">      String originalFilename = file.getOriginalFilename();</span>
+<span class="pc bpc" id="L84" title="1 of 2 branches missed.">      if (originalFilename == null) {</span>
+<span class="nc" id="L85">        throw new IllegalArgumentException(&quot;Filename cannot be null&quot;);</span>
+      }
+      // A chave do objeto no S3
+<span class="fc" id="L88">      String fileKey = UUID.randomUUID() + &quot;_&quot; + originalFilename;</span>
+
+<span class="fc" id="L90">      storageService.uploadFile(file, fileKey, contentType);</span>
+
+<span class="fc" id="L92">      Document document = new Document();</span>
+<span class="fc" id="L93">      document.setTitle(title);</span>
+<span class="fc" id="L94">      document.setFileUrl(fileKey);</span>
+<span class="fc" id="L95">      document.setStatus(DocumentStatus.DRAFT);</span>
+<span class="fc" id="L96">      document.setAuthor(author);</span>
+<span class="fc" id="L97">      document.setProject(project);</span>
+
+<span class="fc" id="L99">      document = documentRepository.save(document);</span>
+
+<span class="fc" id="L101">      auditLogService.logAction(</span>
+          authorId, AcaoAuditoria.UPLOAD_SUCCESS, &quot;Documento anexado no S3: &quot; + title);
+
+<span class="fc" id="L104">      return mapToDto(document);</span>
+<span class="nc" id="L105">    } catch (IOException e) {</span>
+<span class="nc" id="L106">      throw new RuntimeException(&quot;Failed to read file for upload&quot;);</span>
+<span class="nc" id="L107">    } catch (Exception e) {</span>
+<span class="nc" id="L108">      throw new RuntimeException(&quot;Failed to upload file to S3: &quot; + e.getMessage());</span>
+    }
+  }
+
+  /** Documentação para o método getPresignedUrl. */
+  public String getPresignedUrl(UUID documentId, UUID userId) {
+<span class="nc" id="L114">    Document document =</span>
+        documentRepository
+<span class="nc" id="L116">            .findById(documentId)</span>
+<span class="nc" id="L117">            .orElseThrow(() -&gt; new RuntimeException(&quot;Document not found&quot;));</span>
+
+    // Valida se o usuário tem permissão para acessar o projeto do documento
+<span class="nc" id="L120">    projectMemberRepository</span>
+<span class="nc" id="L121">        .findByProjectIdAndUserId(document.getProject().getId(), userId)</span>
+<span class="nc" id="L122">        .orElseThrow(</span>
+<span class="nc" id="L123">            () -&gt; new RuntimeException(&quot;Access denied: You are not a member of this project&quot;));</span>
+
+    String presignedUrl;
+    try {
+<span class="nc" id="L127">      presignedUrl = storageService.getPresignedUrl(document.getFileUrl());</span>
+<span class="nc" id="L128">    } catch (Exception e) {</span>
+<span class="nc" id="L129">      throw new RuntimeException(&quot;Failed to generate presigned URL&quot;, e);</span>
+<span class="nc" id="L130">    }</span>
+
+<span class="nc" id="L132">    auditLogService.logAction(</span>
+        userId,
+        AcaoAuditoria.UPLOAD_SUCCESS,
+<span class="nc" id="L135">        &quot;Gerada URL presigned para download: &quot; + document.getTitle());</span>
+<span class="nc" id="L136">    return presignedUrl;</span>
+  }
+
+  /** Documentação. */
+  public Page&lt;DocumentResponseDto&gt; listDocumentsByUser(
+      UUID userId, UUID projectId, String title, Pageable pageable) {
+<span class="nc" id="L142">    return documentRepository</span>
+<span class="nc" id="L143">        .findDocumentsByUserIdAndFilters(userId, projectId, title, pageable)</span>
+<span class="nc" id="L144">        .map(this::mapToDto);</span>
+  }
+
+  /** Documentação. */
+  @Transactional
+  public void deleteDocument(UUID documentId, UUID userId) {
+<span class="fc" id="L150">    Document document =</span>
+        documentRepository
+<span class="fc" id="L152">            .findById(documentId)</span>
+<span class="pc" id="L153">            .orElseThrow(() -&gt; new RuntimeException(&quot;Document not found&quot;));</span>
+
+<span class="pc bpc" id="L155" title="1 of 2 branches missed.">    if (!document.getAuthor().getId().equals(userId)) {</span>
+<span class="nc" id="L156">      throw new RuntimeException(&quot;Only the author can delete this document&quot;);</span>
+    }
+<span class="pc bpc" id="L158" title="1 of 2 branches missed.">    if (document.getStatus() != DocumentStatus.DRAFT) {</span>
+<span class="nc" id="L159">      throw new RuntimeException(&quot;Only DRAFT documents can be deleted&quot;);</span>
+    }
+
+    // Deletar o arquivo físico no GCS para conformidade com a LGPD
+    try {
+<span class="fc" id="L164">      storageService.deleteFile(document.getFileUrl());</span>
+<span class="nc" id="L165">    } catch (Exception e) {</span>
+<span class="nc" id="L166">      throw new RuntimeException(&quot;Erro ao excluir arquivo físico: &quot; + e.getMessage());</span>
+<span class="fc" id="L167">    }</span>
+
+<span class="fc" id="L169">    documentRepository.delete(document);</span>
+<span class="fc" id="L170">    auditLogService.logAction(</span>
+<span class="fc" id="L171">        userId, AcaoAuditoria.DELETE_DOCUMENT, &quot;Documento excluido: &quot; + document.getTitle());</span>
+<span class="fc" id="L172">  }</span>
+
+  private DocumentResponseDto mapToDto(Document document) {
+<span class="fc" id="L175">    DocumentResponseDto dto = new DocumentResponseDto();</span>
+<span class="fc" id="L176">    dto.setId(document.getId());</span>
+<span class="fc" id="L177">    dto.setTitle(document.getTitle());</span>
+<span class="fc" id="L178">    dto.setFileUrl(document.getFileUrl());</span>
+<span class="fc" id="L179">    dto.setStatus(document.getStatus());</span>
+<span class="fc" id="L180">    dto.setAuthorId(document.getAuthor().getId());</span>
+<span class="fc" id="L181">    dto.setProjectId(document.getProject().getId());</span>
+<span class="fc" id="L182">    dto.setCreatedAt(document.getCreatedAt());</span>
+<span class="fc" id="L183">    dto.setFeedback(document.getFeedback());</span>
+<span class="fc" id="L184">    return dto;</span>
+  }
+
+  /** Documentação. */
+  @Transactional
+  public DocumentResponseDto reviewDocument(
+      UUID documentId, UUID reviewerId, DocumentStatus newStatus, String feedback) {
+<span class="pc bpc" id="L191" title="3 of 4 branches missed.">    if (newStatus != DocumentStatus.APPROVED &amp;&amp; newStatus != DocumentStatus.REJECTED) {</span>
+<span class="nc" id="L192">      throw new IllegalArgumentException(</span>
+          &quot;Status inválido. Apenas APPROVED ou REJECTED são permitidos na revisão.&quot;);
+    }
+<span class="fc" id="L195">    Document document =</span>
+        documentRepository
+<span class="fc" id="L197">            .findById(documentId)</span>
+<span class="pc" id="L198">            .orElseThrow(() -&gt; new RuntimeException(&quot;Document not found&quot;));</span>
+<span class="fc" id="L199">    ProjectMember member =</span>
+        projectMemberRepository
+<span class="fc" id="L201">            .findByProjectIdAndUserId(document.getProject().getId(), reviewerId)</span>
+<span class="fc" id="L202">            .orElseThrow(</span>
+<span class="nc" id="L203">                () -&gt; new RuntimeException(&quot;Acess denied: You are not a member of this project&quot;));</span>
+<span class="pc bpc" id="L204" title="1 of 2 branches missed.">    if (member.getRole() != ProjectRole.ADVISOR) {</span>
+<span class="nc" id="L205">      throw new RuntimeException(&quot;Acess denied: Only an ADVISOR can review documents&quot;);</span>
+    }
+<span class="pc bpc" id="L207" title="1 of 2 branches missed.">    if (document.getStatus() != DocumentStatus.PENDING_REVIEW) {</span>
+<span class="nc" id="L208">      throw new RuntimeException(&quot;Document is not pending review&quot;);</span>
+    }
+<span class="fc" id="L210">    document.setStatus(newStatus);</span>
+<span class="fc" id="L211">    document.setFeedback(feedback);</span>
+<span class="fc" id="L212">    Document savedDocument = documentRepository.save(document);</span>
+    AcaoAuditoria acao =
+<span class="pc bpc" id="L214" title="1 of 2 branches missed.">        (newStatus == DocumentStatus.APPROVED)</span>
+<span class="fc" id="L215">            ? AcaoAuditoria.DOCUMENT_APPROVED</span>
+<span class="pc" id="L216">            : AcaoAuditoria.DOCUMENT_REJECTED;</span>
+<span class="fc" id="L217">    String details =</span>
+        &quot;Status alterado para &quot;
+            + newStatus
+            + &quot;.Feedback: &quot;
+<span class="pc bpc" id="L221" title="2 of 4 branches missed.">            + (feedback != null &amp;&amp; !feedback.trim().isEmpty() ? feedback : &quot;Sem feedback&quot;);</span>
+<span class="fc" id="L222">    auditLogService.logAction(reviewerId, acao, details);</span>
+<span class="fc" id="L223">    return mapToDto(savedDocument);</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

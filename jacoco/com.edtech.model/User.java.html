@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>User.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">edtech-api</a> &gt; <a href="index.source.html" class="el_package">com.edtech.model</a> &gt; <span class="el_source">User.java</span></div><h1>User.java</h1><pre class="source lang-java linenums">package com.edtech.model;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
+import jakarta.persistence.Table;
+import java.time.Instant;
+import java.util.UUID;
+
+/** Documentação para User. */
+@Entity
+@Table(name = &quot;users&quot;)
+public class User {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  @Column(updatable = false, nullable = false)
+  private UUID id;
+
+  @Column(nullable = false, length = 120)
+  private String name;
+
+  @Column(nullable = false, unique = true, length = 180)
+  private String email;
+
+  @Column(name = &quot;password_hash&quot;, nullable = false)
+  private String passwordHash;
+
+<span class="fc" id="L35">  @Enumerated(EnumType.STRING)</span>
+  @Column(nullable = false)
+  private UserRole role = UserRole.RESEARCHER;
+
+<span class="fc" id="L39">  @Column(nullable = false)</span>
+  private boolean active = true;
+
+  @Column(name = &quot;created_at&quot;, nullable = false, updatable = false)
+  private Instant createdAt;
+
+  @Column(name = &quot;updated_at&quot;, nullable = false)
+  private Instant updatedAt;
+
+<span class="fc" id="L48">  protected User() {}</span>
+
+  /** Documentação para o método User. */
+<span class="fc" id="L51">  public User(String name, String email, String passwordHash, UserRole role) {</span>
+<span class="fc" id="L52">    this.name = name;</span>
+<span class="fc" id="L53">    this.email = email;</span>
+<span class="fc" id="L54">    this.passwordHash = passwordHash;</span>
+<span class="fc" id="L55">    this.role = role;</span>
+<span class="fc" id="L56">  }</span>
+
+  @PrePersist
+  void prePersist() {
+<span class="fc" id="L60">    Instant now = Instant.now();</span>
+<span class="fc" id="L61">    createdAt = now;</span>
+<span class="fc" id="L62">    updatedAt = now;</span>
+<span class="fc" id="L63">  }</span>
+
+  @PreUpdate
+  void preUpdate() {
+<span class="nc" id="L67">    updatedAt = Instant.now();</span>
+<span class="nc" id="L68">  }</span>
+
+  /** Documentação para o método getId. */
+  public UUID getId() {
+<span class="fc" id="L72">    return id;</span>
+  }
+
+  /** Documentação para o método getName. */
+  public String getName() {
+<span class="fc" id="L77">    return name;</span>
+  }
+
+  /** Documentação para o método getEmail. */
+  public String getEmail() {
+<span class="fc" id="L82">    return email;</span>
+  }
+
+  /** Documentação para o método getPasswordHash. */
+  public String getPasswordHash() {
+<span class="fc" id="L87">    return passwordHash;</span>
+  }
+
+  /** Documentação para o método setPasswordHash. */
+  public void setPasswordHash(String passwordHash) {
+<span class="fc" id="L92">    this.passwordHash = passwordHash;</span>
+<span class="fc" id="L93">  }</span>
+
+  /** Documentação para o método getRole. */
+  public UserRole getRole() {
+<span class="fc" id="L97">    return role;</span>
+  }
+
+  /** Documentação para o método isActive. */
+  public boolean isActive() {
+<span class="fc" id="L102">    return active;</span>
+  }
+
+  /** Documentação para o método getCreatedAt. */
+  public Instant getCreatedAt() {
+<span class="fc" id="L107">    return createdAt;</span>
+  }
+
+  /** Documentação para o método getUpdatedAt. */
+  public Instant getUpdatedAt() {
+<span class="nc" id="L112">    return updatedAt;</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
