@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 
 /** Documentação para JwtService. */
 @Service
-public class JwtService {
+public final class JwtService {
 
   private final SecretKey secretKey;
   private final Duration expiration;
