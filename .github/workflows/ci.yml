@@ -215,12 +215,12 @@ jobs:
           cache-dependency-path: 'frontend/package-lock.json'
       - name: Install dependencies
         run: npm ci
-      - name: Run unit tests
+      - name: Run unit tests (Vitest)
         run: npm run test
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
       - name: Run E2E Tests (Playwright)
-        run: |
-          npx playwright install --with-deps chromium
-          npx playwright test
+        run: npx playwright test
 
   # ==========================================
   #                 DEPLOY
