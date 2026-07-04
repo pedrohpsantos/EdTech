@@ -2287,10 +2287,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
-  <a href="#now-atuando-agora" class="md-nav__link">
+  <a href="#now-atuando-agora-sprint-8" class="md-nav__link">
     <span class="md-ellipsis">
       
-        NOW (Atuando Agora)
+        NOW (Atuando Agora - Sprint 8)
       
     </span>
   </a>
@@ -3173,10 +3173,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
-  <a href="#now-atuando-agora" class="md-nav__link">
+  <a href="#now-atuando-agora-sprint-8" class="md-nav__link">
     <span class="md-ellipsis">
       
-        NOW (Atuando Agora)
+        NOW (Atuando Agora - Sprint 8)
       
     </span>
   </a>
@@ -3246,40 +3246,31 @@
 <div class="timeline-diagram">
 <pre class="mermaid"><code>timeline
     title Product Roadmap Macro (Now / Next / Later)
-    NOW (Atuando) : Fundação de Arquitetura (SPA + API) : Segurança (JWT) : Pipeline CI/CD (Actions) : Deploy Serverless (Cloud Run)
-    NEXT (Próximos) : Upload de Documentos (GCS) : Painel do Orientador : Auditoria de Logs
-    LATER (Futuro) : Relatórios Avançados (Auditora) : Antiplágio com ML : Integração Moodle/SIGAA</code></pre>
+    NOW (Atuando) : Testes E2E (Playwright) : Platform Engineering : Infra as Code : Manutenção S8
+    NEXT (Próximos) : Relatórios Avançados (Auditora) : Antiplágio Experimental (ML)
+    LATER (Futuro) : Integração Moodle/SIGAA : SSO Institucional</code></pre>
 </div>
-<h2 id="now-atuando-agora">NOW (Atuando Agora)<a class="headerlink" href="#now-atuando-agora" title="Permanent link">¶</a></h2>
-<p><strong>Foco:</strong> Fundações de arquitetura, segurança, estabilidade do <abbr title="Minimum Viable Product — Produto Mínimo Viável">MVP</abbr> e Integração Contínua.</p>
+<h2 id="now-atuando-agora-sprint-8">NOW (Atuando Agora - Sprint 8)<a class="headerlink" href="#now-atuando-agora-sprint-8" title="Permanent link">¶</a></h2>
+<p><strong>Foco:</strong> Engenharia de Plataforma, automação total de testes e estabilidade.</p>
 <ul>
 <li>
-<p>Configuração de <abbr title="Continuous Integration / Continuous Delivery — Integração Contínua / Entrega Contínua">CI/CD</abbr> via GitHub Actions e infraestrutura Serverless no Google Cloud Run (<code>ADR 0003</code>, <code>ADR 0008</code>).</p>
+<p>Configuração final de Testes E2E via Playwright (<code>ADR 0010</code>).</p>
 </li>
 <li>
-<p>Setup da <abbr title="Application Programming Interface">API</abbr> <abbr title="Representational State Transfer">REST</abbr> em Spring Boot (<code>ADR 0005</code>) separada do Frontend <abbr title="Single Page Application">SPA</abbr> em React (<code>ADR 0006</code>).</p>
+<p>Refinamentos na documentação arquitetural e DevOps.</p>
 </li>
 <li>
-<p>Implementação da Autenticação via <abbr title="JSON Web Token">JWT</abbr> com cookies HttpOnly para proteção contra <abbr title="Cross-Site Scripting">XSS</abbr> (<code>ADR 0002</code>).</p>
-</li>
-<li>
-<p>Setup do cluster PostgreSQL e versionamento de esquema com Flyway (<code>ADR 0004</code>, <code>ADR 0007</code>).</p>
-</li>
-<li>
-<p>Estabelecimento do Docs-as-Code com MkDocs (<code>ADR 0009</code>).</p>
+<p>Monitoramento ativo de segurança e correções de dívida técnica.</p>
 </li>
 </ul>
 <h2 id="next-proximos-passos">NEXT (Próximos Passos)<a class="headerlink" href="#next-proximos-passos" title="Permanent link">¶</a></h2>
-<p><strong>Foco:</strong> Completude do Fluxo de Usuário (Pesquisador e Orientador) com o armazenamento funcional.</p>
+<p><strong>Foco:</strong> Ferramentas Avançadas e Automação de Análises.</p>
 <ul>
 <li>
-<p>Integração completa ao Google Cloud Storage (<code>ADR 0001</code>) para upload seguro de artigos e relatórios (Alana).</p>
+<p>Criação de relatórios automatizados (exportação <abbr title="Comma-Separated Values — Valores Separados por Vírgula">CSV</abbr>/<abbr title="Portable Document Format">PDF</abbr>) para a auditoria de acesso.</p>
 </li>
 <li>
-<p>Dashboard de acompanhamento e validação de submissões para Orientadores/Administradores (Arthur).</p>
-</li>
-<li>
-<p>Geração da base de <code>audit_logs</code> inalterável, cobrindo todos os eventos sensíveis do sistema (Mariana).</p>
+<p>Suporte experimental a Machine Learning para classificar a similaridade dos Artigos Submetidos (Antiplágio interno).</p>
 </li>
 </ul>
 <h2 id="later-futuro">LATER (Futuro)<a class="headerlink" href="#later-futuro" title="Permanent link">¶</a></h2>
@@ -3353,7 +3344,7 @@
     <span class="md-icon" title="Última atualização">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="4 de julho de 2026 15:53:21 UTC">4 de julho de 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="4 de julho de 2026 16:14:02 UTC">4 de julho de 2026</span>
   </span>
 
     

@@ -17,6 +17,11 @@
   --transition-smooth: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   --glass-bg: rgba(255, 255, 255, 0.65);
   --glass-border: rgba(255, 255, 255, 0.3);
+  
+  /* Redesign Vars */
+  --blob-color-1: rgba(124, 77, 255, 0.4);
+  --blob-color-2: rgba(255, 145, 0, 0.3);
+  --blob-color-3: rgba(234, 128, 252, 0.4);
 }
 
 [data-md-color-scheme="slate"] {
@@ -176,6 +181,106 @@
   transform: translateY(-3px);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
   border-color: rgba(255, 255, 255, 0.7);
+}
+
+/* ============================================================
+   NEW REDESIGN HERO (replaces default md-hero)
+   ============================================================ */
+.animated-hero {
+  position: relative;
+  border-radius: 24px;
+  padding: 5rem 3rem;
+  margin: 2rem 0 4rem 0;
+  text-align: center;
+  overflow: hidden;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+  backdrop-filter: blur(20px);
+}
+
+/* Animated Background Blobs */
+.animated-hero::before,
+.animated-hero::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  z-index: -1;
+  animation: float-blobs 15s infinite alternate ease-in-out;
+}
+
+.animated-hero::before {
+  top: -20%;
+  left: -10%;
+  width: 400px;
+  height: 400px;
+  background: var(--blob-color-1);
+}
+
+.animated-hero::after {
+  bottom: -20%;
+  right: -10%;
+  width: 300px;
+  height: 300px;
+  background: var(--blob-color-2);
+  animation-delay: -5s;
+}
+
+/* Typography for new hero */
+.hero-title {
+  font-size: 4rem;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(135deg, var(--md-primary-fg-color), var(--md-accent-fg-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: contentSlideUp 0.8s ease-out backwards;
+}
+
+.hero-subtitle {
+  font-size: 1.3rem;
+  color: var(--md-default-fg-color);
+  max-width: 800px;
+  margin: 0 auto 2.5rem;
+  line-height: 1.6;
+  opacity: 0.85;
+  animation: contentSlideUp 0.8s ease-out backwards;
+  animation-delay: 0.2s;
+}
+
+.hero-cta {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  animation: contentSlideUp 0.8s ease-out backwards;
+  animation-delay: 0.4s;
+}
+
+.hero-cta .md-button {
+  padding: 1rem 2.5rem;
+  font-size: 1.1rem;
+  border-radius: 50px;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.hero-cta .md-button--primary {
+  background: linear-gradient(135deg, var(--md-primary-fg-color), var(--md-primary-fg-color--light));
+  box-shadow: 0 10px 30px rgba(106, 27, 154, 0.3);
+  border: none;
+}
+
+.hero-cta .md-button--primary:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 15px 40px rgba(106, 27, 154, 0.5);
+}
+
+@keyframes float-blobs {
+  0% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -50px) scale(1.1); }
+  66% { transform: translate(-20px, 20px) scale(0.9); }
+  100% { transform: translate(0, 0) scale(1); }
 }
 
 /* ============================================================
