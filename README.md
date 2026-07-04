@@ -42,6 +42,37 @@ Navegue pela documentação específica de cada módulo:
 
 ---
 
+## 🛡️ Status Atual do Projeto
+
+O projeto encontra-se em **produção**, operando na nuvem do Google Cloud Platform, mas continua recebendo novas integrações de segurança.
+
+| Status | Funcionalidade |
+| :---: | :--- |
+| ✅ | Infraestrutura de Autenticação JWT e CORS configurada |
+| ✅ | CI/CD (GitHub Actions) com validação de testes e build no Cloud Run |
+| ✅ | Modelagem do Banco (PostgreSQL) automatizada via Flyway |
+| ✅ | Dashboard do Pesquisador (Upload de Artigos via GCS) |
+| ✅ | Rastreabilidade e Auditoria de eventos |
+| 🚧 | Integração completa com ferramentas de SAST (Dependency Check) |
+| 🚧 | Painel Analítico do Orientador (Métricas do Laboratório) |
+
+---
+
+## 🔐 Variáveis de Ambiente
+
+Para o ambiente local, copie o arquivo `.env.example` para `.env` e configure os valores básicos. Em produção, esses valores são protegidos pelo Google Secret Manager.
+
+| Variável | Padrão (Local) | Descrição |
+| :--- | :--- | :--- |
+| `POSTGRES_USER` | `postgres` | Usuário do banco de dados (Container Docker) |
+| `POSTGRES_PASSWORD` | `postgres` | Senha do banco de dados |
+| `POSTGRES_DB` | `edtech_db` | Nome do banco |
+| `JWT_SECRET` | `secret_super_seguro_para_jwt...` | Chave HMAC de 256-bits para assinatura de tokens (trocar em prod) |
+| `GCP_PROJECT_ID` | `(vazio)` | ID do projeto no Google Cloud (Necessário para GCS) |
+| `FRONTEND_URL` | `http://localhost:5173` | URL do frontend autorizada no CORS da API |
+
+---
+
 ## 🚀 Quick Start (Desenvolvimento Local - 1 Click)
 
 ### 1. Requisitos
@@ -80,8 +111,3 @@ Seus commits devem seguir estritamente o formato: `<tipo>[escopo opcional]: <des
 - `refactor:` Refatoração de código que não adiciona feature nem corrige bug
 
 Exemplo: `feat(auth): adiciona fluxo de login com JWT`
-
----
-
-## 🛡️ Status Atual: Enterprise Grade (Produção)
-O projeto encerrou seu ciclo de MVP (Minimum Viable Product) e opera atualmente em infraestrutura *Serverless* na nuvem (Google Cloud Run + Firebase Hosting) com conectividade criptografada, pipelines GitHub Actions independentes (CI/CD) e gerenciamento de segredos otimizado pelo Google Secret Manager.

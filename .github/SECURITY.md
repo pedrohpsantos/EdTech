@@ -26,3 +26,13 @@ Como *fallback*, contate o Tech Lead diretamente pelo perfil do GitHub associado
 1. **Confirmação:** Nosso time fará o possível para responder acusando o recebimento em até **7 dias úteis**.
 2. **Triagem e Correção:** O relato será classificado em criticidade e a equipe desenvolverá um patch confidencial na branch interna.
 3. **Divulgação Responsável:** Após o patch ser testado e integrado aos ambientes principais (com a trilha de auditoria devidamente reforçada), a vulnerabilidade será divulgada publicamente com os devidos créditos a quem a relatou.
+
+---
+
+## Nossas Práticas de Segurança (Enterprise Grade)
+
+- **Armazenamento de Segredos:** Todas as credenciais de produção estão armazenadas no **Google Secret Manager**. Nenhuma chave sensível deve ser comitada neste repositório.
+- **Autenticação Segura:** Utilizamos JWT armazenado exclusivamente em cookies `HttpOnly` e `Secure`, mitigando ataques de XSS e dificultando a extração do token pelo lado cliente.
+- **Auditoria de Eventos:** A plataforma mantém um log imutável de todas as ações de upload, download, login e falhas de acesso, disponível apenas para o perfil Auditor.
+- **Análise Estática e Dependências:** Pipelines de CI estão configurados com análises de SAST e `dependency-check` para bloquear a implantação de artefatos vulneráveis.
+- **Validação de Uploads:** Somente extensões permitidas (PDF, CSV, XLSX) podem ser enviadas, e qualquer tentativa de enviar executáveis será bloqueada ativamente pela camada da API.
