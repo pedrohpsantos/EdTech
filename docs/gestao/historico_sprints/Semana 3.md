@@ -267,21 +267,3 @@ Iniciar a implementação do MVP do EdTech com foco em três frentes paralelas: 
 | #9 | Integração audit logs nos endpoints |  Baixo — funcionalidade auxiliar |
 
 ---
-
-## Próximos Passos
-
-→ [Semana 4 — Integração, Rotas e Refinamento de Escopo](Semana%204.md)
-
-← [Semana 2 — Lean Inception, Requisitos e Arquitetura](Semana%202.md)
-
----
-
-## Histórico de Versões
-
-| Versão |    Data    | Descrição                           | Autor                    |
-| :---: | :---: | :--- | :--- |
-| `1.0`  | 05/06/2026 | Criação do documento                | Pedro Henrique P. Santos |
-| `1.1` | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |
-| `2.0` | 04/07/2026 | Revisão profunda, correção de metadados e melhorias visuais | Pedro Henrique P. Santos |
-
-

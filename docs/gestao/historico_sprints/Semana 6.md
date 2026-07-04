@@ -102,20 +102,3 @@ Todas as issues críticas da Sprint 6 foram repriorizadas para a Sprint 7, junta
 | #68 / #69 | Painel de Auditoria e Endpoint de Consulta | Crítico — Demonstração |
 
 ---
-
-## Próximos Passos
-
-→ **Semana 7**: Fluxo E2E, Painéis Finais e Deploy MVP
-
-← [Semana 5 — Uploads, Autenticação e Integrações GCS](Semana%205.md)
-
----
-
-## Histórico de Versões
-
-| Versão | Data | Descrição | Autor |
-| :---: | :---: | :--- | :--- |
-| `1.0` | 26/06/2026 | Documentação inicial da Entrega 6 | Pedro Henrique P. Santos |
-| `2.0` | 04/07/2026 | Revisão profunda, correção de metadados e melhorias visuais | Pedro Henrique P. Santos |
-
-

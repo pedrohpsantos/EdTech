@@ -138,20 +138,3 @@ Consolidar a Integração Contínua, finalizar a base de Autenticação com CORS
 | #96 | Auditoria de Segurança e Deploy MVP (Tech Lead) | Crítico — Entrega em ambiente real |
 
 ---
-
-## Próximos Passos
-
-→ [Semana 6 — Infraestrutura, Plugins e Ajuste de Rotas](Semana%206.md)
-
-← [Semana 4 — Integração, Rotas e Refinamento de Escopo](Semana%204.md)
-
----
-
-## Histórico de Versões
-
-| Versão | Data | Descrição | Autor |
-| :---: | :---: | :--- | :--- |
-| `1.0` | 19/06/2026 | Documentação inicial da Entrega 5 | Pedro Henrique P. Santos |
-| `2.0` | 04/07/2026 | Revisão profunda, correção de metadados e melhorias visuais | Pedro Henrique P. Santos |
-
-

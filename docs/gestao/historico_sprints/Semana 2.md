@@ -103,22 +103,3 @@ Executar o Lean Inception completo, levantar e especificar todos os requisitos d
     Por segurança, os tokens são transmitidos exclusivamente via cookies `HttpOnly` + `Secure` + `SameSite=Strict`, protegendo contra XSS e CSRF.
 
 ---
-
-## Próximos Passos
-
-→ [Semana 3](Semana%203.md): início da implementação do MVP.
-
-← [Semana 1 — Setup e Fundação](Semana%201.md)
-
-
----
-
-## Histórico de Versões
-
-| Versão | Data | Descrição | Autor |
-| :---: | :---: | :--- | :--- |
-| `1.0` | 29/05/2026 | Criação do documento | Pedro Henrique P. Santos |
-| `1.1` | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |
-| `2.0` | 04/07/2026 | Revisão profunda, correção de metadados e melhorias visuais | Pedro Henrique P. Santos |
-
-
