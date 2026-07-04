@@ -12,12 +12,19 @@
     </suppress>
     <suppress>
         <notes><![CDATA[
-        Suppressing Tomcat CVEs (CVE-2026-55276, CVE-2026-53434, CVE-2026-53404) for tomcat-embed-core
+        Suppressing Tomcat CVEs (CVE-2026-55276, CVE-2026-53434, CVE-2026-53404) for all tomcat-embed modules
         until Spring Boot updates its managed dependencies to a patched Tomcat version.
         ]]></notes>
-        <packageUrl regex="true">^pkg:maven/org\.apache\.tomcat\.embed/tomcat-embed-core@.*$</packageUrl>
+        <packageUrl regex="true">^pkg:maven/org\.apache\.tomcat\.embed/tomcat-embed-.*@.*$</packageUrl>
         <cve>CVE-2026-55276</cve>
         <cve>CVE-2026-53434</cve>
         <cve>CVE-2026-53404</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[
+        Suppressing CVE-2026-0994 for protobuf-java until a stable patch is available.
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/com\.google\.protobuf/protobuf-java@.*$</packageUrl>
+        <cve>CVE-2026-0994</cve>
     </suppress>
 </suppressions>

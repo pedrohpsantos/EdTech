@@ -176,8 +176,10 @@ Tecnologias selecionadas para robustez, segurança e escalabilidade em ambiente 
 | **Frontend** | HTML5, CSS Puro (Design System), Bootstrap 5 (Grid), React 19, Vite 8 |
 | **Backend** | Java 21, Spring Boot 4.1, Spring Security, JWT (`HttpOnly` + `Secure`) |
 | **Banco de Dados & Storage** | Google Cloud SQL for PostgreSQL, Google Cloud Storage, Flyway |
-| **Infraestrutura & DevOps** | Docker, Google Cloud Run, Firebase Hosting |
-| **CI/CD & Qualidade** | GitHub Actions, JUnit, Python 3.11 (scripts de telemetria - Pós-MVP) |
+| **Infraestrutura** | Docker, Docker Compose |
+| **Nuvem** | Google Cloud Run, Firebase Hosting |
+| **Testes** | **Back:** JUnit 5 (Unit), Jacoco (Coverage), Pitest (Mutation) <br> **Front:** Vitest (Unit), Playwright (E2E), Stryker (Mutation) |
+| **CI/CD & Qualidade** | GitHub Actions |
 | **Documentação** | MkDocs + Material for MkDocs |
 
 [:material-arrow-right: Ver detalhes completos da arquitetura](arquitetura/diagramas/c4_model.md){ .md-button style="margin-top: 1rem;" }

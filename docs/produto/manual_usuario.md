@@ -56,3 +56,15 @@ A tabela permite aplicar filtros por intervalo de data, usuário e tipo de açã
 
 > [!NOTE]
 > Os logs não podem ser apagados ou modificados nem por usuários com perfil de Administrador.
+
+---
+
+## 4. Matriz de Permissões e Controle de Acesso (RBAC)
+
+Para garantir o isolamento e segurança da plataforma, as ações são restritas aos papéis de cada usuário, conforme tabela abaixo:
+
+| Perfil | O que PODE fazer | O que NÃO PODE fazer |
+| --- | --- | --- |
+| **Pesquisador** | - Autenticar no sistema.<br>- Fazer upload de documentos (PDF, CSV).<br>- Visualizar seus próprios projetos/documentos. | - Visualizar documentos de outros pesquisadores.<br>- Aprovar ou rejeitar documentos.<br>- Visualizar logs de auditoria. |
+| **Orientador** | - Visualizar documentos de **todos** os pesquisadores sob sua orientação.<br>- Aprovar, Solicitar Alterações ou Rejeitar envios.<br>- Extrair métricas do painel de controle. | - Acessar projetos de laboratórios os quais não orienta.<br>- Apagar ou alterar logs de auditoria. |
+| **Auditor** | - Visualizar todos os eventos e rastreabilidade (`AuditLog`).<br>- Auditar tentativas de acesso negado ou falhas de login.<br>- Exportar trilha de auditoria para fins de compliance. | - Fazer upload, aprovar ou modificar documentos.<br>- Modificar perfis de usuários.<br>- Alterar qualquer registro histórico do sistema. |
