@@ -94,6 +94,14 @@ jobs:
           if-no-files-found: warn
       - name: Run Mutation Tests (PiTest)
         run: ./mvnw org.pitest:pitest-maven:mutationCoverage -B
+      - name: Cache NVD Vulnerability Database
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository/org/owasp/dependency-check-data
+          key: nvd-data-${{ github.run_id }}
+          restore-keys: |
+            nvd-data-
+          save-always: true
       - name: Run Security Audit (OWASP)
         env:
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
