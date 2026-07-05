@@ -8172,6 +8172,56 @@ flowchart LR
 <h3 id="arquitetura-nuvem_e_seguranca-seguranca_app-walkthrough-do-diagrama">Walkthrough do diagrama<a class="headerlink" href="#arquitetura-nuvem_e_seguranca-seguranca_app-walkthrough-do-diagrama" title="Permanent link">¶</a></h3>
 <p>Atores hostis disparam vetores de ataque que impactam os pontos de entrada e ativos, enquanto os controles mitigam as superfícies críticas do frontend, <abbr title="Application Programming Interface">API</abbr> e persistência.</p>
 <hr>
+<h2 id="arquitetura-nuvem_e_seguranca-seguranca_app-4-rate-limiting-protecao-contra-forca-bruta-bucket4j">4. Rate Limiting — Proteção Contra Força Bruta (Bucket4j)<a class="headerlink" href="#arquitetura-nuvem_e_seguranca-seguranca_app-4-rate-limiting-protecao-contra-forca-bruta-bucket4j" title="Permanent link">¶</a></h2>
+<p>Endpoints de autenticação são alvos naturais de ataques de força bruta e credential stuffing. Para bloquear essas investidas, implementamos o <strong>Bucket4j</strong>, uma biblioteca Java baseada no algoritmo de <em>Token Bucket</em>.</p>
+<h3 id="arquitetura-nuvem_e_seguranca-seguranca_app-como-funciona">Como Funciona<a class="headerlink" href="#arquitetura-nuvem_e_seguranca-seguranca_app-como-funciona" title="Permanent link">¶</a></h3>
+<p>Cada endereço <abbr title="Internet Protocol — Protocolo de Internet">IP</abbr> recebe um "balde" (bucket) com <strong>5 tokens</strong>. Cada requisição consome 1 token. Quando o balde esvazia, o <abbr title="Internet Protocol — Protocolo de Internet">IP</abbr> é bloqueado temporariamente até que os tokens se reponham (intervalo de 1 minuto).</p>
+<pre class="mermaid"><code>sequenceDiagram
+    participant C as Cliente (IP X.X.X.X)
+    participant RL as RateLimitingService
+    participant B as Bucket (5 tokens)
+    participant AC as AuthController
+
+    C-&gt;&gt;RL: Requisição de login
+    RL-&gt;&gt;B: tryConsume(1)
+
+    alt Tem tokens disponíveis
+        B--&gt;&gt;RL: true (token consumido)
+        RL--&gt;&gt;AC: Continua o fluxo normal
+        AC--&gt;&gt;C: 200 OK / 401 Unauthorized
+    else Bucket esgotado
+        B--&gt;&gt;RL: false (sem tokens)
+        RL--&gt;&gt;C: 429 Too Many Requests
+    end</code></pre>
+<h3 id="arquitetura-nuvem_e_seguranca-seguranca_app-endpoints-protegidos">Endpoints Protegidos<a class="headerlink" href="#arquitetura-nuvem_e_seguranca-seguranca_app-endpoints-protegidos" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Endpoint</th>
+<th style="text-align: left;">Método</th>
+<th style="text-align: left;">Limite</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>/api/auth/login</code></td>
+<td style="text-align: left;"><code>POST</code></td>
+<td style="text-align: left;">5 req / minuto por <abbr title="Internet Protocol — Protocolo de Internet">IP</abbr></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>/api/auth/recovery/request</code></td>
+<td style="text-align: left;"><code>POST</code></td>
+<td style="text-align: left;">5 req / minuto por <abbr title="Internet Protocol — Protocolo de Internet">IP</abbr></td>
+</tr>
+</tbody>
+</table>
+<h3 id="arquitetura-nuvem_e_seguranca-seguranca_app-decisoes-de-design">Decisões de Design<a class="headerlink" href="#arquitetura-nuvem_e_seguranca-seguranca_app-decisoes-de-design" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Em memória (<code>ConcurrentHashMap</code>):</strong> O estado dos buckets é mantido em memória local. É eficiente para a escala atual e evita dependência de infraestrutura extra (Redis).</li>
+<li><strong>Por <abbr title="Internet Protocol — Protocolo de Internet">IP</abbr>:</strong> O controle é feito por <code>HttpServletRequest.getRemoteAddr()</code>, garantindo que um atacante não possa abusar do sistema mesmo com IPs distintos via automação.</li>
+<li><strong>Fail-fast:</strong> A verificação do bucket é executada <em>antes</em> de qualquer acesso ao banco de dados, garantindo custo mínimo de processamento para requisições bloqueadas.</li>
+</ul>
+<hr>
 <h2 id="arquitetura-nuvem_e_seguranca-seguranca_app-historico-de-versoes">Histórico de Versões<a class="headerlink" href="#arquitetura-nuvem_e_seguranca-seguranca_app-historico-de-versoes" title="Permanent link">¶</a></h2>
 <table>
 <thead>
@@ -8205,6 +8255,12 @@ flowchart LR
 <td style="text-align: center;"><code>2.0</code></td>
 <td style="text-align: center;">04/07/2026</td>
 <td style="text-align: left;">Revisão profunda, correção de metadados e melhorias visuais</td>
+<td style="text-align: left;">Pedro Henrique P. Santos</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>2.1</code></td>
+<td style="text-align: center;">05/07/2026</td>
+<td style="text-align: left;">Adição da seção de Rate Limiting (Bucket4j)</td>
 <td style="text-align: left;">Pedro Henrique P. Santos</td>
 </tr>
 </tbody>

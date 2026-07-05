@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RateLimitingService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">edtech-api</a> &gt; <a href="index.source.html" class="el_package">com.edtech.security</a> &gt; <span class="el_source">RateLimitingService.java</span></div><h1>RateLimitingService.java</h1><pre class="source lang-java linenums">package com.edtech.security;
+
+import io.github.bucket4j.Bandwidth;
+import io.github.bucket4j.Bucket;
+import io.github.bucket4j.Refill;
+import java.time.Duration;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import org.springframework.stereotype.Service;
+
+@Service
+<span class="fc" id="L12">public class RateLimitingService {</span>
+
+<span class="fc" id="L14">    private final Map&lt;String, Bucket&gt; cache = new ConcurrentHashMap&lt;&gt;();</span>
+
+    public Bucket resolveBucket(String key) {
+<span class="fc" id="L17">        return cache.computeIfAbsent(key, this::newBucket);</span>
+    }
+
+    private Bucket newBucket(String key) {
+        // Allow 5 requests per minute
+<span class="fc" id="L22">        Refill refill = Refill.intervally(5, Duration.ofMinutes(1));</span>
+<span class="fc" id="L23">        Bandwidth limit = Bandwidth.classic(5, refill);</span>
+<span class="fc" id="L24">        return Bucket.builder()</span>
+<span class="fc" id="L25">                .addLimit(limit)</span>
+<span class="fc" id="L26">                .build();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
