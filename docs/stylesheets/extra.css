@@ -258,22 +258,46 @@
   animation-delay: 0.4s;
 }
 
+/* O Markdown injeta um <p> dentro da div. O display: contents anula ele visualmente */
+.hero-cta > p {
+  display: contents;
+}
+
 .hero-cta .md-button {
   padding: 1rem 2.5rem;
   font-size: 1.1rem;
   border-radius: 50px;
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  background: var(--glass-bg);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.hero-cta .md-button:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  border-color: rgba(124, 77, 255, 0.5);
 }
 
 .hero-cta .md-button--primary {
-  background: linear-gradient(135deg, var(--md-primary-fg-color), var(--md-primary-fg-color--light));
+  background: linear-gradient(135deg, var(--md-primary-fg-color), var(--md-accent-fg-color), var(--md-primary-fg-color--light));
+  background-size: 200% 200%;
   box-shadow: 0 10px 30px rgba(106, 27, 154, 0.3);
   border: none;
+  color: white !important;
+  animation: gradientShift 5s ease infinite;
 }
 
 .hero-cta .md-button--primary:hover {
   transform: translateY(-5px) scale(1.05);
   box-shadow: 0 15px 40px rgba(106, 27, 154, 0.5);
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 @keyframes float-blobs {
@@ -714,7 +738,7 @@ a.team-card:hover .team-avatar {
     font-size: 3rem;
   }
   .team-grid {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
