@@ -290,6 +290,7 @@ jobs:
           path: frontend/dist/
 
       - name: Deploy to Firebase Hosting
+        working-directory: frontend
         run: |
           npm install -g firebase-tools
           firebase deploy --project=edtech-storage-501117 --only hosting -m "Deploy via GitHub Actions ${{ github.sha }}" --non-interactive
