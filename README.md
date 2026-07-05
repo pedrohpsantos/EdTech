@@ -39,7 +39,7 @@ Como um bom maestro, dividi este projeto em domínios de responsabilidade estrit
 | **[⚙️ Backend (API)](backend/README.md)** | A engrenagem implacável. *Sem o backend, não há sistema.* | Java 21, Spring Boot 4.1 |
 | **[☁️ Infraestrutura](infra/README.md)** | O chão de fábrica na nuvem. *Se a nuvem cair, nós a levantamos.* | GCP, Docker, Docker Compose |
 | **[📄 Documentação](docs/README.md)** | Nossa biblioteca de Alexandria. *Código não documentado não existe.* | MkDocs Material |
-| **[🤖 Scripts](scripts/README.md)** | Os ninjas da automação. *Atalhos para o trabalho sujo.* | Bash, Python, JS |
+| **[📊 Scripts](scripts/README.md)** | Telemetria e análises avançadas para o Orientador. | Python, Pandas |
 | **[🕵️ Testes](tests/README.md)** | O detetive da qualidade. *Nenhum bug escapa à inspeção.* | Playwright, K6 |
 
 ---
