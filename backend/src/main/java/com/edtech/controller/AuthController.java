@@ -6,10 +6,14 @@ import com.edtech.dto.RegisterRequestDto;
 import com.edtech.dto.ResetPasswordDto;
 import com.edtech.dto.UserResponseDto;
 import com.edtech.dto.VerifyCodeDto;
+import com.edtech.exception.RateLimitExceededException;
 import com.edtech.model.User;
+import com.edtech.security.RateLimitingService;
 import com.edtech.service.JwtService;
 import com.edtech.service.RecoveryService;
 import com.edtech.service.UserService;
+import io.github.bucket4j.Bucket;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import java.time.Duration;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,6 +35,7 @@ public class AuthController {
   private final UserService userService;
   private final JwtService jwtService;
   private final RecoveryService recoveryService;
+  private final RateLimitingService rateLimitingService;
   private final boolean secureCookie;
   private final long jwtExpirationMinutes;
 
@@ -39,11 +44,13 @@ public class AuthController {
       UserService userService,
       JwtService jwtService,
       RecoveryService recoveryService,
+      RateLimitingService rateLimitingService,
       @Value("${jwt.cookie-secure:false}") boolean secureCookie,
       @Value("${jwt.expiration-minutes:60}") long jwtExpirationMinutes) {
     this.userService = userService;
     this.jwtService = jwtService;
     this.recoveryService = recoveryService;
+    this.rateLimitingService = rateLimitingService;
     this.secureCookie = secureCookie;
     this.jwtExpirationMinutes = jwtExpirationMinutes;
   }
@@ -56,7 +63,13 @@ public class AuthController {
 
   /** Documentação. */
   @PostMapping("/login")
-  public ResponseEntity<UserResponseDto> login(@Valid @RequestBody LoginRequestDto request) {
+  public ResponseEntity<UserResponseDto> login(
+      @Valid @RequestBody LoginRequestDto request, HttpServletRequest httpRequest) {
+    Bucket bucket = rateLimitingService.resolveBucket(httpRequest.getRemoteAddr());
+    if (!bucket.tryConsume(1)) {
+      throw new RateLimitExceededException("Limite de tentativas excedido. Tente novamente mais tarde.");
+    }
+
     User user = userService.authenticate(request.email(), request.password());
     String token = jwtService.generateToken(user);
 
@@ -66,7 +79,13 @@ public class AuthController {
   }
 
   @PostMapping("/recovery/request")
-  public ResponseEntity<?> requestRecovery(@RequestBody RecoveryRequestDto request) {
+  public ResponseEntity<?> requestRecovery(
+      @RequestBody RecoveryRequestDto request, HttpServletRequest httpRequest) {
+    Bucket bucket = rateLimitingService.resolveBucket(httpRequest.getRemoteAddr());
+    if (!bucket.tryConsume(1)) {
+      throw new RateLimitExceededException("Limite de tentativas excedido. Tente novamente mais tarde.");
+    }
+
     recoveryService.requestRecovery(request.email());
     return ResponseEntity.ok().build();
   }

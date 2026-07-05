@@ -11,8 +11,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.edtech.model.User;
 import com.edtech.repository.UserRepository;
+import com.edtech.security.RateLimitingService;
 import com.edtech.service.JwtService;
 import com.edtech.service.RecoveryService;
+import io.github.bucket4j.Bucket;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import static org.mockito.Mockito.*;
 import jakarta.servlet.http.Cookie;
@@ -44,6 +46,9 @@ class AuthControllerTest {
   @BeforeEach
   void setUp() {
     this.mockMvc = MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
+    Bucket mockBucket = mock(Bucket.class);
+    when(mockBucket.tryConsume(1)).thenReturn(true);
+    when(rateLimitingService.resolveBucket(anyString())).thenReturn(mockBucket);
   }
 
   @Autowired private UserRepository userRepository;
@@ -58,6 +63,9 @@ class AuthControllerTest {
   
   @MockitoBean
   private RecoveryService recoveryService;
+
+  @MockitoBean
+  private RateLimitingService rateLimitingService;
 
   @Test
   void registerCreatesResearcherWithoutReturningPasswordHash() throws Exception {
@@ -338,5 +346,52 @@ class AuthControllerTest {
 
   private String randomPassword() {
     return UUID.randomUUID().toString() + UUID.randomUUID();
+  }
+
+  @Test
+  void loginRejectsRequestWhenRateLimitExceeded() throws Exception {
+    Bucket mockBucket = mock(Bucket.class);
+    when(mockBucket.tryConsume(1)).thenReturn(false);
+    when(rateLimitingService.resolveBucket(anyString())).thenReturn(mockBucket);
+
+    String payload =
+        """
+        {
+          "email": "user@unb.br",
+          "password": "Password123!"
+        }
+        """;
+
+    mockMvc
+        .perform(
+            post("/api/auth/login")
+                .with(csrf())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(payload))
+        .andExpect(status().isTooManyRequests())
+        .andExpect(jsonPath("$.error").value("Limite de tentativas excedido. Tente novamente mais tarde."));
+  }
+
+  @Test
+  void requestRecoveryRejectsRequestWhenRateLimitExceeded() throws Exception {
+    Bucket mockBucket = mock(Bucket.class);
+    when(mockBucket.tryConsume(1)).thenReturn(false);
+    when(rateLimitingService.resolveBucket(anyString())).thenReturn(mockBucket);
+
+    String payload =
+        """
+        {
+          "email": "user@unb.br"
+        }
+        """;
+
+    mockMvc
+        .perform(
+            post("/api/auth/recovery/request")
+                .with(csrf())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(payload))
+        .andExpect(status().isTooManyRequests())
+        .andExpect(jsonPath("$.error").value("Limite de tentativas excedido. Tente novamente mais tarde."));
   }
 }
