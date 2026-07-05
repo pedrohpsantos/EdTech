@@ -9,8 +9,8 @@ steps:
       - '-t'
       - 'southamerica-east1-docker.pkg.dev/$PROJECT_ID/cloud-run-source-deploy/edtech-backend:$COMMIT_SHA'
       - '-f'
-      - 'docvault/api/Dockerfile.ci'
-      - 'docvault/api/'
+      - 'backend/Dockerfile.ci'
+      - 'backend/'
 
   # ==========================================
   # 2. PUSH BACKEND (ARTIFACT REGISTRY)
