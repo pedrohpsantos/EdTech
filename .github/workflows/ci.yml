@@ -244,6 +244,17 @@ jobs:
       - name: Setup Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
 
+      - name: Download Build Target
+        uses: actions/download-artifact@v8
+        with:
+          name: backend-target
+          path: backend/target/
+
+      - name: Create gcloudignore
+        run: |
+          echo ".git" > .gcloudignore
+          echo "frontend/node_modules" >> .gcloudignore
+          echo ".github" >> .gcloudignore
       - name: Trigger Cloud Build CD
         run: |
           gcloud builds submit --config infra/cloudbuild.yaml \
