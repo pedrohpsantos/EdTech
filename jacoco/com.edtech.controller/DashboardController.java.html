@@ -26,20 +26,20 @@ public class DashboardController {
   /** Documentação. */
   @GetMapping(&quot;/stats&quot;)
   public ResponseEntity&lt;Map&lt;String, Object&gt;&gt; getStats(Authentication authentication) {
-<span class="nc" id="L29">    User user = (User) authentication.getPrincipal();</span>
+<span class="fc" id="L29">    User user = (User) authentication.getPrincipal();</span>
 
-<span class="nc" id="L31">    long totalDocs = documentRepository.countDocumentsByUserId(user.getId());</span>
-<span class="nc" id="L32">    long pendingReviewDocs =</span>
-<span class="nc" id="L33">        documentRepository.countDocumentsByUserIdAndStatus(</span>
-<span class="nc" id="L34">            user.getId(), DocumentStatus.PENDING_REVIEW);</span>
+<span class="fc" id="L31">    long totalDocs = documentRepository.countDocumentsByUserId(user.getId());</span>
+<span class="fc" id="L32">    long pendingReviewDocs =</span>
+<span class="fc" id="L33">        documentRepository.countDocumentsByUserIdAndStatus(</span>
+<span class="fc" id="L34">            user.getId(), DocumentStatus.PENDING_REVIEW);</span>
 
-<span class="nc" id="L36">    Map&lt;String, Object&gt; stats = new HashMap&lt;&gt;();</span>
-<span class="nc" id="L37">    stats.put(&quot;activeDocuments&quot;, totalDocs);</span>
-<span class="nc" id="L38">    stats.put(&quot;pendingReview&quot;, pendingReviewDocs);</span>
-<span class="nc" id="L39">    stats.put(&quot;complianceScore&quot;, 92); // TODO: Implementar lógica de conformidade real</span>
-<span class="nc" id="L40">    stats.put(&quot;researchProgress&quot;, 68); // TODO: Implementar lógica de progresso real</span>
+<span class="fc" id="L36">    Map&lt;String, Object&gt; stats = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L37">    stats.put(&quot;activeDocuments&quot;, totalDocs);</span>
+<span class="fc" id="L38">    stats.put(&quot;pendingReview&quot;, pendingReviewDocs);</span>
+<span class="fc" id="L39">    stats.put(&quot;complianceScore&quot;, 92); // TODO: Implementar lógica de conformidade real</span>
+<span class="fc" id="L40">    stats.put(&quot;researchProgress&quot;, 68); // TODO: Implementar lógica de progresso real</span>
 
-<span class="nc" id="L42">    return ResponseEntity.ok(stats);</span>
+<span class="fc" id="L42">    return ResponseEntity.ok(stats);</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

@@ -111,37 +111,37 @@ public class DocumentService {
 
   /** Documentação para o método getPresignedUrl. */
   public String getPresignedUrl(UUID documentId, UUID userId) {
-<span class="nc" id="L114">    Document document =</span>
+<span class="fc" id="L114">    Document document =</span>
         documentRepository
-<span class="nc" id="L116">            .findById(documentId)</span>
-<span class="nc" id="L117">            .orElseThrow(() -&gt; new RuntimeException(&quot;Document not found&quot;));</span>
+<span class="fc" id="L116">            .findById(documentId)</span>
+<span class="pc" id="L117">            .orElseThrow(() -&gt; new RuntimeException(&quot;Document not found&quot;));</span>
 
     // Valida se o usuário tem permissão para acessar o projeto do documento
-<span class="nc" id="L120">    projectMemberRepository</span>
-<span class="nc" id="L121">        .findByProjectIdAndUserId(document.getProject().getId(), userId)</span>
-<span class="nc" id="L122">        .orElseThrow(</span>
+<span class="fc" id="L120">    projectMemberRepository</span>
+<span class="fc" id="L121">        .findByProjectIdAndUserId(document.getProject().getId(), userId)</span>
+<span class="fc" id="L122">        .orElseThrow(</span>
 <span class="nc" id="L123">            () -&gt; new RuntimeException(&quot;Access denied: You are not a member of this project&quot;));</span>
 
     String presignedUrl;
     try {
-<span class="nc" id="L127">      presignedUrl = storageService.getPresignedUrl(document.getFileUrl());</span>
+<span class="fc" id="L127">      presignedUrl = storageService.getPresignedUrl(document.getFileUrl());</span>
 <span class="nc" id="L128">    } catch (Exception e) {</span>
 <span class="nc" id="L129">      throw new RuntimeException(&quot;Failed to generate presigned URL&quot;, e);</span>
-<span class="nc" id="L130">    }</span>
+<span class="fc" id="L130">    }</span>
 
-<span class="nc" id="L132">    auditLogService.logAction(</span>
+<span class="fc" id="L132">    auditLogService.logAction(</span>
         userId,
         AcaoAuditoria.UPLOAD_SUCCESS,
-<span class="nc" id="L135">        &quot;Gerada URL presigned para download: &quot; + document.getTitle());</span>
-<span class="nc" id="L136">    return presignedUrl;</span>
+<span class="fc" id="L135">        &quot;Gerada URL presigned para download: &quot; + document.getTitle());</span>
+<span class="fc" id="L136">    return presignedUrl;</span>
   }
 
   /** Documentação. */
   public Page&lt;DocumentResponseDto&gt; listDocumentsByUser(
       UUID userId, UUID projectId, String title, Pageable pageable) {
-<span class="nc" id="L142">    return documentRepository</span>
-<span class="nc" id="L143">        .findDocumentsByUserIdAndFilters(userId, projectId, title, pageable)</span>
-<span class="nc" id="L144">        .map(this::mapToDto);</span>
+<span class="fc" id="L142">    return documentRepository</span>
+<span class="fc" id="L143">        .findDocumentsByUserIdAndFilters(userId, projectId, title, pageable)</span>
+<span class="fc" id="L144">        .map(this::mapToDto);</span>
   }
 
   /** Documentação. */

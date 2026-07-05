@@ -67,44 +67,44 @@ public class AuthController {
 
   @PostMapping(&quot;/recovery/request&quot;)
   public ResponseEntity&lt;?&gt; requestRecovery(@RequestBody RecoveryRequestDto request) {
-<span class="nc" id="L70">    recoveryService.requestRecovery(request.email());</span>
-<span class="nc" id="L71">    return ResponseEntity.ok().build();</span>
+<span class="fc" id="L70">    recoveryService.requestRecovery(request.email());</span>
+<span class="fc" id="L71">    return ResponseEntity.ok().build();</span>
   }
 
   /** Documentação. */
   @PostMapping(&quot;/recovery/verify&quot;)
   public ResponseEntity&lt;?&gt; verifyCode(@RequestBody VerifyCodeDto request) {
-<span class="nc" id="L77">    boolean valid = recoveryService.verifyCode(request.email(), request.code());</span>
-<span class="nc bnc" id="L78" title="All 2 branches missed.">    if (valid) {</span>
-<span class="nc" id="L79">      return ResponseEntity.ok().build();</span>
+<span class="fc" id="L77">    boolean valid = recoveryService.verifyCode(request.email(), request.code());</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">    if (valid) {</span>
+<span class="fc" id="L79">      return ResponseEntity.ok().build();</span>
     }
-<span class="nc" id="L81">    return ResponseEntity.badRequest().body(&quot;Código inválido ou expirado.&quot;);</span>
+<span class="fc" id="L81">    return ResponseEntity.badRequest().body(&quot;Código inválido ou expirado.&quot;);</span>
   }
 
   /** Documentação. */
   @PostMapping(&quot;/recovery/reset&quot;)
   public ResponseEntity&lt;?&gt; resetPassword(@RequestBody ResetPasswordDto request) {
-<span class="nc" id="L87">    boolean success =</span>
-<span class="nc" id="L88">        recoveryService.resetPassword(request.email(), request.code(), request.newPassword());</span>
-<span class="nc bnc" id="L89" title="All 2 branches missed.">    if (success) {</span>
-<span class="nc" id="L90">      return ResponseEntity.ok().build();</span>
+<span class="fc" id="L87">    boolean success =</span>
+<span class="fc" id="L88">        recoveryService.resetPassword(request.email(), request.code(), request.newPassword());</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">    if (success) {</span>
+<span class="fc" id="L90">      return ResponseEntity.ok().build();</span>
     }
-<span class="nc" id="L92">    return ResponseEntity.badRequest().body(&quot;Erro ao redefinir a senha.&quot;);</span>
+<span class="fc" id="L92">    return ResponseEntity.badRequest().body(&quot;Erro ao redefinir a senha.&quot;);</span>
   }
 
   /** Documentação. */
   @PostMapping(&quot;/logout&quot;)
   public ResponseEntity&lt;Void&gt; logout() {
-<span class="nc" id="L98">    ResponseCookie clearedCookie =</span>
-<span class="nc" id="L99">        ResponseCookie.from(&quot;token&quot;, &quot;&quot;)</span>
-<span class="nc" id="L100">            .httpOnly(true)</span>
-<span class="nc" id="L101">            .secure(secureCookie)</span>
-<span class="nc" id="L102">            .sameSite(&quot;Lax&quot;)</span>
-<span class="nc" id="L103">            .path(&quot;/&quot;)</span>
-<span class="nc" id="L104">            .maxAge(0)</span>
-<span class="nc" id="L105">            .build();</span>
+<span class="fc" id="L98">    ResponseCookie clearedCookie =</span>
+<span class="fc" id="L99">        ResponseCookie.from(&quot;token&quot;, &quot;&quot;)</span>
+<span class="fc" id="L100">            .httpOnly(true)</span>
+<span class="fc" id="L101">            .secure(secureCookie)</span>
+<span class="fc" id="L102">            .sameSite(&quot;Lax&quot;)</span>
+<span class="fc" id="L103">            .path(&quot;/&quot;)</span>
+<span class="fc" id="L104">            .maxAge(0)</span>
+<span class="fc" id="L105">            .build();</span>
 
-<span class="nc" id="L107">    return ResponseEntity.ok().header(&quot;Set-Cookie&quot;, clearedCookie.toString()).build();</span>
+<span class="fc" id="L107">    return ResponseEntity.ok().header(&quot;Set-Cookie&quot;, clearedCookie.toString()).build();</span>
   }
 
   @GetMapping(&quot;/me&quot;)

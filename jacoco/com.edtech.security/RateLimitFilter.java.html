@@ -23,13 +23,13 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
   private Bucket createNewBucket() {
     // Limit: 5 requests per minute
-<span class="nc" id="L26">    Refill refill = Refill.intervally(5, Duration.ofMinutes(1));</span>
-<span class="nc" id="L27">    Bandwidth limit = Bandwidth.classic(5, refill);</span>
-<span class="nc" id="L28">    return Bucket.builder().addLimit(limit).build();</span>
+<span class="fc" id="L26">    Refill refill = Refill.intervally(5, Duration.ofMinutes(1));</span>
+<span class="fc" id="L27">    Bandwidth limit = Bandwidth.classic(5, refill);</span>
+<span class="fc" id="L28">    return Bucket.builder().addLimit(limit).build();</span>
   }
 
   private Bucket resolveBucket(String clientIp) {
-<span class="nc" id="L32">    return cache.computeIfAbsent(clientIp, k -&gt; createNewBucket());</span>
+<span class="fc" id="L32">    return cache.computeIfAbsent(clientIp, k -&gt; createNewBucket());</span>
   }
 
   @Override
@@ -37,23 +37,23 @@ import org.springframework.web.filter.OncePerRequestFilter;
       HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
       throws ServletException, IOException {
 
-<span class="nc" id="L40">    String path = request.getRequestURI();</span>
+<span class="fc" id="L40">    String path = request.getRequestURI();</span>
 
     // Aplica o rate limit apenas para rotas de autenticacao e recuperacao
-<span class="nc bnc" id="L43" title="All 2 branches missed.">    if (path.startsWith(&quot;/api/auth/&quot;)) {</span>
-<span class="nc" id="L44">      String clientIp = request.getRemoteAddr();</span>
-<span class="nc" id="L45">      Bucket bucket = resolveBucket(clientIp);</span>
+<span class="fc bfc" id="L43" title="All 2 branches covered.">    if (path.startsWith(&quot;/api/auth/&quot;)) {</span>
+<span class="fc" id="L44">      String clientIp = request.getRemoteAddr();</span>
+<span class="fc" id="L45">      Bucket bucket = resolveBucket(clientIp);</span>
 
-<span class="nc bnc" id="L47" title="All 2 branches missed.">      if (bucket.tryConsume(1)) {</span>
-<span class="nc" id="L48">        filterChain.doFilter(request, response);</span>
+<span class="fc bfc" id="L47" title="All 2 branches covered.">      if (bucket.tryConsume(1)) {</span>
+<span class="fc" id="L48">        filterChain.doFilter(request, response);</span>
       } else {
-<span class="nc" id="L50">        response.setStatus(HttpStatus.TOO_MANY_REQUESTS.value());</span>
-<span class="nc" id="L51">        response.getWriter().write(&quot;Too many requests. Please try again later.&quot;);</span>
-<span class="nc" id="L52">        return;</span>
+<span class="fc" id="L50">        response.setStatus(HttpStatus.TOO_MANY_REQUESTS.value());</span>
+<span class="fc" id="L51">        response.getWriter().write(&quot;Too many requests. Please try again later.&quot;);</span>
+<span class="fc" id="L52">        return;</span>
       }
-<span class="nc" id="L54">    } else {</span>
-<span class="nc" id="L55">      filterChain.doFilter(request, response);</span>
+<span class="fc" id="L54">    } else {</span>
+<span class="fc" id="L55">      filterChain.doFilter(request, response);</span>
     }
-<span class="nc" id="L57">  }</span>
+<span class="fc" id="L57">  }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

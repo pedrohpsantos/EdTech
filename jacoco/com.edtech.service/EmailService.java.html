@@ -15,11 +15,11 @@ import org.springframework.stereotype.Service;
   /** Documentação. */
   @Async
   public void sendRecoveryEmail(String toEmail, String otpCode) {
-<span class="nc" id="L18">    SimpleMailMessage message = new SimpleMailMessage();</span>
-<span class="nc" id="L19">    message.setFrom(&quot;noreply@edtech.com&quot;);</span>
-<span class="nc" id="L20">    message.setTo(toEmail);</span>
-<span class="nc" id="L21">    message.setSubject(&quot;Código de Recuperação de Senha - EdTech&quot;);</span>
-<span class="nc" id="L22">    message.setText(</span>
+<span class="fc" id="L18">    SimpleMailMessage message = new SimpleMailMessage();</span>
+<span class="fc" id="L19">    message.setFrom(&quot;noreply@edtech.com&quot;);</span>
+<span class="fc" id="L20">    message.setTo(toEmail);</span>
+<span class="fc" id="L21">    message.setSubject(&quot;Código de Recuperação de Senha - EdTech&quot;);</span>
+<span class="fc" id="L22">    message.setText(</span>
         &quot;Olá,\n\n&quot;
             + &quot;Você solicitou a recuperação da sua senha na EdTech.\n&quot;
             + &quot;Seu código de segurança (OTP) de 6 dígitos é: &quot;
@@ -29,7 +29,7 @@ import org.springframework.stereotype.Service;
             + &quot;Se você não solicitou isso, ignore este e-mail.\n\n&quot;
             + &quot;Equipe EdTech&quot;);
 
-<span class="nc" id="L32">    mailSender.send(message);</span>
-<span class="nc" id="L33">  }</span>
+<span class="fc" id="L32">    mailSender.send(message);</span>
+<span class="fc" id="L33">  }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
