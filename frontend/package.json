@@ -18,6 +18,7 @@
     "@tanstack/react-query": "^5.101.2",
     "axios": "^1.18.0",
     "bootstrap": "^5.3.8",
+    "bootstrap-icons": "^1.13.1",
     "framer-motion": "^12.42.0",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
