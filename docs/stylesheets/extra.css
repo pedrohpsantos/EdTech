@@ -369,15 +369,32 @@
    BUTTONS
    ============================================================ */
 .md-typeset .md-button {
-  border-radius: 10px;
+  border-radius: 12px;
   font-weight: 600;
-  transition: var(--transition-smooth);
-  letter-spacing: 0.01em;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  letter-spacing: 0.02em;
+  background: var(--glass-bg);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .md-typeset .md-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(74, 20, 140, 0.2);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 24px rgba(74, 20, 140, 0.2);
+  border-color: rgba(124, 77, 255, 0.4);
+}
+
+.md-typeset .md-button--primary {
+  background: linear-gradient(135deg, var(--md-primary-fg-color), var(--md-accent-fg-color));
+  color: white !important;
+  border: none;
+  box-shadow: 0 6px 18px rgba(106, 27, 154, 0.25);
+}
+
+.md-typeset .md-button--primary:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 12px 30px rgba(106, 27, 154, 0.4);
 }
 
 /* ============================================================
@@ -596,17 +613,33 @@ a.team-card:hover .team-avatar {
 
 /* Smartwatches / Very Small Screens (up to 360px) */
 @media (max-width: 360px) {
+  :root {
+    --md-text-size: 1.1rem;
+  }
   .md-hero {
-    padding: 1.5rem 0.5rem;
+    padding: 1rem 0.5rem;
+    border-radius: 8px;
   }
   .md-hero h1 {
-    font-size: 1.35rem;
+    font-size: 1.4rem;
+    line-height: 1.1;
   }
   .md-hero p {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
   }
   .md-typeset .grid.cards > ul > li {
+    padding: 0.6rem;
+  }
+  .md-typeset .md-button {
+    width: 100%;
+    text-align: center;
     padding: 0.8rem;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+  }
+  .md-sidebar {
+    display: none !important; /* Esconder lateral para focar no conteúdo */
   }
 }
 
@@ -615,21 +648,24 @@ a.team-card:hover .team-avatar {
   .md-hero {
     padding: 2rem 1rem;
     margin: 0.5rem 0 1.5rem 0;
+    background-size: cover;
   }
   .md-hero h1 {
-    font-size: 1.6rem;
+    font-size: 1.8rem;
+    word-break: break-word;
   }
   .md-hero p {
-    font-size: 0.95rem;
+    font-size: 1.05rem;
   }
   .md-hero .hero-actions {
     flex-direction: column;
-    gap: 1.2rem;
+    gap: 1rem;
   }
   .md-hero .md-button {
     width: 100%;
     box-sizing: border-box;
-    padding: 0.8rem 1rem;
+    padding: 0.9rem 1rem;
+    font-size: 1.05rem;
   }
   .team-grid {
     grid-template-columns: 1fr;
@@ -642,13 +678,16 @@ a.team-card:hover .team-avatar {
     padding: 2.5rem 1.5rem;
   }
   .md-hero h1 {
-    font-size: 2rem;
+    font-size: 2.2rem;
   }
   .md-hero p {
-    font-size: 1.05rem;
+    font-size: 1.1rem;
   }
   .team-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+  .md-typeset .grid.cards > ul > li {
+    padding: 1.2rem;
   }
 }
 
@@ -657,41 +696,63 @@ a.team-card:hover .team-avatar {
   .team-grid {
     grid-template-columns: repeat(3, 1fr);
   }
+  .md-hero .md-button {
+    display: inline-block;
+    min-width: 200px;
+  }
 }
 
 /* Ultrawide / Large Desktops (1200px to 1599px) */
 @media (min-width: 1200px) and (max-width: 1599px) {
   :root {
-    --md-text-container-width: 65rem; /* Expands MkDocs default max-width for better reading */
-  }
-  .md-hero {
-    padding: 3.5rem 2.5rem;
-  }
-  .md-hero h1 {
-    font-size: 2.8rem;
-  }
-  .team-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-/* Super Ultrawide (1600px and up) */
-@media (min-width: 1600px) {
-  :root {
-    --md-text-container-width: 80rem; /* Expands significantly for large monitors */
+    --md-text-container-width: 70rem; /* Expands MkDocs default max-width for better reading */
   }
   .md-hero {
     padding: 4rem 3rem;
   }
   .md-hero h1 {
-    font-size: 3.2rem;
+    font-size: 3rem;
+  }
+  .team-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Super Ultrawide & TVs (1600px and up) */
+@media (min-width: 1600px) {
+  :root {
+    --md-text-container-width: 90rem; /* Expansive layout */
+    --md-text-size: 1.15rem; /* Better readability from distance */
+  }
+  
+  /* Auto-force Slate (Dark Mode) base colors for comfort on large bright screens */
+  body {
+    background-color: #0f111a;
+  }
+  .md-main__inner {
+    margin-top: 2rem;
+  }
+
+  .md-hero {
+    padding: 6rem 4rem;
+    border-radius: 30px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+  }
+  .md-hero h1 {
+    font-size: 4.5rem;
+    letter-spacing: -0.04em;
   }
   .md-hero p {
-    font-size: 1.25rem;
-    max-width: 900px;
+    font-size: 1.5rem;
+    max-width: 1200px;
+    line-height: 1.8;
   }
   .team-grid {
     grid-template-columns: repeat(6, 1fr); /* All cards in one row! */
+  }
+  
+  .md-typeset .grid.cards > ul {
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   }
 }
 
