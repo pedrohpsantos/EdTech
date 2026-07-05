@@ -156,6 +156,51 @@ sequenceDiagram
 
 ---
 
+## 5. Política de Backup e Recuperação de Dados
+
+O banco de dados do EdTech possui backup automático diário gerenciado inteiramente pela infraestrutura do GCP, sem intervenção manual.
+
+### Fluxo do Backup
+
+```mermaid
+sequenceDiagram
+    participant CS as Cloud Scheduler
+    participant API as Cloud SQL Admin API
+    participant DB as Cloud SQL (PostgreSQL)
+    participant GCS as GCS Bucket (edtech-backups)
+
+    Note over CS: Todo dia às 02:00 BRT
+    CS->>API: POST /instances/edtech-db-dev/export
+    API->>DB: pg_dump (exportação SQL)
+    DB-->>API: dump comprimido (.sql.gz)
+    API-->>GCS: Salva backup-YYYY-MM-DD.sql.gz
+    Note over GCS: Lifecycle: delete após 30 dias
+```
+
+### Política Vigente
+
+| Atributo | Valor |
+| :--- | :--- |
+| Frequência | Diária |
+| Horário | 02:00 BRT |
+| Destino | `gs://edtech-backups-<PROJECT_ID>/` |
+| Formato | `.sql.gz` |
+| Retenção | **30 dias** (lifecycle automático) |
+
+### Verificação pelo Orientador
+
+Para consultar o status dos backups sem acessar o GCP Console:
+
+```bash
+uv run scripts/backup_status.py
+```
+
+O script lista os 10 backups mais recentes e emite um **alerta visual** caso o backup mais recente tenha mais de 25 horas (indicando falha no agendamento).
+
+> Consulte o [ADR-0013](../decisoes_adrs/0013-backup-automatico.md) para a decisão de arquitetura completa.
+
+---
+
 ## Histórico de Versões
 
 | Versão |    Data    | Descrição                                | Autor                    |
@@ -165,5 +210,6 @@ sequenceDiagram
 | `1.2` | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |
 | `2.0` | 04/07/2026 | Revisão profunda, correção de metadados e melhorias visuais | Pedro Henrique P. Santos |
 | `2.1` | 05/07/2026 | Adição da seção de Rate Limiting (Bucket4j) | Pedro Henrique P. Santos |
+| `2.2` | 05/07/2026 | Adição da seção de Política de Backup e Recuperação | Pedro Henrique P. Santos |
 
 
