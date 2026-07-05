@@ -80,7 +80,25 @@ jobs:
         working-directory: frontend
         run: npx playwright test e2e/production-smoke.spec.ts || true
 
+      - name: Restaurar Histórico do Allure (Trend)
+        uses: actions/checkout@v4
+        if: always()
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: gh-pages-branch
+
+      - name: Preparar Dados do Allure (Trend, Categories, Executors)
+        if: always()
+        working-directory: frontend
+        run: |
+          mkdir -p allure-results/history
+          cp -R ../gh-pages-branch/allure/history/* allure-results/history/ || true
+          cp allure-categories.json allure-results/categories.json || true
+          echo '{"name": "GitHub Actions", "type": "github", "reportName": "EdTech Smoke Tests", "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}", "buildOrder": "${{ github.run_number }}", "buildName": "${{ github.workflow }}", "buildUrl": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"}' > allure-results/executor.json
+
       - name: Gerar Allure Report
+        if: always()
         working-directory: frontend
         run: |
           npx allure-commandline generate allure-results -o ../docs/allure --clean
