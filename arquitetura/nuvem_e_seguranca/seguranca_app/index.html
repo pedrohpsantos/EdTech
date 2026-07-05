@@ -1761,6 +1761,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../decisoes_adrs/0013-backup-automatico/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ADR-0013: Backup Automático via Cloud SQL Export + Cloud Scheduler
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -2037,6 +2065,56 @@
     <span class="md-ellipsis">
       
         Decisões de Design
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-politica-de-backup-e-recuperacao-de-dados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Política de Backup e Recuperação de Dados
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Política de Backup e Recuperação de Dados">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fluxo-do-backup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fluxo do Backup
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#politica-vigente" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Política Vigente
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verificacao-pelo-orientador" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verificação pelo Orientador
       
     </span>
   </a>
@@ -3640,6 +3718,56 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#5-politica-de-backup-e-recuperacao-de-dados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Política de Backup e Recuperação de Dados
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Política de Backup e Recuperação de Dados">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fluxo-do-backup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fluxo do Backup
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#politica-vigente" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Política Vigente
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verificacao-pelo-orientador" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verificação pelo Orientador
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#historico-de-versoes" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3841,6 +3969,61 @@ flowchart LR
 <li><strong>Fail-fast:</strong> A verificação do bucket é executada <em>antes</em> de qualquer acesso ao banco de dados, garantindo custo mínimo de processamento para requisições bloqueadas.</li>
 </ul>
 <hr>
+<h2 id="5-politica-de-backup-e-recuperacao-de-dados">5. Política de Backup e Recuperação de Dados<a class="headerlink" href="#5-politica-de-backup-e-recuperacao-de-dados" title="Permanent link">¶</a></h2>
+<p>O banco de dados do EdTech possui backup automático diário gerenciado inteiramente pela infraestrutura do <abbr title="Google Cloud Platform">GCP</abbr>, sem intervenção manual.</p>
+<h3 id="fluxo-do-backup">Fluxo do Backup<a class="headerlink" href="#fluxo-do-backup" title="Permanent link">¶</a></h3>
+<pre class="mermaid"><code>sequenceDiagram
+    participant CS as Cloud Scheduler
+    participant API as Cloud SQL Admin API
+    participant DB as Cloud SQL (PostgreSQL)
+    participant GCS as GCS Bucket (edtech-backups)
+
+    Note over CS: Todo dia às 02:00 BRT
+    CS-&gt;&gt;API: POST /instances/edtech-db-dev/export
+    API-&gt;&gt;DB: pg_dump (exportação SQL)
+    DB--&gt;&gt;API: dump comprimido (.sql.gz)
+    API--&gt;&gt;GCS: Salva backup-YYYY-MM-DD.sql.gz
+    Note over GCS: Lifecycle: delete após 30 dias</code></pre>
+<h3 id="politica-vigente">Política Vigente<a class="headerlink" href="#politica-vigente" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Atributo</th>
+<th style="text-align: left;">Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Frequência</td>
+<td style="text-align: left;">Diária</td>
+</tr>
+<tr>
+<td style="text-align: left;">Horário</td>
+<td style="text-align: left;">02:00 BRT</td>
+</tr>
+<tr>
+<td style="text-align: left;">Destino</td>
+<td style="text-align: left;"><code>gs://edtech-backups-&lt;PROJECT_ID&gt;/</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">Formato</td>
+<td style="text-align: left;"><code>.sql.gz</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">Retenção</td>
+<td style="text-align: left;"><strong>30 dias</strong> (lifecycle automático)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="verificacao-pelo-orientador">Verificação pelo Orientador<a class="headerlink" href="#verificacao-pelo-orientador" title="Permanent link">¶</a></h3>
+<p>Para consultar o status dos backups sem acessar o <abbr title="Google Cloud Platform">GCP</abbr> Console:</p>
+<div class="highlight"><pre><span></span><code>uv<span class="w"> </span>run<span class="w"> </span>scripts/backup_status.py
+</code></pre></div>
+<p>O script lista os 10 backups mais recentes e emite um <strong>alerta visual</strong> caso o backup mais recente tenha mais de 25 horas (indicando falha no agendamento).</p>
+<blockquote>
+<p>Consulte o <a href="../../decisoes_adrs/0013-backup-automatico/"><abbr title="Architecture Decision Record — Registro de Decisão Arquitetural">ADR</abbr>-0013</a> para a decisão de arquitetura completa.</p>
+</blockquote>
+<hr>
 <h2 id="historico-de-versoes">Histórico de Versões<a class="headerlink" href="#historico-de-versoes" title="Permanent link">¶</a></h2>
 <table>
 <thead>
@@ -3882,6 +4065,12 @@ flowchart LR
 <td style="text-align: left;">Adição da seção de Rate Limiting (Bucket4j)</td>
 <td style="text-align: left;">Pedro Henrique P. Santos</td>
 </tr>
+<tr>
+<td style="text-align: center;"><code>2.2</code></td>
+<td style="text-align: center;">05/07/2026</td>
+<td style="text-align: left;">Adição da seção de Política de Backup e Recuperação</td>
+<td style="text-align: left;">Pedro Henrique P. Santos</td>
+</tr>
 </tbody>
 </table>
 
@@ -3904,7 +4093,7 @@ flowchart LR
     <span class="md-icon" title="Última atualização">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="5 de julho de 2026 23:32:37 UTC">5 de julho de 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="5 de julho de 2026 23:37:23 UTC">5 de julho de 2026</span>
   </span>
 
     

@@ -1732,6 +1732,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../arquitetura/decisoes_adrs/0013-backup-automatico/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ADR-0013: Backup Automático via Cloud SQL Export + Cloud Scheduler
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -3741,6 +3769,17 @@
     <span class="md-ellipsis">
       
         3.4.12 ADR 0012: Adoção do Firebase Hosting para o Frontend
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#arquitetura-decisoes_adrs-0013-backup-automatico" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4.13 ADR-0013: Backup Automático via Cloud SQL Export + Cloud Scheduler
       
     </span>
   </a>
@@ -7971,6 +8010,112 @@ Hospedar arquivos estáticos em instâncias de contêiner ou máquinas virtuais 
 <td style="text-align: left;">Pedro Henrique P. Santos</td>
 </tr>
 </tbody>
+</table></body></html></section><section class="print-page" id="arquitetura-decisoes_adrs-0013-backup-automatico" heading-number="3.4.13"><html><head>
+        <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            remove_material_navigation();remove_mkdocs_theme_navigation();generate_toc();
+        })
+        </script>
+        </head><body><h1 id="adr-0013-estrategia-de-backup-automatico-do-banco-de-dados"><abbr title="Architecture Decision Record — Registro de Decisão Arquitetural">ADR</abbr>-0013: Estratégia de Backup Automático do Banco de Dados<a class="headerlink" href="#arquitetura-decisoes_adrs-0013-backup-automatico-adr-0013-estrategia-de-backup-automatico-do-banco-de-dados" title="Permanent link">¶</a></h1>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Campo</th>
+<th style="text-align: left;">Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>Data</strong></td>
+<td style="text-align: left;">05/07/2026</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>Status</strong></td>
+<td style="text-align: left;">✅ Aceito</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>Autor</strong></td>
+<td style="text-align: left;">Pedro Henrique P. Santos</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="arquitetura-decisoes_adrs-0013-backup-automatico-contexto">Contexto<a class="headerlink" href="#arquitetura-decisoes_adrs-0013-backup-automatico-contexto" title="Permanent link">¶</a></h2>
+<p>O EdTech persiste dados críticos de pesquisadores, projetos e documentos acadêmicos em um banco de dados PostgreSQL hospedado no <strong>Cloud <abbr title="Structured Query Language">SQL</abbr></strong> (<abbr title="Google Cloud Platform">GCP</abbr>). A ausência de uma política formal de backup expõe o sistema a riscos de perda de dados por falha operacional, erro humano ou incidente de infraestrutura.</p>
+<p>Precisamos de uma solução de backup <strong>automática, auditável e de baixa manutenção</strong>.</p>
+<hr>
+<h2 id="arquitetura-decisoes_adrs-0013-backup-automatico-decisao">Decisão<a class="headerlink" href="#arquitetura-decisoes_adrs-0013-backup-automatico-decisao" title="Permanent link">¶</a></h2>
+<p>Adotamos a estratégia de <strong>Cloud <abbr title="Structured Query Language">SQL</abbr> Export + Cloud Scheduler</strong>, inteiramente nativa do <abbr title="Google Cloud Platform">GCP</abbr>:</p>
+<ol>
+<li>Um <strong>Cloud Scheduler</strong> job dispara diariamente às <strong>02:00 BRT</strong> (horário de menor uso).</li>
+<li>O Scheduler chama a <strong>Cloud <abbr title="Structured Query Language">SQL</abbr> Admin <abbr title="Application Programming Interface">API</abbr></strong> para exportar o banco no formato <code>.sql.gz</code>.</li>
+<li>O dump é salvo em um <strong>bucket <abbr title="Google Cloud Storage">GCS</abbr> dedicado</strong> (<code>edtech-backups-&lt;PROJECT_ID&gt;</code>), separado do bucket de arquivos de usuário.</li>
+<li>Uma <strong>lifecycle policy</strong> no bucket deleta automaticamente backups com mais de <strong>30 dias</strong>.</li>
+</ol>
+<p>Todo o provisionamento é realizado pelo script <code>infra/setup_backup.sh</code>, que pode ser executado uma única vez pelo time de infraestrutura.</p>
+<hr>
+<h2 id="arquitetura-decisoes_adrs-0013-backup-automatico-alternativas-consideradas">Alternativas Consideradas<a class="headerlink" href="#arquitetura-decisoes_adrs-0013-backup-automatico-alternativas-consideradas" title="Permanent link">¶</a></h2>
+<h3 id="arquitetura-decisoes_adrs-0013-backup-automatico-opcao-b-github-actions-com-pg_dump">Opção B: GitHub Actions com <code>pg_dump</code><a class="headerlink" href="#arquitetura-decisoes_adrs-0013-backup-automatico-opcao-b-github-actions-com-pg_dump" title="Permanent link">¶</a></h3>
+<p>Um workflow <code>.yml</code> com <code>schedule: cron</code> rodaria <code>pg_dump</code> e enviaria o resultado ao <abbr title="Google Cloud Storage">GCS</abbr>.</p>
+<p><strong>Descartada porque:</strong>
+- Exige que o Cloud <abbr title="Structured Query Language">SQL</abbr> fique acessível externamente (<abbr title="Internet Protocol — Protocolo de Internet">IP</abbr> público), aumentando a superfície de ataque.
+- O banco em produção está atrás do Cloud <abbr title="Structured Query Language">SQL</abbr> Auth Proxy, o que tornaria essa abordagem complexa de configurar com segurança.
+- O estado do agendamento fica fora do <abbr title="Google Cloud Platform">GCP</abbr>, tornando o monitoramento fragmentado.</p>
+<h3 id="arquitetura-decisoes_adrs-0013-backup-automatico-opcao-c-replica-de-leitura-snapshot">Opção C: Réplica de Leitura + Snapshot<a class="headerlink" href="#arquitetura-decisoes_adrs-0013-backup-automatico-opcao-c-replica-de-leitura-snapshot" title="Permanent link">¶</a></h3>
+<p>Criar uma réplica de leitura do Cloud <abbr title="Structured Query Language">SQL</abbr> e exportar os snapshots periodicamente.</p>
+<p><strong>Descartada porque:</strong>
+- Gera custo adicional de instância para um projeto acadêmico.
+- Complexidade de manutenção desproporcional à escala atual.</p>
+<hr>
+<h2 id="arquitetura-decisoes_adrs-0013-backup-automatico-consequencias">Consequências<a class="headerlink" href="#arquitetura-decisoes_adrs-0013-backup-automatico-consequencias" title="Permanent link">¶</a></h2>
+<p><strong>Positivas:</strong></p>
+<ul>
+<li>✅ <strong>Zero code no backend:</strong> Nenhuma mudança no código da aplicação.</li>
+<li>✅ <strong>Gerenciado pelo <abbr title="Google Cloud Platform">GCP</abbr>:</strong> Monitoramento integrado ao Cloud Console e Cloud Logging.</li>
+<li>✅ <strong>Retenção automática:</strong> Backups antigos são deletados sem intervenção humana.</li>
+<li>✅ <strong>Auditável:</strong> Cada export gera um log no Cloud Logging com status de sucesso/falha.</li>
+<li>✅ <strong>Verificável pelo Orientador:</strong> Script <code>uv run scripts/backup_status.py</code> lista os backups e alerta se o mais recente for muito antigo.</li>
+</ul>
+<p><strong>Negativas / Riscos:</strong></p>
+<ul>
+<li>⚠️ <strong>Configuração IAM manual:</strong> Requer execução do <code>setup_backup.sh</code> por alguém com permissão de <code>roles/owner</code> ou <code>roles/iam.securityAdmin</code> no projeto.</li>
+<li>⚠️ <strong>Custo de storage:</strong> Mínimo para dumps <abbr title="Structured Query Language">SQL</abbr>, mas existente. Estimativa: &lt; R$ 5,00/mês para o volume atual.</li>
+</ul>
+<hr>
+<h2 id="arquitetura-decisoes_adrs-0013-backup-automatico-politica-de-backup">Política de Backup<a class="headerlink" href="#arquitetura-decisoes_adrs-0013-backup-automatico-politica-de-backup" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Atributo</th>
+<th style="text-align: left;">Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Frequência</td>
+<td style="text-align: left;">Diária</td>
+</tr>
+<tr>
+<td style="text-align: left;">Horário</td>
+<td style="text-align: left;">02:00 BRT (05:00 UTC)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Destino</td>
+<td style="text-align: left;"><code>gs://edtech-backups-&lt;PROJECT_ID&gt;/</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">Formato</td>
+<td style="text-align: left;"><code>.sql.gz</code> (dump <abbr title="Structured Query Language">SQL</abbr> comprimido)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Retenção</td>
+<td style="text-align: left;">30 dias</td>
+</tr>
+<tr>
+<td style="text-align: left;">Alertas</td>
+<td style="text-align: left;"><code>uv run scripts/backup_status.py</code> (verifica se backup &lt; 25h)</td>
+</tr>
+</tbody>
 </table></body></html></section></section>
                     <section class='print-page md-section' id='section-3-5' heading-number='3.5'>
                         <h1>Infraestrutura e Segurança<a class='headerlink' href='#section-3-5' title='Permanent link'></a>
@@ -8222,6 +8367,61 @@ flowchart LR
 <li><strong>Fail-fast:</strong> A verificação do bucket é executada <em>antes</em> de qualquer acesso ao banco de dados, garantindo custo mínimo de processamento para requisições bloqueadas.</li>
 </ul>
 <hr>
+<h2 id="arquitetura-nuvem_e_seguranca-seguranca_app-5-politica-de-backup-e-recuperacao-de-dados">5. Política de Backup e Recuperação de Dados<a class="headerlink" href="#arquitetura-nuvem_e_seguranca-seguranca_app-5-politica-de-backup-e-recuperacao-de-dados" title="Permanent link">¶</a></h2>
+<p>O banco de dados do EdTech possui backup automático diário gerenciado inteiramente pela infraestrutura do <abbr title="Google Cloud Platform">GCP</abbr>, sem intervenção manual.</p>
+<h3 id="arquitetura-nuvem_e_seguranca-seguranca_app-fluxo-do-backup">Fluxo do Backup<a class="headerlink" href="#arquitetura-nuvem_e_seguranca-seguranca_app-fluxo-do-backup" title="Permanent link">¶</a></h3>
+<pre class="mermaid"><code>sequenceDiagram
+    participant CS as Cloud Scheduler
+    participant API as Cloud SQL Admin API
+    participant DB as Cloud SQL (PostgreSQL)
+    participant GCS as GCS Bucket (edtech-backups)
+
+    Note over CS: Todo dia às 02:00 BRT
+    CS-&gt;&gt;API: POST /instances/edtech-db-dev/export
+    API-&gt;&gt;DB: pg_dump (exportação SQL)
+    DB--&gt;&gt;API: dump comprimido (.sql.gz)
+    API--&gt;&gt;GCS: Salva backup-YYYY-MM-DD.sql.gz
+    Note over GCS: Lifecycle: delete após 30 dias</code></pre>
+<h3 id="arquitetura-nuvem_e_seguranca-seguranca_app-politica-vigente">Política Vigente<a class="headerlink" href="#arquitetura-nuvem_e_seguranca-seguranca_app-politica-vigente" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Atributo</th>
+<th style="text-align: left;">Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Frequência</td>
+<td style="text-align: left;">Diária</td>
+</tr>
+<tr>
+<td style="text-align: left;">Horário</td>
+<td style="text-align: left;">02:00 BRT</td>
+</tr>
+<tr>
+<td style="text-align: left;">Destino</td>
+<td style="text-align: left;"><code>gs://edtech-backups-&lt;PROJECT_ID&gt;/</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">Formato</td>
+<td style="text-align: left;"><code>.sql.gz</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">Retenção</td>
+<td style="text-align: left;"><strong>30 dias</strong> (lifecycle automático)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="arquitetura-nuvem_e_seguranca-seguranca_app-verificacao-pelo-orientador">Verificação pelo Orientador<a class="headerlink" href="#arquitetura-nuvem_e_seguranca-seguranca_app-verificacao-pelo-orientador" title="Permanent link">¶</a></h3>
+<p>Para consultar o status dos backups sem acessar o <abbr title="Google Cloud Platform">GCP</abbr> Console:</p>
+<div class="highlight"><pre><span></span><code>uv<span class="w"> </span>run<span class="w"> </span>scripts/backup_status.py
+</code></pre></div>
+<p>O script lista os 10 backups mais recentes e emite um <strong>alerta visual</strong> caso o backup mais recente tenha mais de 25 horas (indicando falha no agendamento).</p>
+<blockquote>
+<p>Consulte o <a href="#arquitetura-decisoes_adrs-0013-backup-automatico"><abbr title="Architecture Decision Record — Registro de Decisão Arquitetural">ADR</abbr>-0013</a> para a decisão de arquitetura completa.</p>
+</blockquote>
+<hr>
 <h2 id="arquitetura-nuvem_e_seguranca-seguranca_app-historico-de-versoes">Histórico de Versões<a class="headerlink" href="#arquitetura-nuvem_e_seguranca-seguranca_app-historico-de-versoes" title="Permanent link">¶</a></h2>
 <table>
 <thead>
@@ -8261,6 +8461,12 @@ flowchart LR
 <td style="text-align: center;"><code>2.1</code></td>
 <td style="text-align: center;">05/07/2026</td>
 <td style="text-align: left;">Adição da seção de Rate Limiting (Bucket4j)</td>
+<td style="text-align: left;">Pedro Henrique P. Santos</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>2.2</code></td>
+<td style="text-align: center;">05/07/2026</td>
+<td style="text-align: left;">Adição da seção de Política de Backup e Recuperação</td>
 <td style="text-align: left;">Pedro Henrique P. Santos</td>
 </tr>
 </tbody>
@@ -12783,6 +12989,8 @@ Copie toda a estrutura abaixo para o novo arquivo, preencha os dados e adicione 
 .print-site-enumerate-headings #arquitetura-decisoes_adrs-0011-email-recuperacao-senha-smtp > h1:before { content: '3.4.11 ' }
 
 .print-site-enumerate-headings #arquitetura-decisoes_adrs-0012-firebase-hosting > h1:before { content: '3.4.12 ' }
+
+.print-site-enumerate-headings #arquitetura-decisoes_adrs-0013-backup-automatico > h1:before { content: '3.4.13 ' }
 
 .print-site-enumerate-headings #section-3-5 > h1:before { content: '3.5 ' }
 .print-site-enumerate-headings #arquitetura-nuvem_e_seguranca-nuvem > h1:before { content: '3.5.1 ' }
