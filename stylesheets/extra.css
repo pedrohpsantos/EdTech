@@ -39,15 +39,12 @@
    HEADER
    ============================================================ */
 .md-header {
-  --md-primary-fg-color: transparent;
-  --md-primary-bg-color: var(--header-text-color);
-  background: var(--header-gradient);
+  background: var(--hero-gradient);
   background-attachment: fixed;
   background-size: 200% 200%;
   animation: calmGradient 30s ease infinite alternate;
-  box-shadow: 0 1px 10px rgba(0,0,0,0.05);
+  box-shadow: none;
   backdrop-filter: none;
-  color: var(--md-primary-bg-color);
 }
 
 @keyframes calmGradient {
@@ -70,12 +67,12 @@
    NAVIGATION TABS — MATCH HEADER TONE
    ============================================================ */
 .md-tabs {
-  background: var(--header-gradient);
+  background: var(--hero-gradient);
   background-attachment: fixed;
   background-size: 200% 200%;
   animation: calmGradient 30s ease infinite alternate;
   border-top: 0;
-  border-bottom: 1px solid rgba(124, 77, 255, 0.05);
+  border-bottom: 0;
   box-shadow: none;
 }
 
@@ -91,16 +88,14 @@
 }
 
 .md-tabs__link {
-  color: var(--header-text-color);
+  color: rgba(255, 255, 255, 0.82);
   font-weight: 600;
-  opacity: 0.8;
 }
 
 .md-tabs__link:hover,
 .md-tabs__link:focus,
 .md-tabs__link--active {
-  color: var(--header-text-color);
-  opacity: 1;
+  color: #ffffff;
 }
 
 /* ============================================================
@@ -213,10 +208,12 @@
   margin: 2rem 0 4rem 0;
   text-align: center;
   overflow: hidden;
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  box-shadow: 0 20px 50px rgba(0,0,0,0.1);
-  backdrop-filter: blur(20px);
+  background: var(--hero-gradient);
+  background-attachment: fixed;
+  background-size: 200% 200%;
+  animation: calmGradient 30s ease infinite alternate;
+  border: none;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.3);
 }
 
 /* Animated Background Blobs */
@@ -254,19 +251,16 @@
   font-weight: 800;
   line-height: 1.1;
   margin-bottom: 1.5rem;
-  background: linear-gradient(135deg, var(--md-primary-fg-color), var(--md-accent-fg-color));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #ffffff;
   animation: contentSlideUp 0.8s ease-out backwards;
 }
 
 .hero-subtitle {
   font-size: 1.3rem;
-  color: var(--md-default-fg-color);
+  color: rgba(255, 255, 255, 0.85);
   max-width: 800px;
   margin: 0 auto 2.5rem;
   line-height: 1.6;
-  opacity: 0.85;
   animation: contentSlideUp 0.8s ease-out backwards;
   animation-delay: 0.2s;
 }
@@ -289,32 +283,30 @@
   font-size: 1.1rem;
   border-radius: 50px;
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  background: var(--glass-bg);
+  background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(8px);
-  border: 1.5px solid rgba(124, 77, 255, 0.4);
-  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-  color: var(--md-primary-fg-color);
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  color: #ffffff;
 }
 
 .hero-cta .md-button:hover {
   transform: translateY(-5px) scale(1.02);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  border-color: rgba(124, 77, 255, 0.5);
+  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.5);
 }
 
 .hero-cta .md-button--primary {
-  background: linear-gradient(135deg, var(--md-primary-fg-color), var(--md-accent-fg-color));
-  background-size: 200% 200%;
-  box-shadow: 0 10px 30px rgba(106, 27, 154, 0.2);
+  background: #ffffff;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   border: none;
-  color: white !important;
-  animation: calmGradient 15s infinite alternate ease-in-out;
+  color: var(--md-primary-fg-color) !important;
 }
 
 .hero-cta .md-button--primary:hover {
   transform: translateY(-5px) scale(1.05);
-  box-shadow: 0 15px 40px rgba(106, 27, 154, 0.5);
-  filter: brightness(1.15) hue-rotate(15deg);
+  box-shadow: 0 15px 40px rgba(255, 255, 255, 0.3);
+  filter: none;
 }
 
 @keyframes float-blobs {
