@@ -12,7 +12,7 @@ title: 'API Reference (Swagger)'
     var container = document.getElementById('swagger-ui');
     if (container && typeof SwaggerUIBundle !== 'undefined') {
       window.ui = SwaggerUIBundle({
-        url: "../../assets/openapi.json",
+        url: "../../../assets/openapi.json",
         dom_id: '#swagger-ui',
         deepLinking: true,
         presets: [
