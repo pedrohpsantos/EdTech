@@ -102,6 +102,11 @@ public class User {
     return active;
   }
 
+  /** Documentação para o método setActive. */
+  public void setActive(boolean active) {
+    this.active = active;
+  }
+
   /** Documentação para o método getCreatedAt. */
   public Instant getCreatedAt() {
     return createdAt;

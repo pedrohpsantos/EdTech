@@ -165,7 +165,7 @@ export default function AuthLayout({
             variants={itemVariants}
             style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center' }}
           >
-            <h4 className={styles.acessoLabel}>Acesso à Plataforma</h4>
+            <span className={styles.acessoLabel}>Acesso à Plataforma</span>
           </motion.div>
 
           <motion.h2 variants={itemVariants} className={styles.welcomeTitle}>
