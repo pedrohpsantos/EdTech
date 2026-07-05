@@ -1,83 +1,60 @@
 ---
-title: 'ADR-0013: Backup Automático via Cloud SQL Export + Cloud Scheduler'
+title: 'ADR 0013: Backup Automático via Cloud SQL Export e Cloud Scheduler'
 ---
 
-# ADR-0013: Estratégia de Backup Automático do Banco de Dados
+# :material-text-box-check: ADR 0013: Backup Automático via Cloud SQL Export e Cloud Scheduler
 
-|   Campo   | Valor                              |
-| :-------: | :--------------------------------- |
-|  **Data** | 05/07/2026                         |
-| **Status** | ✅ Aceito                          |
-| **Autor** | Pedro Henrique P. Santos           |
+## Status
 
----
+Aceito
 
 ## Contexto
 
-O EdTech persiste dados críticos de pesquisadores, projetos e documentos acadêmicos em um banco de dados PostgreSQL hospedado no **Cloud SQL** (GCP). A ausência de uma política formal de backup expõe o sistema a riscos de perda de dados por falha operacional, erro humano ou incidente de infraestrutura.
-
-Precisamos de uma solução de backup **automática, auditável e de baixa manutenção**.
-
----
+O banco de dados PostgreSQL do EdTech persiste dados críticos de pesquisadores, projetos e documentos acadêmicos hospedado no Cloud SQL (GCP). A ausência de uma política formal de backup expõe o sistema a riscos de perda de dados por falha operacional, erro humano ou incidente de infraestrutura. Faz-se necessária uma solução de backup automática, auditável e de baixa manutenção que esteja alinhada com a infraestrutura GCP já adotada pelo projeto (ADR 0003).
 
 ## Decisão
 
 Adotamos a estratégia de **Cloud SQL Export + Cloud Scheduler**, inteiramente nativa do GCP:
 
-1. Um **Cloud Scheduler** job dispara diariamente às **02:00 BRT** (horário de menor uso).
-2. O Scheduler chama a **Cloud SQL Admin API** para exportar o banco no formato `.sql.gz`.
-3. O dump é salvo em um **bucket GCS dedicado** (`edtech-backups-<PROJECT_ID>`), separado do bucket de arquivos de usuário.
-4. Uma **lifecycle policy** no bucket deleta automaticamente backups com mais de **30 dias**.
+- Um job no **Cloud Scheduler** dispara diariamente às 02:00 BRT (05:00 UTC).
+- O Scheduler invoca a **Cloud SQL Admin API**, que realiza a exportação do banco no formato `.sql.gz`.
+- O dump comprimido é salvo em um **bucket GCS dedicado** (`edtech-backups-<PROJECT_ID>`), separado do bucket de arquivos de usuário.
+- Uma **lifecycle policy** no bucket deleta automaticamente backups com mais de 30 dias.
 
-Todo o provisionamento é realizado pelo script `infra/setup_backup.sh`, que pode ser executado uma única vez pelo time de infraestrutura.
-
----
-
-## Alternativas Consideradas
-
-### Opção B: GitHub Actions com `pg_dump`
-
-Um workflow `.yml` com `schedule: cron` rodaria `pg_dump` e enviaria o resultado ao GCS.
-
-**Descartada porque:**
-- Exige que o Cloud SQL fique acessível externamente (IP público), aumentando a superfície de ataque.
-- O banco em produção está atrás do Cloud SQL Auth Proxy, o que tornaria essa abordagem complexa de configurar com segurança.
-- O estado do agendamento fica fora do GCP, tornando o monitoramento fragmentado.
-
-### Opção C: Réplica de Leitura + Snapshot
-
-Criar uma réplica de leitura do Cloud SQL e exportar os snapshots periodicamente.
-
-**Descartada porque:**
-- Gera custo adicional de instância para um projeto acadêmico.
-- Complexidade de manutenção desproporcional à escala atual.
-
----
+Todo o provisionamento é realizado pelo script `infra/setup_backup.sh`, executado uma única vez por um usuário com as permissões IAM adequadas.
 
 ## Consequências
 
-**Positivas:**
+### Positivas
 
-- ✅ **Zero code no backend:** Nenhuma mudança no código da aplicação.
-- ✅ **Gerenciado pelo GCP:** Monitoramento integrado ao Cloud Console e Cloud Logging.
-- ✅ **Retenção automática:** Backups antigos são deletados sem intervenção humana.
-- ✅ **Auditável:** Cada export gera um log no Cloud Logging com status de sucesso/falha.
-- ✅ **Verificável pelo Orientador:** Script `uv run scripts/backup_status.py` lista os backups e alerta se o mais recente for muito antigo.
+- **Sem código no backend:** Nenhuma alteração na aplicação é necessária; a solução é inteiramente de infraestrutura.
+- **Gerenciado pelo GCP:** Monitoramento integrado ao Cloud Console e Cloud Logging, com registro de status de cada execução.
+- **Retenção automática:** O lifecycle policy do GCS elimina backups antigos sem intervenção manual.
+- **Verificável:** O script `uv run scripts/backup_status.py` permite que o Orientador consulte os backups mais recentes e receba alerta caso o backup mais recente tenha mais de 25 horas.
 
-**Negativas / Riscos:**
+### Negativas / Riscos
 
-- ⚠️ **Configuração IAM manual:** Requer execução do `setup_backup.sh` por alguém com permissão de `roles/owner` ou `roles/iam.securityAdmin` no projeto.
-- ⚠️ **Custo de storage:** Mínimo para dumps SQL, mas existente. Estimativa: < R$ 5,00/mês para o volume atual.
+- **Configuração IAM manual:** A execução do `setup_backup.sh` requer um usuário com `roles/owner` ou `roles/iam.securityAdmin`, o que não pode ser automatizado sem credenciais elevadas.
+- **Custo de armazenamento:** O custo de storage para dumps SQL comprimidos é mínimo na escala atual, mas existente.
+
+## Alternativas Consideradas
+
+### GitHub Actions com `pg_dump`
+
+Um workflow com `schedule: cron` rodaria `pg_dump` e enviaria o resultado ao GCS diretamente pelo CI.
+
+Descartada porque exigiria expor o Cloud SQL com IP público para que o runner do GitHub Actions conseguisse se conectar, aumentando a superfície de ataque. A abordagem também fragmenta o monitoramento do agendamento fora do GCP.
+
+### Replica de Leitura com Snapshot Periódico
+
+Provisionar uma réplica de leitura do Cloud SQL e gerar snapshots com frequência controlada.
+
+Descartada pelo custo adicional de instância e pela complexidade de manutenção desproporcional à escala atual do projeto.
 
 ---
 
-## Política de Backup
+## Histórico de Versões
 
-| Atributo | Valor |
-| :--- | :--- |
-| Frequência | Diária |
-| Horário | 02:00 BRT (05:00 UTC) |
-| Destino | `gs://edtech-backups-<PROJECT_ID>/` |
-| Formato | `.sql.gz` (dump SQL comprimido) |
-| Retenção | 30 dias |
-| Alertas | `uv run scripts/backup_status.py` (verifica se backup < 25h) |
+| Versão | Data | Descrição | Autor |
+| :---: | :---: | :--- | :--- |
+| `1.0` | 05/07/2026 | Criação do documento | Pedro Henrique P. Santos |
