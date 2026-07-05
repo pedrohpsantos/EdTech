@@ -1170,3 +1170,94 @@ div[align="center"] .md-typeset__table {
   margin-left: auto;
   margin-right: auto;
 }
+
+/* ============================================================
+   GLOBAL CREATIVE EFFECTS & ANIMATIONS
+   Adds "life" across all documentation pages
+   ============================================================ */
+
+/* Page Load Content Fade & Slide Up */
+.md-content {
+  animation: pageFadeIn 0.8s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+@keyframes pageFadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Sidebar Links Interaction */
+.md-nav__link {
+  transition: all 0.3s ease-out;
+}
+.md-nav__link:hover {
+  transform: translateX(6px);
+  color: var(--md-primary-fg-color);
+}
+.md-nav__item .md-nav__link--active {
+  animation: linkPulse 3s infinite;
+}
+@keyframes linkPulse {
+  0% { text-shadow: 0 0 0 transparent; }
+  50% { text-shadow: 0 0 8px rgba(124, 77, 255, 0.5); }
+  100% { text-shadow: 0 0 0 transparent; }
+}
+
+/* Code Blocks Polish */
+.md-typeset pre {
+  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s ease;
+  border: 1px solid transparent;
+}
+.md-typeset pre:hover {
+  transform: translateY(-3px) scale(1.005);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+  border-color: rgba(124, 77, 255, 0.3);
+}
+
+/* Images Zoom on Hover */
+.md-typeset img:not(.twemoji):not(.emojione) {
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.5s ease;
+  border-radius: 8px;
+}
+.md-typeset img:not(.twemoji):not(.emojione):hover {
+  transform: scale(1.03);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+  z-index: 10;
+  position: relative;
+}
+
+/* Admonitions (Callouts) Pop & Lift */
+.md-typeset .admonition {
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  animation: calloutPop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) backwards;
+  animation-delay: 0.3s;
+}
+.md-typeset .admonition:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+}
+@keyframes calloutPop {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Table Rows Hover Highlight */
+.md-typeset table tbody tr {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+.md-typeset table tbody tr:hover {
+  background-color: var(--glass-bg);
+  transform: scale(1.01);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  z-index: 2;
+  position: relative;
+}
+
+/* Custom Text Selection */
+::selection {
+  background: rgba(124, 77, 255, 0.3);
+  color: inherit;
+}
+::-moz-selection {
+  background: rgba(124, 77, 255, 0.3);
+  color: inherit;
+}
