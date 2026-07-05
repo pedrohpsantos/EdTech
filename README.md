@@ -2,7 +2,7 @@
   <img src="docs/assets/imgs/banner-github.png" alt="EdTech Banner" width="100%">
 </div>
 
-# EdTech — O Ecossistema Acadêmico e Repositório Científico
+# EdTech — Repositório Científico e Ecossistema Acadêmico
 
 [![Deploy MkDocs](https://github.com/pedrohpsantos/EdTech/actions/workflows/ci-docs.yml/badge.svg)](https://github.com/pedrohpsantos/EdTech/actions/workflows/ci-docs.yml)
 [![CI Pipeline](https://github.com/pedrohpsantos/EdTech/actions/workflows/ci.yml/badge.svg)](https://github.com/pedrohpsantos/EdTech/actions/workflows/ci.yml)
@@ -11,87 +11,80 @@
 ![Google Cloud](https://img.shields.io/badge/GCP-Cloud_Run_%26_SQL-4285F4?logo=googlecloud&logoColor=white)
 ![Firebase](https://img.shields.io/badge/Firebase-Hosting-FFCA28?logo=firebase&logoColor=white)
 
-*"Eu sou o Arquiteto. Criei o EdTech."* 🕴️ — Olá! Seja muito bem-vindo ao coração do nosso monorepo. Se você está aqui, é porque busca a verdade (ou pelo menos um código limpo e uma infraestrutura resiliente).
+**EdTech** é uma plataforma de software para digitalizar, armazenar e auditar publicações científicas, relatórios de pesquisa e datasets de laboratórios acadêmicos. O sistema foi projetado com foco em rastreabilidade, controle de acesso baseado em perfis e integridade de dados.
 
-**EdTech** é uma solução de software Enterprise-Grade, um monorepo meticulosamente orquestrado para digitalizar, armazenar e auditar publicações, relatórios científicos e datasets de laboratórios acadêmicos. Nós construímos sistemas não apenas para funcionar, mas para escalar com perfeição e rastreabilidade ponta a ponta.
-
-> **📖 Portal Oficial da Documentação (Docs-as-Code):** [pedrohpsantos.github.io/EdTech](https://pedrohpsantos.github.io/EdTech/)
+> **📖 Portal Oficial da Documentação:** [pedrohpsantos.github.io/EdTech](https://pedrohpsantos.github.io/EdTech/)
 
 ---
 
-## 🎯 O Grande Plano (Visão)
+## Visão Geral
 
-O objetivo principal do EdTech é erradicar o caos. Chega de pen drives perdidos, planilhas sobrescritas e e-mails como sistema de versionamento. Substituímos isso por um **Repositório Centralizado e Auditável**, onde cada byte de dado é tratado com o rigor de uma operação cirúrgica.
+O EdTech centraliza o ciclo de vida de documentos acadêmicos em um único repositório auditável, eliminando o uso de soluções ad hoc (e-mail, pen drives, planilhas compartilhadas) para gestão de arquivos científicos.
 
-- **Transparência Absoluta:** O que acontece no laboratório, fica imutavelmente logado na nuvem.
-- **Governança:** Controles estritos de acesso. O Orientador é a chave mestra.
-- **Segurança de Outro Mundo:** JWT rotativo, defesas Anti-CSRF e HTTPS isolado. Não deixe as portas abertas.
+- **Rastreabilidade:** Cada operação relevante é registrada em trilha de auditoria imutável.
+- **Governança de Acesso:** Controles de autorização por perfil — Pesquisador, Orientador e Auditor.
+- **Segurança:** Autenticação via JWT em cookie `HttpOnly`, defesas CSRF e comunicação exclusivamente via HTTPS em produção.
 
 ---
 
-## 🏗️ O Mapa do Tesouro (Estrutura do Monorepo)
+## Estrutura do Monorepo
 
-Como um bom maestro, dividi este projeto em domínios de responsabilidade estrita. Cada pasta tem uma alma e um propósito. E, claro, uma documentação com sua própria personalidade esperando por você:
-
-| Módulo | A Alma (O que faz) | Stack de Poder |
+| Módulo | Responsabilidade | Stack |
 | :--- | :--- | :--- |
-| **[🎨 Frontend (UI)](frontend/README.md)** | SPA vibrante e responsiva. *A interface é o rosto da nossa operação.* | React 19, Vite 8, Tailwind (Brincadeira, Vanilla css!) |
-| **[⚙️ Backend (API)](backend/README.md)** | A engrenagem implacável. *Sem o backend, não há sistema.* | Java 21, Spring Boot 4.1 |
-| **[☁️ Infraestrutura](infra/README.md)** | O chão de fábrica na nuvem. *Se a nuvem cair, nós a levantamos.* | GCP, Docker, Docker Compose |
-| **[📄 Documentação](docs/README.md)** | Nossa biblioteca de Alexandria. *Código não documentado não existe.* | MkDocs Material |
-| **[📊 Scripts](scripts/README.md)** | Telemetria e análises avançadas para o Orientador. | Python, Pandas |
-| **[🕵️ Testes](tests/README.md)** | O detetive da qualidade. *Nenhum bug escapa à inspeção.* | Playwright, K6 |
+| **[🎨 Frontend (UI)](frontend/README.md)** | Interface SPA responsiva para os usuários da plataforma. | React 19, Vite 8, Vanilla CSS |
+| **[⚙️ Backend (API)](backend/README.md)** | API RESTful com regras de negócio, segurança e persistência. | Java 21, Spring Boot 4.1 |
+| **[☁️ Infraestrutura](infra/README.md)** | Orquestração de containers e configuração de infraestrutura em nuvem. | GCP, Docker, Docker Compose |
+| **[📄 Documentação](docs/README.md)** | Portal de documentação técnica e arquitetural (Docs-as-Code). | MkDocs Material |
+| **[📊 Scripts](scripts/README.md)** | Scripts de telemetria e análise para o Orientador. | Python, Pandas |
+| **[🕵️ Testes](tests/README.md)** | Testes de integração, carga e qualidade da plataforma. | Playwright, K6 |
 
 ---
 
-## 🛡️ Telemetria e Status
+## Status Operacional
 
-Nós operamos na nuvem do Google (GCP), mas mantemos as luzes acesas localmente.
-
-| Status | Diretriz de Operação |
+| Status | Item |
 | :---: | :--- |
-| ✅ | Autenticação JWT e malha de CORS configurada |
-| ✅ | CI/CD Implacável (GitHub Actions + Cloud Run) |
-| ✅ | Modelagem via Flyway (Migrações como Código) |
-| ✅ | Armazenamento dinâmico (GCS em prod, Local no dev) |
-| 🚧 | Integração profunda com SAST e Dependency Check |
-| 🚧 | Painel de controle analítico do Orientador |
+| ✅ | Autenticação JWT com cookie `HttpOnly` |
+| ✅ | CI/CD via GitHub Actions e deploy no Cloud Run |
+| ✅ | Migrações de banco gerenciadas pelo Flyway |
+| ✅ | Armazenamento de arquivos no GCS (Google Cloud Storage) |
+| ✅ | Rate limiting nas rotas de autenticação (Bucket4j) |
+| ✅ | Backup automático diário do banco de dados (Cloud Scheduler) |
+| 🚧 | Painel analítico dedicado para o Orientador |
+| 🚧 | Scan de malware em uploads (ClamAV) |
 
 ---
 
-## 🚀 O Despertar (Quick Start Local)
+## Quick Start Local
 
-Para orquestrar tudo isso na sua máquina, você só precisa de **Docker**. Eu escondi as complexidades para que você só precise de *um único comando* para dar vida ao ecossistema.
-
-### A Mágica de 1 Clique
+O ambiente de desenvolvimento completo pode ser iniciado via Docker Compose, sem necessidade de instalar dependências individualmente.
 
 ```bash
-# Siga o coelho branco (Clone o repositório)
+# Clone o repositório
 git clone https://github.com/pedrohpsantos/EdTech.git
 cd EdTech
 
-# Pegue a pílula vermelha (Variáveis locais)
+# Configure as variáveis de ambiente locais
 cp infra/.env.example infra/.env
+# Edite o arquivo infra/.env com os valores adequados
 
-# Acorde o sistema
+# Suba os serviços
 cd infra
 docker compose up --build -d
 ```
 
-- **Frontend (A Matrix visual):** `http://localhost:5173`
-- **Backend (O Núcleo):** `http://localhost:8080`
+- **Frontend:** `http://localhost:5173`
+- **Backend:** `http://localhost:8080`
 
 ---
 
-## 🤝 Comunidade e As Leis Universais
+## Contribuição e Governança
 
-Nós seguimos regras. A anarquia não escala. Por isso, ao se juntar ao projeto, certifique-se de conhecer nossos pilares:
+Consulte os documentos abaixo antes de contribuir com o projeto:
 
-- 📖 **[Como Contribuir (CONTRIBUTING)](.github/CONTRIBUTING.md):** O manual do bom cidadão EdTech.
-- 📜 **[Código de Conduta](.github/CODE_OF_CONDUCT.md):** Respeito mútuo não é opcional.
-- 🔒 **[Segurança (SECURITY)](.github/SECURITY.md):** Como reportar uma vulnerabilidade (antes que ela quebre tudo).
-- ⚖️ **[Licença (LICENSE)](LICENSE):** MIT. Livre, mas com responsabilidade.
+- 📖 **[Como Contribuir](.github/CONTRIBUTING.md)**
+- 📜 **[Código de Conduta](.github/CODE_OF_CONDUCT.md)**
+- 🔒 **[Política de Segurança](.github/SECURITY.md)**
+- ⚖️ **[Licença](LICENSE)** — MIT
 
-E sobre commits... use **Conventional Commits**. Mantenha o histórico limpo, ou os scripts de CI irão te julgar silenciosamente.
-
-> *Dica: Se você não sabe o que fazer a seguir, olhe a aba de Issues. Sempre há uma anomalia precisando de um desenvolvedor habilidoso.*
+Todos os commits devem seguir o padrão **Conventional Commits**. PRs sem testes associados serão rejeitados pelo CI.

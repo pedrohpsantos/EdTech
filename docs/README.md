@@ -1,49 +1,41 @@
-# 📚 EdTech Docs — Os Manuais e Crônicas
+# 📄 EdTech Documentação
 
 ![MkDocs](https://img.shields.io/badge/MkDocs-Material-526CFE?style=for-the-badge&logo=markdown&logoColor=white)
 ![Docs as Code](https://img.shields.io/badge/Docs-as--Code-ffb142?style=for-the-badge)
-![Knowledge Base](https://img.shields.io/badge/Knowledge-Base-purple?style=for-the-badge)
 
-> *"Achegue-se, jovem aprendiz. Sou o Bibliotecário deste ecossistema. Código que funciona hoje, será o legado enigmático de amanhã se não for documentado. Aqui nós preservamos o conhecimento: desde mapas estruturais arquitetônicos (C4 Model) até os registros de decisões imutáveis (ADRs). Nós tratamos a documentação com o mesmo rigor de um código em produção."* 🪶
+Portal de documentação técnica do EdTech, construído com a filosofia **Docs-as-Code**: a documentação vive junto ao código, é versionada no Git, revisada em PRs e publicada automaticamente via GitHub Actions.
 
-Bem-vindo ao acervo de sabedoria do EdTech. Utilizamos a filosofia **Docs-as-Code**, o que significa que nossa documentação oficial vive e evolui junto com o código, versionada no Git, revisada em PRs e construída estaticamente através do **MkDocs**.
+**Portal publicado:** [pedrohpsantos.github.io/EdTech](https://pedrohpsantos.github.io/EdTech/)
 
-## 📖 O Catálogo da Biblioteca
+## Estrutura
 
-Nesta pasta, você encontrará relíquias valiosas:
-
-- **`/docs` (Diretório Raiz do MkDocs):** Os arquivos Markdown que compõem o portal oficial, organizados de forma semântica.
-- **`/docs/adrs` (Architecture Decision Records):** O diário histórico das grandes decisões. Por que escolhemos PostgreSQL em vez de Mongo? Por que Java em vez de Go? A resposta mora lá.
-- **`/docs/assets`:** Imagens, diagramas gerados pelo PlantUML/Mermaid, logotipos e toda mídia visual que ajuda a contar nossas histórias.
-- **`mkdocs.yml` (na raiz do projeto):** O índice mestre que instrui o gerador de sites sobre como construir nossa biblioteca.
+| Diretório | Conteúdo |
+| :--- | :--- |
+| `/docs/arquitetura` | Diagramas C4, decisões arquiteturais (ADRs) e design técnico |
+| `/docs/desenvolvimento` | Guias de contribuição, qualidade e testes |
+| `/docs/produto` | Requisitos, histórias de usuário e critérios de aceitação |
+| `/docs/gestao` | Planejamento de sprints e gestão do projeto |
+| `/docs/assets` | Imagens, diagramas e recursos visuais |
 
 ---
 
-## 🏗️ Lendo e Escrevendo Novos Capítulos
-
-Qualquer pessoa pode (e deve!) contribuir para o conhecimento. Se você adicionou uma nova rota na API, ou um novo hook no Frontend, escreva sobre isso.
-
-Para escrever e visualizar a documentação como um portal web localmente na sua máquina, utilize o script do Python (`uv` / `pip`):
+## Visualização Local
 
 ```bash
-# Navegue até a raiz do projeto (fora desta pasta)
-cd ..
+# A partir da raiz do projeto
+pip install mkdocs-material mkdocs-awesome-pages-plugin
 
-# Caso não tenha o ambiente Python configurado, instale as dependências:
-pip install -r requirements.txt # Ou confie nos scripts de automação se existirem.
-
-# Inicie o servidor do MkDocs
+# Inicie o servidor local com hot reload
 mkdocs serve
 ```
 
-Acesse `http://localhost:8000` no seu navegador. O servidor será atualizado automaticamente sempre que você salvar um arquivo Markdown (Hot Reloading).
+Acesse `http://localhost:8000`. O portal é atualizado automaticamente ao salvar qualquer arquivo Markdown.
 
 ---
 
-## 📜 Os 3 Mandamentos do Cronista
+## Diretrizes para Contribuição
 
-1. **Seja Claro e Atemporal:** Evite gírias ou informações que envelhecem rápido demais ("Na semana passada corrigimos um bug..."). Escreva pensando no desenvolvedor que lerá isso daqui a 3 anos.
-2. **Desenhe Diagramas:** Um diagrama Mermaid.js ou PlantUML vale mais que mil palavras de explicação de endpoints.
-3. **Use Alertas (Admonitions):** Utilize as caixas de dicas `!!! tip` ou `!!! warning` do MkDocs Material para dar destaque a regras vitais.
-
-> *Lembre-se: O código diz o 'COMO'. A documentação diz o 'POR QUÊ'. Vá e escreva a nossa história.*
+1. **Seja claro e objetivo:** Evite informações efêmeras (ex: "recentemente corrigimos..."). Escreva pensando no leitor de longo prazo.
+2. **Use diagramas:** Diagramas Mermaid são preferíveis a longas descrições textuais de fluxos e arquiteturas.
+3. **Use admonitions:** Utilize as caixas `!!! tip`, `!!! warning` e `!!! note` do MkDocs Material para destacar informações importantes.
+4. **ADRs para decisões relevantes:** Toda decisão arquitetural significativa deve ser registrada como um novo ADR em `/docs/arquitetura/decisoes_adrs/`.

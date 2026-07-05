@@ -1,56 +1,62 @@
-# ☁️ EdTech Infra — O Chão de Fábrica
+# ☁️ EdTech Infraestrutura
 
 ![Docker](https://img.shields.io/badge/Docker-24.0-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 ![Google Cloud](https://img.shields.io/badge/GCP-Cloud_Run-4285F4?style=for-the-badge&logo=googlecloud&logoColor=white)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Data-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
-![Uptime](https://img.shields.io/badge/Uptime-99.99%25-brightgreen?style=for-the-badge)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
 
-> *"Silêncio no terminal. Eu sou o Mestre das Nuvens. Enquanto o frontend desenha botões bonitos e o backend discute sobre injeção de dependências, sou eu quem garante que a infraestrutura não pegue fogo de madrugada. Se os containers sobem, se o banco persiste e se a rede respira... é graças a este diretório."* 🌩️
+Este diretório (`/infra`) contém a configuração de infraestrutura do EdTech como código (IaC): orquestração de containers para desenvolvimento local e definições de deploy para o ambiente de produção no GCP.
 
-Bem-vindo ao coração operacional do EdTech. Este diretório (`/infra`) contém todas as plantas arquitetônicas (Infrastructure as Code) para orquestrar os serviços. Nós não configuramos servidores clicando em botões em painéis web; nós escrevemos código, damos `up` e deixamos o Docker fazer a mágica pesada.
+## Conteúdo do Diretório
 
-## 📦 O Que Vive Aqui?
-
-- **`docker-compose.yml`**: A nossa "partitura". Ele sabe como construir o Backend, servir o Frontend via Nginx, e levantar o PostgreSQL sem que você precise instalar nada além do Docker.
-- **`.env.example`**: O esqueleto dos segredos. (Lembre-se: *NUNCA* commite o `.env` verdadeiro ou eu pessoalmente cancelarei seus acessos de PR).
-- **`init.sql`** (Se aplicável): Os scripts de inicialização que ensinam o banco de dados recém-criado quem ele é e a qual mestre ele serve.
-
----
-
-## 🛠️ O Ritual de Inicialização (Local)
-
-Para que toda a aplicação ganhe vida na sua máquina de desenvolvimento de forma isolada, siga as instruções precisas:
-
-1. **Copie o mapa dos segredos:**
-   ```bash
-   cp .env.example .env
-   # Edite o .env se precisar ajustar senhas ou apontar para um provedor de storage em nuvem.
-   ```
-
-2. **Acenda as Fornalhas:**
-   ```bash
-   docker compose up --build -d
-   ```
-   *O parâmetro `-d` (detached) garante que o seu terminal continue livre para outras tarefas, enquanto a infraestrutura roda silenciosamente no fundo.*
-
-3. **Verifique os Motores (Logs):**
-   ```bash
-   docker compose logs -f backend
-   # Se vir "Started EdTechApplication", você teve sucesso.
-   ```
-
-4. **Desligando o Reator:**
-   ```bash
-   docker compose down
-   # Se quiser destruir tudo (inclusive o volume de dados), adicione -v. Use com cautela!
-   ```
+| Arquivo / Pasta | Descrição |
+| :--- | :--- |
+| `docker-compose.yml` | Orquestra os serviços de Backend, Frontend e PostgreSQL para o ambiente local |
+| `.env.example` | Template das variáveis de ambiente necessárias (nunca commitar o `.env` real) |
+| `cloudbuild.yaml` | Pipeline de build e deploy para o Google Cloud Build |
+| `setup_backup.sh` | Script de provisionamento do backup automático diário no GCS via Cloud Scheduler |
+| `database/schema.sql` | Schema SQL de referência do banco de dados |
 
 ---
 
-## ☁️ A Fronteira Final (Deploy e Produção)
+## Ambiente Local (Docker Compose)
 
-No mundo real (Produção), nós não rodamos via `docker compose` numa máquina virtual solta. Nós exportamos essas imagens para o **Google Cloud Registry** e as operamos via **Cloud Run** de forma escalável e Serverless. 
+```bash
+# 1. Copie e configure as variáveis de ambiente
+cp .env.example .env
+# Edite o arquivo .env com as credenciais locais
 
-As variáveis de ambiente de produção vivem trancafiadas a sete chaves no *Google Secret Manager*. Se precisar alterar alguma rota de rede ou variável crítica de prod, certifique-se de falar comigo (ou ler os manuais do Terraform/GCP antes).
+# 2. Suba todos os serviços em background
+docker compose up --build -d
 
-> **Aviso do Operador Sênior:** *A infraestrutura é resiliente, mas não à prova de desenvolvedores descuidados. Se um container seu crashar em produção por falta de memória (OOMKilled), eu estarei de olho nos logs.* 👀
+# 3. Acompanhe os logs do backend
+docker compose logs -f backend
+# Aguarde a mensagem "Started EdTechApplication" para confirmar que o serviço está pronto
+
+# 4. Para encerrar os serviços
+docker compose down
+
+# Para remover também os volumes de dados (banco de dados local)
+docker compose down -v
+```
+
+---
+
+## Produção (GCP)
+
+Em produção, as imagens Docker são publicadas no **Artifact Registry** do GCP e operadas via **Cloud Run** (Serverless, auto-scaling). O banco de dados é gerenciado pelo **Cloud SQL** (PostgreSQL 15).
+
+Variáveis de ambiente sensíveis (credenciais de banco, chaves JWT) são armazenadas no **Secret Manager** e injetadas diretamente nos serviços do Cloud Run, sem exposição em arquivos de configuração.
+
+O processo de deploy é automatizado pelo `cloudbuild.yaml` e disparado via push na branch `main`.
+
+---
+
+## Backup do Banco de Dados
+
+O backup automático é provisionado pelo script `setup_backup.sh`. Executar uma única vez com um usuário que tenha permissão `roles/owner` ou `roles/iam.securityAdmin`:
+
+```bash
+bash infra/setup_backup.sh
+```
+
+Detalhes da política de backup estão documentados no [ADR-0013](../docs/arquitetura/decisoes_adrs/0013-backup-automatico.md).
