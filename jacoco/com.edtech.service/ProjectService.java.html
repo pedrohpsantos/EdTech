@@ -44,7 +44,7 @@ public class ProjectService {
 <span class="fc" id="L44">    User advisor =</span>
         userRepository
 <span class="fc" id="L46">            .findById(advisorId)</span>
-<span class="pc" id="L47">            .orElseThrow(() -&gt; new RuntimeException(&quot;User not found&quot;));</span>
+<span class="fc" id="L47">            .orElseThrow(() -&gt; new RuntimeException(&quot;User not found&quot;));</span>
 
 <span class="fc" id="L49">    Project project = new Project();</span>
 <span class="fc" id="L50">    project.setTitle(request.getTitle());</span>
@@ -75,27 +75,27 @@ public class ProjectService {
 <span class="fc" id="L75">    Project project =</span>
         projectRepository
 <span class="fc" id="L77">            .findById(projectId)</span>
-<span class="pc" id="L78">            .orElseThrow(() -&gt; new RuntimeException(&quot;Project not found&quot;));</span>
+<span class="fc" id="L78">            .orElseThrow(() -&gt; new RuntimeException(&quot;Project not found&quot;));</span>
 
     UUID targetUserId =
 <span class="pc bpc" id="L81" title="2 of 4 branches missed.">        (dto != null &amp;&amp; dto.getUserId() != null) ? dto.getUserId() : authenticatedUser.getId();</span>
 
     // Se o usuário que está tentando associar alguém for diferente do alvo, ele deve ser ADVISOR do
     // projeto.
-<span class="pc bpc" id="L85" title="1 of 2 branches missed.">    if (!targetUserId.equals(authenticatedUser.getId())) {</span>
-<span class="nc" id="L86">      ProjectMember advisorMember =</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">    if (!targetUserId.equals(authenticatedUser.getId())) {</span>
+<span class="fc" id="L86">      ProjectMember advisorMember =</span>
           projectMemberRepository
-<span class="nc" id="L88">              .findByProjectIdAndUserId(projectId, authenticatedUser.getId())</span>
-<span class="nc" id="L89">              .orElseThrow(</span>
-<span class="nc" id="L90">                  () -&gt; new RuntimeException(&quot;User is not part of the project to add members&quot;));</span>
+<span class="fc" id="L88">              .findByProjectIdAndUserId(projectId, authenticatedUser.getId())</span>
+<span class="fc" id="L89">              .orElseThrow(</span>
+<span class="fc" id="L90">                  () -&gt; new RuntimeException(&quot;User is not part of the project to add members&quot;));</span>
 
-<span class="nc bnc" id="L92" title="All 2 branches missed.">      if (advisorMember.getRole() != ProjectRole.ADVISOR) {</span>
-<span class="nc" id="L93">        throw new RuntimeException(&quot;Only ADVISORS can add other members&quot;);</span>
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">      if (advisorMember.getRole() != ProjectRole.ADVISOR) {</span>
+<span class="fc" id="L93">        throw new RuntimeException(&quot;Only ADVISORS can add other members&quot;);</span>
       }
     }
 
-<span class="pc bpc" id="L97" title="1 of 2 branches missed.">    if (projectMemberRepository.findByProjectIdAndUserId(projectId, targetUserId).isPresent()) {</span>
-<span class="nc" id="L98">      throw new RuntimeException(&quot;User is already a member of this project&quot;);</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">    if (projectMemberRepository.findByProjectIdAndUserId(projectId, targetUserId).isPresent()) {</span>
+<span class="fc" id="L98">      throw new RuntimeException(&quot;User is already a member of this project&quot;);</span>
     }
 
 <span class="fc" id="L101">    User newUser =</span>
