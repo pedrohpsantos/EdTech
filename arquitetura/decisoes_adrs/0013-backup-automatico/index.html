@@ -26,7 +26,7 @@
     
     
       
-        <title>ADR-0013: Backup Automático via Cloud SQL Export + Cloud Scheduler - EdTech — Repositório Acadêmico</title>
+        <title>ADR 0013: Backup Automático via Cloud SQL Export e Cloud Scheduler - EdTech — Repositório Acadêmico</title>
       
     
     
@@ -72,7 +72,7 @@
     
   
 <meta property="og:type" content="website">
-<meta property="og:title" content="ADR-0013: Backup Automático via Cloud SQL Export + Cloud Scheduler - EdTech — Repositório Acadêmico">
+<meta property="og:title" content="ADR 0013: Backup Automático via Cloud SQL Export e Cloud Scheduler - EdTech — Repositório Acadêmico">
 <meta property="og:description" content="Documentação oficial do projeto EdTech — Plataforma de centralização, gerenciamento e auditoria de publicações acadêmicas. AILAB Makers — UnB FCTE.">
 <meta property="og:image" content="https://pedrohpsantos.github.io/EdTech/assets/images/social/arquitetura/decisoes_adrs/0013-backup-automatico.png">
 <meta property="og:image:type" content="image/png">
@@ -80,7 +80,7 @@
 <meta property="og:image:height" content="630">
 <meta property="og:url" content="https://pedrohpsantos.github.io/EdTech/arquitetura/decisoes_adrs/0013-backup-automatico/">
 <meta property="twitter:card" content="summary_large_image">
-<meta property="twitter:title" content="ADR-0013: Backup Automático via Cloud SQL Export + Cloud Scheduler - EdTech — Repositório Acadêmico">
+<meta property="twitter:title" content="ADR 0013: Backup Automático via Cloud SQL Export e Cloud Scheduler - EdTech — Repositório Acadêmico">
 <meta property="twitter:description" content="Documentação oficial do projeto EdTech — Plataforma de centralização, gerenciamento e auditoria de publicações acadêmicas. AILAB Makers — UnB FCTE.">
 <meta property="twitter:image" content="https://pedrohpsantos.github.io/EdTech/assets/images/social/arquitetura/decisoes_adrs/0013-backup-automatico.png">
 <link href="../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
@@ -112,7 +112,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#adr-0013-estrategia-de-backup-automatico-do-banco-de-dados" class="md-skip">
+        <a href="#adr-0013-backup-automatico-via-cloud-sql-export-e-cloud-scheduler" class="md-skip">
           Pular para conteúdo
         </a>
       
@@ -147,7 +147,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              ADR-0013: Backup Automático via Cloud SQL Export + Cloud Scheduler
+              ADR 0013: Backup Automático via Cloud SQL Export e Cloud Scheduler
             
           </span>
         </div>
@@ -1784,7 +1784,7 @@
   <span class="md-ellipsis">
     
   
-    ADR-0013: Backup Automático via Cloud SQL Export + Cloud Scheduler
+    ADR 0013: Backup Automático via Cloud SQL Export e Cloud Scheduler
   
 
     
@@ -1802,7 +1802,7 @@
   <span class="md-ellipsis">
     
   
-    ADR-0013: Backup Automático via Cloud SQL Export + Cloud Scheduler
+    ADR 0013: Backup Automático via Cloud SQL Export e Cloud Scheduler
   
 
     
@@ -1828,6 +1828,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
+  <a href="#status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Status
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#contexto" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1850,22 +1861,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#alternativas-consideradas" class="md-nav__link">
+  <a href="#consequencias" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Alternativas Consideradas
+        Consequências
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Alternativas Consideradas">
+    <nav class="md-nav" aria-label="Consequências">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#opcao-b-github-actions-com-pg_dump" class="md-nav__link">
+  <a href="#positivas" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Opção B: GitHub Actions com pg_dump
+        Positivas
       
     </span>
   </a>
@@ -1873,10 +1884,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#opcao-c-replica-de-leitura-snapshot" class="md-nav__link">
+  <a href="#negativas-riscos" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Opção C: Réplica de Leitura + Snapshot
+        Negativas / Riscos
       
     </span>
   </a>
@@ -1889,21 +1900,49 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#consequencias" class="md-nav__link">
+  <a href="#alternativas-consideradas" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Consequências
+        Alternativas Consideradas
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Alternativas Consideradas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#github-actions-com-pg_dump" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GitHub Actions com pg_dump
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#politica-de-backup" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#replica-de-leitura-com-snapshot-periodico" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Política de Backup
+        Replica de Leitura com Snapshot Periódico
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#historico-de-versoes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Histórico de Versões
       
     </span>
   </a>
@@ -3484,6 +3523,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
+  <a href="#status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Status
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#contexto" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3506,22 +3556,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#alternativas-consideradas" class="md-nav__link">
+  <a href="#consequencias" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Alternativas Consideradas
+        Consequências
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Alternativas Consideradas">
+    <nav class="md-nav" aria-label="Consequências">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#opcao-b-github-actions-com-pg_dump" class="md-nav__link">
+  <a href="#positivas" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Opção B: GitHub Actions com pg_dump
+        Positivas
       
     </span>
   </a>
@@ -3529,10 +3579,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#opcao-c-replica-de-leitura-snapshot" class="md-nav__link">
+  <a href="#negativas-riscos" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Opção C: Réplica de Leitura + Snapshot
+        Negativas / Riscos
       
     </span>
   </a>
@@ -3545,21 +3595,49 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#consequencias" class="md-nav__link">
+  <a href="#alternativas-consideradas" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Consequências
+        Alternativas Consideradas
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Alternativas Consideradas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#github-actions-com-pg_dump" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GitHub Actions com pg_dump
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#politica-de-backup" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#replica-de-leitura-com-snapshot-periodico" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Política de Backup
+        Replica de Leitura com Snapshot Periódico
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#historico-de-versoes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Histórico de Versões
       
     </span>
   </a>
@@ -3591,104 +3669,57 @@
   
 
 
-<h1 id="adr-0013-estrategia-de-backup-automatico-do-banco-de-dados"><abbr title="Architecture Decision Record — Registro de Decisão Arquitetural">ADR</abbr>-0013: Estratégia de Backup Automático do Banco de Dados<a class="headerlink" href="#adr-0013-estrategia-de-backup-automatico-do-banco-de-dados" title="Permanent link">¶</a></h1>
-<table>
-<thead>
-<tr>
-<th style="text-align: center;">Campo</th>
-<th style="text-align: left;">Valor</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><strong>Data</strong></td>
-<td style="text-align: left;">05/07/2026</td>
-</tr>
-<tr>
-<td style="text-align: center;"><strong>Status</strong></td>
-<td style="text-align: left;">✅ Aceito</td>
-</tr>
-<tr>
-<td style="text-align: center;"><strong>Autor</strong></td>
-<td style="text-align: left;">Pedro Henrique P. Santos</td>
-</tr>
-</tbody>
-</table>
-<hr>
+<h1 id="adr-0013-backup-automatico-via-cloud-sql-export-e-cloud-scheduler"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17 21-2.75-3 1.16-1.16L17 18.43l3.59-3.59 1.16 1.41M12.8 21H5a2 2 0 0 1-2-2V5c0-1.11.89-2 2-2h14a2 2 0 0 1 2 2v7.8c-.88-.51-1.91-.8-3-.8l-1 .08V11H7v2h7.69A5.98 5.98 0 0 0 12 18c0 1.09.29 2.12.8 3m-.8-6H7v2h5m5-10H7v2h10"></path></svg></span> <abbr title="Architecture Decision Record — Registro de Decisão Arquitetural">ADR</abbr> 0013: Backup Automático via Cloud <abbr title="Structured Query Language">SQL</abbr> Export e Cloud Scheduler<a class="headerlink" href="#adr-0013-backup-automatico-via-cloud-sql-export-e-cloud-scheduler" title="Permanent link">¶</a></h1>
+<h2 id="status">Status<a class="headerlink" href="#status" title="Permanent link">¶</a></h2>
+<p>Aceito</p>
 <h2 id="contexto">Contexto<a class="headerlink" href="#contexto" title="Permanent link">¶</a></h2>
-<p>O EdTech persiste dados críticos de pesquisadores, projetos e documentos acadêmicos em um banco de dados PostgreSQL hospedado no <strong>Cloud <abbr title="Structured Query Language">SQL</abbr></strong> (<abbr title="Google Cloud Platform">GCP</abbr>). A ausência de uma política formal de backup expõe o sistema a riscos de perda de dados por falha operacional, erro humano ou incidente de infraestrutura.</p>
-<p>Precisamos de uma solução de backup <strong>automática, auditável e de baixa manutenção</strong>.</p>
-<hr>
+<p>O banco de dados PostgreSQL do EdTech persiste dados críticos de pesquisadores, projetos e documentos acadêmicos hospedado no Cloud <abbr title="Structured Query Language">SQL</abbr> (<abbr title="Google Cloud Platform">GCP</abbr>). A ausência de uma política formal de backup expõe o sistema a riscos de perda de dados por falha operacional, erro humano ou incidente de infraestrutura. Faz-se necessária uma solução de backup automática, auditável e de baixa manutenção que esteja alinhada com a infraestrutura <abbr title="Google Cloud Platform">GCP</abbr> já adotada pelo projeto (<abbr title="Architecture Decision Record — Registro de Decisão Arquitetural">ADR</abbr> 0003).</p>
 <h2 id="decisao">Decisão<a class="headerlink" href="#decisao" title="Permanent link">¶</a></h2>
 <p>Adotamos a estratégia de <strong>Cloud <abbr title="Structured Query Language">SQL</abbr> Export + Cloud Scheduler</strong>, inteiramente nativa do <abbr title="Google Cloud Platform">GCP</abbr>:</p>
-<ol>
-<li>Um <strong>Cloud Scheduler</strong> job dispara diariamente às <strong>02:00 BRT</strong> (horário de menor uso).</li>
-<li>O Scheduler chama a <strong>Cloud <abbr title="Structured Query Language">SQL</abbr> Admin <abbr title="Application Programming Interface">API</abbr></strong> para exportar o banco no formato <code>.sql.gz</code>.</li>
-<li>O dump é salvo em um <strong>bucket <abbr title="Google Cloud Storage">GCS</abbr> dedicado</strong> (<code>edtech-backups-&lt;PROJECT_ID&gt;</code>), separado do bucket de arquivos de usuário.</li>
-<li>Uma <strong>lifecycle policy</strong> no bucket deleta automaticamente backups com mais de <strong>30 dias</strong>.</li>
-</ol>
-<p>Todo o provisionamento é realizado pelo script <code>infra/setup_backup.sh</code>, que pode ser executado uma única vez pelo time de infraestrutura.</p>
-<hr>
-<h2 id="alternativas-consideradas">Alternativas Consideradas<a class="headerlink" href="#alternativas-consideradas" title="Permanent link">¶</a></h2>
-<h3 id="opcao-b-github-actions-com-pg_dump">Opção B: GitHub Actions com <code>pg_dump</code><a class="headerlink" href="#opcao-b-github-actions-com-pg_dump" title="Permanent link">¶</a></h3>
-<p>Um workflow <code>.yml</code> com <code>schedule: cron</code> rodaria <code>pg_dump</code> e enviaria o resultado ao <abbr title="Google Cloud Storage">GCS</abbr>.</p>
-<p><strong>Descartada porque:</strong>
-- Exige que o Cloud <abbr title="Structured Query Language">SQL</abbr> fique acessível externamente (<abbr title="Internet Protocol — Protocolo de Internet">IP</abbr> público), aumentando a superfície de ataque.
-- O banco em produção está atrás do Cloud <abbr title="Structured Query Language">SQL</abbr> Auth Proxy, o que tornaria essa abordagem complexa de configurar com segurança.
-- O estado do agendamento fica fora do <abbr title="Google Cloud Platform">GCP</abbr>, tornando o monitoramento fragmentado.</p>
-<h3 id="opcao-c-replica-de-leitura-snapshot">Opção C: Réplica de Leitura + Snapshot<a class="headerlink" href="#opcao-c-replica-de-leitura-snapshot" title="Permanent link">¶</a></h3>
-<p>Criar uma réplica de leitura do Cloud <abbr title="Structured Query Language">SQL</abbr> e exportar os snapshots periodicamente.</p>
-<p><strong>Descartada porque:</strong>
-- Gera custo adicional de instância para um projeto acadêmico.
-- Complexidade de manutenção desproporcional à escala atual.</p>
-<hr>
+<ul>
+<li>Um job no <strong>Cloud Scheduler</strong> dispara diariamente às 02:00 BRT (05:00 UTC).</li>
+<li>O Scheduler invoca a <strong>Cloud <abbr title="Structured Query Language">SQL</abbr> Admin <abbr title="Application Programming Interface">API</abbr></strong>, que realiza a exportação do banco no formato <code>.sql.gz</code>.</li>
+<li>O dump comprimido é salvo em um <strong>bucket <abbr title="Google Cloud Storage">GCS</abbr> dedicado</strong> (<code>edtech-backups-&lt;PROJECT_ID&gt;</code>), separado do bucket de arquivos de usuário.</li>
+<li>Uma <strong>lifecycle policy</strong> no bucket deleta automaticamente backups com mais de 30 dias.</li>
+</ul>
+<p>Todo o provisionamento é realizado pelo script <code>infra/setup_backup.sh</code>, executado uma única vez por um usuário com as permissões IAM adequadas.</p>
 <h2 id="consequencias">Consequências<a class="headerlink" href="#consequencias" title="Permanent link">¶</a></h2>
-<p><strong>Positivas:</strong></p>
+<h3 id="positivas">Positivas<a class="headerlink" href="#positivas" title="Permanent link">¶</a></h3>
 <ul>
-<li>✅ <strong>Zero code no backend:</strong> Nenhuma mudança no código da aplicação.</li>
-<li>✅ <strong>Gerenciado pelo <abbr title="Google Cloud Platform">GCP</abbr>:</strong> Monitoramento integrado ao Cloud Console e Cloud Logging.</li>
-<li>✅ <strong>Retenção automática:</strong> Backups antigos são deletados sem intervenção humana.</li>
-<li>✅ <strong>Auditável:</strong> Cada export gera um log no Cloud Logging com status de sucesso/falha.</li>
-<li>✅ <strong>Verificável pelo Orientador:</strong> Script <code>uv run scripts/backup_status.py</code> lista os backups e alerta se o mais recente for muito antigo.</li>
+<li><strong>Sem código no backend:</strong> Nenhuma alteração na aplicação é necessária; a solução é inteiramente de infraestrutura.</li>
+<li><strong>Gerenciado pelo <abbr title="Google Cloud Platform">GCP</abbr>:</strong> Monitoramento integrado ao Cloud Console e Cloud Logging, com registro de status de cada execução.</li>
+<li><strong>Retenção automática:</strong> O lifecycle policy do <abbr title="Google Cloud Storage">GCS</abbr> elimina backups antigos sem intervenção manual.</li>
+<li><strong>Verificável:</strong> O script <code>uv run scripts/backup_status.py</code> permite que o Orientador consulte os backups mais recentes e receba alerta caso o backup mais recente tenha mais de 25 horas.</li>
 </ul>
-<p><strong>Negativas / Riscos:</strong></p>
+<h3 id="negativas-riscos">Negativas / Riscos<a class="headerlink" href="#negativas-riscos" title="Permanent link">¶</a></h3>
 <ul>
-<li>⚠️ <strong>Configuração IAM manual:</strong> Requer execução do <code>setup_backup.sh</code> por alguém com permissão de <code>roles/owner</code> ou <code>roles/iam.securityAdmin</code> no projeto.</li>
-<li>⚠️ <strong>Custo de storage:</strong> Mínimo para dumps <abbr title="Structured Query Language">SQL</abbr>, mas existente. Estimativa: &lt; R$ 5,00/mês para o volume atual.</li>
+<li><strong>Configuração IAM manual:</strong> A execução do <code>setup_backup.sh</code> requer um usuário com <code>roles/owner</code> ou <code>roles/iam.securityAdmin</code>, o que não pode ser automatizado sem credenciais elevadas.</li>
+<li><strong>Custo de armazenamento:</strong> O custo de storage para dumps <abbr title="Structured Query Language">SQL</abbr> comprimidos é mínimo na escala atual, mas existente.</li>
 </ul>
+<h2 id="alternativas-consideradas">Alternativas Consideradas<a class="headerlink" href="#alternativas-consideradas" title="Permanent link">¶</a></h2>
+<h3 id="github-actions-com-pg_dump">GitHub Actions com <code>pg_dump</code><a class="headerlink" href="#github-actions-com-pg_dump" title="Permanent link">¶</a></h3>
+<p>Um workflow com <code>schedule: cron</code> rodaria <code>pg_dump</code> e enviaria o resultado ao <abbr title="Google Cloud Storage">GCS</abbr> diretamente pelo CI.</p>
+<p>Descartada porque exigiria expor o Cloud <abbr title="Structured Query Language">SQL</abbr> com <abbr title="Internet Protocol — Protocolo de Internet">IP</abbr> público para que o runner do GitHub Actions conseguisse se conectar, aumentando a superfície de ataque. A abordagem também fragmenta o monitoramento do agendamento fora do <abbr title="Google Cloud Platform">GCP</abbr>.</p>
+<h3 id="replica-de-leitura-com-snapshot-periodico">Replica de Leitura com Snapshot Periódico<a class="headerlink" href="#replica-de-leitura-com-snapshot-periodico" title="Permanent link">¶</a></h3>
+<p>Provisionar uma réplica de leitura do Cloud <abbr title="Structured Query Language">SQL</abbr> e gerar snapshots com frequência controlada.</p>
+<p>Descartada pelo custo adicional de instância e pela complexidade de manutenção desproporcional à escala atual do projeto.</p>
 <hr>
-<h2 id="politica-de-backup">Política de Backup<a class="headerlink" href="#politica-de-backup" title="Permanent link">¶</a></h2>
+<h2 id="historico-de-versoes">Histórico de Versões<a class="headerlink" href="#historico-de-versoes" title="Permanent link">¶</a></h2>
 <table>
 <thead>
 <tr>
-<th style="text-align: left;">Atributo</th>
-<th style="text-align: left;">Valor</th>
+<th style="text-align: center;">Versão</th>
+<th style="text-align: center;">Data</th>
+<th style="text-align: left;">Descrição</th>
+<th style="text-align: left;">Autor</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;">Frequência</td>
-<td style="text-align: left;">Diária</td>
-</tr>
-<tr>
-<td style="text-align: left;">Horário</td>
-<td style="text-align: left;">02:00 BRT (05:00 UTC)</td>
-</tr>
-<tr>
-<td style="text-align: left;">Destino</td>
-<td style="text-align: left;"><code>gs://edtech-backups-&lt;PROJECT_ID&gt;/</code></td>
-</tr>
-<tr>
-<td style="text-align: left;">Formato</td>
-<td style="text-align: left;"><code>.sql.gz</code> (dump <abbr title="Structured Query Language">SQL</abbr> comprimido)</td>
-</tr>
-<tr>
-<td style="text-align: left;">Retenção</td>
-<td style="text-align: left;">30 dias</td>
-</tr>
-<tr>
-<td style="text-align: left;">Alertas</td>
-<td style="text-align: left;"><code>uv run scripts/backup_status.py</code> (verifica se backup &lt; 25h)</td>
+<td style="text-align: center;"><code>1.0</code></td>
+<td style="text-align: center;">05/07/2026</td>
+<td style="text-align: left;">Criação do documento</td>
+<td style="text-align: left;">Pedro Henrique P. Santos</td>
 </tr>
 </tbody>
 </table>
@@ -3712,7 +3743,7 @@
     <span class="md-icon" title="Última atualização">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="5 de julho de 2026 23:37:23 UTC">5 de julho de 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="5 de julho de 2026 23:52:28 UTC">5 de julho de 2026</span>
   </span>
 
     
