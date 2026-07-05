@@ -83,8 +83,12 @@ steps:
 
 availableSecrets:
   secretManager:
-  - versionName: projects/$PROJECT_ID/secrets/FIREBASE_SERVICE_ACCOUNT_EDTECH/versions/latest
+  - versionName: projects/$PROJECT_ID/secrets/${_FIREBASE_SA_SECRET}/versions/latest
     env: 'FIREBASE_TOKEN'
+
+substitutions:
+  _FIREBASE_SA_SECRET: 'FIREBASE_SERVICE_ACCOUNT_EDTECH'
 
 options:
   logging: CLOUD_LOGGING_ONLY
+
