@@ -35,13 +35,21 @@
    HEADER
    ============================================================ */
 .md-header {
-  background: var(--hero-gradient);
-  box-shadow: none;
+  background: linear-gradient(270deg, #4A148C, #00B0FF, #FF007F, #7C4DFF, #4A148C);
+  background-size: 400% 400%;
+  animation: rgbHeader 15s ease infinite;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   backdrop-filter: none;
 }
 
+@keyframes rgbHeader {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
 .md-header[data-md-state="shadow"] {
-  box-shadow: none;
+  box-shadow: 0 5px 25px rgba(0,0,0,0.4);
 }
 
 /* Fix mobile search Z-index overlay */
@@ -55,7 +63,9 @@
    NAVIGATION TABS — MATCH HEADER TONE
    ============================================================ */
 .md-tabs {
-  background: var(--hero-gradient);
+  background: linear-gradient(270deg, #4A148C, #00B0FF, #FF007F, #7C4DFF, #4A148C);
+  background-size: 400% 400%;
+  animation: rgbHeader 15s ease infinite;
   border-top: 0;
   border-bottom: 0;
   box-shadow: none;
