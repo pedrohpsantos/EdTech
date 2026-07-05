@@ -1,6 +1,7 @@
 title: 'Arquitetura de Software'
 nav:
   - design_tecnico.md
+  - design_patterns.md
   - diagramas
   - decisoes_adrs
   - nuvem_e_seguranca

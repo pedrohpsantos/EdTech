@@ -12,6 +12,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.edtech.model.User;
 import com.edtech.repository.UserRepository;
 import com.edtech.service.JwtService;
+import com.edtech.service.RecoveryService;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import static org.mockito.Mockito.*;
 import jakarta.servlet.http.Cookie;
 import java.time.Duration;
 import java.util.UUID;
@@ -52,6 +55,9 @@ class AuthControllerTest {
     registry.add("jwt.secret", () -> JWT_SECRET);
     registry.add("jwt.expiration-minutes", () -> "60");
   }
+  
+  @MockitoBean
+  private RecoveryService recoveryService;
 
   @Test
   void registerCreatesResearcherWithoutReturningPasswordHash() throws Exception {
@@ -213,6 +219,68 @@ class AuthControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(registerPayload(email, password)))
         .andExpect(status().isCreated());
+  }
+
+  @Test
+  void requestRecoveryReturnsOk() throws Exception {
+    mockMvc.perform(post("/api/auth/recovery/request")
+                .with(csrf())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"email\":\"test@unb.br\"}"))
+           .andExpect(status().isOk());
+    verify(recoveryService, times(1)).requestRecovery("test@unb.br");
+  }
+
+  @Test
+  void verifyCodeValidReturnsOk() throws Exception {
+    when(recoveryService.verifyCode("test@unb.br", "123456")).thenReturn(true);
+    mockMvc.perform(post("/api/auth/recovery/verify")
+                .with(csrf())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"email\":\"test@unb.br\", \"code\":\"123456\"}"))
+           .andExpect(status().isOk());
+  }
+
+  @Test
+  void verifyCodeInvalidReturnsBadRequest() throws Exception {
+    when(recoveryService.verifyCode("test@unb.br", "123456")).thenReturn(false);
+    mockMvc.perform(post("/api/auth/recovery/verify")
+                .with(csrf())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"email\":\"test@unb.br\", \"code\":\"123456\"}"))
+           .andExpect(status().isBadRequest());
+  }
+
+  @Test
+  void resetPasswordValidReturnsOk() throws Exception {
+    when(recoveryService.resetPassword("test@unb.br", "123456", "newpass")).thenReturn(true);
+    mockMvc.perform(post("/api/auth/recovery/reset")
+                .with(csrf())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"email\":\"test@unb.br\", \"code\":\"123456\", \"newPassword\":\"newpass\"}"))
+           .andExpect(status().isOk());
+  }
+
+  @Test
+  void resetPasswordInvalidReturnsBadRequest() throws Exception {
+    when(recoveryService.resetPassword("test@unb.br", "123456", "newpass")).thenReturn(false);
+    mockMvc.perform(post("/api/auth/recovery/reset")
+                .with(csrf())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"email\":\"test@unb.br\", \"code\":\"123456\", \"newPassword\":\"newpass\"}"))
+           .andExpect(status().isBadRequest());
+  }
+
+  @Test
+  void logoutClearsCookie() throws Exception {
+    String email = uniqueEmail("logout");
+    String password = randomPassword();
+    registerUser(email, password);
+    Cookie cookie = loginAndGetTokenCookie(email, password);
+
+    mockMvc.perform(post("/api/auth/logout").with(csrf()).cookie(cookie))
+           .andExpect(status().isOk())
+           .andExpect(header().string("Set-Cookie", org.hamcrest.Matchers.containsString("Max-Age=0")));
   }
 
   private void registerUser(String email, String password) throws Exception {

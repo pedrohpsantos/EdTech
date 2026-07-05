@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import * as allure from 'allure-playwright';
 
 /**
  * Suite de testes E2E - Saúde da Aplicação
@@ -10,6 +11,11 @@ import { test, expect } from '@playwright/test';
  */
 test.describe('Health Check', () => {
   test('placeholder - CI não falha por falta de testes E2E', async () => {
+    await allure.epic('Core Infrastructure');
+    await allure.feature('Health Checks');
+    await allure.story('Basic Ping');
+    await allure.tags('smoke', 'ci-cd');
+    
     // Este teste sempre passa - existe apenas para que o Playwright
     // não retorne "No tests found" quando não há outros testes E2E configurados
     expect(true).toBe(true);

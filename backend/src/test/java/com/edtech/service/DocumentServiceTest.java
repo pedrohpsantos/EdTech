@@ -4,6 +4,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import java.util.Collections;
 
 import com.edtech.dto.DocumentResponseDto;
 import com.edtech.model.Document;
@@ -141,5 +145,31 @@ public class DocumentServiceTest {
     assertNotNull(response);
     assertEquals(DocumentStatus.APPROVED, response.getStatus());
     verify(auditLogService, times(1)).logAction(eq(advisorId), any(), anyString());
+  }
+
+  @Test
+  void testGetPresignedUrl_Success() throws Exception {
+    when(documentRepository.findById(documentId)).thenReturn(Optional.of(document));
+    when(projectMemberRepository.findByProjectIdAndUserId(projectId, authorId))
+        .thenReturn(Optional.of(projectMember));
+    when(storageService.getPresignedUrl(anyString())).thenReturn("http://presigned.url");
+
+    String url = documentService.getPresignedUrl(documentId, authorId);
+    
+    assertNotNull(url);
+    assertEquals("http://presigned.url", url);
+    verify(auditLogService, times(1)).logAction(eq(authorId), any(), anyString());
+  }
+
+  @Test
+  void testListDocumentsByUser_Success() {
+    Page<Document> page = new PageImpl<>(Collections.singletonList(document));
+    when(documentRepository.findDocumentsByUserIdAndFilters(eq(authorId), eq(projectId), anyString(), any()))
+        .thenReturn(page);
+
+    Page<DocumentResponseDto> response = documentService.listDocumentsByUser(authorId, projectId, "title", PageRequest.of(0, 10));
+    
+    assertNotNull(response);
+    assertEquals(1, response.getContent().size());
   }
 }

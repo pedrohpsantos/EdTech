@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+import com.edtech.dto.ProjectMemberRequestDto;
 import com.edtech.dto.ProjectRequestDto;
 import com.edtech.dto.ProjectResponseDto;
 import com.edtech.model.Project;
@@ -30,6 +31,8 @@ public class ProjectServiceTest {
   @Mock private ProjectMemberRepository projectMemberRepository;
 
   @Mock private UserRepository userRepository;
+
+  @Mock private AuditLogService auditLogService;
 
   @InjectMocks private ProjectService projectService;
 
@@ -77,5 +80,27 @@ public class ProjectServiceTest {
 
     assertEquals(1, list.size());
     assertEquals("P1", list.get(0).getTitle());
+  }
+
+  @Test
+  void addMember_Success() {
+    UUID projectId = UUID.randomUUID();
+    UUID userId = UUID.randomUUID();
+    Project project = new Project();
+    project.setId(projectId);
+    User authUser = new User("Auth", "auth@test.com", "hash", com.edtech.model.UserRole.RESEARCHER);
+    org.springframework.test.util.ReflectionTestUtils.setField(authUser, "id", userId);
+    ProjectMemberRequestDto dto = new ProjectMemberRequestDto();
+    dto.setUserId(userId);
+    dto.setRole("RESEARCHER");
+
+    when(projectRepository.findById(projectId)).thenReturn(Optional.of(project));
+    when(projectMemberRepository.findByProjectIdAndUserId(projectId, userId)).thenReturn(Optional.empty());
+    when(userRepository.findById(userId)).thenReturn(Optional.of(authUser));
+
+    projectService.addMember(projectId, dto, authUser);
+
+    verify(projectMemberRepository, times(1)).save(any(ProjectMember.class));
+    verify(auditLogService, times(1)).logAction(eq(userId), any(), anyString());
   }
 }
