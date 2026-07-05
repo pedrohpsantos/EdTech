@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import * as allure from 'allure-playwright';
 
 test.describe('Dashboard', () => {
-  test('view dashboard statistics', async ({ page }) => {
+  test('view dashboard statistics', async () => {
     await allure.epic('Dashboard');
     await allure.feature('Statistics');
     await allure.story('View Stats');
@@ -11,7 +11,7 @@ test.describe('Dashboard', () => {
     expect(true).toBeTruthy();
   });
 
-  test('navigate to projects from dashboard', async ({ page }) => {
+  test('navigate to projects from dashboard', async () => {
     await allure.epic('Dashboard');
     await allure.feature('Navigation');
     await allure.story('Go to Projects');
