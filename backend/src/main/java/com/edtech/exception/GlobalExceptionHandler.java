@@ -20,6 +20,7 @@ public class GlobalExceptionHandler {
     return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
   }
 
+  /** Trata requisições bloqueadas por excesso de tentativas (HTTP 429). */
   @ExceptionHandler(RateLimitExceededException.class)
   public ResponseEntity<Map<String, String>> handleRateLimitExceededException(
       RateLimitExceededException ex) {

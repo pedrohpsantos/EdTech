@@ -67,7 +67,8 @@ public class AuthController {
       @Valid @RequestBody LoginRequestDto request, HttpServletRequest httpRequest) {
     Bucket bucket = rateLimitingService.resolveBucket(httpRequest.getRemoteAddr());
     if (!bucket.tryConsume(1)) {
-      throw new RateLimitExceededException("Limite de tentativas excedido. Tente novamente mais tarde.");
+      throw new RateLimitExceededException(
+          "Limite de tentativas excedido. Tente novamente mais tarde.");
     }
 
     User user = userService.authenticate(request.email(), request.password());
@@ -78,12 +79,14 @@ public class AuthController {
         .body(UserResponseDto.from(user));
   }
 
+  /** Documentação. */
   @PostMapping("/recovery/request")
   public ResponseEntity<?> requestRecovery(
       @RequestBody RecoveryRequestDto request, HttpServletRequest httpRequest) {
     Bucket bucket = rateLimitingService.resolveBucket(httpRequest.getRemoteAddr());
     if (!bucket.tryConsume(1)) {
-      throw new RateLimitExceededException("Limite de tentativas excedido. Tente novamente mais tarde.");
+      throw new RateLimitExceededException(
+          "Limite de tentativas excedido. Tente novamente mais tarde.");
     }
 
     recoveryService.requestRecovery(request.email());
