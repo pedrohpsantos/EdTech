@@ -39,8 +39,9 @@
    HEADER
    ============================================================ */
 .md-header {
-  background: linear-gradient(90deg, #4A148C 0%, #7C4DFF 50%, #4A148C 100%);
-  background-size: 200% 100%;
+  background: linear-gradient(90deg, #4A148C 0%, #7C4DFF 50%, #4A148C 100%) !important;
+  background-attachment: fixed !important;
+  background-size: 200% 100% !important;
   animation: calmGradient 30s ease infinite alternate;
   box-shadow: none;
   backdrop-filter: none;
@@ -66,8 +67,9 @@
    NAVIGATION TABS — MATCH HEADER TONE
    ============================================================ */
 .md-tabs {
-  background: linear-gradient(90deg, #4A148C 0%, #7C4DFF 50%, #4A148C 100%);
-  background-size: 200% 100%;
+  background: linear-gradient(90deg, #4A148C 0%, #7C4DFF 50%, #4A148C 100%) !important;
+  background-attachment: fixed !important;
+  background-size: 200% 100% !important;
   animation: calmGradient 30s ease infinite alternate;
   border-top: 0;
   border-bottom: 0;
