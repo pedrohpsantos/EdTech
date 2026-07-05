@@ -128,3 +128,12 @@ public class SecurityConfig {
   }
 }
 ```
+
+---
+
+## Histórico de Versões
+
+| Versão | Data | Descrição | Autor |
+| :---: | :---: | :--- | :--- |
+| `0.1.0` | 10/06/2026 | Documentação inicial de Padrões de Projeto. | Pedro Henrique P. Santos |
+| `1.0` | 05/07/2026 | Revisão e detalhamento com base no Refactoring.Guru. | Pedro Henrique P. Santos |
