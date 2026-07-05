@@ -73,8 +73,8 @@ public class DocumentService {
 <span class="fc" id="L73">        throw new IllegalArgumentException(</span>
             &quot;Apenas arquivos PDF reais sao permitidos. Tipo detectado: &quot; + detectedType);
       }
-<span class="nc" id="L76">    } catch (IOException e) {</span>
-<span class="nc" id="L77">      throw new RuntimeException(&quot;Falha ao analisar o conteudo do arquivo&quot;, e);</span>
+<span class="fc" id="L76">    } catch (IOException e) {</span>
+<span class="fc" id="L77">      throw new RuntimeException(&quot;Falha ao analisar o conteudo do arquivo&quot;, e);</span>
 <span class="fc" id="L78">    }</span>
 
 <span class="fc" id="L80">    String contentType = file.getContentType();</span>
@@ -188,7 +188,7 @@ public class DocumentService {
   @Transactional
   public DocumentResponseDto reviewDocument(
       UUID documentId, UUID reviewerId, DocumentStatus newStatus, String feedback) {
-<span class="pc bpc" id="L191" title="1 of 4 branches missed.">    if (newStatus != DocumentStatus.APPROVED &amp;&amp; newStatus != DocumentStatus.REJECTED) {</span>
+<span class="fc bfc" id="L191" title="All 4 branches covered.">    if (newStatus != DocumentStatus.APPROVED &amp;&amp; newStatus != DocumentStatus.REJECTED) {</span>
 <span class="fc" id="L192">      throw new IllegalArgumentException(</span>
           &quot;Status inválido. Apenas APPROVED ou REJECTED são permitidos na revisão.&quot;);
     }
@@ -211,14 +211,14 @@ public class DocumentService {
 <span class="fc" id="L211">    document.setFeedback(feedback);</span>
 <span class="fc" id="L212">    Document savedDocument = documentRepository.save(document);</span>
     AcaoAuditoria acao =
-<span class="pc bpc" id="L214" title="1 of 2 branches missed.">        (newStatus == DocumentStatus.APPROVED)</span>
+<span class="fc bfc" id="L214" title="All 2 branches covered.">        (newStatus == DocumentStatus.APPROVED)</span>
 <span class="fc" id="L215">            ? AcaoAuditoria.DOCUMENT_APPROVED</span>
-<span class="pc" id="L216">            : AcaoAuditoria.DOCUMENT_REJECTED;</span>
+<span class="fc" id="L216">            : AcaoAuditoria.DOCUMENT_REJECTED;</span>
 <span class="fc" id="L217">    String details =</span>
         &quot;Status alterado para &quot;
             + newStatus
             + &quot;.Feedback: &quot;
-<span class="pc bpc" id="L221" title="2 of 4 branches missed.">            + (feedback != null &amp;&amp; !feedback.trim().isEmpty() ? feedback : &quot;Sem feedback&quot;);</span>
+<span class="fc bfc" id="L221" title="All 4 branches covered.">            + (feedback != null &amp;&amp; !feedback.trim().isEmpty() ? feedback : &quot;Sem feedback&quot;);</span>
 <span class="fc" id="L222">    auditLogService.logAction(reviewerId, acao, details);</span>
 <span class="fc" id="L223">    return mapToDto(savedDocument);</span>
   }

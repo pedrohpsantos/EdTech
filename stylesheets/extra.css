@@ -39,9 +39,9 @@
    HEADER
    ============================================================ */
 .md-header {
-  background: var(--hero-gradient);
-  background-attachment: fixed;
-  background-size: 200% 200%;
+  background: linear-gradient(90deg, #4A148C 0%, #7C4DFF 50%, #4A148C 100%) !important;
+  background-attachment: fixed !important;
+  background-size: 200% 100% !important;
   animation: calmGradient 30s ease infinite alternate;
   box-shadow: none;
   backdrop-filter: none;
@@ -67,9 +67,9 @@
    NAVIGATION TABS — MATCH HEADER TONE
    ============================================================ */
 .md-tabs {
-  background: var(--hero-gradient);
-  background-attachment: fixed;
-  background-size: 200% 200%;
+  background: linear-gradient(90deg, #4A148C 0%, #7C4DFF 50%, #4A148C 100%) !important;
+  background-attachment: fixed !important;
+  background-size: 200% 100% !important;
   animation: calmGradient 30s ease infinite alternate;
   border-top: 0;
   border-bottom: 0;
@@ -251,13 +251,13 @@
   font-weight: 800;
   line-height: 1.1;
   margin-bottom: 1.5rem;
-  color: #ffffff;
+  color: #ffffff !important;
   animation: contentSlideUp 0.8s ease-out backwards;
 }
 
 .hero-subtitle {
   font-size: 1.3rem;
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255, 255, 255, 0.85) !important;
   max-width: 800px;
   margin: 0 auto 2.5rem;
   line-height: 1.6;
@@ -278,35 +278,44 @@
   display: contents;
 }
 
-.hero-cta .md-button {
+.md-typeset .hero-cta .md-button {
   padding: 1rem 2.5rem;
   font-size: 1.1rem;
   border-radius: 50px;
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  background: rgba(255, 255, 255, 0.1);
+  background: linear-gradient(135deg, var(--md-accent-fg-color), var(--md-primary-fg-color), var(--md-accent-fg-color));
+  background-size: 200% 200%;
+  animation: gradientShift 5s ease infinite;
   backdrop-filter: blur(8px);
-  border: 1.5px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-  color: #ffffff;
+  border: none;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  color: #ffffff !important;
 }
 
-.hero-cta .md-button:hover {
+.md-typeset .hero-cta .md-button:hover {
   transform: translateY(-5px) scale(1.02);
-  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 10px 30px rgba(255, 145, 0, 0.3);
 }
 
-.hero-cta .md-button--primary {
-  background: #ffffff;
+.md-typeset .hero-cta .md-button--primary {
+  background: linear-gradient(135deg, var(--md-primary-fg-color), var(--md-accent-fg-color), var(--md-primary-fg-color));
+  background-size: 200% 200%;
+  animation: gradientShift 5s ease infinite;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   border: none;
-  color: var(--md-primary-fg-color) !important;
+  color: #ffffff !important;
 }
 
-.hero-cta .md-button--primary:hover {
+.md-typeset .hero-cta .md-button--primary:hover {
   transform: translateY(-5px) scale(1.05);
-  box-shadow: 0 15px 40px rgba(255, 255, 255, 0.3);
+  box-shadow: 0 15px 40px rgba(124, 77, 255, 0.4);
   filter: none;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 @keyframes float-blobs {

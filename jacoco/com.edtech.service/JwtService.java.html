@@ -67,7 +67,7 @@ public final class JwtService {
   public boolean isValid(String token, User user) {
     try {
 <span class="fc" id="L69">      String subject = extractSubject(token);</span>
-<span class="pc bpc" id="L70" title="2 of 4 branches missed.">      return subject != null &amp;&amp; subject.equalsIgnoreCase(user.getEmail());</span>
+<span class="pc bpc" id="L70" title="1 of 4 branches missed.">      return subject != null &amp;&amp; subject.equalsIgnoreCase(user.getEmail());</span>
 <span class="fc" id="L71">    } catch (JwtException | IllegalArgumentException exception) {</span>
 <span class="fc" id="L72">      return false;</span>
     }

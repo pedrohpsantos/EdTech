@@ -78,7 +78,7 @@ public class ProjectService {
 <span class="fc" id="L78">            .orElseThrow(() -&gt; new RuntimeException(&quot;Project not found&quot;));</span>
 
     UUID targetUserId =
-<span class="pc bpc" id="L81" title="2 of 4 branches missed.">        (dto != null &amp;&amp; dto.getUserId() != null) ? dto.getUserId() : authenticatedUser.getId();</span>
+<span class="fc bfc" id="L81" title="All 4 branches covered.">        (dto != null &amp;&amp; dto.getUserId() != null) ? dto.getUserId() : authenticatedUser.getId();</span>
 
     // Se o usuário que está tentando associar alguém for diferente do alvo, ele deve ser ADVISOR do
     // projeto.
@@ -101,10 +101,10 @@ public class ProjectService {
 <span class="fc" id="L101">    User newUser =</span>
         userRepository
 <span class="fc" id="L103">            .findById(targetUserId)</span>
-<span class="pc" id="L104">            .orElseThrow(() -&gt; new RuntimeException(&quot;User not found&quot;));</span>
+<span class="fc" id="L104">            .orElseThrow(() -&gt; new RuntimeException(&quot;User not found&quot;));</span>
 
     String roleStr =
-<span class="pc bpc" id="L107" title="2 of 4 branches missed.">        (dto != null &amp;&amp; dto.getRole() != null) ? dto.getRole().toUpperCase() : &quot;RESEARCHER&quot;;</span>
+<span class="fc bfc" id="L107" title="All 4 branches covered.">        (dto != null &amp;&amp; dto.getRole() != null) ? dto.getRole().toUpperCase() : &quot;RESEARCHER&quot;;</span>
 
 <span class="fc" id="L109">    ProjectMember newMember = new ProjectMember();</span>
 <span class="fc" id="L110">    newMember.setProject(project);</span>

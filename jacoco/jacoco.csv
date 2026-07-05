@@ -1,13 +1,13 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
-edtech-api,com.edtech.service,InvalidCredentialsException,4,0,0,0,2,0,1,0,1,0
-edtech-api,com.edtech.service,DocumentService,25,405,4,18,4,104,6,20,2,13
-edtech-api,com.edtech.service,UserService,10,82,2,6,1,20,3,5,1,3
+edtech-api,com.edtech.service,InvalidCredentialsException,0,4,0,0,0,2,0,1,0,1
+edtech-api,com.edtech.service,DocumentService,16,414,0,22,2,106,2,24,2,13
+edtech-api,com.edtech.service,UserService,0,92,0,8,0,21,0,8,0,4
 edtech-api,com.edtech.service,InvalidInstitutionalEmailException,0,4,0,0,0,2,0,1,0,1
 edtech-api,com.edtech.service,GcsStorageServiceImpl,0,65,0,0,0,17,0,5,0,5
 edtech-api,com.edtech.service,AuditLogService,5,81,1,7,2,20,1,8,0,5
-edtech-api,com.edtech.service,JwtService,14,85,2,2,3,22,3,6,1,6
+edtech-api,com.edtech.service,JwtService,13,86,1,3,3,22,2,7,1,6
 edtech-api,com.edtech.service,LocalStorageServiceImpl,15,7,0,0,5,2,3,2,3,2
-edtech-api,com.edtech.service,ProjectService,8,223,5,9,0,56,6,10,1,8
+edtech-api,com.edtech.service,ProjectService,0,231,1,13,0,56,1,15,0,9
 edtech-api,com.edtech.service,DuplicateEmailException,0,4,0,0,0,2,0,1,0,1
 edtech-api,com.edtech.service,RecoveryService,2,140,4,8,1,34,4,7,0,5
 edtech-api,com.edtech.service,EmailService,0,25,0,0,0,8,0,2,0,2
@@ -41,7 +41,7 @@ edtech-api,com.edtech.controller,DocumentController,26,53,0,0,5,13,2,4,2,4
 edtech-api,com.edtech.model,Project,22,34,0,0,10,14,5,10,5,10
 edtech-api,com.edtech.model,RecoveryToken,22,26,0,0,10,9,6,5,6,5
 edtech-api,com.edtech.model,AcaoAuditoria,0,75,0,0,0,13,0,1,0,1
-edtech-api,com.edtech.model,User,7,64,0,0,3,22,2,11,2,11
+edtech-api,com.edtech.model,User,7,68,0,0,3,24,2,12,2,12
 edtech-api,com.edtech.model,AuditLog,6,72,0,0,2,30,2,15,2,15
 edtech-api,com.edtech.model,UserRole,0,21,0,0,0,4,0,1,0,1
 edtech-api,com.edtech.model,Document,22,58,0,0,10,24,5,16,5,16

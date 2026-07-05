@@ -1,1 +1,1 @@
-[{"values":["linux"],"name":"OS"},{"values":["v20.20.2"],"name":"NodeJS"},{"values":["true"],"name":"CI"},{"values":["Chromium"],"name":"Browser"}]
+[{"values":["Chromium"],"name":"Browser"},{"values":["Production Smoke"],"name":"Environment"},{"values":["Ubuntu Latest"],"name":"OS"}]
