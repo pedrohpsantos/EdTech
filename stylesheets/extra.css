@@ -12,6 +12,8 @@
   --md-accent-fg-color:         #FF9100;
 
   --hero-gradient: linear-gradient(135deg, #4A148C 0%, #7C4DFF 50%, #ea80fc 100%);
+  --header-gradient: linear-gradient(135deg, #ffffff 0%, #f4f0ff 50%, #ffffff 100%);
+  --header-text-color: #4A148C;
   --card-border-radius: 14px;
   --card-hover-shadow: 0 16px 40px rgba(106, 27, 154, 0.15);
   --transition-smooth: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
@@ -26,6 +28,8 @@
 
 [data-md-color-scheme="slate"] {
   --hero-gradient: linear-gradient(135deg, #1a0033 0%, #4a148c 50%, #7c4dff 100%);
+  --header-gradient: linear-gradient(135deg, #15002b 0%, #291147 50%, #15002b 100%);
+  --header-text-color: #ffffff;
   --card-hover-shadow: 0 16px 40px rgba(124, 77, 255, 0.2);
   --glass-bg: rgba(30, 30, 46, 0.7);
   --glass-border: rgba(124, 77, 255, 0.2);
@@ -35,12 +39,15 @@
    HEADER
    ============================================================ */
 .md-header {
-  background: var(--hero-gradient);
+  --md-primary-fg-color: transparent;
+  --md-primary-bg-color: var(--header-text-color);
+  background: var(--header-gradient);
   background-attachment: fixed;
   background-size: 200% 200%;
   animation: calmGradient 30s ease infinite alternate;
-  box-shadow: none;
+  box-shadow: 0 1px 10px rgba(0,0,0,0.05);
   backdrop-filter: none;
+  color: var(--md-primary-bg-color);
 }
 
 @keyframes calmGradient {
@@ -63,12 +70,12 @@
    NAVIGATION TABS — MATCH HEADER TONE
    ============================================================ */
 .md-tabs {
-  background: var(--hero-gradient);
+  background: var(--header-gradient);
   background-attachment: fixed;
   background-size: 200% 200%;
   animation: calmGradient 30s ease infinite alternate;
   border-top: 0;
-  border-bottom: 0;
+  border-bottom: 1px solid rgba(124, 77, 255, 0.05);
   box-shadow: none;
 }
 
@@ -84,14 +91,16 @@
 }
 
 .md-tabs__link {
-  color: rgba(255, 255, 255, 0.82);
+  color: var(--header-text-color);
   font-weight: 600;
+  opacity: 0.8;
 }
 
 .md-tabs__link:hover,
 .md-tabs__link:focus,
 .md-tabs__link--active {
-  color: #ffffff;
+  color: var(--header-text-color);
+  opacity: 1;
 }
 
 /* ============================================================
