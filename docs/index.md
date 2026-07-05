@@ -163,4 +163,11 @@ Tecnologias selecionadas para robustez, segurança e escalabilidade em ambiente 
 ---
 
 ## Histórico de Versões
-
+
+| Versão | Data | Descrição | Autor |
+| :---: | :---: | :--- | :--- |
+| `0.1.0` | 10/06/2026 | Fundação da documentação técnica e governança. | Pedro Henrique P. Santos |
+| `0.2.0` | 13/06/2026 | Reestruturação arquitetural da documentação e introdução de guias DevEx. | Pedro Henrique P. Santos |
+| `0.5.0` | 01/07/2026 | Refinamento Premium de UX/UI. | Pedro Henrique P. Santos |
+| `2.0` | 04/07/2026 | Revisão profunda, correção de metadados e melhorias visuais. | Pedro Henrique P. Santos |
+| `2.1` | 04/07/2026 | Redesign completo da Home com animações de alto impacto. | Pedro Henrique P. Santos |
