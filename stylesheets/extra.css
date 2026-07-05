@@ -282,7 +282,7 @@
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   background: var(--glass-bg);
   backdrop-filter: blur(8px);
-  border: 1px solid var(--glass-border);
+  border: 1.5px solid rgba(124, 77, 255, 0.4);
   box-shadow: 0 4px 15px rgba(0,0,0,0.05);
   color: var(--md-primary-fg-color);
 }
@@ -304,7 +304,8 @@
 
 .hero-cta .md-button--primary:hover {
   transform: translateY(-5px) scale(1.05);
-  box-shadow: 0 15px 40px rgba(106, 27, 154, 0.4);
+  box-shadow: 0 15px 40px rgba(106, 27, 154, 0.5);
+  filter: brightness(1.15) hue-rotate(15deg);
 }
 
 @keyframes float-blobs {
@@ -406,7 +407,7 @@
   letter-spacing: 0.02em;
   background: var(--glass-bg);
   backdrop-filter: blur(8px);
-  border: 1px solid var(--glass-border);
+  border: 1.5px solid rgba(124, 77, 255, 0.4);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
