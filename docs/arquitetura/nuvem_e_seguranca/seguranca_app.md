@@ -113,6 +113,49 @@ Atores hostis disparam vetores de ataque que impactam os pontos de entrada e ati
 
 ---
 
+## 4. Rate Limiting — Proteção Contra Força Bruta (Bucket4j)
+
+Endpoints de autenticação são alvos naturais de ataques de força bruta e credential stuffing. Para bloquear essas investidas, implementamos o **Bucket4j**, uma biblioteca Java baseada no algoritmo de *Token Bucket*.
+
+### Como Funciona
+
+Cada endereço IP recebe um "balde" (bucket) com **5 tokens**. Cada requisição consome 1 token. Quando o balde esvazia, o IP é bloqueado temporariamente até que os tokens se reponham (intervalo de 1 minuto).
+
+```mermaid
+sequenceDiagram
+    participant C as Cliente (IP X.X.X.X)
+    participant RL as RateLimitingService
+    participant B as Bucket (5 tokens)
+    participant AC as AuthController
+
+    C->>RL: Requisição de login
+    RL->>B: tryConsume(1)
+
+    alt Tem tokens disponíveis
+        B-->>RL: true (token consumido)
+        RL-->>AC: Continua o fluxo normal
+        AC-->>C: 200 OK / 401 Unauthorized
+    else Bucket esgotado
+        B-->>RL: false (sem tokens)
+        RL-->>C: 429 Too Many Requests
+    end
+```
+
+### Endpoints Protegidos
+
+| Endpoint | Método | Limite |
+| :--- | :--- | :--- |
+| `/api/auth/login` | `POST` | 5 req / minuto por IP |
+| `/api/auth/recovery/request` | `POST` | 5 req / minuto por IP |
+
+### Decisões de Design
+
+- **Em memória (`ConcurrentHashMap`):** O estado dos buckets é mantido em memória local. É eficiente para a escala atual e evita dependência de infraestrutura extra (Redis).
+- **Por IP:** O controle é feito por `HttpServletRequest.getRemoteAddr()`, garantindo que um atacante não possa abusar do sistema mesmo com IPs distintos via automação.
+- **Fail-fast:** A verificação do bucket é executada *antes* de qualquer acesso ao banco de dados, garantindo custo mínimo de processamento para requisições bloqueadas.
+
+---
+
 ## Histórico de Versões
 
 | Versão |    Data    | Descrição                                | Autor                    |
@@ -121,4 +164,6 @@ Atores hostis disparam vetores de ataque que impactam os pontos de entrada e ati
 | `1.1`  | 30/05/2026 | Refino do threat model e estilos visuais | Pedro Henrique P. Santos |
 | `1.2` | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |
 | `2.0` | 04/07/2026 | Revisão profunda, correção de metadados e melhorias visuais | Pedro Henrique P. Santos |
+| `2.1` | 05/07/2026 | Adição da seção de Rate Limiting (Bucket4j) | Pedro Henrique P. Santos |
+
 
