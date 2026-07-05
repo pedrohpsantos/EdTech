@@ -11,6 +11,8 @@
     "security-audit": "npm audit --audit-level=high",
     "preview": "vite preview",
     "test": "vitest run --coverage",
+    "test:a11y": "vitest run src/pages/__tests__/accessibility.test.jsx",
+    "test:components": "vitest run src/components/",
     "lint:oxlint": "oxlint .",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,css,md}\""
   },

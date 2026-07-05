@@ -216,6 +216,10 @@ jobs:
         run: npm ci
       - name: Run unit tests (Vitest)
         run: npm run test
+      - name: Run Accessibility tests (WCAG)
+        run: npm run test:a11y
+      - name: Run Component tests
+        run: npm run test:components
 
   # ==========================================
   #                 DEPLOY
