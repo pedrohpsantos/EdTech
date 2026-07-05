@@ -70,4 +70,58 @@ public class UserServiceTest {
 
     verify(userRepository, never()).save(any(User.class));
   }
+  @Test
+  void register_WithValidSubdomainData_MustSavedInDataBase() {
+    RegisterRequestDto Dto =
+        new RegisterRequestDto("SchrodingerCat", "student@fga.unb.br", "not_alive12");
+    User savedUser =
+        new User(
+            "SchrodingerCat", "student@fga.unb.br", "$2a$12$hashBcryptExample...", UserRole.RESEARCHER);
+
+    when(passwordEncoder.encode(anyString())).thenReturn("hashed_password");
+    when(userRepository.existsByEmailIgnoreCase(Dto.email())).thenReturn(false);
+    when(userRepository.save(any())).thenReturn(savedUser);
+
+    User result = userService.register(Dto);
+
+    assertNotNull(result);
+    assertEquals("student@fga.unb.br", result.getEmail());
+    verify(userRepository, times(1)).save(any(User.class));
+  }
+
+  @Test
+  void authenticate_Success() {
+    User user = new User("Name", "test@unb.br", "hashed_pw", UserRole.RESEARCHER);
+    user.setActive(true);
+    when(userRepository.findByEmailIgnoreCase("test@unb.br")).thenReturn(java.util.Optional.of(user));
+    when(passwordEncoder.matches("password", "hashed_pw")).thenReturn(true);
+    
+    User result = userService.authenticate("test@unb.br", "password");
+    assertNotNull(result);
+  }
+
+  @Test
+  void authenticate_UserNotFound_ThrowsException() {
+    when(userRepository.findByEmailIgnoreCase("test@unb.br")).thenReturn(java.util.Optional.empty());
+    assertThrows(InvalidCredentialsException.class, () -> userService.authenticate("test@unb.br", "password"));
+  }
+
+  @Test
+  void authenticate_WrongPassword_ThrowsException() {
+    User user = new User("Name", "test@unb.br", "hashed_pw", UserRole.RESEARCHER);
+    user.setActive(true);
+    when(userRepository.findByEmailIgnoreCase("test@unb.br")).thenReturn(java.util.Optional.of(user));
+    when(passwordEncoder.matches("wrong_pw", "hashed_pw")).thenReturn(false);
+    
+    assertThrows(InvalidCredentialsException.class, () -> userService.authenticate("test@unb.br", "wrong_pw"));
+  }
+
+  @Test
+  void authenticate_InactiveUser_ThrowsException() {
+    User user = new User("Name", "test@unb.br", "hashed_pw", UserRole.RESEARCHER);
+    user.setActive(false);
+    when(userRepository.findByEmailIgnoreCase("test@unb.br")).thenReturn(java.util.Optional.of(user));
+    
+    assertThrows(InvalidCredentialsException.class, () -> userService.authenticate("test@unb.br", "password"));
+  }
 }

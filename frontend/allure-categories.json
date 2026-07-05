@@ -1,24 +1,19 @@
 [
   {
-    "name": "Ignored tests",
+    "name": "Ignored Tests",
     "matchedStatuses": ["skipped"]
   },
   {
-    "name": "Infrastructure problems",
-    "matchedStatuses": ["broken", "failed"],
+    "name": "Infrastructure Problems",
+    "matchedStatuses": ["broken", "unknown"]
+  },
+  {
+    "name": "Timeouts",
+    "matchedStatuses": ["failed"],
     "messageRegex": ".*timeout.*"
   },
   {
-    "name": "Outdated tests",
-    "matchedStatuses": ["broken"],
-    "traceRegex": ".*NoSuchElementError.*"
-  },
-  {
-    "name": "Product defects",
+    "name": "Product Defects",
     "matchedStatuses": ["failed"]
-  },
-  {
-    "name": "Test defects",
-    "matchedStatuses": ["broken"]
   }
 ]

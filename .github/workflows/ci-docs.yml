@@ -96,6 +96,9 @@ jobs:
           cp -R ../gh-pages-branch/allure/history/* allure-results/history/ || true
           cp allure-categories.json allure-results/categories.json || true
           echo '{"name": "GitHub Actions", "type": "github", "reportName": "EdTech Smoke Tests", "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}", "buildOrder": "${{ github.run_number }}", "buildName": "${{ github.workflow }}", "buildUrl": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"}' > allure-results/executor.json
+          echo "Browser=Chromium" > allure-results/environment.properties
+          echo "Environment=Production Smoke" >> allure-results/environment.properties
+          echo "OS=Ubuntu Latest" >> allure-results/environment.properties
 
       - name: Gerar Allure Report
         if: always()

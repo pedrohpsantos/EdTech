@@ -2,6 +2,7 @@ package com.edtech.service;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.mock;
 
 import com.edtech.model.User;
 import com.edtech.model.UserRole;
@@ -85,5 +86,22 @@ public class JwtServiceTest {
             .getPayload()
             .get("uid", String.class);
     return UUID.fromString(uidStr);
+  }
+
+  @Test
+  void isValid_WithValidToken_ReturnsTrue() {
+    String token = jwtService.generateToken(mockUser);
+    assertTrue(jwtService.isValid(token, mockUser));
+  }
+
+  @Test
+  @MockitoSettings(strictness = Strictness.LENIENT)
+  void isValid_WithDifferentUser_ReturnsFalse() {
+    String token = jwtService.generateToken(mockUser);
+    
+    User differentUser = mock(User.class);
+    when(differentUser.getEmail()).thenReturn("other@unb.br");
+
+    assertFalse(jwtService.isValid(token, differentUser));
   }
 }

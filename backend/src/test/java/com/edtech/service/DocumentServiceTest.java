@@ -328,4 +328,62 @@ public class DocumentServiceTest {
     assertNotNull(response);
     assertEquals(1, response.getContent().size());
   }
+
+  @Test
+  void testReviewDocument_Success_Rejected() {
+    document.setStatus(DocumentStatus.PENDING_REVIEW);
+    ProjectMember advisor = new ProjectMember();
+    advisor.setRole(ProjectRole.ADVISOR);
+    UUID advisorId = UUID.randomUUID();
+
+    when(documentRepository.findById(documentId)).thenReturn(Optional.of(document));
+    when(projectMemberRepository.findByProjectIdAndUserId(projectId, advisorId))
+        .thenReturn(Optional.of(advisor));
+    when(documentRepository.save(any(Document.class))).thenReturn(document);
+
+    DocumentResponseDto response =
+        documentService.reviewDocument(
+            documentId, advisorId, DocumentStatus.REJECTED, null); 
+
+    assertNotNull(response);
+    assertEquals(DocumentStatus.REJECTED, response.getStatus());
+    assertNull(response.getFeedback());
+    verify(auditLogService, times(1)).logAction(eq(advisorId), eq(AcaoAuditoria.DOCUMENT_REJECTED), anyString());
+  }
+
+  @Test
+  void testReviewDocument_Success_Rejected_EmptyFeedback() {
+    document.setStatus(DocumentStatus.PENDING_REVIEW);
+    ProjectMember advisor = new ProjectMember();
+    advisor.setRole(ProjectRole.ADVISOR);
+    UUID advisorId = UUID.randomUUID();
+
+    when(documentRepository.findById(documentId)).thenReturn(Optional.of(document));
+    when(projectMemberRepository.findByProjectIdAndUserId(projectId, advisorId))
+        .thenReturn(Optional.of(advisor));
+    when(documentRepository.save(any(Document.class))).thenReturn(document);
+
+    DocumentResponseDto response =
+        documentService.reviewDocument(
+            documentId, advisorId, DocumentStatus.REJECTED, "   "); 
+
+    assertNotNull(response);
+    assertEquals(DocumentStatus.REJECTED, response.getStatus());
+    assertEquals("   ", response.getFeedback());
+    verify(auditLogService, times(1)).logAction(eq(advisorId), eq(AcaoAuditoria.DOCUMENT_REJECTED), anyString());
+  }
+
+  @Test
+  void testUploadDocument_TikaIOException_ThrowsException() throws Exception {
+    org.springframework.web.multipart.MultipartFile file = mock(org.springframework.web.multipart.MultipartFile.class);
+    when(file.getInputStream()).thenThrow(new IOException("Stream error"));
+    
+    when(userRepository.findById(authorId)).thenReturn(Optional.of(author));
+    when(projectRepository.findById(projectId)).thenReturn(Optional.of(project));
+    when(projectMemberRepository.findByProjectIdAndUserId(projectId, authorId))
+        .thenReturn(Optional.of(projectMember));
+
+    RuntimeException exception = assertThrows(RuntimeException.class, () -> documentService.uploadDocument(file, "Test Doc", projectId, authorId));
+    assertEquals("Falha ao analisar o conteudo do arquivo", exception.getMessage());
+  }
 }
