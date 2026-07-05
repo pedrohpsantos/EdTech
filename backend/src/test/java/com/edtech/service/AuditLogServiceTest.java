@@ -11,6 +11,8 @@ import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -22,6 +24,8 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 public class AuditLogServiceTest {
 
   @Mock private AuditLogRepository auditLogRepository;
+  
+  @Captor private ArgumentCaptor<AuditLog> logCaptor;
 
   @InjectMocks private AuditLogService auditLogService;
 
@@ -33,18 +37,25 @@ public class AuditLogServiceTest {
   @Test
   void testLog_WithExplicitIp() {
     UUID userId = UUID.randomUUID();
-    AuditLog mockLog =
-        new AuditLog(userId, AcaoAuditoria.LOGIN_SUCCESS, null, null, "192.168.1.1", "Test log");
-
-    when(auditLogRepository.save(any(AuditLog.class))).thenReturn(mockLog);
+    UUID resourceId = UUID.randomUUID();
+    when(auditLogRepository.save(any(AuditLog.class))).thenAnswer(i -> i.getArguments()[0]);
 
     AuditLog result =
         auditLogService.log(
-            AcaoAuditoria.LOGIN_SUCCESS, userId, null, null, "192.168.1.1", "Test log");
+            AcaoAuditoria.LOGIN_SUCCESS, userId, "User", resourceId, "192.168.1.1", "Test log");
 
+    verify(auditLogRepository).save(logCaptor.capture());
+    AuditLog captured = logCaptor.getValue();
+
+    assertEquals(userId, captured.getUserId());
+    assertEquals(AcaoAuditoria.LOGIN_SUCCESS, captured.getAction());
+    assertEquals("User", captured.getResourceType());
+    assertEquals(resourceId, captured.getResourceId());
+    assertEquals("192.168.1.1", captured.getIpAddress());
+    assertEquals("Test log", captured.getDetails());
+    
     assertNotNull(result);
     assertEquals("192.168.1.1", result.getIpAddress());
-    verify(auditLogRepository, times(1)).save(any(AuditLog.class));
   }
 
   @Test
@@ -54,15 +65,16 @@ public class AuditLogServiceTest {
     RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
 
     UUID userId = UUID.randomUUID();
-    AuditLog mockLog =
-        new AuditLog(userId, AcaoAuditoria.UPLOAD_SUCCESS, null, null, "10.0.0.1", "Test log");
-    when(auditLogRepository.save(any(AuditLog.class))).thenReturn(mockLog);
+    when(auditLogRepository.save(any(AuditLog.class))).thenAnswer(i -> i.getArguments()[0]);
 
     AuditLog result = auditLogService.logAction(userId, AcaoAuditoria.UPLOAD_SUCCESS, "Test log");
 
+    verify(auditLogRepository).save(logCaptor.capture());
+    AuditLog captured = logCaptor.getValue();
+    assertEquals("10.0.0.1", captured.getIpAddress());
+    
     assertNotNull(result);
     assertEquals("10.0.0.1", result.getIpAddress());
-    verify(auditLogRepository, times(1)).save(any(AuditLog.class));
   }
 
   @Test
@@ -72,15 +84,29 @@ public class AuditLogServiceTest {
     RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
 
     UUID userId = UUID.randomUUID();
-    AuditLog mockLog =
-        new AuditLog(
-            userId, AcaoAuditoria.DELETE_DOCUMENT, null, null, "203.0.113.195", "Test log");
-    when(auditLogRepository.save(any(AuditLog.class))).thenReturn(mockLog);
+    when(auditLogRepository.save(any(AuditLog.class))).thenAnswer(i -> i.getArguments()[0]);
 
     AuditLog result = auditLogService.logAction(userId, AcaoAuditoria.DELETE_DOCUMENT, "Test log");
 
+    verify(auditLogRepository).save(logCaptor.capture());
+    AuditLog captured = logCaptor.getValue();
+    assertEquals("203.0.113.195", captured.getIpAddress());
+    
     assertNotNull(result);
-    assertEquals("203.0.113.195", result.getIpAddress());
+  }
+
+  @Test
+  void testLog_WithoutContextFallbackToUnknown() {
+    UUID userId = UUID.randomUUID();
+    when(auditLogRepository.save(any(AuditLog.class))).thenAnswer(i -> i.getArguments()[0]);
+
+    AuditLog result = auditLogService.logAction(userId, AcaoAuditoria.DELETE_DOCUMENT, "Test log");
+
+    verify(auditLogRepository).save(logCaptor.capture());
+    AuditLog captured = logCaptor.getValue();
+    assertEquals("UNKNOWN", captured.getIpAddress());
+    
+    assertNotNull(result);
   }
 
   @Test
@@ -91,6 +117,6 @@ public class AuditLogServiceTest {
     AuditLog result =
         auditLogService.logAction(UUID.randomUUID(), AcaoAuditoria.LOGIN_FAILED, "Test error");
 
-    assertNull(result); // Must return null when there is an exception
+    assertNull(result);
   }
 }

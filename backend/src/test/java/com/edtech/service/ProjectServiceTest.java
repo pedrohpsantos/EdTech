@@ -9,6 +9,7 @@ import com.edtech.dto.ProjectRequestDto;
 import com.edtech.dto.ProjectResponseDto;
 import com.edtech.model.Project;
 import com.edtech.model.ProjectMember;
+import com.edtech.model.ProjectRole;
 import com.edtech.model.User;
 import com.edtech.repository.ProjectMemberRepository;
 import com.edtech.repository.ProjectRepository;
@@ -27,10 +28,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 public class ProjectServiceTest {
 
   @Mock private ProjectRepository projectRepository;
-
   @Mock private ProjectMemberRepository projectMemberRepository;
-
   @Mock private UserRepository userRepository;
+  @Mock private AuditLogService auditLogService;
 
   @Mock private AuditLogService auditLogService;
 
@@ -59,8 +59,26 @@ public class ProjectServiceTest {
 
     assertNotNull(response);
     assertEquals("New Project", response.getTitle());
-    verify(projectRepository, times(1)).save(any(Project.class));
-    verify(projectMemberRepository, times(1)).save(any(ProjectMember.class));
+    assertEquals("Project Desc", response.getDescription());
+    assertEquals(advisorId, response.getAdvisorId());
+    
+    verify(projectRepository).save(any(Project.class));
+    verify(projectMemberRepository).save(argThat(member -> 
+      member.getRole() == ProjectRole.ADVISOR &&
+      member.getUser().equals(advisor)
+    ));
+  }
+
+  @Test
+  void createProject_UserNotFound_ThrowsException() {
+    UUID advisorId = UUID.randomUUID();
+    ProjectRequestDto request = new ProjectRequestDto();
+    
+    when(userRepository.findById(advisorId)).thenReturn(Optional.empty());
+    
+    RuntimeException ex = assertThrows(RuntimeException.class, () -> projectService.createProject(request, advisorId));
+    assertEquals("User not found", ex.getMessage());
+    verify(projectRepository, never()).save(any());
   }
 
   @Test
@@ -80,6 +98,110 @@ public class ProjectServiceTest {
 
     assertEquals(1, list.size());
     assertEquals("P1", list.get(0).getTitle());
+    assertEquals(p1.getId(), list.get(0).getId());
+  }
+
+  @Test
+  void addMember_Success_SelfAdd() {
+    UUID projectId = UUID.randomUUID();
+    UUID userId = UUID.randomUUID();
+    Project project = new Project();
+    project.setId(projectId);
+    project.setTitle("Proj");
+    User authUser = new User("Auth", "auth@test.com", "hash", com.edtech.model.UserRole.RESEARCHER);
+    org.springframework.test.util.ReflectionTestUtils.setField(authUser, "id", userId);
+    
+    ProjectMemberRequestDto dto = new ProjectMemberRequestDto();
+    dto.setUserId(userId);
+    dto.setRole("RESEARCHER");
+
+    when(projectRepository.findById(projectId)).thenReturn(Optional.of(project));
+    when(projectMemberRepository.findByProjectIdAndUserId(projectId, userId)).thenReturn(Optional.empty());
+    when(userRepository.findById(userId)).thenReturn(Optional.of(authUser));
+
+    projectService.addMember(projectId, dto, authUser);
+
+    verify(projectMemberRepository).save(argThat(member -> 
+      member.getRole() == ProjectRole.RESEARCHER && member.getUser().getId().equals(userId)
+    ));
+    verify(auditLogService).logAction(eq(userId), any(), anyString());
+  }
+
+  @Test
+  void addMember_ProjectNotFound_ThrowsException() {
+    UUID projectId = UUID.randomUUID();
+    User authUser = new User("Auth", "auth@test.com", "hash", com.edtech.model.UserRole.RESEARCHER);
+    
+    when(projectRepository.findById(projectId)).thenReturn(Optional.empty());
+    
+    RuntimeException ex = assertThrows(RuntimeException.class, () -> projectService.addMember(projectId, new ProjectMemberRequestDto(), authUser));
+    assertEquals("Project not found", ex.getMessage());
+  }
+
+  @Test
+  void addMember_TargetUserDifferent_AuthUserNotMember_ThrowsException() {
+    UUID projectId = UUID.randomUUID();
+    UUID authUserId = UUID.randomUUID();
+    UUID targetUserId = UUID.randomUUID();
+    
+    Project project = new Project();
+    project.setId(projectId);
+    
+    User authUser = new User("Auth", "auth@test.com", "hash", com.edtech.model.UserRole.RESEARCHER);
+    org.springframework.test.util.ReflectionTestUtils.setField(authUser, "id", authUserId);
+    
+    ProjectMemberRequestDto dto = new ProjectMemberRequestDto();
+    dto.setUserId(targetUserId);
+
+    when(projectRepository.findById(projectId)).thenReturn(Optional.of(project));
+    when(projectMemberRepository.findByProjectIdAndUserId(projectId, authUserId)).thenReturn(Optional.empty());
+
+    RuntimeException ex = assertThrows(RuntimeException.class, () -> projectService.addMember(projectId, dto, authUser));
+    assertEquals("User is not part of the project to add members", ex.getMessage());
+  }
+
+  @Test
+  void addMember_TargetUserDifferent_AuthUserNotAdvisor_ThrowsException() {
+    UUID projectId = UUID.randomUUID();
+    UUID authUserId = UUID.randomUUID();
+    UUID targetUserId = UUID.randomUUID();
+    
+    Project project = new Project();
+    project.setId(projectId);
+    
+    User authUser = new User("Auth", "auth@test.com", "hash", com.edtech.model.UserRole.RESEARCHER);
+    org.springframework.test.util.ReflectionTestUtils.setField(authUser, "id", authUserId);
+    
+    ProjectMemberRequestDto dto = new ProjectMemberRequestDto();
+    dto.setUserId(targetUserId);
+
+    ProjectMember authMember = new ProjectMember();
+    authMember.setRole(ProjectRole.RESEARCHER);
+
+    when(projectRepository.findById(projectId)).thenReturn(Optional.of(project));
+    when(projectMemberRepository.findByProjectIdAndUserId(projectId, authUserId)).thenReturn(Optional.of(authMember));
+
+    RuntimeException ex = assertThrows(RuntimeException.class, () -> projectService.addMember(projectId, dto, authUser));
+    assertEquals("Only ADVISORS can add other members", ex.getMessage());
+  }
+
+  @Test
+  void addMember_UserAlreadyMember_ThrowsException() {
+    UUID projectId = UUID.randomUUID();
+    UUID userId = UUID.randomUUID();
+    Project project = new Project();
+    project.setId(projectId);
+    User authUser = new User("Auth", "auth@test.com", "hash", com.edtech.model.UserRole.RESEARCHER);
+    org.springframework.test.util.ReflectionTestUtils.setField(authUser, "id", userId);
+    
+    ProjectMemberRequestDto dto = new ProjectMemberRequestDto();
+    dto.setUserId(userId);
+
+    when(projectRepository.findById(projectId)).thenReturn(Optional.of(project));
+    when(projectMemberRepository.findByProjectIdAndUserId(projectId, userId)).thenReturn(Optional.of(new ProjectMember()));
+
+    RuntimeException ex = assertThrows(RuntimeException.class, () -> projectService.addMember(projectId, dto, authUser));
+    assertEquals("User is already a member of this project", ex.getMessage());
   }
 
   @Test

@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import * as allure from 'allure-playwright';
+import * as allure from 'allure-js-commons';
 
 test.describe('Dashboard', () => {
   test('view dashboard statistics', async () => {
