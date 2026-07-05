@@ -54,7 +54,7 @@ jobs:
       - name: Compile Code
         run: |
           chmod +x mvnw
-          ./mvnw clean compile -T 1C -B
+          ./mvnw clean package -DskipTests -T 1C -B
       - name: Upload Build Target
         uses: actions/upload-artifact@v7
         with:
