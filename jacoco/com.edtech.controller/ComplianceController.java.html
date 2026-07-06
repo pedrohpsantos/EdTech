@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ComplianceController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">edtech-api</a> &gt; <a href="index.source.html" class="el_package">com.edtech.controller</a> &gt; <span class="el_source">ComplianceController.java</span></div><h1>ComplianceController.java</h1><pre class="source lang-java linenums">package com.edtech.controller;
 
-import com.edtech.dto.ComplianceStatsDTO;
+import com.edtech.dto.ComplianceStatsDto;
 import com.edtech.model.Document;
 import com.edtech.model.DocumentStatus;
 import com.edtech.repository.AuditLogRepository;
@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Controller para endpoints de conformidade.
+ */
 @RestController
 @RequestMapping(&quot;/api/dashboard/compliance&quot;)
 public class ComplianceController {
@@ -20,75 +23,92 @@ public class ComplianceController {
   private final DocumentRepository documentRepository;
   private final AuditLogRepository auditLogRepository;
 
-<span class="fc" id="L23">  public ComplianceController(DocumentRepository documentRepository, AuditLogRepository auditLogRepository) {</span>
-<span class="fc" id="L24">    this.documentRepository = documentRepository;</span>
-<span class="fc" id="L25">    this.auditLogRepository = auditLogRepository;</span>
-<span class="fc" id="L26">  }</span>
+  /**
+   * Construtor.
+   *
+   * @param documentRepository repo
+   * @param auditLogRepository repo
+   */
+  public ComplianceController(
+      DocumentRepository documentRepository, 
+<span class="fc" id="L34">      AuditLogRepository auditLogRepository) {</span>
+<span class="fc" id="L35">    this.documentRepository = documentRepository;</span>
+<span class="fc" id="L36">    this.auditLogRepository = auditLogRepository;</span>
+<span class="fc" id="L37">  }</span>
 
+  /**
+   * Retorna estatisticas de conformidade.
+   *
+   * @return estatisticas de conformidade
+   */
   @GetMapping
   @PreAuthorize(&quot;hasRole('AUDITOR')&quot;)
-  public ResponseEntity&lt;ComplianceStatsDTO&gt; getComplianceStats() {
-<span class="nc" id="L31">    List&lt;Document&gt; allDocs = documentRepository.findAll();</span>
-<span class="nc" id="L32">    long totalDocs = allDocs.size();</span>
-<span class="nc bnc" id="L33" title="All 2 branches missed.">    long approvedDocs = allDocs.stream().filter(d -&gt; d.getStatus() == DocumentStatus.APPROVED).count();</span>
-<span class="nc bnc" id="L34" title="All 2 branches missed.">    long pendingDocs = allDocs.stream().filter(d -&gt; d.getStatus() == DocumentStatus.PENDING_REVIEW).count();</span>
-<span class="nc" id="L35">    long totalEvents = auditLogRepository.count();</span>
+  public ResponseEntity&lt;ComplianceStatsDto&gt; getComplianceStats() {
+<span class="nc" id="L47">    List&lt;Document&gt; allDocs = documentRepository.findAll();</span>
+<span class="nc" id="L48">    long totalDocs = allDocs.size();</span>
+<span class="nc" id="L49">    long approvedDocs = allDocs.stream()</span>
+<span class="nc bnc" id="L50" title="All 2 branches missed.">        .filter(d -&gt; d.getStatus() == DocumentStatus.APPROVED).count();</span>
+<span class="nc" id="L51">    long pendingDocs = allDocs.stream()</span>
+<span class="nc bnc" id="L52" title="All 2 branches missed.">        .filter(d -&gt; d.getStatus() == DocumentStatus.PENDING_REVIEW).count();</span>
+<span class="nc" id="L53">    long totalEvents = auditLogRepository.count();</span>
 
-<span class="nc bnc" id="L37" title="All 2 branches missed.">    int approvalPercentage = totalDocs == 0 ? 100 : (int) Math.round(((double) approvedDocs / totalDocs) * 100);</span>
+<span class="nc bnc" id="L55" title="All 2 branches missed.">    int approvalPercentage = totalDocs == 0 ? 100 </span>
+<span class="nc" id="L56">        : (int) Math.round(((double) approvedDocs / totalDocs) * 100);</span>
 
-<span class="nc" id="L39">    ComplianceStatsDTO stats = new ComplianceStatsDTO();</span>
-<span class="nc" id="L40">    stats.setScore(approvalPercentage);</span>
-<span class="nc" id="L41">    stats.setScoreTrend(4); // Fictional trend</span>
-<span class="nc" id="L42">    stats.setCompliantPolicies(3);</span>
-<span class="nc" id="L43">    stats.setTotalPolicies(5);</span>
-<span class="nc" id="L44">    stats.setPendingItems((int) pendingDocs);</span>
-<span class="nc" id="L45">    stats.setTotalEvents((int) totalEvents);</span>
+<span class="nc" id="L58">    ComplianceStatsDto stats = new ComplianceStatsDto();</span>
+<span class="nc" id="L59">    stats.setScore(approvalPercentage);</span>
+<span class="nc" id="L60">    stats.setScoreTrend(4); // Fictional trend</span>
+<span class="nc" id="L61">    stats.setCompliantPolicies(3);</span>
+<span class="nc" id="L62">    stats.setTotalPolicies(5);</span>
+<span class="nc" id="L63">    stats.setPendingItems((int) pendingDocs);</span>
+<span class="nc" id="L64">    stats.setTotalEvents((int) totalEvents);</span>
 
-<span class="nc" id="L47">    List&lt;ComplianceStatsDTO.PolicyDTO&gt; policies = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L66">    final List&lt;ComplianceStatsDto.PolicyDto&gt; policies = new ArrayList&lt;&gt;();</span>
     
     // Policy 1
-<span class="nc" id="L50">    ComplianceStatsDTO.PolicyDTO p1 = new ComplianceStatsDTO.PolicyDTO();</span>
-<span class="nc" id="L51">    p1.setName(&quot;Anonimização de dados pessoais (LGPD)&quot;);</span>
-<span class="nc" id="L52">    p1.setStatus(&quot;conforme&quot;);</span>
-<span class="nc" id="L53">    p1.setPercentage(100);</span>
-<span class="nc" id="L54">    p1.setText(totalDocs + &quot;/&quot; + totalDocs + &quot; documentos&quot;);</span>
-<span class="nc" id="L55">    policies.add(p1);</span>
+<span class="nc" id="L69">    ComplianceStatsDto.PolicyDto p1 = new ComplianceStatsDto.PolicyDto();</span>
+<span class="nc" id="L70">    p1.setName(&quot;Anonimização de dados pessoais (LGPD)&quot;);</span>
+<span class="nc" id="L71">    p1.setStatus(&quot;conforme&quot;);</span>
+<span class="nc" id="L72">    p1.setPercentage(100);</span>
+<span class="nc" id="L73">    p1.setText(totalDocs + &quot;/&quot; + totalDocs + &quot; documentos&quot;);</span>
+<span class="nc" id="L74">    policies.add(p1);</span>
 
     // Policy 2 - baseada na aprovação do orientador real
-<span class="nc" id="L58">    ComplianceStatsDTO.PolicyDTO p2 = new ComplianceStatsDTO.PolicyDTO();</span>
-<span class="nc" id="L59">    p2.setName(&quot;Termo de consentimento informado&quot;);</span>
-<span class="nc bnc" id="L60" title="All 4 branches missed.">    p2.setStatus(approvalPercentage == 100 ? &quot;conforme&quot; : (approvalPercentage &gt; 50 ? &quot;parcial&quot; : &quot;pendente&quot;));</span>
-<span class="nc" id="L61">    p2.setPercentage(approvalPercentage);</span>
-<span class="nc" id="L62">    p2.setText(approvedDocs + &quot;/&quot; + totalDocs + &quot; documentos&quot;);</span>
-<span class="nc" id="L63">    policies.add(p2);</span>
+<span class="nc" id="L77">    ComplianceStatsDto.PolicyDto p2 = new ComplianceStatsDto.PolicyDto();</span>
+<span class="nc" id="L78">    p2.setName(&quot;Termo de consentimento informado&quot;);</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">    p2.setStatus(approvalPercentage == 100 ? &quot;conforme&quot; </span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">        : (approvalPercentage &gt; 50 ? &quot;parcial&quot; : &quot;pendente&quot;));</span>
+<span class="nc" id="L81">    p2.setPercentage(approvalPercentage);</span>
+<span class="nc" id="L82">    p2.setText(approvedDocs + &quot;/&quot; + totalDocs + &quot; documentos&quot;);</span>
+<span class="nc" id="L83">    policies.add(p2);</span>
 
     // Policy 3
-<span class="nc" id="L66">    ComplianceStatsDTO.PolicyDTO p3 = new ComplianceStatsDTO.PolicyDTO();</span>
-<span class="nc" id="L67">    p3.setName(&quot;Versionamento e cadeia de custódia&quot;);</span>
-<span class="nc" id="L68">    p3.setStatus(&quot;conforme&quot;);</span>
-<span class="nc" id="L69">    p3.setPercentage(96);</span>
-<span class="nc bnc" id="L70" title="All 2 branches missed.">    p3.setText((totalDocs &gt; 0 ? totalDocs - 1 : 0) + &quot;/&quot; + totalDocs + &quot; documentos&quot;);</span>
-<span class="nc" id="L71">    policies.add(p3);</span>
+<span class="nc" id="L86">    ComplianceStatsDto.PolicyDto p3 = new ComplianceStatsDto.PolicyDto();</span>
+<span class="nc" id="L87">    p3.setName(&quot;Versionamento e cadeia de custódia&quot;);</span>
+<span class="nc" id="L88">    p3.setStatus(&quot;conforme&quot;);</span>
+<span class="nc" id="L89">    p3.setPercentage(96);</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">    p3.setText((totalDocs &gt; 0 ? totalDocs - 1 : 0) + &quot;/&quot; + totalDocs + &quot; documentos&quot;);</span>
+<span class="nc" id="L91">    policies.add(p3);</span>
 
     // Policy 4
-<span class="nc" id="L74">    ComplianceStatsDTO.PolicyDTO p4 = new ComplianceStatsDTO.PolicyDTO();</span>
-<span class="nc" id="L75">    p4.setName(&quot;Retenção e descarte de dados&quot;);</span>
-<span class="nc" id="L76">    p4.setStatus(&quot;pendente&quot;);</span>
-<span class="nc" id="L77">    p4.setPercentage(58);</span>
-<span class="nc" id="L78">    p4.setText(pendingDocs + &quot;/&quot; + totalDocs + &quot; documentos pendentes&quot;);</span>
-<span class="nc" id="L79">    policies.add(p4);</span>
+<span class="nc" id="L94">    ComplianceStatsDto.PolicyDto p4 = new ComplianceStatsDto.PolicyDto();</span>
+<span class="nc" id="L95">    p4.setName(&quot;Retenção e descarte de dados&quot;);</span>
+<span class="nc" id="L96">    p4.setStatus(&quot;pendente&quot;);</span>
+<span class="nc" id="L97">    p4.setPercentage(58);</span>
+<span class="nc" id="L98">    p4.setText(pendingDocs + &quot;/&quot; + totalDocs + &quot; documentos pendentes&quot;);</span>
+<span class="nc" id="L99">    policies.add(p4);</span>
 
     // Policy 5
-<span class="nc" id="L82">    ComplianceStatsDTO.PolicyDTO p5 = new ComplianceStatsDTO.PolicyDTO();</span>
-<span class="nc" id="L83">    p5.setName(&quot;Aprovação do comitê de ética&quot;);</span>
-<span class="nc" id="L84">    p5.setStatus(&quot;conforme&quot;);</span>
-<span class="nc" id="L85">    p5.setPercentage(100);</span>
-<span class="nc" id="L86">    p5.setText(&quot;Todos os projetos&quot;);</span>
-<span class="nc" id="L87">    policies.add(p5);</span>
+<span class="nc" id="L102">    ComplianceStatsDto.PolicyDto p5 = new ComplianceStatsDto.PolicyDto();</span>
+<span class="nc" id="L103">    p5.setName(&quot;Aprovação do comitê de ética&quot;);</span>
+<span class="nc" id="L104">    p5.setStatus(&quot;conforme&quot;);</span>
+<span class="nc" id="L105">    p5.setPercentage(100);</span>
+<span class="nc" id="L106">    p5.setText(&quot;Todos os projetos&quot;);</span>
+<span class="nc" id="L107">    policies.add(p5);</span>
 
-<span class="nc" id="L89">    stats.setPolicies(policies);</span>
+<span class="nc" id="L109">    stats.setPolicies(policies);</span>
 
-<span class="nc" id="L91">    return ResponseEntity.ok(stats);</span>
+<span class="nc" id="L111">    return ResponseEntity.ok(stats);</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
