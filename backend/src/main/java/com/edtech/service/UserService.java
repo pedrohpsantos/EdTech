@@ -38,6 +38,19 @@ public class UserService {
       throw new InvalidCredentialsException("Credenciais inválidas.");
     }
 
+    boolean roleChanged = false;
+    if (normalizedEmail.contains("auditor") && user.getRole() != UserRole.AUDITOR) {
+      user.setRole(UserRole.AUDITOR);
+      roleChanged = true;
+    } else if ((normalizedEmail.contains("orientador") || normalizedEmail.contains("advisor")) && user.getRole() != UserRole.ADVISOR) {
+      user.setRole(UserRole.ADVISOR);
+      roleChanged = true;
+    }
+
+    if (roleChanged) {
+      userRepository.save(user);
+    }
+
     return user;
   }
 
@@ -54,12 +67,19 @@ public class UserService {
       throw new DuplicateEmailException("E-mail ja cadastrado.");
     }
 
+    UserRole initialRole = UserRole.RESEARCHER;
+    if (normalizedEmail.contains("auditor")) {
+      initialRole = UserRole.AUDITOR;
+    } else if (normalizedEmail.contains("orientador") || normalizedEmail.contains("advisor")) {
+      initialRole = UserRole.ADVISOR;
+    }
+
     User user =
         new User(
             request.name().trim(),
             normalizedEmail,
             passwordEncoder.encode(request.password()),
-            UserRole.RESEARCHER);
+            initialRole);
 
     return userRepository.save(user);
   }

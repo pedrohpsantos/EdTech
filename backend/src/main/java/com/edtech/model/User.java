@@ -97,6 +97,11 @@ public class User {
     return role;
   }
 
+  /** Documentação para o método setRole. */
+  public void setRole(UserRole role) {
+    this.role = role;
+  }
+
   /** Documentação para o método isActive. */
   public boolean isActive() {
     return active;
