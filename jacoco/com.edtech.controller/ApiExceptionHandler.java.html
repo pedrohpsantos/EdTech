@@ -24,14 +24,14 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
   @ExceptionHandler(InvalidInstitutionalEmailException.class)
   public ResponseEntity&lt;ErrorResponse&gt; handleInvalidInstitutionalEmail(
       InvalidInstitutionalEmailException exception) {
-<span class="nc" id="L27">    return ResponseEntity.badRequest()</span>
-<span class="nc" id="L28">        .body(new ErrorResponse(&quot;invalid_institutional_email&quot;, exception.getMessage()));</span>
+<span class="fc" id="L27">    return ResponseEntity.badRequest()</span>
+<span class="fc" id="L28">        .body(new ErrorResponse(&quot;invalid_institutional_email&quot;, exception.getMessage()));</span>
   }
 
   @ExceptionHandler(InvalidCredentialsException.class)
   public ResponseEntity&lt;ErrorResponse&gt; handleInvalidCredentials() {
-<span class="nc" id="L33">    return ResponseEntity.status(HttpStatus.UNAUTHORIZED)</span>
-<span class="nc" id="L34">        .body(new ErrorResponse(&quot;invalid_credentials&quot;, &quot;Credenciais inválidas.&quot;));</span>
+<span class="fc" id="L33">    return ResponseEntity.status(HttpStatus.UNAUTHORIZED)</span>
+<span class="fc" id="L34">        .body(new ErrorResponse(&quot;invalid_credentials&quot;, &quot;Credenciais inválidas.&quot;));</span>
   }
 
   @ExceptionHandler({MethodArgumentNotValidException.class, ConstraintViolationException.class})
