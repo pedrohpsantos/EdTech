@@ -1,7 +1,7 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
 edtech-api,com.edtech.service,InvalidCredentialsException,0,4,0,0,0,2,0,1,0,1
 edtech-api,com.edtech.service,DocumentService,16,415,0,22,2,106,2,24,2,13
-edtech-api,com.edtech.service,UserService,0,92,0,8,0,21,0,8,0,4
+edtech-api,com.edtech.service,UserService,29,122,11,15,7,28,9,8,0,4
 edtech-api,com.edtech.service,InvalidInstitutionalEmailException,0,4,0,0,0,2,0,1,0,1
 edtech-api,com.edtech.service,GcsStorageServiceImpl,0,65,0,0,0,17,0,5,0,5
 edtech-api,com.edtech.service,AuditLogService,5,81,1,7,2,20,1,8,0,5
@@ -48,7 +48,7 @@ edtech-api,com.edtech.controller,DocumentController,27,53,0,0,5,13,2,4,2,4
 edtech-api,com.edtech.model,Project,15,41,0,0,7,17,4,11,4,11
 edtech-api,com.edtech.model,RecoveryToken,22,26,0,0,10,9,6,5,6,5
 edtech-api,com.edtech.model,AcaoAuditoria,0,75,0,0,0,13,0,1,0,1
-edtech-api,com.edtech.model,User,7,68,0,0,3,24,2,12,2,12
+edtech-api,com.edtech.model,User,11,68,0,0,5,24,3,12,3,12
 edtech-api,com.edtech.model,AuditLog,6,72,0,0,2,30,2,15,2,15
 edtech-api,com.edtech.model,UserRole,0,21,0,0,0,4,0,1,0,1
 edtech-api,com.edtech.model,Document,15,65,0,0,7,27,4,17,4,17

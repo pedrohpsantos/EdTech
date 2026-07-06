@@ -38,30 +38,50 @@ public class UserService {
 <span class="fc" id="L38">      throw new InvalidCredentialsException(&quot;Credenciais inválidas.&quot;);</span>
     }
 
-<span class="fc" id="L41">    return user;</span>
+<span class="fc" id="L41">    boolean roleChanged = false;</span>
+<span class="pc bpc" id="L42" title="3 of 4 branches missed.">    if (normalizedEmail.contains(&quot;auditor&quot;) &amp;&amp; user.getRole() != UserRole.AUDITOR) {</span>
+<span class="nc" id="L43">      user.setRole(UserRole.AUDITOR);</span>
+<span class="nc" id="L44">      roleChanged = true;</span>
+<span class="pc bpc" id="L45" title="4 of 6 branches missed.">    } else if ((normalizedEmail.contains(&quot;orientador&quot;) || normalizedEmail.contains(&quot;advisor&quot;)) &amp;&amp; user.getRole() != UserRole.ADVISOR) {</span>
+<span class="nc" id="L46">      user.setRole(UserRole.ADVISOR);</span>
+<span class="nc" id="L47">      roleChanged = true;</span>
+    }
+
+<span class="pc bpc" id="L50" title="1 of 2 branches missed.">    if (roleChanged) {</span>
+<span class="nc" id="L51">      userRepository.save(user);</span>
+    }
+
+<span class="fc" id="L54">    return user;</span>
   }
 
   /** Documentação. */
   @Transactional
   public User register(RegisterRequestDto request) {
-<span class="fc" id="L47">    String normalizedEmail = request.email().trim().toLowerCase(Locale.ROOT);</span>
+<span class="fc" id="L60">    String normalizedEmail = request.email().trim().toLowerCase(Locale.ROOT);</span>
 
-<span class="fc bfc" id="L49" title="All 4 branches covered.">    if (!normalizedEmail.endsWith(&quot;@unb.br&quot;) &amp;&amp; !normalizedEmail.endsWith(&quot;.unb.br&quot;)) {</span>
-<span class="fc" id="L50">      throw new InvalidInstitutionalEmailException(&quot;O e-mail deve pertencer ao dominio unb.br.&quot;);</span>
+<span class="fc bfc" id="L62" title="All 4 branches covered.">    if (!normalizedEmail.endsWith(&quot;@unb.br&quot;) &amp;&amp; !normalizedEmail.endsWith(&quot;.unb.br&quot;)) {</span>
+<span class="fc" id="L63">      throw new InvalidInstitutionalEmailException(&quot;O e-mail deve pertencer ao dominio unb.br.&quot;);</span>
     }
 
-<span class="fc bfc" id="L53" title="All 2 branches covered.">    if (userRepository.existsByEmailIgnoreCase(normalizedEmail)) {</span>
-<span class="fc" id="L54">      throw new DuplicateEmailException(&quot;E-mail ja cadastrado.&quot;);</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">    if (userRepository.existsByEmailIgnoreCase(normalizedEmail)) {</span>
+<span class="fc" id="L67">      throw new DuplicateEmailException(&quot;E-mail ja cadastrado.&quot;);</span>
     }
 
-<span class="fc" id="L57">    User user =</span>
+<span class="fc" id="L70">    UserRole initialRole = UserRole.RESEARCHER;</span>
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">    if (normalizedEmail.contains(&quot;auditor&quot;)) {</span>
+<span class="nc" id="L72">      initialRole = UserRole.AUDITOR;</span>
+<span class="pc bpc" id="L73" title="2 of 4 branches missed.">    } else if (normalizedEmail.contains(&quot;orientador&quot;) || normalizedEmail.contains(&quot;advisor&quot;)) {</span>
+<span class="nc" id="L74">      initialRole = UserRole.ADVISOR;</span>
+    }
+
+<span class="fc" id="L77">    User user =</span>
         new User(
-<span class="fc" id="L59">            request.name().trim(),</span>
+<span class="fc" id="L79">            request.name().trim(),</span>
             normalizedEmail,
-<span class="fc" id="L61">            passwordEncoder.encode(request.password()),</span>
-            UserRole.RESEARCHER);
+<span class="fc" id="L81">            passwordEncoder.encode(request.password()),</span>
+            initialRole);
 
-<span class="fc" id="L64">    return userRepository.save(user);</span>
+<span class="fc" id="L84">    return userRepository.save(user);</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
