@@ -64,13 +64,17 @@ public class ComplianceController {
     stats.setTotalEvents((int) totalEvents);
 
     final List<ComplianceStatsDto.PolicyDto> policies = new ArrayList<>();
-    
+
+    boolean noDocs = totalDocs == 0;
+
     // Policy 1
     ComplianceStatsDto.PolicyDto p1 = new ComplianceStatsDto.PolicyDto();
     p1.setName("Anonimização de dados pessoais (LGPD)");
     p1.setStatus("conforme");
     p1.setPercentage(100);
-    p1.setText(totalDocs + "/" + totalDocs + " documentos");
+    p1.setText(noDocs 
+        ? "Sem documentos avaliados" 
+        : totalDocs + "/" + totalDocs + " documentos");
     policies.add(p1);
 
     // Policy 2 - baseada na aprovação do orientador real
@@ -79,23 +83,29 @@ public class ComplianceController {
     p2.setStatus(approvalPercentage == 100 ? "conforme" 
         : (approvalPercentage > 50 ? "parcial" : "pendente"));
     p2.setPercentage(approvalPercentage);
-    p2.setText(approvedDocs + "/" + totalDocs + " documentos");
+    p2.setText(noDocs 
+        ? "Sem documentos avaliados" 
+        : approvedDocs + "/" + totalDocs + " documentos");
     policies.add(p2);
 
     // Policy 3
     ComplianceStatsDto.PolicyDto p3 = new ComplianceStatsDto.PolicyDto();
     p3.setName("Versionamento e cadeia de custódia");
     p3.setStatus("conforme");
-    p3.setPercentage(96);
-    p3.setText((totalDocs > 0 ? totalDocs - 1 : 0) + "/" + totalDocs + " documentos");
+    p3.setPercentage(noDocs ? 100 : 96);
+    p3.setText(noDocs 
+        ? "Sem documentos avaliados" 
+        : (totalDocs > 0 ? totalDocs - 1 : 0) + "/" + totalDocs + " documentos");
     policies.add(p3);
 
     // Policy 4
     ComplianceStatsDto.PolicyDto p4 = new ComplianceStatsDto.PolicyDto();
     p4.setName("Retenção e descarte de dados");
-    p4.setStatus("pendente");
-    p4.setPercentage(58);
-    p4.setText(pendingDocs + "/" + totalDocs + " documentos pendentes");
+    p4.setStatus(noDocs ? "conforme" : "pendente");
+    p4.setPercentage(noDocs ? 100 : 58);
+    p4.setText(noDocs 
+        ? "Sem documentos pendentes" 
+        : pendingDocs + "/" + totalDocs + " documentos pendentes");
     policies.add(p4);
 
     // Policy 5
