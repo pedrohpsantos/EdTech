@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import './GlobalLoader.css';
 
-const GlobalLoader: React.FC = () => {
+interface GlobalLoaderProps {
+  forceShow?: boolean;
+}
+
+const GlobalLoader: React.FC<GlobalLoaderProps> = ({ forceShow = false }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -17,7 +21,7 @@ const GlobalLoader: React.FC = () => {
     };
   }, []);
 
-  if (!isLoading) return null;
+  if (!isLoading && !forceShow) return null;
 
   return (
     <div className="global-loader-overlay">

@@ -39,7 +39,7 @@ function App() {
           <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100svh' }}>
             <GlobalLoader />
             <Suspense
-              fallback={<div style={{ padding: '2rem', textAlign: 'center' }}>Carregando...</div>}
+              fallback={<GlobalLoader forceShow />}
             >
               <Routes>
                 <Route path="/" element={<Login />} />
