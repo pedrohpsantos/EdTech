@@ -3,16 +3,8 @@ import { ApiResponse, User, Project, Document } from '../types';
 
 const BASE_URL = import.meta.env?.VITE_API_URL ?? '';
 
-const getCsrfToken = () => {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; XSRF-TOKEN=`);
-  if (parts.length === 2) return parts.pop().split(';').shift();
-  return '';
-};
-
 const api = axios.create({
   baseURL: BASE_URL,
-  withCredentials: true, // Substitui 'credentials: include'
 });
 
 let activeRequests = 0;
@@ -38,11 +30,12 @@ const hideLoader = () => {
   }
 };
 
-// Interceptor para adicionar o token CSRF e mostrar o loader
+// Interceptor para adicionar o token de autorização e mostrar o loader
 api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
   showLoader();
-  if (config.method !== 'get') {
-    config.headers['X-XSRF-TOKEN'] = getCsrfToken();
+  const token = localStorage.getItem('token');
+  if (token) {
+    config.headers['Authorization'] = `Bearer ${token}`;
   }
   return config;
 });
@@ -77,7 +70,10 @@ const handleApiError = <T = any>(error: any, defaultMessage: string): ApiRespons
 export const login = async (email: string, senha: string): Promise<ApiResponse<any>> => {
   try {
     const resposta = await api.post('/api/auth/login', { email, password: senha });
-    return { sucesso: true, dados: resposta.data };
+    if (resposta.data.token) {
+      localStorage.setItem('token', resposta.data.token);
+    }
+    return { sucesso: true, dados: resposta.data.user };
   } catch (error) {
     return handleApiError(
       error,
@@ -93,7 +89,10 @@ export const register = async (
 ): Promise<ApiResponse<any>> => {
   try {
     const resposta = await api.post('/api/auth/register', { name: nome, email, password: senha });
-    return { sucesso: true, dados: resposta.data };
+    if (resposta.data.token) {
+      localStorage.setItem('token', resposta.data.token);
+    }
+    return { sucesso: true, dados: resposta.data.user };
   } catch (error) {
     return handleApiError(
       error,
@@ -105,8 +104,10 @@ export const register = async (
 export const logout = async (): Promise<ApiResponse<void>> => {
   try {
     await api.post('/api/auth/logout');
+    localStorage.removeItem('token');
     return { sucesso: true };
   } catch (error) {
+    localStorage.removeItem('token');
     return handleApiError(error, 'Falha ao encerrar sessão');
   }
 };

@@ -87,12 +87,13 @@ class AuthControllerTest {
                                 """
                         .formatted(email, password)))
         .andExpect(status().isCreated())
-        .andExpect(jsonPath("$.id").isString())
-        .andExpect(jsonPath("$.name").value("Ana Pesquisadora"))
-        .andExpect(jsonPath("$.email").value(email))
-        .andExpect(jsonPath("$.role").value("RESEARCHER"))
-        .andExpect(jsonPath("$.passwordHash").doesNotExist())
-        .andExpect(jsonPath("$.password").doesNotExist());
+        .andExpect(jsonPath("$.user.id").isString())
+        .andExpect(jsonPath("$.user.name").value("Ana Pesquisadora"))
+        .andExpect(jsonPath("$.user.email").value(email))
+        .andExpect(jsonPath("$.user.role").value("RESEARCHER"))
+        .andExpect(jsonPath("$.user.passwordHash").doesNotExist())
+        .andExpect(jsonPath("$.user.password").doesNotExist())
+        .andExpect(jsonPath("$.token").isString());
 
     var user = userRepository.findByEmailIgnoreCase(email).orElseThrow();
 
@@ -154,7 +155,7 @@ class AuthControllerTest {
   }
 
   @Test
-  void loginReturnsHttpOnlyNoneCookieWithoutTokenInBody() throws Exception {
+  void loginReturnsTokenInBody() throws Exception {
     String email = uniqueEmail("login");
     String password = randomPassword();
     registerUser(email, password);
@@ -166,14 +167,10 @@ class AuthControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(loginPayload(email, password)))
         .andExpect(status().isOk())
-        .andExpect(header().string("Set-Cookie", org.hamcrest.Matchers.containsString("token=")))
-        .andExpect(header().string("Set-Cookie", org.hamcrest.Matchers.containsString("HttpOnly")))
-        .andExpect(
-            header().string("Set-Cookie", org.hamcrest.Matchers.containsString("SameSite=Lax")))
-        .andExpect(jsonPath("$.email").value(email))
-        .andExpect(jsonPath("$.password").doesNotExist())
-        .andExpect(jsonPath("$.passwordHash").doesNotExist())
-        .andExpect(jsonPath("$.token").doesNotExist());
+        .andExpect(jsonPath("$.token").isString())
+        .andExpect(jsonPath("$.user.email").value(email))
+        .andExpect(jsonPath("$.user.password").doesNotExist())
+        .andExpect(jsonPath("$.user.passwordHash").doesNotExist());
   }
 
   @Test
@@ -190,10 +187,10 @@ class AuthControllerTest {
     String password = randomPassword();
     registerUser(email, password);
 
-    Cookie cookie = loginAndGetTokenCookie(email, password);
+    String token = loginAndGetToken(email, password);
 
     mockMvc
-        .perform(get("/api/auth/me").cookie(cookie))
+        .perform(get("/api/auth/me").header("Authorization", "Bearer " + token))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.email").value(email))
         .andExpect(jsonPath("$.role").value("RESEARCHER"))
@@ -210,7 +207,7 @@ class AuthControllerTest {
     String expireDtoken = jwtService.generateToken(user, Duration.ofSeconds(-1));
 
     mockMvc
-        .perform(get("/api/auth/me").cookie(new Cookie("token", expireDtoken)))
+        .perform(get("/api/auth/me").header("Authorization", "Bearer " + expireDtoken))
         .andExpect(status().isUnauthorized())
         .andExpect(jsonPath("$.code").value("unauthorized"));
   }
@@ -280,15 +277,14 @@ class AuthControllerTest {
   }
 
   @Test
-  void logoutClearsCookie() throws Exception {
+  void logoutReturnsOk() throws Exception {
     String email = uniqueEmail("logout");
     String password = randomPassword();
     registerUser(email, password);
-    Cookie cookie = loginAndGetTokenCookie(email, password);
+    String token = loginAndGetToken(email, password);
 
-    mockMvc.perform(post("/api/auth/logout").with(csrf()).cookie(cookie))
-           .andExpect(status().isOk())
-           .andExpect(header().string("Set-Cookie", org.hamcrest.Matchers.containsString("Max-Age=0")));
+    mockMvc.perform(post("/api/auth/logout").with(csrf()).header("Authorization", "Bearer " + token))
+           .andExpect(status().isOk());
   }
 
   private void registerUser(String email, String password) throws Exception {
@@ -301,7 +297,7 @@ class AuthControllerTest {
         .andExpect(status().isCreated());
   }
 
-  private Cookie loginAndGetTokenCookie(String email, String password) throws Exception {
+  private String loginAndGetToken(String email, String password) throws Exception {
     MvcResult result =
         mockMvc
             .perform(
@@ -312,11 +308,8 @@ class AuthControllerTest {
             .andExpect(status().isOk())
             .andReturn();
 
-    Cookie cookie = result.getResponse().getCookie("token");
-    assertThat(cookie).isNotNull();
-    assertThat(cookie.isHttpOnly()).isTrue();
-    assertThat(cookie.getPath()).isEqualTo("/");
-    return cookie;
+    String content = result.getResponse().getContentAsString();
+    return com.jayway.jsonpath.JsonPath.read(content, "$.token");
   }
 
   private String registerPayload(String email, String password) {

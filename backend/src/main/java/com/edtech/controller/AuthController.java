@@ -1,5 +1,6 @@
 package com.edtech.controller;
 
+import com.edtech.dto.AuthResponseDto;
 import com.edtech.dto.LoginRequestDto;
 import com.edtech.dto.RecoveryRequestDto;
 import com.edtech.dto.RegisterRequestDto;
@@ -15,10 +16,7 @@ import com.edtech.service.UserService;
 import io.github.bucket4j.Bucket;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
-import java.time.Duration;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,37 +34,30 @@ public class AuthController {
   private final JwtService jwtService;
   private final RecoveryService recoveryService;
   private final RateLimitingService rateLimitingService;
-  private final boolean secureCookie;
-  private final long jwtExpirationMinutes;
-  private final String sameSite;
 
   /** Documentação. */
   public AuthController(
       UserService userService,
       JwtService jwtService,
       RecoveryService recoveryService,
-      RateLimitingService rateLimitingService,
-      @Value("${jwt.cookie-secure:false}") boolean secureCookie,
-      @Value("${jwt.expiration-minutes:60}") long jwtExpirationMinutes,
-      @Value("${jwt.cookie-same-site:Lax}") String sameSite) {
+      RateLimitingService rateLimitingService) {
     this.userService = userService;
     this.jwtService = jwtService;
     this.recoveryService = recoveryService;
     this.rateLimitingService = rateLimitingService;
-    this.secureCookie = secureCookie;
-    this.jwtExpirationMinutes = jwtExpirationMinutes;
-    this.sameSite = sameSite;
   }
 
   @PostMapping("/register")
-  public ResponseEntity<?> register(@Valid @RequestBody RegisterRequestDto request) {
+  public ResponseEntity<AuthResponseDto> register(@Valid @RequestBody RegisterRequestDto request) {
     User registeredUser = userService.register(request);
-    return ResponseEntity.status(HttpStatus.CREATED).body(UserResponseDto.from(registeredUser));
+    String token = jwtService.generateToken(registeredUser);
+    return ResponseEntity.status(HttpStatus.CREATED)
+        .body(new AuthResponseDto(UserResponseDto.from(registeredUser), token));
   }
 
   /** Documentação. */
   @PostMapping("/login")
-  public ResponseEntity<UserResponseDto> login(
+  public ResponseEntity<AuthResponseDto> login(
       @Valid @RequestBody LoginRequestDto request, HttpServletRequest httpRequest) {
     Bucket bucket = rateLimitingService.resolveBucket(httpRequest.getRemoteAddr());
     if (!bucket.tryConsume(1)) {
@@ -77,9 +68,7 @@ public class AuthController {
     User user = userService.authenticate(request.email(), request.password());
     String token = jwtService.generateToken(user);
 
-    return ResponseEntity.ok()
-        .header("Set-Cookie", buildAuthCookie(token).toString())
-        .body(UserResponseDto.from(user));
+    return ResponseEntity.ok(new AuthResponseDto(UserResponseDto.from(user), token));
   }
 
   /** Documentação. */
@@ -120,31 +109,12 @@ public class AuthController {
   /** Documentação. */
   @PostMapping("/logout")
   public ResponseEntity<Void> logout() {
-    ResponseCookie clearedCookie =
-        ResponseCookie.from("token", "")
-            .httpOnly(true)
-            .secure(secureCookie)
-            .sameSite(sameSite)
-            .path("/")
-            .maxAge(0)
-            .build();
-
-    return ResponseEntity.ok().header("Set-Cookie", clearedCookie.toString()).build();
+    return ResponseEntity.ok().build();
   }
 
   @GetMapping("/me")
   public ResponseEntity<UserResponseDto> me(Authentication authentication) {
     User user = (User) authentication.getPrincipal();
     return ResponseEntity.ok(UserResponseDto.from(user));
-  }
-
-  private ResponseCookie buildAuthCookie(String token) {
-    return ResponseCookie.from("token", token)
-        .httpOnly(true)
-        .secure(secureCookie)
-        .sameSite(sameSite)
-        .path("/")
-        .maxAge(Duration.ofMinutes(jwtExpirationMinutes))
-        .build();
   }
 }
