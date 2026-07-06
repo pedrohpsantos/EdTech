@@ -38,6 +38,7 @@ public class AuthController {
   private final RateLimitingService rateLimitingService;
   private final boolean secureCookie;
   private final long jwtExpirationMinutes;
+  private final String sameSite;
 
   /** Documentação. */
   public AuthController(
@@ -46,103 +47,105 @@ public class AuthController {
       RecoveryService recoveryService,
       RateLimitingService rateLimitingService,
       @Value(&quot;${jwt.cookie-secure:false}&quot;) boolean secureCookie,
-<span class="fc" id="L49">      @Value(&quot;${jwt.expiration-minutes:60}&quot;) long jwtExpirationMinutes) {</span>
-<span class="fc" id="L50">    this.userService = userService;</span>
-<span class="fc" id="L51">    this.jwtService = jwtService;</span>
-<span class="fc" id="L52">    this.recoveryService = recoveryService;</span>
-<span class="fc" id="L53">    this.rateLimitingService = rateLimitingService;</span>
-<span class="fc" id="L54">    this.secureCookie = secureCookie;</span>
-<span class="fc" id="L55">    this.jwtExpirationMinutes = jwtExpirationMinutes;</span>
-<span class="fc" id="L56">  }</span>
+      @Value(&quot;${jwt.expiration-minutes:60}&quot;) long jwtExpirationMinutes,
+<span class="fc" id="L51">      @Value(&quot;${jwt.cookie-same-site:Lax}&quot;) String sameSite) {</span>
+<span class="fc" id="L52">    this.userService = userService;</span>
+<span class="fc" id="L53">    this.jwtService = jwtService;</span>
+<span class="fc" id="L54">    this.recoveryService = recoveryService;</span>
+<span class="fc" id="L55">    this.rateLimitingService = rateLimitingService;</span>
+<span class="fc" id="L56">    this.secureCookie = secureCookie;</span>
+<span class="fc" id="L57">    this.jwtExpirationMinutes = jwtExpirationMinutes;</span>
+<span class="fc" id="L58">    this.sameSite = sameSite;</span>
+<span class="fc" id="L59">  }</span>
 
   @PostMapping(&quot;/register&quot;)
   public ResponseEntity&lt;?&gt; register(@Valid @RequestBody RegisterRequestDto request) {
-<span class="fc" id="L60">    User registeredUser = userService.register(request);</span>
-<span class="fc" id="L61">    return ResponseEntity.status(HttpStatus.CREATED).body(UserResponseDto.from(registeredUser));</span>
+<span class="fc" id="L63">    User registeredUser = userService.register(request);</span>
+<span class="fc" id="L64">    return ResponseEntity.status(HttpStatus.CREATED).body(UserResponseDto.from(registeredUser));</span>
   }
 
   /** Documentação. */
   @PostMapping(&quot;/login&quot;)
   public ResponseEntity&lt;UserResponseDto&gt; login(
       @Valid @RequestBody LoginRequestDto request, HttpServletRequest httpRequest) {
-<span class="fc" id="L68">    Bucket bucket = rateLimitingService.resolveBucket(httpRequest.getRemoteAddr());</span>
-<span class="fc bfc" id="L69" title="All 2 branches covered.">    if (!bucket.tryConsume(1)) {</span>
-<span class="fc" id="L70">      throw new RateLimitExceededException(</span>
+<span class="fc" id="L71">    Bucket bucket = rateLimitingService.resolveBucket(httpRequest.getRemoteAddr());</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">    if (!bucket.tryConsume(1)) {</span>
+<span class="fc" id="L73">      throw new RateLimitExceededException(</span>
           &quot;Limite de tentativas excedido. Tente novamente mais tarde.&quot;);
     }
 
-<span class="fc" id="L74">    User user = userService.authenticate(request.email(), request.password());</span>
-<span class="fc" id="L75">    String token = jwtService.generateToken(user);</span>
+<span class="fc" id="L77">    User user = userService.authenticate(request.email(), request.password());</span>
+<span class="fc" id="L78">    String token = jwtService.generateToken(user);</span>
 
-<span class="fc" id="L77">    return ResponseEntity.ok()</span>
-<span class="fc" id="L78">        .header(&quot;Set-Cookie&quot;, buildAuthCookie(token).toString())</span>
-<span class="fc" id="L79">        .body(UserResponseDto.from(user));</span>
+<span class="fc" id="L80">    return ResponseEntity.ok()</span>
+<span class="fc" id="L81">        .header(&quot;Set-Cookie&quot;, buildAuthCookie(token).toString())</span>
+<span class="fc" id="L82">        .body(UserResponseDto.from(user));</span>
   }
 
   /** Documentação. */
   @PostMapping(&quot;/recovery/request&quot;)
   public ResponseEntity&lt;?&gt; requestRecovery(
       @RequestBody RecoveryRequestDto request, HttpServletRequest httpRequest) {
-<span class="fc" id="L86">    Bucket bucket = rateLimitingService.resolveBucket(httpRequest.getRemoteAddr());</span>
-<span class="fc bfc" id="L87" title="All 2 branches covered.">    if (!bucket.tryConsume(1)) {</span>
-<span class="fc" id="L88">      throw new RateLimitExceededException(</span>
+<span class="fc" id="L89">    Bucket bucket = rateLimitingService.resolveBucket(httpRequest.getRemoteAddr());</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">    if (!bucket.tryConsume(1)) {</span>
+<span class="fc" id="L91">      throw new RateLimitExceededException(</span>
           &quot;Limite de tentativas excedido. Tente novamente mais tarde.&quot;);
     }
 
-<span class="fc" id="L92">    recoveryService.requestRecovery(request.email());</span>
-<span class="fc" id="L93">    return ResponseEntity.ok().build();</span>
+<span class="fc" id="L95">    recoveryService.requestRecovery(request.email());</span>
+<span class="fc" id="L96">    return ResponseEntity.ok().build();</span>
   }
 
   /** Documentação. */
   @PostMapping(&quot;/recovery/verify&quot;)
   public ResponseEntity&lt;?&gt; verifyCode(@RequestBody VerifyCodeDto request) {
-<span class="fc" id="L99">    boolean valid = recoveryService.verifyCode(request.email(), request.code());</span>
-<span class="fc bfc" id="L100" title="All 2 branches covered.">    if (valid) {</span>
-<span class="fc" id="L101">      return ResponseEntity.ok().build();</span>
+<span class="fc" id="L102">    boolean valid = recoveryService.verifyCode(request.email(), request.code());</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">    if (valid) {</span>
+<span class="fc" id="L104">      return ResponseEntity.ok().build();</span>
     }
-<span class="fc" id="L103">    return ResponseEntity.badRequest().body(&quot;Código inválido ou expirado.&quot;);</span>
+<span class="fc" id="L106">    return ResponseEntity.badRequest().body(&quot;Código inválido ou expirado.&quot;);</span>
   }
 
   /** Documentação. */
   @PostMapping(&quot;/recovery/reset&quot;)
   public ResponseEntity&lt;?&gt; resetPassword(@RequestBody ResetPasswordDto request) {
-<span class="fc" id="L109">    boolean success =</span>
-<span class="fc" id="L110">        recoveryService.resetPassword(request.email(), request.code(), request.newPassword());</span>
-<span class="fc bfc" id="L111" title="All 2 branches covered.">    if (success) {</span>
-<span class="fc" id="L112">      return ResponseEntity.ok().build();</span>
+<span class="fc" id="L112">    boolean success =</span>
+<span class="fc" id="L113">        recoveryService.resetPassword(request.email(), request.code(), request.newPassword());</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">    if (success) {</span>
+<span class="fc" id="L115">      return ResponseEntity.ok().build();</span>
     }
-<span class="fc" id="L114">    return ResponseEntity.badRequest().body(&quot;Erro ao redefinir a senha.&quot;);</span>
+<span class="fc" id="L117">    return ResponseEntity.badRequest().body(&quot;Erro ao redefinir a senha.&quot;);</span>
   }
 
   /** Documentação. */
   @PostMapping(&quot;/logout&quot;)
   public ResponseEntity&lt;Void&gt; logout() {
-<span class="fc" id="L120">    ResponseCookie clearedCookie =</span>
-<span class="fc" id="L121">        ResponseCookie.from(&quot;token&quot;, &quot;&quot;)</span>
-<span class="fc" id="L122">            .httpOnly(true)</span>
-<span class="fc" id="L123">            .secure(secureCookie)</span>
-<span class="fc" id="L124">            .sameSite(&quot;Lax&quot;)</span>
-<span class="fc" id="L125">            .path(&quot;/&quot;)</span>
-<span class="fc" id="L126">            .maxAge(0)</span>
-<span class="fc" id="L127">            .build();</span>
+<span class="fc" id="L123">    ResponseCookie clearedCookie =</span>
+<span class="fc" id="L124">        ResponseCookie.from(&quot;token&quot;, &quot;&quot;)</span>
+<span class="fc" id="L125">            .httpOnly(true)</span>
+<span class="fc" id="L126">            .secure(secureCookie)</span>
+<span class="fc" id="L127">            .sameSite(sameSite)</span>
+<span class="fc" id="L128">            .path(&quot;/&quot;)</span>
+<span class="fc" id="L129">            .maxAge(0)</span>
+<span class="fc" id="L130">            .build();</span>
 
-<span class="fc" id="L129">    return ResponseEntity.ok().header(&quot;Set-Cookie&quot;, clearedCookie.toString()).build();</span>
+<span class="fc" id="L132">    return ResponseEntity.ok().header(&quot;Set-Cookie&quot;, clearedCookie.toString()).build();</span>
   }
 
   @GetMapping(&quot;/me&quot;)
   public ResponseEntity&lt;UserResponseDto&gt; me(Authentication authentication) {
-<span class="fc" id="L134">    User user = (User) authentication.getPrincipal();</span>
-<span class="fc" id="L135">    return ResponseEntity.ok(UserResponseDto.from(user));</span>
+<span class="fc" id="L137">    User user = (User) authentication.getPrincipal();</span>
+<span class="fc" id="L138">    return ResponseEntity.ok(UserResponseDto.from(user));</span>
   }
 
   private ResponseCookie buildAuthCookie(String token) {
-<span class="fc" id="L139">    return ResponseCookie.from(&quot;token&quot;, token)</span>
-<span class="fc" id="L140">        .httpOnly(true)</span>
-<span class="fc" id="L141">        .secure(secureCookie)</span>
-<span class="fc" id="L142">        .sameSite(&quot;Lax&quot;)</span>
-<span class="fc" id="L143">        .path(&quot;/&quot;)</span>
-<span class="fc" id="L144">        .maxAge(Duration.ofMinutes(jwtExpirationMinutes))</span>
-<span class="fc" id="L145">        .build();</span>
+<span class="fc" id="L142">    return ResponseCookie.from(&quot;token&quot;, token)</span>
+<span class="fc" id="L143">        .httpOnly(true)</span>
+<span class="fc" id="L144">        .secure(secureCookie)</span>
+<span class="fc" id="L145">        .sameSite(sameSite)</span>
+<span class="fc" id="L146">        .path(&quot;/&quot;)</span>
+<span class="fc" id="L147">        .maxAge(Duration.ofMinutes(jwtExpirationMinutes))</span>
+<span class="fc" id="L148">        .build();</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
