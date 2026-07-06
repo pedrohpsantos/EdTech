@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AuditController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">edtech-api</a> &gt; <a href="index.source.html" class="el_package">com.edtech.controller</a> &gt; <span class="el_source">AuditController.java</span></div><h1>AuditController.java</h1><pre class="source lang-java linenums">package com.edtech.controller;
+
+import com.edtech.dto.AuditLogDTO;
+import com.edtech.model.AuditLog;
+import com.edtech.model.User;
+import com.edtech.repository.AuditLogRepository;
+import com.edtech.repository.UserRepository;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.stream.Collectors;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping(&quot;/api/audit-logs&quot;)
+public class AuditController {
+
+  private final AuditLogRepository auditLogRepository;
+  private final UserRepository userRepository;
+
+<span class="fc" id="L25">  public AuditController(AuditLogRepository auditLogRepository, UserRepository userRepository) {</span>
+<span class="fc" id="L26">    this.auditLogRepository = auditLogRepository;</span>
+<span class="fc" id="L27">    this.userRepository = userRepository;</span>
+<span class="fc" id="L28">  }</span>
+
+  @GetMapping
+  @PreAuthorize(&quot;hasRole('AUDITOR')&quot;)
+  public ResponseEntity&lt;List&lt;AuditLogDTO&gt;&gt; getAuditLogs(
+      @RequestParam(required = false) String search,
+      @RequestParam(required = false) String action) {
+    
+<span class="nc" id="L36">    List&lt;AuditLog&gt; logs = auditLogRepository.findAllByOrderByCreatedAtDesc();</span>
+<span class="nc" id="L37">    DateTimeFormatter formatter = DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd HH:mm:ss.SSS&quot;);</span>
+
+<span class="nc" id="L39">    List&lt;AuditLogDTO&gt; dtos = logs.stream().map(log -&gt; {</span>
+<span class="nc" id="L40">      AuditLogDTO dto = new AuditLogDTO();</span>
+<span class="nc" id="L41">      dto.setId(log.getId());</span>
+<span class="nc" id="L42">      dto.setTimestamp(log.getCreatedAt().format(formatter));</span>
+<span class="nc" id="L43">      dto.setAction(log.getAction());</span>
+<span class="nc" id="L44">      dto.setUserId(log.getUserId());</span>
+<span class="nc" id="L45">      dto.setIp(log.getIpAddress());</span>
+<span class="nc" id="L46">      dto.setDetails(log.getDetails());</span>
+<span class="nc" id="L47">      dto.setEventId(&quot;e&quot; + log.getId().toString().substring(0, 5));</span>
+      
+<span class="nc" id="L49">      User user = userRepository.findById(log.getUserId()).orElse(null);</span>
+<span class="nc bnc" id="L50" title="All 2 branches missed.">      dto.setUserName(user != null ? user.getName() : &quot;Unknown&quot;);</span>
+      
+      // Determine Action Class and Severity based on Action
+<span class="nc bnc" id="L53" title="All 4 branches missed.">      switch (log.getAction()) {</span>
+        case LOGIN_SUCCESS:
+        case DOCUMENT_APPROVED:
+<span class="nc" id="L56">          dto.setActionClass(&quot;green&quot;);</span>
+<span class="nc" id="L57">          dto.setSeverity(&quot;INFO&quot;);</span>
+<span class="nc" id="L58">          break;</span>
+        case LOGIN_FAILED:
+        case DOCUMENT_REJECTED:
+        case MEMBER_JOINED:
+<span class="nc" id="L62">          dto.setActionClass(&quot;orange&quot;);</span>
+<span class="nc" id="L63">          dto.setSeverity(&quot;WARNING&quot;);</span>
+<span class="nc" id="L64">          break;</span>
+        case DELETE_DOCUMENT:
+<span class="nc" id="L66">          dto.setActionClass(&quot;red&quot;);</span>
+<span class="nc" id="L67">          dto.setSeverity(&quot;CRITICAL&quot;);</span>
+<span class="nc" id="L68">          break;</span>
+        default:
+<span class="nc" id="L70">          dto.setActionClass(&quot;blue&quot;);</span>
+<span class="nc" id="L71">          dto.setSeverity(&quot;INFO&quot;);</span>
+      }
+<span class="nc" id="L73">      return dto;</span>
+<span class="nc" id="L74">    }).collect(Collectors.toList());</span>
+
+    // Apply filtering in memory (for simplicity and speed in this context)
+<span class="nc bnc" id="L77" title="All 4 branches missed.">    if (search != null &amp;&amp; !search.isEmpty()) {</span>
+<span class="nc" id="L78">      String s = search.toLowerCase();</span>
+<span class="nc" id="L79">      dtos = dtos.stream().filter(dto -&gt; </span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">          dto.getAction().name().toLowerCase().contains(s) ||</span>
+<span class="nc bnc" id="L81" title="All 4 branches missed.">          (dto.getDetails() != null &amp;&amp; dto.getDetails().toLowerCase().contains(s)) ||</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">          dto.getUserName().toLowerCase().contains(s) ||</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">          dto.getIp().contains(s)</span>
+<span class="nc" id="L84">      ).collect(Collectors.toList());</span>
+    }
+
+<span class="nc bnc" id="L87" title="All 6 branches missed.">    if (action != null &amp;&amp; !action.isEmpty() &amp;&amp; !action.equals(&quot;Todas as Ações&quot;)) {</span>
+<span class="nc" id="L88">      dtos = dtos.stream().filter(dto -&gt; dto.getAction().name().equals(action)).collect(Collectors.toList());</span>
+    }
+
+<span class="nc" id="L91">    return ResponseEntity.ok(dtos);</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

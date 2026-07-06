@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ComplianceStatsDTO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">edtech-api</a> &gt; <a href="index.source.html" class="el_package">com.edtech.dto</a> &gt; <span class="el_source">ComplianceStatsDTO.java</span></div><h1>ComplianceStatsDTO.java</h1><pre class="source lang-java linenums">package com.edtech.dto;
+
+import java.util.List;
+
+<span class="nc" id="L5">public class ComplianceStatsDTO {</span>
+  private int score;
+  private int scoreTrend;
+  private int compliantPolicies;
+  private int totalPolicies;
+  private int pendingItems;
+  private int totalEvents;
+  private List&lt;PolicyDTO&gt; policies;
+
+<span class="nc" id="L14">  public static class PolicyDTO {</span>
+    private String name;
+    private String status; // 'conforme', 'parcial', 'pendente'
+    private int percentage;
+    private String text;
+    
+    // getters and setters
+<span class="nc" id="L21">    public String getName() { return name; }</span>
+<span class="nc" id="L22">    public void setName(String name) { this.name = name; }</span>
+<span class="nc" id="L23">    public String getStatus() { return status; }</span>
+<span class="nc" id="L24">    public void setStatus(String status) { this.status = status; }</span>
+<span class="nc" id="L25">    public int getPercentage() { return percentage; }</span>
+<span class="nc" id="L26">    public void setPercentage(int percentage) { this.percentage = percentage; }</span>
+<span class="nc" id="L27">    public String getText() { return text; }</span>
+<span class="nc" id="L28">    public void setText(String text) { this.text = text; }</span>
+  }
+
+  // getters and setters
+<span class="nc" id="L32">  public int getScore() { return score; }</span>
+<span class="nc" id="L33">  public void setScore(int score) { this.score = score; }</span>
+  
+<span class="nc" id="L35">  public int getScoreTrend() { return scoreTrend; }</span>
+<span class="nc" id="L36">  public void setScoreTrend(int scoreTrend) { this.scoreTrend = scoreTrend; }</span>
+  
+<span class="nc" id="L38">  public int getCompliantPolicies() { return compliantPolicies; }</span>
+<span class="nc" id="L39">  public void setCompliantPolicies(int compliantPolicies) { this.compliantPolicies = compliantPolicies; }</span>
+  
+<span class="nc" id="L41">  public int getTotalPolicies() { return totalPolicies; }</span>
+<span class="nc" id="L42">  public void setTotalPolicies(int totalPolicies) { this.totalPolicies = totalPolicies; }</span>
+  
+<span class="nc" id="L44">  public int getPendingItems() { return pendingItems; }</span>
+<span class="nc" id="L45">  public void setPendingItems(int pendingItems) { this.pendingItems = pendingItems; }</span>
+  
+<span class="nc" id="L47">  public int getTotalEvents() { return totalEvents; }</span>
+<span class="nc" id="L48">  public void setTotalEvents(int totalEvents) { this.totalEvents = totalEvents; }</span>
+  
+<span class="nc" id="L50">  public List&lt;PolicyDTO&gt; getPolicies() { return policies; }</span>
+<span class="nc" id="L51">  public void setPolicies(List&lt;PolicyDTO&gt; policies) { this.policies = policies; }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
