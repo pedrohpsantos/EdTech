@@ -38,8 +38,8 @@ public class SecurityConfig {
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     return http.cors(cors -> cors.configurationSource(corsConfigurationSource()))
-        // API stateless: JWT em cookie HttpOnly com SameSite=Lax, sem sessão server-side.
-        .csrf(AbstractHttpConfigurer::disable)
+        // API stateless: JWT em header Authorization, imune a CSRF.
+        .csrf(csrf -> csrf.ignoringRequestMatchers("/**"))
         .httpBasic(AbstractHttpConfigurer::disable)
         .formLogin(AbstractHttpConfigurer::disable)
         .sessionManagement(

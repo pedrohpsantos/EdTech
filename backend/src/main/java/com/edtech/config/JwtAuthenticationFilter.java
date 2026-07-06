@@ -6,7 +6,6 @@ import com.edtech.service.JwtService;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -24,7 +23,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-  private static final String TOKEN_COOKIE_NAME = "token";
 
   private final JwtService jwtService;
   private final UserRepository userRepository;
@@ -79,14 +77,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
       return Optional.of(authHeader.substring(7));
     }
 
-    Cookie[] cookies = request.getCookies();
-    if (cookies != null) {
-      for (Cookie cookie : cookies) {
-        if (TOKEN_COOKIE_NAME.equals(cookie.getName()) && !cookie.getValue().isBlank()) {
-          return Optional.of(cookie.getValue());
-        }
-      }
-    }
     return Optional.empty();
   }
 

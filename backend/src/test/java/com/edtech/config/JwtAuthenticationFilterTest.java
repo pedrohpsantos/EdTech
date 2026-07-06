@@ -15,7 +15,7 @@ import com.edtech.service.JwtService;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.Cookie;
+
 import java.io.IOException;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
@@ -108,27 +108,7 @@ class JwtAuthenticationFilterTest {
     assertThat(principal.getEmail()).isEqualTo("test@unb.br");
   }
 
-  @Test
-  void doFilterInternalWithCookieToken() throws ServletException, IOException {
-    MockHttpServletRequest request = new MockHttpServletRequest();
-    request.setCookies(new Cookie("token", "valid.token.cookie"));
-    MockHttpServletResponse response = new MockHttpServletResponse();
-    FilterChain filterChain = mock(FilterChain.class);
 
-    User user = new User("Test2", "test2@unb.br", "hash", UserRole.RESEARCHER);
-    user.setActive(true);
-
-    when(jwtService.extractSubject("valid.token.cookie")).thenReturn("test2@unb.br");
-    when(userRepository.findByEmailIgnoreCase("test2@unb.br")).thenReturn(Optional.of(user));
-    when(jwtService.isValid("valid.token.cookie", user)).thenReturn(true);
-
-    filter.doFilterInternal(request, response, filterChain);
-
-    verify(filterChain).doFilter(request, response);
-    assertThat(SecurityContextHolder.getContext().getAuthentication()).isNotNull();
-    User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    assertThat(principal.getEmail()).isEqualTo("test2@unb.br");
-  }
 
   @Test
   void doFilterInternalWithInvalidToken() throws ServletException, IOException {
@@ -180,16 +160,4 @@ class JwtAuthenticationFilterTest {
     assertThat(SecurityContextHolder.getContext().getAuthentication()).isNull();
   }
 
-  @Test
-  void extractTokenIgnoresEmptyCookie() throws ServletException, IOException {
-    MockHttpServletRequest request = new MockHttpServletRequest();
-    request.setCookies(new Cookie("token", "   "));
-    MockHttpServletResponse response = new MockHttpServletResponse();
-    FilterChain filterChain = mock(FilterChain.class);
-
-    filter.doFilterInternal(request, response, filterChain);
-
-    verify(filterChain).doFilter(request, response);
-    assertThat(SecurityContextHolder.getContext().getAuthentication()).isNull();
-  }
 }
