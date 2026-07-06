@@ -320,10 +320,10 @@ public class DocumentServiceTest {
   @Test
   void testListDocumentsByUser_Success() {
     Page<Document> page = new PageImpl<>(Collections.singletonList(document));
-    when(documentRepository.findDocumentsByUserIdAndFilters(eq(authorId), eq(projectId), anyString(), any()))
+    when(documentRepository.findDocumentsByUserIdAndFilters(eq(authorId), eq(projectId), anyString(), any(), any()))
         .thenReturn(page);
 
-    Page<DocumentResponseDto> response = documentService.listDocumentsByUser(authorId, projectId, "title", PageRequest.of(0, 10));
+    Page<DocumentResponseDto> response = documentService.listDocumentsByUser(authorId, projectId, "title", null, PageRequest.of(0, 10));
     
     assertNotNull(response);
     assertEquals(1, response.getContent().size());

@@ -15,6 +15,7 @@ const Documentos: React.FC = () => {
   // Modal State
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const [previewDoc, setPreviewDoc] = useState<Document | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string>('');
   const [isPreviewLoading, setIsPreviewLoading] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [uploadFile, setUploadFile] = useState<File | null>(null);
@@ -44,12 +45,21 @@ const Documentos: React.FC = () => {
     }
   };
 
-  const handleView = (doc: Document) => {
+  const handleView = async (doc: Document) => {
     setPreviewDoc(doc);
     setIsPreviewLoading(true);
-    setTimeout(() => {
+    setPreviewUrl('');
+    
+    try {
+      const url = await getUrl(doc.id);
+      if (url) {
+        setPreviewUrl(url);
+      }
+    } catch (e) {
+      showToast('Erro ao carregar preview do documento');
+    } finally {
       setIsPreviewLoading(false);
-    }, 2000);
+    }
   };
 
   const closePreviewModal = () => {
@@ -413,89 +423,23 @@ const Documentos: React.FC = () => {
               </div>
             </div>
 
-            <div className="preview-modal-body">
-              <div className="dummy-document-viewer">
-                {isPreviewLoading ? (
-                  <div className="dummy-page loading-shimmer">
-                    <div className="dummy-line title"></div>
-                    <div className="dummy-line"></div>
-                    <div className="dummy-line"></div>
-                    <div className="dummy-line"></div>
-                    <div className="dummy-line short"></div>
-
-                    <div className="dummy-image">
-                      <i
-                        className="bi bi-image"
-                        style={{ fontSize: '48px', color: 'rgba(255,255,255,0.1)' }}
-                      ></i>
-                    </div>
-
-                    <div className="dummy-line"></div>
-                    <div className="dummy-line"></div>
-                    <div className="dummy-line short"></div>
+            <div className="preview-modal-body" style={{ padding: '0', height: '65vh', display: 'flex', flexDirection: 'column', background: '#e2e8f0' }}>
+              {isPreviewLoading ? (
+                <div style={{ padding: '2rem', textAlign: 'center', color: '#64748B', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
+                  Carregando visualização do documento...
+                </div>
+              ) : previewUrl ? (
+                <object data={previewUrl} type="application/pdf" width="100%" height="100%" style={{ border: 'none', flex: 1 }}>
+                  <div style={{ padding: '2rem', textAlign: 'center' }}>
+                    Seu navegador não suporta a visualização nativa de PDFs. <br/><br/>
+                    <a href={previewUrl} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--ed-purple)' }}>Clique aqui para baixar</a>
                   </div>
-                ) : (
-                  <div className="dummy-page document-content">
-                    <h2 style={{ color: 'var(--ed-text-dark)', marginBottom: '24px' }}>
-                      {previewDoc.title}
-                    </h2>
-                    <p style={{ color: '#4a4a4a', lineHeight: '1.6', marginBottom: '16px' }}>
-                      Este é um documento de visualização fictício para o arquivo selecionado. Na
-                      versão final do sistema conectado ao Storage, aqui será renderizado o conteúdo
-                      nativo do arquivo (PDF Viewer integrado, tabela de dados CSV ou renderizador
-                      JSON).
-                    </p>
-                    <p style={{ color: '#4a4a4a', lineHeight: '1.6', marginBottom: '16px' }}>
-                      A plataforma EdTech garante acesso seguro e auditado. Todas as ações de
-                      visualização são registradas nos logs de segurança da{' '}
-                      <strong>Trilha de Pesquisa</strong>.
-                    </p>
-
-                    <div
-                      style={{
-                        backgroundColor: 'var(--code-bg)',
-                        padding: '24px',
-                        borderRadius: '8px',
-                        border: '1px solid var(--border)',
-                        marginTop: '32px',
-                      }}
-                    >
-                      <h4
-                        style={{
-                          color: 'var(--ed-purple-main)',
-                          marginTop: 0,
-                          marginBottom: '12px',
-                        }}
-                      >
-                        Detalhes do Arquivo
-                      </h4>
-                      <ul
-                        style={{
-                          listStyleType: 'none',
-                          padding: 0,
-                          margin: 0,
-                          color: 'var(--ed-text-muted)',
-                          fontSize: '14px',
-                        }}
-                      >
-                        <li style={{ marginBottom: '8px' }}>
-                          <strong>ID do Registro:</strong> {previewDoc.id}
-                        </li>
-                        <li style={{ marginBottom: '8px' }}>
-                          <strong>Projeto / Workpace:</strong> {previewDoc.project}
-                        </li>
-                        <li style={{ marginBottom: '8px' }}>
-                          <strong>Tamanho Identificado:</strong> {previewDoc.size}
-                        </li>
-                        <li>
-                          <strong>Status de Conformidade:</strong>{' '}
-                          <span style={{ color: 'var(--ed-green-main)' }}>Validado</span>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                )}
-              </div>
+                </object>
+              ) : (
+                <div style={{ padding: '2rem', textAlign: 'center', color: '#64748B', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
+                  Nenhum preview disponível.
+                </div>
+              )}
             </div>
           </div>
         </div>

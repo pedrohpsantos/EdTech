@@ -50,11 +50,12 @@ public class DocumentController {
   public ResponseEntity<Page<DocumentResponseDto>> listDocuments(
       @RequestParam(required = false) UUID projectId,
       @RequestParam(required = false) String title,
+      @RequestParam(required = false) com.edtech.model.DocumentStatus status,
       @PageableDefault(size = 20) Pageable pageable,
       Authentication authentication) {
     User user = (User) authentication.getPrincipal();
     return ResponseEntity.ok(
-        documentService.listDocumentsByUser(user.getId(), projectId, title, pageable));
+        documentService.listDocumentsByUser(user.getId(), projectId, title, status, pageable));
   }
 
   @GetMapping("/{id}/download")

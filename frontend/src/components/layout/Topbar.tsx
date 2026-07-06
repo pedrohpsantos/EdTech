@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import { useAuth } from '../../context/authContext';
+import { useAuth } from '../../context/authContext';
 import ThemeToggle from '../themeToggle';
 
 interface TopbarProps {
@@ -11,7 +11,7 @@ interface TopbarProps {
 }
 
 const Topbar: React.FC<TopbarProps> = ({ title, subtitle, breadcrumbs, customTopbarElement }) => {
-  // const { user } = useAuth();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const [showNotifications, setShowNotifications] = useState(false);
 
@@ -46,10 +46,13 @@ const Topbar: React.FC<TopbarProps> = ({ title, subtitle, breadcrumbs, customTop
         {subtitle && <p className="page-subtitle">{subtitle}</p>}
       </div>
       <div className="topbar-right">
-        {customTopbarElement}
-        <button className="btn-upload" onClick={() => navigate('/upload')}>
-          <i className="bi bi-upload"></i> Enviar documento
-        </button>
+        {customTopbarElement ? (
+          customTopbarElement
+        ) : user?.role === 'RESEARCHER' ? (
+          <button className="btn-upload" onClick={() => navigate('/upload')}>
+            <i className="bi bi-upload"></i> Enviar documento
+          </button>
+        ) : null}
         <div className="topbar-actions">
           <div className="action-icon-wrapper">
             <ThemeToggle />

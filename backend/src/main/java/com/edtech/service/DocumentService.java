@@ -138,9 +138,9 @@ public class DocumentService {
 
   /** Documentação. */
   public Page<DocumentResponseDto> listDocumentsByUser(
-      UUID userId, UUID projectId, String title, Pageable pageable) {
+      UUID userId, UUID projectId, String title, DocumentStatus status, Pageable pageable) {
     return documentRepository
-        .findDocumentsByUserIdAndFilters(userId, projectId, title, pageable)
+        .findDocumentsByUserIdAndFilters(userId, projectId, title, status, pageable)
         .map(this::mapToDto);
   }
 

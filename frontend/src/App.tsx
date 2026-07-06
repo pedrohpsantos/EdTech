@@ -15,6 +15,11 @@ const Trail = React.lazy(() => import('./pages/trail'));
 const Upload = React.lazy(() => import('./pages/upload'));
 const Settings = React.lazy(() => import('./pages/settings'));
 const About = React.lazy(() => import('./pages/About'));
+const Submissions = React.lazy(() => import('./pages/submissions'));
+const Analytics = React.lazy(() => import('./pages/analytics'));
+const ComplianceCenter = React.lazy(() => import('./pages/compliance'));
+const AuditLogs = React.lazy(() => import('./pages/auditLogs'));
+const Projects = React.lazy(() => import('./pages/projects'));
 
 const queryClient = new QueryClient();
 
@@ -59,6 +64,22 @@ function App() {
                   }
                 />
                 <Route
+                  path="/submissions"
+                  element={
+                    <PrivateRoute allowedRoles={['ADVISOR']}>
+                      <Submissions />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path="/projects"
+                  element={
+                    <PrivateRoute>
+                      <Projects />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
                   path="/upload"
                   element={
                     <PrivateRoute>
@@ -71,6 +92,30 @@ function App() {
                   element={
                     <PrivateRoute>
                       <Trail />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path="/analytics"
+                  element={
+                    <PrivateRoute>
+                      <Analytics />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path="/compliance-center"
+                  element={
+                    <PrivateRoute allowedRoles={['AUDITOR']}>
+                      <ComplianceCenter />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path="/audit-logs"
+                  element={
+                    <PrivateRoute allowedRoles={['AUDITOR']}>
+                      <AuditLogs />
                     </PrivateRoute>
                   }
                 />

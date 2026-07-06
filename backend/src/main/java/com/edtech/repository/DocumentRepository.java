@@ -20,11 +20,13 @@ public interface DocumentRepository extends JpaRepository<Document, UUID> {
       "SELECT d FROM Document d JOIN ProjectMember pm ON d.project.id = pm.project.id "
           + "WHERE pm.user.id = :userId "
           + "AND (:projectId IS NULL OR d.project.id = :projectId) "
-          + "AND (:title IS NULL OR LOWER(d.title) LIKE LOWER(CONCAT('%', :title, '%')))")
+          + "AND (:title IS NULL OR LOWER(d.title) LIKE LOWER(CONCAT('%', :title, '%'))) "
+          + "AND (:status IS NULL OR d.status = :status)")
   Page<Document> findDocumentsByUserIdAndFilters(
       @Param("userId") UUID userId,
       @Param("projectId") UUID projectId,
       @Param("title") String title,
+      @Param("status") com.edtech.model.DocumentStatus status,
       Pageable pageable);
 
   @Query(

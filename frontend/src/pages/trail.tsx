@@ -1,26 +1,62 @@
 import React, { useState } from 'react';
 import DashboardLayout from '../components/layout/DashboardLayout';
+import { useAuth } from '../context/authContext';
 import '../assets/trail.css';
 
 const ResearchTrail: React.FC = () => {
+  const { user } = useAuth();
   // For demo purposes, we'll use local state to switch between "list mode" and "detail mode"
   const [selectedDocId, setSelectedDocId] = useState<string>('1');
 
-  const documents = [
+  const advisorDocuments = [
     {
       id: '1',
       title: 'Metodologia_Qualitativa_v3.pdf',
-      project: 'Análise LGPD',
+      project: 'R. Silva - Análise LGPD',
       status: 'Aprovado',
+      type: 'pdf',
     },
     {
       id: '2',
-      title: 'Dataset_Experimento_A.csv',
-      project: 'Sistemas de IA',
+      title: 'Resultados_Parciais_Q2.pdf',
+      project: 'J. Mendes - Bioinformática',
       status: 'Em revisão',
+      type: 'pdf',
     },
-    { id: '3', title: 'Referencial_Teorico_v2.pdf', project: 'Análise LGPD', status: 'Submetido' },
+    { 
+      id: '3', 
+      title: 'analise_estatistica_q2.json', 
+      project: 'A. Costa - Sistemas de IA', 
+      status: 'Submetido',
+      type: 'csv', // using csv style for json
+    },
+    {
+      id: '4',
+      title: 'Dataset_Experimento_B.csv',
+      project: 'J. Ferreira - Análise LGPD',
+      status: 'Rascunho',
+      type: 'csv',
+    },
   ];
+
+  const researcherDocuments = [
+    {
+      id: '1',
+      title: 'Referencial_Teorico_Final.pdf',
+      project: 'Projeto - Análise LGPD',
+      status: 'Aprovado',
+      type: 'pdf',
+    },
+    {
+      id: '4',
+      title: 'Dataset_Experimento_B.csv',
+      project: 'Projeto - Análise LGPD',
+      status: 'Rascunho',
+      type: 'csv',
+    },
+  ];
+
+  const documents = user?.role === 'RESEARCHER' ? researcherDocuments : advisorDocuments;
 
   const getStatusBadgeClass = (status: string) => {
     switch (status) {
@@ -46,56 +82,24 @@ const ResearchTrail: React.FC = () => {
         </div>
       }
     >
-      {/* GOVERNANCE ALERTS (Mixed in as requested) */}
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
-          gap: '24px',
-          marginBottom: '32px',
-        }}
-      >
-        <div
-          className="governance-alert"
-          style={{ background: 'var(--ed-status-danger)', margin: 0 }}
-        >
-          <div className="alert-content">
-            <div className="alert-icon" style={{ backgroundColor: 'rgba(255,255,255,0.2)' }}>
-              <i className="bi bi-shield-lock"></i>
-            </div>
-            <div className="alert-text-container">
-              <span className="alert-title text-white">ALTO RISCO (1)</span>
-              <span className="alert-desc text-white">
-                Anonimização de dados LGPD obrigatória antes do envio para a Nuvem.
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <div className="governance-alert" style={{ background: 'var(--ed-orange)', margin: 0 }}>
-          <div className="alert-content">
-            <div className="alert-icon" style={{ backgroundColor: 'rgba(255,255,255,0.2)' }}>
-              <i className="bi bi-journal-x"></i>
-            </div>
-            <div className="alert-text-container">
-              <span className="alert-title text-white">ATENÇÃO (2)</span>
-              <span className="alert-desc text-white">
-                Documentos detectados com seções de metodologia incompletas.
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* List Section */}
       <div className="trail-doc-list">
         <div className="trail-doc-list-header">
           <div className="trail-doc-list-icon">
-            <i className="bi bi-folder2-open"></i>
+            <i className="bi bi-person-badge"></i>
           </div>
           <div className="trail-doc-list-title">
-            <h3>Seus documentos</h3>
-            <p>Trilha de auditoria dos documentos que você criou</p>
+            {user?.role === 'RESEARCHER' ? (
+              <>
+                <h3>Meus Documentos</h3>
+                <p>Trilha das suas submissões e evidências</p>
+              </>
+            ) : (
+              <>
+                <h3>Documentos dos orientandos</h3>
+                <p>Trilha dos documentos sob sua orientação</p>
+              </>
+            )}
           </div>
         </div>
 
@@ -137,10 +141,10 @@ const ResearchTrail: React.FC = () => {
               </div>
               <div>
                 <span className="trail-doc-name" style={{ fontSize: '16px' }}>
-                  Metodologia_Qualitativa_v3.pdf
+                  {user?.role === 'RESEARCHER' ? 'Referencial_Teorico_Final.pdf' : 'Metodologia_Qualitativa_v3.pdf'}
                 </span>
                 <span className="trail-doc-project">
-                  Dra. Renata Silva - Análise LGPD - 7 eventos · 4 versões
+                  {user?.role === 'RESEARCHER' ? 'Seu projeto - Análise LGPD - 7 eventos · 4 versões' : 'Dra. Renata Silva - Análise LGPD - 7 eventos · 4 versões'}
                 </span>
               </div>
             </div>

@@ -37,7 +37,7 @@ const Sidebar: React.FC = () => {
         </div>
         <div className="role-badge">
           <span className="badge-dot"></span>
-          PESQUISADOR
+          {user?.role === 'ADVISOR' ? 'ORIENTADOR' : user?.role === 'AUDITOR' ? 'AUDITOR' : 'PESQUISADOR'}
         </div>
       </div>
 
@@ -52,32 +52,81 @@ const Sidebar: React.FC = () => {
               <i className="bi bi-grid-1x2"></i> Visão Geral
               <i className="bi bi-chevron-right arrow-icon ms-auto"></i>
             </NavLink>
-            <NavLink
-              to="/documentos"
-              className={({ isActive }) => `nav-link-item ${isActive ? 'active' : ''}`}
-            >
-              <i className="bi bi-folder2-open"></i> Área de Pesquisa
-              <i className="bi bi-chevron-right arrow-icon ms-auto"></i>
-            </NavLink>
+            {user?.role === 'RESEARCHER' && (
+              <>
+                <NavLink
+                  to="/documentos"
+                  className={({ isActive }) => `nav-link-item ${isActive ? 'active' : ''}`}
+                >
+                  <i className="bi bi-folder2-open"></i> Área de Pesquisa
+                  <i className="bi bi-chevron-right arrow-icon ms-auto"></i>
+                </NavLink>
+                <NavLink
+                  to="/projects"
+                  className={({ isActive }) => `nav-link-item ${isActive ? 'active' : ''}`}
+                >
+                  <i className="bi bi-briefcase"></i> Projetos
+                  <i className="bi bi-chevron-right arrow-icon ms-auto"></i>
+                </NavLink>
+              </>
+            )}
+            {user?.role === 'ADVISOR' && (
+              <NavLink
+                to="/submissions"
+                className={({ isActive }) => `nav-link-item ${isActive ? 'active' : ''}`}
+              >
+                <i className="bi bi-play-circle"></i> Submissões
+                <i className="bi bi-chevron-right arrow-icon ms-auto"></i>
+              </NavLink>
+            )}
           </div>
         </div>
 
-        <div className="nav-section">
-          <span className="nav-section-title">INTELIGÊNCIA</span>
-          <div className="nav-links">
-            <NavLink
-              to="/trail"
-              className={({ isActive }) => `nav-link-item ${isActive ? 'active' : ''}`}
-            >
-              <i className="bi bi-diagram-3"></i> Trilha de Pesquisa
-              <i className="bi bi-chevron-right arrow-icon ms-auto"></i>
-            </NavLink>
+        {user?.role !== 'AUDITOR' && (
+          <div className="nav-section">
+            <span className="nav-section-title">INTELIGÊNCIA</span>
+            <div className="nav-links">
+              <NavLink
+                to="/trail"
+                className={({ isActive }) => `nav-link-item ${isActive ? 'active' : ''}`}
+              >
+                <i className="bi bi-diagram-3"></i> Trilha de Pesquisa
+                <i className="bi bi-chevron-right arrow-icon ms-auto"></i>
+              </NavLink>
+              {user?.role === 'ADVISOR' && (
+                <NavLink
+                  to="/analytics"
+                  className={({ isActive }) => `nav-link-item ${isActive ? 'active' : ''}`}
+                >
+                  <i className="bi bi-graph-up-arrow"></i> Análises
+                  <i className="bi bi-chevron-right arrow-icon ms-auto"></i>
+                </NavLink>
+              )}
+            </div>
           </div>
-        </div>
+        )}
 
         <div className="nav-section">
           <span className="nav-section-title">GOVERNANÇA</span>
           <div className="nav-links">
+            {user?.role === 'AUDITOR' && (
+              <>
+                <NavLink
+                  to="/compliance-center"
+                  className={({ isActive }) => `nav-link-item ${isActive ? 'active' : ''}`}
+                >
+                  <i className="bi bi-shield-check"></i> Centro de Conformidade
+                  <i className="bi bi-chevron-right arrow-icon ms-auto"></i>
+                </NavLink>
+                <NavLink
+                  to="/audit-logs"
+                  className={({ isActive }) => `nav-link-item ${isActive ? 'active' : ''}`}
+                >
+                  <i className="bi bi-journal-text"></i> Logs de Auditoria
+                  <i className="bi bi-chevron-right arrow-icon ms-auto"></i>
+                </NavLink>
+              </>
+            )}
             <NavLink
               to="/settings"
               className={({ isActive }) => `nav-link-item ${isActive ? 'active' : ''}`}

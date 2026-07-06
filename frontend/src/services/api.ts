@@ -130,19 +130,45 @@ export const getProjects = async (): Promise<ApiResponse<Project[]>> => {
   }
 };
 
+export const joinProject = async (projectId: string): Promise<ApiResponse<any>> => {
+  try {
+    const resposta = await api.post(`/api/projects/${projectId}/members`);
+    return { sucesso: true, dados: resposta.data };
+  } catch (error) {
+    return handleApiError(error, 'Erro ao associar-se ao projeto.');
+  }
+};
+
 export const getDocuments = async (
   projectId?: string,
   title?: string,
+  status?: string,
   page = 0,
   size = 20,
 ): Promise<ApiResponse<any>> => {
   try {
     const resposta = await api.get('/api/documents', {
-      params: { projectId, title, page, size },
+      params: { projectId, title, status, page, size },
     });
     return { sucesso: true, dados: resposta.data };
   } catch (error) {
     return handleApiError(error, 'Erro ao listar documentos.');
+  }
+};
+
+export const reviewDocument = async (
+  documentId: string,
+  status: 'APPROVED' | 'REJECTED',
+  feedback?: string,
+): Promise<ApiResponse<any>> => {
+  try {
+    const resposta = await api.patch(`/api/documents/${documentId}/status`, {
+      status,
+      feedback,
+    });
+    return { sucesso: true, dados: resposta.data };
+  } catch (error) {
+    return handleApiError(error, 'Erro ao atualizar o status do documento.');
   }
 };
 
@@ -213,5 +239,31 @@ export const resetPassword = async (
     return { sucesso: true, mensagem: 'Senha alterada com sucesso.' };
   } catch (error) {
     return handleApiError(error, 'Erro ao redefinir senha.');
+  }
+};
+
+export const getAuditLogs = async (
+  search?: string,
+  action?: string,
+): Promise<any[]> => {
+  try {
+    const params: any = {};
+    if (search) params.search = search;
+    if (action) params.action = action;
+    const response = await api.get('/api/audit-logs', { params });
+    return response.data;
+  } catch (error) {
+    console.error('Erro ao buscar logs de auditoria:', error);
+    return [];
+  }
+};
+
+export const getComplianceStats = async (): Promise<any> => {
+  try {
+    const response = await api.get('/api/dashboard/compliance');
+    return response.data;
+  } catch (error) {
+    console.error('Erro ao buscar estatísticas de compliance:', error);
+    return null;
   }
 };
