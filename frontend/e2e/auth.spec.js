@@ -1,22 +1,22 @@
 import { test, expect } from '@playwright/test';
-import * as allure from 'allure-js-commons';
+import { allure } from 'allure-playwright';
 
 test.describe('Authentication', () => {
   test('successful login', async ({ page }) => {
-    await allure.epic('Authentication');
-    await allure.feature('Login');
-    await allure.story('Valid Credentials');
-    await allure.tags('auth', 'smoke');
+    allure.epic('Authentication');
+    allure.feature('Login');
+    allure.story('Valid Credentials');
+    allure.tags('auth', 'smoke');
     
     await page.goto('/');
     await expect(page).toHaveTitle(/EdTech/);
   });
 
   test('invalid login shows error', async ({ page }) => {
-    await allure.epic('Authentication');
-    await allure.feature('Login');
-    await allure.story('Invalid Credentials');
-    await allure.tags('auth', 'negative');
+    allure.epic('Authentication');
+    allure.feature('Login');
+    allure.story('Invalid Credentials');
+    allure.tags('auth', 'negative');
     
     await page.goto('/login');
     const button = page.getByRole('button', { name: /entrar/i });
