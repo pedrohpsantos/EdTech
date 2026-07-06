@@ -70,7 +70,7 @@ export default function Projects() {
                     </div>
                     <div>
                       <h4 style={{ margin: 0, fontSize: '1rem', fontWeight: 600, color: 'var(--ed-text-dark)' }}>{project.name}</h4>
-                      <span style={{ fontSize: '12px', color: 'var(--ed-text-muted)' }}>Criado em {new Date(project.createdAt).toLocaleDateString()}</span>
+                      <span style={{ fontSize: '12px', color: 'var(--ed-text-muted)' }}>Criado em {project.createdAt ? new Date(project.createdAt).toLocaleDateString() : 'N/A'}</span>
                     </div>
                   </div>
                 </div>

@@ -5,7 +5,7 @@ export const useDocuments = (projectId?: string, title?: string, page = 0, size 
   return useQuery({
     queryKey: ['documents', projectId, title, page, size],
     queryFn: async () => {
-      const res = await getDocuments(projectId, title, page, size);
+      const res = await getDocuments(projectId, title, undefined, page, size);
       if (!res.sucesso) throw new Error(res.mensagem);
       return res.dados?.content || res.dados || [];
     },

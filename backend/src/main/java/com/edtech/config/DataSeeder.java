@@ -1,7 +1,16 @@
 package com.edtech.config;
 
-import com.edtech.model.*;
-import com.edtech.repository.*;
+import com.edtech.model.AcaoAuditoria;
+import com.edtech.model.AuditLog;
+import com.edtech.model.Document;
+import com.edtech.model.DocumentStatus;
+import com.edtech.model.Project;
+import com.edtech.model.User;
+import com.edtech.model.UserRole;
+import com.edtech.repository.AuditLogRepository;
+import com.edtech.repository.DocumentRepository;
+import com.edtech.repository.ProjectRepository;
+import com.edtech.repository.UserRepository;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -10,6 +19,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * Data seeder para popular o banco de dados com dados iniciais.
+ */
 @Configuration
 public class DataSeeder implements CommandLineRunner {
 
@@ -19,6 +31,15 @@ public class DataSeeder implements CommandLineRunner {
   private final AuditLogRepository auditLogRepository;
   private final PasswordEncoder passwordEncoder;
 
+  /**
+   * Construtor do DataSeeder.
+   *
+   * @param userRepository     repositorio de usuario
+   * @param projectRepository  repositorio de projeto
+   * @param documentRepository repositorio de documento
+   * @param auditLogRepository repositorio de audit log
+   * @param passwordEncoder    encoder de senha
+   */
   public DataSeeder(
       UserRepository userRepository,
       ProjectRepository projectRepository,
@@ -42,10 +63,14 @@ public class DataSeeder implements CommandLineRunner {
     String defaultPassword = passwordEncoder.encode("senha123");
 
     // 1. Criar Usuários
-    User auditor = new User("Auditor Externo", "auditor@demo.com", defaultPassword, UserRole.AUDITOR);
-    User advisor = new User("Carlos Mendes", "carlos@demo.com", defaultPassword, UserRole.ADVISOR);
-    User researcher = new User("Renata Silva", "renata@demo.com", defaultPassword, UserRole.RESEARCHER);
-    User researcher2 = new User("João Almeida", "joao@demo.com", defaultPassword, UserRole.RESEARCHER);
+    User auditor = new User("Auditor Externo", "auditor@demo.com", defaultPassword,
+        UserRole.AUDITOR);
+    User advisor = new User("Carlos Mendes", "carlos@demo.com", defaultPassword,
+        UserRole.ADVISOR);
+    User researcher = new User("Renata Silva", "renata@demo.com", defaultPassword,
+        UserRole.RESEARCHER);
+    User researcher2 = new User("João Almeida", "joao@demo.com", defaultPassword,
+        UserRole.RESEARCHER);
     
     userRepository.saveAll(List.of(auditor, advisor, researcher, researcher2));
 
@@ -90,29 +115,46 @@ public class DataSeeder implements CommandLineRunner {
     // 4. Criar Audit Logs (Os 14 eventos da tela)
     LocalDateTime now = LocalDateTime.now();
     
-    saveLog(researcher, AcaoAuditoria.UPLOAD_SUCCESS, "Document", doc1.getId(), "143.107.42.88", "Metodologia_Qualitativa_v3.pdf · 2.4 MB", now.minusMinutes(10));
-    saveLog(researcher, AcaoAuditoria.LOGIN_SUCCESS, "System", researcher.getId(), "143.107.42.88", "UA: Chrome/126 · 2FA: TOTP_OK", now.minusMinutes(25));
-    saveLog(advisor, AcaoAuditoria.DOCUMENT_APPROVED, "Document", doc2.getId(), "200.130.11.220", "Dataset_Experimento_A.csv · proj:ia-02", now.minusMinutes(40));
-    saveLog(advisor, AcaoAuditoria.LOGIN_FAILED, "System", advisor.getId(), "177.82.94.12", "Attempt 3/5 · wrong_password", now.minusHours(2));
-    saveLog(advisor, AcaoAuditoria.REVIEW_DOCUMENT, "Document", doc1.getId(), "200.130.11.220", "Referencial_Teorico_Final.pdf · dur:00:04:12", now.minusHours(3));
-    saveLog(auditor, AcaoAuditoria.MEMBER_JOINED, "Project", project1.getId(), "10.0.0.1", "target:usr-7b1e5d80 · ROLE researcher>reviewer", now.minusHours(4));
-    saveLog(researcher, AcaoAuditoria.DELETE_DOCUMENT, "Document", doc1.getId(), "143.107.42.88", "rascunho_inicial_v1.pdf · PERMANENT", now.minusDays(1).minusHours(1));
-    saveLog(advisor, AcaoAuditoria.DOCUMENT_REJECTED, "Document", doc3.getId(), "200.130.11.220", "analise_estatistica_v1.json · reason: incomplete_dataset", now.minusDays(1).minusHours(2));
-    saveLog(advisor, AcaoAuditoria.REVIEW_DOCUMENT, "Document", doc1.getId(), "177.82.94.12", "Referencial_Teorico_Final.pdf · v1>v2 · diff:34_lines", now.minusDays(1).minusHours(3));
-    saveLog(auditor, AcaoAuditoria.LOGIN_SUCCESS, "System", auditor.getId(), "189.102.55.74", "Audit session initiated · UA: Firefox/127", now.minusDays(1).minusHours(9));
-    saveLog(researcher2, AcaoAuditoria.REGISTER, "System", researcher2.getId(), "192.168.1.42", "Email link · token_expiry:3600s · completed_ok", now.minusDays(2).minusHours(4));
-    saveLog(researcher2, AcaoAuditoria.UPLOAD_SUCCESS, "Document", doc3.getId(), "192.168.1.42", "Dataset_Experimento_B.csv · 23.1 MB · virus_scan: CLEAN", now.minusDays(2).minusHours(8));
-    saveLog(advisor, AcaoAuditoria.LOGIN_FAILED, "System", advisor.getId(), "200.130.11.220", "Attempt 1/5 · wrong_password", now.minusDays(2).minusHours(11));
-    saveLog(researcher2, AcaoAuditoria.REVIEW_DOCUMENT, "Document", doc1.getId(), "192.168.1.42", "Metodologia_Qualitativa_v3.pdf · dur:00:12:05", now.minusDays(3));
+    saveLog(researcher, AcaoAuditoria.UPLOAD_SUCCESS, "Document", doc1.getId(), "143.107.42.88",
+        "Metodologia_Qualitativa_v3.pdf · 2.4 MB", now.minusMinutes(10));
+    saveLog(researcher, AcaoAuditoria.LOGIN_SUCCESS, "System", researcher.getId(), "143.107.42.88",
+        "UA: Chrome/126 · 2FA: TOTP_OK", now.minusMinutes(25));
+    saveLog(advisor, AcaoAuditoria.DOCUMENT_APPROVED, "Document", doc2.getId(), "200.130.11.220",
+        "Dataset_Experimento_A.csv · proj:ia-02", now.minusMinutes(40));
+    saveLog(advisor, AcaoAuditoria.LOGIN_FAILED, "System", advisor.getId(), "177.82.94.12",
+        "Attempt 3/5 · wrong_password", now.minusHours(2));
+    saveLog(advisor, AcaoAuditoria.REVIEW_DOCUMENT, "Document", doc1.getId(), "200.130.11.220",
+        "Referencial_Teorico_Final.pdf · dur:00:04:12", now.minusHours(3));
+    saveLog(auditor, AcaoAuditoria.MEMBER_JOINED, "Project", project1.getId(), "10.0.0.1",
+        "target:usr-7b1e5d80 · ROLE researcher>reviewer", now.minusHours(4));
+    saveLog(researcher, AcaoAuditoria.DELETE_DOCUMENT, "Document", doc1.getId(), "143.107.42.88",
+        "rascunho_inicial_v1.pdf · PERMANENT", now.minusDays(1).minusHours(1));
+    saveLog(advisor, AcaoAuditoria.DOCUMENT_REJECTED, "Document", doc3.getId(), "200.130.11.220",
+        "analise_estatistica_v1.json · reason: incomplete_dataset", now.minusDays(1).minusHours(2));
+    saveLog(advisor, AcaoAuditoria.REVIEW_DOCUMENT, "Document", doc1.getId(), "177.82.94.12",
+        "Referencial_Teorico_Final.pdf · v1>v2 · diff:34_lines", now.minusDays(1).minusHours(3));
+    saveLog(auditor, AcaoAuditoria.LOGIN_SUCCESS, "System", auditor.getId(), "189.102.55.74",
+        "Audit session initiated · UA: Firefox/127", now.minusDays(1).minusHours(9));
+    saveLog(researcher2, AcaoAuditoria.REGISTER, "System", researcher2.getId(), "192.168.1.42",
+        "Email link · token_expiry:3600s · completed_ok", now.minusDays(2).minusHours(4));
+    saveLog(researcher2, AcaoAuditoria.UPLOAD_SUCCESS, "Document", doc3.getId(), "192.168.1.42",
+        "Dataset_Experimento_B.csv · 23.1 MB · virus_scan: CLEAN", now.minusDays(2).minusHours(8));
+    saveLog(advisor, AcaoAuditoria.LOGIN_FAILED, "System", advisor.getId(), "200.130.11.220",
+        "Attempt 1/5 · wrong_password", now.minusDays(2).minusHours(11));
+    saveLog(researcher2, AcaoAuditoria.REVIEW_DOCUMENT, "Document", doc1.getId(), "192.168.1.42",
+        "Metodologia_Qualitativa_v3.pdf · dur:00:12:05", now.minusDays(3));
   }
 
-  private void saveLog(User user, AcaoAuditoria action, String resourceType, UUID resourceId, String ip, String details, LocalDateTime time) {
+  private void saveLog(User user, AcaoAuditoria action, String resourceType, UUID resourceId,
+      String ip, String details, LocalDateTime time) {
     AuditLog log = new AuditLog(user.getId(), action, resourceType, resourceId, ip, details);
     try {
       java.lang.reflect.Field createdAtField = AuditLog.class.getDeclaredField("createdAt");
       createdAtField.setAccessible(true);
       createdAtField.set(log, time);
-    } catch (Exception ignored) {}
+    } catch (Exception ignored) {
+      // ignored reflection error
+    }
     auditLogRepository.save(log);
   }
 }
