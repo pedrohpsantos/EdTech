@@ -23,7 +23,7 @@ O EdTech centraliza o ciclo de vida de documentos acadêmicos em um único repos
 
 - **Rastreabilidade:** Cada operação relevante é registrada em trilha de auditoria imutável.
 - **Governança de Acesso:** Controles de autorização por perfil — Pesquisador, Orientador e Auditor.
-- **Segurança:** Autenticação via JWT em cookie `HttpOnly`, defesas CSRF e comunicação exclusivamente via HTTPS em produção.
+- **Segurança:** Autenticação via JWT (Bearer Token), armazenado no Local Storage, anulando riscos de CSRF, com comunicação exclusivamente via HTTPS em produção.
 
 ---
 
@@ -44,7 +44,7 @@ O EdTech centraliza o ciclo de vida de documentos acadêmicos em um único repos
 
 | Status | Item |
 | :---: | :--- |
-| ✅ | Autenticação JWT com cookie `HttpOnly` |
+| ✅ | Autenticação JWT via cabeçalho Authorization Bearer |
 | ✅ | CI/CD via GitHub Actions e deploy no Cloud Run |
 | ✅ | Migrações de banco gerenciadas pelo Flyway |
 | ✅ | Armazenamento de arquivos no GCS (Google Cloud Storage) |

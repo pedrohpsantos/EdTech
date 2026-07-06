@@ -1,18 +1,17 @@
 # Changelog
 
-Todos os recursos notáveis deste projeto serão documentados neste arquivo.
+Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
+O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/), e este projeto adota [Semantic Versioning](https://semver.org/).
 
-O formato baseia-se em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e este projeto segue [Versionamento Semântico](https://semver.org/lang/pt-BR/).
+## [1.0.0] - 2026-07-06
 
-## [1.0.0] - 2026-07-05
-
-> **Nota de Release (MVP - Enterprise Ready):** Esta é a primeira versão oficial de produção (Minimum Viable Product). A plataforma transita do estágio de desenvolvimento local para a infraestrutura de Nuvem, consolidando a estabilidade da governança de dados, segurança da informação e esteiras ágeis.
-
-### Added
-- **Deploy de Produção:** Lançamento do Frontend SPA via Firebase Hosting (com SSL e CDN) e Backend API via Google Cloud Run (com Auto-scaling).
-- **Segurança IaC:** Centralização do gerenciamento de variáveis críticas e secrets pelo Google Cloud Secret Manager.
-- **Defesa Cibernética (AppSec):** Implementação de Rate Limiting via Bucket4j em rotas abertas de autenticação (mitigação de ataques de força bruta e repetições de carga com erro 429).
-- **Gerenciamento de Storage Nativo S3:** Implantação de arquitetura robusta acoplada ao Supabase Storage / S3 para o ciclo de vida completo de documentos acadêmicos e PDFs.
+### Adicionado
+- **MVP Inicial do EdTech**: Plataforma completa para gerenciamento e auditoria de publicações acadêmicas.
+- **Backend (API)**: Autenticação baseada em JWT (Bearer Token), CRUD de documentos, integração com Google Cloud Storage para uploads.
+- **Frontend (SPA)**: Interface React responsiva para pesquisadores, orientadores e auditores.
+- **Infraestrutura**: Configuração Docker e migrações Flyway.
+- **Documentação**: Portal MkDocs com arquitetura, guias de desenvolvimento e manuais.
+- **Segurança**: Trilha de auditoria imutável, Rate Limiting (Bucket4j) e backups automatizados.
 - **Resiliência e Recuperação de Desastres:** Provisão de rotina de Backup Automático assíncrona diária (PostgreSQL Dump) pelo Cloud Scheduler e Cloud SQL Export, com políticas de expurgo rotativo no GCS.
 - **Trilha de Auditoria (Audit Logs):** Endpoint e logs irremovíveis nativos na base de dados (registrando vínculo de membros e deleções), integrados à interface de interface administrativa.
 - **Gestão de Qualidade Integrada:** Barreiras rígidas de validação de qualidade em pipeline contínuo (JaCoCo imposto acima de 80% e verificação total do Checkstyle).

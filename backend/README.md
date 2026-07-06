@@ -20,7 +20,7 @@ API RESTful do EdTech desenvolvida em **Java 21** com **Spring Boot 4.1**. Respo
 
 ## Segurança
 
-- **JWT em Cookie `HttpOnly`:** O token de sessão nunca é acessível via JavaScript no browser.
+- **JWT via Cabeçalho:** A comunicação entre SPA e API utiliza tokens no cabeçalho `Authorization` (Bearer), sem uso de cookies e anulando riscos de CSRF.
 - **CORS Restrito:** Apenas origens cadastradas explicitamente têm permissão de consumir a API.
 - **Rate Limiting (Bucket4j):** Endpoints de autenticação bloqueiam IPs após 5 tentativas por minuto (HTTP 429).
 - **Auditoria:** Operações críticas (upload, aprovação, rejeição) geram registros imutáveis na trilha de auditoria.

@@ -4,21 +4,19 @@ title: 'AppSec e Segurança'
 
 # :material-shield-lock: AppSec e Segurança
 
-A proteção do EdTech gira em torno de duas engrenagens centrais: Autenticação Restrita (JWT em cookies) e Log de Auditoria irrefutável.
+A proteção do EdTech gira em torno de duas engrenagens centrais: Autenticação Restrita (JWT via Bearer Token) e Log de Auditoria irrefutável.
 
 ## 1. Segurança de Sessão (JWT)
 
 A aplicação não armazena sessão em banco ou memória do servidor (`STATELESS`).
 
-### Confinamento do Cookie
-Para evitar roubo de token, o token JWT nunca deve ser lido pelo código JavaScript do frontend. O Backend Spring devolve o cookie configurado com defesas embutidas para o navegador:
+### Confinamento do Token
+Para manter a compatibilidade entre diferentes domínios da infraestrutura (Frontend no Firebase e Backend no Cloud Run), adotamos o uso de tokens enviados via cabeçalho `Authorization: Bearer <token>`. O Frontend armazena o token no `LocalStorage`.
 
-    
-- **`HttpOnly`:** Bloqueia leituras via JavaScript (`document.cookie`), blindando o sistema contra XSS.
-
-- **`Secure`:** Exige tráfego via HTTPS.
-
-- **`SameSite=Lax`:** Permite navegações top-level e requisições cross-origin autenticadas via CORS, enquanto mitiga ataques CSRF de sites de terceiros.
+Para mitigar a vulnerabilidade de XSS (Cross-Site Scripting) inerente a armazenamentos acessíveis por JavaScript, aplicamos as seguintes defesas complementares:
+- **Sanitização de Inputs e Outputs:** Utilização de frameworks (React) que realizam escape automático de dados antes da renderização.
+- **Isolamento de Domínio (CORS):** Política restrita de CORS para impedir que scripts de origens desconhecidas interajam com a API, bloqueando exfiltração de dados caso um script malicioso consiga ser injetado.
+- **Fim do Risco de CSRF:** Por não utilizar o mecanismo padrão de Cookies do navegador, a vulnerabilidade de CSRF (Cross-Site Request Forgery) é organicamente neutralizada (browsers não anexam localStorage automaticamente nas requisições).
 
 ## 2. Controle de Acesso Baseado em Papéis (RBAC)
 
@@ -46,7 +44,8 @@ sequenceDiagram
     S->>S: Valida Hash no Banco
     S->>J: Solicita Geração de Token
     J-->>S: Retorna Token Assinado
-    S-->>L: Retorna Cookie HttpOnly (JWT)
+    S-->>L: Retorna Token no Corpo (JSON)
+    L->>L: Salva Token no LocalStorage
     L-->>U: Redireciona para Dashboard
 ```
 
@@ -76,7 +75,7 @@ flowchart LR
 
     subgraph Controles["Controles"]
         WAF["WAF"]
-        JWT["JWT HttpOnly"]
+        JWT["JWT (Bearer)"]
         VAL["Validação de Input"]
         LOG["Logs Imutáveis"]
     end
