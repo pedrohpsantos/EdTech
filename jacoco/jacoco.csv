@@ -1,7 +1,7 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
 edtech-api,com.edtech.service,InvalidCredentialsException,0,4,0,0,0,2,0,1,0,1
 edtech-api,com.edtech.service,DocumentService,16,415,0,22,2,106,2,24,2,13
-edtech-api,com.edtech.service,UserService,29,122,11,15,7,28,9,8,0,4
+edtech-api,com.edtech.service,UserService,29,122,11,15,8,29,9,8,0,4
 edtech-api,com.edtech.service,InvalidInstitutionalEmailException,0,4,0,0,0,2,0,1,0,1
 edtech-api,com.edtech.service,GcsStorageServiceImpl,0,65,0,0,0,17,0,5,0,5
 edtech-api,com.edtech.service,AuditLogService,5,81,1,7,2,20,1,8,0,5

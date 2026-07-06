@@ -42,46 +42,48 @@ public class UserService {
 <span class="pc bpc" id="L42" title="3 of 4 branches missed.">    if (normalizedEmail.contains(&quot;auditor&quot;) &amp;&amp; user.getRole() != UserRole.AUDITOR) {</span>
 <span class="nc" id="L43">      user.setRole(UserRole.AUDITOR);</span>
 <span class="nc" id="L44">      roleChanged = true;</span>
-<span class="pc bpc" id="L45" title="4 of 6 branches missed.">    } else if ((normalizedEmail.contains(&quot;orientador&quot;) || normalizedEmail.contains(&quot;advisor&quot;)) &amp;&amp; user.getRole() != UserRole.ADVISOR) {</span>
-<span class="nc" id="L46">      user.setRole(UserRole.ADVISOR);</span>
-<span class="nc" id="L47">      roleChanged = true;</span>
+<span class="pc bpc" id="L45" title="1 of 2 branches missed.">    } else if ((normalizedEmail.contains(&quot;orientador&quot;) </span>
+<span class="pc bpc" id="L46" title="1 of 2 branches missed.">        || normalizedEmail.contains(&quot;advisor&quot;)) </span>
+<span class="nc bnc" id="L47" title="All 2 branches missed.">        &amp;&amp; user.getRole() != UserRole.ADVISOR) {</span>
+<span class="nc" id="L48">      user.setRole(UserRole.ADVISOR);</span>
+<span class="nc" id="L49">      roleChanged = true;</span>
     }
 
-<span class="pc bpc" id="L50" title="1 of 2 branches missed.">    if (roleChanged) {</span>
-<span class="nc" id="L51">      userRepository.save(user);</span>
+<span class="pc bpc" id="L52" title="1 of 2 branches missed.">    if (roleChanged) {</span>
+<span class="nc" id="L53">      userRepository.save(user);</span>
     }
 
-<span class="fc" id="L54">    return user;</span>
+<span class="fc" id="L56">    return user;</span>
   }
 
   /** Documentação. */
   @Transactional
   public User register(RegisterRequestDto request) {
-<span class="fc" id="L60">    String normalizedEmail = request.email().trim().toLowerCase(Locale.ROOT);</span>
+<span class="fc" id="L62">    String normalizedEmail = request.email().trim().toLowerCase(Locale.ROOT);</span>
 
-<span class="fc bfc" id="L62" title="All 4 branches covered.">    if (!normalizedEmail.endsWith(&quot;@unb.br&quot;) &amp;&amp; !normalizedEmail.endsWith(&quot;.unb.br&quot;)) {</span>
-<span class="fc" id="L63">      throw new InvalidInstitutionalEmailException(&quot;O e-mail deve pertencer ao dominio unb.br.&quot;);</span>
+<span class="fc bfc" id="L64" title="All 4 branches covered.">    if (!normalizedEmail.endsWith(&quot;@unb.br&quot;) &amp;&amp; !normalizedEmail.endsWith(&quot;.unb.br&quot;)) {</span>
+<span class="fc" id="L65">      throw new InvalidInstitutionalEmailException(&quot;O e-mail deve pertencer ao dominio unb.br.&quot;);</span>
     }
 
-<span class="fc bfc" id="L66" title="All 2 branches covered.">    if (userRepository.existsByEmailIgnoreCase(normalizedEmail)) {</span>
-<span class="fc" id="L67">      throw new DuplicateEmailException(&quot;E-mail ja cadastrado.&quot;);</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">    if (userRepository.existsByEmailIgnoreCase(normalizedEmail)) {</span>
+<span class="fc" id="L69">      throw new DuplicateEmailException(&quot;E-mail ja cadastrado.&quot;);</span>
     }
 
-<span class="fc" id="L70">    UserRole initialRole = UserRole.RESEARCHER;</span>
-<span class="pc bpc" id="L71" title="1 of 2 branches missed.">    if (normalizedEmail.contains(&quot;auditor&quot;)) {</span>
-<span class="nc" id="L72">      initialRole = UserRole.AUDITOR;</span>
-<span class="pc bpc" id="L73" title="2 of 4 branches missed.">    } else if (normalizedEmail.contains(&quot;orientador&quot;) || normalizedEmail.contains(&quot;advisor&quot;)) {</span>
-<span class="nc" id="L74">      initialRole = UserRole.ADVISOR;</span>
+<span class="fc" id="L72">    UserRole initialRole = UserRole.RESEARCHER;</span>
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">    if (normalizedEmail.contains(&quot;auditor&quot;)) {</span>
+<span class="nc" id="L74">      initialRole = UserRole.AUDITOR;</span>
+<span class="pc bpc" id="L75" title="2 of 4 branches missed.">    } else if (normalizedEmail.contains(&quot;orientador&quot;) || normalizedEmail.contains(&quot;advisor&quot;)) {</span>
+<span class="nc" id="L76">      initialRole = UserRole.ADVISOR;</span>
     }
 
-<span class="fc" id="L77">    User user =</span>
+<span class="fc" id="L79">    User user =</span>
         new User(
-<span class="fc" id="L79">            request.name().trim(),</span>
+<span class="fc" id="L81">            request.name().trim(),</span>
             normalizedEmail,
-<span class="fc" id="L81">            passwordEncoder.encode(request.password()),</span>
+<span class="fc" id="L83">            passwordEncoder.encode(request.password()),</span>
             initialRole);
 
-<span class="fc" id="L84">    return userRepository.save(user);</span>
+<span class="fc" id="L86">    return userRepository.save(user);</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
