@@ -47,6 +47,7 @@ public class AuthController {
     this.rateLimitingService = rateLimitingService;
   }
 
+  /** Documentação. */
   @PostMapping("/register")
   public ResponseEntity<AuthResponseDto> register(@Valid @RequestBody RegisterRequestDto request) {
     User registeredUser = userService.register(request);
@@ -112,6 +113,7 @@ public class AuthController {
     return ResponseEntity.ok().build();
   }
 
+  /** Documentação. */
   @GetMapping("/me")
   public ResponseEntity<UserResponseDto> me(Authentication authentication) {
     User user = (User) authentication.getPrincipal();
