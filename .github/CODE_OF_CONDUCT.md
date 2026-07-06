@@ -4,7 +4,7 @@
 
 No interesse de fomentar um ambiente aberto, inclusivo e acolhedor, nós como contribuidores e mantenedores nos comprometemos a fazer da participação em nosso projeto e em nossa comunidade uma experiência livre de assédio para todos, independentemente da idade, tamanho corporal, deficiência, etnia, características sexuais, identidade e expressão de gênero, nível de experiência, educação, status socioeconômico, nacionalidade, aparência pessoal, raça, religião, ou identidade e orientação sexual.
 
-> *"O melhor código nasce na diversidade e no respeito mútuo. Nós somos desenvolvedores, pesquisadores e acadêmicos unidos por um propósito. A arrogância não compila por aqui."* — Os Mantenedores
+
 
 ## Nossos Padrões
 
