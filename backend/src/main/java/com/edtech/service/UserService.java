@@ -42,7 +42,9 @@ public class UserService {
     if (normalizedEmail.contains("auditor") && user.getRole() != UserRole.AUDITOR) {
       user.setRole(UserRole.AUDITOR);
       roleChanged = true;
-    } else if ((normalizedEmail.contains("orientador") || normalizedEmail.contains("advisor")) && user.getRole() != UserRole.ADVISOR) {
+    } else if ((normalizedEmail.contains("orientador") 
+        || normalizedEmail.contains("advisor")) 
+        && user.getRole() != UserRole.ADVISOR) {
       user.setRole(UserRole.ADVISOR);
       roleChanged = true;
     }
