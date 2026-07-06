@@ -74,25 +74,27 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 <span class="fc" id="L74">  }</span>
 
   private Optional&lt;String&gt; extractToken(HttpServletRequest request) {
-<span class="fc" id="L77">    Cookie[] cookies = request.getCookies();</span>
-<span class="fc bfc" id="L78" title="All 2 branches covered.">    if (cookies == null) {</span>
-<span class="fc" id="L79">      return Optional.empty();</span>
+<span class="fc" id="L77">    String authHeader = request.getHeader(&quot;Authorization&quot;);</span>
+<span class="pc bpc" id="L78" title="1 of 4 branches missed.">    if (authHeader != null &amp;&amp; authHeader.startsWith(&quot;Bearer &quot;)) {</span>
+<span class="fc" id="L79">      return Optional.of(authHeader.substring(7));</span>
     }
 
-<span class="pc bpc" id="L82" title="1 of 2 branches missed.">    for (Cookie cookie : cookies) {</span>
-<span class="pc bpc" id="L83" title="2 of 4 branches missed.">      if (TOKEN_COOKIE_NAME.equals(cookie.getName()) &amp;&amp; !cookie.getValue().isBlank()) {</span>
-<span class="fc" id="L84">        return Optional.of(cookie.getValue());</span>
+<span class="fc" id="L82">    Cookie[] cookies = request.getCookies();</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">    if (cookies != null) {</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">      for (Cookie cookie : cookies) {</span>
+<span class="nc bnc" id="L85" title="All 4 branches missed.">        if (TOKEN_COOKIE_NAME.equals(cookie.getName()) &amp;&amp; !cookie.getValue().isBlank()) {</span>
+<span class="nc" id="L86">          return Optional.of(cookie.getValue());</span>
+        }
       }
     }
-
-<span class="nc" id="L88">    return Optional.empty();</span>
+<span class="fc" id="L90">    return Optional.empty();</span>
   }
 
   private void authenticateUser(HttpServletRequest request, User user) {
-<span class="fc" id="L92">    var authorities = List.of(new SimpleGrantedAuthority(&quot;ROLE_&quot; + user.getRole().name()));</span>
-<span class="fc" id="L93">    var authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);</span>
-<span class="fc" id="L94">    authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));</span>
-<span class="fc" id="L95">    SecurityContextHolder.getContext().setAuthentication(authentication);</span>
-<span class="fc" id="L96">  }</span>
+<span class="fc" id="L94">    var authorities = List.of(new SimpleGrantedAuthority(&quot;ROLE_&quot; + user.getRole().name()));</span>
+<span class="fc" id="L95">    var authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);</span>
+<span class="fc" id="L96">    authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));</span>
+<span class="fc" id="L97">    SecurityContextHolder.getContext().setAuthentication(authentication);</span>
+<span class="fc" id="L98">  }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

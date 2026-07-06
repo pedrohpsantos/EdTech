@@ -20,6 +20,7 @@ edtech-api,com.edtech.dto,ResetPasswordDto,0,12,0,0,0,1,0,1,0,1
 edtech-api,com.edtech.dto,ProjectResponseDto,0,38,0,0,0,16,0,11,0,11
 edtech-api,com.edtech.dto,RegisterRequestDto,0,12,0,0,0,1,0,1,0,1
 edtech-api,com.edtech.dto,LoginRequestDto,0,9,0,0,0,1,0,1,0,1
+edtech-api,com.edtech.dto,AuthResponseDto,0,9,0,0,0,1,0,1,0,1
 edtech-api,com.edtech.dto,VerifyCodeDto,0,9,0,0,0,1,0,1,0,1
 edtech-api,com.edtech.dto,DocumentResponseDto,0,59,0,0,0,25,0,17,0,17
 edtech-api,com.edtech.dto,ErrorResponse,0,9,0,0,0,1,0,1,0,1
@@ -28,15 +29,15 @@ edtech-api,com.edtech.dto,ProjectRequestDto,0,17,0,0,0,7,0,5,0,5
 edtech-api,com.edtech.dto,UpdateDocumentStatusRequest,9,0,0,0,1,0,1,0,1,0
 edtech-api,com.edtech.dto,LoginResponseDto,15,0,0,0,1,0,1,0,1,0
 edtech-api,com.edtech.config,WebMvcConfig,0,4,0,0,0,2,0,2,0,2
-edtech-api,com.edtech.config,SecurityConfig,0,173,0,0,0,41,0,10,0,10
+edtech-api,com.edtech.config,SecurityConfig,0,161,0,0,0,39,0,9,0,9
 edtech-api,com.edtech.config,JwtAuthenticationEntryPoint,0,24,0,0,0,7,0,2,0,2
 edtech-api,com.edtech.config,GcsConfig,32,0,4,0,9,0,4,0,2,0
-edtech-api,com.edtech.config,JwtAuthenticationFilter,6,161,9,17,1,37,9,11,0,7
+edtech-api,com.edtech.config,JwtAuthenticationFilter,31,149,14,16,3,37,11,11,0,7
 edtech-api,com.edtech,EdTechApplication,5,3,0,0,2,1,1,1,1,1
 edtech-api,com.edtech.controller,DashboardController,0,54,0,0,0,14,0,2,0,2
 edtech-api,com.edtech.controller,ApiExceptionHandler,18,21,0,0,4,5,2,3,2,3
 edtech-api,com.edtech.controller,ProjectController,14,31,0,0,3,8,1,3,1,3
-edtech-api,com.edtech.controller,AuthController,0,196,0,8,0,51,0,13,0,9
+edtech-api,com.edtech.controller,AuthController,0,141,0,8,0,33,0,12,0,8
 edtech-api,com.edtech.controller,DocumentController,26,53,0,0,5,13,2,4,2,4
 edtech-api,com.edtech.model,Project,22,34,0,0,10,14,5,10,5,10
 edtech-api,com.edtech.model,RecoveryToken,22,26,0,0,10,9,6,5,6,5
