@@ -15,7 +15,7 @@
         <link rel="prev" href="../nuvem/">
       
       
-        <link rel="next" href="../../../desenvolvimento/setup_local/guia_local/">
+        <link rel="next" href="../../decisoes_adrs/0001-armazenamento-google-cloud/">
       
       
         
@@ -1372,6 +1372,363 @@
                 
   
   
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" checked="">
+        
+          
+          <label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Infraestrutura e Segurança
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Infraestrutura e Segurança
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nuvem/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Arquitetura de Nuvem
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AppSec e Segurança
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AppSec e Segurança
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#1-seguranca-de-sessao-jwt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Segurança de Sessão (JWT)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Segurança de Sessão (JWT)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#confinamento-do-cookie" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Confinamento do Cookie
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-controle-de-acesso-baseado-em-papeis-rbac" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Controle de Acesso Baseado em Papéis (RBAC)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-dinamica-do-processo-seguro-diagrama-de-upload" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Dinâmica do Processo Seguro (Diagrama de Upload)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Dinâmica do Processo Seguro (Diagrama de Upload)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#modelo-de-ameacas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Modelo de Ameaças
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#walkthrough-do-diagrama" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Walkthrough do diagrama
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-rate-limiting-protecao-contra-forca-bruta-bucket4j" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Rate Limiting — Proteção Contra Força Bruta (Bucket4j)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Rate Limiting — Proteção Contra Força Bruta (Bucket4j)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#como-funciona" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Como Funciona
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#endpoints-protegidos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Endpoints Protegidos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#decisoes-de-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Decisões de Design
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-politica-de-backup-e-recuperacao-de-dados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Política de Backup e Recuperação de Dados
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Política de Backup e Recuperação de Dados">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fluxo-do-backup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fluxo do Backup
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#politica-vigente" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Política Vigente
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verificacao-pelo-orientador" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verificação pelo Orientador
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#historico-de-versoes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Histórico de Versões
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
   
   
     
@@ -1393,10 +1750,10 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_4">
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5">
         
           
-          <label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="">
+          <label class="md-nav__link" for="__nav_3_5" id="__nav_3_5_label" tabindex="">
             
   
   
@@ -1414,8 +1771,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_4">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1784,363 +2141,6 @@
   
 
       </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-    
-  
-  
-  
-    
-    
-    
-    
-      
-      
-        
-          
-          
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5" checked="">
-        
-          
-          <label class="md-nav__link" for="__nav_3_5" id="__nav_3_5_label" tabindex="">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Infraestrutura e Segurança
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_3_5">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Infraestrutura e Segurança
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix="">
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../nuvem/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Arquitetura de Nuvem
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-    
-  
-  
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    AppSec e Segurança
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    AppSec e Segurança
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Índice">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Índice
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-      
-        <li class="md-nav__item">
-  <a href="#1-seguranca-de-sessao-jwt" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        1. Segurança de Sessão (JWT)
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="1. Segurança de Sessão (JWT)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#confinamento-do-cookie" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Confinamento do Cookie
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#2-controle-de-acesso-baseado-em-papeis-rbac" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2. Controle de Acesso Baseado em Papéis (RBAC)
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#3-dinamica-do-processo-seguro-diagrama-de-upload" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3. Dinâmica do Processo Seguro (Diagrama de Upload)
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="3. Dinâmica do Processo Seguro (Diagrama de Upload)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#modelo-de-ameacas" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Modelo de Ameaças
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#walkthrough-do-diagrama" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Walkthrough do diagrama
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#4-rate-limiting-protecao-contra-forca-bruta-bucket4j" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        4. Rate Limiting — Proteção Contra Força Bruta (Bucket4j)
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="4. Rate Limiting — Proteção Contra Força Bruta (Bucket4j)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#como-funciona" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Como Funciona
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#endpoints-protegidos" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Endpoints Protegidos
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#decisoes-de-design" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Decisões de Design
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#5-politica-de-backup-e-recuperacao-de-dados" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        5. Política de Backup e Recuperação de Dados
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="5. Política de Backup e Recuperação de Dados">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#fluxo-do-backup" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Fluxo do Backup
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#politica-vigente" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Política Vigente
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#verificacao-pelo-orientador" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Verificação pelo Orientador
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#historico-de-versoes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Histórico de Versões
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -4197,13 +4197,13 @@ flowchart LR
         
         
           
-          <a href="../../../desenvolvimento/setup_local/guia_local/" class="md-footer__link md-footer__link--next" aria-label="Próximo: Guia Rápido de Onboarding">
+          <a href="../../decisoes_adrs/0001-armazenamento-google-cloud/" class="md-footer__link md-footer__link--next" aria-label="Próximo: ADR 0001: Armazenamento em Nuvem Nativo (Google Cloud)">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Próximo
               </span>
               <div class="md-ellipsis">
-                Guia Rápido de Onboarding
+                ADR 0001: Armazenamento em Nuvem Nativo (Google Cloud)
               </div>
             </div>
             <div class="md-footer__button md-icon">
