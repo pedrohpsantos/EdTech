@@ -282,7 +282,7 @@ describe('api service', () => {
       }
       expect(window.location.href).toBe('/login?session_expired=true');
       
-      window.location = originalLocation;
+      (window as any).location = originalLocation;
     });
     
     it('response interceptor ignores 401 on login route', async () => {
@@ -300,7 +300,7 @@ describe('api service', () => {
       }
       expect(window.location.href).toBe(''); // Did not redirect
       
-      window.location = originalLocation;
+      (window as any).location = originalLocation;
     });
   });
 });
