@@ -124,4 +124,48 @@ public class UserServiceTest {
     
     assertThrows(InvalidCredentialsException.class, () -> userService.authenticate("test@unb.br", "password"));
   }
+
+  @Test
+  void register_WithAuditorEmail_AssignsAuditorRole() {
+    RegisterRequestDto dto = new RegisterRequestDto("Auditor", "auditor@unb.br", "pass");
+    when(passwordEncoder.encode(anyString())).thenReturn("hashed");
+    when(userRepository.save(any())).thenAnswer(i -> i.getArguments()[0]);
+
+    User result = userService.register(dto);
+    assertEquals(UserRole.AUDITOR, result.getRole());
+  }
+
+  @Test
+  void register_WithOrientadorEmail_AssignsAdvisorRole() {
+    RegisterRequestDto dto = new RegisterRequestDto("Orientador", "orientador@unb.br", "pass");
+    when(passwordEncoder.encode(anyString())).thenReturn("hashed");
+    when(userRepository.save(any())).thenAnswer(i -> i.getArguments()[0]);
+
+    User result = userService.register(dto);
+    assertEquals(UserRole.ADVISOR, result.getRole());
+  }
+
+  @Test
+  void authenticate_AuditorEmail_UpdatesRoleToAuditor() {
+    User user = new User("Auditor", "auditor@unb.br", "hashed_pw", UserRole.RESEARCHER);
+    user.setActive(true);
+    when(userRepository.findByEmailIgnoreCase("auditor@unb.br")).thenReturn(java.util.Optional.of(user));
+    when(passwordEncoder.matches("password", "hashed_pw")).thenReturn(true);
+    
+    User result = userService.authenticate("auditor@unb.br", "password");
+    assertEquals(UserRole.AUDITOR, result.getRole());
+    verify(userRepository, times(1)).save(user);
+  }
+
+  @Test
+  void authenticate_OrientadorEmail_UpdatesRoleToAdvisor() {
+    User user = new User("Orientador", "orientador@unb.br", "hashed_pw", UserRole.RESEARCHER);
+    user.setActive(true);
+    when(userRepository.findByEmailIgnoreCase("orientador@unb.br")).thenReturn(java.util.Optional.of(user));
+    when(passwordEncoder.matches("password", "hashed_pw")).thenReturn(true);
+    
+    User result = userService.authenticate("orientador@unb.br", "password");
+    assertEquals(UserRole.ADVISOR, result.getRole());
+    verify(userRepository, times(1)).save(user);
+  }
 }
