@@ -156,7 +156,7 @@ export const getDownloadUrl = async (documentId: string): Promise<ApiResponse<an
 };
 
 export const getDashboardStats = async (): Promise<any> => {
-  const response = await api.get('/dashboard/stats');
+  const response = await api.get('/api/dashboard/stats');
   return response.data;
 };
 
