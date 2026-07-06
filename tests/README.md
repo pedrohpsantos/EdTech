@@ -1,54 +1,50 @@
-# 🕵️ EdTech Tests — O Escritório de Qualidade
+# Testes e Qualidade de Software
 
 ![Playwright](https://img.shields.io/badge/Playwright-E2E-2EAD33?style=for-the-badge&logo=playwright&logoColor=white)
 ![k6](https://img.shields.io/badge/k6-Performance-7D64FF?style=for-the-badge&logo=k6&logoColor=white)
-![Quality](https://img.shields.io/badge/Bugs_Allowed-Zero-red?style=for-the-badge)
 
-> *"Você acha que seu código está pronto? Eu sou o Inspetor Implacável. Meu trabalho não é escrever features, meu trabalho é destruí-las antes que cheguem em produção. Aqui neste diretório, nós simulamos usuários mal-intencionados, cliques furiosos e quedas de rede. Eu desconfio de tudo e de todos. Seu PR não é aceito até passar por interrogatório completo aqui. Mãos ao alto!"* 🔎
+Este diretório (`/tests`) consolida as suítes de testes externos da plataforma EdTech. Ele atua como barreira secundária de qualidade, validando o comportamento da aplicação em nível de integração sistêmica, *End-to-End* (E2E) e testes de carga.
 
-Bem-vindo ao diretório (`/tests`), a alfândega que garante a qualidade da plataforma EdTech. Nós testamos não apenas se a aplicação roda, mas se ela resiste à dor. Usamos abordagens de ponta para simular a realidade de forma brutal e determinística.
+A garantia de qualidade em nível unitário (Backend com JUnit/Mockito e Frontend com Vitest) é mantida em seus respectivos diretórios de origem.
 
-## 🔬 Nossos Métodos de Investigação
+## Cobertura e Estratégia
 
-Dividimos nossos esforços em pastas específicas para cada tipo de crime que precisamos investigar:
+O repositório adota pastas específicas para isolar escopos de teste:
 
-- **`/tests/e2e` (End-to-End com Playwright):** Nossos robôs abrem navegadores invisíveis (Chromium, Firefox, WebKit) e clicam em todos os botões do sistema inteiro. Eles confirmam desde o login via JWT até o upload final do arquivo, interagindo tanto com o Frontend quanto com o Backend simultaneamente.
-- **`/tests/k6` (Performance e Stress):** Simulações de carga pesada. O que acontece quando 5.000 alunos tentam acessar um edital ao mesmo tempo? O k6 esmurra nossa API para garantir que não haverá lentidão.
+- **`/tests/e2e` (Playwright):** Foca em cenários Ponta a Ponta. Navegadores automatizados (*Headless*) simulam as jornadas críticas dos usuários de forma realista: login (protegido por JWT e CSRF), upload de arquivos e validação de interfaces visuais. Interagem concomitantemente com Frontend e Backend.
+- **`/tests/k6` (Performance e Stress):** Scripts voltados para a simulação de tráfego denso contra a API (Backend). Usados para aferir o comportamento do Rate Limiting, resposta sob carga e latência no limite operacional.
 
 ---
 
-## 🚔 Como Participar do Interrogatório (Rodar localmente)
+## Execução Local (E2E)
 
-Para rodar a suíte de testes de ponta a ponta na sua máquina:
+Para garantir que novos fluxos não afetem a integridade do sistema, a execução local de testes deve ser efetuada com o ambiente em funcionamento simultâneo (API + SPA).
 
-### Requisitos
+### Pré-requisitos
+- Node.js (>= 20).
+- Os serviços da aplicação (Frontend em `http://localhost:5173` e Backend em `http://localhost:8080`) devem estar em execução.
 
-- Node.js (>= 20)
-- Garanta que o ecossistema local (via `docker-compose`) está **TOTALMENTE DE PÉ** (Frontend em `5173`, Backend em `8080`). Nós testamos um sistema vivo, não um mock estático.
-
-### Execução
+### Comandos
 
 ```bash
-# Entre na sala de interrogatório
+# Navegue até o diretório de testes
 cd tests
 
-# Instale os equipamentos (isso instala também os binários dos browsers do Playwright)
+# Instale dependências e navegadores (Playwright)
 npm install
 npx playwright install
 
-# Inicie a bateria de testes no modo terminal (headless)
+# Execute a bateria no modo headless (terminal)
 npm run test:e2e
 
-# Quer assistir os robôs clicando na tela? (Com interface de UI)
+# Execute os testes com interface de inspeção (UI Mode)
 npx playwright test --ui
 ```
 
 ---
 
-## 🚫 Regras da Cena do Crime
+## Diretrizes de Qualidade Contínua
 
-1. **Testes Flaky são inaceitáveis:** Se um teste E2E passa na sua máquina, mas falha no CI do GitHub Actions porque "demorou pra carregar", a culpa não é da máquina virtual. O seu teste precisa usar espera explícita (`await page.waitForSelector`).
-2. **Nova feature = Novo teste:** Não aceitamos código novo em rotas críticas sem a devida cobertura de testes ponta a ponta.
-3. **Mantenha tudo Limpo:** Nossos scripts de teste limpam o banco de dados (geralmente criando um banco `_test`) antes e depois das operações. Nunca teste na base de dados de produção.
-
-> *"Todo código é culpado até que meus robôs provem a sua inocência."*
+1. **Tolerância a Flaky Tests:** Testes que falham de forma intermitente devem ser sanados antes do envio ao pipeline de CI. Utilize mecanismos formais de espera explícita (e.g., aguardar componentes renderizarem) ao invés de *timeouts* arbitrários.
+2. **Cobertura Baseada em Risco:** Toda nova jornada crítica deve possuir cobertura E2E refletida no Playwright.
+3. **Isolamento de Estado:** Os testes devem operar sobre o ambiente de forma idêntica e independente. Scripts de configuração devem garantir o isolamento da massa de dados, expurgando registros de teste nas fases de *teardown*. Nenhuma bateria de teste deve ser executada sobre bases produtivas reais.

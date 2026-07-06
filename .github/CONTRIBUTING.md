@@ -1,49 +1,47 @@
-# 🤝 Como Contribuir para o EdTech
+# Diretrizes de Contribuição
 
-> *"Olá! Seja muito bem-vindo ao projeto EdTech. Eu sou o Mentor Amigável. Fico extremamente feliz que você queira contribuir conosco. Quer você esteja resolvendo um bug crítico, consertando um erro de digitação na documentação ou propondo uma arquitetura nova, sua ajuda é muito valiosa! Puxe uma cadeira, pegue um café e vamos codar juntos."* ☕
+O projeto EdTech adota normas rigorosas de padronização, automação e qualidade. Quaisquer contribuições (resoluções de problemas, atualizações de arquitetura ou correções de código) devem aderir aos protocolos detalhados neste documento para serem incorporadas.
 
-Para garantirmos que o repositório se mantenha organizado e que seus Pull Requests (PRs) sejam aprovados rapidamente, peço que você siga algumas regras simples.
+## Fluxo de Trabalho (Git Flow)
 
-## 🧭 O Caminho do Contribuidor
-
-1. **Encontre um Problema:** Procure na aba de *Issues* por tarefas com as tags `good first issue` ou `help wanted`. Se quiser propor algo novo, abra uma issue primeiro para discutirmos a ideia!
-2. **Faça um Fork:** Crie a sua própria cópia do repositório.
-3. **Crie uma Branch:** Não commite diretamente na sua `main`. Crie uma branch descritiva (ex: `feat/login-page` ou `fix/jwt-validation`).
-4. **Code com Cuidado:** Siga os padrões do projeto. Se você mexeu no backend, garanta que o Maven (`mvn test`) ainda sorri para você. Se mexeu no frontend, verifique se não quebrou o layout.
-5. **Abra o Pull Request:** Preencha o nosso template de PR com carinho. O robô revisor do GitHub Actions passará para verificar seu código.
+1. **Rastreamento:** Procure na aba de *Issues* por itens com *tags* correspondentes (`good first issue`, `bug`, etc). Caso proponha algo novo, crie uma Issue descritiva primeiramente.
+2. **Branching:** A partir de um *fork* ou da branch `develop` (se você for mantenedor interno), crie uma nova branch com prefixo descritivo, por exemplo: `feat/nome-da-funcionalidade` ou `fix/nome-da-correcao`.
+3. **Desenvolvimento:** Submeta alterações seguindo estritamente os padrões de codificação do ecossistema correspondente, garantindo que o código passe pelos requisitos mínimos de *linting* e baterias de testes (e.g. `mvn verify` e `npm test`).
+4. **Submissão (Pull Request):** Abra o Pull Request apontando para a branch `develop`. Preencha de forma metódica o formulário do PR (Pull Request Template), garantindo que os *Checks* de CI do GitHub Actions finalizem com sucesso.
 
 ---
 
-## 📝 Regras de Ouro: Conventional Commits
+## Padronização de Commits
 
-Nós amamos automação! E para que a automação funcione, precisamos que o histórico do Git seja limpo. Seus commits **devem** seguir o formato do [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/):
+A integridade do histórico do Git e a automação de releases dependem da adesão unânime ao padrão **[Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)**:
 
 ```text
 <tipo>[escopo opcional]: <descrição breve>
 ```
 
-**Tipos permitidos:**
-- `feat:` Nova funcionalidade (Isso geralmente gera uma versão nova minor).
-- `fix:` Correção de bug (Gera uma versão patch).
-- `docs:` Mudanças apenas na documentação (READMEs, MkDocs).
-- `chore:` Tarefas de manutenção ou atualização de pacotes (ex: `chore(deps): update vite`).
-- `refactor:` Refatoração de código que não adiciona funcionalidade nem corrige bug.
-- `test:` Adição ou correção de testes E2E / Unitários.
-- `style:` Formatação de código (tabs, espaços), sem mudança lógica.
+### Tipos Permitidos
 
-**Exemplo Perfeito:**
+- `feat:` Inclusão de nova funcionalidade.
+- `fix:` Correção de defeito/bug.
+- `docs:` Alterações exclusivas na base documental (arquivos Markdown, documentação do MkDocs).
+- `chore:` Atualizações de infraestrutura, dependências ou manutenções na esteira de build (ex: `chore(deps): update vite`).
+- `refactor:` Ajustes de código que não adicionam funcionalidades nem corrigem bugs (ex: otimização estrutural).
+- `test:` Inserção ou correção nas baterias de testes.
+- `style:` Alterações exclusivas de formatação (espaçamentos, quebras de linha), sem impacto na lógica de negócios.
+
+**Exemplo de Commit Válido:**
 `feat(auth): adiciona fluxo de login com validacao JWT`
 
-*Se o seu commit for apenas `ajustes` ou `arrumei o bug`, meu amigo... eu terei que pedir amavelmente para você reescrever o histórico (rebase).* 😅
+> Mensagens vagas e submissões fora do padrão de Conventional Commits resultarão em falha automática na esteira de CI ou exigirão a refatoração completa do histórico (rebase).
 
 ---
 
-## 🏗️ Padrões de Código
+## Padrões de Código e Estrutura
 
-- **Backend (Java):** Usamos a convenção oficial do Google/Spring. Nomes de variáveis em `camelCase`, classes em `PascalCase`. Tipagem estrita.
-- **Frontend (React):** Componentes sempre em `PascalCase`. Usamos CSS puro para estilos organizados.
-- **Documentação:** Mantenha um tom profissional mas acolhedor. Arquivos sempre em formato Markdown (`.md`).
+- **Backend (Java):** Adoção das convenções arquiteturais do Spring Boot e Google Java Style. Nomenclatura rigorosa (`camelCase` para métodos/variáveis, `PascalCase` para classes/interfaces). Todo o código é submetido à avaliação do Checkstyle.
+- **Frontend (React):** Componentização lógica, utilizando estilos modulares (Vanilla CSS) ou padrões de classes consistentes e componentes isolados declarados em `PascalCase`.
+- **Documentação:** Estilo de escrita técnico, objetivo, formal e alinhado aos padrões corporativos do MkDocs. Arquivos textuais devem utilizar exclusivamente a extensão Markdown (`.md`).
 
-## 💬 Precisa de Ajuda?
+## Suporte
 
-Se travar em alguma etapa de configuração (o Docker às vezes tem vida própria), abra uma issue com a tag `question` ou marque os mantenedores. Nós não mordemos! E lembre-se: todo Mestre Sênior um dia já foi um Estagiário que quebrou a produção. O importante é aprender. 🚀
+Em caso de impasses técnicos profundos — especialmente de infraestrutura local via Docker —, registre o erro via Issue contendo obrigatoriamente os *stacktraces* do terminal ou evidências contextuais. Problemas documentados corretamente garantem resolução sistêmica acelerada.
