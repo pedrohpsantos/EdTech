@@ -39,18 +39,18 @@ public class UserService {
     }
 
 <span class="fc" id="L41">    boolean roleChanged = false;</span>
-<span class="pc bpc" id="L42" title="3 of 4 branches missed.">    if (normalizedEmail.contains(&quot;auditor&quot;) &amp;&amp; user.getRole() != UserRole.AUDITOR) {</span>
-<span class="nc" id="L43">      user.setRole(UserRole.AUDITOR);</span>
-<span class="nc" id="L44">      roleChanged = true;</span>
-<span class="pc bpc" id="L45" title="1 of 2 branches missed.">    } else if ((normalizedEmail.contains(&quot;orientador&quot;) </span>
+<span class="pc bpc" id="L42" title="1 of 4 branches missed.">    if (normalizedEmail.contains(&quot;auditor&quot;) &amp;&amp; user.getRole() != UserRole.AUDITOR) {</span>
+<span class="fc" id="L43">      user.setRole(UserRole.AUDITOR);</span>
+<span class="fc" id="L44">      roleChanged = true;</span>
+<span class="fc bfc" id="L45" title="All 2 branches covered.">    } else if ((normalizedEmail.contains(&quot;orientador&quot;) </span>
 <span class="pc bpc" id="L46" title="1 of 2 branches missed.">        || normalizedEmail.contains(&quot;advisor&quot;)) </span>
-<span class="nc bnc" id="L47" title="All 2 branches missed.">        &amp;&amp; user.getRole() != UserRole.ADVISOR) {</span>
-<span class="nc" id="L48">      user.setRole(UserRole.ADVISOR);</span>
-<span class="nc" id="L49">      roleChanged = true;</span>
+<span class="pc bpc" id="L47" title="1 of 2 branches missed.">        &amp;&amp; user.getRole() != UserRole.ADVISOR) {</span>
+<span class="fc" id="L48">      user.setRole(UserRole.ADVISOR);</span>
+<span class="fc" id="L49">      roleChanged = true;</span>
     }
 
-<span class="pc bpc" id="L52" title="1 of 2 branches missed.">    if (roleChanged) {</span>
-<span class="nc" id="L53">      userRepository.save(user);</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">    if (roleChanged) {</span>
+<span class="fc" id="L53">      userRepository.save(user);</span>
     }
 
 <span class="fc" id="L56">    return user;</span>
@@ -70,10 +70,10 @@ public class UserService {
     }
 
 <span class="fc" id="L72">    UserRole initialRole = UserRole.RESEARCHER;</span>
-<span class="pc bpc" id="L73" title="1 of 2 branches missed.">    if (normalizedEmail.contains(&quot;auditor&quot;)) {</span>
-<span class="nc" id="L74">      initialRole = UserRole.AUDITOR;</span>
-<span class="pc bpc" id="L75" title="2 of 4 branches missed.">    } else if (normalizedEmail.contains(&quot;orientador&quot;) || normalizedEmail.contains(&quot;advisor&quot;)) {</span>
-<span class="nc" id="L76">      initialRole = UserRole.ADVISOR;</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">    if (normalizedEmail.contains(&quot;auditor&quot;)) {</span>
+<span class="fc" id="L74">      initialRole = UserRole.AUDITOR;</span>
+<span class="pc bpc" id="L75" title="1 of 4 branches missed.">    } else if (normalizedEmail.contains(&quot;orientador&quot;) || normalizedEmail.contains(&quot;advisor&quot;)) {</span>
+<span class="fc" id="L76">      initialRole = UserRole.ADVISOR;</span>
     }
 
 <span class="fc" id="L79">    User user =</span>

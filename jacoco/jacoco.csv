@@ -1,7 +1,7 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
 edtech-api,com.edtech.service,InvalidCredentialsException,0,4,0,0,0,2,0,1,0,1
 edtech-api,com.edtech.service,DocumentService,16,415,0,22,2,106,2,24,2,13
-edtech-api,com.edtech.service,UserService,29,122,11,15,8,29,9,8,0,4
+edtech-api,com.edtech.service,UserService,0,151,4,22,0,37,4,13,0,4
 edtech-api,com.edtech.service,InvalidInstitutionalEmailException,0,4,0,0,0,2,0,1,0,1
 edtech-api,com.edtech.service,GcsStorageServiceImpl,0,65,0,0,0,17,0,5,0,5
 edtech-api,com.edtech.service,AuditLogService,5,81,1,7,2,20,1,8,0,5
@@ -19,7 +19,7 @@ edtech-api,com.edtech.dto,UserResponseDto,0,38,0,0,0,8,0,2,0,2
 edtech-api,com.edtech.dto,ResetPasswordDto,0,12,0,0,0,1,0,1,0,1
 edtech-api,com.edtech.dto,ProjectResponseDto,0,38,0,0,0,16,0,11,0,11
 edtech-api,com.edtech.dto,RegisterRequestDto,0,12,0,0,0,1,0,1,0,1
-edtech-api,com.edtech.dto,ComplianceStatsDto,52,0,0,0,22,0,15,0,15,0
+edtech-api,com.edtech.dto,ComplianceStatsDto,12,40,0,0,4,18,4,11,4,11
 edtech-api,com.edtech.dto,LoginRequestDto,0,9,0,0,0,1,0,1,0,1
 edtech-api,com.edtech.dto,AuthResponseDto,0,9,0,0,0,1,0,1,0,1
 edtech-api,com.edtech.dto,VerifyCodeDto,0,9,0,0,0,1,0,1,0,1
@@ -29,7 +29,7 @@ edtech-api,com.edtech.dto,DocumentStatusUpdateDto,11,15,0,0,5,6,3,3,3,3
 edtech-api,com.edtech.dto,ProjectRequestDto,0,17,0,0,0,7,0,5,0,5
 edtech-api,com.edtech.dto,UpdateDocumentStatusRequest,9,0,0,0,1,0,1,0,1,0
 edtech-api,com.edtech.dto,AuditLogDto,59,0,0,0,25,0,17,0,17,0
-edtech-api,com.edtech.dto,ComplianceStatsDto.PolicyDto,31,0,0,0,13,0,9,0,9,0
+edtech-api,com.edtech.dto,ComplianceStatsDto.PolicyDto,6,25,0,0,2,11,2,7,2,7
 edtech-api,com.edtech.dto,LoginResponseDto,15,0,0,0,1,0,1,0,1,0
 edtech-api,com.edtech.config,WebMvcConfig,0,4,0,0,0,2,0,2,0,2
 edtech-api,com.edtech.config,SecurityConfig,0,171,0,0,0,39,0,10,0,10
@@ -43,12 +43,12 @@ edtech-api,com.edtech.controller,DashboardController,0,54,0,0,0,14,0,2,0,2
 edtech-api,com.edtech.controller,ApiExceptionHandler,18,21,0,0,4,5,2,3,2,3
 edtech-api,com.edtech.controller,ProjectController,14,31,0,0,3,8,1,3,1,3
 edtech-api,com.edtech.controller,AuthController,0,141,0,8,0,33,0,12,0,8
-edtech-api,com.edtech.controller,ComplianceController,252,9,28,0,59,4,17,1,3,1
+edtech-api,com.edtech.controller,ComplianceController,3,258,2,26,0,63,2,16,0,4
 edtech-api,com.edtech.controller,DocumentController,27,53,0,0,5,13,2,4,2,4
 edtech-api,com.edtech.model,Project,15,41,0,0,7,17,4,11,4,11
 edtech-api,com.edtech.model,RecoveryToken,22,26,0,0,10,9,6,5,6,5
 edtech-api,com.edtech.model,AcaoAuditoria,0,75,0,0,0,13,0,1,0,1
-edtech-api,com.edtech.model,User,11,68,0,0,5,24,3,12,3,12
+edtech-api,com.edtech.model,User,7,72,0,0,3,26,2,13,2,13
 edtech-api,com.edtech.model,AuditLog,6,72,0,0,2,30,2,15,2,15
 edtech-api,com.edtech.model,UserRole,0,21,0,0,0,4,0,1,0,1
 edtech-api,com.edtech.model,Document,15,65,0,0,7,27,4,17,4,17
