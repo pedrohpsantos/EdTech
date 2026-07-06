@@ -28,3 +28,4 @@ cors:
 
 jwt:
   cookie-secure: true
+  cookie-same-site: None

@@ -38,6 +38,7 @@ public class AuthController {
   private final RateLimitingService rateLimitingService;
   private final boolean secureCookie;
   private final long jwtExpirationMinutes;
+  private final String sameSite;
 
   /** Documentação. */
   public AuthController(
@@ -46,13 +47,15 @@ public class AuthController {
       RecoveryService recoveryService,
       RateLimitingService rateLimitingService,
       @Value("${jwt.cookie-secure:false}") boolean secureCookie,
-      @Value("${jwt.expiration-minutes:60}") long jwtExpirationMinutes) {
+      @Value("${jwt.expiration-minutes:60}") long jwtExpirationMinutes,
+      @Value("${jwt.cookie-same-site:Lax}") String sameSite) {
     this.userService = userService;
     this.jwtService = jwtService;
     this.recoveryService = recoveryService;
     this.rateLimitingService = rateLimitingService;
     this.secureCookie = secureCookie;
     this.jwtExpirationMinutes = jwtExpirationMinutes;
+    this.sameSite = sameSite;
   }
 
   @PostMapping("/register")
@@ -121,7 +124,7 @@ public class AuthController {
         ResponseCookie.from("token", "")
             .httpOnly(true)
             .secure(secureCookie)
-            .sameSite("Lax")
+            .sameSite(sameSite)
             .path("/")
             .maxAge(0)
             .build();
@@ -139,7 +142,7 @@ public class AuthController {
     return ResponseCookie.from("token", token)
         .httpOnly(true)
         .secure(secureCookie)
-        .sameSite("Lax")
+        .sameSite(sameSite)
         .path("/")
         .maxAge(Duration.ofMinutes(jwtExpirationMinutes))
         .build();
