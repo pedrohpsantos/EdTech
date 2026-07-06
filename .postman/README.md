@@ -1,31 +1,28 @@
-# 📬 EdTech Postman — O Carteiro Explorador
+# Coleção Postman e Testes de API
 
 ![Postman](https://img.shields.io/badge/Postman-API_Testing-FF6C37?style=for-the-badge&logo=postman&logoColor=white)
 ![REST API](https://img.shields.io/badge/API-RESTful-005571?style=for-the-badge)
 
-> *"Bom dia! Tem encomenda para o Backend! ✉️ Eu sou o Carteiro Explorador. Meu trabalho é garantir que as requisições cheguem inteiras, com os cabeçalhos certos, tokens autênticos e pacotes JSON formatados perfeitamente. Se a API disser '200 OK', meu dia está ganho. Se disser '401 Unauthorized', é hora de trocar a fechadura (ou o JWT)!"* 📦
+Este diretório (`/.postman`) contém a coleção oficial para iteração manual, depuração e validação de contratos da API do EdTech. Ele permite que desenvolvedores reproduzam requisições sistêmicas contra a aplicação sem necessidade de desenvolver scripts dedicados.
 
-Bem-vindo à sala de correspondências! Este diretório oculto contém a coleção exportada oficial do **Postman** (ou Insomnia, dependendo de qual cliente você prefere) para você interagir e testar nossa API local ou em produção.
+## Escopo da Coleção
 
-## 📨 O Pacote de Coleções
+O arquivo `EdTech.json` abrange todos os cenários transacionais e operacionais consolidados no sistema:
 
-O arquivo `EdTech.json` contido aqui é a sua chave-mestra para explorar os endpoints. Ele possui toda a estrutura da nossa API já mastigada:
-
-- **Autenticação:** Rotas para gerar o Token JWT.
-- **Pesquisadores:** Rotas de CRUD para perfis.
-- **Relatórios:** Upload, download e listagem de dados.
-- **Auditoria:** Endpoints para verificar os logs gerados (apenas admin).
+- **Autenticação:** Emissão de tokens JWT e gestão de sessão (comportamento simulado de *HttpOnly* cookies e envio condicional de cabeçalhos CSRF).
+- **Domínio de Projetos e Usuários:** Operações CRUD aplicadas a perfis, fluxos de vinculação de laboratório e acompanhamento de pesquisas.
+- **Armazenamento e Upload (Supabase/S3):** Chamadas complexas com submissões em *multipart/form-data* e delegação de payload em Storage externo.
+- **Governança:** Acesso restrito e paginação das matrizes da Trilha de Auditoria.
 
 ---
 
-## 🏃 Como Importar e Rodar
+## Importação e Configuração de Ambiente
 
-Não tente adivinhar as rotas lendo os Controllers do Backend. Poupe seu tempo:
+Para aferir ou testar a API na sua máquina local:
 
-1. Abra o seu Postman (ou qualquer outro cliente API compatível, como o Insomnia).
-2. Vá em **Import** (Importar) e selecione o arquivo `EdTech.json` desta pasta.
-3. **Atenção aos Ambientes (Environments):** Configure uma variável global chamada `{{base_url}}`.
-   - Para desenvolvimento local: Defina o valor como `http://localhost:8080`
-4. **O Segredo do Carteiro (JWT):** Nossa API é protegida (graças ao Guardião lá no Backend). Após chamar a rota de Login e receber o token, coloque-o na aba de *Authorization -> Bearer Token* para que as próximas rotas confiem em você.
+1. Importe o arquivo `EdTech.json` utilizando o Postman (ou software compatível como Insomnia).
+2. Estabeleça um **Environment** (*Ambiente*) e declare a variável base de rotas `{{base_url}}`.
+   - Para instâncias locais padrão: `http://localhost:8080`
+3. **Autenticação de Rota:** Como a API restringe operações abertas e baseia-se em tokens JWT (*stateless*), ative o fluxo gerando o token pela chamada de Login. No modo de exploração manual, forneça o credencial devolvida pelo endpoint nas requisições subsequentes via menu de *Authorization* (*Bearer Token*).
 
-> *Dica: Se você conseguir burlar alguma regra e retornar um HTTP 500 em vez de uma mensagem de erro tratada, por favor, abra uma issue. Nós não gostamos de encomendas extraviadas.*
+> A inobservância das regras de negócio ou omissão de campos obrigatórios resultará em respostas estruturadas `400 Bad Request`. Respostas arbitrárias do tipo `500 Internal Server Error` representam anomalias na blindagem de entrada e devem ser reportadas como Issues na rastreabilidade do GitHub.
