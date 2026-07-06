@@ -1,8 +1,13 @@
 import { test, expect } from '@playwright/test';
+import { allure } from 'allure-playwright';
 
 test.describe('Core Business Flow: Upload & Approve', () => {
   
   test('Researcher can upload and Advisor can approve', async ({ page }) => {
+    allure.epic('Qualidade e E2E');
+    allure.feature('Fluxo Principal do Pesquisador');
+    allure.story('Caminho Feliz: Login, Upload e Visualização de Trilha');
+    
     // Note: Em um ambiente real de CI, isso deveria bater em um banco de dados
     // limpo ou mockado. Aqui estamos garantindo que a tela inicial abre.
     
