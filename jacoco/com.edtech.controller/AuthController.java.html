@@ -47,75 +47,77 @@ public class AuthController {
 <span class="fc" id="L47">    this.rateLimitingService = rateLimitingService;</span>
 <span class="fc" id="L48">  }</span>
 
+  /** Documentação. */
   @PostMapping(&quot;/register&quot;)
   public ResponseEntity&lt;AuthResponseDto&gt; register(@Valid @RequestBody RegisterRequestDto request) {
-<span class="fc" id="L52">    User registeredUser = userService.register(request);</span>
-<span class="fc" id="L53">    String token = jwtService.generateToken(registeredUser);</span>
-<span class="fc" id="L54">    return ResponseEntity.status(HttpStatus.CREATED)</span>
-<span class="fc" id="L55">        .body(new AuthResponseDto(UserResponseDto.from(registeredUser), token));</span>
+<span class="fc" id="L53">    User registeredUser = userService.register(request);</span>
+<span class="fc" id="L54">    String token = jwtService.generateToken(registeredUser);</span>
+<span class="fc" id="L55">    return ResponseEntity.status(HttpStatus.CREATED)</span>
+<span class="fc" id="L56">        .body(new AuthResponseDto(UserResponseDto.from(registeredUser), token));</span>
   }
 
   /** Documentação. */
   @PostMapping(&quot;/login&quot;)
   public ResponseEntity&lt;AuthResponseDto&gt; login(
       @Valid @RequestBody LoginRequestDto request, HttpServletRequest httpRequest) {
-<span class="fc" id="L62">    Bucket bucket = rateLimitingService.resolveBucket(httpRequest.getRemoteAddr());</span>
-<span class="fc bfc" id="L63" title="All 2 branches covered.">    if (!bucket.tryConsume(1)) {</span>
-<span class="fc" id="L64">      throw new RateLimitExceededException(</span>
+<span class="fc" id="L63">    Bucket bucket = rateLimitingService.resolveBucket(httpRequest.getRemoteAddr());</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">    if (!bucket.tryConsume(1)) {</span>
+<span class="fc" id="L65">      throw new RateLimitExceededException(</span>
           &quot;Limite de tentativas excedido. Tente novamente mais tarde.&quot;);
     }
 
-<span class="fc" id="L68">    User user = userService.authenticate(request.email(), request.password());</span>
-<span class="fc" id="L69">    String token = jwtService.generateToken(user);</span>
+<span class="fc" id="L69">    User user = userService.authenticate(request.email(), request.password());</span>
+<span class="fc" id="L70">    String token = jwtService.generateToken(user);</span>
 
-<span class="fc" id="L71">    return ResponseEntity.ok(new AuthResponseDto(UserResponseDto.from(user), token));</span>
+<span class="fc" id="L72">    return ResponseEntity.ok(new AuthResponseDto(UserResponseDto.from(user), token));</span>
   }
 
   /** Documentação. */
   @PostMapping(&quot;/recovery/request&quot;)
   public ResponseEntity&lt;?&gt; requestRecovery(
       @RequestBody RecoveryRequestDto request, HttpServletRequest httpRequest) {
-<span class="fc" id="L78">    Bucket bucket = rateLimitingService.resolveBucket(httpRequest.getRemoteAddr());</span>
-<span class="fc bfc" id="L79" title="All 2 branches covered.">    if (!bucket.tryConsume(1)) {</span>
-<span class="fc" id="L80">      throw new RateLimitExceededException(</span>
+<span class="fc" id="L79">    Bucket bucket = rateLimitingService.resolveBucket(httpRequest.getRemoteAddr());</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">    if (!bucket.tryConsume(1)) {</span>
+<span class="fc" id="L81">      throw new RateLimitExceededException(</span>
           &quot;Limite de tentativas excedido. Tente novamente mais tarde.&quot;);
     }
 
-<span class="fc" id="L84">    recoveryService.requestRecovery(request.email());</span>
-<span class="fc" id="L85">    return ResponseEntity.ok().build();</span>
+<span class="fc" id="L85">    recoveryService.requestRecovery(request.email());</span>
+<span class="fc" id="L86">    return ResponseEntity.ok().build();</span>
   }
 
   /** Documentação. */
   @PostMapping(&quot;/recovery/verify&quot;)
   public ResponseEntity&lt;?&gt; verifyCode(@RequestBody VerifyCodeDto request) {
-<span class="fc" id="L91">    boolean valid = recoveryService.verifyCode(request.email(), request.code());</span>
-<span class="fc bfc" id="L92" title="All 2 branches covered.">    if (valid) {</span>
-<span class="fc" id="L93">      return ResponseEntity.ok().build();</span>
+<span class="fc" id="L92">    boolean valid = recoveryService.verifyCode(request.email(), request.code());</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">    if (valid) {</span>
+<span class="fc" id="L94">      return ResponseEntity.ok().build();</span>
     }
-<span class="fc" id="L95">    return ResponseEntity.badRequest().body(&quot;Código inválido ou expirado.&quot;);</span>
+<span class="fc" id="L96">    return ResponseEntity.badRequest().body(&quot;Código inválido ou expirado.&quot;);</span>
   }
 
   /** Documentação. */
   @PostMapping(&quot;/recovery/reset&quot;)
   public ResponseEntity&lt;?&gt; resetPassword(@RequestBody ResetPasswordDto request) {
-<span class="fc" id="L101">    boolean success =</span>
-<span class="fc" id="L102">        recoveryService.resetPassword(request.email(), request.code(), request.newPassword());</span>
-<span class="fc bfc" id="L103" title="All 2 branches covered.">    if (success) {</span>
-<span class="fc" id="L104">      return ResponseEntity.ok().build();</span>
+<span class="fc" id="L102">    boolean success =</span>
+<span class="fc" id="L103">        recoveryService.resetPassword(request.email(), request.code(), request.newPassword());</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">    if (success) {</span>
+<span class="fc" id="L105">      return ResponseEntity.ok().build();</span>
     }
-<span class="fc" id="L106">    return ResponseEntity.badRequest().body(&quot;Erro ao redefinir a senha.&quot;);</span>
+<span class="fc" id="L107">    return ResponseEntity.badRequest().body(&quot;Erro ao redefinir a senha.&quot;);</span>
   }
 
   /** Documentação. */
   @PostMapping(&quot;/logout&quot;)
   public ResponseEntity&lt;Void&gt; logout() {
-<span class="fc" id="L112">    return ResponseEntity.ok().build();</span>
+<span class="fc" id="L113">    return ResponseEntity.ok().build();</span>
   }
 
+  /** Documentação. */
   @GetMapping(&quot;/me&quot;)
   public ResponseEntity&lt;UserResponseDto&gt; me(Authentication authentication) {
-<span class="fc" id="L117">    User user = (User) authentication.getPrincipal();</span>
-<span class="fc" id="L118">    return ResponseEntity.ok(UserResponseDto.from(user));</span>
+<span class="fc" id="L119">    User user = (User) authentication.getPrincipal();</span>
+<span class="fc" id="L120">    return ResponseEntity.ok(UserResponseDto.from(user));</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
