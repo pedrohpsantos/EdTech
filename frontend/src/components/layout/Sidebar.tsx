@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../../context/authContext';
-import logo from '../../assets/svgs/logo-white.svg';
+
 import '../../assets/dashboard.css';
 
 const Sidebar: React.FC = () => {
@@ -21,7 +21,18 @@ const Sidebar: React.FC = () => {
     <aside className="sidebar-container">
       <div className="sidebar-header">
         <div className="logo-section" onClick={handleLogoClick} style={{ cursor: 'pointer' }}>
-          <img src={logo} alt="EdTech Logo" style={{ height: '32px' }} />
+          <svg width="32" height="32" viewBox="0 0 100 100" style={{ marginRight: '8px' }}>
+            <line x1="20" y1="25" x2="80" y2="25" stroke="#FFFFFF" strokeWidth="10" strokeLinecap="round" />
+            <line x1="20" y1="50" x2="55" y2="50" stroke="#FFFFFF" strokeWidth="10" strokeLinecap="round" />
+            <line x1="20" y1="75" x2="80" y2="75" stroke="#FFFFFF" strokeWidth="10" strokeLinecap="round" />
+            <line x1="20" y1="25" x2="20" y2="75" stroke="#FFFFFF" strokeWidth="10" strokeLinecap="round" />
+            <circle cx="20" cy="25" r="8" fill="#FFFFFF" />
+            <circle cx="80" cy="25" r="8" fill="#FFFFFF" />
+            <circle cx="20" cy="50" r="8" fill="#FFFFFF" />
+            <circle cx="55" cy="50" r="8" fill="#FF9100" />
+            <circle cx="20" cy="75" r="8" fill="#FFFFFF" />
+            <circle cx="80" cy="75" r="8" fill="#FFFFFF" />
+          </svg>
           <span className="logo-text">EdTech</span>
         </div>
         <div className="role-badge">
