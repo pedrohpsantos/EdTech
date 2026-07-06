@@ -99,7 +99,7 @@ const Dashboard: React.FC = () => {
             boxShadow: '0 4px 12px rgba(63, 27, 138, 0.3)'
           }}
         >
-          <i className="bi bi-diagram-3"></i> Ver Research Trail
+          <i className="bi bi-diagram-3"></i> Ver Trilha de Pesquisa
         </button>
       )}
     </div>
