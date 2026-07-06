@@ -54,4 +54,11 @@
         <packageUrl regex="true">^pkg:maven/com\.fasterxml\.jackson\.core/jackson-databind@.*$</packageUrl>
         <cve>CVE-2026-54515</cve>
     </suppress>
+    <suppress>
+        <notes><![CDATA[
+        Suppressing HTTPCore CVE-2026-54399
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.apache\.httpcomponents/httpcore@.*$</packageUrl>
+        <cve>CVE-2026-54399</cve>
+    </suppress>
 </suppressions>
