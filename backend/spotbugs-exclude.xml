@@ -7,7 +7,7 @@
     
     <!-- Ignore CT_CONSTRUCTOR_THROW in JwtService since throwing IllegalStateException is standard validation -->
     <Match>
-        <Class name="com.edTech.service.JwtService" />
+        <Class name="com.edtech.service.JwtService" />
         <Bug pattern="CT_CONSTRUCTOR_THROW" />
     </Match>
 </FindBugsFilter>
