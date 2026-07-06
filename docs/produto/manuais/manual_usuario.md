@@ -77,4 +77,4 @@ Para garantir o isolamento e segurança da plataforma, as ações são restritas
 | Versão | Data | Descrição | Autor |
 | :---: | :---: | :--- | :--- |
 | `1.0` | 04/07/2026 | Refatoração inicial da documentação | Pedro Henrique P. Santos |
-| `2.0` | 04/07/2026 | Revisão profunda, correção de metadados e melhorias visuais | Pedro Henrique P. Santos |
+| `2.0.0` | 04/07/2026 | Revisão profunda, correção de metadados e melhorias visuais | Pedro Henrique P. Santos |

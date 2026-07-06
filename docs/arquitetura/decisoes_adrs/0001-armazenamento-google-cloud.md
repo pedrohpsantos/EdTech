@@ -41,8 +41,8 @@ A aplicação backend (Cloud Run) fará comunicação direta com as APIs nativas
 | :---: | :---: | :--- | :--- |
 | `1.0` | 30/05/2026 | Documento de Registro de Decisão Arquitetural (GCS inicial) | Pedro Henrique P. Santos |
 | `1.1` | 04/06/2026 | Padronização do formato do documento | Pedro Henrique P. Santos |
-| `2.0` | 21/06/2026 | Transição temporária de Storage (removido) | Pedro Henrique P. Santos |
+| `2.0.0` | 21/06/2026 | Transição temporária de Storage (removido) | Pedro Henrique P. Santos |
 | `3.0` | 01/07/2026 | Consolidação final no ecossistema nativo Google Cloud e Firebase | Pedro Henrique P. Santos |
-| `2.0` | 04/07/2026 | Revisão profunda, correção de metadados e melhorias visuais | Pedro Henrique P. Santos |
+| `2.0.0` | 04/07/2026 | Revisão profunda, correção de metadados e melhorias visuais | Pedro Henrique P. Santos |
 
 

@@ -102,6 +102,6 @@ Sombras sutis tingidas com o **Deep Purple** para evitar o aspecto "sujo" de som
 | :---: | :---: | :--- | :--- |
 | `1.0` | 09/06/2026 | Documentação do Design System e Tokens | Pedro Henrique P. Santos |
 | `1.1` | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |
-| `2.0` | 04/07/2026 | Revisão profunda, correção de metadados e melhorias visuais | Pedro Henrique P. Santos |
+| `2.0.0` | 04/07/2026 | Revisão profunda, correção de metadados e melhorias visuais | Pedro Henrique P. Santos |
 
 

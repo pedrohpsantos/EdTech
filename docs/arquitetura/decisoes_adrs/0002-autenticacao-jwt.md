@@ -37,7 +37,7 @@ Optamos por utilizar **JWT (JSON Web Token)** armazenado no **LocalStorage** do 
 | :---: | :---: | :--- | :--- |
 | `1.0` | 04/06/2026 | Criação do documento original (Cookies HttpOnly) | Pedro Henrique P. Santos |
 | `1.1` | 13/06/2026 | Revisão técnica | Pedro Henrique P. Santos |
-| `2.0` | 04/07/2026 | Revisão e formatação | Pedro Henrique P. Santos |
+| `2.0.0` | 04/07/2026 | Revisão e formatação | Pedro Henrique P. Santos |
 | `3.0` | 06/07/2026 | Migração de Cookies para Bearer Token no LocalStorage devido ao bloqueio Third-Party Cookies | Pedro Henrique P. Santos |
 
 
