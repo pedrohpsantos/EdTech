@@ -95,3 +95,10 @@ Estabelecer toda a fundação do projeto: repositório, pipeline de CI/CD, ambie
     Todos os membros (exceto o Tech Lead) são designados como **Full Stack** com rotação bimensal entre frentes de trabalho, evitando especialização precoce.
 
 ---
+
+## Histórico de Versões
+
+| Versão | Data | Descrição | Autor |
+|--------|------|-----------|-------|
+| `1.0` | 18/05/2026 | Criação do documento de fechamento da Sprint 1 | Pedro Henrique P. Santos |
+| `1.1` | 04/07/2026 | Revisão profunda, correção de metadados e melhorias visuais | Pedro Henrique P. Santos |

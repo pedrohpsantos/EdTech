@@ -103,3 +103,10 @@ Executar o Lean Inception completo, levantar e especificar todos os requisitos d
     Por segurança, os tokens são transmitidos exclusivamente via cookies `HttpOnly` + `Secure` + `SameSite=Strict`, protegendo contra XSS e CSRF.
 
 ---
+
+## Histórico de Versões
+
+| Versão | Data | Descrição | Autor |
+|--------|------|-----------|-------|
+| `1.0` | 25/05/2026 | Criação do documento de fechamento da Sprint 2 | Pedro Henrique P. Santos |
+| `1.1` | 04/07/2026 | Revisão profunda, correção de metadados e melhorias visuais | Pedro Henrique P. Santos |

@@ -61,5 +61,5 @@ Uma funcionalidade desenvolvida só pode ser dada como concluída (Muda para **D
 | `1.0` | 30/05/2026 | Definição inicial do DoR e DoD do projeto | Pedro Henrique P. Santos |
 | `1.1` | 04/06/2026 | Inclusão de garantias de arquitetura, Flyway, CI/CD e Docs-as-Code (ADRs) | Pedro Henrique P. Santos |
 | `1.2` | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |
-| `2.0.0` | 04/07/2026 | Revisão profunda, correção de metadados e melhorias visuais | Pedro Henrique P. Santos |
+| `1.3` | 04/07/2026 | Revisão profunda, correção de metadados e melhorias visuais | Pedro Henrique P. Santos |
 

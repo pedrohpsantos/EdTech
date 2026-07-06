@@ -138,3 +138,10 @@ Consolidar a Integração Contínua, finalizar a base de Autenticação com CORS
 | #96 | Auditoria de Segurança e Deploy MVP (Tech Lead) | Crítico — Entrega em ambiente real |
 
 ---
+
+## Histórico de Versões
+
+| Versão | Data | Descrição | Autor |
+|--------|------|-----------|-------|
+| `1.0` | 19/06/2026 | Criação do documento de fechamento da Sprint 5 | Pedro Henrique P. Santos |
+| `1.1` | 04/07/2026 | Revisão profunda, correção de metadados e melhorias visuais | Pedro Henrique P. Santos |

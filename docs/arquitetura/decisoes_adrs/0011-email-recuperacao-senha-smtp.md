@@ -36,6 +36,6 @@ Adotaremos o `spring-boot-starter-mail`, que abstrai o envio de e-mails usando a
 | Versão | Data | Descrição | Autor |
 | :---: | :---: | :--- | :--- |
 | `1.0` | 28/06/2026 | Documento de Registro de Decisão Arquitetural (Envio de E-mails Transacionais) | Pedro Henrique P. Santos |
-| `2.0.0` | 04/07/2026 | Revisão profunda, correção de metadados e melhorias visuais | Pedro Henrique P. Santos |
+| `1.1` | 04/07/2026 | Revisão profunda, correção de metadados e melhorias visuais | Pedro Henrique P. Santos |
 
 

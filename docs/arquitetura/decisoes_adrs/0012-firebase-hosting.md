@@ -37,6 +37,6 @@ Optamos por utilizar o **Firebase Hosting** como plataforma para hospedar o fron
 | Versão | Data | Descrição | Autor |
 | :---: | :---: | :--- | :--- |
 | `1.0` | 01/07/2026 | Criação do documento | Pedro Henrique P. Santos |
-| `2.0.0` | 04/07/2026 | Revisão profunda, correção de metadados e melhorias visuais | Pedro Henrique P. Santos |
+| `1.1` | 04/07/2026 | Revisão profunda, correção de metadados e melhorias visuais | Pedro Henrique P. Santos |
 
 

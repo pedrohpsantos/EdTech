@@ -207,8 +207,8 @@ O script lista os 10 backups mais recentes e emite um **alerta visual** caso o b
 | `1.0`  | 30/05/2026 | Criação do documento                     | Pedro Henrique P. Santos |
 | `1.1`  | 30/05/2026 | Refino do threat model e estilos visuais | Pedro Henrique P. Santos |
 | `1.2` | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |
-| `2.0.0` | 04/07/2026 | Revisão profunda, correção de metadados e melhorias visuais | Pedro Henrique P. Santos |
-| `2.1.0` | 05/07/2026 | Adição da seção de Rate Limiting (Bucket4j) | Pedro Henrique P. Santos |
-| `2.2` | 05/07/2026 | Adição da seção de Política de Backup e Recuperação | Pedro Henrique P. Santos |
+| `1.3` | 04/07/2026 | Revisão profunda, correção de metadados e melhorias visuais | Pedro Henrique P. Santos |
+| `1.4` | 05/07/2026 | Adição da seção de Rate Limiting (Bucket4j) | Pedro Henrique P. Santos |
+| `1.5` | 06/07/2026 | Adição da seção de Política de Backup e Recuperação | Pedro Henrique P. Santos |
 
 
