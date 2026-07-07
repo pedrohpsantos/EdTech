@@ -59,6 +59,8 @@ export default function () {
   sleep(1);
 }
 
+import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js";
+
 // Esta função é chamada no final do teste.
 // Ela gera um relatório JSON com todos os dados coletados.
 export function handleSummary(data) {
@@ -68,5 +70,8 @@ export function handleSummary(data) {
 
     // Salva o relatório completo em um arquivo JSON.
     'k6-summary.json': JSON.stringify(data, null, 2),
+
+    // Salva o relatório visual em HTML
+    'k6-summary.html': htmlReport(data),
   };
 }

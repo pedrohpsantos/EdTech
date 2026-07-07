@@ -94,6 +94,25 @@ jobs:
         env:
           BASE_URL: 'https://edtech-storage-501117.web.app'
 
+      - name: Install K6
+        run: |
+          sudo gpg -k
+          sudo gpg --no-default-keyring --keyring /usr/share/keyrings/k6-archive-keyring.gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C5AD17C747E3415A3642D57D77C6C491D6AC1D69
+          echo "deb [signed-by=/usr/share/keyrings/k6-archive-keyring.gpg] https://dl.k6.io/deb stable main" | sudo tee /etc/apt/sources.list.d/k6.list
+          sudo apt-get update
+          sudo apt-get install k6
+
+      - name: Executar Testes de Carga (K6)
+        working-directory: tests/performance
+        run: k6 run load-test.js || true
+
+      - name: Integrar K6 na Documentação
+        run: |
+          mkdir -p docs/k6
+          if [ -f "tests/performance/k6-summary.html" ]; then
+            cp tests/performance/k6-summary.html docs/k6/index.html || true
+          fi
+
       - name: Restaurar Histórico do Allure (Trend)
         uses: actions/checkout@v4
         if: always()
