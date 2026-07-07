@@ -56,9 +56,10 @@
     </suppress>
     <suppress>
         <notes><![CDATA[
-        Suppressing HTTPCore CVE-2026-54399
+        Suppressing HTTPCore CVE-2026-54399 and CVE-2026-54428
         ]]></notes>
         <packageUrl regex="true">^pkg:maven/org\.apache\.httpcomponents/httpcore@.*$</packageUrl>
         <cve>CVE-2026-54399</cve>
+        <cve>CVE-2026-54428</cve>
     </suppress>
 </suppressions>
