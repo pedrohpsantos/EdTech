@@ -90,7 +90,9 @@ jobs:
 
       - name: Executar Smoke Tests (Allure)
         working-directory: frontend
-        run: npx playwright test e2e/production-smoke.spec.ts || true
+        run: npx playwright test || true
+        env:
+          BASE_URL: 'https://edtech-storage-501117.web.app'
 
       - name: Restaurar Histórico do Allure (Trend)
         uses: actions/checkout@v4
