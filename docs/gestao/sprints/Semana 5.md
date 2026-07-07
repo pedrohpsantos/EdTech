@@ -101,7 +101,7 @@ Consolidar a Integração Contínua, finalizar a base de Autenticação com CORS
 - **Commits:** `c891f21`.
 
 ### DevOps (Luis Gustavo)
-- **Foco:** Configuração do Supabase e revisão da esteira CI.
+- **Foco:** Configuração de Infraestrutura e revisão da esteira CI.
 - **Entregas:** Auxílio em infraestrutura.
 - **Commits:** `(Revisões de PR)`.
 
