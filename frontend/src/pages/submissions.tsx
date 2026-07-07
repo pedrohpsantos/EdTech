@@ -5,9 +5,9 @@ import { getDocuments, reviewDocument, getDashboardStats } from '../services/api
 import styles from './submissions.module.css';
 
 export default function Submissions() {
-  const { user } = useAuth();
+  const { user: _user } = useAuth();
   const [documents, setDocuments] = useState<any[]>([]);
-  const [stats, setStats] = useState<any>(null);
+  const [_stats, setStats] = useState<any>(null);
   
   // Modals state
   const [selectedDoc, setSelectedDoc] = useState<any>(null);
@@ -81,7 +81,7 @@ export default function Submissions() {
     });
   };
 
-  const formatSize = (url: string) => {
+  const formatSize = (_url: string) => {
     return '2.4 MB'; // Mock placeholder, since we don't return size from backend yet
   };
 
