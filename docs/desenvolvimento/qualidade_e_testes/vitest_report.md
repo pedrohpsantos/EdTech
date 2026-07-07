@@ -11,8 +11,8 @@ Abaixo você encontra o relatório iterativo e completo dos testes do frontend d
 - Testes de Acessibilidade (vitest-axe)
 - Cobertura de Código (Coverage via V8)
 
-> [!NOTE]
-> Os testes unitários focam nas validações visuais e de lógica de negócio client-side, independentemente de conexão de rede ou backend ativo.
+!!! note "Nota"
+    Os testes unitários focam nas validações visuais e de lógica de negócio client-side, independentemente de conexão de rede ou backend ativo.
 
 <div style="display: flex; justify-content: flex-end; margin-bottom: 15px;" markdown="1">
   [Abrir Relatório Vitest em Tela Cheia :material-open-in-new:](../../../vitest/index.html){ .md-button target="_blank" }

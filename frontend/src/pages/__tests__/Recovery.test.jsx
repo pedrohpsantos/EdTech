@@ -11,28 +11,7 @@ vi.mock('../../services/api', () => ({
   resetPassword: vi.fn(),
 }));
 
-// Mock do framer-motion para evitar erros de animação no JSDOM
-vi.mock('framer-motion', () => {
-  const React = require('react');
-  const filterProps = (props) => {
-    const rest = { ...props };
-    delete rest.whileHover;
-    delete rest.whileTap;
-    delete rest.initial;
-    delete rest.animate;
-    delete rest.variants;
-    delete rest.transition;
-    return rest;
-  };
-  return {
-    motion: {
-      div: React.forwardRef((props, ref) => <div ref={ref} {...filterProps(props)} />),
-      h2: React.forwardRef((props, ref) => <h2 ref={ref} {...filterProps(props)} />),
-      p: React.forwardRef((props, ref) => <p ref={ref} {...filterProps(props)} />),
-      button: React.forwardRef((props, ref) => <button ref={ref} {...filterProps(props)} />),
-    },
-  };
-});
+
 
 describe('Recovery Component - Unit Tests', () => {
   beforeEach(() => {

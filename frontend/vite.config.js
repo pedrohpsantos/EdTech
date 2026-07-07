@@ -18,7 +18,8 @@ export default defineConfig({
     // css: true processa CSS Modules nativamente no Vitest (retorna objeto com class names)
     // Antes falhava por import.meta.env undefined — agora resolvido com optional chaining em api.ts
     css: true,
-    setupFiles: './src/setupTests.js',
+    setupFiles: './src/setupTests.jsx',
+    slowTestThreshold: 1000,
     exclude: ['node_modules', 'dist', '.idea', '.git', '.cache', 'e2e/**'],
     coverage: {
       provider: 'v8',
