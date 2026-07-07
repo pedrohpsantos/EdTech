@@ -10,6 +10,7 @@ on:
       - 'pyproject.toml'
       - '.github/workflows/ci-docs.yml'
       - 'backend/**'
+      - 'frontend/**'
   workflow_dispatch:
 
 permissions:
@@ -75,6 +76,17 @@ jobs:
         run: |
           npm ci
           npx playwright install --with-deps chromium
+
+      - name: Executar Testes Unitários (Vitest)
+        working-directory: frontend
+        run: npm run test || true
+
+      - name: Integrar Vitest na Documentação
+        run: |
+          mkdir -p docs/vitest
+          if [ -d "frontend/html" ]; then
+            cp -r frontend/html/* docs/vitest/ || true
+          fi
 
       - name: Executar Smoke Tests (Allure)
         working-directory: frontend
