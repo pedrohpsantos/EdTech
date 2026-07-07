@@ -12,7 +12,11 @@ import com.edtech.repository.DocumentRepository;
 import com.edtech.repository.ProjectMemberRepository;
 import com.edtech.repository.ProjectRepository;
 import com.edtech.repository.UserRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 import org.apache.tika.Tika;
 import org.springframework.data.domain.Page;
@@ -21,9 +25,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-/** Documentação para DocumentService. */
+/** Documentacao para DocumentService. */
 @Service
 public class DocumentService {
+
+  private static final String MIME_PDF = "application/pdf";
+  private static final String MIME_CSV = "text/csv";
+  private static final String MIME_JSON = "application/json";
+  private static final Map<String, String> ALLOWED_MIME_BY_EXTENSION =
+      Map.of(".pdf", MIME_PDF, ".csv", MIME_CSV, ".json", MIME_JSON);
+  private static final Set<String> CSV_COMPATIBLE_DETECTED_TYPES =
+      Set.of(MIME_CSV, "text/plain", "application/csv", "application/vnd.ms-excel");
+  private static final Set<String> JSON_COMPATIBLE_DETECTED_TYPES = Set.of(MIME_JSON, "text/plain");
 
   private final DocumentRepository documentRepository;
   private final ProjectRepository projectRepository;
@@ -32,8 +45,9 @@ public class DocumentService {
   private final AuditLogService auditLogService;
   private final StorageService storageService;
   private final Tika tika = new Tika();
+  private final ObjectMapper objectMapper = new ObjectMapper();
 
-  /** Documentação. */
+  /** Documentacao. */
   public DocumentService(
       DocumentRepository documentRepository,
       ProjectRepository projectRepository,
@@ -49,7 +63,7 @@ public class DocumentService {
     this.storageService = storageService;
   }
 
-  /** Documentação. */
+  /** Documentacao. */
   @Transactional
   public DocumentResponseDto uploadDocument(
       MultipartFile file, String title, UUID projectId, UUID authorId) {
@@ -66,25 +80,13 @@ public class DocumentService {
         .findByProjectIdAndUserId(projectId, authorId)
         .orElseThrow(() -> new RuntimeException("Author is not a member of the project"));
 
-    // Validação de segurança estrita (MIME Type via Tika) mitigação SEC-004
-    try {
-      String detectedType = tika.detect(file.getInputStream());
-      if (!"application/pdf".equalsIgnoreCase(detectedType)) {
-        throw new IllegalArgumentException(
-            "Apenas arquivos PDF reais sao permitidos. Tipo detectado: " + detectedType);
-      }
-    } catch (IOException e) {
-      throw new RuntimeException("Falha ao analisar o conteudo do arquivo", e);
-    }
-
-    String contentType = file.getContentType();
-
     try {
       String originalFilename = file.getOriginalFilename();
       if (originalFilename == null) {
         throw new IllegalArgumentException("Filename cannot be null");
       }
-      // A chave do objeto no GCS
+
+      String contentType = validateAllowedFile(file, originalFilename);
       String fileKey = UUID.randomUUID() + "_" + originalFilename;
 
       storageService.uploadFile(file, fileKey, contentType);
@@ -98,25 +100,29 @@ public class DocumentService {
 
       document = documentRepository.save(document);
 
-      auditLogService.logAction(
-          authorId, AcaoAuditoria.UPLOAD_SUCCESS, "Documento anexado no Cloud Storage: " + title);
+      auditLogService.logDocumentAction(
+          authorId,
+          AcaoAuditoria.UPLOAD_SUCCESS,
+          document.getId(),
+          "Documento anexado no Cloud Storage: " + title);
 
       return mapToDto(document);
     } catch (IOException e) {
-      throw new RuntimeException("Failed to read file for upload");
+      throw new RuntimeException("Falha ao analisar o conteudo do arquivo", e);
+    } catch (IllegalArgumentException e) {
+      throw e;
     } catch (Exception e) {
       throw new RuntimeException("Failed to upload file to Cloud Storage: " + e.getMessage());
     }
   }
 
-  /** Documentação para o método getPresignedUrl. */
+  /** Documentacao para o metodo getPresignedUrl. */
   public String getPresignedUrl(UUID documentId, UUID userId) {
     Document document =
         documentRepository
             .findById(documentId)
             .orElseThrow(() -> new RuntimeException("Document not found"));
 
-    // Valida se o usuário tem permissão para acessar o projeto do documento
     projectMemberRepository
         .findByProjectIdAndUserId(document.getProject().getId(), userId)
         .orElseThrow(
@@ -129,14 +135,12 @@ public class DocumentService {
       throw new RuntimeException("Failed to generate presigned URL", e);
     }
 
-    auditLogService.logAction(
-        userId,
-        AcaoAuditoria.UPLOAD_SUCCESS,
-        "Gerada URL presigned para download: " + document.getTitle());
+    auditLogService.logDocumentAction(
+        userId, AcaoAuditoria.DOWNLOAD, documentId, "Gerada URL presigned para download: " + document.getTitle());
     return presignedUrl;
   }
 
-  /** Documentação. */
+  /** Documentacao. */
   public Page<DocumentResponseDto> listDocumentsByUser(
       UUID userId, UUID projectId, String title, DocumentStatus status, Pageable pageable) {
     return documentRepository
@@ -144,7 +148,7 @@ public class DocumentService {
         .map(this::mapToDto);
   }
 
-  /** Documentação. */
+  /** Documentacao. */
   @Transactional
   public void deleteDocument(UUID documentId, UUID userId) {
     Document document =
@@ -159,16 +163,77 @@ public class DocumentService {
       throw new RuntimeException("Only DRAFT documents can be deleted");
     }
 
-    // Deletar o arquivo físico no GCS para conformidade com a LGPD
     try {
       storageService.deleteFile(document.getFileUrl());
     } catch (Exception e) {
-      throw new RuntimeException("Erro ao excluir arquivo físico: " + e.getMessage());
+      throw new RuntimeException("Erro ao excluir arquivo fisico: " + e.getMessage());
     }
 
     documentRepository.delete(document);
-    auditLogService.logAction(
-        userId, AcaoAuditoria.DELETE_DOCUMENT, "Documento excluido: " + document.getTitle());
+    auditLogService.logDocumentAction(
+        userId, AcaoAuditoria.DELETE_DOCUMENT, documentId, "Documento excluido: " + document.getTitle());
+  }
+
+  private String validateAllowedFile(MultipartFile file, String originalFilename)
+      throws IOException {
+    String extension = extractExtension(originalFilename);
+    String expectedMimeType = ALLOWED_MIME_BY_EXTENSION.get(extension);
+    if (expectedMimeType == null) {
+      throw new IllegalArgumentException(
+          "Tipo de arquivo nao permitido. Formatos aceitos: PDF, CSV e JSON.");
+    }
+
+    String declaredType = normalizeMimeType(file.getContentType());
+    if (!expectedMimeType.equals(declaredType)) {
+      throw new IllegalArgumentException(
+          "Content-Type nao permitido para "
+              + extension
+              + ". Esperado: "
+              + expectedMimeType
+              + ". Recebido: "
+              + declaredType);
+    }
+
+    String detectedType = normalizeMimeType(tika.detect(file.getInputStream(), originalFilename));
+    if (!isDetectedTypeCompatible(expectedMimeType, detectedType)) {
+      throw new IllegalArgumentException(
+          "Conteudo do arquivo nao corresponde ao tipo permitido. Tipo detectado: " + detectedType);
+    }
+
+    if (MIME_JSON.equals(expectedMimeType)) {
+      validateJsonContent(file);
+    }
+
+    return expectedMimeType;
+  }
+
+  private String extractExtension(String filename) {
+    int lastDotIndex = filename.lastIndexOf('.');
+    if (lastDotIndex < 0 || lastDotIndex == filename.length() - 1) {
+      return "";
+    }
+    return filename.substring(lastDotIndex).toLowerCase(Locale.ROOT);
+  }
+
+  private boolean isDetectedTypeCompatible(String expectedMimeType, String detectedType) {
+    if (MIME_CSV.equals(expectedMimeType)) {
+      return CSV_COMPATIBLE_DETECTED_TYPES.contains(detectedType);
+    }
+    if (MIME_JSON.equals(expectedMimeType)) {
+      return JSON_COMPATIBLE_DETECTED_TYPES.contains(detectedType);
+    }
+    return expectedMimeType.equals(detectedType);
+  }
+
+  private String normalizeMimeType(String mimeType) {
+    if (mimeType == null || mimeType.isBlank()) {
+      return "";
+    }
+    return mimeType.split(";")[0].trim().toLowerCase(Locale.ROOT);
+  }
+
+  private void validateJsonContent(MultipartFile file) throws IOException {
+    objectMapper.readTree(file.getInputStream());
   }
 
   private DocumentResponseDto mapToDto(Document document) {
@@ -184,13 +249,13 @@ public class DocumentService {
     return dto;
   }
 
-  /** Documentação. */
+  /** Documentacao. */
   @Transactional
   public DocumentResponseDto reviewDocument(
       UUID documentId, UUID reviewerId, DocumentStatus newStatus, String feedback) {
     if (newStatus != DocumentStatus.APPROVED && newStatus != DocumentStatus.REJECTED) {
       throw new IllegalArgumentException(
-          "Status inválido. Apenas APPROVED ou REJECTED são permitidos na revisão.");
+          "Status invalido. Apenas APPROVED ou REJECTED sao permitidos na revisao.");
     }
     Document document =
         documentRepository
@@ -219,7 +284,7 @@ public class DocumentService {
             + newStatus
             + ".Feedback: "
             + (feedback != null && !feedback.trim().isEmpty() ? feedback : "Sem feedback");
-    auditLogService.logAction(reviewerId, acao, details);
+    auditLogService.logDocumentAction(reviewerId, acao, documentId, details);
     return mapToDto(savedDocument);
   }
 }
