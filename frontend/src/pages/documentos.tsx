@@ -55,7 +55,7 @@ const Documentos: React.FC = () => {
       if (url) {
         setPreviewUrl(url);
       }
-    } catch (e) {
+    } catch {
       showToast('Erro ao carregar preview do documento');
     } finally {
       setIsPreviewLoading(false);

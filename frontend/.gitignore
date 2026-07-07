@@ -17,6 +17,7 @@ playwright-report/
 test-results/
 coverage/
 reports/
+html/
 
 # Editor directories and files
 .vscode/*
