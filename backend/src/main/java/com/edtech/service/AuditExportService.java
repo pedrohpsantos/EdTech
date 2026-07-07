@@ -22,6 +22,7 @@ public class AuditExportService {
   private final ProjectMemberRepository projectMemberRepository;
   private final AuditTrailCsvExporter csvExporter;
 
+  /** Cria o servico com os repositorios e exportador necessarios. */
   public AuditExportService(
       AuditLogRepository auditLogRepository,
       DocumentRepository documentRepository,
@@ -33,6 +34,14 @@ public class AuditExportService {
     this.csvExporter = csvExporter;
   }
 
+  /**
+   * Exporta os logs de auditoria relacionados a um documento.
+   *
+   * @param documentId identificador do documento.
+   * @param userId identificador do usuario que solicitou a exportacao.
+   * @param format formato solicitado para exportacao.
+   * @return conteudo do arquivo exportado em bytes.
+   */
   public byte[] exportDocumentAuditTrail(UUID documentId, UUID userId, String format) {
     String normalizedFormat = normalizeFormat(format);
     if (!CSV_FORMAT.equals(normalizedFormat)) {

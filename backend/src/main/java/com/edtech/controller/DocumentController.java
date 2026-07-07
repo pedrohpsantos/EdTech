@@ -33,7 +33,8 @@ public class DocumentController {
   private final AuditExportService auditExportService;
 
   /** Documentacao para o metodo DocumentController. */
-  public DocumentController(DocumentService documentService, AuditExportService auditExportService) {
+  public DocumentController(
+      DocumentService documentService, AuditExportService auditExportService) {
     this.documentService = documentService;
     this.auditExportService = auditExportService;
   }
@@ -70,6 +71,7 @@ public class DocumentController {
     return ResponseEntity.ok(documentService.getPresignedUrl(id, user.getId()));
   }
 
+  /** Exporta a trilha de auditoria de um documento em arquivo CSV. */
   @GetMapping("/{id}/audit/export")
   public ResponseEntity<byte[]> exportAuditTrail(
       @PathVariable UUID id,

@@ -136,7 +136,10 @@ public class DocumentService {
     }
 
     auditLogService.logDocumentAction(
-        userId, AcaoAuditoria.DOWNLOAD, documentId, "Gerada URL presigned para download: " + document.getTitle());
+        userId,
+        AcaoAuditoria.DOWNLOAD,
+        documentId,
+        "Gerada URL presigned para download: " + document.getTitle());
     return presignedUrl;
   }
 
@@ -171,7 +174,10 @@ public class DocumentService {
 
     documentRepository.delete(document);
     auditLogService.logDocumentAction(
-        userId, AcaoAuditoria.DELETE_DOCUMENT, documentId, "Documento excluido: " + document.getTitle());
+        userId,
+        AcaoAuditoria.DELETE_DOCUMENT,
+        documentId,
+        "Documento excluido: " + document.getTitle());
   }
 
   private String validateAllowedFile(MultipartFile file, String originalFilename)
