@@ -1,1 +1,1 @@
-{"reportName":"EdTech Smoke Tests","testRuns":[],"statistic":{"failed":1,"broken":0,"skipped":0,"passed":15,"unknown":0,"total":16},"time":{"start":1783120358040,"stop":1783435712682,"duration":315354642,"minDuration":3,"maxDuration":2640,"sumDuration":8768}}
+{"reportName":"EdTech Smoke Tests","testRuns":[],"statistic":{"failed":1,"broken":0,"skipped":0,"passed":15,"unknown":0,"total":16},"time":{"start":1783120358040,"stop":1783436432549,"duration":316074509,"minDuration":3,"maxDuration":2640,"sumDuration":7817}}
