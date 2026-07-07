@@ -14,10 +14,8 @@ Abaixo você encontra o relatório iterativo e completo dos testes do frontend d
 > [!NOTE]
 > Os testes unitários focam nas validações visuais e de lógica de negócio client-side, independentemente de conexão de rede ou backend ativo.
 
-<div style="margin-top: 20px; margin-bottom: 20px; text-align: center;">
-  <a href="../../../vitest/index.html" target="_blank" class="md-button md-button--primary">
-    :material-open-in-new: Abrir Relatório Vitest em Tela Cheia
-  </a>
+<div style="display: flex; justify-content: flex-end; margin-bottom: 15px;" markdown="1">
+  [Abrir Relatório Vitest em Tela Cheia :material-open-in-new:](../../../vitest/index.html){ .md-button target="_blank" }
 </div>
 
 <iframe src="../../../vitest/index.html" width="100%" height="800px" style="border:none; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); background-color: #fff;">
