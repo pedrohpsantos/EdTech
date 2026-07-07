@@ -50,7 +50,7 @@ O EdTech centraliza o ciclo de vida de documentos acadêmicos em um único repos
 | ✅ | Armazenamento de arquivos no GCS (Google Cloud Storage) |
 | ✅ | Rate limiting nas rotas de autenticação (Bucket4j) |
 | ✅ | Backup automático diário do banco de dados (Cloud Scheduler) |
-| 🚧 | Painel analítico dedicado para o Orientador |
+| ✅ | Painel analítico dedicado para o Orientador |
 | 🚧 | Scan de malware em uploads (ClamAV) |
 
 ---
