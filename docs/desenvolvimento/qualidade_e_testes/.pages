@@ -1,4 +1,5 @@
 title: 'Qualidade e Testes'
 nav:
   - qualidade_testes.md
+  - vitest_report.md
   - smoke_test_report.md
