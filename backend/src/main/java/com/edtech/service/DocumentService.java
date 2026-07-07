@@ -84,7 +84,7 @@ public class DocumentService {
       if (originalFilename == null) {
         throw new IllegalArgumentException("Filename cannot be null");
       }
-      // A chave do objeto no S3
+      // A chave do objeto no GCS
       String fileKey = UUID.randomUUID() + "_" + originalFilename;
 
       storageService.uploadFile(file, fileKey, contentType);
@@ -99,13 +99,13 @@ public class DocumentService {
       document = documentRepository.save(document);
 
       auditLogService.logAction(
-          authorId, AcaoAuditoria.UPLOAD_SUCCESS, "Documento anexado no S3: " + title);
+          authorId, AcaoAuditoria.UPLOAD_SUCCESS, "Documento anexado no Cloud Storage: " + title);
 
       return mapToDto(document);
     } catch (IOException e) {
       throw new RuntimeException("Failed to read file for upload");
     } catch (Exception e) {
-      throw new RuntimeException("Failed to upload file to S3: " + e.getMessage());
+      throw new RuntimeException("Failed to upload file to Cloud Storage: " + e.getMessage());
     }
   }
 

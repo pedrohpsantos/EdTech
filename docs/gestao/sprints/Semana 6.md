@@ -21,7 +21,7 @@ O objetivo desta sprint era finalizar a auditoria (backend e frontend), realizar
 Apesar do atraso nas features principais de negócio (telas de painéis), avançamos consideravelmente na infraestrutura, código e documentação:
 
 ### :material-server-network: Arquitetura e Backend
-- [x] Migração da persistência de arquivos para o Supabase Storage (S3-compatible) com fallback mantido para Google Cloud Storage (GCS).
+- [x] Migração da persistência de arquivos firmada em Google Cloud Storage (GCS) nativo.
 - [x] Upgrade do Spring Boot para a versão 4.1.0 e atualizações de dependências críticas.
 - [x] Configuração centralizada do Swagger (ReDoc) gerando contratos dinâmicos.
 

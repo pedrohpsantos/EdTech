@@ -161,7 +161,8 @@ public class DocumentServiceTest {
         .thenReturn(Optional.of(projectMember));
 
     RuntimeException exception = assertThrows(RuntimeException.class, () -> documentService.uploadDocument(file, "Test Doc", projectId, authorId));
-    assertEquals("Failed to upload file to S3: Filename cannot be null", exception.getMessage());
+    assertEquals(
+        "Failed to upload file to Cloud Storage: Filename cannot be null", exception.getMessage());
   }
 
   @Test
@@ -204,10 +205,11 @@ public class DocumentServiceTest {
   @Test
   void testDeleteDocument_StorageError_ThrowsException() throws Exception {
     when(documentRepository.findById(documentId)).thenReturn(Optional.of(document));
-    doThrow(new RuntimeException("S3 error")).when(storageService).deleteFile(anyString());
+    doThrow(new RuntimeException("GCS error")).when(storageService).deleteFile(anyString());
 
-    RuntimeException exception = assertThrows(RuntimeException.class, () -> documentService.deleteDocument(documentId, authorId));
-    assertTrue(exception.getMessage().contains("Erro ao excluir arquivo físico: S3 error"));
+    RuntimeException exception =
+        assertThrows(RuntimeException.class, () -> documentService.deleteDocument(documentId, authorId));
+    assertTrue(exception.getMessage().contains("Erro ao excluir arquivo físico: GCS error"));
   }
 
   @Test
@@ -311,7 +313,7 @@ public class DocumentServiceTest {
     when(documentRepository.findById(documentId)).thenReturn(Optional.of(document));
     when(projectMemberRepository.findByProjectIdAndUserId(projectId, authorId))
         .thenReturn(Optional.of(projectMember));
-    when(storageService.getPresignedUrl(anyString())).thenThrow(new RuntimeException("S3 error"));
+    when(storageService.getPresignedUrl(anyString())).thenThrow(new RuntimeException("GCS error"));
 
     RuntimeException exception = assertThrows(RuntimeException.class, () -> documentService.getPresignedUrl(documentId, authorId));
     assertEquals("Failed to generate presigned URL", exception.getMessage());
