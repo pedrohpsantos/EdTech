@@ -212,3 +212,44 @@
 .alertIcon {
   font-size: 16px;
 }
+
+/* -------------------------------------------------------------
+ * RESPONSIVE / MOBILE OPTIMIZATIONS (360px a 768px)
+ * ------------------------------------------------------------- */
+@media (max-width: 767.98px) {
+  .kpiGrid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .kpiCard {
+    padding: 16px;
+  }
+
+  .kpiValue {
+    font-size: 28px; 
+    white-space: nowrap; 
+  }
+
+  .chartsGrid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .chartCard {
+    padding: 16px;
+  }
+
+  .chartHeader {
+    margin-bottom: 16px;
+  }
+
+  .svgChart {
+    height: 160px;
+    padding-left: 10px;
+  }
+
+  .barRow {
+    gap: 8px; 
+  }
+}
