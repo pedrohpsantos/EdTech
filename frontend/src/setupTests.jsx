@@ -10,7 +10,7 @@ HTMLCanvasElement.prototype.getContext = () => {
   return {
     fillRect: () => {},
     clearRect: () => {},
-    getImageData: (x, y, w, h) => ({ data: new Array(w * h * 4) }),
+    getImageData: (x, y, w, h) => ({ data: Array.from({ length: w * h * 4 }) }),
     putImageData: () => {},
     createImageData: () => ([]),
     setTransform: () => {},
