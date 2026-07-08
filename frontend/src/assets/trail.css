@@ -410,3 +410,86 @@
 .text-danger {
   color: var(--ed-status-danger);
 }
+
+/* -------------------------------------------------------------
+ * RESPONSIVE / MOBILE OPTIMIZATIONS(360px a 768px)
+ * ------------------------------------------------------------- */
+@media (max-width: 767.98px) {
+  .trail-content-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .trail-doc-list-header {
+    padding: 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .trail-doc-item {
+    padding: 16px;
+    flex-wrap: wrap; 
+    gap: 12px;
+  }
+
+  .trail-details-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 16px;
+  }
+
+  .btn-export-trail {
+    width: 100%; 
+    justify-content: center;
+  }
+
+  .timeline-card,
+  .trail-sidebar-card {
+    padding: 16px;
+  }
+
+  .timeline-event {
+    gap: 16px; 
+  }
+
+  .timeline-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .timeline-event-hash {
+    word-break: break-all;
+    display: inline-block;
+  }
+
+  .version-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .trail-doc-info {
+    min-width: 0; 
+    width: 100%;
+  }
+
+  .trail-doc-name {
+    word-break: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+    line-height: 1.4; 
+  }
+
+  .trail-doc-project {
+    word-break: break-word;
+    white-space: normal;
+  }
+
+  .trail-details-banner {
+    box-sizing: border-box;
+    overflow: hidden; 
+  }
+}
