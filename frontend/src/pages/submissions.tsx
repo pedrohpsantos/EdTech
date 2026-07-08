@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import DashboardLayout from '../components/layout/DashboardLayout';
 import { useAuth } from '../context/authContext';
 import { getDocuments, reviewDocument, getDashboardStats } from '../services/api';
-import styles from './submissions.module.css';
+import styles from '../assets/submissions.module.css';
 
 export default function Submissions() {
   const { user: _user } = useAuth();
