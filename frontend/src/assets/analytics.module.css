@@ -252,4 +252,23 @@
   .barRow {
     gap: 8px; 
   }
+
+  .notifications-dropdown {
+    position: fixed !important;
+    top: 70px !important; 
+    
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    
+    width: calc(100vw - 32px) !important;
+    max-width: 340px !important; 
+    
+    right: auto !important; 
+  }
+
+  .notification-text p,
+  .notification-text span {
+    white-space: normal !important;
+    word-break: break-word !important;
+  }
 }
