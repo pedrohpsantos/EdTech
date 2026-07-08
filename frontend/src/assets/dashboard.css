@@ -1138,5 +1138,4 @@ body:has(.dashboard-layout) #root {
     color: var(--ed-orange, #f59e0b);
     font-weight: 700;
   }
-
 }
