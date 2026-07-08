@@ -24,7 +24,7 @@ export default function About() {
 
       <h1>Sobre o Projeto EdTech</h1>
       <p style={{ fontSize: '18px', lineHeight: '1.6', marginBottom: '40px' }}>
-        O DocVault (EdTech) é uma plataforma moderna desenvolvida para simplificar o envio, análise
+        O EdTech é uma plataforma moderna desenvolvida para simplificar o envio, análise
         e aprovação de documentos acadêmicos entre orientadores e pesquisadores, promovendo um fluxo
         de trabalho ágil e rastreável.
       </p>
@@ -47,29 +47,37 @@ export default function About() {
           <h3 style={{ margin: '0 0 8px 0', color: 'var(--text-h)' }}>
             Arthur Leite (arthurlleite)
           </h3>
-          <p style={{ margin: 0, fontSize: '14px' }}>Padawan - Backend & Infra</p>
+          <p style={{ margin: 0, fontSize: '14px' }}>Padawan - FullStack</p>
         </div>
 
         <div style={{ padding: '16px', border: '1px solid var(--border)', borderRadius: '8px' }}>
           <h3 style={{ margin: '0 0 8px 0', color: 'var(--text-h)' }}>
             Alana Feitosa (alanafeitosa-ui)
           </h3>
-          <p style={{ margin: 0, fontSize: '14px' }}>Padawan - Backend</p>
+          <p style={{ margin: 0, fontSize: '14px' }}>Padawan - FullStack</p>
         </div>
 
         <div style={{ padding: '16px', border: '1px solid var(--border)', borderRadius: '8px' }}>
           <h3 style={{ margin: '0 0 8px 0', color: 'var(--text-h)' }}>
             Mateus Araújo (mateusaraujo2006)
           </h3>
-          <p style={{ margin: 0, fontSize: '14px' }}>Padawan - QA Automation</p>
+          <p style={{ margin: 0, fontSize: '14px' }}>Padawan - FullStack</p>
         </div>
 
         <div style={{ padding: '16px', border: '1px solid var(--border)', borderRadius: '8px' }}>
           <h3 style={{ margin: '0 0 8px 0', color: 'var(--text-h)' }}>
             Mariana Farias (mariana-farias12)
           </h3>
-          <p style={{ margin: 0, fontSize: '14px' }}>Padawan - Frontend & Design</p>
+          <p style={{ margin: 0, fontSize: '14px' }}>Padawan - FullStack</p>
         </div>
+        
+        <div style={{ padding: '16px', border: '1px solid var(--border)', borderRadius: '8px' }}>
+          <h3 style={{ margin: '0 0 8px 0', color: 'var(--text-h)' }}>
+            Luis G. Ferreira Nunes (LuisGFNunes)
+          </h3>
+          <p style={{ margin: 0, fontSize: '14px' }}>Padawan - FullStack</p>
+        </div>
+
       </div>
     </div>
   );
