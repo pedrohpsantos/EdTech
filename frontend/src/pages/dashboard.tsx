@@ -39,10 +39,8 @@ const Dashboard: React.FC = () => {
     }
   }, [user]);
 
-
-
   const customTopbar = (
-    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+    <div className="topbar-responsive-container">
       {user?.role === 'ADVISOR' ? (
         <button 
           onClick={() => navigate('/submissions')}
@@ -114,145 +112,172 @@ const Dashboard: React.FC = () => {
       breadcrumbs={['EdTech', 'Visão Geral']}
       customTopbarElement={customTopbar}
     >
-      {/* Stats Row */}
+      
+      {/* 1. SEÇÃO DE CARDS INDICADORES (STATS ROW REFACTORADO) */}
+      <div className="row g-3 mb-4">
+        {user?.role === 'RESEARCHER' ? (
+          <>
+            <div className="col-12 col-sm-6 col-xl-3">
+              <div className="stat-card h-100 m-0">
+                <span className="stat-header">
+                  Meus Documentos
+                  <i className="bi bi-file-earmark-text stat-icon" style={{ color: 'var(--ed-purple-light)' }}></i>
+                </span>
+                <div className="stat-body">
+                  <span className="stat-value">{stats.activeDocuments || 12}</span>
+                  <span className="stat-trend" style={{ background: 'rgba(16, 185, 129, 0.1)', color: 'var(--ed-status-success)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}>+1</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="col-12 col-sm-6 col-xl-3">
+              <div className="stat-card h-100 m-0">
+                <div className="stat-header">
+                  Em Revisão
+                  <i className="bi bi-clock stat-icon" style={{ color: 'var(--ed-orange)' }}></i>
+                </div>
+                <div className="stat-body">
+                  <span className="stat-value">{stats.pendingReview || 2}</span>
+                  <span className="stat-trend" style={{ background: 'var(--border)', color: 'var(--ed-text-muted)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}>aguardando</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="col-12 col-sm-6 col-xl-3">
+              <div className="stat-card h-100 m-0">
+                <span className="stat-header">
+                  Aprovados
+                  <i className="bi bi-check-circle stat-icon" style={{ color: 'var(--ed-status-success)' }}></i>
+                </span>
+                <div className="stat-body">
+                  <span className="stat-value">8</span>
+                  <span className="stat-trend" style={{ background: 'rgba(16, 185, 129, 0.1)', color: 'var(--ed-status-success)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}>+2 este mês</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="col-12 col-sm-6 col-xl-3">
+              <div className="stat-card h-100 m-0">
+                <span className="stat-header">
+                  Seu Compliance Score
+                  <i className="bi bi-shield-check stat-icon" style={{ color: 'var(--ed-status-info)' }}></i>
+                </span>
+                <div className="stat-body">
+                  <span className="stat-value">98%</span>
+                  <span className="stat-trend" style={{ background: 'rgba(59, 130, 246, 0.1)', color: 'var(--ed-status-info)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}>ótimo</span>
+                </div>
+              </div>
+            </div>
+          </>
+        ) : user?.role === 'AUDITOR' ? (
+          <>
+            <div className="col-12 col-sm-6 col-xl-3">
+              <div className="stat-card h-100 m-0">
+                <span className="stat-header">
+                  Eventos Hoje
+                  <i className="bi bi-activity stat-icon" style={{ color: 'var(--ed-purple-light)' }}></i>
+                </span>
+                <div className="stat-body">
+                  <span className="stat-value">{auditorStats?.totalEvents || 0}</span>
+                </div>
+              </div>
+            </div>
+            <div className="col-12 col-sm-6 col-xl-3">
+              <div className="stat-card h-100 m-0">
+                <div className="stat-header">
+                  Alertas Ativos
+                  <i className="bi bi-exclamation-triangle stat-icon" style={{ color: 'var(--ed-orange)' }}></i>
+                </div>
+                <div className="stat-body">
+                  <span className="stat-value">{auditorStats?.pendingItems || 0}</span>
+                  <span className="stat-trend" style={{ background: 'rgba(239, 68, 68, 0.1)', color: 'var(--ed-status-danger)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}>ação</span>
+                </div>
+              </div>
+            </div>
+            <div className="col-12 col-sm-6 col-xl-3">
+              <div className="stat-card h-100 m-0">
+                <span className="stat-header">
+                  Políticas Conformes
+                  <i className="bi bi-file-earmark-text stat-icon" style={{ color: 'var(--ed-status-info)' }}></i>
+                </span>
+                <div className="stat-body">
+                  <span className="stat-value">{auditorStats?.compliantPolicies || 0}/{auditorStats?.totalPolicies || 5}</span>
+                </div>
+              </div>
+            </div>
+            <div className="col-12 col-sm-6 col-xl-3">
+              <div className="stat-card h-100 m-0">
+                <span className="stat-header">
+                  Compliance Geral
+                  <i className="bi bi-shield-check stat-icon" style={{ color: 'var(--ed-status-success)' }}></i>
+                </span>
+                <div className="stat-body">
+                  <span className="stat-value">{auditorStats?.score || 0}%</span>
+                  <span className="stat-trend" style={{ background: 'rgba(16, 185, 129, 0.1)', color: 'var(--ed-status-success)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}>+{auditorStats?.scoreTrend || 0} pts</span>
+                </div>
+              </div>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="col-12 col-sm-6 col-xl-3">
+              <div className="stat-card h-100 m-0">
+                <span className="stat-header">
+                  Documentos ativos
+                  <i className="bi bi-file-earmark-text stat-icon" style={{ color: 'var(--ed-purple-light)' }}></i>
+                </span>
+                <div className="stat-body">
+                  <span className="stat-value">{stats.activeDocuments || 24}</span>
+                  <span className="stat-trend" style={{ background: 'rgba(16, 185, 129, 0.1)', color: 'var(--ed-status-success)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}>+3</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="col-12 col-sm-6 col-xl-3">
+              <div className="stat-card h-100 m-0">
+                <div className="stat-header">
+                  Aguardando revisão
+                  <i className="bi bi-clock stat-icon" style={{ color: 'var(--ed-orange)' }}></i>
+                </div>
+                <div className="stat-body">
+                  <span className="stat-value">{stats.pendingReview || 5}</span>
+                  <span className="stat-trend" style={{ background: 'rgba(16, 185, 129, 0.1)', color: 'var(--ed-status-success)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}>-1</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="col-12 col-sm-6 col-xl-3">
+              <div className="stat-card h-100 m-0">
+                <span className="stat-header">
+                  Compliance Score Geral
+                  <i className="bi bi-shield-check stat-icon" style={{ color: 'var(--ed-status-success)' }}></i>
+                </span>
+                <div className="stat-body">
+                  <span className="stat-value">{stats.complianceScore || 92}%</span>
+                  <span className="stat-trend" style={{ background: 'rgba(16, 185, 129, 0.1)', color: 'var(--ed-status-success)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}>+4 pts</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="col-12 col-sm-6 col-xl-3">
+              <div className="stat-card h-100 m-0">
+                <span className="stat-header">
+                  Progresso da pesquisa
+                  <i className="bi bi-graph-up stat-icon" style={{ color: 'var(--ed-status-info)' }}></i>
+                </span>
+                <div className="stat-body">
+                  <span className="stat-value">{stats.researchProgress || 68}%</span>
+                  <span className="stat-trend" style={{ background: 'rgba(59, 130, 246, 0.1)', color: 'var(--ed-status-info)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}>no prazo</span>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
+      </div>
+
+      {/* 2. BARRA DE ALERTA DE GOVERNANÇA (FLEXBOX RESPONSIVO) */}
       {user?.role === 'RESEARCHER' ? (
-        <div className="stats-row">
-          <div className="stat-card">
-            <span className="stat-header">
-              Meus Documentos
-              <i className="bi bi-file-earmark-text stat-icon" style={{ color: 'var(--ed-purple-light)' }}></i>
-            </span>
-            <div className="stat-body">
-              <span className="stat-value">{stats.activeDocuments || 12}</span>
-              <span className="stat-trend" style={{ background: 'rgba(16, 185, 129, 0.1)', color: 'var(--ed-status-success)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}>+1</span>
-            </div>
-          </div>
-
-          <div className="stat-card">
-            <div className="stat-header">
-              Em Revisão
-              <i className="bi bi-clock stat-icon" style={{ color: 'var(--ed-orange)' }}></i>
-            </div>
-            <div className="stat-body">
-              <span className="stat-value">{stats.pendingReview || 2}</span>
-              <span className="stat-trend" style={{ background: 'var(--border)', color: 'var(--ed-text-muted)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}>aguardando</span>
-            </div>
-          </div>
-
-          <div className="stat-card">
-            <span className="stat-header">
-              Aprovados
-              <i className="bi bi-check-circle stat-icon" style={{ color: 'var(--ed-status-success)' }}></i>
-            </span>
-            <div className="stat-body">
-              <span className="stat-value">8</span>
-              <span className="stat-trend" style={{ background: 'rgba(16, 185, 129, 0.1)', color: 'var(--ed-status-success)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}>+2 este mês</span>
-            </div>
-          </div>
-
-          <div className="stat-card">
-            <span className="stat-header">
-              Seu Compliance Score
-              <i className="bi bi-shield-check stat-icon" style={{ color: 'var(--ed-status-info)' }}></i>
-            </span>
-            <div className="stat-body">
-              <span className="stat-value">98%</span>
-              <span className="stat-trend" style={{ background: 'rgba(59, 130, 246, 0.1)', color: 'var(--ed-status-info)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}>ótimo</span>
-            </div>
-          </div>
-        </div>
-      ) : user?.role === 'AUDITOR' ? (
-        <div className="stats-row">
-          <div className="stat-card">
-            <span className="stat-header">
-              Eventos Hoje
-              <i className="bi bi-activity stat-icon" style={{ color: 'var(--ed-purple-light)' }}></i>
-            </span>
-            <div className="stat-body">
-              <span className="stat-value">{auditorStats?.totalEvents || 0}</span>
-            </div>
-          </div>
-          <div className="stat-card">
-            <div className="stat-header">
-              Alertas Ativos
-              <i className="bi bi-exclamation-triangle stat-icon" style={{ color: 'var(--ed-orange)' }}></i>
-            </div>
-            <div className="stat-body">
-              <span className="stat-value">{auditorStats?.pendingItems || 0}</span>
-              <span className="stat-trend" style={{ background: 'rgba(239, 68, 68, 0.1)', color: 'var(--ed-status-danger)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}>ação</span>
-            </div>
-          </div>
-          <div className="stat-card">
-            <span className="stat-header">
-              Políticas Conformes
-              <i className="bi bi-file-earmark-text stat-icon" style={{ color: 'var(--ed-status-info)' }}></i>
-            </span>
-            <div className="stat-body">
-              <span className="stat-value">{auditorStats?.compliantPolicies || 0}/{auditorStats?.totalPolicies || 5}</span>
-            </div>
-          </div>
-          <div className="stat-card">
-            <span className="stat-header">
-              Compliance Geral
-              <i className="bi bi-shield-check stat-icon" style={{ color: 'var(--ed-status-success)' }}></i>
-            </span>
-            <div className="stat-body">
-              <span className="stat-value">{auditorStats?.score || 0}%</span>
-              <span className="stat-trend" style={{ background: 'rgba(16, 185, 129, 0.1)', color: 'var(--ed-status-success)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}>+{auditorStats?.scoreTrend || 0} pts</span>
-            </div>
-          </div>
-        </div>
-      ) : (
-        <div className="stats-row">
-          <div className="stat-card">
-            <span className="stat-header">
-              Documentos ativos
-              <i className="bi bi-file-earmark-text stat-icon" style={{ color: 'var(--ed-purple-light)' }}></i>
-            </span>
-            <div className="stat-body">
-              <span className="stat-value">{stats.activeDocuments || 24}</span>
-              <span className="stat-trend" style={{ background: 'rgba(16, 185, 129, 0.1)', color: 'var(--ed-status-success)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}>+3</span>
-            </div>
-          </div>
-
-          <div className="stat-card">
-            <div className="stat-header">
-              Aguardando revisão
-              <i className="bi bi-clock stat-icon" style={{ color: 'var(--ed-orange)' }}></i>
-            </div>
-            <div className="stat-body">
-              <span className="stat-value">{stats.pendingReview || 5}</span>
-              <span className="stat-trend" style={{ background: 'rgba(16, 185, 129, 0.1)', color: 'var(--ed-status-success)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}>-1</span>
-            </div>
-          </div>
-
-          <div className="stat-card">
-            <span className="stat-header">
-              Compliance Score Geral
-              <i className="bi bi-shield-check stat-icon" style={{ color: 'var(--ed-status-success)' }}></i>
-            </span>
-            <div className="stat-body">
-              <span className="stat-value">{stats.complianceScore || 92}%</span>
-              <span className="stat-trend" style={{ background: 'rgba(16, 185, 129, 0.1)', color: 'var(--ed-status-success)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}>+4 pts</span>
-            </div>
-          </div>
-
-          <div className="stat-card">
-            <span className="stat-header">
-              Progresso da pesquisa
-              <i className="bi bi-graph-up stat-icon" style={{ color: 'var(--ed-status-info)' }}></i>
-            </span>
-            <div className="stat-body">
-              <span className="stat-value">{stats.researchProgress || 68}%</span>
-              <span className="stat-trend" style={{ background: 'rgba(59, 130, 246, 0.1)', color: 'var(--ed-status-info)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}>no prazo</span>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Governance Alert */}
-      {user?.role === 'RESEARCHER' ? (
-        <div className="governance-alert" style={{ background: 'linear-gradient(90deg, #f58a07 0%, #ffb057 100%)', boxShadow: '0 4px 15px rgba(245, 138, 7, 0.3)' }}>
+        <div className="governance-alert d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-4" style={{ background: 'linear-gradient(90deg, #f58a07 0%, #ffb057 100%)', boxShadow: '0 4px 15px rgba(245, 138, 7, 0.3)' }}>
           <div className="alert-content">
             <div className="alert-icon">
               <i className="bi bi-exclamation-triangle"></i>
@@ -264,12 +289,12 @@ const Dashboard: React.FC = () => {
               </span>
             </div>
           </div>
-          <button className="btn-alert" style={{ background: 'white', color: 'var(--ed-orange)' }} onClick={() => navigate('/trail')}>
+          <button className="btn-alert w-100 w-md-auto" style={{ background: 'white', color: 'var(--ed-orange)' }} onClick={() => navigate('/trail')}>
             <i className="bi bi-arrow-right-short"></i> Corrigir agora
           </button>
         </div>
       ) : user?.role === 'AUDITOR' ? (
-        <div className="governance-alert" style={{ background: 'linear-gradient(90deg, #dc2626 0%, #ef4444 100%)', boxShadow: '0 4px 15px rgba(220, 38, 38, 0.3)' }}>
+        <div className="governance-alert d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-4" style={{ background: 'linear-gradient(90deg, #dc2626 0%, #ef4444 100%)', boxShadow: '0 4px 15px rgba(220, 38, 38, 0.3)' }}>
           <div className="alert-content">
             <div className="alert-icon">
               <i className="bi bi-shield-x"></i>
@@ -281,12 +306,12 @@ const Dashboard: React.FC = () => {
               </span>
             </div>
           </div>
-          <button className="btn-alert" style={{ background: 'white', color: '#dc2626' }} onClick={() => navigate('/compliance-center')}>
+          <button className="btn-alert w-100 w-md-auto" style={{ background: 'white', color: '#dc2626' }} onClick={() => navigate('/compliance-center')}>
             <i className="bi bi-arrow-right-short"></i> Investigar
           </button>
         </div>
       ) : (
-        <div className="governance-alert">
+        <div className="governance-alert d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-4">
           <div className="alert-content">
             <div className="alert-icon">
               <i className="bi bi-shield-exclamation"></i>
@@ -298,24 +323,25 @@ const Dashboard: React.FC = () => {
               </span>
             </div>
           </div>
-          <button className="btn-alert" onClick={() => navigate('/trail')}>
+          <button className="btn-alert w-100 w-md-auto" onClick={() => navigate('/trail')}>
             <i className="bi bi-arrow-right-short"></i> Ver detalhes
           </button>
         </div>
       )}
 
-      {/* Main Grid */}
-      <div className="dashboard-grid">
-        <div className="grid-left">
+      {/* 3. GRID PRINCIPAL (DASHBOARD GRID REFACTORADO) */}
+      <div className="row g-4">
+        {/* COLUNA DA ESQUERDA (Lista de submissões/atividades) */}
+        <div className="col-12 col-xl-8">
           {user?.role === 'RESEARCHER' ? (
-            <div className="dashboard-card">
+            <div className="dashboard-card h-100 mb-0">
               <div className="card-header-flex">
                 <h3 className="card-title">Minhas Submissões Recentes</h3>
                 <span className="card-action-link" style={{ color: 'var(--ed-purple-light)', cursor: 'pointer', fontSize: '13px', fontWeight: 500 }}>Ver histórico</span>
               </div>
               <div className="doc-list">
                 {recentDocs.length > 0 ? recentDocs.map((doc: any, i) => (
-                  <div className="doc-item" key={doc.id} style={i === recentDocs.length - 1 ? { borderBottom: 'none' } : {}}>
+                  <div className="doc-item flex-column flex-sm-row align-items-start align-items-sm-center justify-content-between gap-2" key={doc.id} style={i === recentDocs.length - 1 ? { borderBottom: 'none' } : {}}>
                     <div className="doc-info" style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                       <div style={{ width: '36px', height: '36px', background: 'rgba(59, 130, 246, 0.1)', color: 'var(--ed-status-info)', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <i className={doc.title.endsWith('.pdf') ? 'bi bi-file-earmark-pdf' : 'bi bi-file-earmark-text'}></i>
@@ -327,7 +353,7 @@ const Dashboard: React.FC = () => {
                         <span style={{ fontSize: '12px', color: 'var(--ed-text-muted)' }}>Atualizado {new Date(doc.createdAt).toLocaleDateString()}</span>
                       </div>
                     </div>
-                    <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                    <div className="d-flex align-items-center justify-content-between w-100 w-sm-auto gap-3">
                       <span style={{ fontSize: '12px', color: 'var(--ed-text-muted)', background: 'var(--border)', padding: '4px 10px', borderRadius: '12px', fontWeight: 600 }}>
                         {doc.status}
                       </span>
@@ -342,14 +368,14 @@ const Dashboard: React.FC = () => {
               </div>
             </div>
           ) : user?.role === 'AUDITOR' ? (
-            <div className="dashboard-card">
+            <div className="dashboard-card h-100 mb-0">
               <div className="card-header-flex">
                 <h3 className="card-title">Atividades Críticas Recentes</h3>
                 <span className="card-action-link" style={{ color: 'var(--ed-purple-light)', cursor: 'pointer', fontSize: '13px', fontWeight: 500 }} onClick={() => navigate('/audit-logs')}>Ver logs</span>
               </div>
               <div className="doc-list">
                 {recentLogs.length > 0 ? recentLogs.map((log: any, i) => (
-                  <div className="doc-item" key={log.id} style={i === recentLogs.length - 1 ? { borderBottom: 'none' } : {}}>
+                  <div className="doc-item flex-column flex-sm-row align-items-start align-items-sm-center justify-content-between gap-2" key={log.id} style={i === recentLogs.length - 1 ? { borderBottom: 'none' } : {}}>
                     <div className="doc-info" style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                       <div style={{ width: '36px', height: '36px', background: 'rgba(239, 68, 68, 0.1)', color: 'var(--ed-status-danger)', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <i className="bi bi-shield-exclamation"></i>
@@ -361,7 +387,7 @@ const Dashboard: React.FC = () => {
                         <span style={{ fontSize: '12px', color: 'var(--ed-text-muted)' }}>{log.details.substring(0, 30)}...</span>
                       </div>
                     </div>
-                    <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                    <div className="d-flex align-items-center justify-content-between w-100 w-sm-auto gap-3">
                       <span style={{ fontSize: '12px', color: 'var(--ed-text-muted)' }}>{log.userName}</span>
                     </div>
                   </div>
@@ -371,14 +397,14 @@ const Dashboard: React.FC = () => {
               </div>
             </div>
           ) : (
-            <div className="dashboard-card">
+            <div className="dashboard-card h-100 mb-0">
               <div className="card-header-flex">
                 <h3 className="card-title">Revisões Pendentes</h3>
                 <span className="card-action-link" style={{ color: 'var(--ed-purple-light)', cursor: 'pointer', fontSize: '13px', fontWeight: 500 }}>Ver todas</span>
               </div>
               <div className="doc-list">
                 {recentDocs.length > 0 ? recentDocs.map((doc: any, i) => (
-                  <div className="doc-item" key={doc.id} style={i === recentDocs.length - 1 ? { borderBottom: 'none' } : {}}>
+                  <div className="doc-item flex-column flex-sm-row align-items-start align-items-sm-center justify-content-between gap-2" key={doc.id} style={i === recentDocs.length - 1 ? { borderBottom: 'none' } : {}}>
                     <div className="doc-info" style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                       <div style={{ width: '36px', height: '36px', background: 'rgba(239, 68, 68, 0.1)', color: 'var(--ed-status-danger)', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <i className="bi bi-file-earmark-pdf"></i>
@@ -390,7 +416,7 @@ const Dashboard: React.FC = () => {
                         <span style={{ fontSize: '12px', color: 'var(--ed-text-muted)' }}>{doc.author?.name} - {new Date(doc.createdAt).toLocaleDateString()}</span>
                       </div>
                     </div>
-                    <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                    <div className="d-flex align-items-center justify-content-between w-100 w-sm-auto gap-3">
                       <span style={{ fontSize: '12px', color: 'var(--ed-orange)', background: 'rgba(245, 158, 11, 0.1)', padding: '4px 10px', borderRadius: '12px', fontWeight: 600 }}>
                         <i className="bi bi-clock"></i> Pendente
                       </span>
@@ -407,11 +433,12 @@ const Dashboard: React.FC = () => {
           )}
         </div>
 
-        <div className="grid-right">
+        {/* COLUNA DA DIREITA (Compliance e Gráficos de Progresso) */}
+        <div className="col-12 col-xl-4 d-flex flex-column gap-4">
           {user?.role === 'RESEARCHER' ? (
             <>
               {/* Compliance Score (Personal) */}
-              <div className="dashboard-card">
+              <div className="dashboard-card mb-0">
                 <div className="card-header-flex" style={{ paddingBottom: '10px', border: 'none' }}>
                   <div>
                     <div className="card-title">Meu Perfil de Conformidade</div>
@@ -441,7 +468,7 @@ const Dashboard: React.FC = () => {
               </div>
 
               {/* Research Progress (Personal) */}
-              <div className="dashboard-card">
+              <div className="dashboard-card mb-0">
                 <div className="card-header-flex" style={{ paddingBottom: '10px', border: 'none' }}>
                   <div className="card-title">Progresso da Tese / Artigo</div>
                 </div>
@@ -481,7 +508,7 @@ const Dashboard: React.FC = () => {
           ) : user?.role === 'AUDITOR' ? (
             <>
               {/* Compliance Overview */}
-              <div className="dashboard-card">
+              <div className="dashboard-card mb-0">
                 <div className="card-header-flex" style={{ paddingBottom: '10px', border: 'none' }}>
                   <div className="card-title">Conformidade Institucional</div>
                 </div>
@@ -519,7 +546,7 @@ const Dashboard: React.FC = () => {
           ) : (
             <>
               {/* Compliance Score (General) */}
-              <div className="dashboard-card">
+              <div className="dashboard-card mb-0">
                 <div className="card-header-flex" style={{ paddingBottom: '10px', border: 'none' }}>
                   <div>
                     <div className="card-title">Pontuação de Conformidade (Laboratório)</div>
@@ -549,7 +576,7 @@ const Dashboard: React.FC = () => {
               </div>
 
               {/* Research Progress (Projects) */}
-              <div className="dashboard-card">
+              <div className="dashboard-card mb-0">
                 <div className="card-header-flex" style={{ paddingBottom: '10px', border: 'none' }}>
                   <div className="card-title">Progresso dos Projetos</div>
                 </div>

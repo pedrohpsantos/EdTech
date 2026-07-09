@@ -212,3 +212,63 @@
 .alertIcon {
   font-size: 16px;
 }
+
+/* -------------------------------------------------------------
+ * RESPONSIVE / MOBILE OPTIMIZATIONS (360px a 768px)
+ * ------------------------------------------------------------- */
+@media (max-width: 767.98px) {
+  .kpiGrid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .kpiCard {
+    padding: 16px;
+  }
+
+  .kpiValue {
+    font-size: 28px; 
+    white-space: nowrap; 
+  }
+
+  .chartsGrid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .chartCard {
+    padding: 16px;
+  }
+
+  .chartHeader {
+    margin-bottom: 16px;
+  }
+
+  .svgChart {
+    height: 160px;
+    padding-left: 10px;
+  }
+
+  .barRow {
+    gap: 8px; 
+  }
+
+  .notifications-dropdown {
+    position: fixed !important;
+    top: 70px !important; 
+    
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    
+    width: calc(100vw - 32px) !important;
+    max-width: 340px !important; 
+    
+    right: auto !important; 
+  }
+
+  .notification-text p,
+  .notification-text span {
+    white-space: normal !important;
+    word-break: break-word !important;
+  }
+}

@@ -1,6 +1,6 @@
 import React from 'react';
 import DashboardLayout from '../components/layout/DashboardLayout';
-import styles from './analytics.module.css';
+import styles from '../assets/analytics.module.css';
 
 export default function Analytics() {
   const customTopbar = (

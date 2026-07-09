@@ -498,3 +498,81 @@
   font-size: 0.875rem;
   color: #64748B;
 }
+
+/* Sobrescrita para o Dark Theme */
+[data-theme='dark'] .container {
+  background-color: #0f0920; /* Cor de fundo do layout principal */
+}
+
+[data-theme='dark'] .statCard,
+[data-theme='dark'] .tableContainer {
+  background: #16171d; /* Fundo dos cards e tabela */
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: none;
+}
+
+[data-theme='dark'] .title,
+[data-theme='dark'] .statValue,
+[data-theme='dark'] .tableTitle,
+[data-theme='dark'] .researcherName,
+[data-theme='dark'] .fileName,
+[data-theme='dark'] .docTitle {
+  color: #E2E8F0; /* Texto principal mais claro */
+}
+
+[data-theme='dark'] .statTitle,
+[data-theme='dark'] .breadcrumb,
+[data-theme='dark'] .researcherEmail,
+[data-theme='dark'] .fileSize,
+[data-theme='dark'] .projectCell {
+  color: #94A3B8; /* Texto secundário */
+}
+
+[data-theme='dark'] .table th {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+[data-theme='dark'] .table td {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+[data-theme='dark'] .btnAnalisar {
+  background: #16171d;
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #E2E8F0;
+}
+
+/* -------------------------------------------------------------
+ * RESPONSIVE / MOBILE OPTIMIZATIONS 
+ * ------------------------------------------------------------- */
+
+@media (max-width: 1024px) {
+  .statsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .tableContainer {
+    overflow-x: auto;
+    padding: 1rem;
+  }
+
+  .table {
+    min-width: 600px; 
+  }
+
+  .tableHeader {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .searchInput {
+    width: 100%;
+  }
+}
