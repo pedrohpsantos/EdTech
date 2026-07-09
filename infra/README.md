@@ -15,6 +15,7 @@ Este diretório (`/infra`) contém a configuração de infraestrutura do EdTech 
 | `cloudbuild.yaml` | Pipeline de build e deploy para o Google Cloud Build |
 | `setup_backup.sh` | Script de provisionamento do backup automático diário no GCS via Cloud Scheduler |
 | `database/schema.sql` | Schema SQL de referência do banco de dados |
+| `terraform/` | Módulos Terraform parametrizados para Cloud Run, Cloud SQL e Cloud Storage |
 
 ---
 
@@ -48,6 +49,32 @@ Em produção, as imagens Docker são publicadas no **Artifact Registry** do GCP
 Variáveis de ambiente sensíveis (credenciais de banco, chaves JWT) são armazenadas no **Secret Manager** e injetadas diretamente nos serviços do Cloud Run, sem exposição em arquivos de configuração.
 
 O processo de deploy é automatizado pelo `cloudbuild.yaml` e disparado via push na branch `main`.
+
+---
+
+## Infraestrutura como Código (Terraform)
+
+A pasta `infra/terraform` contém a definição parametrizada da infraestrutura de produção. Nenhum identificador sensível ou específico de projeto deve ser versionado; use `terraform.tfvars` local a partir do template:
+
+```bash
+cd infra/terraform
+cp terraform.tfvars.example terraform.tfvars
+# Edite project_id, region, artifact_registry, bucket e demais variáveis
+
+terraform init -backend-config="bucket=<bucket-tfstate>"
+terraform plan
+terraform apply
+```
+
+Módulos disponíveis:
+
+| Módulo | Recursos |
+| :--- | :--- |
+| `modules/cloud_run` | Serviço backend no Cloud Run, variáveis de ambiente e integração com storage |
+| `modules/cloud_sql` | Instância PostgreSQL gerenciada |
+| `modules/cloud_storage` | Bucket de arquivos acadêmicos |
+
+O estado remoto deve ficar em um bucket GCS controlado pela equipe de plataforma. O arquivo `terraform.tfvars` real e a pasta `.terraform/` permanecem fora do Git.
 
 ---
 

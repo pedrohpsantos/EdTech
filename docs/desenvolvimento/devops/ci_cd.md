@@ -31,15 +31,16 @@ De acordo com o ADR 0003, o deploy das partes ativas do sistema ocorre de forma 
 
 ### Frontend
 - **Provedor**: Firebase Hosting
-- **GCP Project ID**: `edtech-academic`
-- **Gatilho**: Job `deploy` no GitHub Actions após sucesso nos testes, autenticado pela secret `FIREBASE_SERVICE_ACCOUNT_EDTECH`.
+- **Gatilho**: Job de deploy no GitHub Actions após sucesso nos testes, autenticado por secrets do repositório.
 
 ### Backend
 - **Provedor**: Google Cloud Run
-- **GCP Project ID**: `edtech-storage-501117`
-- **Registry Docker**: Google Artifact Registry (repositório: `cloud-run-source-deploy` em `southamerica-east1`).
-- **Bucket de Armazenamento**: `edtech-vault-storage`.
+- **Registry Docker**: Google Artifact Registry configurado por variáveis da pipeline e do Terraform.
+- **Bucket de Armazenamento**: Google Cloud Storage definido via variável de infraestrutura, sem hardcode no repositório.
 - **Segurança (Secret Manager)**: No ambiente de produção, o Cloud Run não consome variáveis de ambiente do repositório, mas busca dados sensíveis (como `SPRING_DATASOURCE_URL`, senhas do banco e `JWT_SECRET`) diretamente do Google Cloud Secret Manager.
+
+### Infraestrutura
+- **Terraform**: A pasta `infra/terraform` mantém módulos para Cloud Run, Cloud SQL e Cloud Storage. O arquivo `terraform.tfvars` real não deve ser versionado; use `terraform.tfvars.example` como base.
 
 ---
 
@@ -50,5 +51,6 @@ De acordo com o ADR 0003, o deploy das partes ativas do sistema ocorre de forma 
 | `1.0` | 13/06/2026 | Criação do documento de suporte ao DevEx | Pedro Henrique P. Santos |
 | `1.1` | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |
 | `1.2` | 04/07/2026 | Revisão profunda, correção de metadados e melhorias visuais | Pedro Henrique P. Santos |
+| `1.3` | 09/07/2026 | Atualização do deploy para infraestrutura parametrizada com Terraform | Pedro Henrique P. Santos |
 
 

@@ -35,6 +35,7 @@ flowchart TB
 - **Cloud Run:** Permite *cold starts* e escalonamento até zero instâncias quando não houver alunos acessando de madrugada, economizando custos. A comunicação com o Firebase Hosting é natural e rápida.
 - **Cloud SQL:** Isola a base relacional da internet pública, limitando o tráfego exclusivamente para a rede VPC interna do Cloud Run através do Cloud SQL Auth Proxy.
 - **Cloud Storage:** Separa o armazenamento de grandes volumes binários (PDFs) do banco relacional, garantindo performance nas requisições textuais (APIs) da aplicação.
+- **Terraform:** A infraestrutura principal possui módulos versionados para Cloud Run, Cloud SQL e Cloud Storage, com `project_id`, região, bucket e imagem configurados por variáveis locais não versionadas.
 
 !!! info "Decisão Arquitetural"
     Como o projeto já contava com [Decisão Técnica #0001](../decisoes_adrs/0001-armazenamento-google-cloud.md) apontando para o GCP, optou-se por consolidar a hospedagem da API no **Google Cloud Run**, uma plataforma serverless e moderna.
@@ -48,4 +49,5 @@ flowchart TB
 | `1.0` | 30/05/2026 | Criação do documento | Pedro Henrique P. Santos |
 | `1.1` | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |
 | `1.2` | 04/07/2026 | Revisão profunda, correção de metadados e melhorias visuais | Pedro Henrique P. Santos |
+| `1.3` | 09/07/2026 | Inclusão dos módulos Terraform para infraestrutura GCP | Pedro Henrique P. Santos |
 

@@ -1,614 +1,680 @@
-﻿{
-    "openapi":  "3.1.0",
-    "info":  {
-                 "title":  "OpenAPI definition",
-                 "version":  "v0"
-             },
-    "servers":  [
-                    {
-                        "url":  "http://localhost:8080",
-                        "description":  "Generated server url"
-                    }
-                ],
-    "paths":  {
-                  "/api/projects":  {
-                                        "get":  {
-                                                    "tags":  [
-                                                                 "project-controller"
-                                                             ],
-                                                    "operationId":  "listProjects",
-                                                    "responses":  {
-                                                                      "200":  {
-                                                                                  "description":  "OK",
-                                                                                  "content":  {
-                                                                                                  "*/*":  {
-                                                                                                              "schema":  {
-                                                                                                                             "type":  "array",
-                                                                                                                             "items":  {
-                                                                                                                                           "$ref":  "#/components/schemas/ProjectResponseDTO"
-                                                                                                                                       }
-                                                                                                                         }
-                                                                                                          }
-                                                                                              }
-                                                                              }
-                                                                  }
-                                                },
-                                        "post":  {
-                                                     "tags":  [
-                                                                  "project-controller"
-                                                              ],
-                                                     "operationId":  "createProject",
-                                                     "requestBody":  {
-                                                                         "content":  {
-                                                                                         "application/json":  {
-                                                                                                                  "schema":  {
-                                                                                                                                 "$ref":  "#/components/schemas/ProjectRequestDTO"
-                                                                                                                             }
-                                                                                                              }
-                                                                                     },
-                                                                         "required":  true
-                                                                     },
-                                                     "responses":  {
-                                                                       "200":  {
-                                                                                   "description":  "OK",
-                                                                                   "content":  {
-                                                                                                   "*/*":  {
-                                                                                                               "schema":  {
-                                                                                                                              "$ref":  "#/components/schemas/ProjectResponseDTO"
-                                                                                                                          }
-                                                                                                           }
-                                                                                               }
-                                                                               }
-                                                                   }
-                                                 }
-                                    },
-                  "/api/projects/{projectId}/members":  {
-                                                            "post":  {
-                                                                         "tags":  [
-                                                                                      "project-controller"
-                                                                                  ],
-                                                                         "operationId":  "addMember",
-                                                                         "parameters":  [
-                                                                                            {
-                                                                                                "name":  "projectId",
-                                                                                                "in":  "path",
-                                                                                                "required":  true,
-                                                                                                "schema":  {
-                                                                                                               "type":  "string",
-                                                                                                               "format":  "uuid"
-                                                                                                           }
-                                                                                            }
-                                                                                        ],
-                                                                         "requestBody":  {
-                                                                                             "content":  {
-                                                                                                             "application/json":  {
-                                                                                                                                      "schema":  {
-                                                                                                                                                     "$ref":  "#/components/schemas/AddProjectMemberDTO"
-                                                                                                                                                 }
-                                                                                                                                  }
-                                                                                                         },
-                                                                                             "required":  true
-                                                                                         },
-                                                                         "responses":  {
-                                                                                           "200":  {
-                                                                                                       "description":  "OK"
-                                                                                                   }
-                                                                                       }
-                                                                     }
-                                                        },
-                  "/api/documents":  {
-                                         "get":  {
-                                                     "tags":  [
-                                                                  "document-controller"
-                                                              ],
-                                                     "operationId":  "listDocuments",
-                                                     "parameters":  [
-                                                                        {
-                                                                            "name":  "projectId",
-                                                                            "in":  "query",
-                                                                            "required":  false,
-                                                                            "schema":  {
-                                                                                           "type":  "string",
-                                                                                           "format":  "uuid"
-                                                                                       }
-                                                                        },
-                                                                        {
-                                                                            "name":  "title",
-                                                                            "in":  "query",
-                                                                            "required":  false,
-                                                                            "schema":  {
-                                                                                           "type":  "string"
-                                                                                       }
-                                                                        },
-                                                                        {
-                                                                            "name":  "pageable",
-                                                                            "in":  "query",
-                                                                            "required":  true,
-                                                                            "schema":  {
-                                                                                           "$ref":  "#/components/schemas/Pageable"
-                                                                                       }
-                                                                        }
-                                                                    ],
-                                                     "responses":  {
-                                                                       "200":  {
-                                                                                   "description":  "OK",
-                                                                                   "content":  {
-                                                                                                   "*/*":  {
-                                                                                                               "schema":  {
-                                                                                                                              "$ref":  "#/components/schemas/PageDocumentResponseDTO"
-                                                                                                                          }
-                                                                                                           }
-                                                                                               }
-                                                                               }
-                                                                   }
-                                                 },
-                                         "post":  {
-                                                      "tags":  [
-                                                                   "document-controller"
-                                                               ],
-                                                      "operationId":  "uploadDocument",
-                                                      "parameters":  [
-                                                                         {
-                                                                             "name":  "title",
-                                                                             "in":  "query",
-                                                                             "required":  true,
-                                                                             "schema":  {
-                                                                                            "type":  "string"
-                                                                                        }
-                                                                         },
-                                                                         {
-                                                                             "name":  "projectId",
-                                                                             "in":  "query",
-                                                                             "required":  true,
-                                                                             "schema":  {
-                                                                                            "type":  "string",
-                                                                                            "format":  "uuid"
-                                                                                        }
-                                                                         }
-                                                                     ],
-                                                      "requestBody":  {
-                                                                          "content":  {
-                                                                                          "multipart/form-data":  {
-                                                                                                                      "schema":  {
-                                                                                                                                     "type":  "object",
-                                                                                                                                     "properties":  {
-                                                                                                                                                        "file":  {
-                                                                                                                                                                     "type":  "string",
-                                                                                                                                                                     "format":  "binary"
-                                                                                                                                                                 }
-                                                                                                                                                    },
-                                                                                                                                     "required":  [
-                                                                                                                                                      "file"
-                                                                                                                                                  ]
-                                                                                                                                 }
-                                                                                                                  }
-                                                                                      }
-                                                                      },
-                                                      "responses":  {
-                                                                        "200":  {
-                                                                                    "description":  "OK",
-                                                                                    "content":  {
-                                                                                                    "*/*":  {
-                                                                                                                "schema":  {
-                                                                                                                               "$ref":  "#/components/schemas/DocumentResponseDTO"
-                                                                                                                           }
-                                                                                                            }
-                                                                                                }
-                                                                                }
-                                                                    }
-                                                  }
-                                     },
-                  "/api/auth/register":  {
-                                             "post":  {
-                                                          "tags":  [
-                                                                       "auth-controller"
-                                                                   ],
-                                                          "operationId":  "register",
-                                                          "requestBody":  {
-                                                                              "content":  {
-                                                                                              "application/json":  {
-                                                                                                                       "schema":  {
-                                                                                                                                      "$ref":  "#/components/schemas/RegisterRequestDTO"
-                                                                                                                                  }
-                                                                                                                   }
-                                                                                          },
-                                                                              "required":  true
-                                                                          },
-                                                          "responses":  {
-                                                                            "200":  {
-                                                                                        "description":  "OK",
-                                                                                        "content":  {
-                                                                                                        "*/*":  {
-                                                                                                                    "schema":  {
-
-                                                                                                                               }
-                                                                                                                }
-                                                                                                    }
-                                                                                    }
-                                                                        }
-                                                      }
-                                         },
-                  "/api/auth/logout":  {
-                                           "post":  {
-                                                        "tags":  [
-                                                                     "auth-controller"
-                                                                 ],
-                                                        "operationId":  "logout",
-                                                        "responses":  {
-                                                                          "200":  {
-                                                                                      "description":  "OK"
-                                                                                  }
-                                                                      }
-                                                    }
-                                       },
-                  "/api/auth/login":  {
-                                          "post":  {
-                                                       "tags":  [
-                                                                    "auth-controller"
-                                                                ],
-                                                       "operationId":  "login",
-                                                       "requestBody":  {
-                                                                           "content":  {
-                                                                                           "application/json":  {
-                                                                                                                    "schema":  {
-                                                                                                                                   "$ref":  "#/components/schemas/LoginRequestDTO"
-                                                                                                                               }
-                                                                                                                }
-                                                                                       },
-                                                                           "required":  true
-                                                                       },
-                                                       "responses":  {
-                                                                         "200":  {
-                                                                                     "description":  "OK",
-                                                                                     "content":  {
-                                                                                                     "*/*":  {
-                                                                                                                 "schema":  {
-                                                                                                                                "$ref":  "#/components/schemas/UserResponseDTO"
-                                                                                                                            }
-                                                                                                             }
-                                                                                                 }
-                                                                                 }
-                                                                     }
-                                                   }
-                                      },
-                  "/api/documents/{id}/download":  {
-                                                       "get":  {
-                                                                   "tags":  [
-                                                                                "document-controller"
-                                                                            ],
-                                                                   "operationId":  "downloadDocument",
-                                                                   "parameters":  [
-                                                                                      {
-                                                                                          "name":  "id",
-                                                                                          "in":  "path",
-                                                                                          "required":  true,
-                                                                                          "schema":  {
-                                                                                                         "type":  "string",
-                                                                                                         "format":  "uuid"
-                                                                                                     }
-                                                                                      }
-                                                                                  ],
-                                                                   "responses":  {
-                                                                                     "200":  {
-                                                                                                 "description":  "OK",
-                                                                                                 "content":  {
-                                                                                                                 "*/*":  {
-                                                                                                                             "schema":  {
-                                                                                                                                            "type":  "string"
-                                                                                                                                        }
-                                                                                                                         }
-                                                                                                             }
-                                                                                             }
-                                                                                 }
-                                                               }
-                                                   },
-                  "/api/auth/me":  {
-                                       "get":  {
-                                                   "tags":  [
-                                                                "auth-controller"
-                                                            ],
-                                                   "operationId":  "me",
-                                                   "responses":  {
-                                                                     "200":  {
-                                                                                 "description":  "OK",
-                                                                                 "content":  {
-                                                                                                 "*/*":  {
-                                                                                                             "schema":  {
-                                                                                                                            "$ref":  "#/components/schemas/UserResponseDTO"
-                                                                                                                        }
-                                                                                                         }
-                                                                                             }
-                                                                             }
-                                                                 }
-                                               }
-                                   },
-                  "/api/documents/{id}":  {
-                                              "delete":  {
-                                                             "tags":  [
-                                                                          "document-controller"
-                                                                      ],
-                                                             "operationId":  "deleteDocument",
-                                                             "parameters":  [
-                                                                                {
-                                                                                    "name":  "id",
-                                                                                    "in":  "path",
-                                                                                    "required":  true,
-                                                                                    "schema":  {
-                                                                                                   "type":  "string",
-                                                                                                   "format":  "uuid"
-                                                                                               }
-                                                                                }
-                                                                            ],
-                                                             "responses":  {
-                                                                               "200":  {
-                                                                                           "description":  "OK"
-                                                                                       }
-                                                                           }
-                                                         }
-                                          }
-              },
-    "components":  {
-                       "schemas":  {
-                                       "ProjectRequestDTO":  {
-                                                                 "type":  "object",
-                                                                 "properties":  {
-                                                                                    "title":  {
-                                                                                                  "type":  "string"
-                                                                                              },
-                                                                                    "description":  {
-                                                                                                        "type":  "string"
-                                                                                                    }
-                                                                                }
-                                                             },
-                                       "ProjectResponseDTO":  {
-                                                                  "type":  "object",
-                                                                  "properties":  {
-                                                                                     "id":  {
-                                                                                                "type":  "string",
-                                                                                                "format":  "uuid"
-                                                                                            },
-                                                                                     "title":  {
-                                                                                                   "type":  "string"
-                                                                                               },
-                                                                                     "description":  {
-                                                                                                         "type":  "string"
-                                                                                                     },
-                                                                                     "advisorId":  {
-                                                                                                       "type":  "string",
-                                                                                                       "format":  "uuid"
-                                                                                                   },
-                                                                                     "createdAt":  {
-                                                                                                       "type":  "string",
-                                                                                                       "format":  "date-time"
-                                                                                                   }
-                                                                                 }
-                                                              },
-                                       "AddProjectMemberDTO":  {
-                                                                   "type":  "object",
-                                                                   "properties":  {
-                                                                                      "email":  {
-                                                                                                    "type":  "string"
-                                                                                                },
-                                                                                      "role":  {
-                                                                                                   "type":  "string"
-                                                                                               }
-                                                                                  }
-                                                               },
-                                       "DocumentResponseDTO":  {
-                                                                   "type":  "object",
-                                                                   "properties":  {
-                                                                                      "id":  {
-                                                                                                 "type":  "string",
-                                                                                                 "format":  "uuid"
-                                                                                             },
-                                                                                      "title":  {
-                                                                                                    "type":  "string"
-                                                                                                },
-                                                                                      "fileUrl":  {
-                                                                                                      "type":  "string"
-                                                                                                  },
-                                                                                      "status":  {
-                                                                                                     "type":  "string",
-                                                                                                     "enum":  [
-                                                                                                                  "DRAFT",
-                                                                                                                  "PENDING_REVIEW",
-                                                                                                                  "APPROVED",
-                                                                                                                  "REJECTED",
-                                                                                                                  "PUBLISHED",
-                                                                                                                  "ARCHIVED"
-                                                                                                              ]
-                                                                                                 },
-                                                                                      "authorId":  {
-                                                                                                       "type":  "string",
-                                                                                                       "format":  "uuid"
-                                                                                                   },
-                                                                                      "projectId":  {
-                                                                                                        "type":  "string",
-                                                                                                        "format":  "uuid"
-                                                                                                    },
-                                                                                      "createdAt":  {
-                                                                                                        "type":  "string",
-                                                                                                        "format":  "date-time"
-                                                                                                    }
-                                                                                  }
-                                                               },
-                                       "RegisterRequestDTO":  {
-                                                                  "type":  "object",
-                                                                  "properties":  {
-                                                                                     "name":  {
-                                                                                                  "type":  "string",
-                                                                                                  "maxLength":  120,
-                                                                                                  "minLength":  0
-                                                                                              },
-                                                                                     "email":  {
-                                                                                                   "type":  "string",
-                                                                                                   "maxLength":  180,
-                                                                                                   "minLength":  0,
-                                                                                                   "pattern":  ".+@unb\\.br$"
-                                                                                               },
-                                                                                     "password":  {
-                                                                                                      "type":  "string",
-                                                                                                      "maxLength":  120,
-                                                                                                      "minLength":  8
-                                                                                                  }
-                                                                                 },
-                                                                  "required":  [
-                                                                                   "email",
-                                                                                   "name",
-                                                                                   "password"
-                                                                               ]
-                                                              },
-                                       "LoginRequestDTO":  {
-                                                               "type":  "object",
-                                                               "properties":  {
-                                                                                  "email":  {
-                                                                                                "type":  "string",
-                                                                                                "maxLength":  180,
-                                                                                                "minLength":  0
-                                                                                            },
-                                                                                  "password":  {
-                                                                                                   "type":  "string",
-                                                                                                   "maxLength":  120,
-                                                                                                   "minLength":  8
-                                                                                               }
-                                                                              },
-                                                               "required":  [
-                                                                                "email",
-                                                                                "password"
-                                                                            ]
-                                                           },
-                                       "UserResponseDTO":  {
-                                                               "type":  "object",
-                                                               "properties":  {
-                                                                                  "id":  {
-                                                                                             "type":  "string",
-                                                                                             "format":  "uuid"
-                                                                                         },
-                                                                                  "name":  {
-                                                                                               "type":  "string"
-                                                                                           },
-                                                                                  "email":  {
-                                                                                                "type":  "string"
-                                                                                            },
-                                                                                  "role":  {
-                                                                                               "type":  "string"
-                                                                                           },
-                                                                                  "active":  {
-                                                                                                 "type":  "boolean"
-                                                                                             },
-                                                                                  "createdAt":  {
-                                                                                                    "type":  "string",
-                                                                                                    "format":  "date-time"
-                                                                                                }
-                                                                              }
-                                                           },
-                                       "Pageable":  {
-                                                        "type":  "object",
-                                                        "properties":  {
-                                                                           "page":  {
-                                                                                        "type":  "integer",
-                                                                                        "format":  "int32",
-                                                                                        "minimum":  0
-                                                                                    },
-                                                                           "size":  {
-                                                                                        "type":  "integer",
-                                                                                        "format":  "int32",
-                                                                                        "minimum":  1
-                                                                                    },
-                                                                           "sort":  {
-                                                                                        "type":  "array",
-                                                                                        "items":  {
-                                                                                                      "type":  "string"
-                                                                                                  }
-                                                                                    }
-                                                                       }
-                                                    },
-                                       "PageDocumentResponseDTO":  {
-                                                                       "type":  "object",
-                                                                       "properties":  {
-                                                                                          "totalElements":  {
-                                                                                                                "type":  "integer",
-                                                                                                                "format":  "int64"
-                                                                                                            },
-                                                                                          "totalPages":  {
-                                                                                                             "type":  "integer",
-                                                                                                             "format":  "int32"
-                                                                                                         },
-                                                                                          "pageable":  {
-                                                                                                           "$ref":  "#/components/schemas/Pageablenull"
-                                                                                                       },
-                                                                                          "first":  {
-                                                                                                        "type":  "boolean"
-                                                                                                    },
-                                                                                          "last":  {
-                                                                                                       "type":  "boolean"
-                                                                                                   },
-                                                                                          "numberOfElements":  {
-                                                                                                                   "type":  "integer",
-                                                                                                                   "format":  "int32"
-                                                                                                               },
-                                                                                          "size":  {
-                                                                                                       "type":  "integer",
-                                                                                                       "format":  "int32"
-                                                                                                   },
-                                                                                          "content":  {
-                                                                                                          "type":  "array",
-                                                                                                          "items":  {
-                                                                                                                        "$ref":  "#/components/schemas/DocumentResponseDTO"
-                                                                                                                    }
-                                                                                                      },
-                                                                                          "number":  {
-                                                                                                         "type":  "integer",
-                                                                                                         "format":  "int32"
-                                                                                                     },
-                                                                                          "sort":  {
-                                                                                                       "$ref":  "#/components/schemas/Sortnull"
-                                                                                                   },
-                                                                                          "empty":  {
-                                                                                                        "type":  "boolean"
-                                                                                                    }
-                                                                                      }
-                                                                   },
-                                       "Pageablenull":  {
-                                                            "type":  "object",
-                                                            "properties":  {
-                                                                               "unpaged":  {
-                                                                                               "type":  "boolean"
-                                                                                           },
-                                                                               "paged":  {
-                                                                                             "type":  "boolean"
-                                                                                         },
-                                                                               "pageSize":  {
-                                                                                                "type":  "integer",
-                                                                                                "format":  "int32"
-                                                                                            },
-                                                                               "pageNumber":  {
-                                                                                                  "type":  "integer",
-                                                                                                  "format":  "int32"
-                                                                                              },
-                                                                               "offset":  {
-                                                                                              "type":  "integer",
-                                                                                              "format":  "int64"
-                                                                                          },
-                                                                               "sort":  {
-                                                                                            "$ref":  "#/components/schemas/Sortnull"
-                                                                                        }
-                                                                           }
-                                                        },
-                                       "Sortnull":  {
-                                                        "type":  "object",
-                                                        "properties":  {
-                                                                           "unsorted":  {
-                                                                                            "type":  "boolean"
-                                                                                        },
-                                                                           "sorted":  {
-                                                                                          "type":  "boolean"
-                                                                                      },
-                                                                           "empty":  {
-                                                                                         "type":  "boolean"
-                                                                                     }
-                                                                       }
-                                                    }
-                                   }
-                   }
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "OpenAPI definition",
+    "version": "v0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Generated server url"
+    }
+  ],
+  "paths": {
+    "/api/projects": {
+      "get": {
+        "tags": [
+          "project-controller"
+        ],
+        "operationId": "listProjects",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProjectResponseDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "project-controller"
+        ],
+        "operationId": "createProject",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectRequestDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProjectResponseDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/projects/{projectId}/members": {
+      "post": {
+        "tags": [
+          "project-controller"
+        ],
+        "operationId": "addMember",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddProjectMemberDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/documents": {
+      "get": {
+        "tags": [
+          "document-controller"
+        ],
+        "operationId": "listDocuments",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "title",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "DRAFT",
+                "SUBMITTED",
+                "UNDER_REVIEW",
+                "APPROVED",
+                "REJECTED",
+                "ARCHIVED"
+              ]
+            }
+          },
+          {
+            "name": "pageable",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Pageable"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageDocumentResponseDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "document-controller"
+        ],
+        "operationId": "uploadDocument",
+        "parameters": [
+          {
+            "name": "title",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "projectId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                },
+                "required": [
+                  "file"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentResponseDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/register": {
+      "post": {
+        "tags": [
+          "auth-controller"
+        ],
+        "operationId": "register",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterRequestDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/logout": {
+      "post": {
+        "tags": [
+          "auth-controller"
+        ],
+        "operationId": "logout",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "tags": [
+          "auth-controller"
+        ],
+        "operationId": "login",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequestDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponseDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/documents/{id}/download": {
+      "get": {
+        "tags": [
+          "document-controller"
+        ],
+        "operationId": "downloadDocument",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/me": {
+      "get": {
+        "tags": [
+          "auth-controller"
+        ],
+        "operationId": "me",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponseDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/documents/{id}": {
+      "delete": {
+        "tags": [
+          "document-controller"
+        ],
+        "operationId": "deleteDocument",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/documents/{id}/audit/export": {
+      "get": {
+        "tags": [
+          "document-controller"
+        ],
+        "operationId": "exportAuditTrail",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "format",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "csv",
+              "enum": [
+                "csv"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "Content-Disposition": {
+                "description": "Attachment filename for the exported audit trail",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "text/csv": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ProjectRequestDTO": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      },
+      "ProjectResponseDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "advisorId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "AddProjectMemberDTO": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          }
+        }
+      },
+      "DocumentResponseDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "title": {
+            "type": "string"
+          },
+          "fileUrl": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "DRAFT",
+              "PENDING_REVIEW",
+              "APPROVED",
+              "REJECTED",
+              "PUBLISHED",
+              "ARCHIVED"
+            ]
+          },
+          "authorId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "projectId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "RegisterRequestDTO": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 120,
+            "minLength": 0
+          },
+          "email": {
+            "type": "string",
+            "maxLength": 180,
+            "minLength": 0,
+            "pattern": ".+@unb\\.br$"
+          },
+          "password": {
+            "type": "string",
+            "maxLength": 120,
+            "minLength": 8
+          }
+        },
+        "required": [
+          "email",
+          "name",
+          "password"
+        ]
+      },
+      "LoginRequestDTO": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "maxLength": 180,
+            "minLength": 0
+          },
+          "password": {
+            "type": "string",
+            "maxLength": 120,
+            "minLength": 8
+          }
+        },
+        "required": [
+          "email",
+          "password"
+        ]
+      },
+      "UserResponseDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Pageable": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 0
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 1
+          },
+          "sort": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "PageDocumentResponseDTO": {
+        "type": "object",
+        "properties": {
+          "totalElements": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageable": {
+            "$ref": "#/components/schemas/Pageablenull"
+          },
+          "first": {
+            "type": "boolean"
+          },
+          "last": {
+            "type": "boolean"
+          },
+          "numberOfElements": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DocumentResponseDTO"
+            }
+          },
+          "number": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "sort": {
+            "$ref": "#/components/schemas/Sortnull"
+          },
+          "empty": {
+            "type": "boolean"
+          }
+        }
+      },
+      "Pageablenull": {
+        "type": "object",
+        "properties": {
+          "unpaged": {
+            "type": "boolean"
+          },
+          "paged": {
+            "type": "boolean"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "offset": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "sort": {
+            "$ref": "#/components/schemas/Sortnull"
+          }
+        }
+      },
+      "Sortnull": {
+        "type": "object",
+        "properties": {
+          "unsorted": {
+            "type": "boolean"
+          },
+          "sorted": {
+            "type": "boolean"
+          },
+          "empty": {
+            "type": "boolean"
+          }
+        }
+      }
+    }
+  }
 }

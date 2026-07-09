@@ -23,7 +23,30 @@ API RESTful do EdTech desenvolvida em **Java 21** com **Spring Boot 4.1**. Respo
 - **JWT via Cabeçalho:** A comunicação entre SPA e API utiliza tokens no cabeçalho `Authorization` (Bearer), sem uso de cookies e anulando riscos de CSRF.
 - **CORS Restrito:** Apenas origens cadastradas explicitamente têm permissão de consumir a API.
 - **Rate Limiting (Bucket4j):** Endpoints de autenticação bloqueiam IPs após 5 tentativas por minuto (HTTP 429).
-- **Auditoria:** Operações críticas (upload, aprovação, rejeição) geram registros imutáveis na trilha de auditoria.
+- **Auditoria:** Operações críticas (upload, download, aprovação, rejeição) geram registros imutáveis na trilha de auditoria, com exportação CSV por documento.
+
+---
+
+## Documentos e Auditoria
+
+O módulo de documentos aceita uploads `multipart/form-data` nos formatos:
+
+| Extensão | Content-Type esperado | Uso |
+| :--- | :--- | :--- |
+| `.pdf` | `application/pdf` | Artigos, teses e relatórios acadêmicos |
+| `.csv` | `text/csv` | Datasets tabulares |
+| `.json` | `application/json` | Datasets estruturados |
+
+Endpoints principais:
+
+| Método | Rota | Descrição |
+| :---: | :--- | :--- |
+| `POST` | `/api/documents` | Faz upload de documento ou dataset vinculado a um projeto |
+| `GET` | `/api/documents` | Lista documentos com filtros por projeto, título, status e paginação |
+| `GET` | `/api/documents/{id}/download` | Retorna URL assinada para download autorizado |
+| `GET` | `/api/documents/{id}/audit/export?format=csv` | Exporta a trilha de auditoria do documento em CSV |
+| `PATCH` | `/api/documents/{id}/status` | Aprova ou rejeita documento em revisão |
+| `DELETE` | `/api/documents/{id}` | Remove documento em rascunho pelo autor |
 
 ---
 

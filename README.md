@@ -33,7 +33,7 @@ O EdTech centraliza o ciclo de vida de documentos acadêmicos em um único repos
 | :--- | :--- | :--- |
 | **[🎨 Frontend (UI)](frontend/README.md)** | Interface SPA responsiva para os usuários da plataforma. | React 19, Vite 8, Vanilla CSS |
 | **[⚙️ Backend (API)](backend/README.md)** | API RESTful com regras de negócio, segurança e persistência. | Java 21, Spring Boot 4.1 |
-| **[☁️ Infraestrutura](infra/README.md)** | Orquestração de containers e configuração de infraestrutura em nuvem. | GCP, Docker, Docker Compose |
+| **[☁️ Infraestrutura](infra/README.md)** | Orquestração de containers e configuração de infraestrutura em nuvem. | GCP, Terraform, Docker Compose |
 | **[📄 Documentação](docs/README.md)** | Portal de documentação técnica e arquitetural (Docs-as-Code). | MkDocs Material |
 | **[📊 Scripts](scripts/README.md)** | Scripts de telemetria e análise para o Orientador. | Python, Pandas |
 | **[🕵️ Testes](tests/README.md)** | Testes de integração, carga e qualidade da plataforma. | Playwright, K6 |
@@ -48,6 +48,8 @@ O EdTech centraliza o ciclo de vida de documentos acadêmicos em um único repos
 | ✅ | CI/CD via GitHub Actions e deploy no Cloud Run |
 | ✅ | Migrações de banco gerenciadas pelo Flyway |
 | ✅ | Armazenamento de arquivos no GCS (Google Cloud Storage) |
+| ✅ | Upload de documentos PDF e datasets CSV/JSON |
+| ✅ | Exportação CSV da trilha de auditoria por documento |
 | ✅ | Rate limiting nas rotas de autenticação (Bucket4j) |
 | ✅ | Backup automático diário do banco de dados (Cloud Scheduler) |
 | ✅ | Painel analítico dedicado para o Orientador |
