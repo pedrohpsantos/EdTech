@@ -1,0 +1,15 @@
+# Ignorar a pasta de trabalho local do Terraform (contém os binários dos providers)
+.terraform/
+
+# Ignorar arquivos de estado local (o seu estado deve ir para o backend remoto no GCS)
+*.tfstate
+*.tfstate.*
+
+# Ignorar arquivos de variáveis que contêm senhas ou segredos locais
+*.tfvars
+*.tfvars.json
+*.tfbackend
+
+# Ignorar arquivos de log do Terraform
+crash.log
+crash.*.log
