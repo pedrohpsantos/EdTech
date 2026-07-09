@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AuditTrailCsvExporter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">edtech-api</a> &gt; <a href="index.source.html" class="el_package">com.edtech.service</a> &gt; <span class="el_source">AuditTrailCsvExporter.java</span></div><h1>AuditTrailCsvExporter.java</h1><pre class="source lang-java linenums">package com.edtech.service;
+
+import com.edtech.model.AuditLog;
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
+import org.springframework.stereotype.Component;
+
+/** Transforma logs de auditoria em arquivos CSV. */
+@Component
+<span class="fc" id="L12">public class AuditTrailCsvExporter {</span>
+
+  /**
+   * Gera um CSV em memoria com os principais dados da trilha de auditoria.
+   *
+   * @param logs logs que devem ser exportados.
+   * @return conteudo do arquivo CSV em bytes.
+   */
+  public byte[] export(List&lt;AuditLog&gt; logs) {
+<span class="fc" id="L21">    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();</span>
+
+<span class="fc" id="L23">    try (OutputStreamWriter writer = new OutputStreamWriter(outputStream, StandardCharsets.UTF_8)) {</span>
+
+<span class="fc" id="L25">      writeRow(</span>
+          writer,
+          &quot;data_hora&quot;,
+          &quot;usuario_id&quot;,
+          &quot;acao&quot;,
+          &quot;tipo_recurso&quot;,
+          &quot;id_recurso&quot;,
+          &quot;ip&quot;,
+          &quot;detalhes&quot;);
+
+<span class="fc bfc" id="L35" title="All 2 branches covered.">      for (AuditLog log : logs) {</span>
+<span class="fc" id="L36">        writeRow(</span>
+            writer,
+<span class="pc bpc" id="L38" title="1 of 2 branches missed.">            log.getCreatedAt() != null ? log.getCreatedAt().toString() : &quot;&quot;,</span>
+<span class="pc bpc" id="L39" title="1 of 2 branches missed.">            log.getUserId() != null ? log.getUserId().toString() : &quot;&quot;,</span>
+<span class="pc bpc" id="L40" title="1 of 2 branches missed.">            log.getAction() != null ? log.getAction().name() : &quot;&quot;,</span>
+<span class="pc bpc" id="L41" title="1 of 2 branches missed.">            log.getResourceType() != null ? log.getResourceType() : &quot;&quot;,</span>
+<span class="pc bpc" id="L42" title="1 of 2 branches missed.">            log.getResourceId() != null ? log.getResourceId().toString() : &quot;&quot;,</span>
+<span class="pc bpc" id="L43" title="1 of 2 branches missed.">            log.getIpAddress() != null ? log.getIpAddress() : &quot;&quot;,</span>
+<span class="pc bpc" id="L44" title="1 of 2 branches missed.">            log.getDetails() != null ? log.getDetails() : &quot;&quot;);</span>
+<span class="fc" id="L45">      }</span>
+
+<span class="fc" id="L47">      writer.flush();</span>
+<span class="fc" id="L48">      return outputStream.toByteArray();</span>
+<span class="nc" id="L49">    } catch (Exception e) {</span>
+<span class="nc" id="L50">      throw new RuntimeException(&quot;Falha ao gerar CSV da trilha de auditoria&quot;, e);</span>
+    }
+  }
+
+  private void writeRow(OutputStreamWriter writer, String... values) throws java.io.IOException {
+<span class="fc bfc" id="L55" title="All 2 branches covered.">    for (int index = 0; index &lt; values.length; index++) {</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">      if (index &gt; 0) {</span>
+<span class="fc" id="L57">        writer.write(&quot;,&quot;);</span>
+      }
+<span class="fc" id="L59">      writer.write(escape(values[index]));</span>
+    }
+<span class="fc" id="L61">    writer.write(&quot;\r\n&quot;);</span>
+<span class="fc" id="L62">  }</span>
+
+  private String escape(String value) {
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">    String safeValue = value != null ? value : &quot;&quot;;</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">    if (safeValue.contains(&quot;\&quot;&quot;)</span>
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">        || safeValue.contains(&quot;,&quot;)</span>
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">        || safeValue.contains(&quot;\n&quot;)</span>
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">        || safeValue.contains(&quot;\r&quot;)) {</span>
+<span class="fc" id="L70">      return &quot;\&quot;&quot; + safeValue.replace(&quot;\&quot;&quot;, &quot;\&quot;\&quot;&quot;) + &quot;\&quot;&quot;;</span>
+    }
+<span class="fc" id="L72">    return safeValue;</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

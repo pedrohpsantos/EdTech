@@ -11,44 +11,45 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-/** Serviço responsável por registrar logs de auditoria no sistema. */
+/** Servico responsavel por registrar logs de auditoria no sistema. */
 @Service
 public class AuditLogService {
-<span class="fc" id="L17">  private static final Logger log = LoggerFactory.getLogger(AuditLogService.class);</span>
+  private static final String DOCUMENT_RESOURCE_TYPE = &quot;Document&quot;;
+<span class="fc" id="L18">  private static final Logger log = LoggerFactory.getLogger(AuditLogService.class);</span>
   private final AuditLogRepository auditLogRepository;
 
   /**
-   * Construtor para injeção de dependências.
+   * Construtor para injecao de dependencias.
    *
-   * @param auditLogRepository Repositório de logs de auditoria.
+   * @param auditLogRepository Repositorio de logs de auditoria.
    */
-<span class="fc" id="L25">  public AuditLogService(AuditLogRepository auditLogRepository) {</span>
-<span class="fc" id="L26">    this.auditLogRepository = auditLogRepository;</span>
-<span class="fc" id="L27">  }</span>
+<span class="fc" id="L26">  public AuditLogService(AuditLogRepository auditLogRepository) {</span>
+<span class="fc" id="L27">    this.auditLogRepository = auditLogRepository;</span>
+<span class="fc" id="L28">  }</span>
 
   private String getClientIp() {
     try {
       ServletRequestAttributes attributes =
-<span class="fc" id="L32">          (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();</span>
-<span class="fc bfc" id="L33" title="All 2 branches covered.">      if (attributes != null) {</span>
-<span class="fc" id="L34">        HttpServletRequest request = attributes.getRequest();</span>
-<span class="fc" id="L35">        String forwardedFor = request.getHeader(&quot;X-Forwarded-For&quot;);</span>
-<span class="pc bpc" id="L36" title="1 of 4 branches missed.">        if (forwardedFor != null &amp;&amp; !forwardedFor.isEmpty()) {</span>
-<span class="fc" id="L37">          return forwardedFor.split(&quot;,&quot;)[0].trim();</span>
+<span class="fc" id="L33">          (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();</span>
+<span class="fc bfc" id="L34" title="All 2 branches covered.">      if (attributes != null) {</span>
+<span class="fc" id="L35">        HttpServletRequest request = attributes.getRequest();</span>
+<span class="fc" id="L36">        String forwardedFor = request.getHeader(&quot;X-Forwarded-For&quot;);</span>
+<span class="pc bpc" id="L37" title="1 of 4 branches missed.">        if (forwardedFor != null &amp;&amp; !forwardedFor.isEmpty()) {</span>
+<span class="fc" id="L38">          return forwardedFor.split(&quot;,&quot;)[0].trim();</span>
         }
-<span class="fc" id="L39">        return request.getRemoteAddr();</span>
+<span class="fc" id="L40">        return request.getRemoteAddr();</span>
       }
-<span class="nc" id="L41">    } catch (Exception ignored) {</span>
-<span class="nc" id="L42">      log.debug(&quot;Erro ao extrair o IP do cliente&quot;, ignored);</span>
-<span class="fc" id="L43">    }</span>
-<span class="fc" id="L44">    return &quot;UNKNOWN&quot;;</span>
+<span class="nc" id="L42">    } catch (Exception ignored) {</span>
+<span class="nc" id="L43">      log.debug(&quot;Erro ao extrair o IP do cliente&quot;, ignored);</span>
+<span class="fc" id="L44">    }</span>
+<span class="fc" id="L45">    return &quot;UNKNOWN&quot;;</span>
   }
 
   /**
-   * Registra uma ação de auditoria detalhada.
+   * Registra uma acao de auditoria detalhada.
    *
-   * @param action Ação realizada.
-   * @param userId ID do usuário.
+   * @param action Acao realizada.
+   * @param userId ID do usuario.
    * @param resourceType Tipo do recurso.
    * @param resourceId ID do recurso.
    * @param ip IP do cliente.
@@ -63,25 +64,39 @@ public class AuditLogService {
       String ip,
       String details) {
     try {
-<span class="fc bfc" id="L66" title="All 2 branches covered.">      String clientIp = ip != null ? ip : getClientIp();</span>
-<span class="fc" id="L67">      AuditLog auditLog = new AuditLog(userId, action, resourceType, resourceId, clientIp, details);</span>
-<span class="fc" id="L68">      return auditLogRepository.save(auditLog);</span>
-<span class="fc" id="L69">    } catch (Exception e) {</span>
-<span class="fc" id="L70">      log.error(&quot;Erro em salvar o log da auditoria: {}&quot;, e.getMessage(), e);</span>
-<span class="fc" id="L71">      return null;</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">      String clientIp = ip != null ? ip : getClientIp();</span>
+<span class="fc" id="L68">      AuditLog auditLog = new AuditLog(userId, action, resourceType, resourceId, clientIp, details);</span>
+<span class="fc" id="L69">      return auditLogRepository.save(auditLog);</span>
+<span class="fc" id="L70">    } catch (Exception e) {</span>
+<span class="fc" id="L71">      log.error(&quot;Erro em salvar o log da auditoria: {}&quot;, e.getMessage(), e);</span>
+<span class="fc" id="L72">      return null;</span>
     }
   }
 
   /**
-   * Registra uma ação de auditoria simples.
+   * Registra uma acao de auditoria simples, sem vinculo direto com um recurso especifico.
    *
-   * @param userId ID do usuário.
-   * @param action Ação realizada.
+   * @param userId ID do usuario.
+   * @param action Acao realizada.
    * @param details Detalhes adicionais.
    * @return Log de auditoria salvo.
    */
   public AuditLog logAction(UUID userId, AcaoAuditoria action, String details) {
-<span class="fc" id="L84">    return log(action, userId, null, null, null, details);</span>
+<span class="fc" id="L85">    return log(action, userId, null, null, null, details);</span>
+  }
+
+  /**
+   * Registra uma acao de auditoria relacionada a um documento especifico.
+   *
+   * @param userId ID do usuario que executou a acao.
+   * @param action Acao realizada.
+   * @param documentId ID do documento afetado.
+   * @param details Detalhes adicionais da acao.
+   * @return Log de auditoria salvo.
+   */
+  public AuditLog logDocumentAction(
+      UUID userId, AcaoAuditoria action, UUID documentId, String details) {
+<span class="nc" id="L99">    return log(action, userId, DOCUMENT_RESOURCE_TYPE, documentId, null, details);</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

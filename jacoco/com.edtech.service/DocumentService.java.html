@@ -12,7 +12,11 @@ import com.edtech.repository.DocumentRepository;
 import com.edtech.repository.ProjectMemberRepository;
 import com.edtech.repository.ProjectRepository;
 import com.edtech.repository.UserRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 import org.apache.tika.Tika;
 import org.springframework.data.domain.Page;
@@ -21,9 +25,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-/** Documentação para DocumentService. */
+/** Documentacao para DocumentService. */
 @Service
 public class DocumentService {
+
+  private static final String MIME_PDF = &quot;application/pdf&quot;;
+  private static final String MIME_CSV = &quot;text/csv&quot;;
+  private static final String MIME_JSON = &quot;application/json&quot;;
+<span class="fc" id="L35">  private static final Map&lt;String, String&gt; ALLOWED_MIME_BY_EXTENSION =</span>
+<span class="fc" id="L36">      Map.of(&quot;.pdf&quot;, MIME_PDF, &quot;.csv&quot;, MIME_CSV, &quot;.json&quot;, MIME_JSON);</span>
+<span class="fc" id="L37">  private static final Set&lt;String&gt; CSV_COMPATIBLE_DETECTED_TYPES =</span>
+<span class="fc" id="L38">      Set.of(MIME_CSV, &quot;text/plain&quot;, &quot;application/csv&quot;, &quot;application/vnd.ms-excel&quot;);</span>
+<span class="fc" id="L39">  private static final Set&lt;String&gt; JSON_COMPATIBLE_DETECTED_TYPES = Set.of(MIME_JSON, &quot;text/plain&quot;);</span>
 
   private final DocumentRepository documentRepository;
   private final ProjectRepository projectRepository;
@@ -31,196 +44,254 @@ public class DocumentService {
   private final ProjectMemberRepository projectMemberRepository;
   private final AuditLogService auditLogService;
   private final StorageService storageService;
-<span class="fc" id="L34">  private final Tika tika = new Tika();</span>
+<span class="fc" id="L47">  private final Tika tika = new Tika();</span>
+<span class="fc" id="L48">  private final ObjectMapper objectMapper = new ObjectMapper();</span>
 
-  /** Documentação. */
+  /** Documentacao. */
   public DocumentService(
       DocumentRepository documentRepository,
       ProjectRepository projectRepository,
       UserRepository userRepository,
       ProjectMemberRepository projectMemberRepository,
       AuditLogService auditLogService,
-<span class="fc" id="L43">      StorageService storageService) {</span>
-<span class="fc" id="L44">    this.documentRepository = documentRepository;</span>
-<span class="fc" id="L45">    this.projectRepository = projectRepository;</span>
-<span class="fc" id="L46">    this.userRepository = userRepository;</span>
-<span class="fc" id="L47">    this.projectMemberRepository = projectMemberRepository;</span>
-<span class="fc" id="L48">    this.auditLogService = auditLogService;</span>
-<span class="fc" id="L49">    this.storageService = storageService;</span>
-<span class="fc" id="L50">  }</span>
+<span class="fc" id="L57">      StorageService storageService) {</span>
+<span class="fc" id="L58">    this.documentRepository = documentRepository;</span>
+<span class="fc" id="L59">    this.projectRepository = projectRepository;</span>
+<span class="fc" id="L60">    this.userRepository = userRepository;</span>
+<span class="fc" id="L61">    this.projectMemberRepository = projectMemberRepository;</span>
+<span class="fc" id="L62">    this.auditLogService = auditLogService;</span>
+<span class="fc" id="L63">    this.storageService = storageService;</span>
+<span class="fc" id="L64">  }</span>
 
-  /** Documentação. */
+  /** Documentacao. */
   @Transactional
   public DocumentResponseDto uploadDocument(
       MultipartFile file, String title, UUID projectId, UUID authorId) {
-<span class="fc" id="L56">    User author =</span>
+<span class="fc" id="L70">    User author =</span>
         userRepository
-<span class="fc" id="L58">            .findById(authorId)</span>
-<span class="fc" id="L59">            .orElseThrow(() -&gt; new RuntimeException(&quot;Author not found&quot;));</span>
-<span class="fc" id="L60">    Project project =</span>
+<span class="fc" id="L72">            .findById(authorId)</span>
+<span class="fc" id="L73">            .orElseThrow(() -&gt; new RuntimeException(&quot;Author not found&quot;));</span>
+<span class="fc" id="L74">    Project project =</span>
         projectRepository
-<span class="fc" id="L62">            .findById(projectId)</span>
-<span class="fc" id="L63">            .orElseThrow(() -&gt; new RuntimeException(&quot;Project not found&quot;));</span>
+<span class="fc" id="L76">            .findById(projectId)</span>
+<span class="fc" id="L77">            .orElseThrow(() -&gt; new RuntimeException(&quot;Project not found&quot;));</span>
 
-<span class="fc" id="L65">    projectMemberRepository</span>
-<span class="fc" id="L66">        .findByProjectIdAndUserId(projectId, authorId)</span>
-<span class="fc" id="L67">        .orElseThrow(() -&gt; new RuntimeException(&quot;Author is not a member of the project&quot;));</span>
-
-    // Validação de segurança estrita (MIME Type via Tika) mitigação SEC-004
-    try {
-<span class="fc" id="L71">      String detectedType = tika.detect(file.getInputStream());</span>
-<span class="fc bfc" id="L72" title="All 2 branches covered.">      if (!&quot;application/pdf&quot;.equalsIgnoreCase(detectedType)) {</span>
-<span class="fc" id="L73">        throw new IllegalArgumentException(</span>
-            &quot;Apenas arquivos PDF reais sao permitidos. Tipo detectado: &quot; + detectedType);
-      }
-<span class="fc" id="L76">    } catch (IOException e) {</span>
-<span class="fc" id="L77">      throw new RuntimeException(&quot;Falha ao analisar o conteudo do arquivo&quot;, e);</span>
-<span class="fc" id="L78">    }</span>
-
-<span class="fc" id="L80">    String contentType = file.getContentType();</span>
+<span class="fc" id="L79">    projectMemberRepository</span>
+<span class="fc" id="L80">        .findByProjectIdAndUserId(projectId, authorId)</span>
+<span class="fc" id="L81">        .orElseThrow(() -&gt; new RuntimeException(&quot;Author is not a member of the project&quot;));</span>
 
     try {
-<span class="fc" id="L83">      String originalFilename = file.getOriginalFilename();</span>
-<span class="fc bfc" id="L84" title="All 2 branches covered.">      if (originalFilename == null) {</span>
-<span class="fc" id="L85">        throw new IllegalArgumentException(&quot;Filename cannot be null&quot;);</span>
+<span class="fc" id="L84">      String originalFilename = file.getOriginalFilename();</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">      if (originalFilename == null) {</span>
+<span class="fc" id="L86">        throw new IllegalArgumentException(&quot;Filename cannot be null&quot;);</span>
       }
-      // A chave do objeto no GCS
-<span class="fc" id="L88">      String fileKey = UUID.randomUUID() + &quot;_&quot; + originalFilename;</span>
 
-<span class="fc" id="L90">      storageService.uploadFile(file, fileKey, contentType);</span>
+<span class="fc" id="L89">      String contentType = validateAllowedFile(file, originalFilename);</span>
+<span class="fc" id="L90">      String fileKey = UUID.randomUUID() + &quot;_&quot; + originalFilename;</span>
 
-<span class="fc" id="L92">      Document document = new Document();</span>
-<span class="fc" id="L93">      document.setTitle(title);</span>
-<span class="fc" id="L94">      document.setFileUrl(fileKey);</span>
-<span class="fc" id="L95">      document.setStatus(DocumentStatus.DRAFT);</span>
-<span class="fc" id="L96">      document.setAuthor(author);</span>
-<span class="fc" id="L97">      document.setProject(project);</span>
+<span class="fc" id="L92">      storageService.uploadFile(file, fileKey, contentType);</span>
 
-<span class="fc" id="L99">      document = documentRepository.save(document);</span>
+<span class="fc" id="L94">      Document document = new Document();</span>
+<span class="fc" id="L95">      document.setTitle(title);</span>
+<span class="fc" id="L96">      document.setFileUrl(fileKey);</span>
+<span class="fc" id="L97">      document.setStatus(DocumentStatus.DRAFT);</span>
+<span class="fc" id="L98">      document.setAuthor(author);</span>
+<span class="fc" id="L99">      document.setProject(project);</span>
 
-<span class="fc" id="L101">      auditLogService.logAction(</span>
-          authorId, AcaoAuditoria.UPLOAD_SUCCESS, &quot;Documento anexado no Cloud Storage: &quot; + title);
+<span class="fc" id="L101">      document = documentRepository.save(document);</span>
 
-<span class="fc" id="L104">      return mapToDto(document);</span>
-<span class="nc" id="L105">    } catch (IOException e) {</span>
-<span class="nc" id="L106">      throw new RuntimeException(&quot;Failed to read file for upload&quot;);</span>
-<span class="fc" id="L107">    } catch (Exception e) {</span>
-<span class="fc" id="L108">      throw new RuntimeException(&quot;Failed to upload file to Cloud Storage: &quot; + e.getMessage());</span>
+<span class="fc" id="L103">      auditLogService.logDocumentAction(</span>
+          authorId,
+          AcaoAuditoria.UPLOAD_SUCCESS,
+<span class="fc" id="L106">          document.getId(),</span>
+          &quot;Documento anexado no Cloud Storage: &quot; + title);
+
+<span class="fc" id="L109">      return mapToDto(document);</span>
+<span class="fc" id="L110">    } catch (IOException e) {</span>
+<span class="fc" id="L111">      throw new RuntimeException(&quot;Falha ao analisar o conteudo do arquivo&quot;, e);</span>
+<span class="fc" id="L112">    } catch (IllegalArgumentException e) {</span>
+<span class="fc" id="L113">      throw e;</span>
+<span class="nc" id="L114">    } catch (Exception e) {</span>
+<span class="nc" id="L115">      throw new RuntimeException(&quot;Failed to upload file to Cloud Storage: &quot; + e.getMessage());</span>
     }
   }
 
-  /** Documentação para o método getPresignedUrl. */
+  /** Documentacao para o metodo getPresignedUrl. */
   public String getPresignedUrl(UUID documentId, UUID userId) {
-<span class="fc" id="L114">    Document document =</span>
+<span class="fc" id="L121">    Document document =</span>
         documentRepository
-<span class="fc" id="L116">            .findById(documentId)</span>
-<span class="pc" id="L117">            .orElseThrow(() -&gt; new RuntimeException(&quot;Document not found&quot;));</span>
+<span class="fc" id="L123">            .findById(documentId)</span>
+<span class="pc" id="L124">            .orElseThrow(() -&gt; new RuntimeException(&quot;Document not found&quot;));</span>
 
-    // Valida se o usuário tem permissão para acessar o projeto do documento
-<span class="fc" id="L120">    projectMemberRepository</span>
-<span class="fc" id="L121">        .findByProjectIdAndUserId(document.getProject().getId(), userId)</span>
-<span class="fc" id="L122">        .orElseThrow(</span>
-<span class="fc" id="L123">            () -&gt; new RuntimeException(&quot;Access denied: You are not a member of this project&quot;));</span>
+<span class="fc" id="L126">    projectMemberRepository</span>
+<span class="fc" id="L127">        .findByProjectIdAndUserId(document.getProject().getId(), userId)</span>
+<span class="fc" id="L128">        .orElseThrow(</span>
+<span class="fc" id="L129">            () -&gt; new RuntimeException(&quot;Access denied: You are not a member of this project&quot;));</span>
 
     String presignedUrl;
     try {
-<span class="fc" id="L127">      presignedUrl = storageService.getPresignedUrl(document.getFileUrl());</span>
-<span class="fc" id="L128">    } catch (Exception e) {</span>
-<span class="fc" id="L129">      throw new RuntimeException(&quot;Failed to generate presigned URL&quot;, e);</span>
-<span class="fc" id="L130">    }</span>
+<span class="fc" id="L133">      presignedUrl = storageService.getPresignedUrl(document.getFileUrl());</span>
+<span class="fc" id="L134">    } catch (Exception e) {</span>
+<span class="fc" id="L135">      throw new RuntimeException(&quot;Failed to generate presigned URL&quot;, e);</span>
+<span class="fc" id="L136">    }</span>
 
-<span class="fc" id="L132">    auditLogService.logAction(</span>
+<span class="fc" id="L138">    auditLogService.logDocumentAction(</span>
         userId,
-        AcaoAuditoria.UPLOAD_SUCCESS,
-<span class="fc" id="L135">        &quot;Gerada URL presigned para download: &quot; + document.getTitle());</span>
-<span class="fc" id="L136">    return presignedUrl;</span>
+        AcaoAuditoria.DOWNLOAD,
+        documentId,
+<span class="fc" id="L142">        &quot;Gerada URL presigned para download: &quot; + document.getTitle());</span>
+<span class="fc" id="L143">    return presignedUrl;</span>
   }
 
-  /** Documentação. */
+  /** Documentacao. */
   public Page&lt;DocumentResponseDto&gt; listDocumentsByUser(
       UUID userId, UUID projectId, String title, DocumentStatus status, Pageable pageable) {
-<span class="fc" id="L142">    return documentRepository</span>
-<span class="fc" id="L143">        .findDocumentsByUserIdAndFilters(userId, projectId, title, status, pageable)</span>
-<span class="fc" id="L144">        .map(this::mapToDto);</span>
+<span class="fc" id="L149">    return documentRepository</span>
+<span class="fc" id="L150">        .findDocumentsByUserIdAndFilters(userId, projectId, title, status, pageable)</span>
+<span class="fc" id="L151">        .map(this::mapToDto);</span>
   }
 
-  /** Documentação. */
+  /** Documentacao. */
   @Transactional
   public void deleteDocument(UUID documentId, UUID userId) {
-<span class="fc" id="L150">    Document document =</span>
+<span class="fc" id="L157">    Document document =</span>
         documentRepository
-<span class="fc" id="L152">            .findById(documentId)</span>
-<span class="fc" id="L153">            .orElseThrow(() -&gt; new RuntimeException(&quot;Document not found&quot;));</span>
+<span class="fc" id="L159">            .findById(documentId)</span>
+<span class="fc" id="L160">            .orElseThrow(() -&gt; new RuntimeException(&quot;Document not found&quot;));</span>
 
-<span class="fc bfc" id="L155" title="All 2 branches covered.">    if (!document.getAuthor().getId().equals(userId)) {</span>
-<span class="fc" id="L156">      throw new RuntimeException(&quot;Only the author can delete this document&quot;);</span>
+<span class="fc bfc" id="L162" title="All 2 branches covered.">    if (!document.getAuthor().getId().equals(userId)) {</span>
+<span class="fc" id="L163">      throw new RuntimeException(&quot;Only the author can delete this document&quot;);</span>
     }
-<span class="fc bfc" id="L158" title="All 2 branches covered.">    if (document.getStatus() != DocumentStatus.DRAFT) {</span>
-<span class="fc" id="L159">      throw new RuntimeException(&quot;Only DRAFT documents can be deleted&quot;);</span>
+<span class="fc bfc" id="L165" title="All 2 branches covered.">    if (document.getStatus() != DocumentStatus.DRAFT) {</span>
+<span class="fc" id="L166">      throw new RuntimeException(&quot;Only DRAFT documents can be deleted&quot;);</span>
     }
 
-    // Deletar o arquivo físico no GCS para conformidade com a LGPD
     try {
-<span class="fc" id="L164">      storageService.deleteFile(document.getFileUrl());</span>
-<span class="fc" id="L165">    } catch (Exception e) {</span>
-<span class="fc" id="L166">      throw new RuntimeException(&quot;Erro ao excluir arquivo físico: &quot; + e.getMessage());</span>
-<span class="fc" id="L167">    }</span>
+<span class="fc" id="L170">      storageService.deleteFile(document.getFileUrl());</span>
+<span class="fc" id="L171">    } catch (Exception e) {</span>
+<span class="fc" id="L172">      throw new RuntimeException(&quot;Erro ao excluir arquivo fisico: &quot; + e.getMessage());</span>
+<span class="fc" id="L173">    }</span>
 
-<span class="fc" id="L169">    documentRepository.delete(document);</span>
-<span class="fc" id="L170">    auditLogService.logAction(</span>
-<span class="fc" id="L171">        userId, AcaoAuditoria.DELETE_DOCUMENT, &quot;Documento excluido: &quot; + document.getTitle());</span>
-<span class="fc" id="L172">  }</span>
+<span class="fc" id="L175">    documentRepository.delete(document);</span>
+<span class="fc" id="L176">    auditLogService.logDocumentAction(</span>
+        userId,
+        AcaoAuditoria.DELETE_DOCUMENT,
+        documentId,
+<span class="fc" id="L180">        &quot;Documento excluido: &quot; + document.getTitle());</span>
+<span class="fc" id="L181">  }</span>
 
-  private DocumentResponseDto mapToDto(Document document) {
-<span class="fc" id="L175">    DocumentResponseDto dto = new DocumentResponseDto();</span>
-<span class="fc" id="L176">    dto.setId(document.getId());</span>
-<span class="fc" id="L177">    dto.setTitle(document.getTitle());</span>
-<span class="fc" id="L178">    dto.setFileUrl(document.getFileUrl());</span>
-<span class="fc" id="L179">    dto.setStatus(document.getStatus());</span>
-<span class="fc" id="L180">    dto.setAuthorId(document.getAuthor().getId());</span>
-<span class="fc" id="L181">    dto.setProjectId(document.getProject().getId());</span>
-<span class="fc" id="L182">    dto.setCreatedAt(document.getCreatedAt());</span>
-<span class="fc" id="L183">    dto.setFeedback(document.getFeedback());</span>
-<span class="fc" id="L184">    return dto;</span>
+  private String validateAllowedFile(MultipartFile file, String originalFilename)
+      throws IOException {
+<span class="fc" id="L185">    String extension = extractExtension(originalFilename);</span>
+<span class="fc" id="L186">    String expectedMimeType = ALLOWED_MIME_BY_EXTENSION.get(extension);</span>
+<span class="fc bfc" id="L187" title="All 2 branches covered.">    if (expectedMimeType == null) {</span>
+<span class="fc" id="L188">      throw new IllegalArgumentException(</span>
+          &quot;Tipo de arquivo nao permitido. Formatos aceitos: PDF, CSV e JSON.&quot;);
+    }
+
+<span class="fc" id="L192">    String declaredType = normalizeMimeType(file.getContentType());</span>
+<span class="pc bpc" id="L193" title="1 of 2 branches missed.">    if (!expectedMimeType.equals(declaredType)) {</span>
+<span class="nc" id="L194">      throw new IllegalArgumentException(</span>
+          &quot;Content-Type nao permitido para &quot;
+              + extension
+              + &quot;. Esperado: &quot;
+              + expectedMimeType
+              + &quot;. Recebido: &quot;
+              + declaredType);
+    }
+
+<span class="fc" id="L203">    String detectedType = normalizeMimeType(tika.detect(file.getInputStream(), originalFilename));</span>
+<span class="pc bpc" id="L204" title="1 of 2 branches missed.">    if (!isDetectedTypeCompatible(expectedMimeType, detectedType)) {</span>
+<span class="nc" id="L205">      throw new IllegalArgumentException(</span>
+          &quot;Conteudo do arquivo nao corresponde ao tipo permitido. Tipo detectado: &quot; + detectedType);
+    }
+
+<span class="fc bfc" id="L209" title="All 2 branches covered.">    if (MIME_JSON.equals(expectedMimeType)) {</span>
+<span class="fc" id="L210">      validateJsonContent(file);</span>
+    }
+
+<span class="fc" id="L213">    return expectedMimeType;</span>
   }
 
-  /** Documentação. */
+  private String extractExtension(String filename) {
+<span class="fc" id="L217">    int lastDotIndex = filename.lastIndexOf('.');</span>
+<span class="pc bpc" id="L218" title="2 of 4 branches missed.">    if (lastDotIndex &lt; 0 || lastDotIndex == filename.length() - 1) {</span>
+<span class="nc" id="L219">      return &quot;&quot;;</span>
+    }
+<span class="fc" id="L221">    return filename.substring(lastDotIndex).toLowerCase(Locale.ROOT);</span>
+  }
+
+  private boolean isDetectedTypeCompatible(String expectedMimeType, String detectedType) {
+<span class="fc bfc" id="L225" title="All 2 branches covered.">    if (MIME_CSV.equals(expectedMimeType)) {</span>
+<span class="fc" id="L226">      return CSV_COMPATIBLE_DETECTED_TYPES.contains(detectedType);</span>
+    }
+<span class="fc bfc" id="L228" title="All 2 branches covered.">    if (MIME_JSON.equals(expectedMimeType)) {</span>
+<span class="fc" id="L229">      return JSON_COMPATIBLE_DETECTED_TYPES.contains(detectedType);</span>
+    }
+<span class="fc" id="L231">    return expectedMimeType.equals(detectedType);</span>
+  }
+
+  private String normalizeMimeType(String mimeType) {
+<span class="pc bpc" id="L235" title="2 of 4 branches missed.">    if (mimeType == null || mimeType.isBlank()) {</span>
+<span class="nc" id="L236">      return &quot;&quot;;</span>
+    }
+<span class="fc" id="L238">    return mimeType.split(&quot;;&quot;)[0].trim().toLowerCase(Locale.ROOT);</span>
+  }
+
+  private void validateJsonContent(MultipartFile file) throws IOException {
+<span class="fc" id="L242">    objectMapper.readTree(file.getInputStream());</span>
+<span class="fc" id="L243">  }</span>
+
+  private DocumentResponseDto mapToDto(Document document) {
+<span class="fc" id="L246">    DocumentResponseDto dto = new DocumentResponseDto();</span>
+<span class="fc" id="L247">    dto.setId(document.getId());</span>
+<span class="fc" id="L248">    dto.setTitle(document.getTitle());</span>
+<span class="fc" id="L249">    dto.setFileUrl(document.getFileUrl());</span>
+<span class="fc" id="L250">    dto.setStatus(document.getStatus());</span>
+<span class="fc" id="L251">    dto.setAuthorId(document.getAuthor().getId());</span>
+<span class="fc" id="L252">    dto.setProjectId(document.getProject().getId());</span>
+<span class="fc" id="L253">    dto.setCreatedAt(document.getCreatedAt());</span>
+<span class="fc" id="L254">    dto.setFeedback(document.getFeedback());</span>
+<span class="fc" id="L255">    return dto;</span>
+  }
+
+  /** Documentacao. */
   @Transactional
   public DocumentResponseDto reviewDocument(
       UUID documentId, UUID reviewerId, DocumentStatus newStatus, String feedback) {
-<span class="fc bfc" id="L191" title="All 4 branches covered.">    if (newStatus != DocumentStatus.APPROVED &amp;&amp; newStatus != DocumentStatus.REJECTED) {</span>
-<span class="fc" id="L192">      throw new IllegalArgumentException(</span>
-          &quot;Status inválido. Apenas APPROVED ou REJECTED são permitidos na revisão.&quot;);
+<span class="fc bfc" id="L262" title="All 4 branches covered.">    if (newStatus != DocumentStatus.APPROVED &amp;&amp; newStatus != DocumentStatus.REJECTED) {</span>
+<span class="fc" id="L263">      throw new IllegalArgumentException(</span>
+          &quot;Status invalido. Apenas APPROVED ou REJECTED sao permitidos na revisao.&quot;);
     }
-<span class="fc" id="L195">    Document document =</span>
+<span class="fc" id="L266">    Document document =</span>
         documentRepository
-<span class="fc" id="L197">            .findById(documentId)</span>
-<span class="pc" id="L198">            .orElseThrow(() -&gt; new RuntimeException(&quot;Document not found&quot;));</span>
-<span class="fc" id="L199">    ProjectMember member =</span>
+<span class="fc" id="L268">            .findById(documentId)</span>
+<span class="pc" id="L269">            .orElseThrow(() -&gt; new RuntimeException(&quot;Document not found&quot;));</span>
+<span class="fc" id="L270">    ProjectMember member =</span>
         projectMemberRepository
-<span class="fc" id="L201">            .findByProjectIdAndUserId(document.getProject().getId(), reviewerId)</span>
-<span class="fc" id="L202">            .orElseThrow(</span>
-<span class="fc" id="L203">                () -&gt; new RuntimeException(&quot;Acess denied: You are not a member of this project&quot;));</span>
-<span class="fc bfc" id="L204" title="All 2 branches covered.">    if (member.getRole() != ProjectRole.ADVISOR) {</span>
-<span class="fc" id="L205">      throw new RuntimeException(&quot;Acess denied: Only an ADVISOR can review documents&quot;);</span>
+<span class="fc" id="L272">            .findByProjectIdAndUserId(document.getProject().getId(), reviewerId)</span>
+<span class="fc" id="L273">            .orElseThrow(</span>
+<span class="fc" id="L274">                () -&gt; new RuntimeException(&quot;Acess denied: You are not a member of this project&quot;));</span>
+<span class="fc bfc" id="L275" title="All 2 branches covered.">    if (member.getRole() != ProjectRole.ADVISOR) {</span>
+<span class="fc" id="L276">      throw new RuntimeException(&quot;Acess denied: Only an ADVISOR can review documents&quot;);</span>
     }
-<span class="fc bfc" id="L207" title="All 2 branches covered.">    if (document.getStatus() != DocumentStatus.PENDING_REVIEW) {</span>
-<span class="fc" id="L208">      throw new RuntimeException(&quot;Document is not pending review&quot;);</span>
+<span class="fc bfc" id="L278" title="All 2 branches covered.">    if (document.getStatus() != DocumentStatus.PENDING_REVIEW) {</span>
+<span class="fc" id="L279">      throw new RuntimeException(&quot;Document is not pending review&quot;);</span>
     }
-<span class="fc" id="L210">    document.setStatus(newStatus);</span>
-<span class="fc" id="L211">    document.setFeedback(feedback);</span>
-<span class="fc" id="L212">    Document savedDocument = documentRepository.save(document);</span>
+<span class="fc" id="L281">    document.setStatus(newStatus);</span>
+<span class="fc" id="L282">    document.setFeedback(feedback);</span>
+<span class="fc" id="L283">    Document savedDocument = documentRepository.save(document);</span>
     AcaoAuditoria acao =
-<span class="fc bfc" id="L214" title="All 2 branches covered.">        (newStatus == DocumentStatus.APPROVED)</span>
-<span class="fc" id="L215">            ? AcaoAuditoria.DOCUMENT_APPROVED</span>
-<span class="fc" id="L216">            : AcaoAuditoria.DOCUMENT_REJECTED;</span>
-<span class="fc" id="L217">    String details =</span>
+<span class="fc bfc" id="L285" title="All 2 branches covered.">        (newStatus == DocumentStatus.APPROVED)</span>
+<span class="fc" id="L286">            ? AcaoAuditoria.DOCUMENT_APPROVED</span>
+<span class="fc" id="L287">            : AcaoAuditoria.DOCUMENT_REJECTED;</span>
+<span class="fc" id="L288">    String details =</span>
         &quot;Status alterado para &quot;
             + newStatus
             + &quot;.Feedback: &quot;
-<span class="fc bfc" id="L221" title="All 4 branches covered.">            + (feedback != null &amp;&amp; !feedback.trim().isEmpty() ? feedback : &quot;Sem feedback&quot;);</span>
-<span class="fc" id="L222">    auditLogService.logAction(reviewerId, acao, details);</span>
-<span class="fc" id="L223">    return mapToDto(savedDocument);</span>
+<span class="fc bfc" id="L292" title="All 4 branches covered.">            + (feedback != null &amp;&amp; !feedback.trim().isEmpty() ? feedback : &quot;Sem feedback&quot;);</span>
+<span class="fc" id="L293">    auditLogService.logDocumentAction(reviewerId, acao, documentId, details);</span>
+<span class="fc" id="L294">    return mapToDto(savedDocument);</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
