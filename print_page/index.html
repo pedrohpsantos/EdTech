@@ -1611,6 +1611,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../desenvolvimento/qualidade_e_testes/mutation_test_report/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Relatorio de Testes de Mutacao (PiTest)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../desenvolvimento/qualidade_e_testes/vitest_report/" class="md-nav__link">
         
   
@@ -2454,6 +2482,34 @@
     
   
     ADR 0013: Backup Automático via Cloud SQL Export e Cloud Scheduler
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../arquitetura/decisoes_adrs/0014-terraform-infraestrutura-como-codigo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ADR 0014: Terraform para Infraestrutura como Codigo
   
 
     
@@ -3767,10 +3823,21 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#desenvolvimento-qualidade_e_testes-mutation_test_report" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4.2 Relatorio de Testes de Mutacao (PiTest)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#desenvolvimento-qualidade_e_testes-vitest_report" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.4.2 Relatório Vitest (Frontend)
+        3.4.3 Relatório Vitest (Frontend)
       
     </span>
   </a>
@@ -3781,7 +3848,7 @@
   <a href="#desenvolvimento-qualidade_e_testes-smoke_test_report" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.4.3 Relatório de Testes E2E (Smoke Tests)
+        3.4.4 Relatório de Testes E2E (Smoke Tests)
       
     </span>
   </a>
@@ -3792,7 +3859,7 @@
   <a href="#desenvolvimento-qualidade_e_testes-k6_report" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.4.4 Relatório K6 (Carga)
+        3.4.5 Relatório K6 (Carga)
       
     </span>
   </a>
@@ -4070,6 +4137,17 @@
     <span class="md-ellipsis">
       
         4.5.13 ADR 0013: Backup Automático via Cloud SQL Export e Cloud Scheduler
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#arquitetura-decisoes_adrs-0014-terraform-infraestrutura-como-codigo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5.14 ADR 0014: Terraform para Infraestrutura como Codigo
       
     </span>
   </a>
@@ -7494,6 +7572,10 @@ Qualquer rota protegida passa pelo <code>JwtAuthenticationFilter</code> antes de
         </head><body><h1 id="qualidade-e-testes-jacoco"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m10 17-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9m-6-8L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5z"></path></svg></span> Qualidade e Testes (JaCoCo)<a class="headerlink" href="#desenvolvimento-qualidade_e_testes-qualidade_testes-qualidade-e-testes-jacoco" title="Permanent link">¶</a></h1>
 <p>Esta página centraliza as métricas de qualidade de código do backend.
 O nosso pipeline de CI está configurado para executar os testes e extrair a cobertura usando o <strong>JaCoCo</strong>.</p>
+<div class="admonition info">
+<p class="admonition-title">Cobertura vs. mutação</p>
+<p>O JaCoCo mostra cobertura de linhas e branches. Testes de mutação são avaliados pelo PiTest e ficam no <a href="#desenvolvimento-qualidade_e_testes-mutation_test_report">Relatório de Testes de Mutação</a>.</p>
+</div>
 <h2 id="desenvolvimento-qualidade_e_testes-qualidade_testes-relatorio-de-cobertura-jacoco">Relatório de Cobertura (JaCoCo)<a class="headerlink" href="#desenvolvimento-qualidade_e_testes-qualidade_testes-relatorio-de-cobertura-jacoco" title="Permanent link">¶</a></h2>
 <iframe id="jacoco-frame" src="../../../jacoco/index.html" width="100%" height="800px" style="border:none; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);" onload="injectJacocoStyles()"></iframe>
 
@@ -7552,8 +7634,51 @@ function injectJacocoStyles() {
 <td>Revisão profunda, correção de metadados e melhorias visuais</td>
 <td>Pedro Henrique P. Santos</td>
 </tr>
+<tr>
+<td><code>1.2</code></td>
+<td>09/07/2026</td>
+<td>Esclarece diferença entre JaCoCo e PiTest</td>
+<td>Pedro Henrique P. Santos</td>
+</tr>
 </tbody>
-</table></body></html></section><section class="print-page" id="desenvolvimento-qualidade_e_testes-vitest_report" heading-number="3.4.2"><html><head>
+</table></body></html></section><section class="print-page" id="desenvolvimento-qualidade_e_testes-mutation_test_report" heading-number="3.4.2"><html><head>
+        <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            remove_material_navigation();remove_mkdocs_theme_navigation();generate_toc();
+        })
+        </script>
+        </head><body><h1 id="relatorio-de-testes-de-mutacao-pitest"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2h2v2c0 1.44.68 2.61 1.88 3.78.86.83 2.01 1.63 3.21 2.42l-1.83 1.19C8.27 10.72 7.31 10 6.5 9.21 5.07 7.82 4 6.1 4 4zm14 0h2v2c0 2.1-1.07 3.82-2.5 5.21-1.41 1.38-3.21 2.52-4.96 3.63-1.75 1.12-3.45 2.21-4.66 3.38C6.68 17.39 6 18.56 6 20v2H4v-2c0-2.1 1.07-3.82 2.5-5.21 1.41-1.38 3.21-2.52 4.96-3.63 1.75-1.12 3.45-2.21 4.66-3.38C17.32 6.61 18 5.44 18 4zm-3.26 10.61c.99.67 1.95 1.39 2.76 2.18C18.93 16.18 20 17.9 20 20v2h-2v-2c0-1.44-.68-2.61-1.88-3.78-.86-.83-2.01-1.63-3.21-2.42zM7 3h10v1l-.06.5H7.06L7 4zm.68 3h8.64c-.24.34-.52.69-.9 1.06l-.51.44H9.07l-.49-.44c-.38-.37-.66-.72-.9-1.06m1.41 10.5h5.84l.49.44c.38.37.66.72.9 1.06H7.68c.24-.34.52-.69.9-1.06zm-2.03 3h9.88l.06.5v1H7v-1z"></path></svg></span> Relatorio de Testes de Mutacao (PiTest)<a class="headerlink" href="#desenvolvimento-qualidade_e_testes-mutation_test_report-relatorio-de-testes-de-mutacao-pitest" title="Permanent link">¶</a></h1>
+<p>Esta pagina publica o relatorio <abbr title="HyperText Markup Language — Linguagem de Marcação de Hipertexto">HTML</abbr> do <strong>PiTest</strong>, responsavel por avaliar a efetividade dos testes do backend por meio de mutacoes controladas no codigo.</p>
+<div class="admonition note">
+<p class="admonition-title">JaCoCo e PiTest medem coisas diferentes</p>
+<p>O JaCoCo mede cobertura estrutural, como linhas e branches executados. Testes de mutacao nao aparecem no JaCoCo; eles sao gerados pelo PiTest em um relatorio <abbr title="HyperText Markup Language — Linguagem de Marcação de Hipertexto">HTML</abbr> separado.</p>
+</div>
+<div style="display: flex; justify-content: flex-end; margin-bottom: 15px;">
+<p><a class="md-button" href="#pitest-index" target="_blank">Abrir em Tela Cheia <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"></path></svg></span></a></p>
+</div>
+<iframe src="../../../pitest/index.html" width="100%" height="800px" style="border:none; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); background-color: #fff;">
+</iframe>
+
+<p><em>(O relatorio acima e gerado automaticamente pelo pipeline de documentacao.)</em></p>
+<h2 id="desenvolvimento-qualidade_e_testes-mutation_test_report-historico-de-versoes">Historico de Versoes<a class="headerlink" href="#desenvolvimento-qualidade_e_testes-mutation_test_report-historico-de-versoes" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Versao</th>
+<th>Data</th>
+<th>Descricao</th>
+<th>Autor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>1.0</code></td>
+<td>09/07/2026</td>
+<td>Criacao da pagina de relatorio de mutacao PiTest</td>
+<td>Pedro Henrique P. Santos</td>
+</tr>
+</tbody>
+</table></body></html></section><section class="print-page" id="desenvolvimento-qualidade_e_testes-vitest_report" heading-number="3.4.3"><html><head>
         <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function () {
             remove_material_navigation();remove_mkdocs_theme_navigation();generate_toc();
@@ -7576,7 +7701,7 @@ function injectJacocoStyles() {
 </div>
 <iframe src="../../../vitest/index.html" width="100%" height="800px" style="border:none; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); background-color: #fff;">
   Seu navegador não suporta iframes. <a href="#vitest-index" target="_blank">Clique aqui</a> para ver o relatório.
-</iframe></body></html></section><section class="print-page" id="desenvolvimento-qualidade_e_testes-smoke_test_report" heading-number="3.4.3"><html><head>
+</iframe></body></html></section><section class="print-page" id="desenvolvimento-qualidade_e_testes-smoke_test_report" heading-number="3.4.4"><html><head>
         <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function () {
             remove_material_navigation();remove_mkdocs_theme_navigation();generate_toc();
@@ -7621,7 +7746,7 @@ function injectJacocoStyles() {
 <td>Pedro Henrique P. Santos</td>
 </tr>
 </tbody>
-</table></body></html></section><section class="print-page" id="desenvolvimento-qualidade_e_testes-k6_report" heading-number="3.4.4"><html><head>
+</table></body></html></section><section class="print-page" id="desenvolvimento-qualidade_e_testes-k6_report" heading-number="3.4.5"><html><head>
         <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function () {
             remove_material_navigation();remove_mkdocs_theme_navigation();generate_toc();
@@ -9270,6 +9395,83 @@ Hospedar arquivos estáticos em instâncias de contêiner ou máquinas virtuais 
 <td style="text-align: center;"><code>1.0</code></td>
 <td style="text-align: center;">05/07/2026</td>
 <td style="text-align: left;">Criação do documento</td>
+<td style="text-align: left;">Pedro Henrique P. Santos</td>
+</tr>
+</tbody>
+</table></body></html></section><section class="print-page" id="arquitetura-decisoes_adrs-0014-terraform-infraestrutura-como-codigo" heading-number="4.5.14"><html><head>
+        <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            remove_material_navigation();remove_mkdocs_theme_navigation();generate_toc();
+        })
+        </script>
+        </head><body><h1 id="adr-0014-terraform-para-infraestrutura-como-codigo"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17 21-2.75-3 1.16-1.16L17 18.43l3.59-3.59 1.16 1.41M12.8 21H5a2 2 0 0 1-2-2V5c0-1.11.89-2 2-2h14a2 2 0 0 1 2 2v7.8c-.88-.51-1.91-.8-3-.8l-1 .08V11H7v2h7.69A5.98 5.98 0 0 0 12 18c0 1.09.29 2.12.8 3m-.8-6H7v2h5m5-10H7v2h10"></path></svg></span> <abbr title="Architecture Decision Record — Registro de Decisão Arquitetural">ADR</abbr> 0014: Terraform para Infraestrutura como Codigo<a class="headerlink" href="#arquitetura-decisoes_adrs-0014-terraform-infraestrutura-como-codigo-adr-0014-terraform-para-infraestrutura-como-codigo" title="Permanent link">¶</a></h1>
+<h2 id="arquitetura-decisoes_adrs-0014-terraform-infraestrutura-como-codigo-status">Status<a class="headerlink" href="#arquitetura-decisoes_adrs-0014-terraform-infraestrutura-como-codigo-status" title="Permanent link">¶</a></h2>
+<p>Aceita</p>
+<h2 id="arquitetura-decisoes_adrs-0014-terraform-infraestrutura-como-codigo-contexto">Contexto<a class="headerlink" href="#arquitetura-decisoes_adrs-0014-terraform-infraestrutura-como-codigo-contexto" title="Permanent link">¶</a></h2>
+<p>O EdTech ja opera em Google Cloud com Cloud Run, Cloud <abbr title="Structured Query Language">SQL</abbr>, Cloud Storage, Artifact Registry e Firebase Hosting. Antes desta decisao, parte relevante da infraestrutura era descrita em scripts, workflows e configuracoes operacionais, o que dificultava revisao, reproducibilidade e auditoria de mudancas.</p>
+<p>Tambem havia risco de documentar ou versionar identificadores concretos de projeto, buckets, imagens e instancia de banco em arquivos que deveriam ser reutilizaveis. Para reduzir esse risco, a infraestrutura precisa ser declarativa, parametrizada e revisavel no mesmo fluxo de Pull Request do restante do codigo.</p>
+<h2 id="arquitetura-decisoes_adrs-0014-terraform-infraestrutura-como-codigo-decisao">Decisao<a class="headerlink" href="#arquitetura-decisoes_adrs-0014-terraform-infraestrutura-como-codigo-decisao" title="Permanent link">¶</a></h2>
+<p>Adotamos <strong>Terraform</strong> como ferramenta de Infraestrutura como Codigo para os recursos principais de backend na Google Cloud.</p>
+<p>A definicao fica em <code>infra/terraform</code> e e organizada em modulos:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Modulo</th>
+<th style="text-align: left;">Responsabilidade</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>modules/cloud_run</code></td>
+<td style="text-align: left;">Servico backend, imagem, variaveis de ambiente e integracao com storage</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>modules/cloud_sql</code></td>
+<td style="text-align: left;">Instancia PostgreSQL gerenciada</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>modules/cloud_storage</code></td>
+<td style="text-align: left;">Bucket de arquivos academicos</td>
+</tr>
+</tbody>
+</table>
+<p>Os valores concretos de ambiente devem ser fornecidos por variaveis em <code>terraform.tfvars</code>, criado localmente a partir de <code>terraform.tfvars.example</code>. O arquivo real de variaveis, o estado local e a pasta <code>.terraform/</code> nao devem ser versionados.</p>
+<h2 id="arquitetura-decisoes_adrs-0014-terraform-infraestrutura-como-codigo-consequencias">Consequencias<a class="headerlink" href="#arquitetura-decisoes_adrs-0014-terraform-infraestrutura-como-codigo-consequencias" title="Permanent link">¶</a></h2>
+<h3 id="arquitetura-decisoes_adrs-0014-terraform-infraestrutura-como-codigo-positivas">Positivas<a class="headerlink" href="#arquitetura-decisoes_adrs-0014-terraform-infraestrutura-como-codigo-positivas" title="Permanent link">¶</a></h3>
+<ul>
+<li>Mudancas de infraestrutura passam pelo mesmo fluxo de revisao do codigo.</li>
+<li>A topologia cloud fica reproduzivel e documentada de forma executavel.</li>
+<li>Reduzimos hardcode de projeto, bucket, regiao e imagem em arquivos versionados.</li>
+<li>A separacao por modulos facilita evolucao futura, como <abbr title="Virtual Private Cloud">VPC</abbr>, Workload Identity Federation e alertas de budget.</li>
+</ul>
+<h3 id="arquitetura-decisoes_adrs-0014-terraform-infraestrutura-como-codigo-negativas">Negativas<a class="headerlink" href="#arquitetura-decisoes_adrs-0014-terraform-infraestrutura-como-codigo-negativas" title="Permanent link">¶</a></h3>
+<ul>
+<li>A equipe precisa manter disciplina sobre estado remoto e variaveis locais.</li>
+<li>O Terraform adiciona uma etapa operacional para quem for provisionar ou alterar recursos.</li>
+<li>Alteracoes manuais feitas diretamente no console da <abbr title="Google Cloud Platform">GCP</abbr> podem gerar drift e precisam ser reconciliadas.</li>
+</ul>
+<h2 id="arquitetura-decisoes_adrs-0014-terraform-infraestrutura-como-codigo-alternativas-consideradas">Alternativas Consideradas<a class="headerlink" href="#arquitetura-decisoes_adrs-0014-terraform-infraestrutura-como-codigo-alternativas-consideradas" title="Permanent link">¶</a></h2>
+<h3 id="arquitetura-decisoes_adrs-0014-terraform-infraestrutura-como-codigo-manter-apenas-scripts-e-github-actions">Manter apenas scripts e GitHub Actions<a class="headerlink" href="#arquitetura-decisoes_adrs-0014-terraform-infraestrutura-como-codigo-manter-apenas-scripts-e-github-actions" title="Permanent link">¶</a></h3>
+<p>Foi descartado porque scripts imperativos sao mais dificeis de revisar, comparar e reaplicar com seguranca.</p>
+<h3 id="arquitetura-decisoes_adrs-0014-terraform-infraestrutura-como-codigo-google-cloud-deployment-manager">Google Cloud Deployment Manager<a class="headerlink" href="#arquitetura-decisoes_adrs-0014-terraform-infraestrutura-como-codigo-google-cloud-deployment-manager" title="Permanent link">¶</a></h3>
+<p>Foi descartado por menor adocao no ecossistema atual e por nao oferecer a mesma portabilidade e familiaridade do Terraform.</p>
+<h3 id="arquitetura-decisoes_adrs-0014-terraform-infraestrutura-como-codigo-provisionamento-manual-pelo-console">Provisionamento manual pelo console<a class="headerlink" href="#arquitetura-decisoes_adrs-0014-terraform-infraestrutura-como-codigo-provisionamento-manual-pelo-console" title="Permanent link">¶</a></h3>
+<p>Foi descartado por nao ser auditavel o suficiente para um projeto com foco em governanca e rastreabilidade.</p>
+<h2 id="arquitetura-decisoes_adrs-0014-terraform-infraestrutura-como-codigo-historico-de-versoes">Historico de Versoes<a class="headerlink" href="#arquitetura-decisoes_adrs-0014-terraform-infraestrutura-como-codigo-historico-de-versoes" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Versao</th>
+<th style="text-align: center;">Data</th>
+<th style="text-align: left;">Descricao</th>
+<th style="text-align: left;">Autor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><code>1.0</code></td>
+<td style="text-align: center;">09/07/2026</td>
+<td style="text-align: left;">Registro da decisao de adotar Terraform para IaC</td>
 <td style="text-align: left;">Pedro Henrique P. Santos</td>
 </tr>
 </tbody>
@@ -13196,11 +13398,13 @@ Copie toda a estrutura abaixo para o novo arquivo, preencha os dados e adicione 
 .print-site-enumerate-headings #section-3-4 > h1:before { content: '3.4 ' }
 .print-site-enumerate-headings #desenvolvimento-qualidade_e_testes-qualidade_testes > h1:before { content: '3.4.1 ' }
 
-.print-site-enumerate-headings #desenvolvimento-qualidade_e_testes-vitest_report > h1:before { content: '3.4.2 ' }
+.print-site-enumerate-headings #desenvolvimento-qualidade_e_testes-mutation_test_report > h1:before { content: '3.4.2 ' }
 
-.print-site-enumerate-headings #desenvolvimento-qualidade_e_testes-smoke_test_report > h1:before { content: '3.4.3 ' }
+.print-site-enumerate-headings #desenvolvimento-qualidade_e_testes-vitest_report > h1:before { content: '3.4.3 ' }
 
-.print-site-enumerate-headings #desenvolvimento-qualidade_e_testes-k6_report > h1:before { content: '3.4.4 ' }
+.print-site-enumerate-headings #desenvolvimento-qualidade_e_testes-smoke_test_report > h1:before { content: '3.4.4 ' }
+
+.print-site-enumerate-headings #desenvolvimento-qualidade_e_testes-k6_report > h1:before { content: '3.4.5 ' }
 
 .print-site-enumerate-headings #section-4 > h1:before { content: '4 ' }
 .print-site-enumerate-headings #arquitetura-design_tecnico > h1:before { content: '4.1 ' }
@@ -13249,6 +13453,8 @@ Copie toda a estrutura abaixo para o novo arquivo, preencha os dados e adicione 
 .print-site-enumerate-headings #arquitetura-decisoes_adrs-0012-firebase-hosting > h1:before { content: '4.5.12 ' }
 
 .print-site-enumerate-headings #arquitetura-decisoes_adrs-0013-backup-automatico > h1:before { content: '4.5.13 ' }
+
+.print-site-enumerate-headings #arquitetura-decisoes_adrs-0014-terraform-infraestrutura-como-codigo > h1:before { content: '4.5.14 ' }
 
 .print-site-enumerate-headings #section-5 > h1:before { content: '5 ' }
 .print-site-enumerate-headings #section-5-1 > h1:before { content: '5.1 ' }
