@@ -7577,7 +7577,7 @@ O nosso pipeline de CI está configurado para executar os testes e extrair a cob
 <p>O JaCoCo mostra cobertura de linhas e branches. Testes de mutação são avaliados pelo PiTest e ficam no <a href="#desenvolvimento-qualidade_e_testes-mutation_test_report">Relatório de Testes de Mutação</a>.</p>
 </div>
 <h2 id="desenvolvimento-qualidade_e_testes-qualidade_testes-relatorio-de-cobertura-jacoco">Relatório de Cobertura (JaCoCo)<a class="headerlink" href="#desenvolvimento-qualidade_e_testes-qualidade_testes-relatorio-de-cobertura-jacoco" title="Permanent link">¶</a></h2>
-<iframe id="jacoco-frame" src="../../../jacoco/index.html" width="100%" height="800px" style="border:none; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);" onload="injectJacocoStyles()"></iframe>
+<iframe id="jacoco-frame" src="https://pedrohpsantos.github.io/EdTech/jacoco/index.html" width="100%" height="800px" style="border:none; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);" onload="injectJacocoStyles()"></iframe>
 
 <script>
 function injectJacocoStyles() {
@@ -7654,10 +7654,125 @@ function injectJacocoStyles() {
 <p>O JaCoCo mede cobertura estrutural, como linhas e branches executados. Testes de mutacao nao aparecem no JaCoCo; eles sao gerados pelo PiTest em um relatorio <abbr title="HyperText Markup Language — Linguagem de Marcação de Hipertexto">HTML</abbr> separado.</p>
 </div>
 <div style="display: flex; justify-content: flex-end; margin-bottom: 15px;">
-<p><a class="md-button" href="#pitest-index" target="_blank">Abrir em Tela Cheia <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"></path></svg></span></a></p>
+<p><a class="md-button" href="https://pedrohpsantos.github.io/EdTech/pitest/index.html" target="_blank">Abrir em Tela Cheia <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"></path></svg></span></a></p>
 </div>
-<iframe src="../../../pitest/index.html" width="100%" height="800px" style="border:none; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); background-color: #fff;">
+<iframe id="pitest-frame" src="https://pedrohpsantos.github.io/EdTech/pitest/index.html" width="100%" height="860px" style="border:none; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); background-color: #fff;" onload="injectPitestStyles()">
 </iframe>
+
+<script>
+function injectPitestStyles() {
+    var iframe = document.getElementById('pitest-frame');
+    try {
+        var doc = iframe.contentDocument || iframe.contentWindow.document;
+        var style = doc.createElement('style');
+        style.innerHTML = `
+            :root { color-scheme: light; }
+            body {
+                font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+                background: #ffffff !important;
+                color: #202124 !important;
+                margin: 0 !important;
+                padding: 24px !important;
+                line-height: 1.5 !important;
+            }
+            h1 {
+                margin: 0 0 20px !important;
+                color: #111827 !important;
+                font-size: 1.8rem !important;
+                font-weight: 750 !important;
+                letter-spacing: 0 !important;
+            }
+            h3 {
+                margin: 28px 0 12px !important;
+                color: #1f2937 !important;
+                font-size: 1.1rem !important;
+                font-weight: 700 !important;
+            }
+            table {
+                width: 100% !important;
+                border-collapse: separate !important;
+                border-spacing: 0 !important;
+                overflow: hidden !important;
+                border: 1px solid #e5e7eb !important;
+                border-radius: 8px !important;
+                box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06) !important;
+                background: #ffffff !important;
+                margin-bottom: 18px !important;
+            }
+            thead { background: #f8fafc !important; }
+            th {
+                padding: 12px 16px !important;
+                border: 0 !important;
+                border-bottom: 1px solid #e5e7eb !important;
+                color: #374151 !important;
+                font-size: 0.78rem !important;
+                font-weight: 700 !important;
+                text-align: left !important;
+                text-transform: uppercase !important;
+                letter-spacing: 0 !important;
+                white-space: nowrap !important;
+            }
+            td {
+                padding: 14px 16px !important;
+                border: 0 !important;
+                border-bottom: 1px solid #f1f5f9 !important;
+                color: #374151 !important;
+                font-size: 0.95rem !important;
+                vertical-align: middle !important;
+            }
+            tbody tr:last-child td { border-bottom: 0 !important; }
+            tbody tr:hover { background: #f9fafb !important; }
+            a {
+                color: #2563eb !important;
+                font-weight: 600 !important;
+                text-decoration: none !important;
+            }
+            a:hover { color: #1d4ed8 !important; text-decoration: underline !important; }
+            .coverage_percentage {
+                min-width: 42px !important;
+                margin-bottom: 5px !important;
+                color: #111827 !important;
+                font-weight: 700 !important;
+            }
+            .coverage_bar {
+                position: relative !important;
+                height: 12px !important;
+                min-width: 140px !important;
+                overflow: hidden !important;
+                border-radius: 999px !important;
+                background: #fee2e2 !important;
+                border: 1px solid #fecaca !important;
+                box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.08) !important;
+            }
+            .coverage_complete {
+                height: 100% !important;
+                border-radius: 999px !important;
+                background: linear-gradient(90deg, #16a34a, #22c55e) !important;
+            }
+            .coverage_legend {
+                margin-top: 4px !important;
+                color: #6b7280 !important;
+                font-size: 0.78rem !important;
+                font-weight: 600 !important;
+            }
+            ul {
+                margin: 16px 0 !important;
+                padding: 14px 18px 14px 34px !important;
+                border: 1px solid #fde68a !important;
+                border-radius: 8px !important;
+                background: #fffbeb !important;
+                color: #78350f !important;
+            }
+            hr { border: 0 !important; border-top: 1px solid #e5e7eb !important; margin: 28px 0 18px !important; }
+            body > br { display: none !important; }
+            body > a, body > p { color: #4b5563 !important; font-size: 0.9rem !important; }
+        `;
+        doc.head.appendChild(style);
+    } catch(e) {
+        console.warn('Could not inject styles into PiTest iframe', e);
+    }
+}
+</script>
 
 <p><em>(O relatorio acima e gerado automaticamente pelo pipeline de documentacao.)</em></p>
 <h2 id="desenvolvimento-qualidade_e_testes-mutation_test_report-historico-de-versoes">Historico de Versoes<a class="headerlink" href="#desenvolvimento-qualidade_e_testes-mutation_test_report-historico-de-versoes" title="Permanent link">¶</a></h2>
@@ -7675,6 +7790,12 @@ function injectJacocoStyles() {
 <td><code>1.0</code></td>
 <td>09/07/2026</td>
 <td>Criacao da pagina de relatorio de mutacao PiTest</td>
+<td>Pedro Henrique P. Santos</td>
+</tr>
+<tr>
+<td><code>1.1</code></td>
+<td>09/07/2026</td>
+<td>Melhoria visual do relatorio embarcado do PiTest</td>
 <td>Pedro Henrique P. Santos</td>
 </tr>
 </tbody>
@@ -7697,10 +7818,10 @@ function injectJacocoStyles() {
 <p>Os testes unitários focam nas validações visuais e de lógica de negócio client-side, independentemente de conexão de rede ou backend ativo.</p>
 </div>
 <div style="display: flex; justify-content: flex-end; margin-bottom: 15px;">
-<p><a class="md-button" href="#vitest-index" target="_blank">Abrir Relatório Vitest em Tela Cheia <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"></path></svg></span></a></p>
+<p><a class="md-button" href="https://pedrohpsantos.github.io/EdTech/vitest/index.html" target="_blank">Abrir Relatório Vitest em Tela Cheia <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"></path></svg></span></a></p>
 </div>
-<iframe src="../../../vitest/index.html" width="100%" height="800px" style="border:none; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); background-color: #fff;">
-  Seu navegador não suporta iframes. <a href="#vitest-index" target="_blank">Clique aqui</a> para ver o relatório.
+<iframe src="https://pedrohpsantos.github.io/EdTech/vitest/index.html" width="100%" height="800px" style="border:none; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); background-color: #fff;">
+  Seu navegador não suporta iframes. <a href="https://pedrohpsantos.github.io/EdTech/vitest/index.html" target="_blank">Clique aqui</a> para ver o relatório.
 </iframe></body></html></section><section class="print-page" id="desenvolvimento-qualidade_e_testes-smoke_test_report" heading-number="3.4.4"><html><head>
         <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function () {
@@ -7710,9 +7831,9 @@ function injectJacocoStyles() {
         </head><body><h1 id="relatorio-de-testes-e2e-smoke-tests"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 2v2h1v14a4 4 0 0 0 4 4 4 4 0 0 0 4-4V4h1V2zm4 14c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1m2-4c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1m1-5h-4V4h4z"></path></svg></span> Relatório de Testes E2E (Smoke Tests)<a class="headerlink" href="#desenvolvimento-qualidade_e_testes-smoke_test_report-relatorio-de-testes-e2e-smoke-tests" title="Permanent link">¶</a></h1>
 <p>Abaixo você encontra o relatório executivo (Allure Report) interativo, contendo todos os detalhes dos nossos testes E2E e de integração em produção.</p>
 <div style="display: flex; justify-content: flex-end; margin-bottom: 15px;">
-<p><a class="md-button" href="#allure-index" target="_blank">Abrir em Tela Cheia <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"></path></svg></span></a></p>
+<p><a class="md-button" href="https://pedrohpsantos.github.io/EdTech/allure/index.html" target="_blank">Abrir em Tela Cheia <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"></path></svg></span></a></p>
 </div>
-<iframe src="../../../allure/index.html" width="100%" height="800px" style="border:none; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); background-color: #fff;">
+<iframe src="https://pedrohpsantos.github.io/EdTech/allure/index.html" width="100%" height="800px" style="border:none; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); background-color: #fff;">
 </iframe>
 
 <p><em>(O relatório acima é gerado automaticamente pelo pipeline de <abbr title="Continuous Integration / Continuous Delivery — Integração Contínua / Entrega Contínua">CI/CD</abbr>)</em></p>
@@ -7756,10 +7877,10 @@ function injectJacocoStyles() {
 <p>Abaixo você encontra o relatório interativo dos testes de carga (Load Testing) executados via <strong>K6</strong> contra o ambiente de Produção.</p>
 <p>Estes testes validam a conformidade com os requisitos <strong>RNF07</strong> e <strong>RNF09</strong>, forçando concorrência (ex: 100 usuários simultâneos) e monitorando taxas de erro, métricas de hardware (quando em loop com o backend) e degradação do p(95).</p>
 <div style="display: flex; justify-content: flex-end; margin-bottom: 15px;">
-<p><a class="md-button" href="#k6-index" target="_blank">Abrir Relatório K6 em Tela Cheia <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"></path></svg></span></a></p>
+<p><a class="md-button" href="https://pedrohpsantos.github.io/EdTech/k6/index.html" target="_blank">Abrir Relatório K6 em Tela Cheia <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"></path></svg></span></a></p>
 </div>
-<iframe src="../../../k6/index.html" width="100%" height="800px" style="border:none; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); background-color: #fff;">
-  Seu navegador não suporta iframes. <a href="#k6-index" target="_blank">Clique aqui</a> para ver o relatório.
+<iframe src="https://pedrohpsantos.github.io/EdTech/k6/index.html" width="100%" height="800px" style="border:none; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); background-color: #fff;">
+  Seu navegador não suporta iframes. <a href="https://pedrohpsantos.github.io/EdTech/k6/index.html" target="_blank">Clique aqui</a> para ver o relatório.
 </iframe></body></html></section></section></section>
                     <section class='print-page md-section' id='section-4' heading-number='4'>
                         <h1>Arquitetura de Software<a class='headerlink' href='#section-4' title='Permanent link'></a>
