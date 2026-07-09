@@ -1,12 +1,16 @@
 package com.edtech.repository;
 
 import com.edtech.model.AuditLog;
+import java.util.List;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-/** Documentação para AuditLogRepository. */
+/** Documentacao para AuditLogRepository. */
 @Repository
 public interface AuditLogRepository extends JpaRepository<AuditLog, UUID> {
-  java.util.List<AuditLog> findAllByOrderByCreatedAtDesc();
+  List<AuditLog> findAllByOrderByCreatedAtDesc();
+
+  List<AuditLog> findByResourceTypeAndResourceIdOrderByCreatedAtAsc(
+      String resourceType, UUID resourceId);
 }

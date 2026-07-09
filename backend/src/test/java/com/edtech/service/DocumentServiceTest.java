@@ -96,7 +96,52 @@ public class DocumentServiceTest {
     assertNotNull(response);
     assertEquals("Test Doc", response.getTitle());
     verify(storageService, times(1)).uploadFile(any(), anyString(), anyString());
-    verify(auditLogService, times(1)).logAction(eq(authorId), eq(AcaoAuditoria.UPLOAD_SUCCESS), anyString());
+    verify(auditLogService, times(1))
+        .logDocumentAction(
+            eq(authorId), eq(AcaoAuditoria.UPLOAD_SUCCESS), eq(documentId), anyString());
+  }
+
+
+  @Test
+  void testUploadDocument_CsvSuccess() throws Exception {
+    byte[] csvContent = "coluna_a,coluna_b\n1,2".getBytes();
+    MockMultipartFile file =
+        new MockMultipartFile("file", "dataset.csv", "text/csv", csvContent);
+
+    when(userRepository.findById(authorId)).thenReturn(Optional.of(author));
+    when(projectRepository.findById(projectId)).thenReturn(Optional.of(project));
+    when(projectMemberRepository.findByProjectIdAndUserId(projectId, authorId))
+        .thenReturn(Optional.of(projectMember));
+    when(documentRepository.save(any(Document.class))).thenReturn(document);
+
+    DocumentResponseDto response =
+        documentService.uploadDocument(file, "Dataset CSV", projectId, authorId);
+
+    assertNotNull(response);
+    verify(storageService, times(1)).uploadFile(any(), anyString(), eq("text/csv"));
+    verify(auditLogService, times(1))
+        .logDocumentAction(eq(authorId), eq(AcaoAuditoria.UPLOAD_SUCCESS), eq(documentId), anyString());
+  }
+
+  @Test
+  void testUploadDocument_JsonSuccess() throws Exception {
+    byte[] jsonContent = "{\"samples\":[1,2,3]}".getBytes();
+    MockMultipartFile file =
+        new MockMultipartFile("file", "dataset.json", "application/json", jsonContent);
+
+    when(userRepository.findById(authorId)).thenReturn(Optional.of(author));
+    when(projectRepository.findById(projectId)).thenReturn(Optional.of(project));
+    when(projectMemberRepository.findByProjectIdAndUserId(projectId, authorId))
+        .thenReturn(Optional.of(projectMember));
+    when(documentRepository.save(any(Document.class))).thenReturn(document);
+
+    DocumentResponseDto response =
+        documentService.uploadDocument(file, "Dataset JSON", projectId, authorId);
+
+    assertNotNull(response);
+    verify(storageService, times(1)).uploadFile(any(), anyString(), eq("application/json"));
+    verify(auditLogService, times(1))
+        .logDocumentAction(eq(authorId), eq(AcaoAuditoria.UPLOAD_SUCCESS), eq(documentId), anyString());
   }
 
   @Test
@@ -144,25 +189,24 @@ public class DocumentServiceTest {
             IllegalArgumentException.class,
             () -> documentService.uploadDocument(file, "Test Doc", projectId, authorId));
 
-    assertTrue(exception.getMessage().contains("Apenas arquivos PDF reais sao permitidos"));
+    assertTrue(exception.getMessage().contains("Tipo de arquivo nao permitido"));
   }
 
   @Test
   void testUploadDocument_NullFilename_ThrowsException() {
     org.springframework.web.multipart.MultipartFile file = mock(org.springframework.web.multipart.MultipartFile.class);
     when(file.getOriginalFilename()).thenReturn(null);
-    try {
-      when(file.getInputStream()).thenReturn(new java.io.ByteArrayInputStream("%PDF-1.4\n%EOF".getBytes()));
-    } catch (IOException e) {}
 
     when(userRepository.findById(authorId)).thenReturn(Optional.of(author));
     when(projectRepository.findById(projectId)).thenReturn(Optional.of(project));
     when(projectMemberRepository.findByProjectIdAndUserId(projectId, authorId))
         .thenReturn(Optional.of(projectMember));
 
-    RuntimeException exception = assertThrows(RuntimeException.class, () -> documentService.uploadDocument(file, "Test Doc", projectId, authorId));
-    assertEquals(
-        "Failed to upload file to Cloud Storage: Filename cannot be null", exception.getMessage());
+    IllegalArgumentException exception =
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> documentService.uploadDocument(file, "Test Doc", projectId, authorId));
+    assertEquals("Filename cannot be null", exception.getMessage());
   }
 
   @Test
@@ -173,7 +217,9 @@ public class DocumentServiceTest {
     documentService.deleteDocument(documentId, authorId);
 
     verify(documentRepository, times(1)).delete(document);
-    verify(auditLogService, times(1)).logAction(eq(authorId), eq(AcaoAuditoria.DELETE_DOCUMENT), anyString());
+    verify(auditLogService, times(1))
+        .logDocumentAction(
+            eq(authorId), eq(AcaoAuditoria.DELETE_DOCUMENT), eq(documentId), anyString());
   }
 
   @Test
@@ -209,7 +255,7 @@ public class DocumentServiceTest {
 
     RuntimeException exception =
         assertThrows(RuntimeException.class, () -> documentService.deleteDocument(documentId, authorId));
-    assertTrue(exception.getMessage().contains("Erro ao excluir arquivo físico: GCS error"));
+    assertTrue(exception.getMessage().contains("Erro ao excluir arquivo fisico: GCS error"));
   }
 
   @Test
@@ -231,7 +277,9 @@ public class DocumentServiceTest {
     assertNotNull(response);
     assertEquals(DocumentStatus.APPROVED, response.getStatus());
     assertEquals("Great work", response.getFeedback());
-    verify(auditLogService, times(1)).logAction(eq(advisorId), eq(AcaoAuditoria.DOCUMENT_APPROVED), anyString());
+    verify(auditLogService, times(1))
+        .logDocumentAction(
+            eq(advisorId), eq(AcaoAuditoria.DOCUMENT_APPROVED), eq(documentId), anyString());
   }
 
   @Test
@@ -239,7 +287,7 @@ public class DocumentServiceTest {
     UUID advisorId = UUID.randomUUID();
     IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, 
         () -> documentService.reviewDocument(documentId, advisorId, DocumentStatus.DRAFT, "Great work"));
-    assertTrue(exception.getMessage().contains("Status inválido"));
+    assertTrue(exception.getMessage().contains("Status invalido"));
   }
 
   @Test
@@ -296,7 +344,8 @@ public class DocumentServiceTest {
     
     assertNotNull(url);
     assertEquals("http://presigned.url", url);
-    verify(auditLogService, times(1)).logAction(eq(authorId), eq(AcaoAuditoria.UPLOAD_SUCCESS), anyString());
+    verify(auditLogService, times(1))
+        .logDocumentAction(eq(authorId), eq(AcaoAuditoria.DOWNLOAD), eq(documentId), anyString());
   }
 
   @Test
@@ -350,7 +399,9 @@ public class DocumentServiceTest {
     assertNotNull(response);
     assertEquals(DocumentStatus.REJECTED, response.getStatus());
     assertNull(response.getFeedback());
-    verify(auditLogService, times(1)).logAction(eq(advisorId), eq(AcaoAuditoria.DOCUMENT_REJECTED), anyString());
+    verify(auditLogService, times(1))
+        .logDocumentAction(
+            eq(advisorId), eq(AcaoAuditoria.DOCUMENT_REJECTED), eq(documentId), anyString());
   }
 
   @Test
@@ -372,12 +423,16 @@ public class DocumentServiceTest {
     assertNotNull(response);
     assertEquals(DocumentStatus.REJECTED, response.getStatus());
     assertEquals("   ", response.getFeedback());
-    verify(auditLogService, times(1)).logAction(eq(advisorId), eq(AcaoAuditoria.DOCUMENT_REJECTED), anyString());
+    verify(auditLogService, times(1))
+        .logDocumentAction(
+            eq(advisorId), eq(AcaoAuditoria.DOCUMENT_REJECTED), eq(documentId), anyString());
   }
 
   @Test
   void testUploadDocument_TikaIOException_ThrowsException() throws Exception {
     org.springframework.web.multipart.MultipartFile file = mock(org.springframework.web.multipart.MultipartFile.class);
+    when(file.getOriginalFilename()).thenReturn("test.pdf");
+    when(file.getContentType()).thenReturn("application/pdf");
     when(file.getInputStream()).thenThrow(new IOException("Stream error"));
     
     when(userRepository.findById(authorId)).thenReturn(Optional.of(author));

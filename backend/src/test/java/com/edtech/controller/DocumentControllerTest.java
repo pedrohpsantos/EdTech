@@ -5,11 +5,13 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.edtech.dto.DocumentResponseDto;
 import com.edtech.model.DocumentStatus;
 import com.edtech.model.User;
+import com.edtech.service.AuditExportService;
 import com.edtech.service.DocumentService;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,6 +32,7 @@ public class DocumentControllerTest {
   private MockMvc mockMvc;
 
   @Mock private DocumentService documentService;
+  @Mock private AuditExportService auditExportService;
 
   @InjectMocks private DocumentController documentController;
 
@@ -63,6 +66,30 @@ public class DocumentControllerTest {
                 .param("projectId", projectId.toString())
                 .principal(new UsernamePasswordAuthenticationToken(mockUser, null)))
         .andExpect(status().isCreated());
+  }
+
+
+  @Test
+  void testExportAuditTrail_Success() throws Exception {
+    UUID docId = UUID.randomUUID();
+    byte[] csv = "data_hora,usuario_id,acao\n".getBytes();
+
+    when(auditExportService.exportDocumentAuditTrail(eq(docId), any(), eq("csv"))).thenReturn(csv);
+    when(auditExportService.buildFilename(eq(docId), eq("csv")))
+        .thenReturn("audit-trail-" + docId + ".csv");
+
+    mockMvc
+        .perform(
+            get("/api/documents/" + docId + "/audit/export")
+                .param("format", "csv")
+                .principal(new UsernamePasswordAuthenticationToken(mockUser, null)))
+        .andExpect(status().isOk())
+        .andExpect(header().string("Content-Type", "text/csv"))
+        .andExpect(
+            header()
+                .string(
+                    "Content-Disposition",
+                    "attachment; filename=\"audit-trail-" + docId + ".csv\""));
   }
 
   @Test

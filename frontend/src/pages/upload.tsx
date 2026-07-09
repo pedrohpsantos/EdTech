@@ -6,6 +6,20 @@ import { useUploadDocument } from '../hooks/useDocuments';
 import { Project } from '../types';
 import { useAuth } from '../context/authContext';
 
+const ALLOWED_FILE_TYPES = ['application/pdf', 'text/csv', 'application/json'];
+const ALLOWED_FILE_EXTENSIONS = ['.pdf', '.csv', '.json'];
+
+const getFileExtension = (filename: string) => {
+  const lastDotIndex = filename.lastIndexOf('.');
+  return lastDotIndex >= 0 ? filename.substring(lastDotIndex).toLowerCase() : '';
+};
+
+const isAllowedFile = (file: File) => {
+  const extension = getFileExtension(file.name);
+  const hasAllowedExtension = ALLOWED_FILE_EXTENSIONS.includes(extension);
+  const hasAllowedMimeType = !file.type || ALLOWED_FILE_TYPES.includes(file.type);
+  return hasAllowedExtension && hasAllowedMimeType;
+};
 const Upload: React.FC = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -34,17 +48,29 @@ const Upload: React.FC = () => {
     setIsDragging(false);
   };
 
+  const selectUploadFile = (file: File) => {
+    setUploadError('');
+
+    if (!isAllowedFile(file)) {
+      setUploadFile(null);
+      setUploadError('Formato inválido. Envie apenas arquivos PDF, CSV ou JSON.');
+      return;
+    }
+
+    setUploadFile(file);
+  };
+
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     setIsDragging(false);
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      setUploadFile(e.dataTransfer.files[0]);
+      selectUploadFile(e.dataTransfer.files[0]);
     }
   };
 
   const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
-      setUploadFile(e.target.files[0]);
+      selectUploadFile(e.target.files[0]);
     }
   };
 
@@ -58,6 +84,11 @@ const Upload: React.FC = () => {
       setUploadError(
         'Por favor, preencha todos os campos obrigatórios (Título, Projeto e Arquivo).',
       );
+      return;
+    }
+
+    if (!isAllowedFile(uploadFile)) {
+      setUploadError('Formato inválido. Envie apenas arquivos PDF, CSV ou JSON.');
       return;
     }
 
@@ -342,7 +373,7 @@ const Upload: React.FC = () => {
                   type="file"
                   className="d-none"
                   onChange={handleFileInput}
-                  accept=".pdf,.json,.csv"
+                  accept=".pdf,.csv,.json,application/pdf,text/csv,application/json"
                 />
               </div>
 

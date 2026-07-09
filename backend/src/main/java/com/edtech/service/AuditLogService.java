@@ -11,16 +11,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-/** Serviço responsável por registrar logs de auditoria no sistema. */
+/** Servico responsavel por registrar logs de auditoria no sistema. */
 @Service
 public class AuditLogService {
+  private static final String DOCUMENT_RESOURCE_TYPE = "Document";
   private static final Logger log = LoggerFactory.getLogger(AuditLogService.class);
   private final AuditLogRepository auditLogRepository;
 
   /**
-   * Construtor para injeção de dependências.
+   * Construtor para injecao de dependencias.
    *
-   * @param auditLogRepository Repositório de logs de auditoria.
+   * @param auditLogRepository Repositorio de logs de auditoria.
    */
   public AuditLogService(AuditLogRepository auditLogRepository) {
     this.auditLogRepository = auditLogRepository;
@@ -45,10 +46,10 @@ public class AuditLogService {
   }
 
   /**
-   * Registra uma ação de auditoria detalhada.
+   * Registra uma acao de auditoria detalhada.
    *
-   * @param action Ação realizada.
-   * @param userId ID do usuário.
+   * @param action Acao realizada.
+   * @param userId ID do usuario.
    * @param resourceType Tipo do recurso.
    * @param resourceId ID do recurso.
    * @param ip IP do cliente.
@@ -73,14 +74,28 @@ public class AuditLogService {
   }
 
   /**
-   * Registra uma ação de auditoria simples.
+   * Registra uma acao de auditoria simples, sem vinculo direto com um recurso especifico.
    *
-   * @param userId ID do usuário.
-   * @param action Ação realizada.
+   * @param userId ID do usuario.
+   * @param action Acao realizada.
    * @param details Detalhes adicionais.
    * @return Log de auditoria salvo.
    */
   public AuditLog logAction(UUID userId, AcaoAuditoria action, String details) {
     return log(action, userId, null, null, null, details);
+  }
+
+  /**
+   * Registra uma acao de auditoria relacionada a um documento especifico.
+   *
+   * @param userId ID do usuario que executou a acao.
+   * @param action Acao realizada.
+   * @param documentId ID do documento afetado.
+   * @param details Detalhes adicionais da acao.
+   * @return Log de auditoria salvo.
+   */
+  public AuditLog logDocumentAction(
+      UUID userId, AcaoAuditoria action, UUID documentId, String details) {
+    return log(action, userId, DOCUMENT_RESOURCE_TYPE, documentId, null, details);
   }
 }
