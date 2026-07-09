@@ -129,7 +129,7 @@ jobs:
           fi
 
       - name: Restaurar Histórico do Allure (Trend)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         if: always()
         continue-on-error: true
         with:
