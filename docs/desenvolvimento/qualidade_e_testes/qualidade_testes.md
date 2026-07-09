@@ -7,6 +7,9 @@ title: 'Qualidade e Testes (JaCoCo)'
 Esta página centraliza as métricas de qualidade de código do backend.
 O nosso pipeline de CI está configurado para executar os testes e extrair a cobertura usando o **JaCoCo**.
 
+!!! info "Cobertura vs. mutação"
+    O JaCoCo mostra cobertura de linhas e branches. Testes de mutação são avaliados pelo PiTest e ficam no [Relatório de Testes de Mutação](mutation_test_report.md).
+
 ## Relatório de Cobertura (JaCoCo)
 
 <iframe id="jacoco-frame" src="../../../jacoco/index.html" width="100%" height="800px" style="border:none; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);" onload="injectJacocoStyles()"></iframe>
@@ -51,5 +54,6 @@ function injectJacocoStyles() {
 |--------|------|-----------|-------|
 | `1.0` | 28/06/2026 | Criação e estruturação do documento | Pedro Henrique P. Santos |
 | `1.1` | 04/07/2026 | Revisão profunda, correção de metadados e melhorias visuais | Pedro Henrique P. Santos |
+| `1.2` | 09/07/2026 | Esclarece diferença entre JaCoCo e PiTest | Pedro Henrique P. Santos |
 
 

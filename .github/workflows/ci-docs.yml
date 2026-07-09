@@ -57,6 +57,12 @@ jobs:
           chmod +x mvnw
           ./mvnw clean test jacoco:report
 
+      - name: Gerar Relatório PiTest
+        working-directory: backend
+        run: |
+          chmod +x mvnw
+          ./mvnw org.pitest:pitest-maven:mutationCoverage -B -Dpitest.threads=4
+
       - name: Integrar JaCoCo na Documentação
         run: |
           mkdir -p docs/jacoco
@@ -66,10 +72,19 @@ jobs:
             echo "Nenhum relatório JaCoCo encontrado (talvez não existam testes). Pulando."
           fi
 
+      - name: Integrar PiTest na Documentação
+        run: |
+          mkdir -p docs/pitest
+          if [ -d "backend/target/pit-reports" ]; then
+            cp -r backend/target/pit-reports/* docs/pitest/ || true
+          else
+            echo "Nenhum relatório PiTest encontrado. Pulando."
+          fi
+
       - name: Setup Node.js (E2E)
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: '20'
+          node-version: '24'
 
       - name: Instalar Dependências e Playwright
         working-directory: frontend

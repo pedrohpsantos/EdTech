@@ -13,4 +13,5 @@ nav:
   - 0011-email-recuperacao-senha-smtp.md
   - 0012-firebase-hosting.md
   - 0013-backup-automatico.md
+  - 0014-terraform-infraestrutura-como-codigo.md
 
