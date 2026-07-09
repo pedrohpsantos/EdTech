@@ -12,7 +12,7 @@ O nosso pipeline de CI está configurado para executar os testes e extrair a cob
 
 ## Relatório de Cobertura (JaCoCo)
 
-<iframe id="jacoco-frame" src="../../../jacoco/index.html" width="100%" height="800px" style="border:none; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);" onload="injectJacocoStyles()"></iframe>
+<iframe id="jacoco-frame" src="https://pedrohpsantos.github.io/EdTech/jacoco/index.html" width="100%" height="800px" style="border:none; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);" onload="injectJacocoStyles()"></iframe>
 
 <script>
 function injectJacocoStyles() {

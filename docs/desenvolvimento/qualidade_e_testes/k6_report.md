@@ -9,9 +9,9 @@ Abaixo você encontra o relatório interativo dos testes de carga (Load Testing)
 Estes testes validam a conformidade com os requisitos **RNF07** e **RNF09**, forçando concorrência (ex: 100 usuários simultâneos) e monitorando taxas de erro, métricas de hardware (quando em loop com o backend) e degradação do p(95).
 
 <div style="display: flex; justify-content: flex-end; margin-bottom: 15px;" markdown="1">
-  [Abrir Relatório K6 em Tela Cheia :material-open-in-new:](../../../k6/index.html){ .md-button target="_blank" }
+  [Abrir Relatório K6 em Tela Cheia :material-open-in-new:](https://pedrohpsantos.github.io/EdTech/k6/index.html){ .md-button target="_blank" }
 </div>
 
-<iframe src="../../../k6/index.html" width="100%" height="800px" style="border:none; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); background-color: #fff;">
-  Seu navegador não suporta iframes. <a href="../../../k6/index.html" target="_blank">Clique aqui</a> para ver o relatório.
+<iframe src="https://pedrohpsantos.github.io/EdTech/k6/index.html" width="100%" height="800px" style="border:none; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); background-color: #fff;">
+  Seu navegador não suporta iframes. <a href="https://pedrohpsantos.github.io/EdTech/k6/index.html" target="_blank">Clique aqui</a> para ver o relatório.
 </iframe>
