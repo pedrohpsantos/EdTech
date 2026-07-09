@@ -1,0 +1,13 @@
+# Copy this file to terraform.tfvars and fill values for your environment.
+# Do not commit terraform.tfvars.
+
+project_id             = "example-gcp-project"
+region                 = "southamerica-east1"
+zone                   = "southamerica-east1-a"
+storage_bucket_name    = "example-edtech-storage"
+cors_allowed_origin    = "https://example.web.app"
+backend_image_tag      = "replace-with-image-tag"
+backend_service_name   = "edtech-backend"
+database_instance_name = "edtech-db-dev"
+database_version       = "POSTGRES_16"
+database_tier          = "db-f1-micro"
