@@ -43,37 +43,37 @@ public class AuditExportService {
    * @return conteudo do arquivo exportado em bytes.
    */
   public byte[] exportDocumentAuditTrail(UUID documentId, UUID userId, String format) {
-<span class="nc" id="L46">    String normalizedFormat = normalizeFormat(format);</span>
-<span class="nc bnc" id="L47" title="All 2 branches missed.">    if (!CSV_FORMAT.equals(normalizedFormat)) {</span>
-<span class="nc" id="L48">      throw new IllegalArgumentException(&quot;Formato invalido. Use: csv&quot;);</span>
+<span class="fc" id="L46">    String normalizedFormat = normalizeFormat(format);</span>
+<span class="fc bfc" id="L47" title="All 2 branches covered.">    if (!CSV_FORMAT.equals(normalizedFormat)) {</span>
+<span class="fc" id="L48">      throw new IllegalArgumentException(&quot;Formato invalido. Use: csv&quot;);</span>
     }
 
-<span class="nc" id="L51">    Document document =</span>
+<span class="fc" id="L51">    Document document =</span>
         documentRepository
-<span class="nc" id="L53">            .findById(documentId)</span>
-<span class="nc" id="L54">            .orElseThrow(() -&gt; new RuntimeException(&quot;Document not found&quot;));</span>
+<span class="fc" id="L53">            .findById(documentId)</span>
+<span class="fc" id="L54">            .orElseThrow(() -&gt; new RuntimeException(&quot;Document not found&quot;));</span>
 
-<span class="nc" id="L56">    projectMemberRepository</span>
-<span class="nc" id="L57">        .findByProjectIdAndUserId(document.getProject().getId(), userId)</span>
-<span class="nc" id="L58">        .orElseThrow(</span>
-<span class="nc" id="L59">            () -&gt; new RuntimeException(&quot;Access denied: You are not a member of this project&quot;));</span>
+<span class="fc" id="L56">    projectMemberRepository</span>
+<span class="fc" id="L57">        .findByProjectIdAndUserId(document.getProject().getId(), userId)</span>
+<span class="fc" id="L58">        .orElseThrow(</span>
+<span class="fc" id="L59">            () -&gt; new RuntimeException(&quot;Access denied: You are not a member of this project&quot;));</span>
 
-<span class="nc" id="L61">    List&lt;AuditLog&gt; logs =</span>
-<span class="nc" id="L62">        auditLogRepository.findByResourceTypeAndResourceIdOrderByCreatedAtAsc(</span>
+<span class="fc" id="L61">    List&lt;AuditLog&gt; logs =</span>
+<span class="fc" id="L62">        auditLogRepository.findByResourceTypeAndResourceIdOrderByCreatedAtAsc(</span>
             DOCUMENT_RESOURCE_TYPE, documentId);
 
-<span class="nc" id="L65">    return csvExporter.export(logs);</span>
+<span class="fc" id="L65">    return csvExporter.export(logs);</span>
   }
 
   public String buildFilename(UUID documentId, String format) {
-<span class="nc" id="L69">    return &quot;audit-trail-&quot; + documentId + &quot;.&quot; + normalizeFormat(format);</span>
+<span class="fc" id="L69">    return &quot;audit-trail-&quot; + documentId + &quot;.&quot; + normalizeFormat(format);</span>
   }
 
   private String normalizeFormat(String format) {
-<span class="nc bnc" id="L73" title="All 4 branches missed.">    if (format == null || format.isBlank()) {</span>
-<span class="nc" id="L74">      return CSV_FORMAT;</span>
+<span class="fc bfc" id="L73" title="All 4 branches covered.">    if (format == null || format.isBlank()) {</span>
+<span class="fc" id="L74">      return CSV_FORMAT;</span>
     }
-<span class="nc" id="L76">    return format.toLowerCase(Locale.ROOT);</span>
+<span class="fc" id="L76">    return format.toLowerCase(Locale.ROOT);</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
