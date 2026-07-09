@@ -196,9 +196,6 @@ public class DocumentServiceTest {
   void testUploadDocument_NullFilename_ThrowsException() {
     org.springframework.web.multipart.MultipartFile file = mock(org.springframework.web.multipart.MultipartFile.class);
     when(file.getOriginalFilename()).thenReturn(null);
-    try {
-      when(file.getInputStream()).thenReturn(new java.io.ByteArrayInputStream("%PDF-1.4\n%EOF".getBytes()));
-    } catch (IOException e) {}
 
     when(userRepository.findById(authorId)).thenReturn(Optional.of(author));
     when(projectRepository.findById(projectId)).thenReturn(Optional.of(project));
@@ -290,7 +287,7 @@ public class DocumentServiceTest {
     UUID advisorId = UUID.randomUUID();
     IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, 
         () -> documentService.reviewDocument(documentId, advisorId, DocumentStatus.DRAFT, "Great work"));
-    assertTrue(exception.getMessage().contains("Status invÃ¡lido"));
+    assertTrue(exception.getMessage().contains("Status invalido"));
   }
 
   @Test
@@ -434,6 +431,8 @@ public class DocumentServiceTest {
   @Test
   void testUploadDocument_TikaIOException_ThrowsException() throws Exception {
     org.springframework.web.multipart.MultipartFile file = mock(org.springframework.web.multipart.MultipartFile.class);
+    when(file.getOriginalFilename()).thenReturn("test.pdf");
+    when(file.getContentType()).thenReturn("application/pdf");
     when(file.getInputStream()).thenThrow(new IOException("Stream error"));
     
     when(userRepository.findById(authorId)).thenReturn(Optional.of(author));
