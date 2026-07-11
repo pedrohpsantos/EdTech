@@ -276,14 +276,18 @@ jobs:
   # ==========================================
   #                 DEPLOY
   # ==========================================
-  deploy-backend:
-    name: Deploy Backend (Cloud Run)
+  deploy-tasks:
+    name: Deploy
     runs-on: ubuntu-latest
-    needs: [backend-approved, infra-approved]
+    needs: [backend-approved, frontend-approved, infra-approved]
     if: github.ref == 'refs/heads/main'
     permissions:
       contents: 'read'
       id-token: 'write'
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [backend, frontend]
     steps:
       - uses: actions/checkout@v7
       
@@ -292,156 +296,79 @@ jobs:
         uses: 'google-github-actions/auth@v3'
         with:
           credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
-          
+
+      # --- BACKEND DEPLOY ---
       - name: Setup Cloud SDK
+        if: matrix.target == 'backend'
         uses: google-github-actions/setup-gcloud@v3
 
       - name: Download Build Target
+        if: matrix.target == 'backend'
         uses: actions/download-artifact@v8
         with:
           name: backend-target
           path: backend/target/
 
-      - name: Configure Docker
+      - name: Configure Docker Auth
+        if: matrix.target == 'backend'
         run: gcloud auth configure-docker southamerica-east1-docker.pkg.dev --quiet
 
-      - name: Build Docker Image
-        run: |
-          docker build -t southamerica-east1-docker.pkg.dev/edtech-storage-501117/cloud-run-source-deploy/edtech-backend:${{ github.sha }} -f backend/Dockerfile.ci backend/
-          
-      - name: Scan Docker Image (Trivy)
-        uses: aquasecurity/trivy-action@master
+      - name: Set up Docker Buildx
+        if: matrix.target == 'backend'
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and Push Docker Image
+        if: matrix.target == 'backend'
+        uses: docker/build-push-action@v5
         with:
-          image-ref: 'southamerica-east1-docker.pkg.dev/edtech-storage-501117/cloud-run-source-deploy/edtech-backend:${{ github.sha }}'
-          format: 'table'
-          exit-code: '1'
-          ignore-unfixed: true
-          vuln-type: 'os,library'
-          severity: 'CRITICAL'
-          
-      - name: Push Docker Image
-        run: |
-          docker push southamerica-east1-docker.pkg.dev/edtech-storage-501117/cloud-run-source-deploy/edtech-backend:${{ github.sha }}
-          
+          context: backend/
+          file: backend/Dockerfile.ci
+          push: true
+          tags: southamerica-east1-docker.pkg.dev/edtech-storage-501117/cloud-run-source-deploy/edtech-backend:${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
       - name: Setup Terraform
+        if: matrix.target == 'backend'
         uses: hashicorp/setup-terraform@v4
         
-      - name: Ensure Terraform State Bucket Exists
-        run: |
-          if ! gsutil ls gs://edtech-terraform-state-501117 > /dev/null 2>&1; then
-            echo "Bucket não encontrado. Criando bucket de estado do Terraform..."
-            gsutil mb -p edtech-storage-501117 -l southamerica-east1 -b on gs://edtech-terraform-state-501117
-            gsutil versioning set on gs://edtech-terraform-state-501117
-            echo "Bucket criado com sucesso."
-          else
-            echo "Bucket já existe."
-          fi
-
       - name: Terraform Init
+        if: matrix.target == 'backend'
         working-directory: infra/terraform
         run: terraform init -backend-config="bucket=edtech-terraform-state-501117"
-        
-      - name: Terraform Import Existing Resources
-        working-directory: infra/terraform
-        run: |
-          # Import bucket
-          terraform import \
-            -var="project_id=edtech-storage-501117" \
-            -var="backend_image_tag=${{ github.sha }}" \
-            -var="storage_bucket_name=edtech-vault-storage" \
-            -var="cors_allowed_origin=https://edtech-storage-501117.web.app" \
-            module.storage_app.google_storage_bucket.bucket edtech-vault-storage || echo "Bucket import failed or already in state"
-            
-          # Import secrets
-          terraform import \
-            -var="project_id=edtech-storage-501117" \
-            -var="backend_image_tag=${{ github.sha }}" \
-            -var="storage_bucket_name=edtech-vault-storage" \
-            -var="cors_allowed_origin=https://edtech-storage-501117.web.app" \
-            module.backend_api.google_secret_manager_secret.jwt_secret projects/128660331605/secrets/JWT_SECRET || echo "JWT_SECRET import failed or already in state"
-            
-          terraform import \
-            -var="project_id=edtech-storage-501117" \
-            -var="backend_image_tag=${{ github.sha }}" \
-            -var="storage_bucket_name=edtech-vault-storage" \
-            -var="cors_allowed_origin=https://edtech-storage-501117.web.app" \
-            module.backend_api.google_secret_manager_secret.spring_password projects/128660331605/secrets/SPRING_DATASOURCE_PASSWORD || echo "SPRING_DATASOURCE_PASSWORD import failed or already in state"
-            
-          terraform import \
-            -var="project_id=edtech-storage-501117" \
-            -var="backend_image_tag=${{ github.sha }}" \
-            -var="storage_bucket_name=edtech-vault-storage" \
-            -var="cors_allowed_origin=https://edtech-storage-501117.web.app" \
-            module.backend_api.google_secret_manager_secret.spring_url projects/128660331605/secrets/SPRING_DATASOURCE_URL || echo "SPRING_DATASOURCE_URL import failed or already in state"
-            
-          terraform import \
-            -var="project_id=edtech-storage-501117" \
-            -var="backend_image_tag=${{ github.sha }}" \
-            -var="storage_bucket_name=edtech-vault-storage" \
-            -var="cors_allowed_origin=https://edtech-storage-501117.web.app" \
-            module.backend_api.google_secret_manager_secret.spring_username projects/128660331605/secrets/SPRING_DATASOURCE_USERNAME || echo "SPRING_DATASOURCE_USERNAME import failed or already in state"
-            
-          terraform import \
-            -var="project_id=edtech-storage-501117" \
-            -var="backend_image_tag=${{ github.sha }}" \
-            -var="storage_bucket_name=edtech-vault-storage" \
-            -var="cors_allowed_origin=https://edtech-storage-501117.web.app" \
-            module.database.google_sql_database_instance.instance edtech-db-dev || echo "Database import failed or already in state"
-            
-          terraform import \
-            -var="project_id=edtech-storage-501117" \
-            -var="backend_image_tag=${{ github.sha }}" \
-            -var="storage_bucket_name=edtech-vault-storage" \
-            -var="cors_allowed_origin=https://edtech-storage-501117.web.app" \
-            module.backend_api.google_cloud_run_v2_service.api projects/edtech-storage-501117/locations/southamerica-east1/services/edtech-backend || echo "Cloud Run service import failed or already in state"
 
       - name: Terraform Apply
+        if: matrix.target == 'backend'
         working-directory: infra/terraform
         run: |
-          terraform apply -auto-approve \
-            -var="project_id=edtech-storage-501117" \
-            -var="backend_image_tag=${{ github.sha }}" \
-            -var="storage_bucket_name=edtech-vault-storage" \
-            -var="cors_allowed_origin=https://edtech-storage-501117.web.app" || {
+          terraform apply -auto-approve             -var="project_id=edtech-storage-501117"             -var="backend_image_tag=${{ github.sha }}"             -var="storage_bucket_name=edtech-vault-storage"             -var="cors_allowed_origin=https://edtech-storage-501117.web.app" || {
               echo "Terraform Apply failed. Fetching Cloud Run logs for debugging:"
               gcloud logging read 'resource.type="cloud_run_revision" AND resource.labels.service_name="edtech-backend" AND severity>=ERROR' --limit 50 --format="value(textPayload)" --project=edtech-storage-501117
               exit 1
             }
 
       - name: Run Database Migrations (Cloud Run Job)
+        if: matrix.target == 'backend'
         run: |
-          echo "Executando job de migração do banco de dados (Flyway)..."
+          echo "Executando job de migra��o do banco de dados (Flyway)..."
           gcloud run jobs execute edtech-backend-migration --region southamerica-east1 --wait --project edtech-storage-501117
 
-  deploy-frontend:
-    name: Deploy Frontend (Firebase)
-    runs-on: ubuntu-latest
-    needs: [frontend-approved]
-    if: github.ref == 'refs/heads/main'
-    permissions:
-      contents: 'read'
-      id-token: 'write'
-    steps:
-      - uses: actions/checkout@v7
-      
-      - id: 'auth'
-        name: Authenticate to Google Cloud
-        uses: 'google-github-actions/auth@v3'
-        with:
-          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
-
+      # --- FRONTEND DEPLOY ---
       - name: Set up Node 24
+        if: matrix.target == 'frontend'
         uses: actions/setup-node@v6
         with:
           node-version: '24'
 
       - name: Download Frontend Artifact
+        if: matrix.target == 'frontend'
         uses: actions/download-artifact@v8
         with:
           name: frontend-dist
           path: frontend/dist/
 
       - name: Deploy to Firebase Hosting
+        if: matrix.target == 'frontend'
         working-directory: frontend
         run: |
           npm install -g firebase-tools
@@ -449,41 +376,57 @@ jobs:
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ steps.auth.outputs.credentials_file_path }}
 
-  e2e-production:
-    name: E2E Smoke Tests (Production)
+  # ==========================================
+  #                 PRODUCTION TESTS
+  # ==========================================
+  production-tests:
+    name: Production Tests
     runs-on: ubuntu-latest
-    needs: [deploy-backend, deploy-frontend]
+    needs: [deploy-tasks]
     if: github.ref == 'refs/heads/main'
+    strategy:
+      fail-fast: false
+      matrix:
+        test: [e2e, performance]
     steps:
       - uses: actions/checkout@v7
+      
+      # --- E2E SMOKE TESTS ---
       - name: Set up Node 24
+        if: matrix.test == 'e2e'
         uses: actions/setup-node@v6
         with:
           node-version: '24'
       - name: Install dependencies
+        if: matrix.test == 'e2e'
         working-directory: frontend
         run: npm ci
       - name: Get Playwright version
+        if: matrix.test == 'e2e'
         id: playwright-version
         working-directory: frontend
         run: |
-          echo "version=$(npm ls @playwright/test --json | grep -oP '(?<="version": ")[^"]*')" >> $GITHUB_OUTPUT
+          PLAYWRIGHT_VERSION=$(npx playwright --version | awk '{print $2}')
+          echo "version=$PLAYWRIGHT_VERSION" >> $GITHUB_OUTPUT
       - name: Cache Playwright browsers
+        if: matrix.test == 'e2e'
         uses: actions/cache@v6
         with:
           path: ~/.cache/ms-playwright
           key: playwright-browsers-${{ steps.playwright-version.outputs.version }}
       - name: Install Playwright browsers
+        if: matrix.test == 'e2e'
         working-directory: frontend
         run: npx playwright install --with-deps chromium
       - name: Run E2E Production Tests
+        if: matrix.test == 'e2e'
         id: e2e-production-tests
         working-directory: frontend
         run: npx playwright test
         env:
           BASE_URL: 'https://edtech-storage-501117.web.app'
       - name: Production E2E Summary
-        if: always()
+        if: always() && matrix.test == 'e2e'
         run: |
           {
             echo "## Production E2E summary"
@@ -495,14 +438,9 @@ jobs:
             echo "Base URL: https://edtech-storage-501117.web.app"
           } >> "$GITHUB_STEP_SUMMARY"
 
-  performance-production:
-    name: Load Tests (K6)
-    runs-on: ubuntu-latest
-    needs: [deploy-backend, deploy-frontend]
-    if: github.ref == 'refs/heads/main'
-    steps:
-      - uses: actions/checkout@v7
+      # --- PERFORMANCE TESTS ---
       - name: Install K6
+        if: matrix.test == 'performance'
         run: |
           sudo gpg -k
           sudo gpg --no-default-keyring --keyring /usr/share/keyrings/k6-archive-keyring.gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C5AD17C747E3415A3642D57D77C6C491D6AC1D69
@@ -510,13 +448,14 @@ jobs:
           sudo apt-get update
           sudo apt-get install k6
       - name: Run K6 Load Test
+        if: matrix.test == 'performance'
         id: k6-load-test
         working-directory: tests/performance
         env:
           API_URL: 'https://edtech-backend-shv6qbpf4q-rj.a.run.app'
         run: k6 run load-test.js
       - name: Production Load Test Summary
-        if: always()
+        if: always() && matrix.test == 'performance'
         run: |
           {
             echo "## Production load test summary"
@@ -534,7 +473,7 @@ jobs:
           fi
       - name: Upload K6 Summary
         uses: actions/upload-artifact@v7
-        if: always()
+        if: always() && matrix.test == 'performance'
         with:
           name: k6-summary
           path: tests/performance/k6-summary.json
