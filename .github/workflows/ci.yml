@@ -383,6 +383,13 @@ jobs:
             -var="storage_bucket_name=edtech-vault-storage" \
             -var="cors_allowed_origin=https://edtech-storage-501117.web.app" \
             module.database.google_sql_database_instance.instance edtech-db-dev || echo "Database import failed or already in state"
+            
+          terraform import \
+            -var="project_id=edtech-storage-501117" \
+            -var="backend_image_tag=${{ github.sha }}" \
+            -var="storage_bucket_name=edtech-vault-storage" \
+            -var="cors_allowed_origin=https://edtech-storage-501117.web.app" \
+            module.backend_api.google_cloud_run_v2_service.api projects/edtech-storage-501117/locations/southamerica-east1/services/edtech-backend || echo "Cloud Run service import failed or already in state"
 
       - name: Terraform Apply
         working-directory: infra/terraform
