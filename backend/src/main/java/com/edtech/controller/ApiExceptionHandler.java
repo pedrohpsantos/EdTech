@@ -39,4 +39,11 @@ public class ApiExceptionHandler {
     return ResponseEntity.badRequest()
         .body(new ErrorResponse("invalid_request", "Verifique os dados enviados."));
   }
+
+  @ExceptionHandler(org.springframework.dao.DataIntegrityViolationException.class)
+  public ResponseEntity<ErrorResponse> handleDataIntegrityViolation(
+      org.springframework.dao.DataIntegrityViolationException exception) {
+    return ResponseEntity.status(HttpStatus.CONFLICT)
+        .body(new ErrorResponse("email_already_registered", "Conflito de dados. Verifique unicidade."));
+  }
 }
