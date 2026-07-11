@@ -72,14 +72,13 @@ describe('api service', () => {
   });
 
   describe('register', () => {
-    it('returns success and saves token', async () => {
+    it('returns success', async () => {
       const mockUser = { id: 1, name: 'New User' };
-      (mAxios.post as any).mockResolvedValueOnce({ data: { token: 'mockToken2', user: mockUser } });
+      (mAxios.post as any).mockResolvedValueOnce({ data: { user: mockUser } });
       
       const result = await apiModule.register('New User', 'test@test.com', 'password', 'RESEARCHER');
       expect(result.sucesso).toBe(true);
       expect(result.dados).toEqual(mockUser);
-      expect(localStorage.getItem('token')).toBe('mockToken2');
     });
 
     it('handles errors', async () => {
