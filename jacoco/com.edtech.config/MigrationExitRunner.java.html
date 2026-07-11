@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MigrationExitRunner.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">edtech-api</a> &gt; <a href="index.source.html" class="el_package">com.edtech.config</a> &gt; <span class="el_source">MigrationExitRunner.java</span></div><h1>MigrationExitRunner.java</h1><pre class="source lang-java linenums">package com.edtech.config;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
+
+/**
+ * Força o encerramento do Cloud Run Job de migração do banco de dados após a inicialização do
+ * contexto (e execução do Flyway).
+ */
+@Component
+@Order(Ordered.HIGHEST_PRECEDENCE)
+<span class="fc" id="L15">public class MigrationExitRunner implements CommandLineRunner {</span>
+
+  @Value(&quot;${spring.main.web-application-type:servlet}&quot;)
+  private String webAppType;
+
+  @Override
+  public void run(String... args) {
+<span class="pc bpc" id="L22" title="1 of 2 branches missed.">    if (&quot;none&quot;.equalsIgnoreCase(webAppType)) {</span>
+<span class="nc" id="L23">      System.out.println(</span>
+          &quot;Migration Cloud Run Job concluído com sucesso. Forçando saída para evitar timeout...&quot;);
+<span class="nc" id="L25">      System.exit(0);</span>
+    }
+<span class="fc" id="L27">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
