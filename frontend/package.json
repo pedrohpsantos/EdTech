@@ -6,14 +6,14 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "lint": "npm run lint:oxlint && eslint . --max-warnings=0",
+    "lint": "npm run lint:oxlint && eslint src --max-warnings=0",
     "type-check": "tsc --noEmit",
     "security-audit": "npm audit --audit-level=high",
     "preview": "vite preview",
     "test": "vitest run --coverage --reporter=html --reporter=default",
     "test:a11y": "vitest run src/pages/__tests__/accessibility.test.jsx",
     "test:components": "vitest run src/components/",
-    "lint:oxlint": "oxlint .",
+    "lint:oxlint": "oxlint src",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,css,md}\""
   },
   "dependencies": {

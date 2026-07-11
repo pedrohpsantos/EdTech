@@ -1,13 +1,7 @@
 import React from 'react';
-import { render, screen, waitFor, fireEvent, act } from '@testing-library/react';
+import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import Documentos from '../documentos';
-import { useDocuments, useUploadDocument, useDownloadUrl, useToggleStar } from '../../hooks/useDocuments';
-
-vi.mock('react-router-dom', () => ({
-  useNavigate: () => vi.fn(),
-}));
-
 vi.mock('../../hooks/useDocuments', () => ({
   useDocuments: vi.fn(),
   useUploadDocument: vi.fn(),
@@ -110,7 +104,7 @@ describe('Documentos Page', () => {
     (useDocuments as any).mockReturnValue({ data: mockData, isLoading: false });
     render(<Documentos />);
     
-    const starBtn = screen.getByRole('button', { name: '' }); // The button has no text, need to find it by class or structure
+    // const starBtn = screen.getByRole('button', { name: '' }); // The button has no text, need to find it by class or structure
     // Since we only have icon buttons, let's find it by some unique trait or just get the first one.
     const toggleStarBtn = document.querySelector('.bi-star')?.closest('button') as HTMLButtonElement;
     

@@ -393,7 +393,7 @@ jobs:
   #                 DEPLOY
   # ==========================================
   deploy-backend:
-    name: Deploy Backend
+    name: Deploy (Backend)
     runs-on: ubuntu-latest
     needs: [backend-approved, infra-approved]
     if: github.ref == 'refs/heads/main'
@@ -434,7 +434,7 @@ jobs:
             --region southamerica-east1 --wait --project edtech-storage-501117
 
   deploy-frontend:
-    name: Deploy Frontend
+    name: Deploy (Frontend)
     runs-on: ubuntu-latest
     needs: [frontend-approved, infra-approved]
     if: github.ref == 'refs/heads/main'
