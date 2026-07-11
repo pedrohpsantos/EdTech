@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import DashboardLayout from '../components/layout/DashboardLayout';
 import { useAuth } from '../context/authContext';
 import { getDocuments, reviewDocument, getDashboardStats } from '../services/api';
+import DatasetPreview from '../components/DatasetPreview';
 import styles from '../assets/submissions.module.css';
 
 export default function Submissions() {
@@ -267,12 +268,16 @@ export default function Submissions() {
             
             <div className={styles.documentPreview} style={{ padding: '0', height: '60vh', background: '#e2e8f0', display: 'flex', flexDirection: 'column' }}>
               {previewUrl ? (
-                <object data={previewUrl} type="application/pdf" width="100%" height="100%" style={{ border: 'none', flex: 1 }}>
-                  <div style={{ padding: '2rem', textAlign: 'center' }}>
-                    Seu navegador não suporta a visualização nativa de PDFs. <br/><br/>
-                    <a href={previewUrl} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--ed-purple)' }}>Clique aqui para baixar</a>
-                  </div>
-                </object>
+                (selectedDoc.type === 'CSV' || selectedDoc.type === 'JSON') ? (
+                  <DatasetPreview url={previewUrl} type={selectedDoc.type} />
+                ) : (
+                  <object data={previewUrl} type="application/pdf" width="100%" height="100%" style={{ border: 'none', flex: 1 }}>
+                    <div style={{ padding: '2rem', textAlign: 'center' }}>
+                      Seu navegador não suporta a visualização nativa de PDFs. <br/><br/>
+                      <a href={previewUrl} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--ed-purple)' }}>Clique aqui para baixar</a>
+                    </div>
+                  </object>
+                )
               ) : (
                 <div style={{ padding: '2rem', textAlign: 'center', color: '#64748B', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
                   Carregando visualização do documento...

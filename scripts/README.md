@@ -11,7 +11,7 @@ O foco destes utilitários é a inteligência de dados: fornecer aos usuários c
 
 Os scripts operam sob o gerenciador `uv`, garantindo isolamento de dependências e previsibilidade em qualquer ambiente de execução.
 
-- **Geração de Relatórios Consolidados:** Extração quantitativa de documentos (volumes aprovados, pendentes e rejeitados) segmentados por projeto.
+- **Geração de Relatórios Consolidados:** Extração quantitativa de documentos (pdfs, datasets CSV/JSON, volumes aprovados, pendentes e rejeitados) segmentados por projeto.
 - **Telemetria de Usuários:** Monitoramento de acessos, frequência de submissões e funil de conversão de documentos.
 - **Processamento de Dados:** Consolidação de métricas provenientes do Banco de Dados (PostgreSQL) e da API para exportação ou exibição em painéis analíticos.
 

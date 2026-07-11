@@ -4,6 +4,7 @@ import DashboardLayout from '../components/layout/DashboardLayout';
 import { useDocuments, useUploadDocument, useDownloadUrl, useToggleStar } from '../hooks/useDocuments';
 import { Document } from '../types';
 import DocumentComments from '../components/DocumentComments';
+import DatasetPreview from '../components/DatasetPreview';
 import '../assets/documentos.css';
 
 const Documentos: React.FC = () => {
@@ -411,12 +412,16 @@ const Documentos: React.FC = () => {
                     Carregando visualização do documento...
                   </div>
                 ) : previewUrl ? (
-                  <object data={previewUrl} type="application/pdf" width="100%" height="100%" style={{ border: 'none', flex: 1 }}>
-                    <div style={{ padding: '2rem', textAlign: 'center' }}>
-                      Seu navegador não suporta a visualização nativa de PDFs. <br/><br/>
-                      <a href={previewUrl} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--ed-purple)' }}>Clique aqui para baixar</a>
-                    </div>
-                  </object>
+                  (previewDoc.type === 'CSV' || previewDoc.type === 'JSON') ? (
+                    <DatasetPreview url={previewUrl} type={previewDoc.type} />
+                  ) : (
+                    <object data={previewUrl} type="application/pdf" width="100%" height="100%" style={{ border: 'none', flex: 1 }}>
+                      <div style={{ padding: '2rem', textAlign: 'center' }}>
+                        Seu navegador não suporta a visualização nativa de PDFs. <br/><br/>
+                        <a href={previewUrl} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--ed-purple)' }}>Clique aqui para baixar</a>
+                      </div>
+                    </object>
+                  )
                 ) : (
                   <div style={{ padding: '2rem', textAlign: 'center', color: '#64748B', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
                     Nenhum preview disponível.

@@ -11,8 +11,8 @@ Portal de documentação técnica do EdTech, construído com a filosofia **Docs-
 
 | Diretório | Conteúdo |
 | :--- | :--- |
-| `/docs/arquitetura` | Diagramas C4, decisões arquiteturais (ADRs) e design técnico |
-| `/docs/desenvolvimento` | Guias de contribuição, qualidade e testes |
+| `/docs/arquitetura` | Diagramas C4, decisões arquiteturais (ADRs), design técnico e análise de custos (FinOps) |
+| `/docs/desenvolvimento` | Guias de contribuição, qualidade, testes e Runbooks operacionais (Troubleshooting) |
 | `/docs/produto` | Requisitos, histórias de usuário e critérios de aceitação |
 | `/docs/gestao` | Planejamento de sprints e gestão do projeto |
 | `/docs/assets` | Imagens, diagramas e recursos visuais |

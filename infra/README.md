@@ -70,7 +70,7 @@ Módulos disponíveis:
 
 | Módulo | Recursos |
 | :--- | :--- |
-| `modules/cloud_run` | Serviço backend no Cloud Run, variáveis de ambiente e integração com storage |
+| `modules/cloud_run` | Serviço backend escalável, variáveis, integração com storage e **Cloud Run Job** isolado para execução de migrações (Flyway). |
 | `modules/cloud_sql` | Instância PostgreSQL gerenciada |
 | `modules/cloud_storage` | Bucket de arquivos acadêmicos |
 

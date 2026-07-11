@@ -1,8 +1,8 @@
 ---
-title: 'Relatorio de Testes de Mutacao (PiTest)'
+title: 'Relatório de Testes de Mutação (PiTest)'
 ---
 
-# :material-dna: Relatorio de Testes de Mutacao (PiTest)
+# :material-dna: Relatório de Testes de Mutação (PiTest)
 
 Esta pagina publica o relatorio HTML do **PiTest**, responsavel por avaliar a efetividade dos testes do backend por meio de mutacoes controladas no codigo.
 

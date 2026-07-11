@@ -40,6 +40,7 @@ Acesse `http://localhost:5173` após iniciar o servidor.
 - **Vanilla CSS:** Sem frameworks de utilitários (como Tailwind). As variáveis de design são centralizadas no `:root` do `index.css`, garantindo consistência e manutenibilidade.
 - **Responsividade:** A interface é desenvolvida para funcionar corretamente em diferentes tamanhos de tela — de smartphones a monitores ultrawide.
 - **Componentes reutilizáveis:** Novos elementos visuais devem verificar se já existe um componente padronizado em `/src/components` antes de criar um novo.
+- **Suporte a Datasets:** Interfaces de revisão (Orientador) contam com renderização nativa de grandes volumes de dados via componente utilitário `DatasetPreview` para arquivos `.csv` e `.json`.
 
 ---
 

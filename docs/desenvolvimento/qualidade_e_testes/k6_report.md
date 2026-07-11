@@ -15,3 +15,11 @@ Estes testes validam a conformidade com os requisitos **RNF07** e **RNF09**, for
 <iframe src="https://pedrohpsantos.github.io/EdTech/k6/index.html" width="100%" height="800px" style="border:none; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); background-color: #fff;">
   Seu navegador não suporta iframes. <a href="https://pedrohpsantos.github.io/EdTech/k6/index.html" target="_blank">Clique aqui</a> para ver o relatório.
 </iframe>
+
+---
+
+## Histórico de Versões
+
+| Versão | Data | Descrição | Autor |
+|--------|------|-----------|-------|
+| `1.0` | 11/07/2026 | Criação da página de relatório interativo K6 | Pedro Henrique P. Santos |

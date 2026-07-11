@@ -65,7 +65,10 @@ Endpoints principais:
 ./mvnw spring-boot:run
 ```
 
-A forma recomendada para desenvolvimento local é utilizar o Docker Compose disponível em `/infra`, que provisiona automaticamente o banco de dados e as dependências de infraestrutura.
+A forma recomendada para desenvolvimento local é utilizar o Docker Compose disponível em `/infra`, que provisiona automaticamente o banco de dados e as dependências de infraestrutura. Em ambiente produtivo, as migrações estruturais do banco (Flyway) não rodam na inicialização da API, mas sim via um **Cloud Run Job** isolado para evitar falhas de concorrência.
+
+**Documentação da API:**
+Com a aplicação em execução, acesse o [Swagger UI](http://localhost:8080/swagger-ui.html) para explorar os endpoints e interagir com a especificação OpenAPI dinamicamente.
 
 ---
 
