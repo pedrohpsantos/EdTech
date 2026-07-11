@@ -17,13 +17,21 @@ permissions:
   contents: write
 
 jobs:
-  backend-reports:
+  generate-reports:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        report-type: [backend, frontend, performance]
     steps:
       - name: Checkout do código
         uses: actions/checkout@v7
 
+      # ==========================
+      # BACKEND
+      # ==========================
       - name: Configurar JDK 21
+        if: matrix.report-type == 'backend'
         uses: actions/setup-java@v5
         with:
           java-version: '21'
@@ -31,49 +39,54 @@ jobs:
           cache: maven
 
       - name: Gerar Relatório JaCoCo
+        if: matrix.report-type == 'backend'
         working-directory: backend
         run: |
           chmod +x mvnw
           ./mvnw clean test jacoco:report -B -T 1C
 
       - name: Gerar Relatório PiTest
+        if: matrix.report-type == 'backend'
         working-directory: backend
         run: ./mvnw org.pitest:pitest-maven:mutationCoverage -B -Dpitest.threads=4
 
       - name: Preparar Artefatos Backend
+        if: matrix.report-type == 'backend'
         run: |
           mkdir -p reports/jacoco reports/pitest
           if [ -d "backend/target/site/jacoco" ]; then cp -r backend/target/site/jacoco/* reports/jacoco/ || true; fi
           if [ -d "backend/target/pit-reports" ]; then cp -r backend/target/pit-reports/* reports/pitest/ || true; fi
 
       - name: Upload Backend Reports
+        if: matrix.report-type == 'backend'
         uses: actions/upload-artifact@v4
         with:
           name: backend-reports
           path: reports/
 
-  frontend-reports:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout do código
-        uses: actions/checkout@v7
-
+      # ==========================
+      # FRONTEND
+      # ==========================
       - name: Setup Node.js
+        if: matrix.report-type == 'frontend'
         uses: actions/setup-node@v6
         with:
           node-version: '24'
 
       - name: Instalar Dependências e Playwright
+        if: matrix.report-type == 'frontend'
         working-directory: frontend
         run: |
           npm ci
           npx playwright install --with-deps chromium
 
       - name: Executar Testes Unitários (Vitest)
+        if: matrix.report-type == 'frontend'
         working-directory: frontend
         run: npm run test || true
 
       - name: Restaurar Histórico do Allure (Trend)
+        if: matrix.report-type == 'frontend'
         uses: actions/checkout@v7
         continue-on-error: true
         with:
@@ -81,12 +94,14 @@ jobs:
           path: gh-pages-branch
 
       - name: Executar Smoke Tests (Allure)
+        if: matrix.report-type == 'frontend'
         working-directory: frontend
         run: npx playwright test || true
         env:
           BASE_URL: 'https://edtech-storage-501117.web.app'
 
       - name: Gerar Allure Report
+        if: matrix.report-type == 'frontend'
         working-directory: frontend
         run: |
           mkdir -p allure-results/history
@@ -97,24 +112,24 @@ jobs:
           npx allure-commandline generate allure-results -o allure-report --clean
 
       - name: Preparar Artefatos Frontend
+        if: matrix.report-type == 'frontend'
         run: |
           mkdir -p reports/vitest reports/allure
           if [ -d "frontend/html" ]; then cp -r frontend/html/* reports/vitest/ || true; fi
           if [ -d "frontend/allure-report" ]; then cp -r frontend/allure-report/* reports/allure/ || true; fi
 
       - name: Upload Frontend Reports
+        if: matrix.report-type == 'frontend'
         uses: actions/upload-artifact@v4
         with:
           name: frontend-reports
           path: reports/
 
-  performance-reports:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout do código
-        uses: actions/checkout@v7
-
+      # ==========================
+      # PERFORMANCE
+      # ==========================
       - name: Install K6
+        if: matrix.report-type == 'performance'
         run: |
           sudo gpg -k
           sudo gpg --no-default-keyring --keyring /usr/share/keyrings/k6-archive-keyring.gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C5AD17C747E3415A3642D57D77C6C491D6AC1D69
@@ -123,15 +138,18 @@ jobs:
           sudo apt-get install k6
 
       - name: Executar Testes de Carga (K6)
+        if: matrix.report-type == 'performance'
         working-directory: tests/performance
         run: k6 run load-test.js || true
 
       - name: Preparar Artefato K6
+        if: matrix.report-type == 'performance'
         run: |
           mkdir -p reports/k6
           if [ -f "tests/performance/k6-summary.html" ]; then cp tests/performance/k6-summary.html reports/k6/index.html || true; fi
 
       - name: Upload Performance Reports
+        if: matrix.report-type == 'performance'
         uses: actions/upload-artifact@v4
         with:
           name: performance-reports
@@ -139,7 +157,7 @@ jobs:
 
   deploy-mkdocs:
     runs-on: ubuntu-latest
-    needs: [backend-reports, frontend-reports, performance-reports]
+    needs: [generate-reports]
     steps:
       - name: Checkout do código
         uses: actions/checkout@v7
@@ -161,18 +179,21 @@ jobs:
 
       - name: Download Backend Reports
         uses: actions/download-artifact@v4
+        continue-on-error: true
         with:
           name: backend-reports
           path: docs/
 
       - name: Download Frontend Reports
         uses: actions/download-artifact@v4
+        continue-on-error: true
         with:
           name: frontend-reports
           path: docs/
 
       - name: Download Performance Reports
         uses: actions/download-artifact@v4
+        continue-on-error: true
         with:
           name: performance-reports
           path: docs/

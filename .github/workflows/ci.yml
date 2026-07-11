@@ -17,51 +17,8 @@ jobs:
   # ==========================================
   #                 BACKEND
   # ==========================================
-  lint-backend:
-    name: Lint Backend
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: backend
-    steps:
-      - uses: actions/checkout@v7
-      - name: Set up JDK 21
-        uses: actions/setup-java@v5
-        with:
-          java-version: '21'
-          distribution: 'temurin'
-          cache: maven
-      - name: Run Lint / Code Style Check
-        run: |
-          chmod +x mvnw
-          ./mvnw compile checkstyle:check spotbugs:check -B
-
-  build-backend:
-    name: Build Backend
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: backend
-    steps:
-      - uses: actions/checkout@v7
-      - name: Set up JDK 21
-        uses: actions/setup-java@v5
-        with:
-          java-version: '21'
-          distribution: 'temurin'
-          cache: maven
-      - name: Compile Code
-        run: |
-          chmod +x mvnw
-          ./mvnw clean package -DskipTests -T 1C -B
-      - name: Upload Build Target
-        uses: actions/upload-artifact@v7
-        with:
-          name: backend-target
-          path: backend/target/
-  
-  test-unit-backend:
-    name: Unit Tests & Coverage
+  backend-tasks:
+    name: Backend
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -77,6 +34,10 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+    strategy:
+      fail-fast: false
+      matrix:
+        task: [lint, build, test, pitest, security]
     defaults:
       run:
         working-directory: backend
@@ -88,20 +49,43 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
           cache: maven
+
+      # --- LINT ---
+      - name: Run Lint / Code Style Check
+        if: matrix.task == 'lint'
+        run: |
+          chmod +x mvnw
+          ./mvnw compile checkstyle:check spotbugs:check -B
+
+      # --- BUILD ---
+      - name: Compile Code
+        if: matrix.task == 'build'
+        run: |
+          chmod +x mvnw
+          ./mvnw clean package -DskipTests -T 1C -B
+      - name: Upload Build Target
+        if: matrix.task == 'build'
+        uses: actions/upload-artifact@v7
+        with:
+          name: backend-target
+          path: backend/target/
+
+      # --- TEST ---
       - name: Run Tests & Coverage
+        if: matrix.task == 'test'
         id: backend-tests
         run: |
           chmod +x mvnw
           ./mvnw clean test jacoco:report -B -T 1C
       - name: Upload JaCoCo Report
+        if: always() && matrix.task == 'test'
         uses: actions/upload-artifact@v7
-        if: always()
         with:
           name: jacoco-report
           path: "**/site/jacoco"
           if-no-files-found: warn
       - name: Backend Test Summary
-        if: always()
+        if: always() && matrix.task == 'test'
         run: |
           {
             echo "## Backend test summary"
@@ -131,41 +115,16 @@ jobs:
               print(f"| {totals['tests']} | {totals['failures']} | {totals['errors']} | {totals['skipped']} |")
           PY
 
-  test-mutation-backend:
-    name: Mutation Tests
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: backend
-    steps:
-      - uses: actions/checkout@v7
-      - name: Set up JDK 21
-        uses: actions/setup-java@v5
-        with:
-          java-version: '21'
-          distribution: 'temurin'
-          cache: maven
+      # --- PITEST ---
       - name: Run Mutation Tests (PiTest)
-        id: mutation-tests
+        if: matrix.task == 'pitest'
         run: |
           chmod +x mvnw
           ./mvnw clean test-compile org.pitest:pitest-maven:mutationCoverage -B -Dpitest.threads=4
 
-  security-backend:
-    name: Security Audit
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: backend
-    steps:
-      - uses: actions/checkout@v7
-      - name: Set up JDK 21
-        uses: actions/setup-java@v5
-        with:
-          java-version: '21'
-          distribution: 'temurin'
-          cache: maven
+      # --- SECURITY ---
       - name: Cache NVD Vulnerability Database
+        if: matrix.task == 'security'
         uses: actions/cache@v6
         with:
           path: ~/.m2/repository/org/owasp/dependency-check-data
@@ -173,7 +132,7 @@ jobs:
           restore-keys: |
             nvd-data-
       - name: Run Security Audit (OWASP)
-        id: security-audit
+        if: matrix.task == 'security'
         env:
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
         run: |
@@ -196,9 +155,13 @@ jobs:
   # ==========================================
   #                 FRONTEND
   # ==========================================
-  lint-frontend:
-    name: Lint Frontend
+  frontend-tasks:
+    name: Frontend
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        task: [lint, build, test]
     defaults:
       run:
         working-directory: frontend
@@ -212,68 +175,48 @@ jobs:
           cache-dependency-path: 'frontend/package-lock.json'
       - name: Install dependencies
         run: npm ci
+
+      # --- LINT ---
       - name: Run lint
+        if: matrix.task == 'lint'
         run: npm run lint
       - name: Run Type Check
+        if: matrix.task == 'lint'
         run: npm run type-check
       - name: Run Security Audit
+        if: matrix.task == 'lint'
         run: npm run security-audit
 
-  build-frontend:
-    name: Build Frontend
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: frontend
-    steps:
-      - uses: actions/checkout@v7
-      - name: Set up Node 24
-        uses: actions/setup-node@v6
-        with:
-          node-version: '24'
-          cache: 'npm'
-          cache-dependency-path: 'frontend/package-lock.json'
-      - name: Install dependencies
-        run: npm ci
+      # --- BUILD ---
       - name: Build
+        if: matrix.task == 'build'
         run: |
           npm run build
           echo ${{ github.sha }} > dist/version.txt
         env:
           VITE_API_URL: https://edtech-backend-shv6qbpf4q-rj.a.run.app
       - name: Upload Frontend Artifact
+        if: matrix.task == 'build'
         uses: actions/upload-artifact@v7
         with:
           name: frontend-dist
           path: frontend/dist/
 
-  test-frontend:
-    name: Test Frontend
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: frontend
-    steps:
-      - uses: actions/checkout@v7
-      - name: Set up Node 24
-        uses: actions/setup-node@v6
-        with:
-          node-version: '24'
-          cache: 'npm'
-          cache-dependency-path: 'frontend/package-lock.json'
-      - name: Install dependencies
-        run: npm ci
+      # --- TEST ---
       - name: Run unit tests (Vitest)
+        if: matrix.task == 'test'
         id: unit-tests
         run: npm run test
       - name: Run Accessibility tests (WCAG)
+        if: matrix.task == 'test'
         id: accessibility-tests
         run: npm run test:a11y
       - name: Run Component tests
+        if: matrix.task == 'test'
         id: component-tests
         run: npm run test:components
       - name: Frontend Test Summary
-        if: always()
+        if: always() && matrix.task == 'test'
         run: |
           {
             echo "## Frontend test summary"
@@ -312,14 +255,14 @@ jobs:
   backend-approved:
     name: Backend Approved
     runs-on: ubuntu-latest
-    needs: [lint-backend, build-backend, test-unit-backend, test-mutation-backend, security-backend]
+    needs: [backend-tasks]
     steps:
       - run: echo "✅ All Backend Validations Passed"
 
   frontend-approved:
     name: Frontend Approved
     runs-on: ubuntu-latest
-    needs: [lint-frontend, build-frontend, test-frontend]
+    needs: [frontend-tasks]
     steps:
       - run: echo "✅ All Frontend Validations Passed"
 
@@ -379,8 +322,6 @@ jobs:
       - name: Push Docker Image
         run: |
           docker push southamerica-east1-docker.pkg.dev/edtech-storage-501117/cloud-run-source-deploy/edtech-backend:${{ github.sha }}
-          
-
           
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v4
