@@ -27,7 +27,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
   private final UserRepository userRepository;
 
   /** Documentação para o método JwtAuthenticationFilter. */
-  public JwtAuthenticationFilter(JwtService jwtService, UserRepository userRepository) {
+  public JwtAuthenticationFilter(JwtService jwtService, @org.springframework.context.annotation.Lazy UserRepository userRepository) {
     this.jwtService = jwtService;
     this.userRepository = userRepository;
   }

@@ -102,6 +102,11 @@ resource "google_cloud_run_v2_service" "api" {
       }
 
       env {
+        name  = "SPRING_FLYWAY_ENABLED"
+        value = "true"
+      }
+
+      env {
         name = "JWT_SECRET" #nome no .env.example
         value_source {
           secret_key_ref {
