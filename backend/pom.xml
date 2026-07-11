@@ -63,7 +63,7 @@
         <dependency>
             <groupId>com.google.cloud.sql</groupId>
             <artifactId>postgres-socket-factory</artifactId>
-            <version>1.18.0</version>
+            <version>1.28.6</version>
         </dependency>
         <!-- Swagger / OpenAPI -->
         <dependency>
@@ -76,7 +76,7 @@
         <dependency>
             <groupId>org.apache.tika</groupId>
             <artifactId>tika-core</artifactId>
-            <version>3.2.2</version>
+            <version>3.3.1</version>
         </dependency>
 
         <!-- Bucket4j for Rate Limiting -->
@@ -151,7 +151,7 @@
         <dependency>
             <groupId>net.logstash.logback</groupId>
             <artifactId>logstash-logback-encoder</artifactId>
-            <version>7.4</version>
+            <version>9.0</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -277,7 +277,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>3.3.1</version>
+                <version>3.6.0</version>
                 <configuration>
                     <configLocation>google_checks.xml</configLocation>
                     <consoleOutput>true</consoleOutput>
@@ -289,7 +289,7 @@
             <plugin>
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-maven-plugin</artifactId>
-                <version>4.8.3.1</version>
+                <version>4.10.2.0</version>
                 <configuration>
                     <failOnError>true</failOnError>
                     <excludeFilterFile>spotbugs-exclude.xml</excludeFilterFile>
