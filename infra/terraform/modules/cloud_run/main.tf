@@ -196,6 +196,11 @@ resource "google_cloud_run_v2_job" "flyway_migration" {
         }
 
         env {
+          name  = "SPRING_FLYWAY_BASELINE_ON_MIGRATE"
+          value = "true"
+        }
+
+        env {
           name = "SPRING_DATASOURCE_PASSWORD"
           value_source {
             secret_key_ref {
