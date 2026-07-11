@@ -164,13 +164,11 @@ Tecnologias selecionadas para máxima robustez, segurança e automação.
 
 ## Histórico de Versões
 
---8<-- "_snippets/version_header.md"
-
-| Versão | Data       | Autor       | Descrição                                                                 |
-| :----- | :--------- | :---------- | :------------------------------------------------------------------------ |
-| 1.5    | 11/07/2026 | Antigravity | Atualização da Stack (K6, Terraform) e simplificação visual da tabela.    |
-| 1.4    | 06/07/2026 | Pedro Santos| Redesign completo da Home com animações de alto impacto.                  |
-| 1.3    | 04/07/2026 | Pedro Santos| Revisão profunda, correção de metadados e melhorias visuais.              |
-| 1.2    | 01/07/2026 | Pedro Santos| Refinamento Premium de UX/UI.                                             |
-| 1.1    | 13/06/2026 | Pedro Santos| Reestruturação arquitetural da documentação e introdução de guias DevEx.  |
-| 1.0    | 10/06/2026 | Pedro Santos| Fundação da documentação técnica e governança.                            |
+| Versão | Data | Descrição | Autor |
+| :---: | :---: | :--- | :--- |
+| `1.0` | 10/06/2026 | Fundação da documentação técnica e governança | Pedro Henrique P. Santos |
+| `1.1` | 13/06/2026 | Reestruturação arquitetural da documentação e introdução de guias DevEx | Pedro Henrique P. Santos |
+| `1.2` | 01/07/2026 | Refinamento Premium de UX/UI | Pedro Henrique P. Santos |
+| `1.3` | 04/07/2026 | Revisão profunda, correção de metadados e melhorias visuais | Pedro Henrique P. Santos |
+| `1.4` | 06/07/2026 | Redesign completo da Home com animações de alto impacto | Pedro Henrique P. Santos |
+| `1.5` | 11/07/2026 | Atualização da Stack (K6, Terraform) e simplificação visual da tabela | Pedro Henrique P. Santos |

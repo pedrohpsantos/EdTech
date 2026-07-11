@@ -37,6 +37,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        # lint     = Checkstyle + SpotBugs
+        # build    = Maven package + artifact upload
+        # test     = JUnit + JaCoCo
+        # pitest   = Mutation coverage
+        # security = OWASP Dependency Check
         task: [lint, build, test, pitest, security]
     defaults:
       run:
@@ -137,7 +142,7 @@ jobs:
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
         run: |
           chmod +x mvnw
-          echo "Iniciando auditoria de segurança estrita. Falhas bloquearão a pipeline."
+          echo "Iniciando auditoria de seguranca estrita. Falhas bloquearao a pipeline."
           MAX_RETRIES=3
           RETRY_COUNT=0
           SUCCESS=0
@@ -161,7 +166,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        task: [lint, build, test]
+        # lint       = ESLint + TypeCheck + Security audit
+        # build      = Vite build + upload artifact
+        # unit       = Vitest unit tests
+        # a11y       = Accessibility tests (WCAG)
+        # components = Component integration tests
+        task: [lint, build, unit, a11y, components]
     defaults:
       run:
         working-directory: frontend
@@ -177,7 +187,7 @@ jobs:
         run: npm ci
 
       # --- LINT ---
-      - name: Run lint
+      - name: Run ESLint
         if: matrix.task == 'lint'
         run: npm run lint
       - name: Run Type Check
@@ -202,32 +212,53 @@ jobs:
           name: frontend-dist
           path: frontend/dist/
 
-      # --- TEST ---
-      - name: Run unit tests (Vitest)
-        if: matrix.task == 'test'
+      # --- UNIT TESTS ---
+      - name: Run Unit Tests (Vitest)
+        if: matrix.task == 'unit'
         id: unit-tests
         run: npm run test
-      - name: Run Accessibility tests (WCAG)
-        if: matrix.task == 'test'
-        id: accessibility-tests
-        run: npm run test:a11y
-      - name: Run Component tests
-        if: matrix.task == 'test'
-        id: component-tests
-        run: npm run test:components
-      - name: Frontend Test Summary
-        if: always() && matrix.task == 'test'
+      - name: Frontend Unit Test Summary
+        if: always() && matrix.task == 'unit'
         run: |
           {
-            echo "## Frontend test summary"
+            echo "## Frontend unit test summary"
             echo
             echo "| Check | Result |"
             echo "| --- | --- |"
             echo "| Unit tests (Vitest) | ${{ steps.unit-tests.outcome }} |"
-            echo "| Accessibility tests (WCAG) | ${{ steps.accessibility-tests.outcome }} |"
-            echo "| Component tests | ${{ steps.component-tests.outcome }} |"
           } >> "$GITHUB_STEP_SUMMARY"
 
+      # --- ACCESSIBILITY TESTS ---
+      - name: Run Accessibility Tests (WCAG)
+        if: matrix.task == 'a11y'
+        id: a11y-tests
+        run: npm run test:a11y
+      - name: Frontend A11y Test Summary
+        if: always() && matrix.task == 'a11y'
+        run: |
+          {
+            echo "## Accessibility (WCAG) test summary"
+            echo
+            echo "| Check | Result |"
+            echo "| --- | --- |"
+            echo "| Accessibility tests (WCAG) | ${{ steps.a11y-tests.outcome }} |"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      # --- COMPONENT TESTS ---
+      - name: Run Component Tests
+        if: matrix.task == 'components'
+        id: component-tests
+        run: npm run test:components
+      - name: Frontend Component Test Summary
+        if: always() && matrix.task == 'components'
+        run: |
+          {
+            echo "## Component test summary"
+            echo
+            echo "| Check | Result |"
+            echo "| --- | --- |"
+            echo "| Component tests | ${{ steps.component-tests.outcome }} |"
+          } >> "$GITHUB_STEP_SUMMARY"
 
   # ==========================================
   #                 INFRASTRUCTURE
@@ -235,9 +266,14 @@ jobs:
   infra-tasks:
     name: Infrastructure
     runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      id-token: 'write'
     strategy:
       fail-fast: false
       matrix:
+        # validate     = Terraform fmt + init + validate
+        # docker-build = Maven package + Docker build & push (main only)
         task: [validate, docker-build]
     steps:
       - uses: actions/checkout@v7
@@ -273,10 +309,10 @@ jobs:
         run: |
           chmod +x mvnw
           ./mvnw clean package -DskipTests -T 1C -B
-      - id: 'auth'
+      - name: Authenticate to Google Cloud
+        id: auth
         if: matrix.task == 'docker-build' && github.ref == 'refs/heads/main'
-        name: Authenticate to Google Cloud
-        uses: 'google-github-actions/auth@v3'
+        uses: google-github-actions/auth@v3
         with:
           credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
       - name: Configure Docker Auth
@@ -304,21 +340,21 @@ jobs:
     runs-on: ubuntu-latest
     needs: [backend-tasks]
     steps:
-      - run: echo "✅ All Backend Validations Passed"
+      - run: echo "All Backend Validations Passed"
 
   frontend-approved:
     name: Frontend Approved
     runs-on: ubuntu-latest
     needs: [frontend-tasks]
     steps:
-      - run: echo "✅ All Frontend Validations Passed"
+      - run: echo "All Frontend Validations Passed"
 
   infra-approved:
     name: Infra Approved
     runs-on: ubuntu-latest
     needs: [infra-tasks]
     steps:
-      - run: echo "✅ All Infrastructure Validations Passed"
+      - run: echo "All Infrastructure Validations Passed"
 
   # ==========================================
   #                 DEPLOY
@@ -334,13 +370,15 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        # backend  = Terraform Apply + Cloud Run + Flyway migrations
+        # frontend = Download artifact + Firebase Hosting deploy
         target: [backend, frontend]
     steps:
       - uses: actions/checkout@v7
-      
-      - id: 'auth'
-        name: Authenticate to Google Cloud
-        uses: 'google-github-actions/auth@v3'
+
+      - name: Authenticate to Google Cloud
+        id: auth
+        uses: google-github-actions/auth@v3
         with:
           credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
 
@@ -352,7 +390,7 @@ jobs:
       - name: Setup Terraform
         if: matrix.target == 'backend'
         uses: hashicorp/setup-terraform@v4
-        
+
       - name: Terraform Init
         if: matrix.target == 'backend'
         working-directory: infra/terraform
@@ -362,17 +400,23 @@ jobs:
         if: matrix.target == 'backend'
         working-directory: infra/terraform
         run: |
-          terraform apply -auto-approve             -var="project_id=edtech-storage-501117"             -var="backend_image_tag=${{ github.sha }}"             -var="storage_bucket_name=edtech-vault-storage"             -var="cors_allowed_origin=https://edtech-storage-501117.web.app" || {
+          terraform apply -auto-approve \
+            -var="project_id=edtech-storage-501117" \
+            -var="backend_image_tag=${{ github.sha }}" \
+            -var="storage_bucket_name=edtech-vault-storage" \
+            -var="cors_allowed_origin=https://edtech-storage-501117.web.app" || {
               echo "Terraform Apply failed. Fetching Cloud Run logs for debugging:"
-              gcloud logging read 'resource.type="cloud_run_revision" AND resource.labels.service_name="edtech-backend" AND severity>=ERROR' --limit 50 --format="value(textPayload)" --project=edtech-storage-501117
+              gcloud logging read 'resource.type="cloud_run_revision" AND resource.labels.service_name="edtech-backend" AND severity>=ERROR' \
+                --limit 50 --format="value(textPayload)" --project=edtech-storage-501117
               exit 1
             }
 
-      - name: Run Database Migrations (Cloud Run Job)
+      - name: Run Database Migrations (Flyway)
         if: matrix.target == 'backend'
         run: |
-          echo "Executando job de migração do banco de dados (Flyway)..."
-          gcloud run jobs execute edtech-backend-migration --region southamerica-east1 --wait --project edtech-storage-501117
+          echo "Executando job de migracao do banco de dados (Flyway)..."
+          gcloud run jobs execute edtech-backend-migration \
+            --region southamerica-east1 --wait --project edtech-storage-501117
 
       # --- FRONTEND DEPLOY ---
       - name: Set up Node 24
@@ -408,10 +452,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        # e2e         = Playwright E2E smoke tests against production
+        # performance = K6 load tests against production API
         test: [e2e, performance]
     steps:
       - uses: actions/checkout@v7
-      
+
       # --- E2E SMOKE TESTS ---
       - name: Set up Node 24
         if: matrix.test == 'e2e'
@@ -464,8 +510,12 @@ jobs:
         if: matrix.test == 'performance'
         run: |
           sudo gpg -k
-          sudo gpg --no-default-keyring --keyring /usr/share/keyrings/k6-archive-keyring.gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C5AD17C747E3415A3642D57D77C6C491D6AC1D69
-          echo "deb [signed-by=/usr/share/keyrings/k6-archive-keyring.gpg] https://dl.k6.io/deb stable main" | sudo tee /etc/apt/sources.list.d/k6.list
+          sudo gpg --no-default-keyring \
+            --keyring /usr/share/keyrings/k6-archive-keyring.gpg \
+            --keyserver hkp://keyserver.ubuntu.com:80 \
+            --recv-keys C5AD17C747E3415A3642D57D77C6C491D6AC1D69
+          echo "deb [signed-by=/usr/share/keyrings/k6-archive-keyring.gpg] https://dl.k6.io/deb stable main" \
+            | sudo tee /etc/apt/sources.list.d/k6.list
           sudo apt-get update
           sudo apt-get install k6
       - name: Run K6 Load Test
@@ -489,12 +539,12 @@ jobs:
           if [ -f tests/performance/k6-summary.json ]; then
             {
               echo
-              echo "K6 JSON summary generated: \`tests/performance/k6-summary.json\`"
+              echo "K6 JSON summary generated"
             } >> "$GITHUB_STEP_SUMMARY"
           fi
       - name: Upload K6 Summary
-        uses: actions/upload-artifact@v7
         if: always() && matrix.test == 'performance'
+        uses: actions/upload-artifact@v7
         with:
           name: k6-summary
           path: tests/performance/k6-summary.json

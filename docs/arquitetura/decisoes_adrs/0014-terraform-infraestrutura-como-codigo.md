@@ -2,13 +2,6 @@
 title: 'ADR 0014: Terraform para Infraestrutura como Código'
 ---
 
---8<-- "_snippets/version_header.md"
-
-| Versão | Data       | Autor       | Descrição                                 |
-| :----- | :--------- | :---------- | :---------------------------------------- |
-| 1.1    | 11/07/2026 | Antigravity | Correção ortográfica e de acentuação      |
-| 1.0    | 09/07/2026 | Pedro Santos| Registro da decisão de adotar Terraform   |
-
 # :material-text-box-check: ADR 0014: Terraform para Infraestrutura como Código
 
 ## Status
@@ -63,3 +56,12 @@ Foi descartado por menor adoção no ecossistema atual e por não oferecer a mes
 ### Provisionamento manual pelo console
 
 Foi descartado por não ser auditável o suficiente para um projeto com foco em governança e rastreabilidade.
+
+---
+
+## Histórico de Versões
+
+| Versão | Data | Descrição | Autor |
+| :---: | :---: | :--- | :--- |
+| `1.1` | 11/07/2026 | Correção ortográfica e de acentuação | Pedro Henrique P. Santos |
+| `1.0` | 09/07/2026 | Registro da decisão de adotar Terraform | Pedro Henrique P. Santos |
