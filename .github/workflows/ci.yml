@@ -304,21 +304,21 @@ jobs:
     runs-on: ubuntu-latest
     needs: [backend-tasks]
     steps:
-      - run: echo "â All Backend Validations Passed"
+      - run: echo "✅ All Backend Validations Passed"
 
   frontend-approved:
     name: Frontend Approved
     runs-on: ubuntu-latest
     needs: [frontend-tasks]
     steps:
-      - run: echo "â All Frontend Validations Passed"
+      - run: echo "✅ All Frontend Validations Passed"
 
   infra-approved:
     name: Infra Approved
     runs-on: ubuntu-latest
     needs: [infra-tasks]
     steps:
-      - run: echo "â All Infrastructure Validations Passed"
+      - run: echo "✅ All Infrastructure Validations Passed"
 
   # ==========================================
   #                 DEPLOY
