@@ -43,13 +43,12 @@ public class DatabaseSeeder implements CommandLineRunner {
     String defaultPasswordHash = passwordEncoder.encode("Demo@1234");
 
     // 1. Criar usuários
-    User pesquisador =
-        seedUser(
-            "Pesquisador Demo",
-            "pesquisador.demo@unb.br",
-            defaultPasswordHash,
-            UserRole.RESEARCHER,
-            demoInstitutionId);
+    seedUser(
+        "Pesquisador Demo",
+        "pesquisador.demo@unb.br",
+        defaultPasswordHash,
+        UserRole.RESEARCHER,
+        demoInstitutionId);
     User orientador =
         seedUser(
             "Orientador Demo",
@@ -57,13 +56,12 @@ public class DatabaseSeeder implements CommandLineRunner {
             defaultPasswordHash,
             UserRole.ADVISOR,
             demoInstitutionId);
-    User auditor =
-        seedUser(
-            "Auditor Demo",
-            "auditor.demo@unb.br",
-            defaultPasswordHash,
-            UserRole.AUDITOR,
-            demoInstitutionId);
+    seedUser(
+        "Auditor Demo",
+        "auditor.demo@unb.br",
+        defaultPasswordHash,
+        UserRole.AUDITOR,
+        demoInstitutionId);
 
     // 2. Criar projetos fake
     if (projectRepository.count() == 0) {
