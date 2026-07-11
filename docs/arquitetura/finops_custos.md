@@ -2,67 +2,74 @@
 title: 'FinOps e Previsibilidade de Custos'
 ---
 
+--8<-- "_snippets/version_header.md"
+
+| Versão | Data       | Autor       | Descrição                      |
+| :----- | :--------- | :---------- | :----------------------------- |
+| 1.1    | 11/07/2026 | Antigravity | Ajuste para orçamento estudantil (< $50) |
+| 1.0    | 10/07/2026 | Antigravity | Criação do documento           |
+
 # :material-cash-multiple: FinOps e Previsibilidade de Custos (TCO)
 
-A arquitetura do **EdTech** foi concebida primariamente sobre serviços gerenciados (Serverless e PaaS) no Google Cloud Platform (GCP). O objetivo deste documento é fornecer uma estimativa de custo baseada no tráfego esperado, permitindo planejamento orçamentário.
+A arquitetura do **EdTech** foi concebida primariamente sobre serviços gerenciados (*Serverless* e *PaaS*) no Google Cloud Platform (GCP). Como o projeto foi desenvolvido em um contexto acadêmico, nosso principal requisito é manter o custo total do projeto estritamente abaixo do orçamento estudantil disponibilizado de **$50.00 USD/mês**.
 
 ---
 
-## 1. Topologia de Custos e Drivers
+## 1. Topologia de Custos e Direcionadores
 
 Os principais ofensores de custo do projeto são:
 
-1. **Cloud SQL (PostgreSQL)**: Custo fixo por hora (Instância + Disco + Backup).
-2. **Cloud Run (Backend)**: Custo variável por invocação, CPU e Memória alocados por milissegundo de execução.
-3. **Cloud Storage (GCS)**: Custo variável por volume de GBs armazenados e banda de rede de saída (Egress).
-4. **Secret Manager / Build**: Custos marginais e quase sempre dentro do *Free Tier*.
+1. **Cloud SQL (PostgreSQL)**: Custo fixo por hora (Instância + Disco).
+2. **Cloud Run (Backend)**: Custo variável por invocação, CPU e Memória (amparado pela cota gratuita).
+3. **Cloud Storage (GCS)**: Custo variável por volume armazenado e tráfego de rede de saída (*Egress*).
+4. **Firebase Hosting (Frontend)**: Custo variável de hospedagem estática e banda (amparado pela cota gratuita).
 
 ---
 
-## 2. Cenário Base (Estimativa)
-*Contexto: Uma instituição acadêmica de médio porte com 50 pesquisadores ativos diários, enviando ~10 GB de datasets/PDFs por mês.*
+## 2. Cenário Base (Orçamento de Estudante)
+*Contexto: Ambiente acadêmico com tráfego moderado, visando validação e demonstração, operando sob uma bolsa do Google Cloud for Students.*
 
 ### 2.1. Cloud SQL (Banco de Dados)
-Para produção, recomendamos no mínimo a classe `db-custom-1-3840` (1 vCPU, 3.75 GB RAM) ou `db-f1-micro` (para homologação).
-- **Homologação (`db-f1-micro`, 10GB SSD)**: ~$9 a $15 / mês
-- **Produção (`db-custom-1-3840`, 50GB SSD, HA Zonal)**: ~$65 a $85 / mês
+Para mantermos o custo baixo sem perder a consistência, utilizaremos instâncias de núcleo compartilhado (*Shared Core*):
+- **Homologação/Produção Inicial (`db-f1-micro`, 10GB SSD)**: ~$9.00 a $15.00 / mês.
 
-### 2.2. Cloud Run (Backend API)
+### 2.2. Cloud Run (Backend da API)
 Cálculo considerando:
-- **Alocação**: 1 vCPU, 1 GB RAM por container.
-- **Requisições**: ~100.000 requisições / mês.
-- **Duração Média**: 300ms por requisição.
-- **Min Instances**: 0 (Scale to zero habilitado).
+- **Alocação**: 1 vCPU, 1 GB RAM por contêiner.
+- **Requisições**: ~10.000 requisições / mês.
+- **Instâncias Mínimas**: 0 (Escalonamento para zero habilitado para economizar recursos).
 
-**Custo Estimado**: Graças ao *Free Tier* de 2 milhões de requisições mensais do Cloud Run, o custo deste serviço para o cenário base será de **$0.00 a $2.00 / mês**.
-*(Nota: Se `min-instances=1` for ativado para evitar cold starts, o custo fixo sobe para ~$25/mês devido à CPU ligada 24/7).*
+**Custo Estimado**: Graças à Cota Gratuita (*Free Tier*) de 2 milhões de requisições mensais do Cloud Run, o custo deste serviço para o cenário base será de **$0.00 a $2.00 / mês**.
 
 ### 2.3. Cloud Storage (Armazenamento de Arquivos)
-Armazenamento Standard (Multi-Region US).
-- **Volume**: 100 GB (acumulado).
-- **Custo de Armazenamento**: ~$0.026 por GB = **$2.60 / mês**.
-- **Custo de Egress (Downloads)**: Assumindo 50 GB de download = ~$0.12 por GB = **$6.00 / mês**.
+Armazenamento Padrão (*Standard*).
+- **Volume**: 20 GB (documentos e metadados).
+- **Custo de Armazenamento**: ~$0.026 por GB = **~$0.52 / mês**.
+- **Custo de Tráfego (*Egress*)**: Assumindo 10 GB de download = ~$0.12 por GB = **~$1.20 / mês**.
 
-### 2.4. Resumo Total Mensal (Cenário Produção Inicial)
+### 2.4. Resumo Total Mensal
 | Recurso | Custo Estimado (USD) | 
 | :--- | :--- |
-| Cloud SQL (Prod) | $ 75.00 |
-| Cloud Run | $ 2.00 |
-| Cloud Storage | $ 8.60 |
-| Rede / Load Balancer | $ 18.00 |
-| **Total Estimado** | **~$ 103.60 / mês** |
+| Cloud SQL (F1-Micro) | $ 15.00 |
+| Cloud Run | $ 0.00 (Coberto pela Cota Gratuita) |
+| Cloud Storage | $ 1.72 |
+| Firebase Hosting / Rede | $ 0.00 (Coberto pela Cota Gratuita) |
+| **Total Estimado** | **~$ 16.72 / mês** |
+
+> **Aviso**: O custo estimado de **$16.72** está perfeitamente alinhado com a restrição orçamentária do balancete acadêmico de **$50.00 USD**.
 
 ---
 
 ## 3. Práticas de Otimização Adotadas
 
-O projeto já possui arquitetura orientada a eficiência de custo:
-- **Upload Direto ao GCS**: O frontend utiliza URLs pre-assinadas para fazer upload diretamente ao Google Cloud Storage. O Cloud Run não processa o fluxo binário do arquivo em memória, o que poupa custos enormes de RAM e duração de CPU na API.
-- **Scale-to-Zero**: O frontend estático no Vercel/Firebase Hosting custa quase zero. O Cloud Run zera instâncias de madrugada, pagando apenas pelo Banco de Dados.
+O projeto já possui uma arquitetura altamente focada em eficiência de custo:
+- **Upload Direto ao GCS**: O frontend (interface de usuário) envia arquivos diretamente ao Google Cloud Storage usando URLs pré-assinadas (*Signed URLs*). O Cloud Run não processa o fluxo binário do arquivo, poupando custos enormes de memória e CPU.
+- **Escalonamento para Zero (*Scale-to-Zero*)**: O frontend estático custa zero na maior parte do tempo. O Cloud Run desliga instâncias completamente de madrugada.
+- **Limpeza Automática (*Lifecycle Rules*)**: Arquivos temporários e exportações no bucket de armazenamento são configurados para expiração automática após 7 dias.
 
-## 4. Alertas Orçamentários (Billing Alerts)
+## 4. Alertas Orçamentários (*Billing Alerts*)
 
-É mandatório que a conta de faturamento do GCP possua um orçamento (`Budget`) configurado em:
-- **50% do limite mensal** (Aviso por email)
-- **90% do limite mensal** (Aviso Crítico)
-- **100% do limite mensal** (Alerta para DevOps)
+Para evitar surpresas no cartão de crédito do estudante, é mandatório que a conta de faturamento do GCP possua um orçamento (`Budget`) configurado de **$50.00** com disparos em:
+- **50% ($25.00)**: Aviso por email.
+- **90% ($45.00)**: Aviso Crítico.
+- **100% ($50.00)**: Alerta para o Time de Desenvolvimento atuar e pausar recursos não críticos.

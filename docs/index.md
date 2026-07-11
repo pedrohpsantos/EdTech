@@ -102,18 +102,18 @@ uv run mkdocs serve
 </div>
 
 <p class="section-subtitle">
-Tecnologias selecionadas para robustez, segurança e escalabilidade em ambiente acadêmico.
+Tecnologias selecionadas para máxima robustez, segurança e automação.
 </p>
 
 <div align="center" markdown>
 
 | Camada | Tecnologias |
 | :--- | :--- |
-| **Frontend** | HTML5, CSS Puro (Design System), Bootstrap 5 (Grid), React 19, Vite 8 |
-| **Backend** | Java 21, Spring Boot 4.1, Spring Security, JWT (`HttpOnly` + `Secure`) |
-| **Banco & Storage** | Google Cloud SQL for PostgreSQL, Google Cloud Storage, Flyway |
-| **Infra & Nuvem** | Docker, Google Cloud Run, Firebase Hosting |
-| **Testes** | JUnit 5, Jacoco, Pitest, Vitest, Playwright, Stryker |
+| **Frontend** | React 19, Vite 8, Bootstrap 5 |
+| **Backend** | Java 21, Spring Boot 4.1, Spring Security (JWT) |
+| **Dados** | PostgreSQL (Cloud SQL), Google Cloud Storage, Flyway |
+| **Infraestrutura e Nuvem** | Docker, Terraform, Cloud Run, Firebase Hosting |
+| **Garantia de Qualidade (QA)** | JUnit 5, Vitest, Playwright (E2E), K6 (Testes de Carga) |
 
 [:material-arrow-right: Ver C4 Model Completo](arquitetura/diagramas/c4_model.md){ .md-button style="margin-top: 1rem;" }
 
@@ -164,10 +164,13 @@ Tecnologias selecionadas para robustez, segurança e escalabilidade em ambiente 
 
 ## Histórico de Versões
 
-| Versão | Data | Descrição | Autor |
-| :---: | :---: | :--- | :--- |
-| `1.0` | 10/06/2026 | Fundação da documentação técnica e governança. | Pedro Henrique P. Santos |
-| `1.1` | 13/06/2026 | Reestruturação arquitetural da documentação e introdução de guias DevEx. | Pedro Henrique P. Santos |
-| `1.2` | 01/07/2026 | Refinamento Premium de UX/UI. | Pedro Henrique P. Santos |
-| `1.3` | 04/07/2026 | Revisão profunda, correção de metadados e melhorias visuais. | Pedro Henrique P. Santos |
-| `1.4` | 06/07/2026 | Redesign completo da Home com animações de alto impacto. | Pedro Henrique P. Santos |
+--8<-- "_snippets/version_header.md"
+
+| Versão | Data       | Autor       | Descrição                                                                 |
+| :----- | :--------- | :---------- | :------------------------------------------------------------------------ |
+| 1.5    | 11/07/2026 | Antigravity | Atualização da Stack (K6, Terraform) e simplificação visual da tabela.    |
+| 1.4    | 06/07/2026 | Pedro Santos| Redesign completo da Home com animações de alto impacto.                  |
+| 1.3    | 04/07/2026 | Pedro Santos| Revisão profunda, correção de metadados e melhorias visuais.              |
+| 1.2    | 01/07/2026 | Pedro Santos| Refinamento Premium de UX/UI.                                             |
+| 1.1    | 13/06/2026 | Pedro Santos| Reestruturação arquitetural da documentação e introdução de guias DevEx.  |
+| 1.0    | 10/06/2026 | Pedro Santos| Fundação da documentação técnica e governança.                            |

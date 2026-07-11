@@ -69,6 +69,9 @@ Esta semana marcou a nossa retrospectiva final e fechamento de ciclo. Toda a equ
 
 ## Histórico de Versões
 
-| Versão | Data | Descrição | Autor |
-|--------|------|-----------|-------|
-| `1.0` | 11/07/2026 | Criação do documento de fechamento da Sprint 8 | Pedro Henrique P. Santos |
+--8<-- "_snippets/version_header.md"
+
+| Versão | Data       | Autor       | Descrição                                         |
+| :----- | :--------- | :---------- | :------------------------------------------------ |
+| 1.1    | 11/07/2026 | Antigravity | Correção de exibição no menu lateral (`.pages`)   |
+| 1.0    | 11/07/2026 | Pedro Santos| Criação do documento de fechamento da Sprint 8    |
