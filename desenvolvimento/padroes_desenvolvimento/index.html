@@ -1452,6 +1452,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#historico-de-versoes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Histórico de Versões
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -3745,6 +3756,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#historico-de-versoes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Histórico de Versões
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -3770,50 +3792,36 @@
   
 
 
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">Versão</th>
-<th style="text-align: left;">Data</th>
-<th style="text-align: left;">Autor</th>
-<th style="text-align: left;">Descrição</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;">1.1</td>
-<td style="text-align: left;">11/07/2026</td>
-<td style="text-align: left;">Antigravity</td>
-<td style="text-align: left;">Refatoração de formatação e tópicos</td>
-</tr>
-<tr>
-<td style="text-align: left;">1.0</td>
-<td style="text-align: left;">10/07/2026</td>
-<td style="text-align: left;">Antigravity</td>
-<td style="text-align: left;">Criação do documento de padrões</td>
-</tr>
-</tbody>
-</table>
 <h1 id="padroes-de-desenvolvimento-code-standards">Padrões de Desenvolvimento (Code Standards)<a class="headerlink" href="#padroes-de-desenvolvimento-code-standards" title="Permanent link">¶</a></h1>
 <p>A fim de garantir consistência, segurança e qualidade ao longo de todo o repositório <strong>EdTech</strong>, nossa equipe definiu os seguintes padrões de engenharia de software. <em>(Embora as regras de convivência estejam em <code>Gestão e Metodologia</code>, este documento foca estritamente nas regras técnicas da base de código).</em></p>
 <h2 id="1-fluxo-de-versionamento-git-flow">1. Fluxo de Versionamento (<abbr title="Sistema de controle de versão">Git</abbr> Flow)<a class="headerlink" href="#1-fluxo-de-versionamento-git-flow" title="Permanent link">¶</a></h2>
 <p>Adotamos um <strong><abbr title="Sistema de controle de versão">Git</abbr> Flow Simplificado</strong> em combinação com <strong>Trunk-Based Development</strong> nas sprints:</p>
 <ul>
-<li><strong><code>main</code></strong></li>
+<li><strong><code>main</code></strong><ul>
 <li>Branch de produção.</li>
 <li>Somente aceita código testado via Pull Request (<abbr title="Pull Request — Solicitação de integração de código">PR</abbr>).</li>
-<li><strong><code>develop</code></strong></li>
+</ul>
+</li>
+<li><strong><code>develop</code></strong><ul>
 <li>Branch de integração.</li>
 <li>Recebe os artefatos em homologação.</li>
-<li><strong><code>feature/nome-da-funcionalidade</code></strong></li>
+</ul>
+</li>
+<li><strong><code>feature/nome-da-funcionalidade</code></strong><ul>
 <li>Criação de novas funcionalidades.</li>
 <li>Exemplo: <code>feature/exportacao-csv</code>.</li>
-<li><strong><code>fix/nome-do-bug</code></strong></li>
+</ul>
+</li>
+<li><strong><code>fix/nome-do-bug</code></strong><ul>
 <li>Correção de defeitos.</li>
 <li>Exemplo: <code>fix/jwt-timeout</code>.</li>
-<li><strong><code>chore/nome-da-tarefa</code></strong></li>
+</ul>
+</li>
+<li><strong><code>chore/nome-da-tarefa</code></strong><ul>
 <li>Manutenção e atualizações de infraestrutura.</li>
 <li>Exemplo: <code>chore/atualiza-pom</code>.</li>
+</ul>
+</li>
 </ul>
 <blockquote>
 <p><strong>Obrigatório:</strong> Todo Pull Request deve ser aprovado via <strong>Code <abbr title="Revisão (Normalmente de código)">Review</abbr></strong> e não pode possuir vulnerabilidades mapeadas pelos fluxos de <abbr title="Continuous Integration / Continuous Delivery — Integração Contínua / Entrega Contínua">CI/CD</abbr> (GitHub Actions).</p>
@@ -3858,21 +3866,51 @@
 <h2 id="3-qualidade-de-codigo-linting-formatting">3. Qualidade de Código (Linting &amp; Formatting)<a class="headerlink" href="#3-qualidade-de-codigo-linting-formatting" title="Permanent link">¶</a></h2>
 <p>O projeto exige ferramentas de formatação rigorosa:</p>
 <ul>
-<li><strong><abbr title="Camada de interface visual do usuário">Frontend</abbr></strong></li>
+<li><strong><abbr title="Camada de interface visual do usuário">Frontend</abbr></strong><ul>
 <li>Utilizamos ESLint integrado com Prettier.</li>
 <li>O CI falhará se <code>npm run lint</code> reportar erros.</li>
-<li><strong><abbr title="Camada de servidor e banco de dados da aplicação">Backend</abbr></strong></li>
+</ul>
+</li>
+<li><strong><abbr title="Camada de servidor e banco de dados da aplicação">Backend</abbr></strong><ul>
 <li>Utilizamos Checkstyle e Spotless.</li>
 <li>As regras estão consolidadas nos arquivos XML da raiz e do backend.</li>
 <li>O CI não permite builds com violações de estilo de Java padrão.</li>
 </ul>
+</li>
+</ul>
 <h2 id="4-testes-e-documentacao">4. Testes e Documentação<a class="headerlink" href="#4-testes-e-documentacao" title="Permanent link">¶</a></h2>
-<ul>
-<li>Todo <abbr title="Pull Request — Solicitação de integração de código">PR</abbr> que introduzir novas rotas (Endpoints) deve possuir:</li>
+<p>Todo <abbr title="Pull Request — Solicitação de integração de código">PR</abbr> que introduzir novas rotas (Endpoints) deve possuir:</p>
+<ol>
 <li>Anotações de documentação nativas para o Swagger/OpenAPI (<code>@Operation</code>, <code>@ApiResponse</code>).</li>
 <li>Testes End-to-End associados, com asserções positivas e cenários de falha.</li>
-<li>A cobertura de testes do backend será monitorada na esteira de Continuous Integration utilizando contêineres de serviços nativos (PostgreSQL real em ambiente de testes).</li>
-</ul>
+</ol>
+<p>A cobertura de testes do backend será monitorada na esteira de Continuous Integration utilizando contêineres de serviços nativos (PostgreSQL real em ambiente de testes).</p>
+<hr>
+<h2 id="historico-de-versoes">Histórico de Versões<a class="headerlink" href="#historico-de-versoes" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Versão</th>
+<th style="text-align: center;">Data</th>
+<th style="text-align: left;">Descrição</th>
+<th style="text-align: left;">Autor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><code>1.1</code></td>
+<td style="text-align: center;">11/07/2026</td>
+<td style="text-align: left;">Correção de formatação e tópicos</td>
+<td style="text-align: left;">Pedro Henrique P. Santos</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>1.0</code></td>
+<td style="text-align: center;">10/07/2026</td>
+<td style="text-align: left;">Criação do documento de padrões</td>
+<td style="text-align: left;">Pedro Henrique P. Santos</td>
+</tr>
+</tbody>
+</table>
 
 
 
@@ -3893,7 +3931,7 @@
     <span class="md-icon" title="Última atualização">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="11 de julho de 2026 16:13:52 UTC">11 de julho de 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="11 de julho de 2026 19:31:06 UTC">11 de julho de 2026</span>
   </span>
 
     

@@ -2322,6 +2322,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#historico-de-versoes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Histórico de Versões
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -3840,6 +3851,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#historico-de-versoes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Histórico de Versões
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -3865,30 +3887,6 @@
   
 
 
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">Versão</th>
-<th style="text-align: left;">Data</th>
-<th style="text-align: left;">Autor</th>
-<th style="text-align: left;">Descrição</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;">1.1</td>
-<td style="text-align: left;">11/07/2026</td>
-<td style="text-align: left;">Antigravity</td>
-<td style="text-align: left;">Ajuste para orçamento estudantil (&lt; $50)</td>
-</tr>
-<tr>
-<td style="text-align: left;">1.0</td>
-<td style="text-align: left;">10/07/2026</td>
-<td style="text-align: left;">Antigravity</td>
-<td style="text-align: left;">Criação do documento</td>
-</tr>
-</tbody>
-</table>
 <h1 id="finops-e-previsibilidade-de-custos-tco"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 6h18v12H5zm9 3a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3M9 8a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2v-4a2 2 0 0 1-2-2zm-8 2h2v10h16v2H1z"></path></svg></span> FinOps e Previsibilidade de Custos (TCO)<a class="headerlink" href="#finops-e-previsibilidade-de-custos-tco" title="Permanent link">¶</a></h1>
 <p>A arquitetura do <strong>EdTech</strong> foi concebida primariamente sobre serviços gerenciados (<em>Serverless</em> e <em>PaaS</em>) no Google <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Platform (<abbr title="Google Cloud Platform">GCP</abbr>). Como o projeto foi desenvolvido em um contexto acadêmico, nosso principal requisito é manter o custo total do projeto estritamente abaixo do orçamento estudantil disponibilizado de <strong>$50.00 USD/mês</strong>.</p>
 <hr>
@@ -3904,19 +3902,25 @@
 <h2 id="2-cenario-base-orcamento-de-estudante">2. Cenário Base (Orçamento de Estudante)<a class="headerlink" href="#2-cenario-base-orcamento-de-estudante" title="Permanent link">¶</a></h2>
 <p><em>Contexto: Ambiente acadêmico com tráfego moderado, visando validação e demonstração, operando sob uma bolsa do Google <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> for Students.</em></p>
 <h3 id="21-cloud-sql-banco-de-dados">2.1. <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> <abbr title="Structured Query Language — Linguagem de Consulta Estruturada">SQL</abbr> (Banco de Dados)<a class="headerlink" href="#21-cloud-sql-banco-de-dados" title="Permanent link">¶</a></h3>
-<p>Para mantermos o custo baixo sem perder a consistência, utilizaremos instâncias de núcleo compartilhado (<em>Shared Core</em>):
-- <strong>Homologação/Produção Inicial (<code>db-f1-micro</code>, 10GB SSD)</strong>: ~$9.00 a $15.00 / mês.</p>
+<p>Para mantermos o custo baixo sem perder a consistência, utilizaremos instâncias de núcleo compartilhado (<em>Shared Core</em>):</p>
+<ul>
+<li><strong>Homologação/Produção Inicial (<code>db-f1-micro</code>, 10GB SSD)</strong>: ~$9.00 a $15.00 / mês.</li>
+</ul>
 <h3 id="22-cloud-run-backend-da-api">2.2. <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run (<abbr title="Camada de servidor e banco de dados da aplicação">Backend</abbr> da <abbr title="Application Programming Interface — Interface de Programação de Aplicação">API</abbr>)<a class="headerlink" href="#22-cloud-run-backend-da-api" title="Permanent link">¶</a></h3>
-<p>Cálculo considerando:
-- <strong>Alocação</strong>: 1 vCPU, 1 GB RAM por contêiner.
-- <strong>Requisições</strong>: ~10.000 requisições / mês.
-- <strong>Instâncias Mínimas</strong>: 0 (Escalonamento para zero habilitado para economizar recursos).</p>
+<p>Cálculo considerando:</p>
+<ul>
+<li><strong>Alocação</strong>: 1 vCPU, 1 GB RAM por contêiner.</li>
+<li><strong>Requisições</strong>: ~10.000 requisições / mês.</li>
+<li><strong>Instâncias Mínimas</strong>: 0 (Escalonamento para zero habilitado para economizar recursos).</li>
+</ul>
 <p><strong>Custo Estimado</strong>: Graças à Cota Gratuita (<em>Free Tier</em>) de 2 milhões de requisições mensais do <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run, o custo deste serviço para o cenário base será de <strong>$0.00 a $2.00 / mês</strong>.</p>
 <h3 id="23-cloud-storage-armazenamento-de-arquivos">2.3. <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Storage (Armazenamento de Arquivos)<a class="headerlink" href="#23-cloud-storage-armazenamento-de-arquivos" title="Permanent link">¶</a></h3>
-<p>Armazenamento Padrão (<em>Standard</em>).
-- <strong>Volume</strong>: 20 GB (documentos e metadados).
-- <strong>Custo de Armazenamento</strong>: ~<span class="arithmatex">\(0.026 por GB = **~\)</span>0.52 / mês<strong>.
-- </strong>Custo de Tráfego (<em>Egress</em>)<strong>: Assumindo 10 GB de download = ~<span class="arithmatex">\(0.12 por GB = **~\)</span>1.20 / mês</strong>.</p>
+<p>Armazenamento Padrão (<em>Standard</em>):</p>
+<ul>
+<li><strong>Volume</strong>: 20 GB (documentos e metadados).</li>
+<li><strong>Custo de Armazenamento</strong>: ~<span class="arithmatex">\(0.026 por GB = **~\)</span>0.52 / mês**.</li>
+<li><strong>Custo de Tráfego (<em>Egress</em>)</strong>: Assumindo 10 GB de download = ~<span class="arithmatex">\(0.12 por GB = **~\)</span>1.20 / mês**.</li>
+</ul>
 <h3 id="24-resumo-total-mensal">2.4. Resumo Total Mensal<a class="headerlink" href="#24-resumo-total-mensal" title="Permanent link">¶</a></h3>
 <table>
 <thead>
@@ -3953,15 +3957,46 @@
 </blockquote>
 <hr>
 <h2 id="3-praticas-de-otimizacao-adotadas">3. Práticas de Otimização Adotadas<a class="headerlink" href="#3-praticas-de-otimizacao-adotadas" title="Permanent link">¶</a></h2>
-<p>O projeto já possui uma arquitetura altamente focada em eficiência de custo:
-- <strong>Upload Direto ao <abbr title="Google Cloud Storage">GCS</abbr></strong>: O frontend (interface de usuário) envia arquivos diretamente ao Google <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Storage usando URLs pré-assinadas (<em>Signed URLs</em>). O <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run não processa o fluxo binário do arquivo, poupando custos enormes de memória e CPU.
-- <strong>Escalonamento para Zero (<em>Scale-to-Zero</em>)</strong>: O frontend estático custa zero na maior parte do tempo. O <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run desliga instâncias completamente de madrugada.
-- <strong>Limpeza Automática (<em>Lifecycle Rules</em>)</strong>: Arquivos temporários e exportações no bucket de armazenamento são configurados para expiração automática após 7 dias.</p>
+<p>O projeto já possui uma arquitetura altamente focada em eficiência de custo:</p>
+<ul>
+<li><strong>Upload Direto ao <abbr title="Google Cloud Storage">GCS</abbr></strong>: O frontend (interface de usuário) envia arquivos diretamente ao Google <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Storage usando URLs pré-assinadas (<em>Signed URLs</em>). O <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run não processa o fluxo binário do arquivo, poupando custos enormes de memória e CPU.</li>
+<li><strong>Escalonamento para Zero (<em>Scale-to-Zero</em>)</strong>: O frontend estático custa zero na maior parte do tempo. O <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run desliga instâncias completamente de madrugada.</li>
+<li><strong>Limpeza Automática (<em>Lifecycle Rules</em>)</strong>: Arquivos temporários e exportações no bucket de armazenamento são configurados para expiração automática após 7 dias.</li>
+</ul>
+<hr>
 <h2 id="4-alertas-orcamentarios-billing-alerts">4. Alertas Orçamentários (<em>Billing Alerts</em>)<a class="headerlink" href="#4-alertas-orcamentarios-billing-alerts" title="Permanent link">¶</a></h2>
-<p>Para evitar surpresas no cartão de crédito do estudante, é mandatório que a conta de faturamento do <abbr title="Google Cloud Platform">GCP</abbr> possua um orçamento (<code>Budget</code>) configurado de <strong><span class="arithmatex">\(50.00** com disparos em:
-- **50% (\)</span>25.00)</strong>: Aviso por email.
-- <strong>90% (<span class="arithmatex">\(45.00)**: Aviso Crítico.
-- **100% (\)</span>50.00)</strong>: Alerta para o Time de Desenvolvimento atuar e pausar recursos não críticos.</p>
+<p>Para evitar surpresas no cartão de crédito do estudante, é mandatório que a conta de faturamento do <abbr title="Google Cloud Platform">GCP</abbr> possua um orçamento (<code>Budget</code>) configurado de <strong>$50.00</strong> com disparos em:</p>
+<ul>
+<li><strong>50% ($25.00)</strong>: Aviso por email.</li>
+<li><strong>90% ($45.00)</strong>: Aviso Crítico.</li>
+<li><strong>100% ($50.00)</strong>: Alerta para o Time de Desenvolvimento atuar e pausar recursos não críticos.</li>
+</ul>
+<hr>
+<h2 id="historico-de-versoes">Histórico de Versões<a class="headerlink" href="#historico-de-versoes" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Versão</th>
+<th style="text-align: center;">Data</th>
+<th style="text-align: left;">Descrição</th>
+<th style="text-align: left;">Autor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><code>1.1</code></td>
+<td style="text-align: center;">11/07/2026</td>
+<td style="text-align: left;">Ajuste para orçamento estudantil (&lt; $50) e correção de formatação</td>
+<td style="text-align: left;">Pedro Henrique P. Santos</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>1.0</code></td>
+<td style="text-align: center;">10/07/2026</td>
+<td style="text-align: left;">Criação do documento</td>
+<td style="text-align: left;">Pedro Henrique P. Santos</td>
+</tr>
+</tbody>
+</table>
 
 
 
@@ -3982,7 +4017,7 @@
     <span class="md-icon" title="Última atualização">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="11 de julho de 2026 16:13:52 UTC">11 de julho de 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="11 de julho de 2026 19:31:06 UTC">11 de julho de 2026</span>
   </span>
 
     
