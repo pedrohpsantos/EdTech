@@ -318,7 +318,11 @@ jobs:
             --set-env-vars 'SPRING_PROFILES_ACTIVE=prod,SPRING_FLYWAY_ENABLED=true' \
             --set-secrets 'SPRING_DATASOURCE_URL=SPRING_DATASOURCE_URL:latest,SPRING_DATASOURCE_USERNAME=SPRING_DATASOURCE_USERNAME:latest,SPRING_DATASOURCE_PASSWORD=SPRING_DATASOURCE_PASSWORD:latest' || true
           
-          gcloud run jobs execute edtech-db-migration --region southamerica-east1 --wait || true
+          gcloud run jobs execute edtech-db-migration --region southamerica-east1 --wait || {
+            echo "Database Migration failed. Fetching logs..."
+            gcloud logging read 'resource.type="cloud_run_job" AND resource.labels.job_name="edtech-db-migration" AND severity>=ERROR' --limit 50 --format="value(textPayload)" --project=edtech-storage-501117
+            exit 1
+          }
           
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v4
@@ -399,7 +403,11 @@ jobs:
             -var="project_id=edtech-storage-501117" \
             -var="backend_image_tag=${{ github.sha }}" \
             -var="storage_bucket_name=edtech-vault-storage" \
-            -var="cors_allowed_origin=https://edtech-storage-501117.web.app"
+            -var="cors_allowed_origin=https://edtech-storage-501117.web.app" || {
+              echo "Terraform Apply failed. Fetching Cloud Run logs for debugging:"
+              gcloud logging read 'resource.type="cloud_run_revision" AND resource.labels.service_name="edtech-backend" AND severity>=ERROR' --limit 50 --format="value(textPayload)" --project=edtech-storage-501117
+              exit 1
+            }
 
   deploy-frontend:
     name: Deploy Frontend (Firebase)
