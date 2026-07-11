@@ -56,7 +56,7 @@ jobs:
           chmod +x mvnw
           ./mvnw clean package -DskipTests -T 1C -B
       - name: Upload Build Target
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: backend-target
           path: backend/target/
@@ -87,7 +87,7 @@ jobs:
           chmod +x mvnw
           ./mvnw verify -B -T 1C
       - name: Upload JaCoCo Report
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         if: always()
         with:
           name: jacoco-report
@@ -227,7 +227,7 @@ jobs:
         env:
           VITE_API_URL: https://edtech-backend-shv6qbpf4q-rj.a.run.app
       - name: Upload Frontend Artifact
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: frontend-dist
           path: frontend/dist/
@@ -443,7 +443,7 @@ jobs:
             } >> "$GITHUB_STEP_SUMMARY"
           fi
       - name: Upload K6 Summary
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         if: always()
         with:
           name: k6-summary
