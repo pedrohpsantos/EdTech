@@ -8,8 +8,8 @@ import com.edtech.model.Project;
 import com.edtech.model.ProjectMember;
 import com.edtech.model.ProjectRole;
 import com.edtech.model.User;
-import com.edtech.repository.DocumentRepository;
 import com.edtech.repository.DocumentCommentRepository;
+import com.edtech.repository.DocumentRepository;
 import com.edtech.repository.ProjectMemberRepository;
 import com.edtech.repository.ProjectRepository;
 import com.edtech.repository.UserRepository;
@@ -114,7 +114,8 @@ public class DocumentService {
           "Documento anexado no Cloud Storage: " + title);
 
       DocumentResponseDto responseDto = mapToDto(document);
-      notificationService.sendToTopic("/topic/projects/" + projectId, 
+      notificationService.sendToTopic(
+          "/topic/projects/" + projectId,
           Map.of("type", "DOCUMENT_UPLOADED", "document", responseDto));
 
       return responseDto;
@@ -268,41 +269,52 @@ public class DocumentService {
   }
 
   @Transactional(readOnly = true)
-  public java.util.List<com.edtech.dto.CommentResponseDto> getComments(UUID documentId, UUID userId) {
-    Document document = documentRepository.findById(documentId)
-        .orElseThrow(() -> new RuntimeException("Document not found"));
-    projectMemberRepository.findByProjectIdAndUserId(document.getProject().getId(), userId)
+  public java.util.List<com.edtech.dto.CommentResponseDto> getComments(
+      UUID documentId, UUID userId) {
+    Document document =
+        documentRepository
+            .findById(documentId)
+            .orElseThrow(() -> new RuntimeException("Document not found"));
+    projectMemberRepository
+        .findByProjectIdAndUserId(document.getProject().getId(), userId)
         .orElseThrow(() -> new RuntimeException("Access denied"));
 
-    return documentCommentRepository.findByDocumentIdOrderByCreatedAtAsc(documentId)
-        .stream().map(c -> {
-          com.edtech.dto.CommentResponseDto dto = new com.edtech.dto.CommentResponseDto();
-          dto.setId(c.getId());
-          dto.setContent(c.getContent());
-          dto.setCreatedAt(c.getCreatedAt());
-          dto.setAuthorId(c.getAuthor().getId());
-          dto.setAuthorName(c.getAuthor().getName());
-          return dto;
-        }).collect(java.util.stream.Collectors.toList());
+    return documentCommentRepository.findByDocumentIdOrderByCreatedAtAsc(documentId).stream()
+        .map(
+            c -> {
+              com.edtech.dto.CommentResponseDto dto = new com.edtech.dto.CommentResponseDto();
+              dto.setId(c.getId());
+              dto.setContent(c.getContent());
+              dto.setCreatedAt(c.getCreatedAt());
+              dto.setAuthorId(c.getAuthor().getId());
+              dto.setAuthorName(c.getAuthor().getName());
+              return dto;
+            })
+        .collect(java.util.stream.Collectors.toList());
   }
 
   @Transactional
-  public com.edtech.dto.CommentResponseDto addComment(UUID documentId, UUID userId, String content) {
-    Document document = documentRepository.findById(documentId)
-        .orElseThrow(() -> new RuntimeException("Document not found"));
-    User user = userRepository.findById(userId)
-        .orElseThrow(() -> new RuntimeException("User not found"));
-    projectMemberRepository.findByProjectIdAndUserId(document.getProject().getId(), userId)
+  public com.edtech.dto.CommentResponseDto addComment(
+      UUID documentId, UUID userId, String content) {
+    Document document =
+        documentRepository
+            .findById(documentId)
+            .orElseThrow(() -> new RuntimeException("Document not found"));
+    User user =
+        userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+    projectMemberRepository
+        .findByProjectIdAndUserId(document.getProject().getId(), userId)
         .orElseThrow(() -> new RuntimeException("Access denied"));
 
     com.edtech.model.DocumentComment comment = new com.edtech.model.DocumentComment();
     comment.setDocument(document);
     comment.setAuthor(user);
     comment.setContent(content);
-    
+
     comment = documentCommentRepository.save(comment);
 
-    auditLogService.logDocumentAction(userId, AcaoAuditoria.REVIEW_DOCUMENT, documentId, "Adicionou um comentário ao documento.");
+    auditLogService.logDocumentAction(
+        userId, AcaoAuditoria.REVIEW_DOCUMENT, documentId, "Adicionou um comentário ao documento.");
 
     com.edtech.dto.CommentResponseDto dto = new com.edtech.dto.CommentResponseDto();
     dto.setId(comment.getId());
@@ -310,10 +322,11 @@ public class DocumentService {
     dto.setCreatedAt(comment.getCreatedAt());
     dto.setAuthorId(comment.getAuthor().getId());
     dto.setAuthorName(comment.getAuthor().getName());
-    
-    notificationService.sendToTopic("/topic/projects/" + document.getProject().getId(), 
+
+    notificationService.sendToTopic(
+        "/topic/projects/" + document.getProject().getId(),
         Map.of("type", "NEW_COMMENT", "documentId", documentId, "comment", dto));
-    
+
     return dto;
   }
 
@@ -353,25 +366,30 @@ public class DocumentService {
             + ".Feedback: "
             + (feedback != null && !feedback.trim().isEmpty() ? feedback : "Sem feedback");
     auditLogService.logDocumentAction(reviewerId, acao, documentId, details);
-    
+
     DocumentResponseDto responseDto = mapToDto(savedDocument);
-    notificationService.sendToTopic("/topic/projects/" + document.getProject().getId(), 
+    notificationService.sendToTopic(
+        "/topic/projects/" + document.getProject().getId(),
         Map.of("type", "DOCUMENT_REVIEWED", "document", responseDto));
-        
+
     return responseDto;
   }
 
   @Transactional
   public DocumentResponseDto toggleStar(UUID documentId, UUID userId) {
-    Document document = documentRepository.findById(documentId)
-        .orElseThrow(() -> new RuntimeException("Document not found"));
+    Document document =
+        documentRepository
+            .findById(documentId)
+            .orElseThrow(() -> new RuntimeException("Document not found"));
 
-    projectMemberRepository.findByProjectIdAndUserId(document.getProject().getId(), userId)
-        .orElseThrow(() -> new RuntimeException("Access denied: You are not a member of this project"));
+    projectMemberRepository
+        .findByProjectIdAndUserId(document.getProject().getId(), userId)
+        .orElseThrow(
+            () -> new RuntimeException("Access denied: You are not a member of this project"));
 
     document.setStarred(!document.isStarred());
     Document savedDocument = documentRepository.save(document);
-    
+
     return mapToDto(savedDocument);
   }
 }

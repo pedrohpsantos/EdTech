@@ -24,7 +24,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 public class AuditLogServiceTest {
 
   @Mock private AuditLogRepository auditLogRepository;
-  
+
   @Captor private ArgumentCaptor<AuditLog> logCaptor;
 
   @InjectMocks private AuditLogService auditLogService;
@@ -53,7 +53,7 @@ public class AuditLogServiceTest {
     assertEquals(resourceId, captured.getResourceId());
     assertEquals("192.168.1.1", captured.getIpAddress());
     assertEquals("Test log", captured.getDetails());
-    
+
     assertNotNull(result);
     assertEquals("192.168.1.1", result.getIpAddress());
   }
@@ -72,7 +72,7 @@ public class AuditLogServiceTest {
     verify(auditLogRepository).save(logCaptor.capture());
     AuditLog captured = logCaptor.getValue();
     assertEquals("10.0.0.1", captured.getIpAddress());
-    
+
     assertNotNull(result);
     assertEquals("10.0.0.1", result.getIpAddress());
   }
@@ -91,7 +91,7 @@ public class AuditLogServiceTest {
     verify(auditLogRepository).save(logCaptor.capture());
     AuditLog captured = logCaptor.getValue();
     assertEquals("203.0.113.195", captured.getIpAddress());
-    
+
     assertNotNull(result);
   }
 
@@ -105,7 +105,7 @@ public class AuditLogServiceTest {
     verify(auditLogRepository).save(logCaptor.capture());
     AuditLog captured = logCaptor.getValue();
     assertEquals("UNKNOWN", captured.getIpAddress());
-    
+
     assertNotNull(result);
   }
 

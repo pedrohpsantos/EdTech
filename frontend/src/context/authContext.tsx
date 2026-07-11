@@ -8,7 +8,7 @@ interface AuthContextType {
   isAuthenticated: boolean;
   isLoading: boolean;
   handleLogin: (email: string, senha: string) => Promise<ApiResponse<any>>;
-  handleRegister: (nome: string, email: string, senha: string) => Promise<ApiResponse<any>>;
+  handleRegister: (nome: string, email: string, senha: string, role?: string) => Promise<ApiResponse<any>>;
   handleLogout: () => Promise<void>;
   checkAuth: () => Promise<void>;
 }
@@ -60,8 +60,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     nome: string,
     email: string,
     senha: string,
+    role: string = 'RESEARCHER'
   ): Promise<ApiResponse<any>> => {
-    const resultado = await register(nome, email, senha);
+    const resultado = await register(nome, email, senha, role);
     return resultado;
   };
   useEffect(() => {

@@ -1,6 +1,5 @@
 package com.edtech.config;
 
-import com.edtech.model.Project;
 import com.edtech.model.User;
 import com.edtech.model.UserRole;
 import com.edtech.repository.ProjectRepository;
@@ -43,9 +42,27 @@ public class DatabaseSeeder implements CommandLineRunner {
     String defaultPasswordHash = passwordEncoder.encode("Demo@1234");
 
     // 1. Criar usuários
-    User pesquisador = seedUser("Pesquisador Demo", "pesquisador.demo@unb.br", defaultPasswordHash, UserRole.RESEARCHER, demoInstitutionId);
-    User orientador = seedUser("Orientador Demo", "orientador.demo@unb.br", defaultPasswordHash, UserRole.ADVISOR, demoInstitutionId);
-    User auditor = seedUser("Auditor Demo", "auditor.demo@unb.br", defaultPasswordHash, UserRole.AUDITOR, demoInstitutionId);
+    User pesquisador =
+        seedUser(
+            "Pesquisador Demo",
+            "pesquisador.demo@unb.br",
+            defaultPasswordHash,
+            UserRole.RESEARCHER,
+            demoInstitutionId);
+    User orientador =
+        seedUser(
+            "Orientador Demo",
+            "orientador.demo@unb.br",
+            defaultPasswordHash,
+            UserRole.ADVISOR,
+            demoInstitutionId);
+    User auditor =
+        seedUser(
+            "Auditor Demo",
+            "auditor.demo@unb.br",
+            defaultPasswordHash,
+            UserRole.AUDITOR,
+            demoInstitutionId);
 
     // 2. Criar projetos fake
     if (projectRepository.count() == 0) {
@@ -59,13 +76,15 @@ public class DatabaseSeeder implements CommandLineRunner {
 
       com.edtech.model.Project p2 = new com.edtech.model.Project();
       p2.setTitle("Classificação de Expressão Genômica");
-      p2.setDescription("Dataset com 10.000 perfis genômicos focados em detecção de anomalias raras.");
+      p2.setDescription(
+          "Dataset com 10.000 perfis genômicos focados em detecção de anomalias raras.");
       p2.setAdvisor(orientador);
       projectRepository.save(p2);
 
       com.edtech.model.Project p3 = new com.edtech.model.Project();
       p3.setTitle("Auditoria Algorítmica em Modelos de Crédito");
-      p3.setDescription("Projeto voltado à detecção de bias em inteligência artificial do setor financeiro.");
+      p3.setDescription(
+          "Projeto voltado à detecção de bias em inteligência artificial do setor financeiro.");
       p3.setAdvisor(orientador);
       projectRepository.save(p3);
 
@@ -75,7 +94,8 @@ public class DatabaseSeeder implements CommandLineRunner {
     logger.info("DatabaseSeeder concluído.");
   }
 
-  private User seedUser(String name, String email, String passwordHash, UserRole role, UUID institutionId) {
+  private User seedUser(
+      String name, String email, String passwordHash, UserRole role, UUID institutionId) {
     String normalizedEmail = email.toLowerCase(Locale.ROOT);
     Optional<User> existing = userRepository.findByEmailIgnoreCase(normalizedEmail);
     if (existing.isEmpty()) {

@@ -12,10 +12,12 @@ import com.edtech.model.User;
 import com.edtech.security.RateLimitingService;
 import com.edtech.service.JwtService;
 import com.edtech.service.RecoveryService;
+import com.edtech.service.TwoFactorAuthService;
 import com.edtech.service.UserService;
 import io.github.bucket4j.Bucket;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -24,8 +26,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.edtech.service.TwoFactorAuthService;
-import java.util.Map;
 
 /** Documentação para AuthController. */
 @RestController
@@ -78,10 +78,10 @@ public class AuthController {
     }
 
     User user = userService.authenticate(request.email(), request.password());
-    
+
     if (user.isMfaEnabled()) {
-        return ResponseEntity.status(HttpStatus.ACCEPTED)
-            .body(Map.of("mfaRequired", true, "email", user.getEmail()));
+      return ResponseEntity.status(HttpStatus.ACCEPTED)
+          .body(Map.of("mfaRequired", true, "email", user.getEmail()));
     }
 
     String token = jwtService.generateToken(user);
@@ -90,7 +90,8 @@ public class AuthController {
 
   @PostMapping("/login/verify-2fa")
   public ResponseEntity<?> verify2FaLogin(
-      @Valid @RequestBody com.edtech.dto.Verify2FaLoginDto request, HttpServletRequest httpRequest) {
+      @Valid @RequestBody com.edtech.dto.Verify2FaLoginDto request,
+      HttpServletRequest httpRequest) {
     Bucket bucket = rateLimitingService.resolveBucket(httpRequest.getRemoteAddr());
     if (!bucket.tryConsume(1)) {
       throw new RateLimitExceededException(
@@ -114,37 +115,40 @@ public class AuthController {
   @GetMapping("/2fa/setup")
   public ResponseEntity<?> setup2Fa(Authentication authentication) {
     User user = (User) authentication.getPrincipal();
-    
+
     if (user.isMfaEnabled()) {
-        return ResponseEntity.badRequest().body("2FA is already enabled.");
+      return ResponseEntity.badRequest().body("2FA is already enabled.");
     }
 
     String secret = user.getMfaSecret();
     if (secret == null || secret.isEmpty()) {
-        secret = twoFactorAuthService.generateSecret();
-        user.setMfaSecret(secret);
-        userService.saveUserWithoutHash(user); // Wait, we need a method to save the user without rehashing
+      secret = twoFactorAuthService.generateSecret();
+      user.setMfaSecret(secret);
+      userService.saveUserWithoutHash(
+          user); // Wait, we need a method to save the user without rehashing
     }
 
     try {
-        String qrCodeUri = twoFactorAuthService.getQrCodeImageUri(secret, user.getEmail());
-        return ResponseEntity.ok(Map.of("secret", secret, "qrCodeUri", qrCodeUri));
+      String qrCodeUri = twoFactorAuthService.getQrCodeImageUri(secret, user.getEmail());
+      return ResponseEntity.ok(Map.of("secret", secret, "qrCodeUri", qrCodeUri));
     } catch (Exception e) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to generate QR Code");
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+          .body("Failed to generate QR Code");
     }
   }
 
   @PostMapping("/2fa/enable")
-  public ResponseEntity<?> enable2Fa(@RequestBody VerifyCodeDto request, Authentication authentication) {
+  public ResponseEntity<?> enable2Fa(
+      @RequestBody VerifyCodeDto request, Authentication authentication) {
     User user = (User) authentication.getPrincipal();
 
     if (user.isMfaEnabled()) {
-        return ResponseEntity.badRequest().body("2FA is already enabled.");
+      return ResponseEntity.badRequest().body("2FA is already enabled.");
     }
 
     boolean isValid = twoFactorAuthService.verifyCode(user.getMfaSecret(), request.code());
     if (!isValid) {
-        return ResponseEntity.badRequest().body("Invalid 2FA code.");
+      return ResponseEntity.badRequest().body("Invalid 2FA code.");
     }
 
     user.setMfaEnabled(true);

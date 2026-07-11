@@ -15,9 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
- * Controller para buscar logs de auditoria.
- */
+/** Controller para buscar logs de auditoria. */
 @RestController
 @RequestMapping("/api/audit-logs")
 public class AuditController {
@@ -48,60 +46,67 @@ public class AuditController {
   public ResponseEntity<List<AuditLogDto>> getAuditLogs(
       @RequestParam(required = false) String search,
       @RequestParam(required = false) String action) {
-    
+
     List<AuditLog> logs = auditLogRepository.findAllByOrderByCreatedAtDesc();
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
 
-    List<AuditLogDto> dtos = logs.stream().map(log -> {
-      AuditLogDto dto = new AuditLogDto();
-      dto.setId(log.getId().toString());
-      dto.setTimestamp(log.getCreatedAt().format(formatter));
-      dto.setAction(log.getAction().name());
-      
-      User user = userRepository.findById(log.getUserId()).orElse(null);
-      dto.setUserName(user != null ? user.getName() : "Unknown");
-      
-      dto.setIp(log.getIpAddress());
-      dto.setDetails(log.getDetails());
-      
-      // Determine Action Class and Severity based on Action
-      switch (log.getAction()) {
-        case LOGIN_SUCCESS:
-        case DOCUMENT_APPROVED:
-          dto.setActionClass("green");
-          dto.setSeverity("INFO");
-          break;
-        case LOGIN_FAILED:
-        case DOCUMENT_REJECTED:
-        case MEMBER_JOINED:
-          dto.setActionClass("orange");
-          dto.setSeverity("WARNING");
-          break;
-        case DELETE_DOCUMENT:
-          dto.setActionClass("red");
-          dto.setSeverity("CRITICAL");
-          break;
-        default:
-          dto.setActionClass("blue");
-          dto.setSeverity("INFO");
-      }
-      return dto;
-    }).collect(Collectors.toList());
+    List<AuditLogDto> dtos =
+        logs.stream()
+            .map(
+                log -> {
+                  AuditLogDto dto = new AuditLogDto();
+                  dto.setId(log.getId().toString());
+                  dto.setTimestamp(log.getCreatedAt().format(formatter));
+                  dto.setAction(log.getAction().name());
+
+                  User user = userRepository.findById(log.getUserId()).orElse(null);
+                  dto.setUserName(user != null ? user.getName() : "Unknown");
+
+                  dto.setIp(log.getIpAddress());
+                  dto.setDetails(log.getDetails());
+
+                  // Determine Action Class and Severity based on Action
+                  switch (log.getAction()) {
+                    case LOGIN_SUCCESS:
+                    case DOCUMENT_APPROVED:
+                      dto.setActionClass("green");
+                      dto.setSeverity("INFO");
+                      break;
+                    case LOGIN_FAILED:
+                    case DOCUMENT_REJECTED:
+                    case MEMBER_JOINED:
+                      dto.setActionClass("orange");
+                      dto.setSeverity("WARNING");
+                      break;
+                    case DELETE_DOCUMENT:
+                      dto.setActionClass("red");
+                      dto.setSeverity("CRITICAL");
+                      break;
+                    default:
+                      dto.setActionClass("blue");
+                      dto.setSeverity("INFO");
+                  }
+                  return dto;
+                })
+            .collect(Collectors.toList());
 
     if (search != null && !search.isEmpty()) {
       String s = search.toLowerCase();
-      dtos = dtos.stream().filter(dto -> 
-          dto.getAction().toLowerCase().contains(s) 
-          || (dto.getDetails() != null && dto.getDetails().toLowerCase().contains(s)) 
-          || dto.getUserName().toLowerCase().contains(s) 
-          || dto.getIp().contains(s)
-      ).collect(Collectors.toList());
+      dtos =
+          dtos.stream()
+              .filter(
+                  dto ->
+                      dto.getAction().toLowerCase().contains(s)
+                          || (dto.getDetails() != null
+                              && dto.getDetails().toLowerCase().contains(s))
+                          || dto.getUserName().toLowerCase().contains(s)
+                          || dto.getIp().contains(s))
+              .collect(Collectors.toList());
     }
 
     if (action != null && !action.isEmpty() && !action.equals("Todas as Ações")) {
-      dtos = dtos.stream()
-          .filter(dto -> dto.getAction().equals(action))
-          .collect(Collectors.toList());
+      dtos =
+          dtos.stream().filter(dto -> dto.getAction().equals(action)).collect(Collectors.toList());
     }
 
     return ResponseEntity.ok(dtos);
@@ -128,13 +133,20 @@ public class AuditController {
 
     if (dtos != null) {
       for (AuditLogDto dto : dtos) {
-        csv.append(escapeCsv(dto.getId())).append(",")
-            .append(escapeCsv(dto.getTimestamp())).append(",")
-            .append(escapeCsv(dto.getAction())).append(",")
-            .append(escapeCsv(dto.getUserName())).append(",")
-            .append(escapeCsv(dto.getIp())).append(",")
-            .append(escapeCsv(dto.getDetails())).append(",")
-            .append(escapeCsv(dto.getSeverity())).append("\n");
+        csv.append(escapeCsv(dto.getId()))
+            .append(",")
+            .append(escapeCsv(dto.getTimestamp()))
+            .append(",")
+            .append(escapeCsv(dto.getAction()))
+            .append(",")
+            .append(escapeCsv(dto.getUserName()))
+            .append(",")
+            .append(escapeCsv(dto.getIp()))
+            .append(",")
+            .append(escapeCsv(dto.getDetails()))
+            .append(",")
+            .append(escapeCsv(dto.getSeverity()))
+            .append("\n");
       }
     }
 
@@ -142,9 +154,7 @@ public class AuditController {
     headers.add("Content-Disposition", "attachment; filename=\"audit_logs.csv\"");
     headers.add("Content-Type", "text/csv; charset=UTF-8");
 
-    return ResponseEntity.ok()
-        .headers(headers)
-        .body(csv.toString());
+    return ResponseEntity.ok().headers(headers).body(csv.toString());
   }
 
   private String escapeCsv(String value) {

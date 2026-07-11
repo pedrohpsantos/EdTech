@@ -1,8 +1,8 @@
 package com.edtech.service;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import com.edtech.model.User;
 import com.edtech.model.UserRole;
@@ -98,7 +98,7 @@ public class JwtServiceTest {
   @MockitoSettings(strictness = Strictness.LENIENT)
   void isValid_WithDifferentUser_ReturnsFalse() {
     String token = jwtService.generateToken(mockUser);
-    
+
     User differentUser = mock(User.class);
     when(differentUser.getEmail()).thenReturn("other@unb.br");
 

@@ -46,11 +46,14 @@ public class SecurityConfig {
             session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .exceptionHandling(
             exception -> exception.authenticationEntryPoint(authenticationEntryPoint))
-        .headers(headers -> headers
-            .httpStrictTransportSecurity(hsts -> hsts.includeSubDomains(true).maxAgeInSeconds(31536000))
-            .frameOptions(frame -> frame.deny())
-            .contentSecurityPolicy(csp -> csp.policyDirectives("default-src 'self'; frame-ancestors 'none';"))
-        )
+        .headers(
+            headers ->
+                headers
+                    .httpStrictTransportSecurity(
+                        hsts -> hsts.includeSubDomains(true).maxAgeInSeconds(31536000))
+                    .frameOptions(frame -> frame.deny())
+                    .contentSecurityPolicy(
+                        csp -> csp.policyDirectives("default-src 'self'; frame-ancestors 'none';")))
         .authorizeHttpRequests(
             auth ->
                 auth.requestMatchers(HttpMethod.OPTIONS, "/**")

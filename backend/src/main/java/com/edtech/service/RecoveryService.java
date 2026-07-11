@@ -77,7 +77,7 @@ public class RecoveryService {
   @Transactional
   public boolean resetPassword(String email, String code, String newPassword) {
     String normalizedEmail = email.trim().toLowerCase(Locale.ROOT);
-    
+
     // Demo accounts cannot reset password
     if (normalizedEmail.endsWith(".demo@unb.br")) {
       return false;

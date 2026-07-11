@@ -29,8 +29,7 @@ class AuditTrailCsvExporterTest {
 
     String csv = new String(exporter.export(List.of(log)), StandardCharsets.UTF_8);
 
-    assertTrue(
-        csv.startsWith("data_hora,usuario_id,acao,tipo_recurso,id_recurso,ip,detalhes\r\n"));
+    assertTrue(csv.startsWith("data_hora,usuario_id,acao,tipo_recurso,id_recurso,ip,detalhes\r\n"));
     assertTrue(csv.contains(userId.toString()));
     assertTrue(csv.contains(resourceId.toString()));
     assertTrue(csv.endsWith("\"linha, \"\"dois\"\"\nquebra\"\r\n"));

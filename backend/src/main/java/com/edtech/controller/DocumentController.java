@@ -109,16 +109,14 @@ public class DocumentController {
 
   @PatchMapping("/{id}/star")
   public ResponseEntity<DocumentResponseDto> toggleStar(
-      @PathVariable UUID id,
-      Authentication authentication) {
+      @PathVariable UUID id, Authentication authentication) {
     User user = (User) authentication.getPrincipal();
     return ResponseEntity.ok(documentService.toggleStar(id, user.getId()));
   }
 
   @GetMapping("/{id}/comments")
   public ResponseEntity<java.util.List<com.edtech.dto.CommentResponseDto>> getComments(
-      @PathVariable UUID id,
-      Authentication authentication) {
+      @PathVariable UUID id, Authentication authentication) {
     User user = (User) authentication.getPrincipal();
     return ResponseEntity.ok(documentService.getComments(id, user.getId()));
   }

@@ -4,6 +4,8 @@ import com.edtech.model.User;
 import com.edtech.model.UserRole;
 import com.edtech.repository.UserRepository;
 import com.edtech.service.LaboratoryTokenService;
+import java.util.Map;
+import java.util.Optional;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,9 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Map;
-import java.util.Optional;
-
 @RestController
 @RequestMapping("/api/v1/laboratory")
 public class LaboratoryController {
@@ -23,7 +22,8 @@ public class LaboratoryController {
   private final LaboratoryTokenService laboratoryTokenService;
   private final UserRepository userRepository;
 
-  public LaboratoryController(LaboratoryTokenService laboratoryTokenService, UserRepository userRepository) {
+  public LaboratoryController(
+      LaboratoryTokenService laboratoryTokenService, UserRepository userRepository) {
     this.laboratoryTokenService = laboratoryTokenService;
     this.userRepository = userRepository;
   }
@@ -32,15 +32,17 @@ public class LaboratoryController {
   public ResponseEntity<?> getLaboratoryToken(@AuthenticationPrincipal UserDetails userDetails) {
     Optional<User> userOpt = userRepository.findByEmailIgnoreCase(userDetails.getUsername());
     if (userOpt.isEmpty() || userOpt.get().getRole() != UserRole.ADVISOR) {
-      return ResponseEntity.status(403).body(Map.of("error", "Apenas orientadores podem gerar tokens do laboratorio"));
+      return ResponseEntity.status(403)
+          .body(Map.of("error", "Apenas orientadores podem gerar tokens do laboratorio"));
     }
-    
+
     String token = laboratoryTokenService.generateToken(userOpt.get().getId());
     return ResponseEntity.ok(Map.of("token", token, "expires_in", "Final da semana"));
   }
 
   @PostMapping("/join")
-  public ResponseEntity<?> joinLaboratory(@AuthenticationPrincipal UserDetails userDetails, @RequestBody Map<String, String> request) {
+  public ResponseEntity<?> joinLaboratory(
+      @AuthenticationPrincipal UserDetails userDetails, @RequestBody Map<String, String> request) {
     String token = request.get("token");
     if (token == null || token.isEmpty()) {
       return ResponseEntity.badRequest().body(Map.of("error", "O campo token e obrigatorio"));
@@ -62,10 +64,10 @@ public class LaboratoryController {
     currentUser.setInstitutionId(advisor.getInstitutionId());
     userRepository.save(currentUser);
 
-    return ResponseEntity.ok(Map.of(
-        "message", "Vinculado ao laboratorio com sucesso", 
-        "advisor_name", advisor.getName(),
-        "institution_id", advisor.getInstitutionId()
-    ));
+    return ResponseEntity.ok(
+        Map.of(
+            "message", "Vinculado ao laboratorio com sucesso",
+            "advisor_name", advisor.getName(),
+            "institution_id", advisor.getInstitutionId()));
   }
 }

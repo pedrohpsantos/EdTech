@@ -23,7 +23,9 @@ public class UserService {
   private static final java.security.SecureRandom SECURE_RANDOM = new java.security.SecureRandom();
 
   /** Documentação para o método UserService. */
-  public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder,
+  public UserService(
+      UserRepository userRepository,
+      PasswordEncoder passwordEncoder,
       com.edtech.repository.VerificationTokenRepository verificationTokenRepository,
       EmailService emailService) {
     this.userRepository = userRepository;
@@ -50,8 +52,7 @@ public class UserService {
     if (normalizedEmail.contains("auditor") && user.getRole() != UserRole.AUDITOR) {
       user.setRole(UserRole.AUDITOR);
       roleChanged = true;
-    } else if ((normalizedEmail.contains("orientador") 
-        || normalizedEmail.contains("advisor")) 
+    } else if ((normalizedEmail.contains("orientador") || normalizedEmail.contains("advisor"))
         && user.getRole() != UserRole.ADVISOR) {
       user.setRole(UserRole.ADVISOR);
       roleChanged = true;
@@ -86,14 +87,15 @@ public class UserService {
             passwordEncoder.encode(request.password()),
             initialRole,
             java.util.UUID.fromString("00000000-0000-0000-0000-000000000001"));
-    
+
     user.setActive(false);
     userRepository.save(user);
 
     verificationTokenRepository.deleteByEmail(normalizedEmail);
     String code = String.format("%06d", SECURE_RANDOM.nextInt(999999));
     com.edtech.model.VerificationToken token =
-        new com.edtech.model.VerificationToken(code, normalizedEmail, java.time.LocalDateTime.now().plusMinutes(15));
+        new com.edtech.model.VerificationToken(
+            code, normalizedEmail, java.time.LocalDateTime.now().plusMinutes(15));
     verificationTokenRepository.save(token);
 
     emailService.sendVerificationEmail(normalizedEmail, code);

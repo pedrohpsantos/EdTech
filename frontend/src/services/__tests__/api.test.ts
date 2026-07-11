@@ -76,7 +76,7 @@ describe('api service', () => {
       const mockUser = { id: 1, name: 'New User' };
       (mAxios.post as any).mockResolvedValueOnce({ data: { token: 'mockToken2', user: mockUser } });
       
-      const result = await apiModule.register('New User', 'test@test.com', 'password');
+      const result = await apiModule.register('New User', 'test@test.com', 'password', 'RESEARCHER');
       expect(result.sucesso).toBe(true);
       expect(result.dados).toEqual(mockUser);
       expect(localStorage.getItem('token')).toBe('mockToken2');
@@ -86,7 +86,7 @@ describe('api service', () => {
       const error = { message: 'Network error' };
       (mAxios.post as any).mockRejectedValueOnce(error);
       
-      const result = await apiModule.register('User', 'test@test.com', 'pass');
+      const result = await apiModule.register('User', 'test@test.com', 'pass', 'RESEARCHER');
       expect(result.sucesso).toBe(false);
       expect(result.mensagem).toBe('Network error');
     });

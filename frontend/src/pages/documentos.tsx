@@ -25,7 +25,7 @@ const Documentos: React.FC = () => {
   // React Query Hooks
   const { data: documents = [], isLoading: loadingDocs } = useDocuments('', filterTitle);
   const { mutateAsync: getUrl } = useDownloadUrl();
-  const { mutateAsync: uploadDoc } = useUploadDocument();
+  const { mutateAsync: _uploadDoc } = useUploadDocument();
   const { mutateAsync: toggleStar } = useToggleStar();
 
   const showToast = (message: string) => {

@@ -32,18 +32,43 @@ public class DocumentComment {
   }
 
   // Getters and Setters
-  public UUID getId() { return id; }
-  public void setId(UUID id) { this.id = id; }
+  public UUID getId() {
+    return id;
+  }
 
-  public Document getDocument() { return document; }
-  public void setDocument(Document document) { this.document = document; }
+  public void setId(UUID id) {
+    this.id = id;
+  }
 
-  public User getAuthor() { return author; }
-  public void setAuthor(User author) { this.author = author; }
+  public Document getDocument() {
+    return document;
+  }
 
-  public String getContent() { return content; }
-  public void setContent(String content) { this.content = content; }
+  public void setDocument(Document document) {
+    this.document = document;
+  }
 
-  public ZonedDateTime getCreatedAt() { return createdAt; }
-  public void setCreatedAt(ZonedDateTime createdAt) { this.createdAt = createdAt; }
+  public User getAuthor() {
+    return author;
+  }
+
+  public void setAuthor(User author) {
+    this.author = author;
+  }
+
+  public String getContent() {
+    return content;
+  }
+
+  public void setContent(String content) {
+    this.content = content;
+  }
+
+  public ZonedDateTime getCreatedAt() {
+    return createdAt;
+  }
+
+  public void setCreatedAt(ZonedDateTime createdAt) {
+    this.createdAt = createdAt;
+  }
 }

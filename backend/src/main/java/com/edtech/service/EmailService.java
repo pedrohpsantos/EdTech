@@ -35,14 +35,18 @@ public class EmailService {
             + "Equipe EdTech");
 
     logger.info("======= E-MAIL SIMULADO NO CONSOLE =======");
-    logger.info("De: noreply@edtech.com\nPara: {}\nAssunto: {}\nCorpo:\n{}", 
-        message.getTo()[0], message.getSubject(), message.getText());
+    logger.info(
+        "De: noreply@edtech.com\nPara: {}\nAssunto: {}\nCorpo:\n{}",
+        message.getTo()[0],
+        message.getSubject(),
+        message.getText());
     logger.info("=========================================");
 
     try {
       mailSender.send(message);
     } catch (MailException ex) {
-      logger.warn("Não foi possível enviar e-mail real via SMTP (verifique credenciais). Usando apenas simulação no console.");
+      logger.warn(
+          "Não foi possível enviar e-mail real via SMTP (verifique credenciais). Usando apenas simulação no console.");
     }
   }
 
@@ -63,14 +67,18 @@ public class EmailService {
             + "Equipe EdTech");
 
     logger.info("======= E-MAIL SIMULADO NO CONSOLE =======");
-    logger.info("De: noreply@edtech.com\nPara: {}\nAssunto: {}\nCorpo:\n{}", 
-        message.getTo()[0], message.getSubject(), message.getText());
+    logger.info(
+        "De: noreply@edtech.com\nPara: {}\nAssunto: {}\nCorpo:\n{}",
+        message.getTo()[0],
+        message.getSubject(),
+        message.getText());
     logger.info("=========================================");
 
     try {
       mailSender.send(message);
     } catch (MailException ex) {
-      logger.warn("Não foi possível enviar e-mail real via SMTP (verifique credenciais). Usando apenas simulação no console.");
+      logger.warn(
+          "Não foi possível enviar e-mail real via SMTP (verifique credenciais). Usando apenas simulação no console.");
     }
   }
 }

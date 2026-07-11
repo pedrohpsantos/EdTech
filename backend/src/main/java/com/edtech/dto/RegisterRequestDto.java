@@ -16,4 +16,5 @@ public record RegisterRequestDto(
         @Size(max = 180)
         String email,
     @NotBlank(message = "A senha é obrigatória") @Size(min = 8, max = 120) String password,
-    @jakarta.validation.constraints.NotNull(message = "O perfil (role) é obrigatório") com.edtech.model.UserRole role) {}
+    @jakarta.validation.constraints.NotNull(message = "O perfil (role) é obrigatório")
+        com.edtech.model.UserRole role) {}
