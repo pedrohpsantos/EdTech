@@ -314,6 +314,7 @@ jobs:
             --image southamerica-east1-docker.pkg.dev/edtech-storage-501117/cloud-run-source-deploy/edtech-backend:${{ github.sha }} \
             --region southamerica-east1 \
             --tasks 1 \
+            --set-cloudsql-instances edtech-storage-501117:southamerica-east1:edtech-db-dev \
             --set-env-vars 'SPRING_PROFILES_ACTIVE=prod,SPRING_FLYWAY_ENABLED=true' \
             --set-secrets 'SPRING_DATASOURCE_URL=SPRING_DATASOURCE_URL:latest,SPRING_DATASOURCE_USERNAME=SPRING_DATASOURCE_USERNAME:latest,SPRING_DATASOURCE_PASSWORD=SPRING_DATASOURCE_PASSWORD:latest' || true
           
