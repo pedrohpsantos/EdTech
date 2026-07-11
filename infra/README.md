@@ -10,12 +10,13 @@ Este diretório (`/infra`) contém a configuração de infraestrutura do EdTech 
 
 | Arquivo / Pasta | Descrição |
 | :--- | :--- |
-| `docker-compose.yml` | Orquestra os serviços de Backend, Frontend e PostgreSQL para o ambiente local |
-| `.env.example` | Template das variáveis de ambiente necessárias (nunca commitar o `.env` real) |
-| `cloudbuild.yaml` | Pipeline de build e deploy para o Google Cloud Build |
-| `setup_backup.sh` | Script de provisionamento do backup automático diário no GCS via Cloud Scheduler |
-| `database/schema.sql` | Schema SQL de referência do banco de dados |
-| `terraform/` | Módulos Terraform parametrizados para Cloud Run, Cloud SQL e Cloud Storage |
+| `dev/docker-compose.yml` | Orquestra os serviços de Backend, Frontend e PostgreSQL para o ambiente local |
+| `dev/.env.example` | Template das variáveis de ambiente necessárias (nunca commitar o `.env` real) |
+| `dev/database/schema.sql` | Schema SQL de referência do banco de dados |
+| `prod/docker-compose.prod.yml`| Configuração docker para teste ou deploy do ambiente produtivo |
+| `prod/cloudbuild.yaml` | Pipeline de build e deploy para o Google Cloud Build |
+| `prod/setup_backup.sh` | Script de provisionamento do backup automático diário no GCS via Cloud Scheduler |
+| `prod/terraform/` | Módulos Terraform parametrizados para Cloud Run, Cloud SQL e Cloud Storage |
 
 ---
 
@@ -23,6 +24,7 @@ Este diretório (`/infra`) contém a configuração de infraestrutura do EdTech 
 
 ```bash
 # 1. Copie e configure as variáveis de ambiente
+cd dev
 cp .env.example .env
 # Edite o arquivo .env com as credenciais locais
 
@@ -53,10 +55,10 @@ O processo de deploy é automatizado pelo `cloudbuild.yaml` e disparado via push
 
 ## Infraestrutura como Código (Terraform)
 
-A pasta `infra/terraform` contém a definição parametrizada da infraestrutura de produção. Nenhum identificador sensível ou específico de projeto deve ser versionado; use `terraform.tfvars` local a partir do template:
+A pasta `infra/prod/terraform` contém a definição parametrizada da infraestrutura de produção. Nenhum identificador sensível ou específico de projeto deve ser versionado; use `terraform.tfvars` local a partir do template:
 
 ```bash
-cd infra/terraform
+cd infra/prod/terraform
 cp terraform.tfvars.example terraform.tfvars
 # Edite project_id, region, artifact_registry, bucket e demais variáveis
 
@@ -82,7 +84,7 @@ O estado remoto deve ficar em um bucket GCS controlado pela equipe de plataforma
 O backup automático é provisionado pelo script `setup_backup.sh`. Executar uma única vez com um usuário que tenha permissão `roles/owner` ou `roles/iam.securityAdmin`:
 
 ```bash
-bash infra/setup_backup.sh
+bash infra/prod/setup_backup.sh
 ```
 
 Detalhes da política de backup estão documentados no [ADR-0013](../docs/arquitetura/decisoes_adrs/0013-backup-automatico.md).

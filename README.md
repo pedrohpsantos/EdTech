@@ -80,11 +80,11 @@ git clone https://github.com/pedrohpsantos/EdTech.git
 cd EdTech
 
 # Configure as variáveis de ambiente locais
-cp infra/.env.example infra/.env
-# Edite o arquivo infra/.env com os valores adequados
+cp infra/dev/.env.example infra/dev/.env
+# Edite o arquivo infra/dev/.env com os valores adequados
 
 # Suba os serviços
-cd infra
+cd infra/dev
 docker compose up --build -d
 ```
 

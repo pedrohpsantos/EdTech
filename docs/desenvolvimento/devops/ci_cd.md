@@ -40,7 +40,7 @@ De acordo com o ADR 0003, o deploy das partes ativas do sistema ocorre de forma 
 - **Segurança (Secret Manager)**: No ambiente de produção, o Cloud Run não consome variáveis de ambiente do repositório, mas busca dados sensíveis (como `SPRING_DATASOURCE_URL`, senhas do banco e `JWT_SECRET`) diretamente do Google Cloud Secret Manager.
 
 ### Infraestrutura
-- **Terraform**: A pasta `infra/terraform` mantém módulos para Cloud Run, Cloud SQL e Cloud Storage. O arquivo `terraform.tfvars` real não deve ser versionado; use `terraform.tfvars.example` como base.
+- **Terraform**: A pasta `infra/prod/terraform` mantém módulos para Cloud Run, Cloud SQL e Cloud Storage. O arquivo `terraform.tfvars` real não deve ser versionado; use `terraform.tfvars.example` como base.
 
 ---
 

@@ -18,7 +18,7 @@ Também havia risco de documentar ou versionar identificadores concretos de proj
 
 Adotamos **Terraform** como ferramenta de Infraestrutura como Código para os recursos principais de backend na Google Cloud.
 
-A definição fica em `infra/terraform` e é organizada em módulos:
+A definição fica em `infra/prod/terraform` e é organizada em módulos:
 
 | Módulo | Responsabilidade |
 | :--- | :--- |
