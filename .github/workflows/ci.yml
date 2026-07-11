@@ -37,6 +37,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        # lint     = Checkstyle + SpotBugs
+        # build    = Maven package + artifact upload
+        # test     = JUnit + JaCoCo
+        # pitest   = Mutation coverage
+        # security = OWASP Dependency Check
         task: [lint, build, test, pitest, security]
     defaults:
       run:
@@ -161,10 +166,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # lint   = ESLint + TypeCheck + Security audit
-        # build  = Vite build + upload artifact
-        # unit   = Vitest unit tests
-        # a11y   = Accessibility tests (WCAG)
+        # lint       = ESLint + TypeCheck + Security audit
+        # build      = Vite build + upload artifact
+        # unit       = Vitest unit tests
+        # a11y       = Accessibility tests (WCAG)
         # components = Component integration tests
         task: [lint, build, unit, a11y, components]
     defaults:
@@ -269,8 +274,7 @@ jobs:
       matrix:
         # validate     = Terraform fmt + init + validate
         # docker-build = Maven package + Docker build & push (main only)
-        # deploy-frontend = Download artifact + Firebase deploy (main only)
-        task: [validate, docker-build, deploy-frontend]
+        task: [validate, docker-build]
     steps:
       - uses: actions/checkout@v7
 
@@ -305,8 +309,8 @@ jobs:
         run: |
           chmod +x mvnw
           ./mvnw clean package -DskipTests -T 1C -B
-      - name: Authenticate to Google Cloud (docker-build)
-        id: auth-docker
+      - name: Authenticate to Google Cloud
+        id: auth
         if: matrix.task == 'docker-build' && github.ref == 'refs/heads/main'
         uses: google-github-actions/auth@v3
         with:
@@ -327,33 +331,6 @@ jobs:
           tags: southamerica-east1-docker.pkg.dev/edtech-storage-501117/cloud-run-source-deploy/edtech-backend:${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-
-      # --- FRONTEND DEPLOY (Firebase) ---
-      - name: Authenticate to Google Cloud (deploy-frontend)
-        id: auth-frontend
-        if: matrix.task == 'deploy-frontend' && github.ref == 'refs/heads/main'
-        uses: google-github-actions/auth@v3
-        with:
-          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
-      - name: Set up Node 24
-        if: matrix.task == 'deploy-frontend' && github.ref == 'refs/heads/main'
-        uses: actions/setup-node@v6
-        with:
-          node-version: '24'
-      - name: Download Frontend Artifact
-        if: matrix.task == 'deploy-frontend' && github.ref == 'refs/heads/main'
-        uses: actions/download-artifact@v8
-        with:
-          name: frontend-dist
-          path: frontend/dist/
-      - name: Deploy to Firebase Hosting
-        if: matrix.task == 'deploy-frontend' && github.ref == 'refs/heads/main'
-        working-directory: frontend
-        run: |
-          npm install -g firebase-tools
-          firebase deploy --project=edtech-storage-501117 --only hosting -m "Deploy via GitHub Actions ${{ github.sha }}" --non-interactive
-        env:
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ steps.auth-frontend.outputs.credentials_file_path }}
 
   # ==========================================
   #                 GATEKEEPERS
@@ -380,16 +357,22 @@ jobs:
       - run: echo "All Infrastructure Validations Passed"
 
   # ==========================================
-  #                 DEPLOY BACKEND
+  #                 DEPLOY
   # ==========================================
-  deploy-backend:
-    name: Deploy Backend (Cloud Run)
+  deploy-tasks:
+    name: Deploy
     runs-on: ubuntu-latest
     needs: [backend-approved, frontend-approved, infra-approved]
     if: github.ref == 'refs/heads/main'
     permissions:
       contents: 'read'
       id-token: 'write'
+    strategy:
+      fail-fast: false
+      matrix:
+        # backend  = Terraform Apply + Cloud Run + Flyway migrations
+        # frontend = Download artifact + Firebase Hosting deploy
+        target: [backend, frontend]
     steps:
       - uses: actions/checkout@v7
 
@@ -399,17 +382,22 @@ jobs:
         with:
           credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
 
+      # --- BACKEND DEPLOY ---
       - name: Setup Cloud SDK
+        if: matrix.target == 'backend'
         uses: google-github-actions/setup-gcloud@v3
 
       - name: Setup Terraform
+        if: matrix.target == 'backend'
         uses: hashicorp/setup-terraform@v4
 
       - name: Terraform Init
+        if: matrix.target == 'backend'
         working-directory: infra/terraform
         run: terraform init -backend-config="bucket=edtech-terraform-state-501117"
 
       - name: Terraform Apply
+        if: matrix.target == 'backend'
         working-directory: infra/terraform
         run: |
           terraform apply -auto-approve \
@@ -424,10 +412,34 @@ jobs:
             }
 
       - name: Run Database Migrations (Flyway)
+        if: matrix.target == 'backend'
         run: |
           echo "Executando job de migracao do banco de dados (Flyway)..."
           gcloud run jobs execute edtech-backend-migration \
             --region southamerica-east1 --wait --project edtech-storage-501117
+
+      # --- FRONTEND DEPLOY ---
+      - name: Set up Node 24
+        if: matrix.target == 'frontend'
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+
+      - name: Download Frontend Artifact
+        if: matrix.target == 'frontend'
+        uses: actions/download-artifact@v8
+        with:
+          name: frontend-dist
+          path: frontend/dist/
+
+      - name: Deploy to Firebase Hosting
+        if: matrix.target == 'frontend'
+        working-directory: frontend
+        run: |
+          npm install -g firebase-tools
+          firebase deploy --project=edtech-storage-501117 --only hosting -m "Deploy via GitHub Actions ${{ github.sha }}" --non-interactive
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ steps.auth.outputs.credentials_file_path }}
 
   # ==========================================
   #                 PRODUCTION TESTS
@@ -435,13 +447,13 @@ jobs:
   production-tests:
     name: Production Tests
     runs-on: ubuntu-latest
-    needs: [deploy-backend]
+    needs: [deploy-tasks]
     if: github.ref == 'refs/heads/main'
     strategy:
       fail-fast: false
       matrix:
-        # e2e         = Playwright E2E smoke tests
-        # performance = K6 load tests
+        # e2e         = Playwright E2E smoke tests against production
+        # performance = K6 load tests against production API
         test: [e2e, performance]
     steps:
       - uses: actions/checkout@v7

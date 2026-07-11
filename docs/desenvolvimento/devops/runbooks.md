@@ -2,12 +2,6 @@
 title: 'Guias Operacionais e Resolução de Problemas'
 ---
 
---8<-- "_snippets/version_header.md"
-
-| Versão | Data       | Autor       | Descrição                                            |
-| :----- | :--------- | :---------- | :--------------------------------------------------- |
-| 1.1    | 11/07/2026 | Antigravity | Refinamento do texto e tradução de termos em inglês  |
-| 1.0    | 10/07/2026 | Antigravity | Criação do documento de resposta a incidentes        |
 
 # :material-lifebuoy: Guias Operacionais e Resolução de Problemas (Runbooks)
 
@@ -97,3 +91,12 @@ Para ler logs estruturados em tempo real diretamente do terminal, utilize:
 ```bash
 gcloud beta run services logs tail edtech-backend --project=edtech-storage-501117
 ```
+
+---
+
+## Histórico de Versões
+
+| Versão | Data | Descrição | Autor |
+| :---: | :---: | :--- | :--- |
+| `1.0` | 10/07/2026 | Criação do documento de resposta a incidentes | Pedro Henrique P. Santos |
+| `1.1` | 11/07/2026 | Refinamento do texto e tradução de termos em inglês | Pedro Henrique P. Santos |
