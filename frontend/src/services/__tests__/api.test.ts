@@ -1,5 +1,4 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import axios from 'axios';
 
 const mockApi = vi.hoisted(() => ({
   post: vi.fn(),
@@ -366,8 +365,8 @@ describe('api.ts', () => {
       const appendChildMock = vi.spyOn(document.body, 'appendChild').mockImplementation(vi.fn());
       const removeChildMock = vi.spyOn(document.body, 'removeChild').mockImplementation(vi.fn());
       
-      global.URL.createObjectURL = vi.fn().mockReturnValue('blob:url');
-      global.URL.revokeObjectURL = vi.fn();
+      globalThis.URL.createObjectURL = vi.fn().mockReturnValue('blob:url') as any;
+      globalThis.URL.revokeObjectURL = vi.fn() as any;
       
       await api.exportAuditLogsCSV('search', 'action');
       

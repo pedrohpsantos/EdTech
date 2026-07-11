@@ -33,7 +33,7 @@ describe('useTheme hook', () => {
   it('should fallback to light if matchMedia dark is false', () => {
     Object.defineProperty(window, 'matchMedia', {
       writable: true,
-      value: vi.fn().mockImplementation(query => ({
+      value: vi.fn().mockImplementation(() => ({
         matches: false,
       })),
     });

@@ -23,7 +23,7 @@ describe('useProjects hook', () => {
   });
 
   it('should successfully fetch projects', async () => {
-    const mockProjects = [{ id: '1', name: 'Proj' }];
+    const mockProjects = [{ id: '1', name: 'Proj', description: 'desc' }];
     vi.mocked(api.getProjects).mockResolvedValueOnce({ sucesso: true, dados: mockProjects });
     
     const { result } = renderHook(() => useProjects(), { wrapper: createWrapper() });

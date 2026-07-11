@@ -41,7 +41,7 @@ describe('Documentos Page', () => {
     (useUploadDocument as any).mockReturnValue({ mutateAsync: mockUploadDoc });
 
     // Mock window.open
-    global.window.open = vi.fn();
+    window.open = vi.fn();
   });
 
   it('renders loading state', () => {
@@ -142,7 +142,7 @@ describe('Documentos Page', () => {
     expect(screen.getByText('Iniciando download seguro...')).toBeInTheDocument();
     
     await waitFor(() => {
-      expect(global.window.open).toHaveBeenCalledWith('http://example.com/file.pdf', '_blank', 'noopener,noreferrer');
+      expect(window.open).toHaveBeenCalledWith('http://example.com/file.pdf', '_blank', 'noopener,noreferrer');
       expect(screen.getByText('Download finalizado com sucesso!')).toBeInTheDocument();
     });
 

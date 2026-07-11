@@ -59,14 +59,14 @@ describe('useDocuments hooks', () => {
 
   describe('useUploadDocument', () => {
     it('should successfully upload document', async () => {
-      vi.mocked(api.uploadDocument).mockResolvedValueOnce({ sucesso: true, dados: 'ok' });
+      vi.mocked(api.uploadDocument).mockResolvedValueOnce({ sucesso: true, dados: { id: '1', title: 'Test', status: 'Aprovado', createdAt: '2023-01-01' } as any });
       const { result } = renderHook(() => useUploadDocument(), { wrapper: createWrapper() });
       
       const file = new File([''], 'test.pdf');
       result.current.mutate({ file, title: 'Test', projectId: '1' });
       
       await waitFor(() => expect(result.current.isSuccess).toBe(true));
-      expect(result.current.data).toBe('ok');
+      expect(result.current.data?.id).toBe('1');
     });
 
     it('should throw error when upload fails', async () => {
