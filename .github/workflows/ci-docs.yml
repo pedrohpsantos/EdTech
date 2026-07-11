@@ -206,6 +206,7 @@ jobs:
           npm install -g @lhci/cli@0.13.0
           mkdir -p reports/lighthouse
           lhci collect --url="https://edtech-storage-501117.web.app/" --numberOfRuns=3
+          lhci assert
           # LHCI names the file dynamically. We will rename it to index.html for easier iframe embedding.
           lhci upload --target=filesystem --outputDir=./reports/lighthouse
           FIRST_HTML=$(find reports/lighthouse -name "*.html" | head -n 1)

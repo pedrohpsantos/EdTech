@@ -603,6 +603,7 @@ jobs:
           npm install -g @lhci/cli@0.13.0
           mkdir -p lighthouse-report
           lhci collect --url="https://edtech-storage-501117.web.app/" --numberOfRuns=3
+          lhci assert
           lhci upload --target=filesystem --outputDir=./lighthouse-report
       - name: Upload Lighthouse Report
         if: always() && matrix.test == 'lighthouse'
