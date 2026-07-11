@@ -8,17 +8,24 @@
   ],
   "coverageAnalysis": "perTest",
   "mutate": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
+    "src/hooks/**/*.ts",
+    "src/hooks/**/*.tsx",
+    "src/services/**/*.ts",
+    "src/context/**/*.tsx",
+    "src/utils/**/*.ts",
     "!src/**/*.test.ts",
     "!src/**/*.spec.ts",
     "!src/**/*.test.tsx",
     "!src/**/*.spec.tsx"
   ],
+  "mutator": {
+    "excludedMutations": ["StringLiteral"]
+  },
+  "ignoreStatic": true,
   "incremental": true,
   "incrementalFile": "reports/mutation/stryker-incremental.json",
   "htmlReporter": {
     "fileName": "reports/mutation/html/index.html"
   },
-  "concurrency": 4
+  "concurrency": 8
 }

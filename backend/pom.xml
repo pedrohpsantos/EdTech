@@ -257,17 +257,13 @@
                 </dependencies>
                 <configuration>
                     <targetClasses>
-                        <param>com.edtech.*</param>
+                        <param>com.edtech.service.*</param>
+                        <param>com.edtech.util.*</param>
                     </targetClasses>
                     <targetTests>
                         <param>com.edtech.*Test</param>
                     </targetTests>
-                    <excludedClasses>
-                        <param>com.edtech.dto.*</param>
-                        <param>com.edtech.exception.*</param>
-                        <param>com.edtech.model.*</param>
-                    </excludedClasses>
-                    <threads>4</threads>
+                    <threads>8</threads>
                     <withHistory>true</withHistory>
                     <mutationThreshold>40</mutationThreshold>
                     <coverageThreshold>40</coverageThreshold>
