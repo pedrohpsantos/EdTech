@@ -1,0 +1,3 @@
+ALTER TABLE users ADD COLUMN IF NOT EXISTS institution_id UUID;
+ALTER TABLE documents ADD COLUMN IF NOT EXISTS institution_id UUID;
+ALTER TABLE audit_logs ADD COLUMN IF NOT EXISTS institution_id UUID;
