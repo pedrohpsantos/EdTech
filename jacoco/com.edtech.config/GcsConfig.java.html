@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 /** Documentação para GcsConfig. */
 @Configuration
 @ConditionalOnProperty(name = &quot;storage.provider&quot;, havingValue = &quot;gcs&quot;, matchIfMissing = true)
-<span class="nc" id="L16">public class GcsConfig {</span>
+<span class="fc" id="L16">public class GcsConfig {</span>
 
   @Value(&quot;${gcp.project-id}&quot;)
   private String projectId;
@@ -25,7 +25,7 @@ import org.springframework.context.annotation.Configuration;
   @Bean
   public Storage googleCloudStorage() throws IOException {
     GoogleCredentials credentials;
-<span class="nc bnc" id="L28" title="All 4 branches missed.">    if (credentialsLocation != null &amp;&amp; !credentialsLocation.isEmpty()) {</span>
+<span class="pc bpc" id="L28" title="2 of 4 branches missed.">    if (credentialsLocation != null &amp;&amp; !credentialsLocation.isEmpty()) {</span>
 <span class="nc" id="L29">      credentials = GoogleCredentials.fromStream(new FileInputStream(credentialsLocation));</span>
     } else {
 <span class="nc" id="L31">      credentials = GoogleCredentials.getApplicationDefault();</span>

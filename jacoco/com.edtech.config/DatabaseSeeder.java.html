@@ -66,7 +66,7 @@ public class DatabaseSeeder implements CommandLineRunner {
         demoInstitutionId);
 
     // 2. Criar projetos fake
-<span class="pc bpc" id="L69" title="1 of 2 branches missed.">    if (projectRepository.count() == 0) {</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">    if (projectRepository.count() == 0) {</span>
 <span class="fc" id="L70">      logger.info(&quot;Populando banco com projetos falsos (Kaggle-like datasets)...&quot;);</span>
 
 <span class="fc" id="L72">      com.edtech.model.Project p1 = new com.edtech.model.Project();</span>
@@ -99,13 +99,13 @@ public class DatabaseSeeder implements CommandLineRunner {
       String name, String email, String passwordHash, UserRole role, UUID institutionId) {
 <span class="fc" id="L100">    String normalizedEmail = email.toLowerCase(Locale.ROOT);</span>
 <span class="fc" id="L101">    Optional&lt;User&gt; existing = userRepository.findByEmailIgnoreCase(normalizedEmail);</span>
-<span class="pc bpc" id="L102" title="1 of 2 branches missed.">    if (existing.isEmpty()) {</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">    if (existing.isEmpty()) {</span>
 <span class="fc" id="L103">      User user = new User(name, normalizedEmail, passwordHash, role, institutionId);</span>
 <span class="fc" id="L104">      user.setActive(true);</span>
 <span class="fc" id="L105">      logger.info(&quot;Criando usuário demo: {}&quot;, email);</span>
 <span class="fc" id="L106">      return userRepository.save(user);</span>
     }
-<span class="nc" id="L108">    return existing.get();</span>
+<span class="fc" id="L108">    return existing.get();</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

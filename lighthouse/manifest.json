@@ -1,0 +1,41 @@
+[
+  {
+    "url": "https://edtech-storage-501117.web.app/",
+    "isRepresentativeRun": false,
+    "htmlPath": "/home/runner/work/EdTech/EdTech/reports/lighthouse/edtech_storage_501117_web_app-_-2026_07_11_21_06_13.report.html",
+    "jsonPath": "/home/runner/work/EdTech/EdTech/reports/lighthouse/edtech_storage_501117_web_app-_-2026_07_11_21_06_13.report.json",
+    "summary": {
+      "performance": 0.71,
+      "accessibility": 0.94,
+      "best-practices": 0.96,
+      "seo": 0.92,
+      "pwa": 0.38
+    }
+  },
+  {
+    "url": "https://edtech-storage-501117.web.app/",
+    "isRepresentativeRun": false,
+    "htmlPath": "/home/runner/work/EdTech/EdTech/reports/lighthouse/edtech_storage_501117_web_app-_-2026_07_11_21_06_26.report.html",
+    "jsonPath": "/home/runner/work/EdTech/EdTech/reports/lighthouse/edtech_storage_501117_web_app-_-2026_07_11_21_06_26.report.json",
+    "summary": {
+      "performance": 0.93,
+      "accessibility": 0.94,
+      "best-practices": 0.96,
+      "seo": 0.92,
+      "pwa": 0.38
+    }
+  },
+  {
+    "url": "https://edtech-storage-501117.web.app/",
+    "isRepresentativeRun": true,
+    "htmlPath": "/home/runner/work/EdTech/EdTech/reports/lighthouse/edtech_storage_501117_web_app-_-2026_07_11_21_06_37.report.html",
+    "jsonPath": "/home/runner/work/EdTech/EdTech/reports/lighthouse/edtech_storage_501117_web_app-_-2026_07_11_21_06_37.report.json",
+    "summary": {
+      "performance": 0.93,
+      "accessibility": 0.94,
+      "best-practices": 0.96,
+      "seo": 0.92,
+      "pwa": 0.38
+    }
+  }
+]
