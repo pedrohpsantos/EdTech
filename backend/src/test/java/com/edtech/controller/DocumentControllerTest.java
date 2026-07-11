@@ -40,7 +40,9 @@ public class DocumentControllerTest {
 
   @BeforeEach
   void setUp() {
-    mockMvc = MockMvcBuilders.standaloneSetup(documentController).build();
+    mockMvc = MockMvcBuilders.standaloneSetup(documentController)
+        .setCustomArgumentResolvers(new org.springframework.data.web.PageableHandlerMethodArgumentResolver())
+        .build();
 
     mockUser = mock(User.class);
     when(mockUser.getId()).thenReturn(UUID.randomUUID());
@@ -122,5 +124,76 @@ public class DocumentControllerTest {
                 .content(jsonPayload)
                 .principal(new UsernamePasswordAuthenticationToken(mockUser, null)))
         .andExpect(status().isOk());
+  }
+
+  @Test
+  void testListDocuments_Success() throws Exception {
+    org.springframework.data.domain.Page<DocumentResponseDto> page = new org.springframework.data.domain.PageImpl<>(java.util.Collections.emptyList(), org.springframework.data.domain.PageRequest.of(0, 20), 0);
+    when(documentService.listDocumentsByUser(any(), any(), any(), any(), any())).thenReturn(page);
+
+    mockMvc
+        .perform(
+            get("/api/documents")
+                .principal(new UsernamePasswordAuthenticationToken(mockUser, null)))
+        .andExpect(status().isOk());
+  }
+
+  @Test
+  void testDownloadDocument_Success() throws Exception {
+    UUID docId = UUID.randomUUID();
+    when(documentService.getPresignedUrl(eq(docId), any())).thenReturn("http://download");
+
+    mockMvc
+        .perform(
+            get("/api/documents/" + docId + "/download")
+                .principal(new UsernamePasswordAuthenticationToken(mockUser, null)))
+        .andExpect(status().isOk())
+        .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.content().string("http://download"));
+  }
+
+  @Test
+  void testToggleStar_Success() throws Exception {
+    UUID docId = UUID.randomUUID();
+    DocumentResponseDto responseDto = new DocumentResponseDto();
+    responseDto.setId(docId);
+    when(documentService.toggleStar(eq(docId), any())).thenReturn(responseDto);
+
+    mockMvc
+        .perform(
+            patch("/api/documents/" + docId + "/star")
+                .principal(new UsernamePasswordAuthenticationToken(mockUser, null)))
+        .andExpect(status().isOk());
+  }
+
+  @Test
+  void testGetComments_Success() throws Exception {
+    UUID docId = UUID.randomUUID();
+    when(documentService.getComments(eq(docId), any())).thenReturn(java.util.Collections.emptyList());
+
+    mockMvc
+        .perform(
+            get("/api/documents/" + docId + "/comments")
+                .principal(new UsernamePasswordAuthenticationToken(mockUser, null)))
+        .andExpect(status().isOk());
+  }
+
+  @Test
+  void testAddComment_Success() throws Exception {
+    UUID docId = UUID.randomUUID();
+    com.edtech.dto.CommentResponseDto commentDto = new com.edtech.dto.CommentResponseDto();
+    commentDto.setId(UUID.randomUUID());
+    commentDto.setContent("New comment");
+    commentDto.setAuthorId(UUID.randomUUID());
+    commentDto.setAuthorName("Author");
+    commentDto.setCreatedAt(java.time.ZonedDateTime.now());
+    when(documentService.addComment(eq(docId), any(), eq("New comment"))).thenReturn(commentDto);
+
+    mockMvc
+        .perform(
+            post("/api/documents/" + docId + "/comments")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"content\":\"New comment\"}")
+                .principal(new UsernamePasswordAuthenticationToken(mockUser, null)))
+        .andExpect(status().isCreated());
   }
 }

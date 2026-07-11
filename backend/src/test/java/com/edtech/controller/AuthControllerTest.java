@@ -62,6 +62,8 @@ class AuthControllerTest {
 
   @MockitoBean private RateLimitingService rateLimitingService;
 
+  @MockitoBean private com.edtech.service.TwoFactorAuthService twoFactorAuthService;
+
   @Test
   void registerCreatesResearcherWithoutReturningPasswordHash() throws Exception {
     String email = uniqueEmail("ana");
@@ -392,5 +394,205 @@ class AuthControllerTest {
         .andExpect(
             jsonPath("$.error")
                 .value("Limite de tentativas excedido. Tente novamente mais tarde."));
+  }
+
+  @Autowired private com.edtech.repository.VerificationTokenRepository verificationTokenRepository;
+
+  @Test
+  void verifyRegistrationReturnsToken() throws Exception {
+    String email = uniqueEmail("verifyreg");
+    String password = randomPassword();
+    mockMvc.perform(post("/api/auth/register").with(csrf()).contentType(MediaType.APPLICATION_JSON).content(registerPayload(email, password))).andExpect(status().isCreated());
+    
+    com.edtech.model.VerificationToken token = new com.edtech.model.VerificationToken("123456", email, java.time.LocalDateTime.now().plusMinutes(15));
+    verificationTokenRepository.save(token);
+
+    mockMvc.perform(post("/api/auth/register/verify").with(csrf()).contentType(MediaType.APPLICATION_JSON)
+        .content("{\"email\":\"" + email + "\", \"code\":\"123456\"}"))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.token").isString());
+  }
+
+  @Test
+  void verify2FaLoginReturnsToken() throws Exception {
+    String email = uniqueEmail("2falogin");
+    String password = randomPassword();
+    registerUser(email, password);
+    User user = userRepository.findByEmailIgnoreCase(email).orElseThrow();
+    user.setMfaEnabled(true);
+    user.setMfaSecret("secret");
+    userRepository.save(user);
+
+    when(twoFactorAuthService.verifyCode("secret", "123456")).thenReturn(true);
+
+    mockMvc.perform(post("/api/auth/login/verify-2fa").with(csrf()).contentType(MediaType.APPLICATION_JSON)
+        .content("{\"email\":\"" + email + "\", \"password\":\"" + password + "\", \"code\":\"123456\"}"))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.token").isString());
+  }
+
+  @Test
+  void setup2FaReturnsSecret() throws Exception {
+    String email = uniqueEmail("setup2fa");
+    String password = randomPassword();
+    registerUser(email, password);
+    String token = loginAndGetToken(email, password);
+
+    when(twoFactorAuthService.generateSecret()).thenReturn("newsecret");
+    when(twoFactorAuthService.getQrCodeImageUri(anyString(), anyString())).thenReturn("http://qrcode");
+
+    mockMvc.perform(get("/api/auth/2fa/setup").header("Authorization", "Bearer " + token))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.secret").value("newsecret"))
+        .andExpect(jsonPath("$.qrCodeUri").value("http://qrcode"));
+
+    User updated = userRepository.findByEmailIgnoreCase(email).orElseThrow();
+    org.junit.jupiter.api.Assertions.assertEquals("newsecret", updated.getMfaSecret());
+  }
+
+  @Test
+  void enable2FaWorks() throws Exception {
+    String email = uniqueEmail("enable2fa");
+    String password = randomPassword();
+    registerUser(email, password);
+    User user = userRepository.findByEmailIgnoreCase(email).orElseThrow();
+    user.setMfaSecret("secret");
+    userRepository.save(user);
+    String token = loginAndGetToken(email, password);
+
+    when(twoFactorAuthService.verifyCode("secret", "123456")).thenReturn(true);
+
+    mockMvc.perform(post("/api/auth/2fa/enable").with(csrf()).header("Authorization", "Bearer " + token).contentType(MediaType.APPLICATION_JSON)
+        .content("{\"email\":\"" + email + "\", \"code\":\"123456\"}"))
+        .andExpect(status().isOk());
+
+    User updated = userRepository.findByEmailIgnoreCase(email).orElseThrow();
+    org.junit.jupiter.api.Assertions.assertTrue(updated.isMfaEnabled());
+  }
+
+  @Test
+  void loginReturnsAcceptedWhenMfaEnabled() throws Exception {
+    String email = uniqueEmail("loginmfa");
+    String password = randomPassword();
+    registerUser(email, password);
+    User user = userRepository.findByEmailIgnoreCase(email).orElseThrow();
+    user.setMfaEnabled(true);
+    userRepository.save(user);
+
+    mockMvc
+        .perform(
+            post("/api/auth/login")
+                .with(csrf())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(loginPayload(email, password)))
+        .andExpect(status().isAccepted())
+        .andExpect(jsonPath("$.mfaRequired").value(true))
+        .andExpect(jsonPath("$.email").value(email));
+  }
+
+  @Test
+  void verify2FaLoginRejectsRequestWhenRateLimitExceeded() throws Exception {
+    Bucket mockBucket = mock(Bucket.class);
+    when(mockBucket.tryConsume(1)).thenReturn(false);
+    when(rateLimitingService.resolveBucket(anyString())).thenReturn(mockBucket);
+
+    mockMvc.perform(post("/api/auth/login/verify-2fa").with(csrf()).contentType(MediaType.APPLICATION_JSON)
+        .content("{\"email\":\"user@unb.br\", \"password\":\"pass\", \"code\":\"123456\"}"))
+        .andExpect(status().isTooManyRequests())
+        .andExpect(jsonPath("$.error").value("Limite de tentativas excedido. Tente novamente mais tarde."));
+  }
+
+  @Test
+  void verify2FaLoginRejectsWhenMfaNotEnabled() throws Exception {
+    String email = uniqueEmail("verify2fanotenabled");
+    String password = randomPassword();
+    registerUser(email, password);
+
+    mockMvc.perform(post("/api/auth/login/verify-2fa").with(csrf()).contentType(MediaType.APPLICATION_JSON)
+        .content("{\"email\":\"" + email + "\", \"password\":\"" + password + "\", \"code\":\"123456\"}"))
+        .andExpect(status().isBadRequest())
+        .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.content().string("2FA is not enabled for this user."));
+  }
+
+  @Test
+  void verify2FaLoginRejectsInvalidCode() throws Exception {
+    String email = uniqueEmail("verify2fainvalid");
+    String password = randomPassword();
+    registerUser(email, password);
+    User user = userRepository.findByEmailIgnoreCase(email).orElseThrow();
+    user.setMfaEnabled(true);
+    user.setMfaSecret("secret");
+    userRepository.save(user);
+
+    when(twoFactorAuthService.verifyCode("secret", "123457")).thenReturn(false);
+
+    mockMvc.perform(post("/api/auth/login/verify-2fa").with(csrf()).contentType(MediaType.APPLICATION_JSON)
+        .content("{\"email\":\"" + email + "\", \"password\":\"" + password + "\", \"code\":\"123457\"}"))
+        .andExpect(status().isUnauthorized())
+        .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.content().string("Invalid 2FA code."));
+  }
+
+  @Test
+  void setup2FaRejectsWhenAlreadyEnabled() throws Exception {
+    String email = uniqueEmail("setup2faenabled");
+    String password = randomPassword();
+    registerUser(email, password);
+    String token = loginAndGetToken(email, password);
+    User user = userRepository.findByEmailIgnoreCase(email).orElseThrow();
+    user.setMfaEnabled(true);
+    userRepository.save(user);
+
+    mockMvc.perform(get("/api/auth/2fa/setup").header("Authorization", "Bearer " + token))
+        .andExpect(status().isBadRequest())
+        .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.content().string("2FA is already enabled."));
+  }
+
+  @Test
+  void setup2FaHandlesException() throws Exception {
+    String email = uniqueEmail("setup2faerror");
+    String password = randomPassword();
+    registerUser(email, password);
+    String token = loginAndGetToken(email, password);
+
+    when(twoFactorAuthService.generateSecret()).thenReturn("newsecret");
+    when(twoFactorAuthService.getQrCodeImageUri(anyString(), anyString())).thenThrow(new RuntimeException("QR Error"));
+
+    mockMvc.perform(get("/api/auth/2fa/setup").header("Authorization", "Bearer " + token))
+        .andExpect(status().isInternalServerError())
+        .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.content().string("Failed to generate QR Code"));
+  }
+
+  @Test
+  void enable2FaRejectsWhenAlreadyEnabled() throws Exception {
+    String email = uniqueEmail("enable2faenabled");
+    String password = randomPassword();
+    registerUser(email, password);
+    String token = loginAndGetToken(email, password);
+    User user = userRepository.findByEmailIgnoreCase(email).orElseThrow();
+    user.setMfaEnabled(true);
+    userRepository.save(user);
+
+    mockMvc.perform(post("/api/auth/2fa/enable").with(csrf()).header("Authorization", "Bearer " + token).contentType(MediaType.APPLICATION_JSON)
+        .content("{\"email\":\"" + email + "\", \"code\":\"123456\"}"))
+        .andExpect(status().isBadRequest())
+        .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.content().string("2FA is already enabled."));
+  }
+
+  @Test
+  void enable2FaRejectsInvalidCode() throws Exception {
+    String email = uniqueEmail("enable2fainvalid");
+    String password = randomPassword();
+    registerUser(email, password);
+    User user = userRepository.findByEmailIgnoreCase(email).orElseThrow();
+    user.setMfaSecret("secret");
+    userRepository.save(user);
+    String token = loginAndGetToken(email, password);
+
+    when(twoFactorAuthService.verifyCode("secret", "123457")).thenReturn(false);
+
+    mockMvc.perform(post("/api/auth/2fa/enable").with(csrf()).header("Authorization", "Bearer " + token).contentType(MediaType.APPLICATION_JSON)
+        .content("{\"email\":\"" + email + "\", \"code\":\"123457\"}"))
+        .andExpect(status().isBadRequest())
+        .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.content().string("Invalid 2FA code."));
   }
 }

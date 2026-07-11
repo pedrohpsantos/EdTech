@@ -6,11 +6,12 @@ import { check, sleep } from 'k6';
 
 // Aqui ficam as configurações principais do teste.
 export const options = {
-  // Simula 100 usuários virtuais acessando a API ao mesmo tempo.
-  vus: 100,
-
-  // Define que o teste vai rodar por 1 minuto.
-  duration: '1m',
+  // Configuração de estágios de VUs (Virtual Users) para o Ramp-up
+  stages: [
+    { duration: '30s', target: 50 }, // Ramp-up para 50 VUs
+    { duration: '1m', target: 100 }, // Sobe até 100 VUs e mantém
+    { duration: '30s', target: 0 },  // Ramp-down
+  ],
 
   // Define quais estatísticas queremos ver no resumo final.
   summaryTrendStats: ['avg', 'min', 'med', 'p(95)', 'p(99)', 'max'],
@@ -23,6 +24,7 @@ export const options = {
     // Menos de 1% das requisições podem falhar.
     // NOTE: Vamos permitir que a taxa de erro seja ignorada no check de status 401
     // se considerarmos falha apenas timeouts e 500.
+    http_req_failed: ['rate<0.01'],
   },
 };
 
@@ -43,7 +45,7 @@ export default function () {
     },
   };
 
-  const loginResponse = http.post(`${baseUrl}/api/v1/auth/login`, loginPayload, params);
+  const loginResponse = http.post(`${baseUrl}/api/auth/login`, loginPayload, params);
 
   // Validamos se a rota respondeu com status esperado (401 pois a senha está errada)
   check(loginResponse, {

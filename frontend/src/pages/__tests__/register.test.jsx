@@ -5,6 +5,13 @@ import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AuthProvider } from '../../context/authContext';
 import Register from '../register';
+import * as api from '../../services/api';
+import { vi } from 'vitest';
+
+vi.mock('../../services/api', () => ({
+  register: vi.fn(),
+  verifyRegistration: vi.fn()
+}));
 
 const queryClient = new QueryClient();
 
@@ -83,5 +90,134 @@ describe('Register Page', () => {
     fireEvent.click(submitButton);
 
     expect(screen.getByText(/As senhas não coincidem/i)).toBeInTheDocument();
+  });
+
+  it('submits register successfully and moves to step 2, then submits verify successfully', async () => {
+    api.register.mockResolvedValueOnce({ sucesso: true, dados: {} });
+    api.verifyRegistration.mockResolvedValueOnce({ sucesso: true, dados: {} });
+
+    render(<Register />, { wrapper: Wrapper });
+    const nameInput = screen.getByPlaceholderText('ex: Chiquinha Silva');
+    const emailInput = screen.getByPlaceholderText('seu.nome@universidade.br');
+    const passFields = screen.getAllByPlaceholderText('••••••••');
+    const passwordInput = passFields[0];
+    const confirmPasswordInput = passFields[1];
+    const submitButton = screen.getByRole('button', { name: /Avançar/i });
+
+    fireEvent.change(nameInput, { target: { value: 'Test User' } });
+    fireEvent.change(emailInput, { target: { value: 'test@edu.br' } });
+    fireEvent.change(passwordInput, { target: { value: 'pass123' } });
+    fireEvent.change(confirmPasswordInput, { target: { value: 'pass123' } });
+
+    fireEvent.click(submitButton);
+
+    // Wait for step 2
+    const verifyInput = await screen.findByPlaceholderText('Ex: 123456');
+    expect(verifyInput).toBeInTheDocument();
+
+    fireEvent.change(verifyInput, { target: { value: '123456' } });
+    const verifyButton = screen.getByRole('button', { name: /Verificar Conta/i });
+    fireEvent.click(verifyButton);
+
+    expect(api.verifyRegistration).toHaveBeenCalledWith('test@edu.br', '123456');
+  });
+
+  it('submits register and handles error', async () => {
+    api.register.mockResolvedValueOnce({ sucesso: false, mensagem: 'Error registering' });
+    render(<Register />, { wrapper: Wrapper });
+    const nameInput = screen.getByPlaceholderText('ex: Chiquinha Silva');
+    const emailInput = screen.getByPlaceholderText('seu.nome@universidade.br');
+    const passFields = screen.getAllByPlaceholderText('••••••••');
+    fireEvent.change(nameInput, { target: { value: 'Test User' } });
+    fireEvent.change(emailInput, { target: { value: 'test@edu.br' } });
+    fireEvent.change(passFields[0], { target: { value: 'pass123' } });
+    fireEvent.change(passFields[1], { target: { value: 'pass123' } });
+    fireEvent.click(screen.getByRole('button', { name: /Avançar/i }));
+
+    const errorMsg = await screen.findByText(/Error registering/i);
+    expect(errorMsg).toBeInTheDocument();
+  });
+
+  it('handles API throw error in register', async () => {
+    api.register.mockRejectedValueOnce(new Error('Network Error'));
+    render(<Register />, { wrapper: Wrapper });
+    const nameInput = screen.getByPlaceholderText('ex: Chiquinha Silva');
+    const emailInput = screen.getByPlaceholderText('seu.nome@universidade.br');
+    const passFields = screen.getAllByPlaceholderText('••••••••');
+    fireEvent.change(nameInput, { target: { value: 'Test User' } });
+    fireEvent.change(emailInput, { target: { value: 'test@edu.br' } });
+    fireEvent.change(passFields[0], { target: { value: 'pass123' } });
+    fireEvent.change(passFields[1], { target: { value: 'pass123' } });
+    fireEvent.click(screen.getByRole('button', { name: /Avançar/i }));
+
+    const errorMsg = await screen.findByText(/Network Error/i);
+    expect(errorMsg).toBeInTheDocument();
+  });
+
+  it('shows error if OTP is too short and toggles back to step 1', async () => {
+    api.register.mockResolvedValueOnce({ sucesso: true, dados: {} });
+    render(<Register />, { wrapper: Wrapper });
+    const nameInput = screen.getByPlaceholderText('ex: Chiquinha Silva');
+    const emailInput = screen.getByPlaceholderText('seu.nome@universidade.br');
+    const passFields = screen.getAllByPlaceholderText('••••••••');
+    fireEvent.change(nameInput, { target: { value: 'Test User' } });
+    fireEvent.change(emailInput, { target: { value: 'test@edu.br' } });
+    fireEvent.change(passFields[0], { target: { value: 'pass123' } });
+    fireEvent.change(passFields[1], { target: { value: 'pass123' } });
+    fireEvent.click(screen.getByRole('button', { name: /Avançar/i }));
+
+    const verifyInput = await screen.findByPlaceholderText('Ex: 123456');
+    fireEvent.change(verifyInput, { target: { value: '12' } }); // < 6
+    fireEvent.click(screen.getByRole('button', { name: /Verificar Conta/i }));
+
+    expect(await screen.findByText(/Por favor, insira o código de 6 dígitos./i)).toBeInTheDocument();
+
+    const backButton = screen.getByRole('button', { name: /Voltar/i });
+    fireEvent.click(backButton);
+    expect(screen.getByPlaceholderText('ex: Chiquinha Silva')).toBeInTheDocument();
+  });
+
+  it('submits verify and handles error', async () => {
+    api.register.mockResolvedValueOnce({ sucesso: true, dados: {} });
+    api.verifyRegistration.mockResolvedValueOnce({ sucesso: false, mensagem: 'Wrong OTP' });
+
+    render(<Register />, { wrapper: Wrapper });
+    const nameInput = screen.getByPlaceholderText('ex: Chiquinha Silva');
+    const emailInput = screen.getByPlaceholderText('seu.nome@universidade.br');
+    const passFields = screen.getAllByPlaceholderText('••••••••');
+    fireEvent.change(nameInput, { target: { value: 'Test User' } });
+    fireEvent.change(emailInput, { target: { value: 'test@edu.br' } });
+    fireEvent.change(passFields[0], { target: { value: 'pass123' } });
+    fireEvent.change(passFields[1], { target: { value: 'pass123' } });
+    fireEvent.click(screen.getByRole('button', { name: /Avançar/i }));
+
+    const verifyInput = await screen.findByPlaceholderText('Ex: 123456');
+    fireEvent.change(verifyInput, { target: { value: '123456' } });
+    fireEvent.click(screen.getByRole('button', { name: /Verificar Conta/i }));
+
+    const errorMsg = await screen.findByText(/Wrong OTP/i);
+    expect(errorMsg).toBeInTheDocument();
+  });
+
+  it('submits verify and handles throw error', async () => {
+    api.register.mockResolvedValueOnce({ sucesso: true, dados: {} });
+    api.verifyRegistration.mockRejectedValueOnce(new Error('Network issue'));
+
+    render(<Register />, { wrapper: Wrapper });
+    const nameInput = screen.getByPlaceholderText('ex: Chiquinha Silva');
+    const emailInput = screen.getByPlaceholderText('seu.nome@universidade.br');
+    const passFields = screen.getAllByPlaceholderText('••••••••');
+    fireEvent.change(nameInput, { target: { value: 'Test User' } });
+    fireEvent.change(emailInput, { target: { value: 'test@edu.br' } });
+    fireEvent.change(passFields[0], { target: { value: 'pass123' } });
+    fireEvent.change(passFields[1], { target: { value: 'pass123' } });
+    fireEvent.click(screen.getByRole('button', { name: /Avançar/i }));
+
+    const verifyInput = await screen.findByPlaceholderText('Ex: 123456');
+    fireEvent.change(verifyInput, { target: { value: '123456' } });
+    fireEvent.click(screen.getByRole('button', { name: /Verificar Conta/i }));
+
+    const errorMsg = await screen.findByText(/Network issue/i);
+    expect(errorMsg).toBeInTheDocument();
   });
 });

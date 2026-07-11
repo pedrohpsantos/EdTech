@@ -91,6 +91,47 @@ describe('api service', () => {
     });
   });
 
+  describe('2FA setup and enable', () => {
+    it('setup2Fa success', async () => {
+      (mAxios.get as any).mockResolvedValueOnce({ data: { secret: 'secret', qrCodeUri: 'uri' } });
+      const result = await apiModule.setup2Fa();
+      expect(result.sucesso).toBe(true);
+      expect(result.dados).toEqual({ secret: 'secret', qrCodeUri: 'uri' });
+    });
+
+    it('setup2Fa error', async () => {
+      (mAxios.get as any).mockRejectedValueOnce(new Error('fail'));
+      const result = await apiModule.setup2Fa();
+      expect(result.sucesso).toBe(false);
+    });
+
+    it('enable2Fa success', async () => {
+      (mAxios.post as any).mockResolvedValueOnce({ data: { enabled: true } });
+      const result = await apiModule.enable2Fa('123456');
+      expect(result.sucesso).toBe(true);
+      expect(result.dados).toEqual({ enabled: true });
+    });
+
+    it('enable2Fa error', async () => {
+      (mAxios.post as any).mockRejectedValueOnce(new Error('fail'));
+      const result = await apiModule.enable2Fa('123456');
+      expect(result.sucesso).toBe(false);
+    });
+    
+    it('verify2FaLogin success', async () => {
+      (mAxios.post as any).mockResolvedValueOnce({ data: { token: 'tok2fa', user: { id: 1 } } });
+      const result = await apiModule.verify2FaLogin('test@test.com', 'pass', '123456');
+      expect(result.sucesso).toBe(true);
+      expect(localStorage.getItem('token')).toBe('tok2fa');
+    });
+
+    it('verify2FaLogin error', async () => {
+      (mAxios.post as any).mockRejectedValueOnce(new Error('fail'));
+      const result = await apiModule.verify2FaLogin('test@test.com', 'pass', '123456');
+      expect(result.sucesso).toBe(false);
+    });
+  });
+
   describe('logout', () => {
     it('clears token on success', async () => {
       localStorage.setItem('token', 'someToken');
@@ -222,6 +263,12 @@ describe('api service', () => {
       const result = await apiModule.resetPassword('test@test.com', '123456', 'newPass');
       expect(result.sucesso).toBe(true);
     });
+
+    it('resetPassword error', async () => {
+      (mAxios.post as any).mockRejectedValueOnce(new Error('fail'));
+      const result = await apiModule.resetPassword('test@test.com', '123456', 'newPass');
+      expect(result.sucesso).toBe(false);
+    });
   });
 
   describe('Audit and Compliance', () => {
@@ -247,6 +294,31 @@ describe('api service', () => {
       (mAxios.get as any).mockRejectedValueOnce(new Error('fail'));
       const result = await apiModule.getComplianceStats();
       expect(result).toBeNull();
+    });
+
+    it('exportAuditLogsCSV success', async () => {
+      const mockBlob = new Blob(['csv content'], { type: 'text/csv' });
+      (mAxios.get as any).mockResolvedValueOnce({ data: mockBlob });
+      
+      const createElementSpy = vi.spyOn(document, 'createElement');
+      const appendChildSpy = vi.spyOn(document.body, 'appendChild');
+      const removeChildSpy = vi.spyOn(document.body, 'removeChild');
+      const createObjectURLSpy = vi.spyOn(window.URL, 'createObjectURL').mockReturnValue('blob:url');
+      const revokeObjectURLSpy = vi.spyOn(window.URL, 'revokeObjectURL').mockImplementation(() => {});
+
+      await apiModule.exportAuditLogsCSV('search', 'CREATE');
+      
+      expect(createElementSpy).toHaveBeenCalledWith('a');
+      expect(appendChildSpy).toHaveBeenCalled();
+      expect(removeChildSpy).toHaveBeenCalled();
+      expect(createObjectURLSpy).toHaveBeenCalled();
+      expect(revokeObjectURLSpy).toHaveBeenCalled();
+    });
+
+    it('exportAuditLogsCSV error', async () => {
+      (mAxios.get as any).mockRejectedValueOnce(new Error('fail'));
+      await apiModule.exportAuditLogsCSV();
+      // just expecting no crash and it handles the catch block
     });
   });
 

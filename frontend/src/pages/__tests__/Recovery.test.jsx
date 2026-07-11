@@ -280,4 +280,82 @@ describe('Recovery Component - Unit Tests', () => {
       expect(screen.getByRole('heading', { name: 'Esqueceu a senha?' })).toBeInTheDocument();
     });
   });
+
+  test('Passo 3: Erro da API ao redefinir senha', async () => {
+    requestPasswordRecovery.mockResolvedValueOnce({ sucesso: true });
+    verifyRecoveryCode.mockResolvedValueOnce({ sucesso: true });
+    resetPassword.mockResolvedValueOnce({ sucesso: false, mensagem: 'Token expirado' });
+
+    render(
+      <MemoryRouter>
+        <Recovery />
+      </MemoryRouter>,
+    );
+
+    fireEvent.change(screen.getByPlaceholderText('seu.nome@universidade.br'), {
+      target: { value: 'teste@unb.br' },
+    });
+    fireEvent.click(screen.getByRole('button', { name: /Continuar/i }));
+    await waitFor(() => expect(screen.getByRole('heading', { name: 'Verificação de Código' })).toBeInTheDocument());
+
+    fireEvent.change(screen.getByPlaceholderText('123456'), { target: { value: '000000' } });
+    fireEvent.click(screen.getByRole('button', { name: /Continuar/i }));
+    await waitFor(() => expect(screen.getByRole('heading', { name: 'Nova Senha' })).toBeInTheDocument());
+
+    const passInputs = screen.getAllByPlaceholderText('••••••••');
+    fireEvent.change(passInputs[0], { target: { value: 'novaSenha123' } });
+    fireEvent.change(passInputs[1], { target: { value: 'novaSenha123' } });
+
+    fireEvent.click(screen.getByRole('button', { name: /Redefinir Senha/i }));
+
+    await waitFor(() => {
+      expect(screen.getByText(/Token expirado/i)).toBeInTheDocument();
+    });
+  });
+
+  test('Passo 3: Erro de exceção da API ao redefinir senha', async () => {
+    requestPasswordRecovery.mockResolvedValueOnce({ sucesso: true });
+    verifyRecoveryCode.mockResolvedValueOnce({ sucesso: true });
+    resetPassword.mockRejectedValueOnce(new Error('Network error'));
+
+    render(
+      <MemoryRouter>
+        <Recovery />
+      </MemoryRouter>,
+    );
+
+    fireEvent.change(screen.getByPlaceholderText('seu.nome@universidade.br'), {
+      target: { value: 'teste@unb.br' },
+    });
+    fireEvent.click(screen.getByRole('button', { name: /Continuar/i }));
+    await waitFor(() => expect(screen.getByRole('heading', { name: 'Verificação de Código' })).toBeInTheDocument());
+
+    fireEvent.change(screen.getByPlaceholderText('123456'), { target: { value: '000000' } });
+    fireEvent.click(screen.getByRole('button', { name: /Continuar/i }));
+    await waitFor(() => expect(screen.getByRole('heading', { name: 'Nova Senha' })).toBeInTheDocument());
+
+    const passInputs = screen.getAllByPlaceholderText('••••••••');
+    fireEvent.change(passInputs[0], { target: { value: 'novaSenha123' } });
+    fireEvent.change(passInputs[1], { target: { value: 'novaSenha123' } });
+
+    fireEvent.click(screen.getByRole('button', { name: /Redefinir Senha/i }));
+
+    await waitFor(() => {
+      expect(screen.getByText(/Erro no servidor/i)).toBeInTheDocument();
+    });
+  });
+  
+  test('Dispara onInvalid em campos requeridos (Step 1)', async () => {
+    render(
+      <MemoryRouter>
+        <Recovery />
+      </MemoryRouter>,
+    );
+    
+    const submitBtn = screen.getByRole('button', { name: /Continuar/i });
+    const emailInput = screen.getByPlaceholderText('seu.nome@universidade.br');
+    
+    // Attempting to submit without required valid email will trigger invalid
+    fireEvent.invalid(emailInput);
+  });
 });

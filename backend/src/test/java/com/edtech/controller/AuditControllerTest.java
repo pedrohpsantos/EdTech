@@ -68,6 +68,8 @@ class AuditControllerTest {
     assertEquals("green", dto1.getActionClass());
     assertEquals("INFO", dto1.getSeverity());
     assertEquals("John Doe", dto1.getUserName());
+    assertNotNull(dto1.getId());
+    assertNotNull(dto1.getTimestamp());
 
     AuditLogDto dto2 = response.getBody().get(1);
     assertEquals("orange", dto2.getActionClass());
@@ -122,5 +124,26 @@ class AuditControllerTest {
     assertNotNull(response.getBody());
     assertEquals(1, response.getBody().size());
     assertEquals("LOGIN_FAILED", response.getBody().get(0).getAction());
+  }
+
+  @Test
+  void exportAuditLogs_ReturnsCsv() {
+    AuditLog log1 = createMockLog(AcaoAuditoria.LOGIN_SUCCESS, "192.168.1.1", "details\nwith newline");
+    when(auditLogRepository.findAllByOrderByCreatedAtDesc()).thenReturn(Arrays.asList(log1));
+    User user = new User("John Doe", "john@unb.br", "pass", UserRole.RESEARCHER, java.util.UUID.randomUUID());
+    when(userRepository.findById(log1.getUserId())).thenReturn(Optional.of(user));
+
+    ResponseEntity<String> response = auditController.exportAuditLogs(null, null);
+
+    assertEquals(200, response.getStatusCode().value());
+    assertNotNull(response.getBody());
+    org.junit.jupiter.api.Assertions.assertNotNull(response.getHeaders().get("Content-Disposition"));
+    org.junit.jupiter.api.Assertions.assertNotNull(response.getHeaders().get("Content-Type"));
+    org.junit.jupiter.api.Assertions.assertTrue(response.getBody().contains("ID,Timestamp,Action,User,IP,Details,Severity\n"));
+    org.junit.jupiter.api.Assertions.assertTrue(response.getBody().contains("\"details\nwith newline\""));
+    org.junit.jupiter.api.Assertions.assertEquals("\"details\nwith newline\"", ReflectionTestUtils.invokeMethod(auditController, "escapeCsv", "details\nwith newline"));
+    org.junit.jupiter.api.Assertions.assertEquals("\"a,b\"", ReflectionTestUtils.invokeMethod(auditController, "escapeCsv", "a,b"));
+    org.junit.jupiter.api.Assertions.assertEquals("\"a\"\"b\"", ReflectionTestUtils.invokeMethod(auditController, "escapeCsv", "a\"b"));
+    org.junit.jupiter.api.Assertions.assertEquals("normal", ReflectionTestUtils.invokeMethod(auditController, "escapeCsv", "normal"));
   }
 }
