@@ -15,7 +15,7 @@ test.describe('Public and Navigation Smoke', () => {
 
     await expect(page.locator('input[type="email"]')).toBeVisible();
     await expect(page.locator('input[type="password"]')).toBeVisible();
-    await expect(page.getByRole('button', { name: /entrar/i })).toBeVisible();
+    await expect(page.getByRole('button', { name: /continuar/i })).toBeVisible();
   });
 
   test('root route renders the login experience', async ({ page }) => {
@@ -23,7 +23,7 @@ test.describe('Public and Navigation Smoke', () => {
 
     await page.goto('/');
 
-    await expect(page.getByRole('button', { name: /entrar/i })).toBeVisible();
+    await expect(page.getByRole('button', { name: /continuar/i })).toBeVisible();
     await expect(page.getByRole('link', { name: /cadastre-se/i })).toBeVisible();
   });
 
@@ -54,7 +54,7 @@ test.describe('Public and Navigation Smoke', () => {
     await page.locator('input[aria-label="email"]').fill('pesquisador@unb.br');
     await page.locator('input[aria-label="senha"]').fill('Senha@123');
     await page.locator('input[aria-label="confirmar senha"]').fill('Outra@123');
-    await page.getByRole('button', { name: /criar conta/i }).click();
+    await page.getByRole('button', { name: /avan[çc]ar/i }).click();
 
     await expect(page.getByText(/senhas/i)).toBeVisible();
   });
