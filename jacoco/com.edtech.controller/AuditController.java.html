@@ -125,47 +125,47 @@ public class AuditController {
       @RequestParam(required = false) String search,
       @RequestParam(required = false) String action) {
 
-<span class="nc" id="L128">    ResponseEntity&lt;List&lt;AuditLogDto&gt;&gt; response = getAuditLogs(search, action);</span>
-<span class="nc" id="L129">    List&lt;AuditLogDto&gt; dtos = response.getBody();</span>
+<span class="fc" id="L128">    ResponseEntity&lt;List&lt;AuditLogDto&gt;&gt; response = getAuditLogs(search, action);</span>
+<span class="fc" id="L129">    List&lt;AuditLogDto&gt; dtos = response.getBody();</span>
 
-<span class="nc" id="L131">    StringBuilder csv = new StringBuilder();</span>
-<span class="nc" id="L132">    csv.append(&quot;ID,Timestamp,Action,User,IP,Details,Severity\n&quot;);</span>
+<span class="fc" id="L131">    StringBuilder csv = new StringBuilder();</span>
+<span class="fc" id="L132">    csv.append(&quot;ID,Timestamp,Action,User,IP,Details,Severity\n&quot;);</span>
 
-<span class="nc bnc" id="L134" title="All 2 branches missed.">    if (dtos != null) {</span>
-<span class="nc bnc" id="L135" title="All 2 branches missed.">      for (AuditLogDto dto : dtos) {</span>
-<span class="nc" id="L136">        csv.append(escapeCsv(dto.getId()))</span>
-<span class="nc" id="L137">            .append(&quot;,&quot;)</span>
-<span class="nc" id="L138">            .append(escapeCsv(dto.getTimestamp()))</span>
-<span class="nc" id="L139">            .append(&quot;,&quot;)</span>
-<span class="nc" id="L140">            .append(escapeCsv(dto.getAction()))</span>
-<span class="nc" id="L141">            .append(&quot;,&quot;)</span>
-<span class="nc" id="L142">            .append(escapeCsv(dto.getUserName()))</span>
-<span class="nc" id="L143">            .append(&quot;,&quot;)</span>
-<span class="nc" id="L144">            .append(escapeCsv(dto.getIp()))</span>
-<span class="nc" id="L145">            .append(&quot;,&quot;)</span>
-<span class="nc" id="L146">            .append(escapeCsv(dto.getDetails()))</span>
-<span class="nc" id="L147">            .append(&quot;,&quot;)</span>
-<span class="nc" id="L148">            .append(escapeCsv(dto.getSeverity()))</span>
-<span class="nc" id="L149">            .append(&quot;\n&quot;);</span>
-<span class="nc" id="L150">      }</span>
+<span class="pc bpc" id="L134" title="1 of 2 branches missed.">    if (dtos != null) {</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">      for (AuditLogDto dto : dtos) {</span>
+<span class="fc" id="L136">        csv.append(escapeCsv(dto.getId()))</span>
+<span class="fc" id="L137">            .append(&quot;,&quot;)</span>
+<span class="fc" id="L138">            .append(escapeCsv(dto.getTimestamp()))</span>
+<span class="fc" id="L139">            .append(&quot;,&quot;)</span>
+<span class="fc" id="L140">            .append(escapeCsv(dto.getAction()))</span>
+<span class="fc" id="L141">            .append(&quot;,&quot;)</span>
+<span class="fc" id="L142">            .append(escapeCsv(dto.getUserName()))</span>
+<span class="fc" id="L143">            .append(&quot;,&quot;)</span>
+<span class="fc" id="L144">            .append(escapeCsv(dto.getIp()))</span>
+<span class="fc" id="L145">            .append(&quot;,&quot;)</span>
+<span class="fc" id="L146">            .append(escapeCsv(dto.getDetails()))</span>
+<span class="fc" id="L147">            .append(&quot;,&quot;)</span>
+<span class="fc" id="L148">            .append(escapeCsv(dto.getSeverity()))</span>
+<span class="fc" id="L149">            .append(&quot;\n&quot;);</span>
+<span class="fc" id="L150">      }</span>
     }
 
-<span class="nc" id="L153">    org.springframework.http.HttpHeaders headers = new org.springframework.http.HttpHeaders();</span>
-<span class="nc" id="L154">    headers.add(&quot;Content-Disposition&quot;, &quot;attachment; filename=\&quot;audit_logs.csv\&quot;&quot;);</span>
-<span class="nc" id="L155">    headers.add(&quot;Content-Type&quot;, &quot;text/csv; charset=UTF-8&quot;);</span>
+<span class="fc" id="L153">    org.springframework.http.HttpHeaders headers = new org.springframework.http.HttpHeaders();</span>
+<span class="fc" id="L154">    headers.add(&quot;Content-Disposition&quot;, &quot;attachment; filename=\&quot;audit_logs.csv\&quot;&quot;);</span>
+<span class="fc" id="L155">    headers.add(&quot;Content-Type&quot;, &quot;text/csv; charset=UTF-8&quot;);</span>
 
-<span class="nc" id="L157">    return ResponseEntity.ok().headers(headers).body(csv.toString());</span>
+<span class="fc" id="L157">    return ResponseEntity.ok().headers(headers).body(csv.toString());</span>
   }
 
   private String escapeCsv(String value) {
-<span class="nc bnc" id="L161" title="All 2 branches missed.">    if (value == null) {</span>
+<span class="pc bpc" id="L161" title="1 of 2 branches missed.">    if (value == null) {</span>
 <span class="nc" id="L162">      return &quot;&quot;;</span>
     }
-<span class="nc" id="L164">    String escaped = value.replace(&quot;\&quot;&quot;, &quot;\&quot;\&quot;&quot;);</span>
-<span class="nc bnc" id="L165" title="All 6 branches missed.">    if (escaped.contains(&quot;,&quot;) || escaped.contains(&quot;\&quot;&quot;) || escaped.contains(&quot;\n&quot;)) {</span>
-<span class="nc" id="L166">      return &quot;\&quot;&quot; + escaped + &quot;\&quot;&quot;;</span>
+<span class="fc" id="L164">    String escaped = value.replace(&quot;\&quot;&quot;, &quot;\&quot;\&quot;&quot;);</span>
+<span class="fc bfc" id="L165" title="All 6 branches covered.">    if (escaped.contains(&quot;,&quot;) || escaped.contains(&quot;\&quot;&quot;) || escaped.contains(&quot;\n&quot;)) {</span>
+<span class="fc" id="L166">      return &quot;\&quot;&quot; + escaped + &quot;\&quot;&quot;;</span>
     }
-<span class="nc" id="L168">    return escaped;</span>
+<span class="fc" id="L168">    return escaped;</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

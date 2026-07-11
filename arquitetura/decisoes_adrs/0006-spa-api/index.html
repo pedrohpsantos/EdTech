@@ -1348,7 +1348,7 @@
   <span class="md-ellipsis">
     
   
-    Padrões de Desenvolvimento (Code Standards)
+    Padrões de Desenvolvimento
   
 
     
@@ -1576,7 +1576,7 @@
   <span class="md-ellipsis">
     
   
-    Runbooks e Troubleshooting
+    Guias Operacionais e Resolução de Problemas
   
 
     
@@ -2166,6 +2166,34 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../../finops_custos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FinOps e Previsibilidade de Custos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -2187,10 +2215,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5" checked="">
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_6" checked="">
         
           
-          <label class="md-nav__link" for="__nav_4_5" id="__nav_4_5_label" tabindex="">
+          <label class="md-nav__link" for="__nav_4_6" id="__nav_4_6_label" tabindex="">
             
   
   
@@ -2208,8 +2236,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_4_5">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -2738,7 +2766,7 @@
   <span class="md-ellipsis">
     
   
-    ADR 0014: Terraform para Infraestrutura como Codigo
+    ADR 0014: Terraform para Infraestrutura como Código
   
 
     
@@ -2755,34 +2783,6 @@
           </ul>
         </nav>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../finops_custos/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    FinOps e Previsibilidade de Custos
-  
-
-    
-  </span>
-  
-  
-
-      </a>
     </li>
   
 
@@ -3204,6 +3204,34 @@
     
   
     Semana 7
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gestao/sprints/Semana%208/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Semana 8
   
 
     
@@ -3649,6 +3677,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gestao/atas/ata-10-07-2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ata de Reunião (10/07/2026)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -3809,16 +3865,16 @@
   
 
 
-<h1 id="adr-0006-separacao-de-api-e-frontend-spa"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17 21-2.75-3 1.16-1.16L17 18.43l3.59-3.59 1.16 1.41M12.8 21H5a2 2 0 0 1-2-2V5c0-1.11.89-2 2-2h14a2 2 0 0 1 2 2v7.8c-.88-.51-1.91-.8-3-.8l-1 .08V11H7v2h7.69A5.98 5.98 0 0 0 12 18c0 1.09.29 2.12.8 3m-.8-6H7v2h5m5-10H7v2h10"></path></svg></span> <abbr title="Architecture Decision Record — Registro de Decisão Arquitetural">ADR</abbr> 0006: Separação de <abbr title="Application Programming Interface">API</abbr> e Frontend (<abbr title="Single Page Application">SPA</abbr>)<a class="headerlink" href="#adr-0006-separacao-de-api-e-frontend-spa" title="Permanent link">¶</a></h1>
+<h1 id="adr-0006-separacao-de-api-e-frontend-spa"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17 21-2.75-3 1.16-1.16L17 18.43l3.59-3.59 1.16 1.41M12.8 21H5a2 2 0 0 1-2-2V5c0-1.11.89-2 2-2h14a2 2 0 0 1 2 2v7.8c-.88-.51-1.91-.8-3-.8l-1 .08V11H7v2h7.69A5.98 5.98 0 0 0 12 18c0 1.09.29 2.12.8 3m-.8-6H7v2h5m5-10H7v2h10"></path></svg></span> <abbr title="Architecture Decision Record — Registro de Decisão Arquitetural">ADR</abbr> 0006: Separação de <abbr title="Application Programming Interface — Interface de Programação de Aplicação">API</abbr> e <abbr title="Camada de interface visual do usuário">Frontend</abbr> (<abbr title="Single Page Application — Aplicação de Página Única">SPA</abbr>)<a class="headerlink" href="#adr-0006-separacao-de-api-e-frontend-spa" title="Permanent link">¶</a></h1>
 <h2 id="status">Status<a class="headerlink" href="#status" title="Permanent link">¶</a></h2>
 <p>Aceito</p>
 <h2 id="contexto">Contexto<a class="headerlink" href="#contexto" title="Permanent link">¶</a></h2>
 <p>Na evolução de plataformas acadêmicas, frequentemente começamos com monolitos renderizados no servidor (Server-Side Rendering). Porém, os requisitos de usabilidade exigem uma experiência rápida, com <code>drag-and-drop</code> nativo e dashboards dinâmicos para orientadores e auditores. Além disso, no futuro, a plataforma pode precisar expor endpoints para integrações com outros sistemas universitários (<abbr title="Sistema Integrado de Gestão de Atividades Acadêmicas">SIGAA</abbr>, Moodle).</p>
 <h2 id="decisao">Decisão<a class="headerlink" href="#decisao" title="Permanent link">¶</a></h2>
-<p>Optamos por uma <strong>Arquitetura Desacoplada</strong>, utilizando um Frontend <strong><abbr title="Single Page Application">SPA</abbr> (Single Page Application)</strong> construído em React e uma <strong><abbr title="Application Programming Interface">API</abbr> RESTful</strong> independente no backend.</p>
+<p>Optamos por uma <strong>Arquitetura Desacoplada</strong>, utilizando um <abbr title="Camada de interface visual do usuário">Frontend</abbr> <strong><abbr title="Single Page Application — Aplicação de Página Única">SPA</abbr> (Single Page Application)</strong> construído em React e uma <strong><abbr title="Application Programming Interface — Interface de Programação de Aplicação">API</abbr> RESTful</strong> independente no backend.</p>
 <h2 id="alternativas-consideradas">Alternativas Consideradas<a class="headerlink" href="#alternativas-consideradas" title="Permanent link">¶</a></h2>
 <ul>
-<li><strong>Monolito com Server-Side Rendering (SSR - Thymeleaf):</strong> Descartado pois, embora simplificasse o deploy inicial e não exigisse tratamento complexo de tokens (<abbr title="Cross-Origin Resource Sharing — Compartilhamento de Recursos de Origem Cruzada">CORS</abbr>), limitaria a reusabilidade da <abbr title="Application Programming Interface">API</abbr> para integrações futuras (como uso por outros sistemas universitários) e dificultaria a interatividade fluida esperada em <em>dashboards</em> de auditoria.</li>
+<li><strong>Monolito com Server-Side Rendering (SSR - Thymeleaf):</strong> Descartado pois, embora simplificasse o deploy inicial e não exigisse tratamento complexo de tokens (<abbr title="Cross-Origin Resource Sharing — Compartilhamento de Recursos de Origem Cruzada">CORS</abbr>), limitaria a reusabilidade da <abbr title="Application Programming Interface — Interface de Programação de Aplicação">API</abbr> para integrações futuras (como uso por outros sistemas universitários) e dificultaria a interatividade fluida esperada em <em>dashboards</em> de auditoria.</li>
 </ul>
 <h2 id="consequencias">Consequências<a class="headerlink" href="#consequencias" title="Permanent link">¶</a></h2>
 <h3 id="positivas">Positivas<a class="headerlink" href="#positivas" title="Permanent link">¶</a></h3>
@@ -3830,13 +3886,13 @@
 <p><strong>Separação de Preocupações:</strong> O time de frontend pode trabalhar e fazer deploys independentes do time de backend.</p>
 </li>
 <li>
-<p><strong>Reaproveitamento de <abbr title="Application Programming Interface">API</abbr>:</strong> A mesma <abbr title="Application Programming Interface">API</abbr> que atende o React poderá atender eventuais integrações via scripts ou aplicativos móveis no futuro.</p>
+<p><strong>Reaproveitamento de <abbr title="Application Programming Interface — Interface de Programação de Aplicação">API</abbr>:</strong> A mesma <abbr title="Application Programming Interface — Interface de Programação de Aplicação">API</abbr> que atende o React poderá atender eventuais integrações via scripts ou aplicativos móveis no futuro.</p>
 </li>
 </ul>
 <h3 id="negativas-riscos">Negativas / Riscos<a class="headerlink" href="#negativas-riscos" title="Permanent link">¶</a></h3>
 <ul>
 <li>
-<p><strong>Complexidade de Deploy:</strong> Exige dois pipelines de <abbr title="Continuous Integration / Continuous Delivery — Integração Contínua / Entrega Contínua">CI/CD</abbr> distintos (um para o frontend, outro para o backend).</p>
+<p><strong>Complexidade de <abbr title="Implantação (Colocar o sistema no ar)">Deploy</abbr>:</strong> Exige dois pipelines de <abbr title="Continuous Integration / Continuous Delivery — Integração Contínua / Entrega Contínua">CI/CD</abbr> distintos (um para o frontend, outro para o backend).</p>
 </li>
 <li>
 <p><strong>Gerenciamento de Estado de Autenticação:</strong> Diferente de um monolito tradicional, exige a troca de tokens ou configuração fina de cookies <abbr title="Cross-Origin Resource Sharing — Compartilhamento de Recursos de Origem Cruzada">CORS</abbr> (<abbr title="Architecture Decision Record — Registro de Decisão Arquitetural">ADR</abbr> 0002) entre domínios distintos.</p>

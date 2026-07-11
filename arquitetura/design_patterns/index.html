@@ -1348,7 +1348,7 @@
   <span class="md-ellipsis">
     
   
-    Padrões de Desenvolvimento (Code Standards)
+    Padrões de Desenvolvimento
   
 
     
@@ -1576,7 +1576,7 @@
   <span class="md-ellipsis">
     
   
-    Runbooks e Troubleshooting
+    Guias Operacionais e Resolução de Problemas
   
 
     
@@ -2343,6 +2343,34 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../finops_custos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FinOps e Previsibilidade de Custos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     
     
     
@@ -2362,10 +2390,10 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_5">
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_6">
         
           
-          <label class="md-nav__link" for="__nav_4_5" id="__nav_4_5_label" tabindex="">
+          <label class="md-nav__link" for="__nav_4_6" id="__nav_4_6_label" tabindex="">
             
   
   
@@ -2383,8 +2411,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4_5">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -2772,7 +2800,7 @@
   <span class="md-ellipsis">
     
   
-    ADR 0014: Terraform para Infraestrutura como Codigo
+    ADR 0014: Terraform para Infraestrutura como Código
   
 
     
@@ -2789,34 +2817,6 @@
           </ul>
         </nav>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../finops_custos/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    FinOps e Previsibilidade de Custos
-  
-
-    
-  </span>
-  
-  
-
-      </a>
     </li>
   
 
@@ -3238,6 +3238,34 @@
     
   
     Semana 7
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gestao/sprints/Semana%208/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Semana 8
   
 
     
@@ -3683,6 +3711,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gestao/atas/ata-10-07-2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ata de Reunião (10/07/2026)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -3878,13 +3934,13 @@
 
 
 <h1 id="padroes-de-projeto-design-patterns">Padrões de Projeto (Design Patterns)<a class="headerlink" href="#padroes-de-projeto-design-patterns" title="Permanent link">¶</a></h1>
-<p>Nesta documentação, detalhamos os Padrões de Projeto (baseados nos conceitos do <a href="https://refactoring.guru/pt-br/design-patterns">Refactoring.Guru</a>) que empregamos em nossa arquitetura de software, tanto no Frontend quanto no Backend.</p>
+<p>Nesta documentação, detalhamos os Padrões de Projeto (baseados nos conceitos do <a href="https://refactoring.guru/pt-br/design-patterns">Refactoring.Guru</a>) que empregamos em nossa arquitetura de software, tanto no <abbr title="Camada de interface visual do usuário">Frontend</abbr> quanto no <abbr title="Camada de servidor e banco de dados da aplicação">Backend</abbr>.</p>
 <p>Utilizamos padrões para manter o código flexível, manutenível e para resolver problemas comuns de design de forma padronizada.</p>
 <hr>
 <h2 id="1-padroes-comportamentais">1. Padrões Comportamentais<a class="headerlink" href="#1-padroes-comportamentais" title="Permanent link">¶</a></h2>
 <h3 id="strategy-estrategia">Strategy (Estratégia)<a class="headerlink" href="#strategy-estrategia" title="Permanent link">¶</a></h3>
 <p>O padrão <strong>Strategy</strong> é usado para definir uma família de algoritmos, encapsular cada um deles e torná-los intercambiáveis. </p>
-<p>Em nosso backend, temos uma necessidade clara: precisamos armazenar arquivos localmente (durante o desenvolvimento) ou na nuvem (Google Cloud Storage) durante a produção. O serviço que usa isso (<code>DocumentService</code>) não precisa saber <em>como</em> o arquivo é salvo, apenas chama a interface abstrata.</p>
+<p>Em nosso backend, temos uma necessidade clara: precisamos armazenar arquivos localmente (durante o desenvolvimento) ou na nuvem (Google <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Storage) durante a produção. O serviço que usa isso (<code>DocumentService</code>) não precisa saber <em>como</em> o arquivo é salvo, apenas chama a interface abstrata.</p>
 <p><strong>A Interface (A Estratégia Base):</strong>
 </p><div class="highlight"><pre><span></span><code><span class="c1">// backend/src/main/java/com/edtech/service/StorageService.java</span>
 <span class="kd">public</span><span class="w"> </span><span class="kd">interface</span> <span class="nc">StorageService</span><span class="w"> </span><span class="p">{</span>
@@ -3922,7 +3978,7 @@ Temos o <code>GcsStorageServiceImpl</code> e o <code>LocalStorageServiceImpl</co
 <span class="p">}</span>
 </code></pre></div><p></p>
 <h3 id="observer-observador">Observer (Observador)<a class="headerlink" href="#observer-observador" title="Permanent link">¶</a></h3>
-<p>Define um mecanismo de assinatura para notificar múltiplos objetos sobre eventos que ocorram. No frontend, usamos isso largamente através da <strong>Context <abbr title="Application Programming Interface">API</abbr></strong> do React e da biblioteca <strong>React Query</strong>.</p>
+<p>Define um mecanismo de assinatura para notificar múltiplos objetos sobre eventos que ocorram. No frontend, usamos isso largamente através da <strong>Context <abbr title="Application Programming Interface — Interface de Programação de Aplicação">API</abbr></strong> do React e da biblioteca <strong>React Query</strong>.</p>
 <p>Os componentes subscrevem ao contexto de autenticação:
 </p><div class="highlight"><pre><span></span><code><span class="c1">// frontend/src/context/authContext.tsx</span>
 <span class="k">export</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="nx">AuthProvider</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">({</span><span class="w"> </span><span class="nx">children</span><span class="w"> </span><span class="p">}</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">children</span><span class="o">:</span><span class="w"> </span><span class="kt">ReactNode</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
@@ -3961,7 +4017,7 @@ Temos o <code>GcsStorageServiceImpl</code> e o <code>LocalStorageServiceImpl</co
 <h2 id="3-padroes-criacionais">3. Padrões Criacionais<a class="headerlink" href="#3-padroes-criacionais" title="Permanent link">¶</a></h2>
 <h3 id="singleton">Singleton<a class="headerlink" href="#singleton" title="Permanent link">¶</a></h3>
 <p>Garante que uma classe tenha apenas uma instância, enquanto provê um ponto de acesso global.
-O framework Spring injeta o Singleton por baixo dos panos na nossa <abbr title="Application Programming Interface">API</abbr>. Ao marcarmos nossas classes com anotações de infraestrutura, garantimos economia de memória e reaproveitamento de componentes.
+O framework Spring injeta o Singleton por baixo dos panos na nossa <abbr title="Application Programming Interface — Interface de Programação de Aplicação">API</abbr>. Ao marcarmos nossas classes com anotações de infraestrutura, garantimos economia de memória e reaproveitamento de componentes.
 </p><div class="highlight"><pre><span></span><code><span class="nd">@Service</span><span class="w"> </span><span class="c1">// O Spring garante que essa classe seja instanciada apenas UMA vez no ciclo de vida</span>
 <span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">EmailService</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="c1">// ...</span>

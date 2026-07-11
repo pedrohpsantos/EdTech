@@ -1356,7 +1356,7 @@
   <span class="md-ellipsis">
     
   
-    Padrões de Desenvolvimento (Code Standards)
+    Padrões de Desenvolvimento
   
 
     
@@ -1798,7 +1798,7 @@
   <span class="md-ellipsis">
     
   
-    Runbooks e Troubleshooting
+    Guias Operacionais e Resolução de Problemas
   
 
     
@@ -2384,6 +2384,34 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../../../arquitetura/finops_custos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FinOps e Previsibilidade de Custos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     
     
     
@@ -2400,10 +2428,10 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_5">
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_6">
         
           
-          <label class="md-nav__link" for="__nav_4_5" id="__nav_4_5_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4_6" id="__nav_4_6_label" tabindex="0">
             
   
   
@@ -2421,8 +2449,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4_5">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -2810,7 +2838,7 @@
   <span class="md-ellipsis">
     
   
-    ADR 0014: Terraform para Infraestrutura como Codigo
+    ADR 0014: Terraform para Infraestrutura como Código
   
 
     
@@ -2827,34 +2855,6 @@
           </ul>
         </nav>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../arquitetura/finops_custos/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    FinOps e Previsibilidade de Custos
-  
-
-    
-  </span>
-  
-  
-
-      </a>
     </li>
   
 
@@ -3276,6 +3276,34 @@
     
   
     Semana 7
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gestao/sprints/Semana%208/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Semana 8
   
 
     
@@ -3721,6 +3749,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gestao/atas/ata-10-07-2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ata de Reunião (10/07/2026)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -3961,7 +4017,7 @@
 <p><strong>Bloqueia respostas</strong> que não contenham os headers <abbr title="Cross-Origin Resource Sharing — Compartilhamento de Recursos de Origem Cruzada">CORS</abbr> adequados.</p>
 </li>
 </ul>
-<p>Ao usar <code>credentials: 'include'</code> na <abbr title="Application Programming Interface">API</abbr> <code>fetch</code>, instruímos o navegador a enviar cookies (como o <abbr title="JSON Web Token">JWT</abbr> <code>HttpOnly</code>) junto com a requisição. Porém, isso impõe restrições adicionais no servidor:</p>
+<p>Ao usar <code>credentials: 'include'</code> na <abbr title="Application Programming Interface — Interface de Programação de Aplicação">API</abbr> <code>fetch</code>, instruímos o navegador a enviar cookies (como o <abbr title="JSON Web Token">JWT</abbr> <code>HttpOnly</code>) junto com a requisição. Porém, isso impõe restrições adicionais no servidor:</p>
 <table>
 <thead>
 <tr>
@@ -3980,12 +4036,12 @@
 </tr>
 <tr>
 <td>Cookie <code>SameSite=Lax</code> ou <code>None</code> (com <code>Secure</code>)</td>
-<td><code>SameSite=Strict</code> nunca envia o cookie em requests cross-origin, impossibilitando a autenticação via <abbr title="Application Programming Interface">API</abbr> de domínios/portas distintos.</td>
+<td><code>SameSite=Strict</code> nunca envia o cookie em requests cross-origin, impossibilitando a autenticação via <abbr title="Application Programming Interface — Interface de Programação de Aplicação">API</abbr> de domínios/portas distintos.</td>
 </tr>
 </tbody>
 </table>
 <hr>
-<h2 id="configuracao-do-backend-spring-security">Configuração do Backend (Spring Security)<a class="headerlink" href="#configuracao-do-backend-spring-security" title="Permanent link">¶</a></h2>
+<h2 id="configuracao-do-backend-spring-security">Configuração do <abbr title="Camada de servidor e banco de dados da aplicação">Backend</abbr> (Spring Security)<a class="headerlink" href="#configuracao-do-backend-spring-security" title="Permanent link">¶</a></h2>
 <p>A camada de segurança no backend é gerenciada pelo Spring Security e configurada para aceitar essas requisições.</p>
 <h3 id="securityconfigjava"><code>SecurityConfig.java</code><a class="headerlink" href="#securityconfigjava" title="Permanent link">¶</a></h3>
 <p>A configuração <abbr title="Cross-Origin Resource Sharing — Compartilhamento de Recursos de Origem Cruzada">CORS</abbr> é aplicada via <code>CorsConfigurationSource</code>:</p>
@@ -4022,7 +4078,7 @@
 </li>
 </ul>
 <hr>
-<h2 id="configuracao-do-frontend">Configuração do Frontend<a class="headerlink" href="#configuracao-do-frontend" title="Permanent link">¶</a></h2>
+<h2 id="configuracao-do-frontend">Configuração do <abbr title="Camada de interface visual do usuário">Frontend</abbr><a class="headerlink" href="#configuracao-do-frontend" title="Permanent link">¶</a></h2>
 <h3 id="client-http-apijs">Client <abbr title="HyperText Transfer Protocol — Protocolo de Transferência de Hipertexto">HTTP</abbr> (<code>api.js</code>)<a class="headerlink" href="#client-http-apijs" title="Permanent link">¶</a></h3>
 <p>Para garantir o tráfego dos cookies de sessão, todas as chamadas <code>fetch</code> incluem o parâmetro de credenciais:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">resposta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">BASE_URL</span><span class="si">}</span><span class="sb">/api/auth/login`</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
@@ -4050,7 +4106,7 @@
 <span class="w">  </span><span class="p">},</span>
 <span class="p">})</span>
 </code></pre></div>
-<p>E altere a <abbr title="Uniform Resource Locator — Localizador Uniforme de Recursos">URL</abbr> base da <abbr title="Application Programming Interface">API</abbr> no <code>.env</code> do frontend para ser relativa:</p>
+<p>E altere a <abbr title="Uniform Resource Locator — Localizador Uniforme de Recursos">URL</abbr> base da <abbr title="Application Programming Interface — Interface de Programação de Aplicação">API</abbr> no <code>.env</code> do frontend para ser relativa:</p>
 <div class="highlight"><pre><span></span><code>VITE_API_URL=
 </code></pre></div>
 <div class="admonition warning">
@@ -4086,7 +4142,7 @@
 </tr>
 </tbody>
 </table>
-<h3 id="checklist-de-deploy">Checklist de Deploy<a class="headerlink" href="#checklist-de-deploy" title="Permanent link">¶</a></h3>
+<h3 id="checklist-de-deploy">Checklist de <abbr title="Implantação (Colocar o sistema no ar)">Deploy</abbr><a class="headerlink" href="#checklist-de-deploy" title="Permanent link">¶</a></h3>
 <ul class="task-list">
 <li class="task-list-item">
 <p><label class="task-list-control"><input type="checkbox" disabled=""><span class="task-list-indicator"></span></label> A variável <code>CORS_ALLOWED_ORIGINS</code> está apontando para o domínio correto de produção (sem a barra <code>/</code> no final).</p>

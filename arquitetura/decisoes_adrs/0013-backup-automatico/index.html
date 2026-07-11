@@ -1348,7 +1348,7 @@
   <span class="md-ellipsis">
     
   
-    Padrões de Desenvolvimento (Code Standards)
+    Padrões de Desenvolvimento
   
 
     
@@ -1576,7 +1576,7 @@
   <span class="md-ellipsis">
     
   
-    Runbooks e Troubleshooting
+    Guias Operacionais e Resolução de Problemas
   
 
     
@@ -2166,6 +2166,34 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../../finops_custos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FinOps e Previsibilidade de Custos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -2187,10 +2215,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5" checked="">
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_6" checked="">
         
           
-          <label class="md-nav__link" for="__nav_4_5" id="__nav_4_5_label" tabindex="">
+          <label class="md-nav__link" for="__nav_4_6" id="__nav_4_6_label" tabindex="">
             
   
   
@@ -2208,8 +2236,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_4_5">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -2766,7 +2794,7 @@
   <span class="md-ellipsis">
     
   
-    ADR 0014: Terraform para Infraestrutura como Codigo
+    ADR 0014: Terraform para Infraestrutura como Código
   
 
     
@@ -2783,34 +2811,6 @@
           </ul>
         </nav>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../finops_custos/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    FinOps e Previsibilidade de Custos
-  
-
-    
-  </span>
-  
-  
-
-      </a>
     </li>
   
 
@@ -3232,6 +3232,34 @@
     
   
     Semana 7
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gestao/sprints/Semana%208/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Semana 8
   
 
     
@@ -3677,6 +3705,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gestao/atas/ata-10-07-2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ata de Reunião (10/07/2026)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -3865,16 +3921,16 @@
   
 
 
-<h1 id="adr-0013-backup-automatico-via-cloud-sql-export-e-cloud-scheduler"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17 21-2.75-3 1.16-1.16L17 18.43l3.59-3.59 1.16 1.41M12.8 21H5a2 2 0 0 1-2-2V5c0-1.11.89-2 2-2h14a2 2 0 0 1 2 2v7.8c-.88-.51-1.91-.8-3-.8l-1 .08V11H7v2h7.69A5.98 5.98 0 0 0 12 18c0 1.09.29 2.12.8 3m-.8-6H7v2h5m5-10H7v2h10"></path></svg></span> <abbr title="Architecture Decision Record — Registro de Decisão Arquitetural">ADR</abbr> 0013: Backup Automático via Cloud <abbr title="Structured Query Language">SQL</abbr> Export e Cloud Scheduler<a class="headerlink" href="#adr-0013-backup-automatico-via-cloud-sql-export-e-cloud-scheduler" title="Permanent link">¶</a></h1>
+<h1 id="adr-0013-backup-automatico-via-cloud-sql-export-e-cloud-scheduler"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17 21-2.75-3 1.16-1.16L17 18.43l3.59-3.59 1.16 1.41M12.8 21H5a2 2 0 0 1-2-2V5c0-1.11.89-2 2-2h14a2 2 0 0 1 2 2v7.8c-.88-.51-1.91-.8-3-.8l-1 .08V11H7v2h7.69A5.98 5.98 0 0 0 12 18c0 1.09.29 2.12.8 3m-.8-6H7v2h5m5-10H7v2h10"></path></svg></span> <abbr title="Architecture Decision Record — Registro de Decisão Arquitetural">ADR</abbr> 0013: Backup Automático via <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> <abbr title="Structured Query Language — Linguagem de Consulta Estruturada">SQL</abbr> Export e <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Scheduler<a class="headerlink" href="#adr-0013-backup-automatico-via-cloud-sql-export-e-cloud-scheduler" title="Permanent link">¶</a></h1>
 <h2 id="status">Status<a class="headerlink" href="#status" title="Permanent link">¶</a></h2>
 <p>Aceito</p>
 <h2 id="contexto">Contexto<a class="headerlink" href="#contexto" title="Permanent link">¶</a></h2>
-<p>O banco de dados PostgreSQL do EdTech persiste dados críticos de pesquisadores, projetos e documentos acadêmicos hospedado no Cloud <abbr title="Structured Query Language">SQL</abbr> (<abbr title="Google Cloud Platform">GCP</abbr>). A ausência de uma política formal de backup expõe o sistema a riscos de perda de dados por falha operacional, erro humano ou incidente de infraestrutura. Faz-se necessária uma solução de backup automática, auditável e de baixa manutenção que esteja alinhada com a infraestrutura <abbr title="Google Cloud Platform">GCP</abbr> já adotada pelo projeto (<abbr title="Architecture Decision Record — Registro de Decisão Arquitetural">ADR</abbr> 0003).</p>
+<p>O banco de dados PostgreSQL do EdTech persiste dados críticos de pesquisadores, projetos e documentos acadêmicos hospedado no <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> <abbr title="Structured Query Language — Linguagem de Consulta Estruturada">SQL</abbr> (<abbr title="Google Cloud Platform">GCP</abbr>). A ausência de uma política formal de backup expõe o sistema a riscos de perda de dados por falha operacional, erro humano ou incidente de infraestrutura. Faz-se necessária uma solução de backup automática, auditável e de baixa manutenção que esteja alinhada com a infraestrutura <abbr title="Google Cloud Platform">GCP</abbr> já adotada pelo projeto (<abbr title="Architecture Decision Record — Registro de Decisão Arquitetural">ADR</abbr> 0003).</p>
 <h2 id="decisao">Decisão<a class="headerlink" href="#decisao" title="Permanent link">¶</a></h2>
-<p>Adotamos a estratégia de <strong>Cloud <abbr title="Structured Query Language">SQL</abbr> Export + Cloud Scheduler</strong>, inteiramente nativa do <abbr title="Google Cloud Platform">GCP</abbr>:</p>
+<p>Adotamos a estratégia de <strong><abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> <abbr title="Structured Query Language — Linguagem de Consulta Estruturada">SQL</abbr> Export + <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Scheduler</strong>, inteiramente nativa do <abbr title="Google Cloud Platform">GCP</abbr>:</p>
 <ul>
-<li>Um job no <strong>Cloud Scheduler</strong> dispara diariamente às 02:00 BRT (05:00 UTC).</li>
-<li>O Scheduler invoca a <strong>Cloud <abbr title="Structured Query Language">SQL</abbr> Admin <abbr title="Application Programming Interface">API</abbr></strong>, que realiza a exportação do banco no formato <code>.sql.gz</code>.</li>
+<li>Um job no <strong><abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Scheduler</strong> dispara diariamente às 02:00 BRT (05:00 UTC).</li>
+<li>O Scheduler invoca a <strong><abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> <abbr title="Structured Query Language — Linguagem de Consulta Estruturada">SQL</abbr> Admin <abbr title="Application Programming Interface — Interface de Programação de Aplicação">API</abbr></strong>, que realiza a exportação do banco no formato <code>.sql.gz</code>.</li>
 <li>O dump comprimido é salvo em um <strong>bucket <abbr title="Google Cloud Storage">GCS</abbr> dedicado</strong> (<code>edtech-backups-&lt;PROJECT_ID&gt;</code>), separado do bucket de arquivos de usuário.</li>
 <li>Uma <strong>lifecycle policy</strong> no bucket deleta automaticamente backups com mais de 30 dias.</li>
 </ul>
@@ -3883,21 +3939,21 @@
 <h3 id="positivas">Positivas<a class="headerlink" href="#positivas" title="Permanent link">¶</a></h3>
 <ul>
 <li><strong>Sem código no backend:</strong> Nenhuma alteração na aplicação é necessária; a solução é inteiramente de infraestrutura.</li>
-<li><strong>Gerenciado pelo <abbr title="Google Cloud Platform">GCP</abbr>:</strong> Monitoramento integrado ao Cloud Console e Cloud Logging, com registro de status de cada execução.</li>
+<li><strong>Gerenciado pelo <abbr title="Google Cloud Platform">GCP</abbr>:</strong> Monitoramento integrado ao <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Console e <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Logging, com registro de status de cada execução.</li>
 <li><strong>Retenção automática:</strong> O lifecycle policy do <abbr title="Google Cloud Storage">GCS</abbr> elimina backups antigos sem intervenção manual.</li>
 <li><strong>Verificável:</strong> O script <code>uv run scripts/backup_status.py</code> permite que o Orientador consulte os backups mais recentes e receba alerta caso o backup mais recente tenha mais de 25 horas.</li>
 </ul>
 <h3 id="negativas-riscos">Negativas / Riscos<a class="headerlink" href="#negativas-riscos" title="Permanent link">¶</a></h3>
 <ul>
 <li><strong>Configuração IAM manual:</strong> A execução do <code>setup_backup.sh</code> requer um usuário com <code>roles/owner</code> ou <code>roles/iam.securityAdmin</code>, o que não pode ser automatizado sem credenciais elevadas.</li>
-<li><strong>Custo de armazenamento:</strong> O custo de storage para dumps <abbr title="Structured Query Language">SQL</abbr> comprimidos é mínimo na escala atual, mas existente.</li>
+<li><strong>Custo de armazenamento:</strong> O custo de storage para dumps <abbr title="Structured Query Language — Linguagem de Consulta Estruturada">SQL</abbr> comprimidos é mínimo na escala atual, mas existente.</li>
 </ul>
 <h2 id="alternativas-consideradas">Alternativas Consideradas<a class="headerlink" href="#alternativas-consideradas" title="Permanent link">¶</a></h2>
 <h3 id="github-actions-com-pg_dump">GitHub Actions com <code>pg_dump</code><a class="headerlink" href="#github-actions-com-pg_dump" title="Permanent link">¶</a></h3>
 <p>Um workflow com <code>schedule: cron</code> rodaria <code>pg_dump</code> e enviaria o resultado ao <abbr title="Google Cloud Storage">GCS</abbr> diretamente pelo CI.</p>
-<p>Descartada porque exigiria expor o Cloud <abbr title="Structured Query Language">SQL</abbr> com <abbr title="Internet Protocol — Protocolo de Internet">IP</abbr> público para que o runner do GitHub Actions conseguisse se conectar, aumentando a superfície de ataque. A abordagem também fragmenta o monitoramento do agendamento fora do <abbr title="Google Cloud Platform">GCP</abbr>.</p>
+<p>Descartada porque exigiria expor o <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> <abbr title="Structured Query Language — Linguagem de Consulta Estruturada">SQL</abbr> com <abbr title="Internet Protocol — Protocolo de Internet">IP</abbr> público para que o runner do GitHub Actions conseguisse se conectar, aumentando a superfície de ataque. A abordagem também fragmenta o monitoramento do agendamento fora do <abbr title="Google Cloud Platform">GCP</abbr>.</p>
 <h3 id="replica-de-leitura-com-snapshot-periodico">Replica de Leitura com Snapshot Periódico<a class="headerlink" href="#replica-de-leitura-com-snapshot-periodico" title="Permanent link">¶</a></h3>
-<p>Provisionar uma réplica de leitura do Cloud <abbr title="Structured Query Language">SQL</abbr> e gerar snapshots com frequência controlada.</p>
+<p>Provisionar uma réplica de leitura do <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> <abbr title="Structured Query Language — Linguagem de Consulta Estruturada">SQL</abbr> e gerar snapshots com frequência controlada.</p>
 <p>Descartada pelo custo adicional de instância e pela complexidade de manutenção desproporcional à escala atual do projeto.</p>
 <hr>
 <h2 id="historico-de-versoes">Histórico de Versões<a class="headerlink" href="#historico-de-versoes" title="Permanent link">¶</a></h2>
@@ -4043,13 +4099,13 @@
         
         
           
-          <a href="../0014-terraform-infraestrutura-como-codigo/" class="md-footer__link md-footer__link--next" aria-label="Próximo: ADR 0014: Terraform para Infraestrutura como Codigo">
+          <a href="../0014-terraform-infraestrutura-como-codigo/" class="md-footer__link md-footer__link--next" aria-label="Próximo: ADR 0014: Terraform para Infraestrutura como Código">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Próximo
               </span>
               <div class="md-ellipsis">
-                ADR 0014: Terraform para Infraestrutura como Codigo
+                ADR 0014: Terraform para Infraestrutura como Código
               </div>
             </div>
             <div class="md-footer__button md-icon">

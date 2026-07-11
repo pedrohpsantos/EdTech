@@ -1350,7 +1350,7 @@
   <span class="md-ellipsis">
     
   
-    Padrões de Desenvolvimento (Code Standards)
+    Padrões de Desenvolvimento
   
 
     
@@ -1578,7 +1578,7 @@
   <span class="md-ellipsis">
     
   
-    Runbooks e Troubleshooting
+    Guias Operacionais e Resolução de Problemas
   
 
     
@@ -2161,6 +2161,34 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../../../arquitetura/finops_custos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FinOps e Previsibilidade de Custos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     
     
     
@@ -2177,10 +2205,10 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_5">
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_6">
         
           
-          <label class="md-nav__link" for="__nav_4_5" id="__nav_4_5_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4_6" id="__nav_4_6_label" tabindex="0">
             
   
   
@@ -2198,8 +2226,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4_5">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -2587,7 +2615,7 @@
   <span class="md-ellipsis">
     
   
-    ADR 0014: Terraform para Infraestrutura como Codigo
+    ADR 0014: Terraform para Infraestrutura como Código
   
 
     
@@ -2604,34 +2632,6 @@
           </ul>
         </nav>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../arquitetura/finops_custos/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    FinOps e Previsibilidade de Custos
-  
-
-    
-  </span>
-  
-  
-
-      </a>
     </li>
   
 
@@ -3062,6 +3062,34 @@
     
   
     Semana 7
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sprints/Semana%208/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Semana 8
   
 
     
@@ -3643,6 +3671,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../atas/ata-10-07-2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ata de Reunião (10/07/2026)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -3807,7 +3863,7 @@
 <p><strong>Atas de Reunião:</strong> Durante a nossa única reunião da semana (nas sextas-feiras), <strong>sempre</strong> formalizamos as pautas e os planos de ação através das Atas de Reunião (presentes na seção <code>Gestão &gt; Reuniões</code>). Elas são a nossa principal ferramenta de rastreabilidade humana, garantindo que o que foi falado presencialmente/verbalmente vire conhecimento documentado para o histórico do projeto.</p>
 </li>
 <li>
-<p><strong>GitHub (Issues/PRs):</strong> Todo debate focado em <em>revisão de código ou resolução de bugs</em> deve acontecer no <abbr title="Pull Request">PR</abbr>, e não perdido no chat instantâneo.</p>
+<p><strong>GitHub (Issues/PRs):</strong> Todo debate focado em <em>revisão de código ou resolução de bugs</em> deve acontecer no <abbr title="Pull Request — Solicitação de integração de código">PR</abbr>, e não perdido no chat instantâneo.</p>
 </li>
 </ol>
 <hr>
@@ -3824,7 +3880,7 @@
 <p>Temos apenas <strong>uma única reunião síncrona na semana</strong>, que ocorre todas as sextas-feiras (podendo ser presencial ou via Discord). É nela que concentramos nossos esforços humanos para não perdermos tempo em calls dispersas ao longo da semana. Nesta call agrupamos:</p>
 <ul>
 <li>
-<p><strong>Review:</strong> Focamos em demonstrar o software rodando (Deploy da funcionalidade) em vez de enviar relatórios acadêmicos monótonos.</p>
+<p><strong><abbr title="Revisão (Normalmente de código)">Review</abbr>:</strong> Focamos em demonstrar o software rodando (<abbr title="Implantação (Colocar o sistema no ar)">Deploy</abbr> da funcionalidade) em vez de enviar relatórios acadêmicos monótonos.</p>
 </li>
 <li>
 <p><strong>Retrospectiva:</strong> O rito contínuo de melhoria de pessoas e processos ("O que foi bom? O que foi ruim?").</p>
@@ -3838,10 +3894,10 @@
 <h2 id="engenharia-e-versionamento">Engenharia e Versionamento<a class="headerlink" href="#engenharia-e-versionamento" title="Permanent link">¶</a></h2>
 <ul>
 <li>
-<p><strong>Docs-as-Code e ADRs:</strong> Toda decisão técnica de alto impacto (uso de Flyway, adoção de <abbr title="Single Page Application">SPA</abbr>, Cloud Run) não é guardada "na cabeça" dos devs. Ela vira um documento markdown de <em>Architecture Decision Record (<abbr title="Architecture Decision Record — Registro de Decisão Arquitetural">ADR</abbr>)</em> dentro do portal.</p>
+<p><strong>Docs-as-Code e ADRs:</strong> Toda decisão técnica de alto impacto (uso de Flyway, adoção de <abbr title="Single Page Application — Aplicação de Página Única">SPA</abbr>, <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run) não é guardada "na cabeça" dos devs. Ela vira um documento markdown de <em>Architecture Decision Record (<abbr title="Architecture Decision Record — Registro de Decisão Arquitetural">ADR</abbr>)</em> dentro do portal.</p>
 </li>
 <li>
-<p><strong>Git Flow Ágil:</strong> Trabalhamos com branches derivativas (<code>feat/</code>, <code>fix/</code>, <code>docs/</code>) e a integração ocorre via <code>develop</code> até chegar à blindada branch <code>main</code>.</p>
+<p><strong><abbr title="Sistema de controle de versão">Git</abbr> Flow Ágil:</strong> Trabalhamos com branches derivativas (<code>feat/</code>, <code>fix/</code>, <code>docs/</code>) e a integração ocorre via <code>develop</code> até chegar à blindada branch <code>main</code>.</p>
 </li>
 <li>
 <p><strong>Regras de CI e Commits:</strong></p>
@@ -3850,7 +3906,7 @@
 <p>O título das mensagens deve seguir rigorosamente a especificação do <strong>Conventional Commits</strong> (tabela documentada no nosso Cronograma).</p>
 </li>
 <li>
-<p>Nenhum <abbr title="Pull Request">PR</abbr> (Pull Request) passa para aprovação sem que o Pipeline automatizado do <em>GitHub Actions</em> sinalize luz verde nos testes e no linter de código. A revisão do Tech Lead é obrigatória conforme a <em>Definition of Done (<abbr title="Definition of Done — Definição de Concluído">DoD</abbr>)</em>.</p>
+<p>Nenhum <abbr title="Pull Request — Solicitação de integração de código">PR</abbr> (Pull Request) passa para aprovação sem que o <abbr title="Esteira de automação (Sequência de passos)">Pipeline</abbr> automatizado do <em>GitHub Actions</em> sinalize luz verde nos testes e no linter de código. A revisão do Tech Lead é obrigatória conforme a <em>Definition of Done (<abbr title="Definition of Done — Definição de Concluído">DoD</abbr>)</em>.</p>
 </li>
 </ul>
 </li>

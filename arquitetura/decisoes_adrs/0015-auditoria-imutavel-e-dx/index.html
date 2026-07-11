@@ -1348,7 +1348,7 @@
   <span class="md-ellipsis">
     
   
-    Padrões de Desenvolvimento (Code Standards)
+    Padrões de Desenvolvimento
   
 
     
@@ -1576,7 +1576,7 @@
   <span class="md-ellipsis">
     
   
-    Runbooks e Troubleshooting
+    Guias Operacionais e Resolução de Problemas
   
 
     
@@ -2166,6 +2166,34 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../../finops_custos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FinOps e Previsibilidade de Custos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -2187,10 +2215,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5" checked="">
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_6" checked="">
         
           
-          <label class="md-nav__link" for="__nav_4_5" id="__nav_4_5_label" tabindex="">
+          <label class="md-nav__link" for="__nav_4_6" id="__nav_4_6_label" tabindex="">
             
   
   
@@ -2208,8 +2236,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_4_5">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -2597,7 +2625,7 @@
   <span class="md-ellipsis">
     
   
-    ADR 0014: Terraform para Infraestrutura como Codigo
+    ADR 0014: Terraform para Infraestrutura como Código
   
 
     
@@ -2614,34 +2642,6 @@
           </ul>
         </nav>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../finops_custos/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    FinOps e Previsibilidade de Custos
-  
-
-    
-  </span>
-  
-  
-
-      </a>
     </li>
   
 
@@ -3063,6 +3063,34 @@
     
   
     Semana 7
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gestao/sprints/Semana%208/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Semana 8
   
 
     
@@ -3508,6 +3536,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gestao/atas/ata-10-07-2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ata de Reunião (10/07/2026)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -3611,14 +3667,14 @@
 <p><strong>Status:</strong> Aceito
 <strong>Data:</strong> 2026-07-10</p>
 <h2 id="contexto">Contexto<a class="headerlink" href="#contexto" title="Permanent link">¶</a></h2>
-<p>Durante um ciclo de auditoria e elevação de padrões arquiteturais, constatou-se que nossa camada de auditoria, embora funcional, permitia mutabilidade na camada de aplicação (existência de métodos "setters" no modelo <code>AuditLog.java</code> do Hibernate). Além disso, o ambiente de desenvolvimento local (DX) possuía fricção devido à falta de emuladores para serviços na nuvem (Google Cloud Storage) e gerenciadores de banco de dados, o que prejudicava o <em>onboarding</em> de novos desenvolvedores.</p>
-<p>Adicionalmente, verificamos que as execuções do Flyway no momento do boot da aplicação no Cloud Run podiam causar <em>Timeouts</em> e quedas de serviço. </p>
+<p>Durante um ciclo de auditoria e elevação de padrões arquiteturais, constatou-se que nossa camada de auditoria, embora funcional, permitia mutabilidade na camada de aplicação (existência de métodos "setters" no modelo <code>AuditLog.java</code> do Hibernate). Além disso, o ambiente de desenvolvimento local (DX) possuía fricção devido à falta de emuladores para serviços na nuvem (Google <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Storage) e gerenciadores de banco de dados, o que prejudicava o <em>onboarding</em> de novos desenvolvedores.</p>
+<p>Adicionalmente, verificamos que as execuções do Flyway no momento do boot da aplicação no <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run podiam causar <em>Timeouts</em> e quedas de serviço. </p>
 <h2 id="decisao">Decisão<a class="headerlink" href="#decisao" title="Permanent link">¶</a></h2>
 <p>Para alcançar a maturidade <em>Enterprise</em> em nosso produto, decidimos implementar as seguintes melhorias:</p>
 <ol>
 <li><strong>Auditoria Imutável Absoluta:</strong> Foram removidos todos os métodos modificadores (setters) da entidade <code>AuditLog.java</code> e aplicadas anotações <code>@Column(updatable = false)</code>. Uma vez instanciado e salvo via repositório, o registro é imutável em nível de aplicação e <abbr title="Object-Relational Mapping — Mapeamento Objeto-Relacional">ORM</abbr>, garantindo o mais alto nível de conformidade e integridade.</li>
-<li><strong>Hardening de Segurança (Containers):</strong> A imagem Docker do Frontend (Next.js/React) foi migrada para <code>nginxinc/nginx-unprivileged:alpine</code>, removendo completamente o acesso <code>root</code> no container de produção.</li>
-<li><strong>Desacoplamento de Migrations:</strong> O processo de <abbr title="Continuous Integration / Continuous Delivery — Integração Contínua / Entrega Contínua">CI/CD</abbr> via GitHub Actions (<code>ci.yml</code>) foi alterado para executar o Flyway como um <em>Cloud Run Job</em> isolado antes de direcionar tráfego para a <abbr title="Application Programming Interface">API</abbr>.</li>
+<li><strong>Hardening de Segurança (Containers):</strong> A imagem Docker do <abbr title="Camada de interface visual do usuário">Frontend</abbr> (Next.js/React) foi migrada para <code>nginxinc/nginx-unprivileged:alpine</code>, removendo completamente o acesso <code>root</code> no container de produção.</li>
+<li><strong>Desacoplamento de Migrations:</strong> O processo de <abbr title="Continuous Integration / Continuous Delivery — Integração Contínua / Entrega Contínua">CI/CD</abbr> via GitHub Actions (<code>ci.yml</code>) foi alterado para executar o Flyway como um <em><abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run Job</em> isolado antes de direcionar tráfego para a <abbr title="Application Programming Interface — Interface de Programação de Aplicação">API</abbr>.</li>
 <li><strong>Developer Experience (DX) - Emuladores Locais:</strong> O <code>docker-compose.yml</code> de desenvolvimento recebeu as imagens <code>fsouza/fake-gcs-server</code> e <code>adminer</code>. Criamos também um <code>docker-compose.prod.yml</code> para emulação do build final localmente.</li>
 </ol>
 <h2 id="consequencias">Consequências<a class="headerlink" href="#consequencias" title="Permanent link">¶</a></h2>
@@ -3733,7 +3789,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Rodapé">
         
           
-          <a href="../0014-terraform-infraestrutura-como-codigo/" class="md-footer__link md-footer__link--prev" aria-label="Anterior: ADR 0014: Terraform para Infraestrutura como Codigo">
+          <a href="../0014-terraform-infraestrutura-como-codigo/" class="md-footer__link md-footer__link--prev" aria-label="Anterior: ADR 0014: Terraform para Infraestrutura como Código">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
@@ -3743,7 +3799,7 @@
                 Anterior
               </span>
               <div class="md-ellipsis">
-                ADR 0014: Terraform para Infraestrutura como Codigo
+                ADR 0014: Terraform para Infraestrutura como Código
               </div>
             </div>
           </a>

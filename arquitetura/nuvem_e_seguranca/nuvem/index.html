@@ -1348,7 +1348,7 @@
   <span class="md-ellipsis">
     
   
-    Padrões de Desenvolvimento (Code Standards)
+    Padrões de Desenvolvimento
   
 
     
@@ -1576,7 +1576,7 @@
   <span class="md-ellipsis">
     
   
-    Runbooks e Troubleshooting
+    Guias Operacionais e Resolução de Problemas
   
 
     
@@ -2265,6 +2265,34 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../../finops_custos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FinOps e Previsibilidade de Custos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     
     
     
@@ -2284,10 +2312,10 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_5">
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_6">
         
           
-          <label class="md-nav__link" for="__nav_4_5" id="__nav_4_5_label" tabindex="">
+          <label class="md-nav__link" for="__nav_4_6" id="__nav_4_6_label" tabindex="">
             
   
   
@@ -2305,8 +2333,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4_5">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -2694,7 +2722,7 @@
   <span class="md-ellipsis">
     
   
-    ADR 0014: Terraform para Infraestrutura como Codigo
+    ADR 0014: Terraform para Infraestrutura como Código
   
 
     
@@ -2711,34 +2739,6 @@
           </ul>
         </nav>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../finops_custos/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    FinOps e Previsibilidade de Custos
-  
-
-    
-  </span>
-  
-  
-
-      </a>
     </li>
   
 
@@ -3160,6 +3160,34 @@
     
   
     Semana 7
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gestao/sprints/Semana%208/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Semana 8
   
 
     
@@ -3605,6 +3633,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gestao/atas/ata-10-07-2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ata de Reunião (10/07/2026)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -3722,8 +3778,8 @@
 
 
 <h1 id="arquitetura-de-nuvem"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.5 20q-2.28 0-3.89-1.57Q1 16.85 1 14.58q0-1.95 1.17-3.48 1.18-1.53 3.08-1.95.63-2.3 2.5-3.72Q9.63 4 12 4q2.93 0 4.96 2.04Q19 8.07 19 11q1.73.2 2.86 1.5 1.14 1.28 1.14 3 0 1.88-1.31 3.19T18.5 20Z"></path></svg></span> Arquitetura de Nuvem<a class="headerlink" href="#arquitetura-de-nuvem" title="Permanent link">¶</a></h1>
-<p>A topologia cloud do projeto adota uma <strong>estratégia 100% nativa no Google Cloud</strong>, utilizando serviços gerenciados e serverless.</p>
-<h2 id="diagrama-de-implantacao-google-cloud-firebase">Diagrama de Implantação (Google Cloud &amp; Firebase)<a class="headerlink" href="#diagrama-de-implantacao-google-cloud-firebase" title="Permanent link">¶</a></h2>
+<p>A topologia cloud do projeto adota uma <strong>estratégia 100% nativa no Google <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr></strong>, utilizando serviços gerenciados e serverless.</p>
+<h2 id="diagrama-de-implantacao-google-cloud-firebase">Diagrama de Implantação (Google <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> &amp; Firebase)<a class="headerlink" href="#diagrama-de-implantacao-google-cloud-firebase" title="Permanent link">¶</a></h2>
 <pre class="mermaid"><code>%%{init: {"flowchart": {"nodeSpacing": 60, "rankSpacing": 80}}}%%
 flowchart TB
     User["Usuário"]
@@ -3742,17 +3798,17 @@ flowchart TB
     Run --&gt;|"JDBC (Socket)"| SQL
     Run --&gt;|"API/gRPC"| Storage</code></pre>
 <h2 id="beneficios-da-topologia">Benefícios da Topologia<a class="headerlink" href="#beneficios-da-topologia" title="Permanent link">¶</a></h2>
-<h3 id="ecossistema-google-cloud">Ecossistema Google Cloud<a class="headerlink" href="#ecossistema-google-cloud" title="Permanent link">¶</a></h3>
+<h3 id="ecossistema-google-cloud">Ecossistema Google <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr><a class="headerlink" href="#ecossistema-google-cloud" title="Permanent link">¶</a></h3>
 <ul>
-<li><strong>Firebase Hosting:</strong> Distribuição global via CDN super rápida para o Frontend (React/Vite), com suporte a domínios personalizados e certificados SSL automáticos.</li>
-<li><strong>Cloud Run:</strong> Permite <em>cold starts</em> e escalonamento até zero instâncias quando não houver alunos acessando de madrugada, economizando custos. A comunicação com o Firebase Hosting é natural e rápida.</li>
-<li><strong>Cloud <abbr title="Structured Query Language">SQL</abbr>:</strong> Isola a base relacional da internet pública, limitando o tráfego exclusivamente para a rede <abbr title="Virtual Private Cloud">VPC</abbr> interna do Cloud Run através do Cloud <abbr title="Structured Query Language">SQL</abbr> Auth Proxy.</li>
-<li><strong>Cloud Storage:</strong> Separa o armazenamento de grandes volumes binários (PDFs) do banco relacional, garantindo performance nas requisições textuais (APIs) da aplicação.</li>
-<li><strong>Terraform:</strong> A infraestrutura principal possui módulos versionados para Cloud Run, Cloud <abbr title="Structured Query Language">SQL</abbr> e Cloud Storage, com <code>project_id</code>, região, bucket e imagem configurados por variáveis locais não versionadas.</li>
+<li><strong>Firebase Hosting:</strong> Distribuição global via CDN super rápida para o <abbr title="Camada de interface visual do usuário">Frontend</abbr> (React/Vite), com suporte a domínios personalizados e certificados SSL automáticos.</li>
+<li><strong><abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run:</strong> Permite <em>cold starts</em> e escalonamento até zero instâncias quando não houver alunos acessando de madrugada, economizando custos. A comunicação com o Firebase Hosting é natural e rápida.</li>
+<li><strong><abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> <abbr title="Structured Query Language — Linguagem de Consulta Estruturada">SQL</abbr>:</strong> Isola a base relacional da internet pública, limitando o tráfego exclusivamente para a rede <abbr title="Virtual Private Cloud">VPC</abbr> interna do <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run através do <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> <abbr title="Structured Query Language — Linguagem de Consulta Estruturada">SQL</abbr> Auth Proxy.</li>
+<li><strong><abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Storage:</strong> Separa o armazenamento de grandes volumes binários (PDFs) do banco relacional, garantindo performance nas requisições textuais (APIs) da aplicação.</li>
+<li><strong>Terraform:</strong> A infraestrutura principal possui módulos versionados para <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run, <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> <abbr title="Structured Query Language — Linguagem de Consulta Estruturada">SQL</abbr> e <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Storage, com <code>project_id</code>, região, bucket e imagem configurados por variáveis locais não versionadas.</li>
 </ul>
 <div class="admonition info">
 <p class="admonition-title">Decisão Arquitetural</p>
-<p>Como o projeto já contava com <a href="../../decisoes_adrs/0001-armazenamento-google-cloud/">Decisão Técnica #0001</a> apontando para o <abbr title="Google Cloud Platform">GCP</abbr>, optou-se por consolidar a hospedagem da <abbr title="Application Programming Interface">API</abbr> no <strong>Google Cloud Run</strong>, uma plataforma serverless e moderna.</p>
+<p>Como o projeto já contava com <a href="../../decisoes_adrs/0001-armazenamento-google-cloud/">Decisão Técnica #0001</a> apontando para o <abbr title="Google Cloud Platform">GCP</abbr>, optou-se por consolidar a hospedagem da <abbr title="Application Programming Interface — Interface de Programação de Aplicação">API</abbr> no <strong>Google <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run</strong>, uma plataforma serverless e moderna.</p>
 </div>
 <hr>
 <h2 id="historico-de-versoes">Histórico de Versões<a class="headerlink" href="#historico-de-versoes" title="Permanent link">¶</a></h2>

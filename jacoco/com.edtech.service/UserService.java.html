@@ -106,18 +106,18 @@ public class UserService {
   /** Documentação. */
   @Transactional
   public User verifyRegistration(String email, String code) {
-<span class="nc" id="L109">    String normalizedEmail = email.trim().toLowerCase(Locale.ROOT);</span>
-<span class="nc" id="L110">    Optional&lt;com.edtech.model.VerificationToken&gt; tokenOpt =</span>
-<span class="nc" id="L111">        verificationTokenRepository.findByEmailAndToken(normalizedEmail, code);</span>
+<span class="fc" id="L109">    String normalizedEmail = email.trim().toLowerCase(Locale.ROOT);</span>
+<span class="fc" id="L110">    Optional&lt;com.edtech.model.VerificationToken&gt; tokenOpt =</span>
+<span class="fc" id="L111">        verificationTokenRepository.findByEmailAndToken(normalizedEmail, code);</span>
 
-<span class="nc bnc" id="L113" title="All 4 branches missed.">    if (tokenOpt.isPresent() &amp;&amp; !tokenOpt.get().isExpired()) {</span>
-<span class="nc" id="L114">      Optional&lt;User&gt; userOpt = userRepository.findByEmailIgnoreCase(normalizedEmail);</span>
-<span class="nc bnc" id="L115" title="All 2 branches missed.">      if (userOpt.isPresent()) {</span>
-<span class="nc" id="L116">        User user = userOpt.get();</span>
-<span class="nc" id="L117">        user.setActive(true);</span>
-<span class="nc" id="L118">        userRepository.save(user);</span>
-<span class="nc" id="L119">        verificationTokenRepository.deleteByEmail(normalizedEmail);</span>
-<span class="nc" id="L120">        return user;</span>
+<span class="pc bpc" id="L113" title="2 of 4 branches missed.">    if (tokenOpt.isPresent() &amp;&amp; !tokenOpt.get().isExpired()) {</span>
+<span class="fc" id="L114">      Optional&lt;User&gt; userOpt = userRepository.findByEmailIgnoreCase(normalizedEmail);</span>
+<span class="pc bpc" id="L115" title="1 of 2 branches missed.">      if (userOpt.isPresent()) {</span>
+<span class="fc" id="L116">        User user = userOpt.get();</span>
+<span class="fc" id="L117">        user.setActive(true);</span>
+<span class="fc" id="L118">        userRepository.save(user);</span>
+<span class="fc" id="L119">        verificationTokenRepository.deleteByEmail(normalizedEmail);</span>
+<span class="fc" id="L120">        return user;</span>
       }
     }
 <span class="nc" id="L123">    throw new InvalidCredentialsException(&quot;Código inválido ou expirado.&quot;);</span>
@@ -125,7 +125,7 @@ public class UserService {
 
   @Transactional
   public User saveUserWithoutHash(User user) {
-<span class="nc" id="L128">    return userRepository.save(user);</span>
+<span class="fc" id="L128">    return userRepository.save(user);</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

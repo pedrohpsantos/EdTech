@@ -1348,7 +1348,7 @@
   <span class="md-ellipsis">
     
   
-    Padrões de Desenvolvimento (Code Standards)
+    Padrões de Desenvolvimento
   
 
     
@@ -1576,7 +1576,7 @@
   <span class="md-ellipsis">
     
   
-    Runbooks e Troubleshooting
+    Guias Operacionais e Resolução de Problemas
   
 
     
@@ -2166,6 +2166,34 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../../finops_custos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FinOps e Previsibilidade de Custos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -2187,10 +2215,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5" checked="">
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_6" checked="">
         
           
-          <label class="md-nav__link" for="__nav_4_5" id="__nav_4_5_label" tabindex="">
+          <label class="md-nav__link" for="__nav_4_6" id="__nav_4_6_label" tabindex="">
             
   
   
@@ -2208,8 +2236,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_4_5">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -2727,7 +2755,7 @@
   <span class="md-ellipsis">
     
   
-    ADR 0014: Terraform para Infraestrutura como Codigo
+    ADR 0014: Terraform para Infraestrutura como Código
   
 
     
@@ -2744,34 +2772,6 @@
           </ul>
         </nav>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../finops_custos/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    FinOps e Previsibilidade de Custos
-  
-
-    
-  </span>
-  
-  
-
-      </a>
     </li>
   
 
@@ -3193,6 +3193,34 @@
     
   
     Semana 7
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gestao/sprints/Semana%208/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Semana 8
   
 
     
@@ -3638,6 +3666,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gestao/atas/ata-10-07-2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ata de Reunião (10/07/2026)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -3787,31 +3843,31 @@
   
 
 
-<h1 id="adr-0003-adocao-de-google-cloud-run-serverless"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17 21-2.75-3 1.16-1.16L17 18.43l3.59-3.59 1.16 1.41M12.8 21H5a2 2 0 0 1-2-2V5c0-1.11.89-2 2-2h14a2 2 0 0 1 2 2v7.8c-.88-.51-1.91-.8-3-.8l-1 .08V11H7v2h7.69A5.98 5.98 0 0 0 12 18c0 1.09.29 2.12.8 3m-.8-6H7v2h5m5-10H7v2h10"></path></svg></span> <abbr title="Architecture Decision Record — Registro de Decisão Arquitetural">ADR</abbr> 0003: Adoção de Google Cloud Run (Serverless)<a class="headerlink" href="#adr-0003-adocao-de-google-cloud-run-serverless" title="Permanent link">¶</a></h1>
+<h1 id="adr-0003-adocao-de-google-cloud-run-serverless"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17 21-2.75-3 1.16-1.16L17 18.43l3.59-3.59 1.16 1.41M12.8 21H5a2 2 0 0 1-2-2V5c0-1.11.89-2 2-2h14a2 2 0 0 1 2 2v7.8c-.88-.51-1.91-.8-3-.8l-1 .08V11H7v2h7.69A5.98 5.98 0 0 0 12 18c0 1.09.29 2.12.8 3m-.8-6H7v2h5m5-10H7v2h10"></path></svg></span> <abbr title="Architecture Decision Record — Registro de Decisão Arquitetural">ADR</abbr> 0003: Adoção de Google <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run (Serverless)<a class="headerlink" href="#adr-0003-adocao-de-google-cloud-run-serverless" title="Permanent link">¶</a></h1>
 <h2 id="status">Status<a class="headerlink" href="#status" title="Permanent link">¶</a></h2>
 <p>Aceito</p>
 <h2 id="contexto">Contexto<a class="headerlink" href="#contexto" title="Permanent link">¶</a></h2>
 <p>A plataforma atende grupos de pesquisa universitários. O tráfego de acesso é altamente sazonal: há picos enormes durante as semanas de entrega de teses, artigos de fim de semestre e submissões para congressos, enquanto o sistema fica praticamente ocioso durante madrugadas, feriados e férias escolares.
 Manter servidores virtuais (VMs) tradicionais rodando 24/7 geraria custos desnecessários para o orçamento do laboratório. Por outro lado, precisamos que a aplicação suporte picos repentinos de dezenas de uploads simultâneos sem cair.</p>
 <h2 id="decisao">Decisão<a class="headerlink" href="#decisao" title="Permanent link">¶</a></h2>
-<p>Optamos por hospedar o backend da aplicação utilizando o <strong>Google Cloud Run</strong>, uma plataforma Serverless para contêineres Docker.</p>
+<p>Optamos por hospedar o backend da aplicação utilizando o <strong>Google <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run</strong>, uma plataforma Serverless para contêineres Docker.</p>
 <h2 id="consequencias">Consequências<a class="headerlink" href="#consequencias" title="Permanent link">¶</a></h2>
 <h3 id="positivas">Positivas<a class="headerlink" href="#positivas" title="Permanent link">¶</a></h3>
 <ul>
 <li>
-<p><strong>Escalabilidade Automática:</strong> O Cloud Run escala instâncias automaticamente (Scale to N) durante picos de tráfego, garantindo estabilidade durante as semanas de entrega.</p>
+<p><strong>Escalabilidade Automática:</strong> O <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run escala instâncias automaticamente (Scale to N) durante picos de tráfego, garantindo estabilidade durante as semanas de entrega.</p>
 </li>
 <li>
 <p><strong>Redução de Custos (Scale to Zero):</strong> Quando não há tráfego (ex: madrugadas), as instâncias são desligadas, resultando em cobrança zero para o tempo de computação.</p>
 </li>
 <li>
-<p><strong>Agilidade no Deploy:</strong> Por ser conteinerizado, a integração com o GitHub Actions se torna natural. Basta construir a imagem Docker e enviá-la para o Artifact Registry.</p>
+<p><strong>Agilidade no <abbr title="Implantação (Colocar o sistema no ar)">Deploy</abbr>:</strong> Por ser conteinerizado, a integração com o GitHub Actions se torna natural. Basta construir a imagem Docker e enviá-la para o Artifact Registry.</p>
 </li>
 </ul>
 <h3 id="negativas-riscos">Negativas / Riscos<a class="headerlink" href="#negativas-riscos" title="Permanent link">¶</a></h3>
 <ul>
 <li>
-<p><strong>Cold Starts:</strong> Como o sistema pode escalar a zero, o primeiro usuário a acessar a plataforma após um longo período de inatividade pode enfrentar uma demora (Cold Start) de alguns segundos enquanto o contêiner Java/Spring Boot sobe. Isso será mitigado mantendo 1 instância mínima rodando no horário comercial.</p>
+<p><strong>Cold Starts:</strong> Como o sistema pode escalar a zero, o primeiro usuário a acessar a plataforma após um longo período de inatividade pode enfrentar uma demora (<abbr title="Início a Frio (Atraso na inicialização do serviço)">Cold Start</abbr>) de alguns segundos enquanto o contêiner Java/Spring Boot sobe. Isso será mitigado mantendo 1 instância mínima rodando no horário comercial.</p>
 </li>
 <li>
 <p><strong>Stateless Obrigatório:</strong> Obriga a aplicação a ser estritamente stateless (sem estado interno). Todo armazenamento persistente precisa ser delegado (PostgreSQL, <abbr title="Google Cloud Storage">GCS</abbr>), o que já está alinhado com a arquitetura definida.</p>

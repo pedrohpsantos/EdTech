@@ -12,7 +12,7 @@
         <link rel="canonical" href="https://pedrohpsantos.github.io/EdTech/gestao/metodologia_e_time/dor_dod/">
       
       
-        <link rel="prev" href="../../sprints/Semana%207/">
+        <link rel="prev" href="../../sprints/Semana%208/">
       
       
         <link rel="next" href="../team_agreements/">
@@ -1350,7 +1350,7 @@
   <span class="md-ellipsis">
     
   
-    Padrões de Desenvolvimento (Code Standards)
+    Padrões de Desenvolvimento
   
 
     
@@ -1578,7 +1578,7 @@
   <span class="md-ellipsis">
     
   
-    Runbooks e Troubleshooting
+    Guias Operacionais e Resolução de Problemas
   
 
     
@@ -2161,6 +2161,34 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../../../arquitetura/finops_custos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FinOps e Previsibilidade de Custos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     
     
     
@@ -2177,10 +2205,10 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_5">
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_6">
         
           
-          <label class="md-nav__link" for="__nav_4_5" id="__nav_4_5_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4_6" id="__nav_4_6_label" tabindex="0">
             
   
   
@@ -2198,8 +2226,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4_5">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -2587,7 +2615,7 @@
   <span class="md-ellipsis">
     
   
-    ADR 0014: Terraform para Infraestrutura como Codigo
+    ADR 0014: Terraform para Infraestrutura como Código
   
 
     
@@ -2604,34 +2632,6 @@
           </ul>
         </nav>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../arquitetura/finops_custos/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    FinOps e Previsibilidade de Custos
-  
-
-    
-  </span>
-  
-  
-
-      </a>
     </li>
   
 
@@ -3062,6 +3062,34 @@
     
   
     Semana 7
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sprints/Semana%208/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Semana 8
   
 
     
@@ -3593,6 +3621,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../atas/ata-10-07-2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ata de Reunião (10/07/2026)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -3704,7 +3760,7 @@
     CR --&gt;|Passa pelo DoD| D["Done"]
     D --&gt; End((Fim))</code></pre>
 <h2 id="definition-of-ready-dor">Definition of Ready (<abbr title="Definition of Ready — Definição de Pronto para Desenvolvimento">DoR</abbr>)<a class="headerlink" href="#definition-of-ready-dor" title="Permanent link">¶</a></h2>
-<p>Uma História de Usuário (<code>User Story</code>) ou Tarefa apenas entra no Sprint (Muda para a coluna <strong>To Do / Ready for Dev</strong>) quando cumpre os seguintes requisitos mínimos de planejamento:</p>
+<p>Uma História de Usuário (<code>User Story</code>) ou Tarefa apenas entra no <abbr title="Ciclo curto de desenvolvimento de software">Sprint</abbr> (Muda para a coluna <strong>To Do / Ready for Dev</strong>) quando cumpre os seguintes requisitos mínimos de planejamento:</p>
 <ol>
 <li>
 <p><strong>Clareza de Valor:</strong> A história segue o formato "Como [Persona], Quero [Ação], Para Que [Benefício]".</p>
@@ -3729,10 +3785,10 @@
 <p><strong>Código Funcional:</strong> O código atende a 100% dos Critérios de Aceitação descritos no ticket.</p>
 </li>
 <li>
-<p><strong>Revisão de Pares (Code Review):</strong> O Pull Request (<abbr title="Pull Request">PR</abbr>) foi aprovado pelo Tech Lead.</p>
+<p><strong>Revisão de Pares (Code <abbr title="Revisão (Normalmente de código)">Review</abbr>):</strong> O Pull Request (<abbr title="Pull Request — Solicitação de integração de código">PR</abbr>) foi aprovado pelo Tech Lead.</p>
 </li>
 <li>
-<p><strong>Integração Contínua (CI):</strong> A pipeline do <strong>GitHub Actions</strong> (<code>ADR 0008</code>) foi finalizada com sucesso (Lint, Build e Testes).</p>
+<p><strong>Integração Contínua (CI):</strong> A pipeline do <strong>GitHub Actions</strong> (<code>ADR 0008</code>) foi finalizada com sucesso (Lint, <abbr title="Construção ou compilação do código fonte">Build</abbr> e Testes).</p>
 </li>
 <li>
 <p><strong>Testes Automatizados:</strong> As novas lógicas de negócio estão cobertas por testes automatizados e não quebram os cenários antigos.</p>
@@ -3741,10 +3797,10 @@
 <p><strong>Banco de Dados (Flyway):</strong> Qualquer alteração estrutural no PostgreSQL (<code>ADR 0004</code>) conta com seu respectivo script de migração versionado no repositório (<code>ADR 0007</code>).</p>
 </li>
 <li>
-<p><strong>Docs-as-Code:</strong> Se a <abbr title="Pull Request">PR</abbr> alterou o sistema de forma sensível, a documentação atrelada (C4 Model, Jornadas, ADRs no MkDocs - <code>ADR 0009</code>) foi atualizada junto ao código na mesma <abbr title="Pull Request">PR</abbr>.</p>
+<p><strong>Docs-as-Code:</strong> Se a <abbr title="Pull Request — Solicitação de integração de código">PR</abbr> alterou o sistema de forma sensível, a documentação atrelada (C4 Model, Jornadas, ADRs no MkDocs - <code>ADR 0009</code>) foi atualizada junto ao código na mesma <abbr title="Pull Request — Solicitação de integração de código">PR</abbr>.</p>
 </li>
 <li>
-<p><strong>Critérios de Segurança e Infraestrutura:</strong> A imagem do Docker deve realizar o build para o ambiente Serverless (<strong>Cloud Run</strong> - <code>ADR 0003</code>). Nenhuma chave ou senha (credentials) pode ser vazada no commit, e a autenticação das rotas deve respeitar as proteções contra <abbr title="Cross-Site Scripting">XSS</abbr> via <strong><abbr title="JSON Web Token">JWT</abbr> em HttpOnly</strong> (<code>ADR 0002</code>).</p>
+<p><strong>Critérios de Segurança e Infraestrutura:</strong> A imagem do Docker deve realizar o build para o ambiente Serverless (<strong><abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run</strong> - <code>ADR 0003</code>). Nenhuma chave ou senha (credentials) pode ser vazada no commit, e a autenticação das rotas deve respeitar as proteções contra <abbr title="Cross-Site Scripting">XSS</abbr> via <strong><abbr title="JSON Web Token">JWT</abbr> em HttpOnly</strong> (<code>ADR 0002</code>).</p>
 </li>
 </ol>
 <hr>
@@ -3892,7 +3948,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Rodapé">
         
           
-          <a href="../../sprints/Semana%207/" class="md-footer__link md-footer__link--prev" aria-label="Anterior: Semana 7">
+          <a href="../../sprints/Semana%208/" class="md-footer__link md-footer__link--prev" aria-label="Anterior: Semana 8">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
@@ -3902,7 +3958,7 @@
                 Anterior
               </span>
               <div class="md-ellipsis">
-                Semana 7
+                Semana 8
               </div>
             </div>
           </a>

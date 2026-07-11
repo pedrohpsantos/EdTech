@@ -1348,7 +1348,7 @@
   <span class="md-ellipsis">
     
   
-    Padrões de Desenvolvimento (Code Standards)
+    Padrões de Desenvolvimento
   
 
     
@@ -1576,7 +1576,7 @@
   <span class="md-ellipsis">
     
   
-    Runbooks e Troubleshooting
+    Guias Operacionais e Resolução de Problemas
   
 
     
@@ -2166,6 +2166,34 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../../finops_custos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FinOps e Previsibilidade de Custos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -2187,10 +2215,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5" checked="">
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_6" checked="">
         
           
-          <label class="md-nav__link" for="__nav_4_5" id="__nav_4_5_label" tabindex="">
+          <label class="md-nav__link" for="__nav_4_6" id="__nav_4_6_label" tabindex="">
             
   
   
@@ -2208,8 +2236,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_4_5">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -2727,7 +2755,7 @@
   <span class="md-ellipsis">
     
   
-    ADR 0014: Terraform para Infraestrutura como Codigo
+    ADR 0014: Terraform para Infraestrutura como Código
   
 
     
@@ -2744,34 +2772,6 @@
           </ul>
         </nav>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../finops_custos/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    FinOps e Previsibilidade de Custos
-  
-
-    
-  </span>
-  
-  
-
-      </a>
     </li>
   
 
@@ -3193,6 +3193,34 @@
     
   
     Semana 7
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gestao/sprints/Semana%208/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Semana 8
   
 
     
@@ -3638,6 +3666,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gestao/atas/ata-10-07-2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ata de Reunião (10/07/2026)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -3794,7 +3850,7 @@
 <p>O EdTech precisa manter relações estritas entre as entidades: Orientadores coordenam Projetos, que têm Pesquisadores (Membros), que por sua vez submetem Documentos. O acesso aos documentos é inteiramente guiado por essa árvore de hierarquia, garantindo o "Isolamento Visual" solicitado nos requisitos.
 Além disso, o sistema conta com um módulo de Auditoria que exige um histórico imutável (<code>append-only</code>) de eventos complexos. Precisamos de consistência forte (<abbr title="Atomicity, Consistency, Isolation, Durability — Atomicidade, Consistência, Isolamento e Durabilidade">ACID</abbr>) para impedir que documentos fiquem orfãos ou que logs de auditoria se percam. Bancos NoSQL poderiam oferecer maior velocidade de inserção, mas à custa da integridade referencial que o projeto demanda.</p>
 <h2 id="decisao">Decisão<a class="headerlink" href="#decisao" title="Permanent link">¶</a></h2>
-<p>Optamos por usar <strong>PostgreSQL</strong>, hospedado no <strong>Google Cloud <abbr title="Structured Query Language">SQL</abbr></strong>.</p>
+<p>Optamos por usar <strong>PostgreSQL</strong>, hospedado no <strong>Google <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> <abbr title="Structured Query Language — Linguagem de Consulta Estruturada">SQL</abbr></strong>.</p>
 <h2 id="consequencias">Consequências<a class="headerlink" href="#consequencias" title="Permanent link">¶</a></h2>
 <h3 id="positivas">Positivas<a class="headerlink" href="#positivas" title="Permanent link">¶</a></h3>
 <ul>
@@ -3802,7 +3858,7 @@ Além disso, o sistema conta com um módulo de Auditoria que exige um histórico
 <p><strong>Integridade Relacional (<abbr title="Atomicity, Consistency, Isolation, Durability — Atomicidade, Consistência, Isolamento e Durabilidade">ACID</abbr>):</strong> Permite usar <em>Foreign Keys</em> para assegurar, no nível do banco de dados, que nenhum documento exista sem um autor válido e que pesquisadores só pertençam a projetos existentes.</p>
 </li>
 <li>
-<p><strong>Consultas Complexas:</strong> O módulo de auditoria demandará pesquisas como "todos os logs de acesso negado a documentos do projeto X no mês Y". O <abbr title="Structured Query Language">SQL</abbr> lida com isso de maneira madura.</p>
+<p><strong>Consultas Complexas:</strong> O módulo de auditoria demandará pesquisas como "todos os logs de acesso negado a documentos do projeto X no mês Y". O <abbr title="Structured Query Language — Linguagem de Consulta Estruturada">SQL</abbr> lida com isso de maneira madura.</p>
 </li>
 <li>
 <p><strong>Ecossistema:</strong> Ferramentas como o Flyway (para versionamento de esquema) e o Spring Data <abbr title="Java Persistence API">JPA</abbr> funcionam de forma nativa e extremamente consolidada com PostgreSQL.</p>
@@ -3814,7 +3870,7 @@ Além disso, o sistema conta com um módulo de Auditoria que exige um histórico
 <p><strong>Gerenciamento de Esquema:</strong> Alterações na estrutura de dados (<abbr title="Data Definition Language">DDL</abbr>) exigem migrações explícitas, diminuindo ligeiramente a agilidade em relação a um banco de dados orientado a documentos.</p>
 </li>
 <li>
-<p><strong>Custo Fixo:</strong> Diferente do Cloud Run (Serverless computacional), o Cloud <abbr title="Structured Query Language">SQL</abbr> possui um custo base contínuo por instância, mesmo ocioso. Para atenuar, será escolhida a menor instância possível para o ambiente de desenvolvimento/homologação.</p>
+<p><strong>Custo Fixo:</strong> Diferente do <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run (Serverless computacional), o <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> <abbr title="Structured Query Language — Linguagem de Consulta Estruturada">SQL</abbr> possui um custo base contínuo por instância, mesmo ocioso. Para atenuar, será escolhida a menor instância possível para o ambiente de desenvolvimento/homologação.</p>
 </li>
 </ul>
 <hr>

@@ -59,16 +59,16 @@ public class DocumentController {
       @RequestParam(required = false) com.edtech.model.DocumentStatus status,
       @PageableDefault(size = 20) Pageable pageable,
       Authentication authentication) {
-<span class="nc" id="L62">    User user = (User) authentication.getPrincipal();</span>
-<span class="nc" id="L63">    return ResponseEntity.ok(</span>
-<span class="nc" id="L64">        documentService.listDocumentsByUser(user.getId(), projectId, title, status, pageable));</span>
+<span class="fc" id="L62">    User user = (User) authentication.getPrincipal();</span>
+<span class="fc" id="L63">    return ResponseEntity.ok(</span>
+<span class="fc" id="L64">        documentService.listDocumentsByUser(user.getId(), projectId, title, status, pageable));</span>
   }
 
   @GetMapping(&quot;/{id}/download&quot;)
   public ResponseEntity&lt;String&gt; downloadDocument(
       @PathVariable UUID id, Authentication authentication) {
-<span class="nc" id="L70">    User user = (User) authentication.getPrincipal();</span>
-<span class="nc" id="L71">    return ResponseEntity.ok(documentService.getPresignedUrl(id, user.getId()));</span>
+<span class="fc" id="L70">    User user = (User) authentication.getPrincipal();</span>
+<span class="fc" id="L71">    return ResponseEntity.ok(documentService.getPresignedUrl(id, user.getId()));</span>
   }
 
   /** Exporta a trilha de auditoria de um documento em arquivo CSV. */
@@ -110,15 +110,15 @@ public class DocumentController {
   @PatchMapping(&quot;/{id}/star&quot;)
   public ResponseEntity&lt;DocumentResponseDto&gt; toggleStar(
       @PathVariable UUID id, Authentication authentication) {
-<span class="nc" id="L113">    User user = (User) authentication.getPrincipal();</span>
-<span class="nc" id="L114">    return ResponseEntity.ok(documentService.toggleStar(id, user.getId()));</span>
+<span class="fc" id="L113">    User user = (User) authentication.getPrincipal();</span>
+<span class="fc" id="L114">    return ResponseEntity.ok(documentService.toggleStar(id, user.getId()));</span>
   }
 
   @GetMapping(&quot;/{id}/comments&quot;)
   public ResponseEntity&lt;java.util.List&lt;com.edtech.dto.CommentResponseDto&gt;&gt; getComments(
       @PathVariable UUID id, Authentication authentication) {
-<span class="nc" id="L120">    User user = (User) authentication.getPrincipal();</span>
-<span class="nc" id="L121">    return ResponseEntity.ok(documentService.getComments(id, user.getId()));</span>
+<span class="fc" id="L120">    User user = (User) authentication.getPrincipal();</span>
+<span class="fc" id="L121">    return ResponseEntity.ok(documentService.getComments(id, user.getId()));</span>
   }
 
   /** Javadoc. */
@@ -127,9 +127,9 @@ public class DocumentController {
       @PathVariable UUID id,
       @jakarta.validation.Valid @RequestBody com.edtech.dto.CommentRequestDto dto,
       Authentication authentication) {
-<span class="nc" id="L130">    User user = (User) authentication.getPrincipal();</span>
-<span class="nc" id="L131">    return ResponseEntity.status(HttpStatus.CREATED)</span>
-<span class="nc" id="L132">        .body(documentService.addComment(id, user.getId(), dto.getContent()));</span>
+<span class="fc" id="L130">    User user = (User) authentication.getPrincipal();</span>
+<span class="fc" id="L131">    return ResponseEntity.status(HttpStatus.CREATED)</span>
+<span class="fc" id="L132">        .body(documentService.addComment(id, user.getId(), dto.getContent()));</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

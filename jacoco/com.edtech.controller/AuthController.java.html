@@ -62,9 +62,9 @@ public class AuthController {
   /** Documentação. */
   @PostMapping(&quot;/register/verify&quot;)
   public ResponseEntity&lt;AuthResponseDto&gt; verifyRegistration(@RequestBody VerifyCodeDto request) {
-<span class="nc" id="L65">    User user = userService.verifyRegistration(request.email(), request.code());</span>
-<span class="nc" id="L66">    String token = jwtService.generateToken(user);</span>
-<span class="nc" id="L67">    return ResponseEntity.ok(new AuthResponseDto(UserResponseDto.from(user), token));</span>
+<span class="fc" id="L65">    User user = userService.verifyRegistration(request.email(), request.code());</span>
+<span class="fc" id="L66">    String token = jwtService.generateToken(user);</span>
+<span class="fc" id="L67">    return ResponseEntity.ok(new AuthResponseDto(UserResponseDto.from(user), token));</span>
   }
 
   /** Documentação. */
@@ -79,9 +79,9 @@ public class AuthController {
 
 <span class="fc" id="L80">    User user = userService.authenticate(request.email(), request.password());</span>
 
-<span class="pc bpc" id="L82" title="1 of 2 branches missed.">    if (user.isMfaEnabled()) {</span>
-<span class="nc" id="L83">      return ResponseEntity.status(HttpStatus.ACCEPTED)</span>
-<span class="nc" id="L84">          .body(Map.of(&quot;mfaRequired&quot;, true, &quot;email&quot;, user.getEmail()));</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">    if (user.isMfaEnabled()) {</span>
+<span class="fc" id="L83">      return ResponseEntity.status(HttpStatus.ACCEPTED)</span>
+<span class="fc" id="L84">          .body(Map.of(&quot;mfaRequired&quot;, true, &quot;email&quot;, user.getEmail()));</span>
     }
 
 <span class="fc" id="L87">    String token = jwtService.generateToken(user);</span>
@@ -93,49 +93,49 @@ public class AuthController {
   public ResponseEntity&lt;?&gt; verify2FaLogin(
       @Valid @RequestBody com.edtech.dto.Verify2FaLoginDto request,
       HttpServletRequest httpRequest) {
-<span class="nc" id="L96">    Bucket bucket = rateLimitingService.resolveBucket(httpRequest.getRemoteAddr());</span>
-<span class="nc bnc" id="L97" title="All 2 branches missed.">    if (!bucket.tryConsume(1)) {</span>
-<span class="nc" id="L98">      throw new RateLimitExceededException(</span>
+<span class="fc" id="L96">    Bucket bucket = rateLimitingService.resolveBucket(httpRequest.getRemoteAddr());</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">    if (!bucket.tryConsume(1)) {</span>
+<span class="fc" id="L98">      throw new RateLimitExceededException(</span>
           &quot;Limite de tentativas excedido. Tente novamente mais tarde.&quot;);
     }
 
-<span class="nc" id="L102">    User user = userService.authenticate(request.email(), request.password());</span>
-<span class="nc bnc" id="L103" title="All 2 branches missed.">    if (!user.isMfaEnabled()) {</span>
-<span class="nc" id="L104">      return ResponseEntity.badRequest().body(&quot;2FA is not enabled for this user.&quot;);</span>
+<span class="fc" id="L102">    User user = userService.authenticate(request.email(), request.password());</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">    if (!user.isMfaEnabled()) {</span>
+<span class="fc" id="L104">      return ResponseEntity.badRequest().body(&quot;2FA is not enabled for this user.&quot;);</span>
     }
 
-<span class="nc" id="L107">    boolean isValid = twoFactorAuthService.verifyCode(user.getMfaSecret(), request.code());</span>
-<span class="nc bnc" id="L108" title="All 2 branches missed.">    if (!isValid) {</span>
-<span class="nc" id="L109">      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(&quot;Invalid 2FA code.&quot;);</span>
+<span class="fc" id="L107">    boolean isValid = twoFactorAuthService.verifyCode(user.getMfaSecret(), request.code());</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">    if (!isValid) {</span>
+<span class="fc" id="L109">      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(&quot;Invalid 2FA code.&quot;);</span>
     }
 
-<span class="nc" id="L112">    String token = jwtService.generateToken(user);</span>
-<span class="nc" id="L113">    return ResponseEntity.ok(new AuthResponseDto(UserResponseDto.from(user), token));</span>
+<span class="fc" id="L112">    String token = jwtService.generateToken(user);</span>
+<span class="fc" id="L113">    return ResponseEntity.ok(new AuthResponseDto(UserResponseDto.from(user), token));</span>
   }
 
   /** Javadoc. */
   @GetMapping(&quot;/2fa/setup&quot;)
   public ResponseEntity&lt;?&gt; setup2Fa(Authentication authentication) {
-<span class="nc" id="L119">    User user = (User) authentication.getPrincipal();</span>
+<span class="fc" id="L119">    User user = (User) authentication.getPrincipal();</span>
 
-<span class="nc bnc" id="L121" title="All 2 branches missed.">    if (user.isMfaEnabled()) {</span>
-<span class="nc" id="L122">      return ResponseEntity.badRequest().body(&quot;2FA is already enabled.&quot;);</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">    if (user.isMfaEnabled()) {</span>
+<span class="fc" id="L122">      return ResponseEntity.badRequest().body(&quot;2FA is already enabled.&quot;);</span>
     }
 
-<span class="nc" id="L125">    String secret = user.getMfaSecret();</span>
-<span class="nc bnc" id="L126" title="All 4 branches missed.">    if (secret == null || secret.isEmpty()) {</span>
-<span class="nc" id="L127">      secret = twoFactorAuthService.generateSecret();</span>
-<span class="nc" id="L128">      user.setMfaSecret(secret);</span>
-<span class="nc" id="L129">      userService.saveUserWithoutHash(</span>
+<span class="fc" id="L125">    String secret = user.getMfaSecret();</span>
+<span class="pc bpc" id="L126" title="3 of 4 branches missed.">    if (secret == null || secret.isEmpty()) {</span>
+<span class="fc" id="L127">      secret = twoFactorAuthService.generateSecret();</span>
+<span class="fc" id="L128">      user.setMfaSecret(secret);</span>
+<span class="fc" id="L129">      userService.saveUserWithoutHash(</span>
           user); // Wait, we need a method to save the user without rehashing
     }
 
     try {
-<span class="nc" id="L134">      String qrCodeUri = twoFactorAuthService.getQrCodeImageUri(secret, user.getEmail());</span>
-<span class="nc" id="L135">      return ResponseEntity.ok(Map.of(&quot;secret&quot;, secret, &quot;qrCodeUri&quot;, qrCodeUri));</span>
-<span class="nc" id="L136">    } catch (Exception e) {</span>
-<span class="nc" id="L137">      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)</span>
-<span class="nc" id="L138">          .body(&quot;Failed to generate QR Code&quot;);</span>
+<span class="fc" id="L134">      String qrCodeUri = twoFactorAuthService.getQrCodeImageUri(secret, user.getEmail());</span>
+<span class="fc" id="L135">      return ResponseEntity.ok(Map.of(&quot;secret&quot;, secret, &quot;qrCodeUri&quot;, qrCodeUri));</span>
+<span class="fc" id="L136">    } catch (Exception e) {</span>
+<span class="fc" id="L137">      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)</span>
+<span class="fc" id="L138">          .body(&quot;Failed to generate QR Code&quot;);</span>
     }
   }
 
@@ -143,20 +143,20 @@ public class AuthController {
   @PostMapping(&quot;/2fa/enable&quot;)
   public ResponseEntity&lt;?&gt; enable2Fa(
       @RequestBody VerifyCodeDto request, Authentication authentication) {
-<span class="nc" id="L146">    User user = (User) authentication.getPrincipal();</span>
+<span class="fc" id="L146">    User user = (User) authentication.getPrincipal();</span>
 
-<span class="nc bnc" id="L148" title="All 2 branches missed.">    if (user.isMfaEnabled()) {</span>
-<span class="nc" id="L149">      return ResponseEntity.badRequest().body(&quot;2FA is already enabled.&quot;);</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">    if (user.isMfaEnabled()) {</span>
+<span class="fc" id="L149">      return ResponseEntity.badRequest().body(&quot;2FA is already enabled.&quot;);</span>
     }
 
-<span class="nc" id="L152">    boolean isValid = twoFactorAuthService.verifyCode(user.getMfaSecret(), request.code());</span>
-<span class="nc bnc" id="L153" title="All 2 branches missed.">    if (!isValid) {</span>
-<span class="nc" id="L154">      return ResponseEntity.badRequest().body(&quot;Invalid 2FA code.&quot;);</span>
+<span class="fc" id="L152">    boolean isValid = twoFactorAuthService.verifyCode(user.getMfaSecret(), request.code());</span>
+<span class="fc bfc" id="L153" title="All 2 branches covered.">    if (!isValid) {</span>
+<span class="fc" id="L154">      return ResponseEntity.badRequest().body(&quot;Invalid 2FA code.&quot;);</span>
     }
 
-<span class="nc" id="L157">    user.setMfaEnabled(true);</span>
-<span class="nc" id="L158">    userService.saveUserWithoutHash(user);</span>
-<span class="nc" id="L159">    return ResponseEntity.ok().build();</span>
+<span class="fc" id="L157">    user.setMfaEnabled(true);</span>
+<span class="fc" id="L158">    userService.saveUserWithoutHash(user);</span>
+<span class="fc" id="L159">    return ResponseEntity.ok().build();</span>
   }
 
   /** Documentação. */

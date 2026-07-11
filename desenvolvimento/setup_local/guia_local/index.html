@@ -1486,7 +1486,7 @@
   <span class="md-ellipsis">
     
   
-    Padrões de Desenvolvimento (Code Standards)
+    Padrões de Desenvolvimento
   
 
     
@@ -1720,7 +1720,7 @@
   <span class="md-ellipsis">
     
   
-    Runbooks e Troubleshooting
+    Guias Operacionais e Resolução de Problemas
   
 
     
@@ -2306,6 +2306,34 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../../../arquitetura/finops_custos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FinOps e Previsibilidade de Custos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     
     
     
@@ -2322,10 +2350,10 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_5">
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_6">
         
           
-          <label class="md-nav__link" for="__nav_4_5" id="__nav_4_5_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4_6" id="__nav_4_6_label" tabindex="0">
             
   
   
@@ -2343,8 +2371,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4_5">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -2732,7 +2760,7 @@
   <span class="md-ellipsis">
     
   
-    ADR 0014: Terraform para Infraestrutura como Codigo
+    ADR 0014: Terraform para Infraestrutura como Código
   
 
     
@@ -2749,34 +2777,6 @@
           </ul>
         </nav>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../arquitetura/finops_custos/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    FinOps e Previsibilidade de Custos
-  
-
-    
-  </span>
-  
-  
-
-      </a>
     </li>
   
 
@@ -3198,6 +3198,34 @@
     
   
     Semana 7
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gestao/sprints/Semana%208/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Semana 8
   
 
     
@@ -3643,6 +3671,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gestao/atas/ata-10-07-2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ata de Reunião (10/07/2026)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -3805,7 +3861,7 @@
 </ul>
 <hr>
 <h2 id="subindo-o-ambiente-1-click-setup"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 19V7H4v12zm0-16a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm-7 14v-2h5v2zm-3.42-4L5.57 9H8.4l3.3 3.3c.39.39.39 1.03 0 1.42L8.42 17H5.59z"></path></svg></span> Subindo o Ambiente (1-Click Setup)<a class="headerlink" href="#subindo-o-ambiente-1-click-setup" title="Permanent link">¶</a></h2>
-<p>Nossa arquitetura roda PostgreSQL, Spring Boot (Backend) e Vite/React (Frontend). Tudo foi orquestrado em um único <code>docker-compose.yml</code> na pasta <code>infra/</code>.</p>
+<p>Nossa arquitetura roda PostgreSQL, Spring Boot (<abbr title="Camada de servidor e banco de dados da aplicação">Backend</abbr>) e Vite/React (<abbr title="Camada de interface visual do usuário">Frontend</abbr>). Tudo foi orquestrado em um único <code>docker-compose.yml</code> na pasta <code>infra/</code>.</p>
 <h3 id="1-configurando-variaveis">1. Configurando Variáveis<a class="headerlink" href="#1-configurando-variaveis" title="Permanent link">¶</a></h3>
 <p>Primeiro, você precisa criar as chaves de ambiente copiando o arquivo de exemplo.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">Windows (PowerShell)</label><label for="__tabbed_1_2">Linux / macOS</label></div>
@@ -3841,12 +3897,12 @@ cp<span class="w"> </span>infra/.env.example<span class="w"> </span>infra/.env
 </code></pre></div>
 <p>Se tudo estiver correto, você poderá acessar:</p>
 <ul>
-<li><strong>Frontend (Painel Web):</strong> <a href="http://localhost:5173">http://localhost:5173</a></li>
-<li><strong>Backend (<abbr title="Application Programming Interface">API</abbr> Health):</strong> <a href="http://localhost:8080/actuator/health">http://localhost:8080/actuator/health</a></li>
+<li><strong><abbr title="Camada de interface visual do usuário">Frontend</abbr> (Painel Web):</strong> <a href="http://localhost:5173">http://localhost:5173</a></li>
+<li><strong><abbr title="Camada de servidor e banco de dados da aplicação">Backend</abbr> (<abbr title="Application Programming Interface — Interface de Programação de Aplicação">API</abbr> Health):</strong> <a href="http://localhost:8080/actuator/health">http://localhost:8080/actuator/health</a></li>
 <li><strong>Banco de Dados:</strong> Conecte-se em <code>localhost:5432</code> com usuário <code>edtech_user</code>.</li>
 </ul>
 <hr>
-<h2 id="troubleshooting-problemas-comuns"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19.79 15.41c.95-2.17.95-4.66 0-6.82l-2.74 1.24c.6 1.38.6 2.95.01 4.34zm-4.37-11.2a8.54 8.54 0 0 0-6.83 0l1.24 2.73c1.39-.59 2.96-.59 4.35.01zM4.21 8.58a8.56 8.56 0 0 0 0 6.84l2.74-1.25c-.6-1.38-.6-2.96 0-4.35zm4.38 11.21a8.5 8.5 0 0 0 6.83-.01l-1.24-2.73a5.5 5.5 0 0 1-4.34.01zM12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2m0 6a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4"></path></svg></span> Troubleshooting (Problemas Comuns)<a class="headerlink" href="#troubleshooting-problemas-comuns" title="Permanent link">¶</a></h2>
+<h2 id="troubleshooting-problemas-comuns"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19.79 15.41c.95-2.17.95-4.66 0-6.82l-2.74 1.24c.6 1.38.6 2.95.01 4.34zm-4.37-11.2a8.54 8.54 0 0 0-6.83 0l1.24 2.73c1.39-.59 2.96-.59 4.35.01zM4.21 8.58a8.56 8.56 0 0 0 0 6.84l2.74-1.25c-.6-1.38-.6-2.96 0-4.35zm4.38 11.21a8.5 8.5 0 0 0 6.83-.01l-1.24-2.73a5.5 5.5 0 0 1-4.34.01zM12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2m0 6a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4"></path></svg></span> <abbr title="Resolução de Problemas (Investigação de falhas)">Troubleshooting</abbr> (Problemas Comuns)<a class="headerlink" href="#troubleshooting-problemas-comuns" title="Permanent link">¶</a></h2>
 <div class="admonition warning">
 <p class="admonition-title">Erro de portas em uso (Bind for 0.0.0.0:5432 failed)</p>
 <p>Se o PostgreSQL não subir, você provavelmente já tem outro banco rodando na porta 5432 localmente. Altere a porta no arquivo <code>infra/.env</code> editando a variável <code>POSTGRES_PORT</code>.</p>

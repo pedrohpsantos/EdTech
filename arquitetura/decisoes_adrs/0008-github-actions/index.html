@@ -1348,7 +1348,7 @@
   <span class="md-ellipsis">
     
   
-    Padrões de Desenvolvimento (Code Standards)
+    Padrões de Desenvolvimento
   
 
     
@@ -1576,7 +1576,7 @@
   <span class="md-ellipsis">
     
   
-    Runbooks e Troubleshooting
+    Guias Operacionais e Resolução de Problemas
   
 
     
@@ -2166,6 +2166,34 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../../finops_custos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FinOps e Previsibilidade de Custos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -2187,10 +2215,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5" checked="">
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_6" checked="">
         
           
-          <label class="md-nav__link" for="__nav_4_5" id="__nav_4_5_label" tabindex="">
+          <label class="md-nav__link" for="__nav_4_6" id="__nav_4_6_label" tabindex="">
             
   
   
@@ -2208,8 +2236,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_4_5">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -2727,7 +2755,7 @@
   <span class="md-ellipsis">
     
   
-    ADR 0014: Terraform para Infraestrutura como Codigo
+    ADR 0014: Terraform para Infraestrutura como Código
   
 
     
@@ -2744,34 +2772,6 @@
           </ul>
         </nav>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../finops_custos/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    FinOps e Previsibilidade de Custos
-  
-
-    
-  </span>
-  
-  
-
-      </a>
     </li>
   
 
@@ -3193,6 +3193,34 @@
     
   
     Semana 7
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gestao/sprints/Semana%208/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Semana 8
   
 
     
@@ -3638,6 +3666,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gestao/atas/ata-10-07-2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ata de Reunião (10/07/2026)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -3791,7 +3847,7 @@
 <h2 id="status">Status<a class="headerlink" href="#status" title="Permanent link">¶</a></h2>
 <p>Aceito</p>
 <h2 id="contexto">Contexto<a class="headerlink" href="#contexto" title="Permanent link">¶</a></h2>
-<p>Um repositório acadêmico com frontend e backend desacoplados (<abbr title="Architecture Decision Record — Registro de Decisão Arquitetural">ADR</abbr> 0006) precisa de uma garantia rigorosa de que as alterações propostas (Pull Requests) não quebram o contrato de <abbr title="Application Programming Interface">API</abbr> e passam nos testes de segurança e negócio (JUnit). Fazer o deploy de aplicações conteinerizadas manualmente no Cloud Run (<abbr title="Architecture Decision Record — Registro de Decisão Arquitetural">ADR</abbr> 0003) é um processo propenso a falhas de segurança (vazamento de chaves) e de operação humana.</p>
+<p>Um repositório acadêmico com frontend e backend desacoplados (<abbr title="Architecture Decision Record — Registro de Decisão Arquitetural">ADR</abbr> 0006) precisa de uma garantia rigorosa de que as alterações propostas (Pull Requests) não quebram o contrato de <abbr title="Application Programming Interface — Interface de Programação de Aplicação">API</abbr> e passam nos testes de segurança e negócio (JUnit). Fazer o deploy de aplicações conteinerizadas manualmente no <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run (<abbr title="Architecture Decision Record — Registro de Decisão Arquitetural">ADR</abbr> 0003) é um processo propenso a falhas de segurança (vazamento de chaves) e de operação humana.</p>
 <h2 id="decisao">Decisão<a class="headerlink" href="#decisao" title="Permanent link">¶</a></h2>
 <p>Adotamos o <strong>GitHub Actions</strong> como nossa plataforma oficial de Integração Contínua (CI) e Entrega Contínua (CD).</p>
 <h2 id="consequencias">Consequências<a class="headerlink" href="#consequencias" title="Permanent link">¶</a></h2>
@@ -3801,7 +3857,7 @@
 <p><strong>Fricção Zero:</strong> O GitHub Actions já é nativo na mesma plataforma de versionamento do código, evitando a necessidade de gerenciar infraestrutura separada (como instâncias de Jenkins).</p>
 </li>
 <li>
-<p><strong>Integração com <abbr title="Google Cloud Platform">GCP</abbr>:</strong> Integração extremamente forte com o Google Cloud via <code>Workload Identity Federation</code>, permitindo deploys sem precisar armazenar senhas fixas/Service Accounts em texto plano no repositório.</p>
+<p><strong>Integração com <abbr title="Google Cloud Platform">GCP</abbr>:</strong> Integração extremamente forte com o Google <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> via <code>Workload Identity Federation</code>, permitindo deploys sem precisar armazenar senhas fixas/Service Accounts em texto plano no repositório.</p>
 </li>
 <li>
 <p><strong>Verificação de Qualidade:</strong> Pipelines automatizados garantem que código que falha no JUnit ou na cobertura mínima nunca atinja o ambiente de produção.</p>
@@ -3809,7 +3865,7 @@
 </ul>
 <h3 id="negativas-riscos">Negativas / Riscos<a class="headerlink" href="#negativas-riscos" title="Permanent link">¶</a></h3>
 <ul>
-<li><strong>Vendor Lock-in Parcial:</strong> Os scripts <code>.yaml</code> escritos para o GitHub Actions não são facilmente portáveis para GitLab CI ou <abbr title="Amazon Web Services">AWS</abbr> CodePipeline sem refatoração considerável caso haja migração de provedor Git.</li>
+<li><strong>Vendor <abbr title="Bloqueio de recurso no banco de dados ou execução">Lock</abbr>-in Parcial:</strong> Os scripts <code>.yaml</code> escritos para o GitHub Actions não são facilmente portáveis para GitLab CI ou <abbr title="Amazon Web Services">AWS</abbr> CodePipeline sem refatoração considerável caso haja migração de provedor <abbr title="Sistema de controle de versão">Git</abbr>.</li>
 </ul>
 <hr>
 <h2 id="historico-de-versoes">Histórico de Versões<a class="headerlink" href="#historico-de-versoes" title="Permanent link">¶</a></h2>

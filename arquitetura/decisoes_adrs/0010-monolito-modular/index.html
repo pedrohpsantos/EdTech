@@ -1348,7 +1348,7 @@
   <span class="md-ellipsis">
     
   
-    Padrões de Desenvolvimento (Code Standards)
+    Padrões de Desenvolvimento
   
 
     
@@ -1576,7 +1576,7 @@
   <span class="md-ellipsis">
     
   
-    Runbooks e Troubleshooting
+    Guias Operacionais e Resolução de Problemas
   
 
     
@@ -2166,6 +2166,34 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../../finops_custos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FinOps e Previsibilidade de Custos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -2187,10 +2215,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5" checked="">
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_6" checked="">
         
           
-          <label class="md-nav__link" for="__nav_4_5" id="__nav_4_5_label" tabindex="">
+          <label class="md-nav__link" for="__nav_4_6" id="__nav_4_6_label" tabindex="">
             
   
   
@@ -2208,8 +2236,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_4_5">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -2738,7 +2766,7 @@
   <span class="md-ellipsis">
     
   
-    ADR 0014: Terraform para Infraestrutura como Codigo
+    ADR 0014: Terraform para Infraestrutura como Código
   
 
     
@@ -2755,34 +2783,6 @@
           </ul>
         </nav>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../finops_custos/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    FinOps e Previsibilidade de Custos
-  
-
-    
-  </span>
-  
-  
-
-      </a>
     </li>
   
 
@@ -3204,6 +3204,34 @@
     
   
     Semana 7
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gestao/sprints/Semana%208/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Semana 8
   
 
     
@@ -3649,6 +3677,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gestao/atas/ata-10-07-2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ata de Reunião (10/07/2026)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -3821,7 +3877,7 @@
 <h2 id="consequencias">Consequências<a class="headerlink" href="#consequencias" title="Permanent link">¶</a></h2>
 <h3 id="positivas">Positivas<a class="headerlink" href="#positivas" title="Permanent link">¶</a></h3>
 <ul>
-<li><strong>Simplicidade de Deploy:</strong> Apenas um Dockerfile e um serviço no Cloud Run.</li>
+<li><strong>Simplicidade de <abbr title="Implantação (Colocar o sistema no ar)">Deploy</abbr>:</strong> Apenas um Dockerfile e um serviço no <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run.</li>
 <li><strong>Agilidade de Desenvolvimento:</strong> Desenvolvedores front-end e back-end só precisam levantar um único backend local na porta <code>8080</code> para terem todo o sistema funcional.</li>
 <li><strong>Menor Complexidade de Rede:</strong> Sem necessidade de chamadas de rede internas (<abbr title="HyperText Transfer Protocol — Protocolo de Transferência de Hipertexto">HTTP</abbr>/gRPC) para validação de tokens entre serviços. Transações e consultas ao banco de dados são diretas.</li>
 <li><strong>Organização Lógica:</strong> O código segue bem estruturado em pacotes (módulos lógicos), o que facilita a refatoração ou até a futura quebra em microsserviços, caso o produto ganhe tração e exija escala horizontal isolada de algum módulo.</li>
@@ -3833,7 +3889,7 @@
 </ul>
 <h2 id="alternativas-consideradas">Alternativas Consideradas<a class="headerlink" href="#alternativas-consideradas" title="Permanent link">¶</a></h2>
 <ul>
-<li><strong>Microsserviços Completos (Auth + <abbr title="Application Programming Interface">API</abbr> Isolados):</strong> Rejeitado. Isso demandaria a criação de um <abbr title="Application Programming Interface">API</abbr> Gateway, tratamento complexo de <abbr title="Cross-Origin Resource Sharing — Compartilhamento de Recursos de Origem Cruzada">CORS</abbr> e o dobro do trabalho no setup local dos desenvolvedores. Para o estágio de <abbr title="Minimum Viable Product — Produto Mínimo Viável">MVP</abbr>, isso violaria o princípio de simplicidade (KISS).</li>
+<li><strong>Microsserviços Completos (Auth + <abbr title="Application Programming Interface — Interface de Programação de Aplicação">API</abbr> Isolados):</strong> Rejeitado. Isso demandaria a criação de um <abbr title="Application Programming Interface — Interface de Programação de Aplicação">API</abbr> Gateway, tratamento complexo de <abbr title="Cross-Origin Resource Sharing — Compartilhamento de Recursos de Origem Cruzada">CORS</abbr> e o dobro do trabalho no setup local dos desenvolvedores. Para o estágio de <abbr title="Minimum Viable Product — Produto Mínimo Viável">MVP</abbr>, isso violaria o princípio de simplicidade (KISS).</li>
 </ul>
 <hr>
 <h2 id="historico-de-versoes">Histórico de Versões<a class="headerlink" href="#historico-de-versoes" title="Permanent link">¶</a></h2>

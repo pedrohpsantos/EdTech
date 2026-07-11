@@ -1348,7 +1348,7 @@
   <span class="md-ellipsis">
     
   
-    Padrões de Desenvolvimento (Code Standards)
+    Padrões de Desenvolvimento
   
 
     
@@ -1576,7 +1576,7 @@
   <span class="md-ellipsis">
     
   
-    Runbooks e Troubleshooting
+    Guias Operacionais e Resolução de Problemas
   
 
     
@@ -2166,6 +2166,34 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../../finops_custos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FinOps e Previsibilidade de Custos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -2187,10 +2215,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5" checked="">
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_6" checked="">
         
           
-          <label class="md-nav__link" for="__nav_4_5" id="__nav_4_5_label" tabindex="">
+          <label class="md-nav__link" for="__nav_4_6" id="__nav_4_6_label" tabindex="">
             
   
   
@@ -2208,8 +2236,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_4_5">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -2727,7 +2755,7 @@
   <span class="md-ellipsis">
     
   
-    ADR 0014: Terraform para Infraestrutura como Codigo
+    ADR 0014: Terraform para Infraestrutura como Código
   
 
     
@@ -2744,34 +2772,6 @@
           </ul>
         </nav>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../finops_custos/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    FinOps e Previsibilidade de Custos
-  
-
-    
-  </span>
-  
-  
-
-      </a>
     </li>
   
 
@@ -3193,6 +3193,34 @@
     
   
     Semana 7
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gestao/sprints/Semana%208/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Semana 8
   
 
     
@@ -3638,6 +3666,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gestao/atas/ata-10-07-2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ata de Reunião (10/07/2026)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -3792,15 +3848,15 @@
 <p>Aceito (Substitui decisão anterior de Cookies HttpOnly)</p>
 <h2 id="contexto">Contexto<a class="headerlink" href="#contexto" title="Permanent link">¶</a></h2>
 <p>A plataforma EdTech lida com dados acadêmicos sensíveis (artigos não publicados, patentes e datasets sigilosos). Precisamos garantir que as sessões dos pesquisadores e orientadores sejam seguras. 
-Originalmente, havíamos optado por armazenar o <abbr title="JavaScript Object Notation">JSON</abbr> Web Token (<abbr title="JSON Web Token">JWT</abbr>) em cookies com as flags <code>HttpOnly</code> e <code>Secure</code>. No entanto, como o Frontend (Firebase em <code>.web.app</code>) e o Backend (Cloud Run em <code>.run.app</code>) estão hospedados em domínios diferentes, os navegadores modernos (como Safari, Chrome, Firefox) bloqueiam os cookies em solicitações cross-site por padrão, devido a políticas de privacidade contra rastreamento de Terceiros (Third-Party Cookies).</p>
+Originalmente, havíamos optado por armazenar o <abbr title="JavaScript Object Notation">JSON</abbr> Web Token (<abbr title="JSON Web Token">JWT</abbr>) em cookies com as flags <code>HttpOnly</code> e <code>Secure</code>. No entanto, como o <abbr title="Camada de interface visual do usuário">Frontend</abbr> (Firebase em <code>.web.app</code>) e o <abbr title="Camada de servidor e banco de dados da aplicação">Backend</abbr> (<abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run em <code>.run.app</code>) estão hospedados em domínios diferentes, os navegadores modernos (como Safari, Chrome, Firefox) bloqueiam os cookies em solicitações cross-site por padrão, devido a políticas de privacidade contra rastreamento de Terceiros (Third-Party Cookies).</p>
 <h2 id="decisao">Decisão<a class="headerlink" href="#decisao" title="Permanent link">¶</a></h2>
-<p>Optamos por utilizar <strong><abbr title="JSON Web Token">JWT</abbr> (<abbr title="JavaScript Object Notation">JSON</abbr> Web Token)</strong> armazenado no <strong>LocalStorage</strong> do navegador, sendo enviado explicitamente via cabeçalho <abbr title="HyperText Transfer Protocol — Protocolo de Transferência de Hipertexto">HTTP</abbr> <code>Authorization: Bearer &lt;token&gt;</code> em todas as requisições para a <abbr title="Application Programming Interface">API</abbr>. A proteção contra <abbr title="Cross-Site Request Forgery">CSRF</abbr> no backend foi completamente desabilitada, uma vez que não há envio automático de credenciais pelo navegador.</p>
+<p>Optamos por utilizar <strong><abbr title="JSON Web Token">JWT</abbr> (<abbr title="JavaScript Object Notation">JSON</abbr> Web Token)</strong> armazenado no <strong>LocalStorage</strong> do navegador, sendo enviado explicitamente via cabeçalho <abbr title="HyperText Transfer Protocol — Protocolo de Transferência de Hipertexto">HTTP</abbr> <code>Authorization: Bearer &lt;token&gt;</code> em todas as requisições para a <abbr title="Application Programming Interface — Interface de Programação de Aplicação">API</abbr>. A proteção contra <abbr title="Cross-Site Request Forgery">CSRF</abbr> no backend foi completamente desabilitada, uma vez que não há envio automático de credenciais pelo navegador.</p>
 <h2 id="consequencias">Consequências<a class="headerlink" href="#consequencias" title="Permanent link">¶</a></h2>
 <h3 id="positivas">Positivas<a class="headerlink" href="#positivas" title="Permanent link">¶</a></h3>
 <ul>
-<li><strong>Compatibilidade Cross-Origin:</strong> O login funciona perfeitamente independente dos domínios em que a <abbr title="Single Page Application">SPA</abbr> e a <abbr title="Application Programming Interface">API</abbr> estejam hospedados.</li>
+<li><strong>Compatibilidade Cross-Origin:</strong> O login funciona perfeitamente independente dos domínios em que a <abbr title="Single Page Application — Aplicação de Página Única">SPA</abbr> e a <abbr title="Application Programming Interface — Interface de Programação de Aplicação">API</abbr> estejam hospedados.</li>
 <li><strong>Fim da Vulnerabilidade <abbr title="Cross-Site Request Forgery">CSRF</abbr>:</strong> Sem envio automático de cookies de autenticação pelo navegador, ataques de Cross-Site Request Forgery (<abbr title="Cross-Site Request Forgery">CSRF</abbr>) tornam-se impossíveis para a autenticação baseada em Bearer Token.</li>
-<li><strong>Simplificação do Backend:</strong> O backend não precisa gerenciar geração e envio de cookies <abbr title="Cross-Site Request Forgery">CSRF</abbr> e a configuração de <abbr title="Cross-Origin Resource Sharing — Compartilhamento de Recursos de Origem Cruzada">CORS</abbr> fica mais simples e permissiva (<code>credentials: include</code> não é estritamente necessário).</li>
+<li><strong>Simplificação do <abbr title="Camada de servidor e banco de dados da aplicação">Backend</abbr>:</strong> O backend não precisa gerenciar geração e envio de cookies <abbr title="Cross-Site Request Forgery">CSRF</abbr> e a configuração de <abbr title="Cross-Origin Resource Sharing — Compartilhamento de Recursos de Origem Cruzada">CORS</abbr> fica mais simples e permissiva (<code>credentials: include</code> não é estritamente necessário).</li>
 </ul>
 <h3 id="negativas-riscos">Negativas / Riscos<a class="headerlink" href="#negativas-riscos" title="Permanent link">¶</a></h3>
 <ul>

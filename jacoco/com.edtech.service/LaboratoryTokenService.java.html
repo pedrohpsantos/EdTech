@@ -28,22 +28,22 @@ public class LaboratoryTokenService {
 
   /** Javadoc. */
   public String generateToken(UUID advisorId) {
-<span class="nc" id="L31">    long currentWeek = System.currentTimeMillis() / (7L * 24 * 60 * 60 * 1000);</span>
-<span class="nc" id="L32">    String rawData = advisorId.toString() + &quot;:&quot; + currentWeek + &quot;:&quot; + serverSecret;</span>
+<span class="fc" id="L31">    long currentWeek = System.currentTimeMillis() / (7L * 24 * 60 * 60 * 1000);</span>
+<span class="fc" id="L32">    String rawData = advisorId.toString() + &quot;:&quot; + currentWeek + &quot;:&quot; + serverSecret;</span>
     try {
-<span class="nc" id="L34">      MessageDigest digest = MessageDigest.getInstance(&quot;SHA-256&quot;);</span>
-<span class="nc" id="L35">      byte[] hash = digest.digest(rawData.getBytes(StandardCharsets.UTF_8));</span>
+<span class="fc" id="L34">      MessageDigest digest = MessageDigest.getInstance(&quot;SHA-256&quot;);</span>
+<span class="fc" id="L35">      byte[] hash = digest.digest(rawData.getBytes(StandardCharsets.UTF_8));</span>
 
       // Extrai os 6 ultimos bytes para formar o TOTP
-<span class="nc" id="L38">      int offset = hash[hash.length - 1] &amp; 0xf;</span>
-<span class="nc" id="L39">      int binary =</span>
+<span class="fc" id="L38">      int offset = hash[hash.length - 1] &amp; 0xf;</span>
+<span class="fc" id="L39">      int binary =</span>
           ((hash[offset] &amp; 0x7f) &lt;&lt; 24)
               | ((hash[offset + 1] &amp; 0xff) &lt;&lt; 16)
               | ((hash[offset + 2] &amp; 0xff) &lt;&lt; 8)
               | (hash[offset + 3] &amp; 0xff);
 
-<span class="nc" id="L45">      int otp = binary % 1000000;</span>
-<span class="nc" id="L46">      return String.format(&quot;%06d&quot;, otp);</span>
+<span class="fc" id="L45">      int otp = binary % 1000000;</span>
+<span class="fc" id="L46">      return String.format(&quot;%06d&quot;, otp);</span>
 <span class="nc" id="L47">    } catch (NoSuchAlgorithmException e) {</span>
 <span class="nc" id="L48">      throw new RuntimeException(&quot;SHA-256 not found&quot;, e);</span>
     }
@@ -51,13 +51,13 @@ public class LaboratoryTokenService {
 
   /** Javadoc. */
   public Optional&lt;User&gt; findAdvisorByToken(String token) {
-<span class="nc" id="L54">    List&lt;User&gt; advisors = userRepository.findByRole(UserRole.ADVISOR);</span>
-<span class="nc bnc" id="L55" title="All 2 branches missed.">    for (User advisor : advisors) {</span>
-<span class="nc bnc" id="L56" title="All 2 branches missed.">      if (generateToken(advisor.getId()).equals(token)) {</span>
-<span class="nc" id="L57">        return Optional.of(advisor);</span>
+<span class="fc" id="L54">    List&lt;User&gt; advisors = userRepository.findByRole(UserRole.ADVISOR);</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">    for (User advisor : advisors) {</span>
+<span class="pc bpc" id="L56" title="1 of 2 branches missed.">      if (generateToken(advisor.getId()).equals(token)) {</span>
+<span class="fc" id="L57">        return Optional.of(advisor);</span>
       }
 <span class="nc" id="L59">    }</span>
-<span class="nc" id="L60">    return Optional.empty();</span>
+<span class="fc" id="L60">    return Optional.empty();</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

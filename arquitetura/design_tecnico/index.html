@@ -1348,7 +1348,7 @@
   <span class="md-ellipsis">
     
   
-    Padrões de Desenvolvimento (Code Standards)
+    Padrões de Desenvolvimento
   
 
     
@@ -1576,7 +1576,7 @@
   <span class="md-ellipsis">
     
   
-    Runbooks e Troubleshooting
+    Guias Operacionais e Resolução de Problemas
   
 
     
@@ -2287,6 +2287,34 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../finops_custos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FinOps e Previsibilidade de Custos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     
     
     
@@ -2306,10 +2334,10 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_5">
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_6">
         
           
-          <label class="md-nav__link" for="__nav_4_5" id="__nav_4_5_label" tabindex="">
+          <label class="md-nav__link" for="__nav_4_6" id="__nav_4_6_label" tabindex="">
             
   
   
@@ -2327,8 +2355,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4_5">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -2716,7 +2744,7 @@
   <span class="md-ellipsis">
     
   
-    ADR 0014: Terraform para Infraestrutura como Codigo
+    ADR 0014: Terraform para Infraestrutura como Código
   
 
     
@@ -2733,34 +2761,6 @@
           </ul>
         </nav>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../finops_custos/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    FinOps e Previsibilidade de Custos
-  
-
-    
-  </span>
-  
-  
-
-      </a>
     </li>
   
 
@@ -3182,6 +3182,34 @@
     
   
     Semana 7
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gestao/sprints/Semana%208/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Semana 8
   
 
     
@@ -3627,6 +3655,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gestao/atas/ata-10-07-2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ata de Reunião (10/07/2026)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -3767,10 +3823,10 @@
 
 <h1 id="design-tecnico-baixo-nivel"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19h1a1 1 0 0 1 1 1h7v2h-7a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1H2v-2h7a1 1 0 0 1 1-1h1v-2H4a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1h-7zM4 3h16a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1m5 4h1V5H9zm0 8h1v-2H9zM5 5v2h2V5zm0 8v2h2v-2z"></path></svg></span> Design Técnico (Baixo Nível)<a class="headerlink" href="#design-tecnico-baixo-nivel" title="Permanent link">¶</a></h1>
 <p>Enquanto o <strong>C4 Model</strong> descreve <em>o que</em> as partes fazem, este documento detalha <em>como</em> as partes interagem no nível de código e dados.</p>
-<h2 id="1-stack-tecnologica-visao-logica">1. Stack Tecnológica (Visão Lógica)<a class="headerlink" href="#1-stack-tecnologica-visao-logica" title="Permanent link">¶</a></h2>
+<h2 id="1-stack-tecnologica-visao-logica">1. <abbr title="Pilha de tecnologias utilizadas">Stack</abbr> Tecnológica (Visão Lógica)<a class="headerlink" href="#1-stack-tecnologica-visao-logica" title="Permanent link">¶</a></h2>
 <p>O sistema é logicamente particionado em camadas cliente-servidor padrão.</p>
-<h3 id="camada-cliente-frontend">Camada Cliente (Frontend)<a class="headerlink" href="#camada-cliente-frontend" title="Permanent link">¶</a></h3>
-<p>A interface de usuário é uma <strong><abbr title="Single Page Application">SPA</abbr></strong> desenvolvida em <strong>React 19.x</strong> com estilização responsiva baseada em <strong><abbr title="Cascading Style Sheets — Folhas de Estilo em Cascata">CSS</abbr> puro</strong> com Design System próprio.</p>
+<h3 id="camada-cliente-frontend">Camada Cliente (<abbr title="Camada de interface visual do usuário">Frontend</abbr>)<a class="headerlink" href="#camada-cliente-frontend" title="Permanent link">¶</a></h3>
+<p>A interface de usuário é uma <strong><abbr title="Single Page Application — Aplicação de Página Única">SPA</abbr></strong> desenvolvida em <strong>React 19.x</strong> com estilização responsiva baseada em <strong><abbr title="Cascading Style Sheets — Folhas de Estilo em Cascata">CSS</abbr> puro</strong> com Design System próprio.</p>
 <table>
 <thead>
 <tr>
@@ -3797,7 +3853,7 @@
 </tr>
 </tbody>
 </table>
-<h3 id="camada-servidora-backend">Camada Servidora (Backend)<a class="headerlink" href="#camada-servidora-backend" title="Permanent link">¶</a></h3>
+<h3 id="camada-servidora-backend">Camada Servidora (<abbr title="Camada de servidor e banco de dados da aplicação">Backend</abbr>)<a class="headerlink" href="#camada-servidora-backend" title="Permanent link">¶</a></h3>
 <p>O backend é um monólito modular que orquestra a lógica de negócio, autenticação e comunicação externa.</p>
 <table>
 <thead>
@@ -3813,7 +3869,7 @@
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Spring Boot 4.1</strong></td>
-<td style="text-align: left;">Framework web e autoconfiguração</td>
+<td style="text-align: left;"><abbr title="Estrutura de código base para desenvolvimento">Framework</abbr> web e autoconfiguração</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Spring Security</strong></td>

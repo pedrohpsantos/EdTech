@@ -1348,7 +1348,7 @@
   <span class="md-ellipsis">
     
   
-    Padrões de Desenvolvimento (Code Standards)
+    Padrões de Desenvolvimento
   
 
     
@@ -1576,7 +1576,7 @@
   <span class="md-ellipsis">
     
   
-    Runbooks e Troubleshooting
+    Guias Operacionais e Resolução de Problemas
   
 
     
@@ -2276,6 +2276,34 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../../finops_custos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FinOps e Previsibilidade de Custos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     
     
     
@@ -2295,10 +2323,10 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_5">
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_6">
         
           
-          <label class="md-nav__link" for="__nav_4_5" id="__nav_4_5_label" tabindex="">
+          <label class="md-nav__link" for="__nav_4_6" id="__nav_4_6_label" tabindex="">
             
   
   
@@ -2316,8 +2344,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4_5">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -2705,7 +2733,7 @@
   <span class="md-ellipsis">
     
   
-    ADR 0014: Terraform para Infraestrutura como Codigo
+    ADR 0014: Terraform para Infraestrutura como Código
   
 
     
@@ -2722,34 +2750,6 @@
           </ul>
         </nav>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../finops_custos/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    FinOps e Previsibilidade de Custos
-  
-
-    
-  </span>
-  
-  
-
-      </a>
     </li>
   
 
@@ -3171,6 +3171,34 @@
     
   
     Semana 7
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gestao/sprints/Semana%208/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Semana 8
   
 
     
@@ -3616,6 +3644,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gestao/atas/ata-10-07-2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ata de Reunião (10/07/2026)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -3787,9 +3843,9 @@ erDiagram
 <h3 id="walkthrough-do-diagrama">Walkthrough do diagrama<a class="headerlink" href="#walkthrough-do-diagrama" title="Permanent link">¶</a></h3>
 <p>O <abbr title="Entity-Relationship Diagram — Diagrama Entidade-Relacionamento">ERD</abbr> resume as entidades centrais e suas relações principais: usuários participam de projetos, projetos possuem documentos e usuários geram auditoria. A entidade de token lida com autenticação e validações temporárias.</p>
 <h2 id="regras-de-isolamento-multi-tenancy-logico">Regras de Isolamento (Multi-tenancy Lógico)<a class="headerlink" href="#regras-de-isolamento-multi-tenancy-logico" title="Permanent link">¶</a></h2>
-<p>Um Orientador (<code>advisor</code>) só consegue consultar metadados e arquivos dos artefatos de projetos nos quais ele está listado explicitamente na tabela de junção <code>project_members</code>. Consultas <abbr title="Structured Query Language">SQL</abbr> abstraídas via <abbr title="Java Persistence API">JPA</abbr> forçam <em>Query Filters</em> em tempo de compilação usando este relacionamento.</p>
+<p>Um Orientador (<code>advisor</code>) só consegue consultar metadados e arquivos dos artefatos de projetos nos quais ele está listado explicitamente na tabela de junção <code>project_members</code>. Consultas <abbr title="Structured Query Language — Linguagem de Consulta Estruturada">SQL</abbr> abstraídas via <abbr title="Java Persistence API">JPA</abbr> forçam <em>Query Filters</em> em tempo de compilação usando este relacionamento.</p>
 <h2 id="evolucao-do-esquema-migrations">Evolução do Esquema (Migrations)<a class="headerlink" href="#evolucao-do-esquema-migrations" title="Permanent link">¶</a></h2>
-<p>Utilizamos a ferramenta <strong>Flyway</strong> atrelada ao build do Spring Boot. Nenhum script <abbr title="Data Definition Language">DDL</abbr> (Data Definition Language) pode ser rodado manualmente no Cloud <abbr title="Structured Query Language">SQL</abbr>; todas as criações de tabelas e índices estão versionadas dentro da pasta <code>src/main/resources/db/migration</code>.</p>
+<p>Utilizamos a ferramenta <strong>Flyway</strong> atrelada ao build do Spring Boot. Nenhum script <abbr title="Data Definition Language">DDL</abbr> (Data Definition Language) pode ser rodado manualmente no <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> <abbr title="Structured Query Language — Linguagem de Consulta Estruturada">SQL</abbr>; todas as criações de tabelas e índices estão versionadas dentro da pasta <code>src/main/resources/db/migration</code>.</p>
 <hr>
 <h2 id="historico-de-versoes">Histórico de Versões<a class="headerlink" href="#historico-de-versoes" title="Permanent link">¶</a></h2>
 <table>

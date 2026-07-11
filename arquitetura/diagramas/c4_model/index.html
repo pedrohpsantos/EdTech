@@ -1348,7 +1348,7 @@
   <span class="md-ellipsis">
     
   
-    Padrões de Desenvolvimento (Code Standards)
+    Padrões de Desenvolvimento
   
 
     
@@ -1576,7 +1576,7 @@
   <span class="md-ellipsis">
     
   
-    Runbooks e Troubleshooting
+    Guias Operacionais e Resolução de Problemas
   
 
     
@@ -2282,6 +2282,34 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../../finops_custos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FinOps e Previsibilidade de Custos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     
     
     
@@ -2301,10 +2329,10 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_5">
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_6">
         
           
-          <label class="md-nav__link" for="__nav_4_5" id="__nav_4_5_label" tabindex="">
+          <label class="md-nav__link" for="__nav_4_6" id="__nav_4_6_label" tabindex="">
             
   
   
@@ -2322,8 +2350,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4_5">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -2711,7 +2739,7 @@
   <span class="md-ellipsis">
     
   
-    ADR 0014: Terraform para Infraestrutura como Codigo
+    ADR 0014: Terraform para Infraestrutura como Código
   
 
     
@@ -2728,34 +2756,6 @@
           </ul>
         </nav>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../finops_custos/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    FinOps e Previsibilidade de Custos
-  
-
-    
-  </span>
-  
-  
-
-      </a>
     </li>
   
 
@@ -3177,6 +3177,34 @@
     
   
     Semana 7
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gestao/sprints/Semana%208/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Semana 8
   
 
     
@@ -3622,6 +3650,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gestao/atas/ata-10-07-2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ata de Reunião (10/07/2026)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -3778,7 +3834,7 @@ flowchart LR
 <h3 id="walkthrough-do-diagrama">Walkthrough do diagrama<a class="headerlink" href="#walkthrough-do-diagrama" title="Permanent link">¶</a></h3>
 <p>A plataforma centraliza a interação de pesquisa, orientação e auditoria, enquanto o <abbr title="Google Cloud Storage">GCS</abbr> atua como storage externo para arquivos de pesquisa.</p>
 <h2 id="nivel-2-diagrama-de-container">Nível 2: Diagrama de Container<a class="headerlink" href="#nivel-2-diagrama-de-container" title="Permanent link">¶</a></h2>
-<p>No C4 Model, um "Container" representa algo que precisa estar rodando para que o sistema funcione (uma <abbr title="Application Programming Interface">API</abbr>, um App Web, um Banco de Dados).</p>
+<p>No C4 Model, um "Container" representa algo que precisa estar rodando para que o sistema funcione (uma <abbr title="Application Programming Interface — Interface de Programação de Aplicação">API</abbr>, um App Web, um Banco de Dados).</p>
 <pre class="mermaid"><code>%%{init: {"theme": "base", "flowchart": {"nodeSpacing": 60, "rankSpacing": 80, "curve": "basis"}}}%%
 flowchart LR
     Usu["Usuario"]
@@ -3808,7 +3864,7 @@ flowchart LR
     classDef support fill:#eef2ff,stroke:#6c7cff,color:#1a1a1a;
     class Auth,Audit support;</code></pre>
 <h3 id="walkthrough-do-diagrama_1">Walkthrough do diagrama<a class="headerlink" href="#walkthrough-do-diagrama_1" title="Permanent link">¶</a></h3>
-<p>O fluxo principal segue da esquerda para a direita (Usuário → <abbr title="Single Page Application">SPA</abbr> → <abbr title="Application Programming Interface">API</abbr> → <abbr title="Database — Banco de Dados">DB</abbr>/<abbr title="Google Cloud Storage">GCS</abbr>), com autenticação e auditoria como serviços auxiliares conectados à <abbr title="Application Programming Interface">API</abbr>.</p>
+<p>O fluxo principal segue da esquerda para a direita (Usuário → <abbr title="Single Page Application — Aplicação de Página Única">SPA</abbr> → <abbr title="Application Programming Interface — Interface de Programação de Aplicação">API</abbr> → <abbr title="Database — Banco de Dados">DB</abbr>/<abbr title="Google Cloud Storage">GCS</abbr>), com autenticação e auditoria como serviços auxiliares conectados à <abbr title="Application Programming Interface — Interface de Programação de Aplicação">API</abbr>.</p>
 <hr>
 <h2 id="historico-de-versoes">Histórico de Versões<a class="headerlink" href="#historico-de-versoes" title="Permanent link">¶</a></h2>
 <table>

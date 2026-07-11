@@ -1348,7 +1348,7 @@
   <span class="md-ellipsis">
     
   
-    Padrões de Desenvolvimento (Code Standards)
+    Padrões de Desenvolvimento
   
 
     
@@ -1576,7 +1576,7 @@
   <span class="md-ellipsis">
     
   
-    Runbooks e Troubleshooting
+    Guias Operacionais e Resolução de Problemas
   
 
     
@@ -2166,6 +2166,34 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../../finops_custos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FinOps e Previsibilidade de Custos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -2187,10 +2215,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5" checked="">
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_6" checked="">
         
           
-          <label class="md-nav__link" for="__nav_4_5" id="__nav_4_5_label" tabindex="">
+          <label class="md-nav__link" for="__nav_4_6" id="__nav_4_6_label" tabindex="">
             
   
   
@@ -2208,8 +2236,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_4_5">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -2699,7 +2727,7 @@
   <span class="md-ellipsis">
     
   
-    ADR 0014: Terraform para Infraestrutura como Codigo
+    ADR 0014: Terraform para Infraestrutura como Código
   
 
     
@@ -2716,34 +2744,6 @@
           </ul>
         </nav>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../finops_custos/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    FinOps e Previsibilidade de Custos
-  
-
-    
-  </span>
-  
-  
-
-      </a>
     </li>
   
 
@@ -3165,6 +3165,34 @@
     
   
     Semana 7
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gestao/sprints/Semana%208/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Semana 8
   
 
     
@@ -3610,6 +3638,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gestao/atas/ata-10-07-2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ata de Reunião (10/07/2026)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -3742,15 +3798,15 @@ Precisamos enviar um código de segurança (OTP - One Time Password) de 6 dígit
 <ul>
 <li>O protocolo utilizado será o SMTP.</li>
 <li>As credenciais SMTP (<code>host</code>, <code>port</code>, <code>username</code>, <code>password</code>) serão obrigatoriamente injetadas via variáveis de ambiente para não comprometer dados sensíveis no repositório.</li>
-<li>Para o ambiente de desenvolvimento local, a recomendação oficial é utilizar o <strong>Mailtrap</strong> (SMTP Mock Server), evitando disparos reais acidentais para e-mails de clientes.</li>
+<li>Para o ambiente de desenvolvimento local, a recomendação oficial é utilizar o <strong>Mailtrap</strong> (SMTP <abbr title="Objeto simulado para testes">Mock</abbr> Server), evitando disparos reais acidentais para e-mails de clientes.</li>
 </ul>
 <h2 id="consequencias">Consequências<a class="headerlink" href="#consequencias" title="Permanent link">¶</a></h2>
 <ul>
 <li><strong>Positivas:</strong> </li>
 <li><code>spring-boot-starter-mail</code> é leve, amplamente suportado e fácil de configurar.</li>
-<li>O código não fica acoplado a uma <abbr title="Application Programming Interface">API</abbr> <abbr title="Representational State Transfer">REST</abbr> proprietária de envio (como SendGrid <abbr title="Application Programming Interface">API</abbr> ou <abbr title="Amazon Web Services">AWS</abbr> SES <abbr title="Application Programming Interface">API</abbr>), sendo possível trocar de provedor apenas alterando propriedades SMTP.</li>
+<li>O código não fica acoplado a uma <abbr title="Application Programming Interface — Interface de Programação de Aplicação">API</abbr> <abbr title="Representational State Transfer">REST</abbr> proprietária de envio (como SendGrid <abbr title="Application Programming Interface — Interface de Programação de Aplicação">API</abbr> ou <abbr title="Amazon Web Services">AWS</abbr> SES <abbr title="Application Programming Interface — Interface de Programação de Aplicação">API</abbr>), sendo possível trocar de provedor apenas alterando propriedades SMTP.</li>
 <li><strong>Negativas:</strong> </li>
-<li>Envio SMTP síncrono pode causar lentidão (gargalo) na resposta da <abbr title="Application Programming Interface">API</abbr> se o servidor de e-mail demorar a responder. <strong>Mitigação futura:</strong> O serviço de envio de e-mail pode ser anotado com <code>@Async</code> e executado em uma TaskExecutor pool paralela, ou jogado em uma fila de mensageria (RabbitMQ/Kafka) futuramente. Por enquanto, será síncrono para validação da prova de conceito.</li>
+<li>Envio SMTP síncrono pode causar lentidão (gargalo) na resposta da <abbr title="Application Programming Interface — Interface de Programação de Aplicação">API</abbr> se o servidor de e-mail demorar a responder. <strong>Mitigação futura:</strong> O serviço de envio de e-mail pode ser anotado com <code>@Async</code> e executado em uma TaskExecutor pool paralela, ou jogado em uma fila de mensageria (RabbitMQ/Kafka) futuramente. Por enquanto, será síncrono para validação da prova de conceito.</li>
 </ul>
 <hr>
 <h2 id="historico-de-versoes">Histórico de Versões<a class="headerlink" href="#historico-de-versoes" title="Permanent link">¶</a></h2>

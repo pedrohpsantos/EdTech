@@ -12,10 +12,10 @@
         <link rel="canonical" href="https://pedrohpsantos.github.io/EdTech/arquitetura/finops_custos/">
       
       
-        <link rel="prev" href="../decisoes_adrs/0014-terraform-infraestrutura-como-codigo/">
+        <link rel="prev" href="../nuvem_e_seguranca/seguranca_app/">
       
       
-        <link rel="next" href="../../gestao/planejamento/roadmap/">
+        <link rel="next" href="../decisoes_adrs/0001-armazenamento-google-cloud/">
       
       
         
@@ -1348,7 +1348,7 @@
   <span class="md-ellipsis">
     
   
-    Padrões de Desenvolvimento (Code Standards)
+    Padrões de Desenvolvimento
   
 
     
@@ -1576,7 +1576,7 @@
   <span class="md-ellipsis">
     
   
-    Runbooks e Troubleshooting
+    Guias Operacionais e Resolução de Problemas
   
 
     
@@ -2166,6 +2166,175 @@
                 
   
   
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FinOps e Previsibilidade de Custos
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FinOps e Previsibilidade de Custos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#1-topologia-de-custos-e-direcionadores" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Topologia de Custos e Direcionadores
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-cenario-base-orcamento-de-estudante" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Cenário Base (Orçamento de Estudante)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Cenário Base (Orçamento de Estudante)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-cloud-sql-banco-de-dados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1. Cloud SQL (Banco de Dados)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-cloud-run-backend-da-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2. Cloud Run (Backend da API)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-cloud-storage-armazenamento-de-arquivos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3. Cloud Storage (Armazenamento de Arquivos)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-resumo-total-mensal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4. Resumo Total Mensal
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-praticas-de-otimizacao-adotadas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Práticas de Otimização Adotadas
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-alertas-orcamentarios-billing-alerts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Alertas Orçamentários (Billing Alerts)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
   
   
     
@@ -2187,10 +2356,10 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_5">
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_6">
         
           
-          <label class="md-nav__link" for="__nav_4_5" id="__nav_4_5_label" tabindex="">
+          <label class="md-nav__link" for="__nav_4_6" id="__nav_4_6_label" tabindex="">
             
   
   
@@ -2208,8 +2377,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4_5">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -2597,7 +2766,7 @@
   <span class="md-ellipsis">
     
   
-    ADR 0014: Terraform para Infraestrutura como Codigo
+    ADR 0014: Terraform para Infraestrutura como Código
   
 
     
@@ -2613,175 +2782,6 @@
             
           </ul>
         </nav>
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-    
-  
-  
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    FinOps e Previsibilidade de Custos
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    FinOps e Previsibilidade de Custos
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Índice">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Índice
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-      
-        <li class="md-nav__item">
-  <a href="#1-topologia-de-custos-e-drivers" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        1. Topologia de Custos e Drivers
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#2-cenario-base-estimativa" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2. Cenário Base (Estimativa)
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="2. Cenário Base (Estimativa)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#21-cloud-sql-banco-de-dados" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2.1. Cloud SQL (Banco de Dados)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#22-cloud-run-backend-api" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2.2. Cloud Run (Backend API)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#23-cloud-storage-armazenamento-de-arquivos" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2.3. Cloud Storage (Armazenamento de Arquivos)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#24-resumo-total-mensal-cenario-producao-inicial" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2.4. Resumo Total Mensal (Cenário Produção Inicial)
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#3-praticas-de-otimizacao-adotadas" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3. Práticas de Otimização Adotadas
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#4-alertas-orcamentarios-billing-alerts" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        4. Alertas Orçamentários (Billing Alerts)
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
       
     </li>
   
@@ -3204,6 +3204,34 @@
     
   
     Semana 7
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gestao/sprints/Semana%208/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Semana 8
   
 
     
@@ -3649,6 +3677,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gestao/atas/ata-10-07-2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ata de Reunião (10/07/2026)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -3691,10 +3747,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
-  <a href="#1-topologia-de-custos-e-drivers" class="md-nav__link">
+  <a href="#1-topologia-de-custos-e-direcionadores" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1. Topologia de Custos e Drivers
+        1. Topologia de Custos e Direcionadores
       
     </span>
   </a>
@@ -3702,15 +3758,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#2-cenario-base-estimativa" class="md-nav__link">
+  <a href="#2-cenario-base-orcamento-de-estudante" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. Cenário Base (Estimativa)
+        2. Cenário Base (Orçamento de Estudante)
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="2. Cenário Base (Estimativa)">
+    <nav class="md-nav" aria-label="2. Cenário Base (Orçamento de Estudante)">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -3725,10 +3781,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#22-cloud-run-backend-api" class="md-nav__link">
+  <a href="#22-cloud-run-backend-da-api" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2.2. Cloud Run (Backend API)
+        2.2. Cloud Run (Backend da API)
       
     </span>
   </a>
@@ -3747,10 +3803,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#24-resumo-total-mensal-cenario-producao-inicial" class="md-nav__link">
+  <a href="#24-resumo-total-mensal" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2.4. Resumo Total Mensal (Cenário Produção Inicial)
+        2.4. Resumo Total Mensal
       
     </span>
   </a>
@@ -3809,38 +3865,59 @@
   
 
 
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Versão</th>
+<th style="text-align: left;">Data</th>
+<th style="text-align: left;">Autor</th>
+<th style="text-align: left;">Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">1.1</td>
+<td style="text-align: left;">11/07/2026</td>
+<td style="text-align: left;">Antigravity</td>
+<td style="text-align: left;">Ajuste para orçamento estudantil (&lt; $50)</td>
+</tr>
+<tr>
+<td style="text-align: left;">1.0</td>
+<td style="text-align: left;">10/07/2026</td>
+<td style="text-align: left;">Antigravity</td>
+<td style="text-align: left;">Criação do documento</td>
+</tr>
+</tbody>
+</table>
 <h1 id="finops-e-previsibilidade-de-custos-tco"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 6h18v12H5zm9 3a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3M9 8a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2v-4a2 2 0 0 1-2-2zm-8 2h2v10h16v2H1z"></path></svg></span> FinOps e Previsibilidade de Custos (TCO)<a class="headerlink" href="#finops-e-previsibilidade-de-custos-tco" title="Permanent link">¶</a></h1>
-<p>A arquitetura do <strong>EdTech</strong> foi concebida primariamente sobre serviços gerenciados (Serverless e PaaS) no Google Cloud Platform (<abbr title="Google Cloud Platform">GCP</abbr>). O objetivo deste documento é fornecer uma estimativa de custo baseada no tráfego esperado, permitindo planejamento orçamentário.</p>
+<p>A arquitetura do <strong>EdTech</strong> foi concebida primariamente sobre serviços gerenciados (<em>Serverless</em> e <em>PaaS</em>) no Google <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Platform (<abbr title="Google Cloud Platform">GCP</abbr>). Como o projeto foi desenvolvido em um contexto acadêmico, nosso principal requisito é manter o custo total do projeto estritamente abaixo do orçamento estudantil disponibilizado de <strong>$50.00 USD/mês</strong>.</p>
 <hr>
-<h2 id="1-topologia-de-custos-e-drivers">1. Topologia de Custos e Drivers<a class="headerlink" href="#1-topologia-de-custos-e-drivers" title="Permanent link">¶</a></h2>
+<h2 id="1-topologia-de-custos-e-direcionadores">1. Topologia de Custos e Direcionadores<a class="headerlink" href="#1-topologia-de-custos-e-direcionadores" title="Permanent link">¶</a></h2>
 <p>Os principais ofensores de custo do projeto são:</p>
 <ol>
-<li><strong>Cloud <abbr title="Structured Query Language">SQL</abbr> (PostgreSQL)</strong>: Custo fixo por hora (Instância + Disco + Backup).</li>
-<li><strong>Cloud Run (Backend)</strong>: Custo variável por invocação, CPU e Memória alocados por milissegundo de execução.</li>
-<li><strong>Cloud Storage (<abbr title="Google Cloud Storage">GCS</abbr>)</strong>: Custo variável por volume de GBs armazenados e banda de rede de saída (Egress).</li>
-<li><strong>Secret Manager / Build</strong>: Custos marginais e quase sempre dentro do <em>Free Tier</em>.</li>
+<li><strong><abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> <abbr title="Structured Query Language — Linguagem de Consulta Estruturada">SQL</abbr> (PostgreSQL)</strong>: Custo fixo por hora (Instância + Disco).</li>
+<li><strong><abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run (<abbr title="Camada de servidor e banco de dados da aplicação">Backend</abbr>)</strong>: Custo variável por invocação, CPU e Memória (amparado pela cota gratuita).</li>
+<li><strong><abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Storage (<abbr title="Google Cloud Storage">GCS</abbr>)</strong>: Custo variável por volume armazenado e tráfego de rede de saída (<em>Egress</em>).</li>
+<li><strong>Firebase Hosting (<abbr title="Camada de interface visual do usuário">Frontend</abbr>)</strong>: Custo variável de hospedagem estática e banda (amparado pela cota gratuita).</li>
 </ol>
 <hr>
-<h2 id="2-cenario-base-estimativa">2. Cenário Base (Estimativa)<a class="headerlink" href="#2-cenario-base-estimativa" title="Permanent link">¶</a></h2>
-<p><em>Contexto: Uma instituição acadêmica de médio porte com 50 pesquisadores ativos diários, enviando ~10 GB de datasets/PDFs por mês.</em></p>
-<h3 id="21-cloud-sql-banco-de-dados">2.1. Cloud <abbr title="Structured Query Language">SQL</abbr> (Banco de Dados)<a class="headerlink" href="#21-cloud-sql-banco-de-dados" title="Permanent link">¶</a></h3>
-<p>Para produção, recomendamos no mínimo a classe <code>db-custom-1-3840</code> (1 vCPU, 3.75 GB RAM) ou <code>db-f1-micro</code> (para homologação).
-- <strong>Homologação (<code>db-f1-micro</code>, 10GB SSD)</strong>: ~$9 a $15 / mês
-- <strong>Produção (<code>db-custom-1-3840</code>, 50GB SSD, HA Zonal)</strong>: ~$65 a $85 / mês</p>
-<h3 id="22-cloud-run-backend-api">2.2. Cloud Run (Backend <abbr title="Application Programming Interface">API</abbr>)<a class="headerlink" href="#22-cloud-run-backend-api" title="Permanent link">¶</a></h3>
+<h2 id="2-cenario-base-orcamento-de-estudante">2. Cenário Base (Orçamento de Estudante)<a class="headerlink" href="#2-cenario-base-orcamento-de-estudante" title="Permanent link">¶</a></h2>
+<p><em>Contexto: Ambiente acadêmico com tráfego moderado, visando validação e demonstração, operando sob uma bolsa do Google <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> for Students.</em></p>
+<h3 id="21-cloud-sql-banco-de-dados">2.1. <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> <abbr title="Structured Query Language — Linguagem de Consulta Estruturada">SQL</abbr> (Banco de Dados)<a class="headerlink" href="#21-cloud-sql-banco-de-dados" title="Permanent link">¶</a></h3>
+<p>Para mantermos o custo baixo sem perder a consistência, utilizaremos instâncias de núcleo compartilhado (<em>Shared Core</em>):
+- <strong>Homologação/Produção Inicial (<code>db-f1-micro</code>, 10GB SSD)</strong>: ~$9.00 a $15.00 / mês.</p>
+<h3 id="22-cloud-run-backend-da-api">2.2. <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run (<abbr title="Camada de servidor e banco de dados da aplicação">Backend</abbr> da <abbr title="Application Programming Interface — Interface de Programação de Aplicação">API</abbr>)<a class="headerlink" href="#22-cloud-run-backend-da-api" title="Permanent link">¶</a></h3>
 <p>Cálculo considerando:
-- <strong>Alocação</strong>: 1 vCPU, 1 GB RAM por container.
-- <strong>Requisições</strong>: ~100.000 requisições / mês.
-- <strong>Duração Média</strong>: 300ms por requisição.
-- <strong>Min Instances</strong>: 0 (Scale to zero habilitado).</p>
-<p><strong>Custo Estimado</strong>: Graças ao <em>Free Tier</em> de 2 milhões de requisições mensais do Cloud Run, o custo deste serviço para o cenário base será de <strong>$0.00 a $2.00 / mês</strong>.
-<em>(Nota: Se <code>min-instances=1</code> for ativado para evitar cold starts, o custo fixo sobe para ~$25/mês devido à CPU ligada 24/7).</em></p>
-<h3 id="23-cloud-storage-armazenamento-de-arquivos">2.3. Cloud Storage (Armazenamento de Arquivos)<a class="headerlink" href="#23-cloud-storage-armazenamento-de-arquivos" title="Permanent link">¶</a></h3>
-<p>Armazenamento Standard (Multi-Region US).
-- <strong>Volume</strong>: 100 GB (acumulado).
-- <strong>Custo de Armazenamento</strong>: ~<span class="arithmatex">\(0.026 por GB = **\)</span>2.60 / mês<strong>.
-- </strong>Custo de Egress (Downloads)<strong>: Assumindo 50 GB de download = ~<span class="arithmatex">\(0.12 por GB = **\)</span>6.00 / mês</strong>.</p>
-<h3 id="24-resumo-total-mensal-cenario-producao-inicial">2.4. Resumo Total Mensal (Cenário Produção Inicial)<a class="headerlink" href="#24-resumo-total-mensal-cenario-producao-inicial" title="Permanent link">¶</a></h3>
+- <strong>Alocação</strong>: 1 vCPU, 1 GB RAM por contêiner.
+- <strong>Requisições</strong>: ~10.000 requisições / mês.
+- <strong>Instâncias Mínimas</strong>: 0 (Escalonamento para zero habilitado para economizar recursos).</p>
+<p><strong>Custo Estimado</strong>: Graças à Cota Gratuita (<em>Free Tier</em>) de 2 milhões de requisições mensais do <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run, o custo deste serviço para o cenário base será de <strong>$0.00 a $2.00 / mês</strong>.</p>
+<h3 id="23-cloud-storage-armazenamento-de-arquivos">2.3. <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Storage (Armazenamento de Arquivos)<a class="headerlink" href="#23-cloud-storage-armazenamento-de-arquivos" title="Permanent link">¶</a></h3>
+<p>Armazenamento Padrão (<em>Standard</em>).
+- <strong>Volume</strong>: 20 GB (documentos e metadados).
+- <strong>Custo de Armazenamento</strong>: ~<span class="arithmatex">\(0.026 por GB = **~\)</span>0.52 / mês<strong>.
+- </strong>Custo de Tráfego (<em>Egress</em>)<strong>: Assumindo 10 GB de download = ~<span class="arithmatex">\(0.12 por GB = **~\)</span>1.20 / mês</strong>.</p>
+<h3 id="24-resumo-total-mensal">2.4. Resumo Total Mensal<a class="headerlink" href="#24-resumo-total-mensal" title="Permanent link">¶</a></h3>
 <table>
 <thead>
 <tr>
@@ -3850,37 +3927,41 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;">Cloud <abbr title="Structured Query Language">SQL</abbr> (Prod)</td>
-<td style="text-align: left;">$ 75.00</td>
+<td style="text-align: left;"><abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> <abbr title="Structured Query Language — Linguagem de Consulta Estruturada">SQL</abbr> (F1-Micro)</td>
+<td style="text-align: left;">$ 15.00</td>
 </tr>
 <tr>
-<td style="text-align: left;">Cloud Run</td>
-<td style="text-align: left;">$ 2.00</td>
+<td style="text-align: left;"><abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run</td>
+<td style="text-align: left;">$ 0.00 (Coberto pela Cota Gratuita)</td>
 </tr>
 <tr>
-<td style="text-align: left;">Cloud Storage</td>
-<td style="text-align: left;">$ 8.60</td>
+<td style="text-align: left;"><abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Storage</td>
+<td style="text-align: left;">$ 1.72</td>
 </tr>
 <tr>
-<td style="text-align: left;">Rede / Load Balancer</td>
-<td style="text-align: left;">$ 18.00</td>
+<td style="text-align: left;">Firebase Hosting / Rede</td>
+<td style="text-align: left;">$ 0.00 (Coberto pela Cota Gratuita)</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Total Estimado</strong></td>
-<td style="text-align: left;"><strong>~$ 103.60 / mês</strong></td>
+<td style="text-align: left;"><strong>~$ 16.72 / mês</strong></td>
 </tr>
 </tbody>
 </table>
+<blockquote>
+<p><strong>Aviso</strong>: O custo estimado de <strong><span class="arithmatex">\(16.72** está perfeitamente alinhado com a restrição orçamentária do balancete acadêmico de **\)</span>50.00 USD</strong>.</p>
+</blockquote>
 <hr>
 <h2 id="3-praticas-de-otimizacao-adotadas">3. Práticas de Otimização Adotadas<a class="headerlink" href="#3-praticas-de-otimizacao-adotadas" title="Permanent link">¶</a></h2>
-<p>O projeto já possui arquitetura orientada a eficiência de custo:
-- <strong>Upload Direto ao <abbr title="Google Cloud Storage">GCS</abbr></strong>: O frontend utiliza URLs pre-assinadas para fazer upload diretamente ao Google Cloud Storage. O Cloud Run não processa o fluxo binário do arquivo em memória, o que poupa custos enormes de RAM e duração de CPU na <abbr title="Application Programming Interface">API</abbr>.
-- <strong>Scale-to-Zero</strong>: O frontend estático no Vercel/Firebase Hosting custa quase zero. O Cloud Run zera instâncias de madrugada, pagando apenas pelo Banco de Dados.</p>
-<h2 id="4-alertas-orcamentarios-billing-alerts">4. Alertas Orçamentários (Billing Alerts)<a class="headerlink" href="#4-alertas-orcamentarios-billing-alerts" title="Permanent link">¶</a></h2>
-<p>É mandatório que a conta de faturamento do <abbr title="Google Cloud Platform">GCP</abbr> possua um orçamento (<code>Budget</code>) configurado em:
-- <strong>50% do limite mensal</strong> (Aviso por email)
-- <strong>90% do limite mensal</strong> (Aviso Crítico)
-- <strong>100% do limite mensal</strong> (Alerta para DevOps)</p>
+<p>O projeto já possui uma arquitetura altamente focada em eficiência de custo:
+- <strong>Upload Direto ao <abbr title="Google Cloud Storage">GCS</abbr></strong>: O frontend (interface de usuário) envia arquivos diretamente ao Google <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Storage usando URLs pré-assinadas (<em>Signed URLs</em>). O <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run não processa o fluxo binário do arquivo, poupando custos enormes de memória e CPU.
+- <strong>Escalonamento para Zero (<em>Scale-to-Zero</em>)</strong>: O frontend estático custa zero na maior parte do tempo. O <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run desliga instâncias completamente de madrugada.
+- <strong>Limpeza Automática (<em>Lifecycle Rules</em>)</strong>: Arquivos temporários e exportações no bucket de armazenamento são configurados para expiração automática após 7 dias.</p>
+<h2 id="4-alertas-orcamentarios-billing-alerts">4. Alertas Orçamentários (<em>Billing Alerts</em>)<a class="headerlink" href="#4-alertas-orcamentarios-billing-alerts" title="Permanent link">¶</a></h2>
+<p>Para evitar surpresas no cartão de crédito do estudante, é mandatório que a conta de faturamento do <abbr title="Google Cloud Platform">GCP</abbr> possua um orçamento (<code>Budget</code>) configurado de <strong><span class="arithmatex">\(50.00** com disparos em:
+- **50% (\)</span>25.00)</strong>: Aviso por email.
+- <strong>90% (<span class="arithmatex">\(45.00)**: Aviso Crítico.
+- **100% (\)</span>50.00)</strong>: Alerta para o Time de Desenvolvimento atuar e pausar recursos não críticos.</p>
 
 
 
@@ -3901,7 +3982,7 @@
     <span class="md-icon" title="Última atualização">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="11 de julho de 2026 13:28:16 UTC">11 de julho de 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="11 de julho de 2026 16:13:52 UTC">11 de julho de 2026</span>
   </span>
 
     
@@ -3988,7 +4069,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Rodapé">
         
           
-          <a href="../decisoes_adrs/0014-terraform-infraestrutura-como-codigo/" class="md-footer__link md-footer__link--prev" aria-label="Anterior: ADR 0014: Terraform para Infraestrutura como Codigo">
+          <a href="../nuvem_e_seguranca/seguranca_app/" class="md-footer__link md-footer__link--prev" aria-label="Anterior: AppSec e Segurança">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
@@ -3998,20 +4079,20 @@
                 Anterior
               </span>
               <div class="md-ellipsis">
-                ADR 0014: Terraform para Infraestrutura como Codigo
+                AppSec e Segurança
               </div>
             </div>
           </a>
         
         
           
-          <a href="../../gestao/planejamento/roadmap/" class="md-footer__link md-footer__link--next" aria-label="Próximo: Product Roadmap (Now / Next / Later)">
+          <a href="../decisoes_adrs/0001-armazenamento-google-cloud/" class="md-footer__link md-footer__link--next" aria-label="Próximo: ADR 0001: Armazenamento em Nuvem Nativo (Google Cloud)">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Próximo
               </span>
               <div class="md-ellipsis">
-                Product Roadmap (Now / Next / Later)
+                ADR 0001: Armazenamento em Nuvem Nativo (Google Cloud)
               </div>
             </div>
             <div class="md-footer__button md-icon">
