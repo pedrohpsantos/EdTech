@@ -46,48 +46,64 @@ public class SecurityConfig {
 <span class="fc" id="L46">            session -&gt; session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))</span>
 <span class="fc" id="L47">        .exceptionHandling(</span>
 <span class="fc" id="L48">            exception -&gt; exception.authenticationEntryPoint(authenticationEntryPoint))</span>
-<span class="fc" id="L49">        .authorizeHttpRequests(</span>
+<span class="fc" id="L49">        .headers(</span>
+            headers -&gt;
+<span class="fc" id="L51">                headers</span>
+<span class="fc" id="L52">                    .httpStrictTransportSecurity(</span>
+<span class="fc" id="L53">                        hsts -&gt; hsts.includeSubDomains(true).maxAgeInSeconds(31536000))</span>
+<span class="fc" id="L54">                    .frameOptions(frame -&gt; frame.deny())</span>
+<span class="fc" id="L55">                    .contentSecurityPolicy(</span>
+<span class="fc" id="L56">                        csp -&gt; csp.policyDirectives(&quot;default-src 'self'; frame-ancestors 'none';&quot;)))</span>
+<span class="fc" id="L57">        .authorizeHttpRequests(</span>
             auth -&gt;
-<span class="fc" id="L51">                auth.requestMatchers(HttpMethod.OPTIONS, &quot;/**&quot;)</span>
-<span class="fc" id="L52">                    .permitAll()</span>
-<span class="fc" id="L53">                    .requestMatchers(HttpMethod.POST, &quot;/api/auth/login&quot;)</span>
-<span class="fc" id="L54">                    .permitAll()</span>
-<span class="fc" id="L55">                    .requestMatchers(HttpMethod.POST, &quot;/api/auth/register&quot;)</span>
-<span class="fc" id="L56">                    .permitAll()</span>
-<span class="fc" id="L57">                    .requestMatchers(&quot;/api/auth/recovery/**&quot;)</span>
-<span class="fc" id="L58">                    .permitAll()</span>
-<span class="fc" id="L59">                    .requestMatchers(&quot;/actuator/**&quot;)</span>
+<span class="fc" id="L59">                auth.requestMatchers(HttpMethod.OPTIONS, &quot;/**&quot;)</span>
 <span class="fc" id="L60">                    .permitAll()</span>
-<span class="fc" id="L61">                    .requestMatchers(&quot;/api/**&quot;)</span>
-<span class="fc" id="L62">                    .authenticated()</span>
-<span class="fc" id="L63">                    .anyRequest()</span>
-<span class="fc" id="L64">                    .denyAll())</span>
-<span class="fc" id="L65">        .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)</span>
-<span class="fc" id="L66">        .build();</span>
+<span class="fc" id="L61">                    .requestMatchers(HttpMethod.POST, &quot;/api/auth/login&quot;)</span>
+<span class="fc" id="L62">                    .permitAll()</span>
+<span class="fc" id="L63">                    .requestMatchers(HttpMethod.POST, &quot;/api/auth/login/verify-2fa&quot;)</span>
+<span class="fc" id="L64">                    .permitAll()</span>
+<span class="fc" id="L65">                    .requestMatchers(HttpMethod.POST, &quot;/api/auth/register&quot;)</span>
+<span class="fc" id="L66">                    .permitAll()</span>
+<span class="fc" id="L67">                    .requestMatchers(HttpMethod.POST, &quot;/api/auth/register/verify&quot;)</span>
+<span class="fc" id="L68">                    .permitAll()</span>
+<span class="fc" id="L69">                    .requestMatchers(&quot;/api/auth/recovery/**&quot;)</span>
+<span class="fc" id="L70">                    .permitAll()</span>
+<span class="fc" id="L71">                    .requestMatchers(&quot;/ws-edtech/**&quot;)</span>
+<span class="fc" id="L72">                    .permitAll()</span>
+<span class="fc" id="L73">                    .requestMatchers(&quot;/actuator/**&quot;)</span>
+<span class="fc" id="L74">                    .permitAll()</span>
+<span class="fc" id="L75">                    .requestMatchers(&quot;/v3/api-docs/**&quot;, &quot;/swagger-ui/**&quot;, &quot;/swagger-ui.html&quot;)</span>
+<span class="fc" id="L76">                    .permitAll()</span>
+<span class="fc" id="L77">                    .requestMatchers(&quot;/api/**&quot;)</span>
+<span class="fc" id="L78">                    .authenticated()</span>
+<span class="fc" id="L79">                    .anyRequest()</span>
+<span class="fc" id="L80">                    .denyAll())</span>
+<span class="fc" id="L81">        .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)</span>
+<span class="fc" id="L82">        .build();</span>
   }
 
   /** Documentação. */
   @Bean
   public CorsConfigurationSource corsConfigurationSource() {
-<span class="fc" id="L72">    CorsConfiguration configuration = new CorsConfiguration();</span>
-<span class="fc" id="L73">    configuration.setAllowedOrigins(List.of(allowedOrigins.split(&quot;,&quot;)));</span>
-<span class="fc" id="L74">    configuration.setAllowedMethods(List.of(&quot;GET&quot;, &quot;POST&quot;, &quot;PUT&quot;, &quot;DELETE&quot;, &quot;OPTIONS&quot;));</span>
-<span class="fc" id="L75">    configuration.setAllowedHeaders(List.of(&quot;Content-Type&quot;, &quot;Authorization&quot;, &quot;X-XSRF-TOKEN&quot;));</span>
-<span class="fc" id="L76">    configuration.setAllowCredentials(true);</span>
+<span class="fc" id="L88">    CorsConfiguration configuration = new CorsConfiguration();</span>
+<span class="fc" id="L89">    configuration.setAllowedOrigins(List.of(allowedOrigins.split(&quot;,&quot;)));</span>
+<span class="fc" id="L90">    configuration.setAllowedMethods(List.of(&quot;GET&quot;, &quot;POST&quot;, &quot;PUT&quot;, &quot;DELETE&quot;, &quot;OPTIONS&quot;));</span>
+<span class="fc" id="L91">    configuration.setAllowedHeaders(List.of(&quot;Content-Type&quot;, &quot;Authorization&quot;, &quot;X-XSRF-TOKEN&quot;));</span>
+<span class="fc" id="L92">    configuration.setAllowCredentials(true);</span>
 
-<span class="fc" id="L78">    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();</span>
-<span class="fc" id="L79">    source.registerCorsConfiguration(&quot;/**&quot;, configuration);</span>
-<span class="fc" id="L80">    return source;</span>
+<span class="fc" id="L94">    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();</span>
+<span class="fc" id="L95">    source.registerCorsConfiguration(&quot;/**&quot;, configuration);</span>
+<span class="fc" id="L96">    return source;</span>
   }
 
   @Bean
   public PasswordEncoder passwordEncoder() {
-<span class="fc" id="L85">    return new BCryptPasswordEncoder(12);</span>
+<span class="fc" id="L101">    return new BCryptPasswordEncoder(12);</span>
   }
 
   @Bean
   public InMemoryUserDetailsManager userDetailsService() {
-<span class="fc" id="L90">    return new InMemoryUserDetailsManager();</span>
+<span class="fc" id="L106">    return new InMemoryUserDetailsManager();</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

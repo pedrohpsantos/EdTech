@@ -2,16 +2,18 @@
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 /** Documentação para EdTechApplication. */
 @SpringBootApplication
 @EnableAsync
-<span class="fc" id="L10">public class EdTechApplication {</span>
+@EnableCaching
+<span class="fc" id="L12">public class EdTechApplication {</span>
 
   /** Documentação para o método main. */
   public static void main(String[] args) {
-<span class="nc" id="L14">    SpringApplication.run(EdTechApplication.class, args);</span>
-<span class="nc" id="L15">  }</span>
+<span class="nc" id="L16">    SpringApplication.run(EdTechApplication.class, args);</span>
+<span class="nc" id="L17">  }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

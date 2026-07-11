@@ -106,5 +106,30 @@ public class DocumentController {
 <span class="fc" id="L106">        documentService.reviewDocument(id, user.getId(), dto.getStatus(), dto.getFeedback());</span>
 <span class="fc" id="L107">    return ResponseEntity.ok(response);</span>
   }
+
+  @PatchMapping(&quot;/{id}/star&quot;)
+  public ResponseEntity&lt;DocumentResponseDto&gt; toggleStar(
+      @PathVariable UUID id, Authentication authentication) {
+<span class="nc" id="L113">    User user = (User) authentication.getPrincipal();</span>
+<span class="nc" id="L114">    return ResponseEntity.ok(documentService.toggleStar(id, user.getId()));</span>
+  }
+
+  @GetMapping(&quot;/{id}/comments&quot;)
+  public ResponseEntity&lt;java.util.List&lt;com.edtech.dto.CommentResponseDto&gt;&gt; getComments(
+      @PathVariable UUID id, Authentication authentication) {
+<span class="nc" id="L120">    User user = (User) authentication.getPrincipal();</span>
+<span class="nc" id="L121">    return ResponseEntity.ok(documentService.getComments(id, user.getId()));</span>
+  }
+
+  /** Javadoc. */
+  @PostMapping(&quot;/{id}/comments&quot;)
+  public ResponseEntity&lt;com.edtech.dto.CommentResponseDto&gt; addComment(
+      @PathVariable UUID id,
+      @jakarta.validation.Valid @RequestBody com.edtech.dto.CommentRequestDto dto,
+      Authentication authentication) {
+<span class="nc" id="L130">    User user = (User) authentication.getPrincipal();</span>
+<span class="nc" id="L131">    return ResponseEntity.status(HttpStatus.CREATED)</span>
+<span class="nc" id="L132">        .body(documentService.addComment(id, user.getId(), dto.getContent()));</span>
+  }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

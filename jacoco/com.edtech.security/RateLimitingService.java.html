@@ -2,7 +2,6 @@
 
 import io.github.bucket4j.Bandwidth;
 import io.github.bucket4j.Bucket;
-import io.github.bucket4j.Refill;
 import java.time.Duration;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -10,22 +9,20 @@ import org.springframework.stereotype.Service;
 
 /** Serviço de rate limiting baseado no algoritmo Token Bucket (Bucket4j). */
 @Service
-<span class="fc" id="L13">public class RateLimitingService {</span>
+<span class="fc" id="L12">public class RateLimitingService {</span>
 
-<span class="fc" id="L15">  private final Map&lt;String, Bucket&gt; cache = new ConcurrentHashMap&lt;&gt;();</span>
+<span class="fc" id="L14">  private final Map&lt;String, Bucket&gt; cache = new ConcurrentHashMap&lt;&gt;();</span>
 
   /** Retorna o bucket associado ao IP fornecido, criando um novo se necessário. */
   public Bucket resolveBucket(String key) {
-<span class="fc" id="L19">    return cache.computeIfAbsent(key, this::newBucket);</span>
+<span class="fc" id="L18">    return cache.computeIfAbsent(key, this::newBucket);</span>
   }
 
   private Bucket newBucket(String key) {
     // 5 requisições por minuto por IP
-<span class="fc" id="L24">    Refill refill = Refill.intervally(5, Duration.ofMinutes(1));</span>
-<span class="fc" id="L25">    Bandwidth limit = Bandwidth.classic(5, refill);</span>
-<span class="fc" id="L26">    return Bucket.builder()</span>
-<span class="fc" id="L27">        .addLimit(limit)</span>
-<span class="fc" id="L28">        .build();</span>
+    Bandwidth limit =
+<span class="fc" id="L24">        Bandwidth.builder().capacity(5).refillIntervally(5, Duration.ofMinutes(1)).build();</span>
+<span class="fc" id="L25">    return Bucket.builder().addLimit(limit).build();</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

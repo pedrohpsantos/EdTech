@@ -14,86 +14,95 @@ import java.util.UUID;
   private UUID projectId;
   private ZonedDateTime createdAt;
   private String feedback;
+  private boolean starred;
 
   // Getters and Setters
   /** Documentação para o método getId. */
   public UUID getId() {
-<span class="fc" id="L21">    return id;</span>
+<span class="fc" id="L22">    return id;</span>
   }
 
   /** Documentação para o método setId. */
   public void setId(UUID id) {
-<span class="fc" id="L26">    this.id = id;</span>
-<span class="fc" id="L27">  }</span>
+<span class="fc" id="L27">    this.id = id;</span>
+<span class="fc" id="L28">  }</span>
 
   /** Documentação para o método getTitle. */
   public String getTitle() {
-<span class="fc" id="L31">    return title;</span>
+<span class="fc" id="L32">    return title;</span>
   }
 
   /** Documentação para o método setTitle. */
   public void setTitle(String title) {
-<span class="fc" id="L36">    this.title = title;</span>
-<span class="fc" id="L37">  }</span>
+<span class="fc" id="L37">    this.title = title;</span>
+<span class="fc" id="L38">  }</span>
 
   /** Documentação para o método getFileUrl. */
   public String getFileUrl() {
-<span class="fc" id="L41">    return fileUrl;</span>
+<span class="fc" id="L42">    return fileUrl;</span>
   }
 
   /** Documentação para o método setFileUrl. */
   public void setFileUrl(String fileUrl) {
-<span class="fc" id="L46">    this.fileUrl = fileUrl;</span>
-<span class="fc" id="L47">  }</span>
+<span class="fc" id="L47">    this.fileUrl = fileUrl;</span>
+<span class="fc" id="L48">  }</span>
 
   /** Documentação para o método getStatus. */
   public DocumentStatus getStatus() {
-<span class="fc" id="L51">    return status;</span>
+<span class="fc" id="L52">    return status;</span>
   }
 
   /** Documentação para o método setStatus. */
   public void setStatus(DocumentStatus status) {
-<span class="fc" id="L56">    this.status = status;</span>
-<span class="fc" id="L57">  }</span>
+<span class="fc" id="L57">    this.status = status;</span>
+<span class="fc" id="L58">  }</span>
 
   /** Documentação para o método getAuthorId. */
   public UUID getAuthorId() {
-<span class="fc" id="L61">    return authorId;</span>
+<span class="fc" id="L62">    return authorId;</span>
   }
 
   /** Documentação para o método setAuthorId. */
   public void setAuthorId(UUID authorId) {
-<span class="fc" id="L66">    this.authorId = authorId;</span>
-<span class="fc" id="L67">  }</span>
+<span class="fc" id="L67">    this.authorId = authorId;</span>
+<span class="fc" id="L68">  }</span>
 
   /** Documentação para o método getProjectId. */
   public UUID getProjectId() {
-<span class="fc" id="L71">    return projectId;</span>
+<span class="fc" id="L72">    return projectId;</span>
   }
 
   /** Documentação para o método setProjectId. */
   public void setProjectId(UUID projectId) {
-<span class="fc" id="L76">    this.projectId = projectId;</span>
-<span class="fc" id="L77">  }</span>
+<span class="fc" id="L77">    this.projectId = projectId;</span>
+<span class="fc" id="L78">  }</span>
 
   /** Documentação para o método getCreatedAt. */
   public ZonedDateTime getCreatedAt() {
-<span class="fc" id="L81">    return createdAt;</span>
+<span class="fc" id="L82">    return createdAt;</span>
   }
 
   /** Documentação para o método setCreatedAt. */
   public void setCreatedAt(ZonedDateTime createdAt) {
-<span class="fc" id="L86">    this.createdAt = createdAt;</span>
-<span class="fc" id="L87">  }</span>
+<span class="fc" id="L87">    this.createdAt = createdAt;</span>
+<span class="fc" id="L88">  }</span>
 
   /** Documentação para o método getFeedback. */
   public String getFeedback() {
-<span class="fc" id="L91">    return feedback;</span>
+<span class="fc" id="L92">    return feedback;</span>
   }
 
   /** Documentação para o método setFeedback. */
   public void setFeedback(String feedback) {
-<span class="fc" id="L96">    this.feedback = feedback;</span>
-<span class="fc" id="L97">  }</span>
+<span class="fc" id="L97">    this.feedback = feedback;</span>
+<span class="fc" id="L98">  }</span>
+
+  public boolean isStarred() {
+<span class="fc" id="L101">    return starred;</span>
+  }
+
+  public void setStarred(boolean starred) {
+<span class="fc" id="L105">    this.starred = starred;</span>
+<span class="fc" id="L106">  }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

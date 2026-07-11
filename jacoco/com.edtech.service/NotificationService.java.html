@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>NotificationService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">edtech-api</a> &gt; <a href="index.source.html" class="el_package">com.edtech.service</a> &gt; <span class="el_source">NotificationService.java</span></div><h1>NotificationService.java</h1><pre class="source lang-java linenums">package com.edtech.service;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.stereotype.Service;
+
+/** Javadoc. */
+@Service
+public class NotificationService {
+
+<span class="fc" id="L12">  private static final Logger logger = LoggerFactory.getLogger(NotificationService.class);</span>
+  private final SimpMessagingTemplate messagingTemplate;
+
+<span class="fc" id="L15">  public NotificationService(SimpMessagingTemplate messagingTemplate) {</span>
+<span class="fc" id="L16">    this.messagingTemplate = messagingTemplate;</span>
+<span class="fc" id="L17">  }</span>
+
+  /**
+   * Envia uma notificação em tempo real (WebSocket) para um usuário específico.
+   *
+   * @param userId O ID do usuário (como String)
+   * @param payload O conteúdo da mensagem
+   */
+  public void sendToUser(String userId, Object payload) {
+<span class="nc" id="L26">    String destination = &quot;/queue/notifications&quot;;</span>
+<span class="nc" id="L27">    logger.info(&quot;Enviando notificacao WS para o usuario {}: {}&quot;, userId, payload);</span>
+<span class="nc" id="L28">    messagingTemplate.convertAndSendToUser(userId, destination, payload);</span>
+<span class="nc" id="L29">  }</span>
+
+  /**
+   * Envia uma notificação para um tópico geral.
+   *
+   * @param topic O tópico de destino (ex: /topic/global)
+   * @param payload O conteúdo da mensagem
+   */
+  public void sendToTopic(String topic, Object payload) {
+<span class="nc" id="L38">    logger.info(&quot;Enviando notificacao WS global para o topico {}: {}&quot;, topic, payload);</span>
+<span class="nc" id="L39">    messagingTemplate.convertAndSend(topic, payload);</span>
+<span class="nc" id="L40">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

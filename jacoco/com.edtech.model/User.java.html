@@ -12,16 +12,28 @@ import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import java.time.Instant;
 import java.util.UUID;
+import org.hibernate.annotations.Filter;
+import org.hibernate.annotations.FilterDef;
+import org.hibernate.annotations.ParamDef;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 
 /** Documentação para User. */
 @Entity
 @Table(name = &quot;users&quot;)
+@FilterDef(name = &quot;tenantFilter&quot;, parameters = @ParamDef(name = &quot;institutionId&quot;, type = UUID.class))
+@Filter(name = &quot;tenantFilter&quot;, condition = &quot;institution_id = :institutionId&quot;)
+@SQLDelete(sql = &quot;UPDATE users SET deleted = true WHERE id=?&quot;)
+@SQLRestriction(&quot;deleted = false&quot;)
 public class User {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(updatable = false, nullable = false)
   private UUID id;
+
+  @Column(name = &quot;institution_id&quot;, nullable = false, updatable = false)
+  private UUID institutionId;
 
   @Column(nullable = false, length = 120)
   private String name;
@@ -32,11 +44,11 @@ public class User {
   @Column(name = &quot;password_hash&quot;, nullable = false)
   private String passwordHash;
 
-<span class="fc" id="L35">  @Enumerated(EnumType.STRING)</span>
+<span class="fc" id="L47">  @Enumerated(EnumType.STRING)</span>
   @Column(nullable = false)
   private UserRole role = UserRole.RESEARCHER;
 
-<span class="fc" id="L39">  @Column(nullable = false)</span>
+<span class="fc" id="L51">  @Column(nullable = false)</span>
   private boolean active = true;
 
   @Column(name = &quot;created_at&quot;, nullable = false, updatable = false)
@@ -45,81 +57,125 @@ public class User {
   @Column(name = &quot;updated_at&quot;, nullable = false)
   private Instant updatedAt;
 
-<span class="fc" id="L48">  protected User() {}</span>
+<span class="fc" id="L60">  @Column(nullable = false)</span>
+  private boolean deleted = false;
+
+<span class="fc" id="L63">  @Column(name = &quot;mfa_enabled&quot;, nullable = false)</span>
+  private boolean mfaEnabled = false;
+
+  @Column(name = &quot;mfa_secret&quot;, length = 32)
+  private String mfaSecret;
+
+<span class="fc" id="L69">  protected User() {}</span>
 
   /** Documentação para o método User. */
-<span class="fc" id="L51">  public User(String name, String email, String passwordHash, UserRole role) {</span>
-<span class="fc" id="L52">    this.name = name;</span>
-<span class="fc" id="L53">    this.email = email;</span>
-<span class="fc" id="L54">    this.passwordHash = passwordHash;</span>
-<span class="fc" id="L55">    this.role = role;</span>
-<span class="fc" id="L56">  }</span>
+<span class="fc" id="L72">  public User(String name, String email, String passwordHash, UserRole role, UUID institutionId) {</span>
+<span class="fc" id="L73">    this.name = name;</span>
+<span class="fc" id="L74">    this.email = email;</span>
+<span class="fc" id="L75">    this.passwordHash = passwordHash;</span>
+<span class="fc" id="L76">    this.role = role;</span>
+<span class="fc" id="L77">    this.institutionId = institutionId;</span>
+<span class="fc" id="L78">  }</span>
 
   @PrePersist
   void prePersist() {
-<span class="fc" id="L60">    Instant now = Instant.now();</span>
-<span class="fc" id="L61">    createdAt = now;</span>
-<span class="fc" id="L62">    updatedAt = now;</span>
-<span class="fc" id="L63">  }</span>
+<span class="fc" id="L82">    Instant now = Instant.now();</span>
+<span class="fc" id="L83">    createdAt = now;</span>
+<span class="fc" id="L84">    updatedAt = now;</span>
+<span class="fc" id="L85">  }</span>
 
   @PreUpdate
   void preUpdate() {
-<span class="nc" id="L67">    updatedAt = Instant.now();</span>
-<span class="nc" id="L68">  }</span>
+<span class="fc" id="L89">    updatedAt = Instant.now();</span>
+<span class="fc" id="L90">  }</span>
 
   /** Documentação para o método getId. */
   public UUID getId() {
-<span class="fc" id="L72">    return id;</span>
+<span class="fc" id="L94">    return id;</span>
   }
+
+  /** Documentação para o método getInstitutionId. */
+  public UUID getInstitutionId() {
+<span class="fc" id="L99">    return institutionId;</span>
+  }
+
+  /** Documentação para o método setInstitutionId. */
+  public void setInstitutionId(UUID institutionId) {
+<span class="nc" id="L104">    this.institutionId = institutionId;</span>
+<span class="nc" id="L105">  }</span>
 
   /** Documentação para o método getName. */
   public String getName() {
-<span class="fc" id="L77">    return name;</span>
+<span class="fc" id="L109">    return name;</span>
   }
 
   /** Documentação para o método getEmail. */
   public String getEmail() {
-<span class="fc" id="L82">    return email;</span>
+<span class="fc" id="L114">    return email;</span>
   }
 
   /** Documentação para o método getPasswordHash. */
   public String getPasswordHash() {
-<span class="fc" id="L87">    return passwordHash;</span>
+<span class="fc" id="L119">    return passwordHash;</span>
   }
 
   /** Documentação para o método setPasswordHash. */
   public void setPasswordHash(String passwordHash) {
-<span class="fc" id="L92">    this.passwordHash = passwordHash;</span>
-<span class="fc" id="L93">  }</span>
+<span class="fc" id="L124">    this.passwordHash = passwordHash;</span>
+<span class="fc" id="L125">  }</span>
 
   /** Documentação para o método getRole. */
   public UserRole getRole() {
-<span class="fc" id="L97">    return role;</span>
+<span class="fc" id="L129">    return role;</span>
   }
 
   /** Documentação para o método setRole. */
   public void setRole(UserRole role) {
-<span class="fc" id="L102">    this.role = role;</span>
-<span class="fc" id="L103">  }</span>
+<span class="fc" id="L134">    this.role = role;</span>
+<span class="fc" id="L135">  }</span>
 
   /** Documentação para o método isActive. */
   public boolean isActive() {
-<span class="fc" id="L107">    return active;</span>
+<span class="fc" id="L139">    return active;</span>
   }
 
   /** Documentação para o método setActive. */
   public void setActive(boolean active) {
-<span class="fc" id="L112">    this.active = active;</span>
-<span class="fc" id="L113">  }</span>
+<span class="fc" id="L144">    this.active = active;</span>
+<span class="fc" id="L145">  }</span>
 
   /** Documentação para o método getCreatedAt. */
   public Instant getCreatedAt() {
-<span class="fc" id="L117">    return createdAt;</span>
+<span class="fc" id="L149">    return createdAt;</span>
   }
 
   /** Documentação para o método getUpdatedAt. */
   public Instant getUpdatedAt() {
-<span class="nc" id="L122">    return updatedAt;</span>
+<span class="nc" id="L154">    return updatedAt;</span>
   }
+
+  public boolean isDeleted() {
+<span class="nc" id="L158">    return deleted;</span>
+  }
+
+  public void setDeleted(boolean deleted) {
+<span class="nc" id="L162">    this.deleted = deleted;</span>
+<span class="nc" id="L163">  }</span>
+
+  public boolean isMfaEnabled() {
+<span class="fc" id="L166">    return mfaEnabled;</span>
+  }
+
+  public void setMfaEnabled(boolean mfaEnabled) {
+<span class="nc" id="L170">    this.mfaEnabled = mfaEnabled;</span>
+<span class="nc" id="L171">  }</span>
+
+  public String getMfaSecret() {
+<span class="nc" id="L174">    return mfaSecret;</span>
+  }
+
+  public void setMfaSecret(String mfaSecret) {
+<span class="nc" id="L178">    this.mfaSecret = mfaSecret;</span>
+<span class="nc" id="L179">  }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

@@ -13,9 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
- * Controller para endpoints de conformidade.
- */
+/** Controller para endpoints de conformidade. */
 @RestController
 @RequestMapping(&quot;/api/dashboard/compliance&quot;)
 public class ComplianceController {
@@ -30,11 +28,10 @@ public class ComplianceController {
    * @param auditLogRepository repo
    */
   public ComplianceController(
-      DocumentRepository documentRepository, 
-<span class="fc" id="L34">      AuditLogRepository auditLogRepository) {</span>
-<span class="fc" id="L35">    this.documentRepository = documentRepository;</span>
-<span class="fc" id="L36">    this.auditLogRepository = auditLogRepository;</span>
-<span class="fc" id="L37">  }</span>
+<span class="fc" id="L31">      DocumentRepository documentRepository, AuditLogRepository auditLogRepository) {</span>
+<span class="fc" id="L32">    this.documentRepository = documentRepository;</span>
+<span class="fc" id="L33">    this.auditLogRepository = auditLogRepository;</span>
+<span class="fc" id="L34">  }</span>
 
   /**
    * Retorna estatisticas de conformidade.
@@ -44,81 +41,82 @@ public class ComplianceController {
   @GetMapping
   @PreAuthorize(&quot;hasRole('AUDITOR')&quot;)
   public ResponseEntity&lt;ComplianceStatsDto&gt; getComplianceStats() {
-<span class="fc" id="L47">    List&lt;Document&gt; allDocs = documentRepository.findAll();</span>
-<span class="fc" id="L48">    long totalDocs = allDocs.size();</span>
-<span class="fc" id="L49">    long approvedDocs = allDocs.stream()</span>
-<span class="fc bfc" id="L50" title="All 2 branches covered.">        .filter(d -&gt; d.getStatus() == DocumentStatus.APPROVED).count();</span>
-<span class="fc" id="L51">    long pendingDocs = allDocs.stream()</span>
-<span class="fc bfc" id="L52" title="All 2 branches covered.">        .filter(d -&gt; d.getStatus() == DocumentStatus.PENDING_REVIEW).count();</span>
-<span class="fc" id="L53">    long totalEvents = auditLogRepository.count();</span>
+<span class="fc" id="L44">    List&lt;Document&gt; allDocs = documentRepository.findAll();</span>
+<span class="fc" id="L45">    long totalDocs = allDocs.size();</span>
+<span class="fc" id="L46">    long approvedDocs =</span>
+<span class="fc bfc" id="L47" title="All 2 branches covered.">        allDocs.stream().filter(d -&gt; d.getStatus() == DocumentStatus.APPROVED).count();</span>
+<span class="fc" id="L48">    long pendingDocs =</span>
+<span class="fc bfc" id="L49" title="All 2 branches covered.">        allDocs.stream().filter(d -&gt; d.getStatus() == DocumentStatus.PENDING_REVIEW).count();</span>
+<span class="fc" id="L50">    long totalEvents = auditLogRepository.count();</span>
 
-<span class="fc bfc" id="L55" title="All 2 branches covered.">    int approvalPercentage = totalDocs == 0 ? 100 </span>
-<span class="fc" id="L56">        : (int) Math.round(((double) approvedDocs / totalDocs) * 100);</span>
+    int approvalPercentage =
+<span class="fc bfc" id="L53" title="All 2 branches covered.">        totalDocs == 0 ? 100 : (int) Math.round(((double) approvedDocs / totalDocs) * 100);</span>
 
-<span class="fc" id="L58">    ComplianceStatsDto stats = new ComplianceStatsDto();</span>
-<span class="fc" id="L59">    stats.setScore(approvalPercentage);</span>
-<span class="fc" id="L60">    stats.setScoreTrend(4); // Fictional trend</span>
-<span class="fc" id="L61">    stats.setCompliantPolicies(3);</span>
-<span class="fc" id="L62">    stats.setTotalPolicies(5);</span>
-<span class="fc" id="L63">    stats.setPendingItems((int) pendingDocs);</span>
-<span class="fc" id="L64">    stats.setTotalEvents((int) totalEvents);</span>
+<span class="fc" id="L55">    ComplianceStatsDto stats = new ComplianceStatsDto();</span>
+<span class="fc" id="L56">    stats.setScore(approvalPercentage);</span>
+<span class="fc" id="L57">    stats.setScoreTrend(4); // Fictional trend</span>
+<span class="fc" id="L58">    stats.setCompliantPolicies(3);</span>
+<span class="fc" id="L59">    stats.setTotalPolicies(5);</span>
+<span class="fc" id="L60">    stats.setPendingItems((int) pendingDocs);</span>
+<span class="fc" id="L61">    stats.setTotalEvents((int) totalEvents);</span>
 
-<span class="fc" id="L66">    final List&lt;ComplianceStatsDto.PolicyDto&gt; policies = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L63">    final List&lt;ComplianceStatsDto.PolicyDto&gt; policies = new ArrayList&lt;&gt;();</span>
 
-<span class="fc bfc" id="L68" title="All 2 branches covered.">    boolean noDocs = totalDocs == 0;</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">    boolean noDocs = totalDocs == 0;</span>
 
     // Policy 1
-<span class="fc" id="L71">    ComplianceStatsDto.PolicyDto p1 = new ComplianceStatsDto.PolicyDto();</span>
-<span class="fc" id="L72">    p1.setName(&quot;Anonimização de dados pessoais (LGPD)&quot;);</span>
-<span class="fc" id="L73">    p1.setStatus(&quot;conforme&quot;);</span>
-<span class="fc" id="L74">    p1.setPercentage(100);</span>
-<span class="fc bfc" id="L75" title="All 2 branches covered.">    p1.setText(noDocs </span>
-<span class="fc" id="L76">        ? &quot;Sem documentos avaliados&quot; </span>
-<span class="fc" id="L77">        : totalDocs + &quot;/&quot; + totalDocs + &quot; documentos&quot;);</span>
-<span class="fc" id="L78">    policies.add(p1);</span>
+<span class="fc" id="L68">    ComplianceStatsDto.PolicyDto p1 = new ComplianceStatsDto.PolicyDto();</span>
+<span class="fc" id="L69">    p1.setName(&quot;Anonimização de dados pessoais (LGPD)&quot;);</span>
+<span class="fc" id="L70">    p1.setStatus(&quot;conforme&quot;);</span>
+<span class="fc" id="L71">    p1.setPercentage(100);</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">    p1.setText(noDocs ? &quot;Sem documentos avaliados&quot; : totalDocs + &quot;/&quot; + totalDocs + &quot; documentos&quot;);</span>
+<span class="fc" id="L73">    policies.add(p1);</span>
 
     // Policy 2 - baseada na aprovação do orientador real
-<span class="fc" id="L81">    ComplianceStatsDto.PolicyDto p2 = new ComplianceStatsDto.PolicyDto();</span>
-<span class="fc" id="L82">    p2.setName(&quot;Termo de consentimento informado&quot;);</span>
-<span class="fc bfc" id="L83" title="All 2 branches covered.">    p2.setStatus(approvalPercentage == 100 ? &quot;conforme&quot; </span>
-<span class="fc bfc" id="L84" title="All 2 branches covered.">        : (approvalPercentage &gt; 50 ? &quot;parcial&quot; : &quot;pendente&quot;));</span>
-<span class="fc" id="L85">    p2.setPercentage(approvalPercentage);</span>
-<span class="fc bfc" id="L86" title="All 2 branches covered.">    p2.setText(noDocs </span>
-<span class="fc" id="L87">        ? &quot;Sem documentos avaliados&quot; </span>
-<span class="fc" id="L88">        : approvedDocs + &quot;/&quot; + totalDocs + &quot; documentos&quot;);</span>
-<span class="fc" id="L89">    policies.add(p2);</span>
+<span class="fc" id="L76">    ComplianceStatsDto.PolicyDto p2 = new ComplianceStatsDto.PolicyDto();</span>
+<span class="fc" id="L77">    p2.setName(&quot;Termo de consentimento informado&quot;);</span>
+<span class="fc" id="L78">    p2.setStatus(</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">        approvalPercentage == 100</span>
+<span class="fc" id="L80">            ? &quot;conforme&quot;</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">            : (approvalPercentage &gt; 50 ? &quot;parcial&quot; : &quot;pendente&quot;));</span>
+<span class="fc" id="L82">    p2.setPercentage(approvalPercentage);</span>
+<span class="fc" id="L83">    p2.setText(</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">        noDocs ? &quot;Sem documentos avaliados&quot; : approvedDocs + &quot;/&quot; + totalDocs + &quot; documentos&quot;);</span>
+<span class="fc" id="L85">    policies.add(p2);</span>
 
     // Policy 3
-<span class="fc" id="L92">    ComplianceStatsDto.PolicyDto p3 = new ComplianceStatsDto.PolicyDto();</span>
-<span class="fc" id="L93">    p3.setName(&quot;Versionamento e cadeia de custódia&quot;);</span>
-<span class="fc" id="L94">    p3.setStatus(&quot;conforme&quot;);</span>
-<span class="fc bfc" id="L95" title="All 2 branches covered.">    p3.setPercentage(noDocs ? 100 : 96);</span>
-<span class="fc bfc" id="L96" title="All 2 branches covered.">    p3.setText(noDocs </span>
-<span class="fc" id="L97">        ? &quot;Sem documentos avaliados&quot; </span>
-<span class="pc bpc" id="L98" title="1 of 2 branches missed.">        : (totalDocs &gt; 0 ? totalDocs - 1 : 0) + &quot;/&quot; + totalDocs + &quot; documentos&quot;);</span>
-<span class="fc" id="L99">    policies.add(p3);</span>
+<span class="fc" id="L88">    ComplianceStatsDto.PolicyDto p3 = new ComplianceStatsDto.PolicyDto();</span>
+<span class="fc" id="L89">    p3.setName(&quot;Versionamento e cadeia de custódia&quot;);</span>
+<span class="fc" id="L90">    p3.setStatus(&quot;conforme&quot;);</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">    p3.setPercentage(noDocs ? 100 : 96);</span>
+<span class="fc" id="L92">    p3.setText(</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">        noDocs</span>
+<span class="fc" id="L94">            ? &quot;Sem documentos avaliados&quot;</span>
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">            : (totalDocs &gt; 0 ? totalDocs - 1 : 0) + &quot;/&quot; + totalDocs + &quot; documentos&quot;);</span>
+<span class="fc" id="L96">    policies.add(p3);</span>
 
     // Policy 4
-<span class="fc" id="L102">    ComplianceStatsDto.PolicyDto p4 = new ComplianceStatsDto.PolicyDto();</span>
-<span class="fc" id="L103">    p4.setName(&quot;Retenção e descarte de dados&quot;);</span>
-<span class="fc bfc" id="L104" title="All 2 branches covered.">    p4.setStatus(noDocs ? &quot;conforme&quot; : &quot;pendente&quot;);</span>
-<span class="fc bfc" id="L105" title="All 2 branches covered.">    p4.setPercentage(noDocs ? 100 : 58);</span>
-<span class="fc bfc" id="L106" title="All 2 branches covered.">    p4.setText(noDocs </span>
-<span class="fc" id="L107">        ? &quot;Sem documentos pendentes&quot; </span>
-<span class="fc" id="L108">        : pendingDocs + &quot;/&quot; + totalDocs + &quot; documentos pendentes&quot;);</span>
-<span class="fc" id="L109">    policies.add(p4);</span>
+<span class="fc" id="L99">    ComplianceStatsDto.PolicyDto p4 = new ComplianceStatsDto.PolicyDto();</span>
+<span class="fc" id="L100">    p4.setName(&quot;Retenção e descarte de dados&quot;);</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">    p4.setStatus(noDocs ? &quot;conforme&quot; : &quot;pendente&quot;);</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">    p4.setPercentage(noDocs ? 100 : 58);</span>
+<span class="fc" id="L103">    p4.setText(</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">        noDocs</span>
+<span class="fc" id="L105">            ? &quot;Sem documentos pendentes&quot;</span>
+<span class="fc" id="L106">            : pendingDocs + &quot;/&quot; + totalDocs + &quot; documentos pendentes&quot;);</span>
+<span class="fc" id="L107">    policies.add(p4);</span>
 
     // Policy 5
-<span class="fc" id="L112">    ComplianceStatsDto.PolicyDto p5 = new ComplianceStatsDto.PolicyDto();</span>
-<span class="fc" id="L113">    p5.setName(&quot;Aprovação do comitê de ética&quot;);</span>
-<span class="fc" id="L114">    p5.setStatus(&quot;conforme&quot;);</span>
-<span class="fc" id="L115">    p5.setPercentage(100);</span>
-<span class="fc" id="L116">    p5.setText(&quot;Todos os projetos&quot;);</span>
-<span class="fc" id="L117">    policies.add(p5);</span>
+<span class="fc" id="L110">    ComplianceStatsDto.PolicyDto p5 = new ComplianceStatsDto.PolicyDto();</span>
+<span class="fc" id="L111">    p5.setName(&quot;Aprovação do comitê de ética&quot;);</span>
+<span class="fc" id="L112">    p5.setStatus(&quot;conforme&quot;);</span>
+<span class="fc" id="L113">    p5.setPercentage(100);</span>
+<span class="fc" id="L114">    p5.setText(&quot;Todos os projetos&quot;);</span>
+<span class="fc" id="L115">    policies.add(p5);</span>
 
-<span class="fc" id="L119">    stats.setPolicies(policies);</span>
+<span class="fc" id="L117">    stats.setPolicies(policies);</span>
 
-<span class="fc" id="L121">    return ResponseEntity.ok(stats);</span>
+<span class="fc" id="L119">    return ResponseEntity.ok(stats);</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

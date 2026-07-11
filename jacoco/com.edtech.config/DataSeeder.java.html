@@ -19,9 +19,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- * Data seeder para popular o banco de dados com dados iniciais.
- */
+/** Data seeder para popular o banco de dados com dados iniciais. */
 @Configuration
 public class DataSeeder implements CommandLineRunner {
 
@@ -34,128 +32,244 @@ public class DataSeeder implements CommandLineRunner {
   /**
    * Construtor do DataSeeder.
    *
-   * @param userRepository     repositorio de usuario
-   * @param projectRepository  repositorio de projeto
+   * @param userRepository repositorio de usuario
+   * @param projectRepository repositorio de projeto
    * @param documentRepository repositorio de documento
    * @param auditLogRepository repositorio de audit log
-   * @param passwordEncoder    encoder de senha
+   * @param passwordEncoder encoder de senha
    */
   public DataSeeder(
       UserRepository userRepository,
       ProjectRepository projectRepository,
       DocumentRepository documentRepository,
       AuditLogRepository auditLogRepository,
-<span class="fc" id="L48">      PasswordEncoder passwordEncoder) {</span>
-<span class="fc" id="L49">    this.userRepository = userRepository;</span>
-<span class="fc" id="L50">    this.projectRepository = projectRepository;</span>
-<span class="fc" id="L51">    this.documentRepository = documentRepository;</span>
-<span class="fc" id="L52">    this.auditLogRepository = auditLogRepository;</span>
-<span class="fc" id="L53">    this.passwordEncoder = passwordEncoder;</span>
-<span class="fc" id="L54">  }</span>
+<span class="fc" id="L46">      PasswordEncoder passwordEncoder) {</span>
+<span class="fc" id="L47">    this.userRepository = userRepository;</span>
+<span class="fc" id="L48">    this.projectRepository = projectRepository;</span>
+<span class="fc" id="L49">    this.documentRepository = documentRepository;</span>
+<span class="fc" id="L50">    this.auditLogRepository = auditLogRepository;</span>
+<span class="fc" id="L51">    this.passwordEncoder = passwordEncoder;</span>
+<span class="fc" id="L52">  }</span>
 
   @Override
   @Transactional
   public void run(String... args) throws Exception {
-<span class="pc bpc" id="L59" title="1 of 2 branches missed.">    if (userRepository.count() &gt; 0) {</span>
-<span class="nc" id="L60">      return; // Database already seeded</span>
+<span class="pc bpc" id="L57" title="1 of 2 branches missed.">    if (userRepository.count() &gt; 0) {</span>
+<span class="nc" id="L58">      return; // Database already seeded</span>
     }
 
-<span class="fc" id="L63">    String defaultPassword = passwordEncoder.encode(&quot;senha123&quot;);</span>
+<span class="fc" id="L61">    UUID defaultInstitution = UUID.fromString(&quot;00000000-0000-0000-0000-000000000001&quot;);</span>
+<span class="fc" id="L62">    String defaultPassword = passwordEncoder.encode(&quot;senha123&quot;);</span>
 
     // 1. Criar Usuários
-<span class="fc" id="L66">    User auditor = new User(&quot;Auditor Externo&quot;, &quot;auditor@demo.com&quot;, defaultPassword,</span>
-        UserRole.AUDITOR);
-<span class="fc" id="L68">    User advisor = new User(&quot;Carlos Mendes&quot;, &quot;carlos@demo.com&quot;, defaultPassword,</span>
-        UserRole.ADVISOR);
-<span class="fc" id="L70">    User researcher = new User(&quot;Renata Silva&quot;, &quot;renata@demo.com&quot;, defaultPassword,</span>
-        UserRole.RESEARCHER);
-<span class="fc" id="L72">    User researcher2 = new User(&quot;João Almeida&quot;, &quot;joao@demo.com&quot;, defaultPassword,</span>
-        UserRole.RESEARCHER);
-    
-<span class="fc" id="L75">    userRepository.saveAll(List.of(auditor, advisor, researcher, researcher2));</span>
+<span class="fc" id="L65">    User auditor =</span>
+        new User(
+            &quot;Auditor Externo&quot;,
+            &quot;auditor@demo.com&quot;,
+            defaultPassword,
+            UserRole.AUDITOR,
+            defaultInstitution);
+<span class="fc" id="L72">    User advisor =</span>
+        new User(
+            &quot;Carlos Mendes&quot;,
+            &quot;carlos@demo.com&quot;,
+            defaultPassword,
+            UserRole.ADVISOR,
+            defaultInstitution);
+<span class="fc" id="L79">    User researcher =</span>
+        new User(
+            &quot;Renata Silva&quot;,
+            &quot;renata@demo.com&quot;,
+            defaultPassword,
+            UserRole.RESEARCHER,
+            defaultInstitution);
+<span class="fc" id="L86">    User researcher2 =</span>
+        new User(
+            &quot;João Almeida&quot;,
+            &quot;joao@demo.com&quot;,
+            defaultPassword,
+            UserRole.RESEARCHER,
+            defaultInstitution);
+
+<span class="fc" id="L94">    userRepository.saveAll(List.of(auditor, advisor, researcher, researcher2));</span>
 
     // 2. Criar Projetos
-<span class="fc" id="L78">    Project project1 = new Project();</span>
-<span class="fc" id="L79">    project1.setTitle(&quot;Projeto IA na Saúde&quot;);</span>
-<span class="fc" id="L80">    project1.setDescription(&quot;Projeto demonstração&quot;);</span>
-<span class="fc" id="L81">    project1.setAdvisor(advisor);</span>
-<span class="fc" id="L82">    projectRepository.save(project1);</span>
+<span class="fc" id="L97">    Project project1 = new Project();</span>
+<span class="fc" id="L98">    project1.setTitle(&quot;Projeto IA na Saúde&quot;);</span>
+<span class="fc" id="L99">    project1.setDescription(&quot;Projeto demonstração&quot;);</span>
+<span class="fc" id="L100">    project1.setAdvisor(advisor);</span>
+<span class="fc" id="L101">    projectRepository.save(project1);</span>
 
-<span class="fc" id="L84">    Project project2 = new Project();</span>
-<span class="fc" id="L85">    project2.setTitle(&quot;Pesquisa Clima&quot;);</span>
-<span class="fc" id="L86">    project2.setDescription(&quot;Projeto demonstração 2&quot;);</span>
-<span class="fc" id="L87">    project2.setAdvisor(advisor);</span>
-<span class="fc" id="L88">    projectRepository.save(project2);</span>
+<span class="fc" id="L103">    Project project2 = new Project();</span>
+<span class="fc" id="L104">    project2.setTitle(&quot;Pesquisa Clima&quot;);</span>
+<span class="fc" id="L105">    project2.setDescription(&quot;Projeto demonstração 2&quot;);</span>
+<span class="fc" id="L106">    project2.setAdvisor(advisor);</span>
+<span class="fc" id="L107">    projectRepository.save(project2);</span>
 
     // 3. Criar Documentos
-<span class="fc" id="L91">    Document doc1 = new Document();</span>
-<span class="fc" id="L92">    doc1.setProject(project1);</span>
-<span class="fc" id="L93">    doc1.setAuthor(researcher);</span>
-<span class="fc" id="L94">    doc1.setTitle(&quot;Metodologia_Qualitativa_v3.pdf&quot;);</span>
-<span class="fc" id="L95">    doc1.setStatus(DocumentStatus.PENDING_REVIEW);</span>
-<span class="fc" id="L96">    doc1.setFileUrl(&quot;fake/path/1.pdf&quot;);</span>
-<span class="fc" id="L97">    documentRepository.save(doc1);</span>
+<span class="fc" id="L110">    Document doc1 = new Document();</span>
+<span class="fc" id="L111">    doc1.setProject(project1);</span>
+<span class="fc" id="L112">    doc1.setAuthor(researcher);</span>
+<span class="fc" id="L113">    doc1.setTitle(&quot;Metodologia_Qualitativa_v3.pdf&quot;);</span>
+<span class="fc" id="L114">    doc1.setStatus(DocumentStatus.PENDING_REVIEW);</span>
+<span class="fc" id="L115">    doc1.setFileUrl(&quot;fake/path/1.pdf&quot;);</span>
+<span class="fc" id="L116">    doc1.setInstitutionId(defaultInstitution);</span>
+<span class="fc" id="L117">    documentRepository.save(doc1);</span>
 
-<span class="fc" id="L99">    Document doc2 = new Document();</span>
-<span class="fc" id="L100">    doc2.setProject(project2);</span>
-<span class="fc" id="L101">    doc2.setAuthor(researcher);</span>
-<span class="fc" id="L102">    doc2.setTitle(&quot;Dataset_Experimento_A.csv&quot;);</span>
-<span class="fc" id="L103">    doc2.setStatus(DocumentStatus.APPROVED);</span>
-<span class="fc" id="L104">    doc2.setFileUrl(&quot;fake/path/2.csv&quot;);</span>
-<span class="fc" id="L105">    documentRepository.save(doc2);</span>
+<span class="fc" id="L119">    Document doc2 = new Document();</span>
+<span class="fc" id="L120">    doc2.setProject(project2);</span>
+<span class="fc" id="L121">    doc2.setAuthor(researcher);</span>
+<span class="fc" id="L122">    doc2.setTitle(&quot;Dataset_Experimento_A.csv&quot;);</span>
+<span class="fc" id="L123">    doc2.setStatus(DocumentStatus.APPROVED);</span>
+<span class="fc" id="L124">    doc2.setFileUrl(&quot;fake/path/2.csv&quot;);</span>
+<span class="fc" id="L125">    doc2.setInstitutionId(defaultInstitution);</span>
+<span class="fc" id="L126">    documentRepository.save(doc2);</span>
 
-<span class="fc" id="L107">    Document doc3 = new Document();</span>
-<span class="fc" id="L108">    doc3.setProject(project1);</span>
-<span class="fc" id="L109">    doc3.setAuthor(researcher2);</span>
-<span class="fc" id="L110">    doc3.setTitle(&quot;Dataset_Experimento_B.csv&quot;);</span>
-<span class="fc" id="L111">    doc3.setStatus(DocumentStatus.PENDING_REVIEW);</span>
-<span class="fc" id="L112">    doc3.setFileUrl(&quot;fake/path/3.csv&quot;);</span>
-<span class="fc" id="L113">    documentRepository.save(doc3);</span>
+<span class="fc" id="L128">    Document doc3 = new Document();</span>
+<span class="fc" id="L129">    doc3.setProject(project1);</span>
+<span class="fc" id="L130">    doc3.setAuthor(researcher2);</span>
+<span class="fc" id="L131">    doc3.setTitle(&quot;Dataset_Experimento_B.csv&quot;);</span>
+<span class="fc" id="L132">    doc3.setStatus(DocumentStatus.PENDING_REVIEW);</span>
+<span class="fc" id="L133">    doc3.setFileUrl(&quot;fake/path/3.csv&quot;);</span>
+<span class="fc" id="L134">    doc3.setInstitutionId(defaultInstitution);</span>
+<span class="fc" id="L135">    documentRepository.save(doc3);</span>
 
     // 4. Criar Audit Logs (Os 14 eventos da tela)
-<span class="fc" id="L116">    LocalDateTime now = LocalDateTime.now();</span>
-    
-<span class="fc" id="L118">    saveLog(researcher, AcaoAuditoria.UPLOAD_SUCCESS, &quot;Document&quot;, doc1.getId(), &quot;143.107.42.88&quot;,</span>
-<span class="fc" id="L119">        &quot;Metodologia_Qualitativa_v3.pdf · 2.4 MB&quot;, now.minusMinutes(10));</span>
-<span class="fc" id="L120">    saveLog(researcher, AcaoAuditoria.LOGIN_SUCCESS, &quot;System&quot;, researcher.getId(), &quot;143.107.42.88&quot;,</span>
-<span class="fc" id="L121">        &quot;UA: Chrome/126 · 2FA: TOTP_OK&quot;, now.minusMinutes(25));</span>
-<span class="fc" id="L122">    saveLog(advisor, AcaoAuditoria.DOCUMENT_APPROVED, &quot;Document&quot;, doc2.getId(), &quot;200.130.11.220&quot;,</span>
-<span class="fc" id="L123">        &quot;Dataset_Experimento_A.csv · proj:ia-02&quot;, now.minusMinutes(40));</span>
-<span class="fc" id="L124">    saveLog(advisor, AcaoAuditoria.LOGIN_FAILED, &quot;System&quot;, advisor.getId(), &quot;177.82.94.12&quot;,</span>
-<span class="fc" id="L125">        &quot;Attempt 3/5 · wrong_password&quot;, now.minusHours(2));</span>
-<span class="fc" id="L126">    saveLog(advisor, AcaoAuditoria.REVIEW_DOCUMENT, &quot;Document&quot;, doc1.getId(), &quot;200.130.11.220&quot;,</span>
-<span class="fc" id="L127">        &quot;Referencial_Teorico_Final.pdf · dur:00:04:12&quot;, now.minusHours(3));</span>
-<span class="fc" id="L128">    saveLog(auditor, AcaoAuditoria.MEMBER_JOINED, &quot;Project&quot;, project1.getId(), &quot;10.0.0.1&quot;,</span>
-<span class="fc" id="L129">        &quot;target:usr-7b1e5d80 · ROLE researcher&gt;reviewer&quot;, now.minusHours(4));</span>
-<span class="fc" id="L130">    saveLog(researcher, AcaoAuditoria.DELETE_DOCUMENT, &quot;Document&quot;, doc1.getId(), &quot;143.107.42.88&quot;,</span>
-<span class="fc" id="L131">        &quot;rascunho_inicial_v1.pdf · PERMANENT&quot;, now.minusDays(1).minusHours(1));</span>
-<span class="fc" id="L132">    saveLog(advisor, AcaoAuditoria.DOCUMENT_REJECTED, &quot;Document&quot;, doc3.getId(), &quot;200.130.11.220&quot;,</span>
-<span class="fc" id="L133">        &quot;analise_estatistica_v1.json · reason: incomplete_dataset&quot;, now.minusDays(1).minusHours(2));</span>
-<span class="fc" id="L134">    saveLog(advisor, AcaoAuditoria.REVIEW_DOCUMENT, &quot;Document&quot;, doc1.getId(), &quot;177.82.94.12&quot;,</span>
-<span class="fc" id="L135">        &quot;Referencial_Teorico_Final.pdf · v1&gt;v2 · diff:34_lines&quot;, now.minusDays(1).minusHours(3));</span>
-<span class="fc" id="L136">    saveLog(auditor, AcaoAuditoria.LOGIN_SUCCESS, &quot;System&quot;, auditor.getId(), &quot;189.102.55.74&quot;,</span>
-<span class="fc" id="L137">        &quot;Audit session initiated · UA: Firefox/127&quot;, now.minusDays(1).minusHours(9));</span>
-<span class="fc" id="L138">    saveLog(researcher2, AcaoAuditoria.REGISTER, &quot;System&quot;, researcher2.getId(), &quot;192.168.1.42&quot;,</span>
-<span class="fc" id="L139">        &quot;Email link · token_expiry:3600s · completed_ok&quot;, now.minusDays(2).minusHours(4));</span>
-<span class="fc" id="L140">    saveLog(researcher2, AcaoAuditoria.UPLOAD_SUCCESS, &quot;Document&quot;, doc3.getId(), &quot;192.168.1.42&quot;,</span>
-<span class="fc" id="L141">        &quot;Dataset_Experimento_B.csv · 23.1 MB · virus_scan: CLEAN&quot;, now.minusDays(2).minusHours(8));</span>
-<span class="fc" id="L142">    saveLog(advisor, AcaoAuditoria.LOGIN_FAILED, &quot;System&quot;, advisor.getId(), &quot;200.130.11.220&quot;,</span>
-<span class="fc" id="L143">        &quot;Attempt 1/5 · wrong_password&quot;, now.minusDays(2).minusHours(11));</span>
-<span class="fc" id="L144">    saveLog(researcher2, AcaoAuditoria.REVIEW_DOCUMENT, &quot;Document&quot;, doc1.getId(), &quot;192.168.1.42&quot;,</span>
-<span class="fc" id="L145">        &quot;Metodologia_Qualitativa_v3.pdf · dur:00:12:05&quot;, now.minusDays(3));</span>
-<span class="fc" id="L146">  }</span>
+<span class="fc" id="L138">    LocalDateTime now = LocalDateTime.now();</span>
 
-  private void saveLog(User user, AcaoAuditoria action, String resourceType, UUID resourceId,
-      String ip, String details, LocalDateTime time) {
-<span class="fc" id="L150">    AuditLog log = new AuditLog(user.getId(), action, resourceType, resourceId, ip, details);</span>
+<span class="fc" id="L140">    saveLog(</span>
+        researcher,
+        AcaoAuditoria.UPLOAD_SUCCESS,
+        &quot;Document&quot;,
+<span class="fc" id="L144">        doc1.getId(),</span>
+        &quot;143.107.42.88&quot;,
+        &quot;Metodologia_Qualitativa_v3.pdf · 2.4 MB&quot;,
+<span class="fc" id="L147">        now.minusMinutes(10));</span>
+<span class="fc" id="L148">    saveLog(</span>
+        researcher,
+        AcaoAuditoria.LOGIN_SUCCESS,
+        &quot;System&quot;,
+<span class="fc" id="L152">        researcher.getId(),</span>
+        &quot;143.107.42.88&quot;,
+        &quot;UA: Chrome/126 · 2FA: TOTP_OK&quot;,
+<span class="fc" id="L155">        now.minusMinutes(25));</span>
+<span class="fc" id="L156">    saveLog(</span>
+        advisor,
+        AcaoAuditoria.DOCUMENT_APPROVED,
+        &quot;Document&quot;,
+<span class="fc" id="L160">        doc2.getId(),</span>
+        &quot;200.130.11.220&quot;,
+        &quot;Dataset_Experimento_A.csv · proj:ia-02&quot;,
+<span class="fc" id="L163">        now.minusMinutes(40));</span>
+<span class="fc" id="L164">    saveLog(</span>
+        advisor,
+        AcaoAuditoria.LOGIN_FAILED,
+        &quot;System&quot;,
+<span class="fc" id="L168">        advisor.getId(),</span>
+        &quot;177.82.94.12&quot;,
+        &quot;Attempt 3/5 · wrong_password&quot;,
+<span class="fc" id="L171">        now.minusHours(2));</span>
+<span class="fc" id="L172">    saveLog(</span>
+        advisor,
+        AcaoAuditoria.REVIEW_DOCUMENT,
+        &quot;Document&quot;,
+<span class="fc" id="L176">        doc1.getId(),</span>
+        &quot;200.130.11.220&quot;,
+        &quot;Referencial_Teorico_Final.pdf · dur:00:04:12&quot;,
+<span class="fc" id="L179">        now.minusHours(3));</span>
+<span class="fc" id="L180">    saveLog(</span>
+        auditor,
+        AcaoAuditoria.MEMBER_JOINED,
+        &quot;Project&quot;,
+<span class="fc" id="L184">        project1.getId(),</span>
+        &quot;10.0.0.1&quot;,
+        &quot;target:usr-7b1e5d80 · ROLE researcher&gt;reviewer&quot;,
+<span class="fc" id="L187">        now.minusHours(4));</span>
+<span class="fc" id="L188">    saveLog(</span>
+        researcher,
+        AcaoAuditoria.DELETE_DOCUMENT,
+        &quot;Document&quot;,
+<span class="fc" id="L192">        doc1.getId(),</span>
+        &quot;143.107.42.88&quot;,
+        &quot;rascunho_inicial_v1.pdf · PERMANENT&quot;,
+<span class="fc" id="L195">        now.minusDays(1).minusHours(1));</span>
+<span class="fc" id="L196">    saveLog(</span>
+        advisor,
+        AcaoAuditoria.DOCUMENT_REJECTED,
+        &quot;Document&quot;,
+<span class="fc" id="L200">        doc3.getId(),</span>
+        &quot;200.130.11.220&quot;,
+        &quot;analise_estatistica_v1.json · reason: incomplete_dataset&quot;,
+<span class="fc" id="L203">        now.minusDays(1).minusHours(2));</span>
+<span class="fc" id="L204">    saveLog(</span>
+        advisor,
+        AcaoAuditoria.REVIEW_DOCUMENT,
+        &quot;Document&quot;,
+<span class="fc" id="L208">        doc1.getId(),</span>
+        &quot;177.82.94.12&quot;,
+        &quot;Referencial_Teorico_Final.pdf · v1&gt;v2 · diff:34_lines&quot;,
+<span class="fc" id="L211">        now.minusDays(1).minusHours(3));</span>
+<span class="fc" id="L212">    saveLog(</span>
+        auditor,
+        AcaoAuditoria.LOGIN_SUCCESS,
+        &quot;System&quot;,
+<span class="fc" id="L216">        auditor.getId(),</span>
+        &quot;189.102.55.74&quot;,
+        &quot;Audit session initiated · UA: Firefox/127&quot;,
+<span class="fc" id="L219">        now.minusDays(1).minusHours(9));</span>
+<span class="fc" id="L220">    saveLog(</span>
+        researcher2,
+        AcaoAuditoria.REGISTER,
+        &quot;System&quot;,
+<span class="fc" id="L224">        researcher2.getId(),</span>
+        &quot;192.168.1.42&quot;,
+        &quot;Email link · token_expiry:3600s · completed_ok&quot;,
+<span class="fc" id="L227">        now.minusDays(2).minusHours(4));</span>
+<span class="fc" id="L228">    saveLog(</span>
+        researcher2,
+        AcaoAuditoria.UPLOAD_SUCCESS,
+        &quot;Document&quot;,
+<span class="fc" id="L232">        doc3.getId(),</span>
+        &quot;192.168.1.42&quot;,
+        &quot;Dataset_Experimento_B.csv · 23.1 MB · virus_scan: CLEAN&quot;,
+<span class="fc" id="L235">        now.minusDays(2).minusHours(8));</span>
+<span class="fc" id="L236">    saveLog(</span>
+        advisor,
+        AcaoAuditoria.LOGIN_FAILED,
+        &quot;System&quot;,
+<span class="fc" id="L240">        advisor.getId(),</span>
+        &quot;200.130.11.220&quot;,
+        &quot;Attempt 1/5 · wrong_password&quot;,
+<span class="fc" id="L243">        now.minusDays(2).minusHours(11));</span>
+<span class="fc" id="L244">    saveLog(</span>
+        researcher2,
+        AcaoAuditoria.REVIEW_DOCUMENT,
+        &quot;Document&quot;,
+<span class="fc" id="L248">        doc1.getId(),</span>
+        &quot;192.168.1.42&quot;,
+        &quot;Metodologia_Qualitativa_v3.pdf · dur:00:12:05&quot;,
+<span class="fc" id="L251">        now.minusDays(3));</span>
+<span class="fc" id="L252">  }</span>
+
+  private void saveLog(
+      User user,
+      AcaoAuditoria action,
+      String resourceType,
+      UUID resourceId,
+      String ip,
+      String details,
+      LocalDateTime time) {
+<span class="fc" id="L262">    AuditLog log =</span>
+        new AuditLog(
+<span class="fc" id="L264">            user.getInstitutionId(), user.getId(), action, resourceType, resourceId, ip, details);</span>
     try {
-<span class="fc" id="L152">      java.lang.reflect.Field createdAtField = AuditLog.class.getDeclaredField(&quot;createdAt&quot;);</span>
-<span class="fc" id="L153">      createdAtField.setAccessible(true);</span>
-<span class="fc" id="L154">      createdAtField.set(log, time);</span>
-<span class="nc" id="L155">    } catch (Exception ignored) {</span>
+<span class="fc" id="L266">      java.lang.reflect.Field createdAtField = AuditLog.class.getDeclaredField(&quot;createdAt&quot;);</span>
+<span class="fc" id="L267">      createdAtField.setAccessible(true);</span>
+<span class="fc" id="L268">      createdAtField.set(log, time);</span>
+<span class="nc" id="L269">    } catch (Exception ignored) {</span>
       // ignored reflection error
-<span class="fc" id="L157">    }</span>
-<span class="fc" id="L158">    auditLogRepository.save(log);</span>
-<span class="fc" id="L159">  }</span>
+<span class="fc" id="L271">    }</span>
+<span class="fc" id="L272">    auditLogRepository.save(log);</span>
+<span class="fc" id="L273">  }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

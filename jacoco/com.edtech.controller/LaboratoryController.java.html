@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LaboratoryController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">edtech-api</a> &gt; <a href="index.source.html" class="el_package">com.edtech.controller</a> &gt; <span class="el_source">LaboratoryController.java</span></div><h1>LaboratoryController.java</h1><pre class="source lang-java linenums">package com.edtech.controller;
+
+import com.edtech.model.User;
+import com.edtech.model.UserRole;
+import com.edtech.repository.UserRepository;
+import com.edtech.service.LaboratoryTokenService;
+import java.util.Map;
+import java.util.Optional;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+/** Javadoc. */
+@RestController
+@RequestMapping(&quot;/api/v1/laboratory&quot;)
+public class LaboratoryController {
+
+  private final LaboratoryTokenService laboratoryTokenService;
+  private final UserRepository userRepository;
+
+  public LaboratoryController(
+<span class="fc" id="L27">      LaboratoryTokenService laboratoryTokenService, UserRepository userRepository) {</span>
+<span class="fc" id="L28">    this.laboratoryTokenService = laboratoryTokenService;</span>
+<span class="fc" id="L29">    this.userRepository = userRepository;</span>
+<span class="fc" id="L30">  }</span>
+
+  /** Javadoc. */
+  @GetMapping(&quot;/token&quot;)
+  public ResponseEntity&lt;?&gt; getLaboratoryToken(@AuthenticationPrincipal UserDetails userDetails) {
+<span class="nc" id="L35">    Optional&lt;User&gt; userOpt = userRepository.findByEmailIgnoreCase(userDetails.getUsername());</span>
+<span class="nc bnc" id="L36" title="All 4 branches missed.">    if (userOpt.isEmpty() || userOpt.get().getRole() != UserRole.ADVISOR) {</span>
+<span class="nc" id="L37">      return ResponseEntity.status(403)</span>
+<span class="nc" id="L38">          .body(Map.of(&quot;error&quot;, &quot;Apenas orientadores podem gerar tokens do laboratorio&quot;));</span>
+    }
+
+<span class="nc" id="L41">    String token = laboratoryTokenService.generateToken(userOpt.get().getId());</span>
+<span class="nc" id="L42">    return ResponseEntity.ok(Map.of(&quot;token&quot;, token, &quot;expires_in&quot;, &quot;Final da semana&quot;));</span>
+  }
+
+  /** Javadoc. */
+  @PostMapping(&quot;/join&quot;)
+  public ResponseEntity&lt;?&gt; joinLaboratory(
+      @AuthenticationPrincipal UserDetails userDetails, @RequestBody Map&lt;String, String&gt; request) {
+<span class="nc" id="L49">    String token = request.get(&quot;token&quot;);</span>
+<span class="nc bnc" id="L50" title="All 4 branches missed.">    if (token == null || token.isEmpty()) {</span>
+<span class="nc" id="L51">      return ResponseEntity.badRequest().body(Map.of(&quot;error&quot;, &quot;O campo token e obrigatorio&quot;));</span>
+    }
+
+<span class="nc" id="L54">    Optional&lt;User&gt; advisorOpt = laboratoryTokenService.findAdvisorByToken(token);</span>
+<span class="nc bnc" id="L55" title="All 2 branches missed.">    if (advisorOpt.isEmpty()) {</span>
+<span class="nc" id="L56">      return ResponseEntity.status(400).body(Map.of(&quot;error&quot;, &quot;Token invalido ou expirado&quot;));</span>
+    }
+
+<span class="nc" id="L59">    Optional&lt;User&gt; currentUserOpt = userRepository.findByEmailIgnoreCase(userDetails.getUsername());</span>
+<span class="nc bnc" id="L60" title="All 2 branches missed.">    if (currentUserOpt.isEmpty()) {</span>
+<span class="nc" id="L61">      return ResponseEntity.status(401).build();</span>
+    }
+
+<span class="nc" id="L64">    User currentUser = currentUserOpt.get();</span>
+<span class="nc" id="L65">    User advisor = advisorOpt.get();</span>
+
+<span class="nc" id="L67">    currentUser.setInstitutionId(advisor.getInstitutionId());</span>
+<span class="nc" id="L68">    userRepository.save(currentUser);</span>
+
+<span class="nc" id="L70">    return ResponseEntity.ok(</span>
+<span class="nc" id="L71">        Map.of(</span>
+            &quot;message&quot;, &quot;Vinculado ao laboratorio com sucesso&quot;,
+<span class="nc" id="L73">            &quot;advisor_name&quot;, advisor.getName(),</span>
+<span class="nc" id="L74">            &quot;institution_id&quot;, advisor.getInstitutionId()));</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EmailService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">edtech-api</a> &gt; <a href="index.source.html" class="el_package">com.edtech.service</a> &gt; <span class="el_source">EmailService.java</span></div><h1>EmailService.java</h1><pre class="source lang-java linenums">package com.edtech.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
@@ -8,18 +11,20 @@ import org.springframework.stereotype.Service;
 
 /** Documentação para EmailService. */
 @Service
-<span class="fc" id="L11">public class EmailService {</span>
+<span class="fc" id="L14">public class EmailService {</span>
+
+<span class="fc" id="L16">  private static final Logger logger = LoggerFactory.getLogger(EmailService.class);</span>
 
   @Autowired private JavaMailSender mailSender;
 
   /** Documentação. */
   @Async
   public void sendRecoveryEmail(String toEmail, String otpCode) {
-<span class="fc" id="L18">    SimpleMailMessage message = new SimpleMailMessage();</span>
-<span class="fc" id="L19">    message.setFrom(&quot;noreply@edtech.com&quot;);</span>
-<span class="fc" id="L20">    message.setTo(toEmail);</span>
-<span class="fc" id="L21">    message.setSubject(&quot;Código de Recuperação de Senha - EdTech&quot;);</span>
-<span class="fc" id="L22">    message.setText(</span>
+<span class="fc" id="L23">    SimpleMailMessage message = new SimpleMailMessage();</span>
+<span class="fc" id="L24">    message.setFrom(&quot;noreply@edtech.com&quot;);</span>
+<span class="fc" id="L25">    message.setTo(toEmail);</span>
+<span class="fc" id="L26">    message.setSubject(&quot;Código de Recuperação de Senha - EdTech&quot;);</span>
+<span class="fc" id="L27">    message.setText(</span>
         &quot;Olá,\n\n&quot;
             + &quot;Você solicitou a recuperação da sua senha na EdTech.\n&quot;
             + &quot;Seu código de segurança (OTP) de 6 dígitos é: &quot;
@@ -29,7 +34,55 @@ import org.springframework.stereotype.Service;
             + &quot;Se você não solicitou isso, ignore este e-mail.\n\n&quot;
             + &quot;Equipe EdTech&quot;);
 
-<span class="fc" id="L32">    mailSender.send(message);</span>
-<span class="fc" id="L33">  }</span>
+<span class="fc" id="L37">    logger.info(&quot;======= E-MAIL SIMULADO NO CONSOLE =======&quot;);</span>
+<span class="fc" id="L38">    logger.info(</span>
+        &quot;De: noreply@edtech.com\nPara: {}\nAssunto: {}\nCorpo:\n{}&quot;,
+<span class="fc" id="L40">        message.getTo()[0],</span>
+<span class="fc" id="L41">        message.getSubject(),</span>
+<span class="fc" id="L42">        message.getText());</span>
+<span class="fc" id="L43">    logger.info(&quot;=========================================&quot;);</span>
+
+    try {
+<span class="fc" id="L46">      mailSender.send(message);</span>
+<span class="nc" id="L47">    } catch (MailException ex) {</span>
+<span class="nc" id="L48">      logger.warn(</span>
+          &quot;Não foi possível enviar e-mail real via SMTP &quot;
+              + &quot;(verifique credenciais). Usando apenas simulação no console.&quot;);
+<span class="fc" id="L51">    }</span>
+<span class="fc" id="L52">  }</span>
+
+  /** Javadoc. */
+  @Async
+  public void sendVerificationEmail(String toEmail, String otpCode) {
+<span class="fc" id="L57">    SimpleMailMessage message = new SimpleMailMessage();</span>
+<span class="fc" id="L58">    message.setFrom(&quot;noreply@edtech.com&quot;);</span>
+<span class="fc" id="L59">    message.setTo(toEmail);</span>
+<span class="fc" id="L60">    message.setSubject(&quot;Código de Verificação de Conta - EdTech&quot;);</span>
+<span class="fc" id="L61">    message.setText(</span>
+        &quot;Olá,\n\n&quot;
+            + &quot;Bem-vindo à EdTech!\n&quot;
+            + &quot;Seu código de verificação (OTP) de 6 dígitos é: &quot;
+            + otpCode
+            + &quot;\n\n&quot;
+            + &quot;Este código é válido por 15 minutos.\n&quot;
+            + &quot;Se você não solicitou isso, ignore este e-mail.\n\n&quot;
+            + &quot;Equipe EdTech&quot;);
+
+<span class="fc" id="L71">    logger.info(&quot;======= E-MAIL SIMULADO NO CONSOLE =======&quot;);</span>
+<span class="fc" id="L72">    logger.info(</span>
+        &quot;De: noreply@edtech.com\nPara: {}\nAssunto: {}\nCorpo:\n{}&quot;,
+<span class="fc" id="L74">        message.getTo()[0],</span>
+<span class="fc" id="L75">        message.getSubject(),</span>
+<span class="fc" id="L76">        message.getText());</span>
+<span class="fc" id="L77">    logger.info(&quot;=========================================&quot;);</span>
+
+    try {
+<span class="nc" id="L80">      mailSender.send(message);</span>
+<span class="fc" id="L81">    } catch (MailException ex) {</span>
+<span class="fc" id="L82">      logger.warn(</span>
+          &quot;Não foi possível enviar e-mail real via SMTP &quot;
+              + &quot;(verifique credenciais). Usando apenas simulação no console.&quot;);
+<span class="nc" id="L85">    }</span>
+<span class="fc" id="L86">  }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

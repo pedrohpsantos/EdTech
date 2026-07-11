@@ -13,11 +13,15 @@ import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import java.time.ZonedDateTime;
 import java.util.UUID;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 
 /** Documentação para Project. */
 @Entity
 @Table(name = &quot;projects&quot;)
-<span class="fc" id="L20">public class Project {</span>
+@SQLDelete(sql = &quot;UPDATE projects SET deleted = true WHERE id=?&quot;)
+@SQLRestriction(&quot;deleted = false&quot;)
+<span class="fc" id="L24">public class Project {</span>
 
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
@@ -39,76 +43,87 @@ import java.util.UUID;
   @Column(name = &quot;updated_at&quot;, nullable = false)
   private ZonedDateTime updatedAt;
 
+<span class="fc" id="L46">  @Column(nullable = false)</span>
+  private boolean deleted = false;
+
   @PrePersist
   protected void onCreate() {
-<span class="fc" id="L44">    this.createdAt = ZonedDateTime.now();</span>
-<span class="fc" id="L45">    this.updatedAt = ZonedDateTime.now();</span>
-<span class="fc" id="L46">  }</span>
+<span class="fc" id="L51">    this.createdAt = ZonedDateTime.now();</span>
+<span class="fc" id="L52">    this.updatedAt = ZonedDateTime.now();</span>
+<span class="fc" id="L53">  }</span>
 
   @PreUpdate
   protected void onUpdate() {
-<span class="nc" id="L50">    this.updatedAt = ZonedDateTime.now();</span>
-<span class="nc" id="L51">  }</span>
+<span class="nc" id="L57">    this.updatedAt = ZonedDateTime.now();</span>
+<span class="nc" id="L58">  }</span>
 
   // Getters and Setters
   /** Documentação para o método getId. */
   public UUID getId() {
-<span class="fc" id="L56">    return id;</span>
+<span class="fc" id="L63">    return id;</span>
   }
 
   /** Documentação para o método setId. */
   public void setId(UUID id) {
-<span class="fc" id="L61">    this.id = id;</span>
-<span class="fc" id="L62">  }</span>
+<span class="fc" id="L68">    this.id = id;</span>
+<span class="fc" id="L69">  }</span>
 
   /** Documentação para o método getTitle. */
   public String getTitle() {
-<span class="fc" id="L66">    return title;</span>
+<span class="fc" id="L73">    return title;</span>
   }
 
   /** Documentação para o método setTitle. */
   public void setTitle(String title) {
-<span class="fc" id="L71">    this.title = title;</span>
-<span class="fc" id="L72">  }</span>
+<span class="fc" id="L78">    this.title = title;</span>
+<span class="fc" id="L79">  }</span>
 
   /** Documentação para o método getDescription. */
   public String getDescription() {
-<span class="fc" id="L76">    return description;</span>
+<span class="fc" id="L83">    return description;</span>
   }
 
   /** Documentação para o método setDescription. */
   public void setDescription(String description) {
-<span class="fc" id="L81">    this.description = description;</span>
-<span class="fc" id="L82">  }</span>
+<span class="fc" id="L88">    this.description = description;</span>
+<span class="fc" id="L89">  }</span>
 
   /** Documentação para o método getAdvisor. */
   public User getAdvisor() {
-<span class="fc" id="L86">    return advisor;</span>
+<span class="fc" id="L93">    return advisor;</span>
   }
 
   /** Documentação para o método setAdvisor. */
   public void setAdvisor(User advisor) {
-<span class="fc" id="L91">    this.advisor = advisor;</span>
-<span class="fc" id="L92">  }</span>
+<span class="fc" id="L98">    this.advisor = advisor;</span>
+<span class="fc" id="L99">  }</span>
 
   /** Documentação para o método getCreatedAt. */
   public ZonedDateTime getCreatedAt() {
-<span class="fc" id="L96">    return createdAt;</span>
+<span class="fc" id="L103">    return createdAt;</span>
   }
 
   /** Documentação para o método setCreatedAt. */
   public void setCreatedAt(ZonedDateTime createdAt) {
-<span class="nc" id="L101">    this.createdAt = createdAt;</span>
-<span class="nc" id="L102">  }</span>
+<span class="nc" id="L108">    this.createdAt = createdAt;</span>
+<span class="nc" id="L109">  }</span>
 
   /** Documentação para o método getUpdatedAt. */
   public ZonedDateTime getUpdatedAt() {
-<span class="nc" id="L106">    return updatedAt;</span>
+<span class="nc" id="L113">    return updatedAt;</span>
   }
 
   /** Documentação para o método setUpdatedAt. */
   public void setUpdatedAt(ZonedDateTime updatedAt) {
-<span class="nc" id="L111">    this.updatedAt = updatedAt;</span>
-<span class="nc" id="L112">  }</span>
+<span class="nc" id="L118">    this.updatedAt = updatedAt;</span>
+<span class="nc" id="L119">  }</span>
+
+  public boolean isDeleted() {
+<span class="nc" id="L122">    return deleted;</span>
+  }
+
+  public void setDeleted(boolean deleted) {
+<span class="nc" id="L126">    this.deleted = deleted;</span>
+<span class="nc" id="L127">  }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

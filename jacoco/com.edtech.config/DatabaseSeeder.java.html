@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DatabaseSeeder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">edtech-api</a> &gt; <a href="index.source.html" class="el_package">com.edtech.config</a> &gt; <span class="el_source">DatabaseSeeder.java</span></div><h1>DatabaseSeeder.java</h1><pre class="source lang-java linenums">package com.edtech.config;
+
+import com.edtech.model.User;
+import com.edtech.model.UserRole;
+import com.edtech.repository.ProjectRepository;
+import com.edtech.repository.UserRepository;
+import java.util.Locale;
+import java.util.Optional;
+import java.util.UUID;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
+/** Database Seeder para inicializar usuários de demonstração e projetos fake. */
+@Component
+public class DatabaseSeeder implements CommandLineRunner {
+
+<span class="fc" id="L21">  private static final Logger logger = LoggerFactory.getLogger(DatabaseSeeder.class);</span>
+
+  private final UserRepository userRepository;
+  private final ProjectRepository projectRepository;
+  private final PasswordEncoder passwordEncoder;
+
+  /** Javadoc. */
+  public DatabaseSeeder(
+      UserRepository userRepository,
+      ProjectRepository projectRepository,
+<span class="fc" id="L31">      PasswordEncoder passwordEncoder) {</span>
+<span class="fc" id="L32">    this.userRepository = userRepository;</span>
+<span class="fc" id="L33">    this.projectRepository = projectRepository;</span>
+<span class="fc" id="L34">    this.passwordEncoder = passwordEncoder;</span>
+<span class="fc" id="L35">  }</span>
+
+  @Override
+  @Transactional
+  public void run(String... args) {
+<span class="fc" id="L40">    logger.info(&quot;Executando DatabaseSeeder...&quot;);</span>
+
+<span class="fc" id="L42">    UUID demoInstitutionId = UUID.fromString(&quot;00000000-0000-0000-0000-000000000001&quot;);</span>
+<span class="fc" id="L43">    String defaultPasswordHash = passwordEncoder.encode(&quot;Demo@1234&quot;);</span>
+
+    // 1. Criar usuários
+<span class="fc" id="L46">    seedUser(</span>
+        &quot;Pesquisador Demo&quot;,
+        &quot;pesquisador.demo@unb.br&quot;,
+        defaultPasswordHash,
+        UserRole.RESEARCHER,
+        demoInstitutionId);
+<span class="fc" id="L52">    User orientador =</span>
+<span class="fc" id="L53">        seedUser(</span>
+            &quot;Orientador Demo&quot;,
+            &quot;orientador.demo@unb.br&quot;,
+            defaultPasswordHash,
+            UserRole.ADVISOR,
+            demoInstitutionId);
+<span class="fc" id="L59">    seedUser(</span>
+        &quot;Auditor Demo&quot;,
+        &quot;auditor.demo@unb.br&quot;,
+        defaultPasswordHash,
+        UserRole.AUDITOR,
+        demoInstitutionId);
+
+    // 2. Criar projetos fake
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">    if (projectRepository.count() == 0) {</span>
+<span class="nc" id="L68">      logger.info(&quot;Populando banco com projetos falsos (Kaggle-like datasets)...&quot;);</span>
+
+<span class="nc" id="L70">      com.edtech.model.Project p1 = new com.edtech.model.Project();</span>
+<span class="nc" id="L71">      p1.setTitle(&quot;Previsão de Temperatura Oceânica&quot;);</span>
+<span class="nc" id="L72">      p1.setDescription(&quot;Análise de séries temporais de mudanças climáticas usando dados globais.&quot;);</span>
+<span class="nc" id="L73">      p1.setAdvisor(orientador);</span>
+<span class="nc" id="L74">      projectRepository.save(p1);</span>
+
+<span class="nc" id="L76">      com.edtech.model.Project p2 = new com.edtech.model.Project();</span>
+<span class="nc" id="L77">      p2.setTitle(&quot;Classificação de Expressão Genômica&quot;);</span>
+<span class="nc" id="L78">      p2.setDescription(</span>
+          &quot;Dataset com 10.000 perfis genômicos focados em detecção de anomalias raras.&quot;);
+<span class="nc" id="L80">      p2.setAdvisor(orientador);</span>
+<span class="nc" id="L81">      projectRepository.save(p2);</span>
+
+<span class="nc" id="L83">      com.edtech.model.Project p3 = new com.edtech.model.Project();</span>
+<span class="nc" id="L84">      p3.setTitle(&quot;Auditoria Algorítmica em Modelos de Crédito&quot;);</span>
+<span class="nc" id="L85">      p3.setDescription(</span>
+          &quot;Projeto voltado à detecção de bias em inteligência artificial do setor financeiro.&quot;);
+<span class="nc" id="L87">      p3.setAdvisor(orientador);</span>
+<span class="nc" id="L88">      projectRepository.save(p3);</span>
+
+<span class="nc" id="L90">      logger.info(&quot;Projetos criados com sucesso.&quot;);</span>
+    }
+
+<span class="fc" id="L93">    logger.info(&quot;DatabaseSeeder concluído.&quot;);</span>
+<span class="fc" id="L94">  }</span>
+
+  private User seedUser(
+      String name, String email, String passwordHash, UserRole role, UUID institutionId) {
+<span class="fc" id="L98">    String normalizedEmail = email.toLowerCase(Locale.ROOT);</span>
+<span class="fc" id="L99">    Optional&lt;User&gt; existing = userRepository.findByEmailIgnoreCase(normalizedEmail);</span>
+<span class="pc bpc" id="L100" title="1 of 2 branches missed.">    if (existing.isEmpty()) {</span>
+<span class="fc" id="L101">      User user = new User(name, normalizedEmail, passwordHash, role, institutionId);</span>
+<span class="fc" id="L102">      user.setActive(true);</span>
+<span class="fc" id="L103">      logger.info(&quot;Criando usuário demo: {}&quot;, email);</span>
+<span class="fc" id="L104">      return userRepository.save(user);</span>
+    }
+<span class="nc" id="L106">    return existing.get();</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

@@ -15,5 +15,7 @@ import jakarta.validation.constraints.Size;
             message = &quot;E-mail deve ser do domínio UNB&quot;)
         @Size(max = 180)
         String email,
-    @NotBlank(message = &quot;A senha é obrigatória&quot;) @Size(min = 8, max = 120) String password) {}
+    @NotBlank(message = &quot;A senha é obrigatória&quot;) @Size(min = 8, max = 120) String password,
+    @jakarta.validation.constraints.NotNull(message = &quot;O perfil (role) é obrigatório&quot;)
+        com.edtech.model.UserRole role) {}
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

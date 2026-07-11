@@ -15,9 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
- * Controller para buscar logs de auditoria.
- */
+/** Controller para buscar logs de auditoria. */
 @RestController
 @RequestMapping(&quot;/api/audit-logs&quot;)
 public class AuditController {
@@ -31,10 +29,10 @@ public class AuditController {
    * @param auditLogRepository repo
    * @param userRepository repo
    */
-<span class="fc" id="L34">  public AuditController(AuditLogRepository auditLogRepository, UserRepository userRepository) {</span>
-<span class="fc" id="L35">    this.auditLogRepository = auditLogRepository;</span>
-<span class="fc" id="L36">    this.userRepository = userRepository;</span>
-<span class="fc" id="L37">  }</span>
+<span class="fc" id="L32">  public AuditController(AuditLogRepository auditLogRepository, UserRepository userRepository) {</span>
+<span class="fc" id="L33">    this.auditLogRepository = auditLogRepository;</span>
+<span class="fc" id="L34">    this.userRepository = userRepository;</span>
+<span class="fc" id="L35">  }</span>
 
   /**
    * Busca logs de auditoria com filtro.
@@ -48,63 +46,126 @@ public class AuditController {
   public ResponseEntity&lt;List&lt;AuditLogDto&gt;&gt; getAuditLogs(
       @RequestParam(required = false) String search,
       @RequestParam(required = false) String action) {
-    
-<span class="fc" id="L52">    List&lt;AuditLog&gt; logs = auditLogRepository.findAllByOrderByCreatedAtDesc();</span>
-<span class="fc" id="L53">    DateTimeFormatter formatter = DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd HH:mm:ss.SSS&quot;);</span>
 
-<span class="fc" id="L55">    List&lt;AuditLogDto&gt; dtos = logs.stream().map(log -&gt; {</span>
-<span class="fc" id="L56">      AuditLogDto dto = new AuditLogDto();</span>
-<span class="fc" id="L57">      dto.setId(log.getId().toString());</span>
-<span class="fc" id="L58">      dto.setTimestamp(log.getCreatedAt().format(formatter));</span>
-<span class="fc" id="L59">      dto.setAction(log.getAction().name());</span>
-      
-<span class="fc" id="L61">      User user = userRepository.findById(log.getUserId()).orElse(null);</span>
-<span class="fc bfc" id="L62" title="All 2 branches covered.">      dto.setUserName(user != null ? user.getName() : &quot;Unknown&quot;);</span>
-      
-<span class="fc" id="L64">      dto.setIp(log.getIpAddress());</span>
-<span class="fc" id="L65">      dto.setDetails(log.getDetails());</span>
-      
-      // Determine Action Class and Severity based on Action
-<span class="fc bfc" id="L68" title="All 4 branches covered.">      switch (log.getAction()) {</span>
-        case LOGIN_SUCCESS:
-        case DOCUMENT_APPROVED:
-<span class="fc" id="L71">          dto.setActionClass(&quot;green&quot;);</span>
-<span class="fc" id="L72">          dto.setSeverity(&quot;INFO&quot;);</span>
-<span class="fc" id="L73">          break;</span>
-        case LOGIN_FAILED:
-        case DOCUMENT_REJECTED:
-        case MEMBER_JOINED:
-<span class="fc" id="L77">          dto.setActionClass(&quot;orange&quot;);</span>
-<span class="fc" id="L78">          dto.setSeverity(&quot;WARNING&quot;);</span>
-<span class="fc" id="L79">          break;</span>
-        case DELETE_DOCUMENT:
-<span class="fc" id="L81">          dto.setActionClass(&quot;red&quot;);</span>
-<span class="fc" id="L82">          dto.setSeverity(&quot;CRITICAL&quot;);</span>
-<span class="fc" id="L83">          break;</span>
-        default:
-<span class="fc" id="L85">          dto.setActionClass(&quot;blue&quot;);</span>
-<span class="fc" id="L86">          dto.setSeverity(&quot;INFO&quot;);</span>
-      }
-<span class="fc" id="L88">      return dto;</span>
-<span class="fc" id="L89">    }).collect(Collectors.toList());</span>
+<span class="fc" id="L50">    List&lt;AuditLog&gt; logs = auditLogRepository.findAllByOrderByCreatedAtDesc();</span>
+<span class="fc" id="L51">    DateTimeFormatter formatter = DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd HH:mm:ss.SSS&quot;);</span>
 
-<span class="pc bpc" id="L91" title="1 of 4 branches missed.">    if (search != null &amp;&amp; !search.isEmpty()) {</span>
-<span class="fc" id="L92">      String s = search.toLowerCase();</span>
-<span class="fc" id="L93">      dtos = dtos.stream().filter(dto -&gt; </span>
-<span class="pc bpc" id="L94" title="1 of 2 branches missed.">          dto.getAction().toLowerCase().contains(s) </span>
-<span class="pc bpc" id="L95" title="1 of 4 branches missed.">          || (dto.getDetails() != null &amp;&amp; dto.getDetails().toLowerCase().contains(s)) </span>
-<span class="pc bpc" id="L96" title="1 of 2 branches missed.">          || dto.getUserName().toLowerCase().contains(s) </span>
-<span class="pc bpc" id="L97" title="1 of 2 branches missed.">          || dto.getIp().contains(s)</span>
-<span class="fc" id="L98">      ).collect(Collectors.toList());</span>
+<span class="fc" id="L53">    List&lt;AuditLogDto&gt; dtos =</span>
+<span class="fc" id="L54">        logs.stream()</span>
+<span class="fc" id="L55">            .map(</span>
+                log -&gt; {
+<span class="fc" id="L57">                  AuditLogDto dto = new AuditLogDto();</span>
+<span class="fc" id="L58">                  dto.setId(log.getId().toString());</span>
+<span class="fc" id="L59">                  dto.setTimestamp(log.getCreatedAt().format(formatter));</span>
+<span class="fc" id="L60">                  dto.setAction(log.getAction().name());</span>
+
+<span class="fc" id="L62">                  User user = userRepository.findById(log.getUserId()).orElse(null);</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">                  dto.setUserName(user != null ? user.getName() : &quot;Unknown&quot;);</span>
+
+<span class="fc" id="L65">                  dto.setIp(log.getIpAddress());</span>
+<span class="fc" id="L66">                  dto.setDetails(log.getDetails());</span>
+
+                  // Determine Action Class and Severity based on Action
+<span class="fc bfc" id="L69" title="All 4 branches covered.">                  switch (log.getAction()) {</span>
+                    case LOGIN_SUCCESS:
+                    case DOCUMENT_APPROVED:
+<span class="fc" id="L72">                      dto.setActionClass(&quot;green&quot;);</span>
+<span class="fc" id="L73">                      dto.setSeverity(&quot;INFO&quot;);</span>
+<span class="fc" id="L74">                      break;</span>
+                    case LOGIN_FAILED:
+                    case DOCUMENT_REJECTED:
+                    case MEMBER_JOINED:
+<span class="fc" id="L78">                      dto.setActionClass(&quot;orange&quot;);</span>
+<span class="fc" id="L79">                      dto.setSeverity(&quot;WARNING&quot;);</span>
+<span class="fc" id="L80">                      break;</span>
+                    case DELETE_DOCUMENT:
+<span class="fc" id="L82">                      dto.setActionClass(&quot;red&quot;);</span>
+<span class="fc" id="L83">                      dto.setSeverity(&quot;CRITICAL&quot;);</span>
+<span class="fc" id="L84">                      break;</span>
+                    default:
+<span class="fc" id="L86">                      dto.setActionClass(&quot;blue&quot;);</span>
+<span class="fc" id="L87">                      dto.setSeverity(&quot;INFO&quot;);</span>
+                  }
+<span class="fc" id="L89">                  return dto;</span>
+                })
+<span class="fc" id="L91">            .collect(Collectors.toList());</span>
+
+<span class="pc bpc" id="L93" title="1 of 4 branches missed.">    if (search != null &amp;&amp; !search.isEmpty()) {</span>
+<span class="fc" id="L94">      String s = search.toLowerCase();</span>
+<span class="fc" id="L95">      dtos =</span>
+<span class="fc" id="L96">          dtos.stream()</span>
+<span class="fc" id="L97">              .filter(</span>
+                  dto -&gt;
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">                      dto.getAction().toLowerCase().contains(s)</span>
+<span class="pc bpc" id="L100" title="1 of 2 branches missed.">                          || (dto.getDetails() != null</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">                              &amp;&amp; dto.getDetails().toLowerCase().contains(s))</span>
+<span class="pc bpc" id="L102" title="1 of 2 branches missed.">                          || dto.getUserName().toLowerCase().contains(s)</span>
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">                          || dto.getIp().contains(s))</span>
+<span class="fc" id="L104">              .collect(Collectors.toList());</span>
     }
 
-<span class="pc bpc" id="L101" title="2 of 6 branches missed.">    if (action != null &amp;&amp; !action.isEmpty() &amp;&amp; !action.equals(&quot;Todas as Ações&quot;)) {</span>
-<span class="fc" id="L102">      dtos = dtos.stream()</span>
-<span class="fc" id="L103">          .filter(dto -&gt; dto.getAction().equals(action))</span>
-<span class="fc" id="L104">          .collect(Collectors.toList());</span>
+<span class="pc bpc" id="L107" title="2 of 6 branches missed.">    if (action != null &amp;&amp; !action.isEmpty() &amp;&amp; !action.equals(&quot;Todas as Ações&quot;)) {</span>
+<span class="fc" id="L108">      dtos =</span>
+<span class="fc" id="L109">          dtos.stream().filter(dto -&gt; dto.getAction().equals(action)).collect(Collectors.toList());</span>
     }
 
-<span class="fc" id="L107">    return ResponseEntity.ok(dtos);</span>
+<span class="fc" id="L112">    return ResponseEntity.ok(dtos);</span>
+  }
+
+  /**
+   * Exporta logs de auditoria para CSV.
+   *
+   * @param search texto de busca
+   * @param action acao filtrada
+   * @return Arquivo CSV
+   */
+  @GetMapping(&quot;/export&quot;)
+  @PreAuthorize(&quot;hasRole('AUDITOR')&quot;)
+  public ResponseEntity&lt;String&gt; exportAuditLogs(
+      @RequestParam(required = false) String search,
+      @RequestParam(required = false) String action) {
+
+<span class="nc" id="L128">    ResponseEntity&lt;List&lt;AuditLogDto&gt;&gt; response = getAuditLogs(search, action);</span>
+<span class="nc" id="L129">    List&lt;AuditLogDto&gt; dtos = response.getBody();</span>
+
+<span class="nc" id="L131">    StringBuilder csv = new StringBuilder();</span>
+<span class="nc" id="L132">    csv.append(&quot;ID,Timestamp,Action,User,IP,Details,Severity\n&quot;);</span>
+
+<span class="nc bnc" id="L134" title="All 2 branches missed.">    if (dtos != null) {</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">      for (AuditLogDto dto : dtos) {</span>
+<span class="nc" id="L136">        csv.append(escapeCsv(dto.getId()))</span>
+<span class="nc" id="L137">            .append(&quot;,&quot;)</span>
+<span class="nc" id="L138">            .append(escapeCsv(dto.getTimestamp()))</span>
+<span class="nc" id="L139">            .append(&quot;,&quot;)</span>
+<span class="nc" id="L140">            .append(escapeCsv(dto.getAction()))</span>
+<span class="nc" id="L141">            .append(&quot;,&quot;)</span>
+<span class="nc" id="L142">            .append(escapeCsv(dto.getUserName()))</span>
+<span class="nc" id="L143">            .append(&quot;,&quot;)</span>
+<span class="nc" id="L144">            .append(escapeCsv(dto.getIp()))</span>
+<span class="nc" id="L145">            .append(&quot;,&quot;)</span>
+<span class="nc" id="L146">            .append(escapeCsv(dto.getDetails()))</span>
+<span class="nc" id="L147">            .append(&quot;,&quot;)</span>
+<span class="nc" id="L148">            .append(escapeCsv(dto.getSeverity()))</span>
+<span class="nc" id="L149">            .append(&quot;\n&quot;);</span>
+<span class="nc" id="L150">      }</span>
+    }
+
+<span class="nc" id="L153">    org.springframework.http.HttpHeaders headers = new org.springframework.http.HttpHeaders();</span>
+<span class="nc" id="L154">    headers.add(&quot;Content-Disposition&quot;, &quot;attachment; filename=\&quot;audit_logs.csv\&quot;&quot;);</span>
+<span class="nc" id="L155">    headers.add(&quot;Content-Type&quot;, &quot;text/csv; charset=UTF-8&quot;);</span>
+
+<span class="nc" id="L157">    return ResponseEntity.ok().headers(headers).body(csv.toString());</span>
+  }
+
+  private String escapeCsv(String value) {
+<span class="nc bnc" id="L161" title="All 2 branches missed.">    if (value == null) {</span>
+<span class="nc" id="L162">      return &quot;&quot;;</span>
+    }
+<span class="nc" id="L164">    String escaped = value.replace(&quot;\&quot;&quot;, &quot;\&quot;\&quot;&quot;);</span>
+<span class="nc bnc" id="L165" title="All 6 branches missed.">    if (escaped.contains(&quot;,&quot;) || escaped.contains(&quot;\&quot;&quot;) || escaped.contains(&quot;\n&quot;)) {</span>
+<span class="nc" id="L166">      return &quot;\&quot;&quot; + escaped + &quot;\&quot;&quot;;</span>
+    }
+<span class="nc" id="L168">    return escaped;</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
