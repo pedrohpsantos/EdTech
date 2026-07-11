@@ -495,7 +495,8 @@ jobs:
       matrix:
         # e2e         = Playwright E2E smoke tests against production
         # performance = K6 load tests against production API
-        test: [e2e, performance]
+        # lighthouse  = Auditoria de UX/Performance/SEO no Frontend
+        test: [e2e, performance, lighthouse]
     steps:
       - uses: actions/checkout@v7
 
@@ -589,3 +590,23 @@ jobs:
         with:
           name: k6-summary
           path: tests/performance/k6-summary.json
+
+      # --- LIGHTHOUSE (UX/SEO/PERFORMANCE) ---
+      - name: Setup Node.js for Lighthouse
+        if: matrix.test == 'lighthouse'
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+      - name: Run Lighthouse Audit
+        if: matrix.test == 'lighthouse'
+        run: |
+          npm install -g @lhci/cli@0.13.0
+          mkdir -p lighthouse-report
+          lhci collect --url="https://edtech-storage-501117.web.app/" --numberOfRuns=3
+          lhci upload --target=filesystem --outputDir=./lighthouse-report
+      - name: Upload Lighthouse Report
+        if: always() && matrix.test == 'lighthouse'
+        uses: actions/upload-artifact@v7
+        with:
+          name: lighthouse-report
+          path: lighthouse-report/

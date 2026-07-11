@@ -26,7 +26,8 @@ jobs:
         # backend-pitest = Mutation testing report (PiTest)
         # frontend       = Vitest + Allure smoke test report
         # performance    = K6 load test report
-        report-type: [backend-jacoco, backend-pitest, frontend, performance]
+        # lighthouse     = Auditoria UX/SEO/Performance
+        report-type: [backend-jacoco, backend-pitest, frontend, performance, lighthouse]
     steps:
       - name: Checkout do codigo
         uses: actions/checkout@v7
@@ -192,6 +193,31 @@ jobs:
           path: reports/
 
       # ==========================
+      # FRONTEND — Lighthouse
+      # ==========================
+      - name: Setup Node.js for Lighthouse
+        if: matrix.report-type == 'lighthouse'
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+      - name: Run Lighthouse Audit
+        if: matrix.report-type == 'lighthouse'
+        run: |
+          npm install -g @lhci/cli@0.13.0
+          mkdir -p reports/lighthouse
+          lhci collect --url="https://edtech-storage-501117.web.app/" --numberOfRuns=3
+          # LHCI names the file dynamically. We will rename it to index.html for easier iframe embedding.
+          lhci upload --target=filesystem --outputDir=./reports/lighthouse
+          mv reports/lighthouse/lhci-reports/*.html reports/lighthouse/index.html || mv reports/lighthouse/*.html reports/lighthouse/index.html || true
+          
+      - name: Upload Lighthouse Report
+        if: matrix.report-type == 'lighthouse'
+        uses: actions/upload-artifact@v7
+        with:
+          name: lighthouse-reports
+          path: reports/
+
+      # ==========================
       # PERFORMANCE
       # ==========================
       - name: Install K6
@@ -278,6 +304,13 @@ jobs:
         continue-on-error: true
         with:
           name: frontend-reports
+          path: docs/
+          
+      - name: Download Lighthouse Reports
+        uses: actions/download-artifact@v7
+        continue-on-error: true
+        with:
+          name: lighthouse-reports
           path: docs/
 
       - name: Download Performance Reports
