@@ -18,6 +18,7 @@ Especificação dos requisitos funcionais do EdTech, organizados por módulo e r
 | RF04 | O sistema deve interceptar todas as requisições para validar o JWT antes de processar |  Alta | F04 | :material-check-circle: |
 | RF05 | O sistema deve retornar `401 Unauthorized` quando o token estiver expirado ou ausente |  Média | F05 | :material-check-circle: |
 | RF06 | O sistema deve validar que o e-mail pertence a um domínio institucional (`@instituicao.edu.br`) |  Média | F01 | :material-check-circle: |
+| RF23 | O sistema deve suportar verificação em duas etapas (2FA) via app Autenticador | Alta | F23 | :material-check-circle: |
 
 ---
 
@@ -122,4 +123,5 @@ stateDiagram-v2
 | `1.4` | 26/06/2026 | Refatoração da notação para numeração contínua | Pedro Henrique P. Santos |
 | `1.5` | 04/07/2026 | Revisão profunda, correção de metadados e melhorias visuais | Pedro Henrique P. Santos |
 | `1.6` | 09/07/2026 | Detalhamento de upload de datasets e exportação CSV da auditoria | Pedro Henrique P. Santos |
+| `1.7` | 11/07/2026 | Inclusão do RF23 para Autenticação em Duas Etapas (2FA) | Pedro Henrique P. Santos |
 

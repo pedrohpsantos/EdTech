@@ -65,6 +65,19 @@ Backlog de histórias de usuário do EdTech, escritas no formato padrão e rastr
 
 ---
 
+### US10 — Configuração e Uso de 2FA
+
+> **Como** usuário preocupado com segurança, **quero** habilitar e usar autenticação em duas etapas (2FA), **para que** minha conta fique protegida mesmo em caso de vazamento de senha.
+
+??? note "Critérios de Aceitação"
+    - [x] O usuário pode ativar o 2FA via configurações de perfil com um app Authenticator.
+    - [x] O login exige o código TOTP de 6 dígitos se ativado.
+    - [x] Códigos inválidos impedem o acesso à plataforma.
+
+**Rastreabilidade:** RF23 · **Persona:** Todos · **Sprint:** 7
+
+---
+
 ## Épico 2 — Documentos
 
 ### US04 — Upload de artigo
@@ -163,15 +176,28 @@ Backlog de histórias de usuário do EdTech, escritas no formato padrão e rastr
 
 ---
 
+### US11 — Exportação de Relatórios de Auditoria
+
+> **Como** auditora, **quero** exportar a trilha de auditoria em CSV, **para que** eu possa processar e reportar os logs externamente.
+
+??? note "Critérios de Aceitação"
+    - [x] Botão de exportação visível e acessível na tela de auditoria.
+    - [x] Gera um arquivo CSV com as mesmas filtragens aplicadas na tela.
+    - [x] Proteção para download apenas por usuários com perfil AUDITOR.
+
+**Rastreabilidade:** RF22 · **Persona:** Márcia · **Sprint:** 7
+
+---
+
 ## Resumo do Backlog
 
 | Épico | Histórias | Concluídas | Em andamento | Pendentes |
 | :--- | :---: | :---: | :---: | :---: |
-| Autenticação | 3 | 3 | 0 | 0 |
+| Autenticação | 4 | 4 | 0 | 0 |
 | Documentos | 3 | 3 | 0 | 0 |
 | Orientador | 2 | 2 | 0 | 0 |
-| Auditoria | 1 | 1 | 0 | 0 |
-| **Total** | **9** | **9** | **0** | **0** |
+| Auditoria | 2 | 2 | 0 | 0 |
+| **Total** | **11** | **11** | **0** | **0** |
 
 
 ---
@@ -183,4 +209,5 @@ Backlog de histórias de usuário do EdTech, escritas no formato padrão e rastr
 | `1.0` | 29/05/2026 | Criação do documento | Pedro Henrique P. Santos |
 | `1.1` | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |
 | `1.2` | 04/07/2026 | Revisão profunda, correção de metadados e melhorias visuais | Pedro Henrique P. Santos |
+| `1.3` | 11/07/2026 | Inclusão das histórias US10 (2FA) e US11 (CSV Auditoria) | Pedro Henrique P. Santos |
 

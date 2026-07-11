@@ -23,6 +23,7 @@ Optamos por adotar o **Flyway** como ferramenta de migração contínua e versio
 - **Controle de Versão:** Todos os scripts SQL ficam armazenados no próprio repositório (ex: `V1__init.sql`), garantindo que o esquema acompanhe exatamente a versão do código-fonte.
 
 - **Automação:** O Flyway se integra nativamente ao Spring Boot (ADR 0005), executando as migrações automaticamente no momento em que a aplicação "sobe", sem necessidade de intervenção humana (Zero-downtime migrations se bem planejadas).
+    - **Nota Arquitetural (Deploy Cloud Run):** Para evitar "drift" entre as versões de entidades do Hibernate e o banco na Cloud Run — o que causa falhas fatais (`SchemaManagementException`) no ambiente serverless —, as migrações não são aplicadas por Jobs paralelos, mas sim de forma *embutida* no ciclo de vida do Spring Boot ativando a variável `SPRING_FLYWAY_ENABLED=true` durante o *Terraform apply*.
 
 - **Rastreabilidade:** Cria uma tabela de histórico automática no PostgreSQL, permitindo saber exatamente quando cada migração foi aplicada.
 
@@ -41,5 +42,5 @@ Optamos por adotar o **Flyway** como ferramenta de migração contínua e versio
 | `1.0` | 04/06/2026 | Criação do documento | Pedro Henrique P. Santos |
 | `1.1` | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |
 | `1.2` | 04/07/2026 | Revisão profunda, correção de metadados e melhorias visuais | Pedro Henrique P. Santos |
-
+| `1.3` | 11/07/2026 | Adicionada nota sobre a inicialização embutida com o Cloud Run | Pedro Henrique P. Santos |
 

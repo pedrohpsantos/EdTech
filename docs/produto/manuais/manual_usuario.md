@@ -23,6 +23,12 @@ Na tela de envio (Upload), o pesquisador pode selecionar um arquivo PDF, CSV ou 
 !!! tip
     São aceitos arquivos `.pdf`, `.csv` e `.json`. Arquivos executáveis ou com tipo incompatível são rejeitados pela validação de upload.
 
+### 1.3 Segurança da Conta (2FA)
+Para garantir maior proteção, o usuário pode acessar a aba de Configurações (Settings) e habilitar a Autenticação em Duas Etapas (2FA).
+1. Faça o scan do QR Code gerado usando um aplicativo Authenticator (ex: Google Authenticator).
+2. Insira o código TOTP no sistema para confirmar a vinculação.
+3. No próximo login, o sistema exigirá a digitação desse código de 6 dígitos.
+
 ---
 
 ## 2. Fluxo do Orientador (Professor/Gestor)
@@ -52,7 +58,7 @@ O Auditor pode pesquisar qualquer evento que tenha ocorrido no ciclo de vida de 
 ![Logs do Auditor](../../assets/imgs/auditor_logs.png)
 
 ### 3.2 Exportação de Trilha de Auditoria
-A tabela permite aplicar filtros por intervalo de data, usuário e tipo de ação. A trilha de auditoria de um documento também pode ser exportada em CSV pelo endpoint `GET /api/documents/{id}/audit/export?format=csv`, permitindo uso em auditorias externas de compliance.
+A tabela permite aplicar filtros por intervalo de data, usuário e tipo de ação. A trilha de auditoria pode ser exportada em CSV pelo botão "Exportar CSV" na interface, ou diretamente pelo endpoint `GET /api/audit-logs/export`, permitindo uso em auditorias externas de compliance.
 
 !!! note
     Os logs não podem ser apagados ou modificados nem por usuários com perfil de Administrador.
@@ -79,3 +85,4 @@ Para garantir o isolamento e segurança da plataforma, as ações são restritas
 | `1.0` | 04/07/2026 | Refatoração inicial da documentação | Pedro Henrique P. Santos |
 | `1.1` | 04/07/2026 | Revisão profunda, correção de metadados e melhorias visuais | Pedro Henrique P. Santos |
 | `1.2` | 09/07/2026 | Atualização de formatos de upload e exportação CSV da auditoria | Pedro Henrique P. Santos |
+| `1.3` | 11/07/2026 | Inclusão das diretrizes de uso do 2FA e ajuste na documentação de Auditoria | Pedro Henrique P. Santos |
