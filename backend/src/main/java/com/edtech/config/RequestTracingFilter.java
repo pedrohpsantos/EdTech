@@ -31,7 +31,9 @@ public class RequestTracingFilter extends OncePerRequestFilter {
       }
 
       MDC.put(MDC_TRACE_ID_KEY, traceId);
-      response.setHeader(TRACE_ID_HEADER, traceId);
+      // Sanitize before echoing back as HTTP header to prevent header injection (HRS)
+      String safeTraceId = traceId.replaceAll("[^a-zA-Z0-9\\-]", "");
+      response.setHeader(TRACE_ID_HEADER, safeTraceId);
 
       filterChain.doFilter(request, response);
     } finally {
