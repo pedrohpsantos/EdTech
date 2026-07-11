@@ -352,7 +352,6 @@ describe('Recovery Component - Unit Tests', () => {
       </MemoryRouter>,
     );
     
-    const submitBtn = screen.getByRole('button', { name: /Continuar/i });
     const emailInput = screen.getByPlaceholderText('seu.nome@universidade.br');
     
     // Attempting to submit without required valid email will trigger invalid
