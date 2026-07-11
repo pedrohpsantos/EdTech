@@ -4,7 +4,7 @@ title: 'FinOps e Previsibilidade de Custos'
 
 # :material-cash-multiple: FinOps e Previsibilidade de Custos (TCO)
 
-A arquitetura do **EdTech** foi concebida primariamente sobre serviços gerenciados (*Serverless* e *PaaS*) no Google Cloud Platform (GCP). Como o projeto foi desenvolvido em um contexto acadêmico, nosso principal requisito é manter o custo total do projeto estritamente abaixo do orçamento estudantil disponibilizado de **$50.00 USD/mês**.
+A arquitetura do **EdTech** foi concebida primariamente sobre serviços gerenciados (*Serverless* e *PaaS*) no Google Cloud Platform (GCP). Como o projeto foi desenvolvido em um contexto acadêmico, nosso principal requisito é manter o custo total do projeto estritamente abaixo do orçamento estudantil disponibilizado de **\$50.00 USD/mês**.
 
 ---
 
@@ -27,7 +27,7 @@ Os principais ofensores de custo do projeto são:
 
 Para mantermos o custo baixo sem perder a consistência, utilizaremos instâncias de núcleo compartilhado (*Shared Core*):
 
-- **Homologação/Produção Inicial (`db-f1-micro`, 10GB SSD)**: $\approx \$9.00$ a $\$15.00$ / mês.
+- **Homologação/Produção Inicial (`db-f1-micro`, 10GB SSD)**: ~ \$9.00 a \$15.00 / mês.
 
 ### 2.2. Cloud Run (Backend da API)
 
@@ -37,27 +37,27 @@ Cálculo considerando:
 - **Requisições**: ~10.000 requisições / mês.
 - **Instâncias Mínimas**: 0 (Escalonamento para zero habilitado para economizar recursos).
 
-**Custo Estimado**: Graças à Cota Gratuita (*Free Tier*) de 2 milhões de requisições mensais do Cloud Run, o custo deste serviço para o cenário base será de **$0.00 a $2.00 / mês**.
+**Custo Estimado**: Graças à Cota Gratuita (*Free Tier*) de 2 milhões de requisições mensais do Cloud Run, o custo deste serviço para o cenário base será de **\$0.00 a \$2.00 / mês**.
 
 ### 2.3. Cloud Storage (Armazenamento de Arquivos)
 
 Armazenamento Padrão (*Standard*):
 
 - **Volume**: 20 GB (documentos e metadados).
-- **Custo de Armazenamento**: $\approx \$0.026$ por GB = **$\approx \$0.52$ / mês**.
-- **Custo de Tráfego (*Egress*)**: Assumindo 10 GB de download = $\approx \$0.12$ por GB = **$\approx \$1.20$ / mês**.
+- **Custo de Armazenamento**: ~ \$0.026 por GB = **~ \$0.52 / mês**.
+- **Custo de Tráfego (*Egress*)**: Assumindo 10 GB de download = ~ \$0.12 por GB = **~ \$1.20 / mês**.
 
 ### 2.4. Resumo Total Mensal
 
 | Recurso | Custo Estimado (USD) |
 | :--- | :--- |
-| Cloud SQL (F1-Micro) | $ 15.00 |
-| Cloud Run | $ 0.00 (Coberto pela Cota Gratuita) |
-| Cloud Storage | $ 1.72 |
-| Firebase Hosting / Rede | $ 0.00 (Coberto pela Cota Gratuita) |
-| **Total Estimado** | **$\approx \$16.72$ / mês** |
+| Cloud SQL (F1-Micro) | \$15.00 |
+| Cloud Run | \$0.00 (Coberto pela Cota Gratuita) |
+| Cloud Storage | \$1.72 |
+| Firebase Hosting / Rede | \$0.00 (Coberto pela Cota Gratuita) |
+| **Total Estimado** | **~ \$16.72 / mês** |
 
-> **Aviso**: O custo estimado de **$16.72** está perfeitamente alinhado com a restrição orçamentária do balancete acadêmico de **$50.00 USD**.
+> **Aviso**: O custo estimado de **\$16.72** está perfeitamente alinhado com a restrição orçamentária do balancete acadêmico de **\$50.00 USD**.
 
 ---
 
@@ -73,11 +73,11 @@ O projeto já possui uma arquitetura altamente focada em eficiência de custo:
 
 ## 4. Alertas Orçamentários (*Billing Alerts*)
 
-Para evitar surpresas no cartão de crédito do estudante, é mandatório que a conta de faturamento do GCP possua um orçamento (`Budget`) configurado de **$50.00** com disparos em:
+Para evitar surpresas no cartão de crédito do estudante, é mandatório que a conta de faturamento do GCP possua um orçamento (`Budget`) configurado de **\$50.00** com disparos em:
 
-- **50% ($25.00)**: Aviso por email.
-- **90% ($45.00)**: Aviso Crítico.
-- **100% ($50.00)**: Alerta para o Time de Desenvolvimento atuar e pausar recursos não críticos.
+- **50% (\$25.00)**: Aviso por email.
+- **90% (\$45.00)**: Aviso Crítico.
+- **100% (\$50.00)**: Alerta para o Time de Desenvolvimento atuar e pausar recursos não críticos.
 
 ---
 
@@ -86,4 +86,4 @@ Para evitar surpresas no cartão de crédito do estudante, é mandatório que a 
 | Versão | Data | Descrição | Autor |
 | :---: | :---: | :--- | :--- |
 | `1.0` | 10/07/2026 | Criação do documento | Pedro Henrique P. Santos |
-| `1.1` | 11/07/2026 | Ajuste para orçamento estudantil (< $50) e correção de formatação | Pedro Henrique P. Santos |
+| `1.1` | 11/07/2026 | Ajuste para orçamento estudantil (< \$50) e correção de formatação | Pedro Henrique P. Santos |
