@@ -1,5 +1,5 @@
 ---
-title: 'Relatório de Testes de Mutação (PiTest)'
+title: 'Relatório de Testes de Mutação'
 ---
 
 # :material-dna: Relatórios de Testes de Mutação
