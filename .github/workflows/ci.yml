@@ -385,7 +385,7 @@ jobs:
   infra-approved:
     name: Infra Approved
     runs-on: ubuntu-latest
-    needs: [infra-validate, infra-docker]
+    needs: [infra-tasks]
     steps:
       - run: echo "All Infrastructure Validations Passed"
 
