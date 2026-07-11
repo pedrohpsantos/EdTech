@@ -7942,7 +7942,7 @@ Qualquer rota protegida passa pelo <code>JwtAuthenticationFilter</code> antes de
 </ul>
 <h3 id="desenvolvimento-devops-ci_cd-infraestrutura">Infraestrutura<a class="headerlink" href="#desenvolvimento-devops-ci_cd-infraestrutura" title="Permanent link">¶</a></h3>
 <ul>
-<li><strong>Terraform</strong>: A pasta <code>infra/prod/terraform</code> mantém módulos para <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run, <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> <abbr title="Structured Query Language — Linguagem de Consulta Estruturada">SQL</abbr> e <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Storage. O arquivo <code>terraform.tfvars</code> real não deve ser versionado; use <code>terraform.tfvars.example</code> como base.</li>
+<li><strong>Terraform</strong>: A pasta <code>infra/terraform</code> mantém módulos para <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run, <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> <abbr title="Structured Query Language — Linguagem de Consulta Estruturada">SQL</abbr> e <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Storage. O arquivo <code>terraform.tfvars</code> real não deve ser versionado; use <code>terraform.tfvars.example</code> como base.</li>
 </ul>
 <hr>
 <h2 id="desenvolvimento-devops-ci_cd-historico-de-versoes">Histórico de Versões<a class="headerlink" href="#desenvolvimento-devops-ci_cd-historico-de-versoes" title="Permanent link">¶</a></h2>
@@ -10308,7 +10308,7 @@ Hospedar arquivos estáticos em instâncias de contêiner ou máquinas virtuais 
 <p>Também havia risco de documentar ou versionar identificadores concretos de projeto, buckets, imagens e instâncias de banco em arquivos que deveriam ser reutilizáveis. Para reduzir esse risco, a infraestrutura precisa ser declarativa, parametrizada e revisável no mesmo fluxo de Pull Request do restante do código.</p>
 <h2 id="arquitetura-decisoes_adrs-0014-terraform-infraestrutura-como-codigo-decisao">Decisão<a class="headerlink" href="#arquitetura-decisoes_adrs-0014-terraform-infraestrutura-como-codigo-decisao" title="Permanent link">¶</a></h2>
 <p>Adotamos <strong>Terraform</strong> como ferramenta de Infraestrutura como Código para os recursos principais de backend na Google <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr>.</p>
-<p>A definição fica em <code>infra/prod/terraform</code> e é organizada em módulos:</p>
+<p>A definição fica em <code>infra/terraform</code> e é organizada em módulos:</p>
 <table>
 <thead>
 <tr>
