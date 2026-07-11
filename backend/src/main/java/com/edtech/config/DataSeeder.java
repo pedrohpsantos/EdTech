@@ -15,12 +15,14 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
 /** Data seeder para popular o banco de dados com dados iniciais. */
 @Configuration
+@ConditionalOnWebApplication
 public class DataSeeder implements CommandLineRunner {
 
   private final UserRepository userRepository;

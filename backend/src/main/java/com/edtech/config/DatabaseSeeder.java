@@ -10,12 +10,14 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-/** Database Seeder para inicializar usuários de demonstração e projetos fake. */
+/** Documentação para DatabaseSeeder. */
 @Component
+@ConditionalOnWebApplication
 public class DatabaseSeeder implements CommandLineRunner {
 
   private static final Logger logger = LoggerFactory.getLogger(DatabaseSeeder.class);
