@@ -322,6 +322,17 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v4
         
+      - name: Ensure Terraform State Bucket Exists
+        run: |
+          if ! gsutil ls gs://edtech-terraform-state-501117 > /dev/null 2>&1; then
+            echo "Bucket não encontrado. Criando bucket de estado do Terraform..."
+            gsutil mb -p edtech-storage-501117 -l southamerica-east1 -b on gs://edtech-terraform-state-501117
+            gsutil versioning set on gs://edtech-terraform-state-501117
+            echo "Bucket criado com sucesso."
+          else
+            echo "Bucket já existe."
+          fi
+
       - name: Terraform Init
         working-directory: infra/terraform
         run: terraform init -backend-config="bucket=edtech-terraform-state-501117"
