@@ -24,10 +24,8 @@ export const options = {
     // 95% das requisições devem responder em menos de 500ms.
     http_req_duration: ['p(95)<500'],
 
-    // Menos de 1% das requisições podem falhar.
-    // NOTE: Vamos permitir que a taxa de erro seja ignorada no check de status 401
-    // se considerarmos falha apenas timeouts e 500.
-    http_req_failed: ['rate<0.01'],
+    // Menos de 1% das validações (checks) podem falhar.
+    checks: ['rate>0.99'],
   },
 };
 
@@ -50,7 +48,8 @@ export default function () {
 
   const loginResponse = http.post(`${baseUrl}/api/auth/login`, loginPayload, params);
 
-  // Validamos se a rota respondeu com status esperado (401 pois a senha esta errada, ou 429 Rate Limit)
+  // Validamos se a rota respondeu com status esperado
+  // 401 pois a senha está errada, ou 429 se o Rate Limiter bloquear (comportamento correto)
   check(loginResponse, {
     'login respondeu (banco acessado)': (res) => res.status === 401 || res.status === 200 || res.status === 429,
   });
