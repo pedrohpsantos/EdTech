@@ -36,4 +36,10 @@
         <Class name="com.edtech.service.EmailService" />
         <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
     </Match>
+
+    <!-- Ignore DM_EXIT in MigrationExitRunner since it is explicitly designed to exit the JVM after migration -->
+    <Match>
+        <Class name="com.edtech.config.MigrationExitRunner" />
+        <Bug pattern="DM_EXIT" />
+    </Match>
 </FindBugsFilter>
