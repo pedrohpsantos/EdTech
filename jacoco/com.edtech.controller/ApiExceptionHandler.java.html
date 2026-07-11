@@ -39,5 +39,12 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 <span class="fc" id="L39">    return ResponseEntity.badRequest()</span>
 <span class="fc" id="L40">        .body(new ErrorResponse(&quot;invalid_request&quot;, &quot;Verifique os dados enviados.&quot;));</span>
   }
+
+  @ExceptionHandler(org.springframework.dao.DataIntegrityViolationException.class)
+  public ResponseEntity&lt;ErrorResponse&gt; handleDataIntegrityViolation(
+      org.springframework.dao.DataIntegrityViolationException exception) {
+<span class="nc" id="L46">    return ResponseEntity.status(HttpStatus.CONFLICT)</span>
+<span class="nc" id="L47">        .body(new ErrorResponse(&quot;email_already_registered&quot;, &quot;Conflito de dados. Verifique unicidade.&quot;));</span>
+  }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
