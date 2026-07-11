@@ -9274,7 +9274,7 @@ flowchart LR
 <h3 id="arquitetura-finops_custos-21-cloud-sql-banco-de-dados">2.1. <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> <abbr title="Structured Query Language — Linguagem de Consulta Estruturada">SQL</abbr> (Banco de Dados)<a class="headerlink" href="#arquitetura-finops_custos-21-cloud-sql-banco-de-dados" title="Permanent link">¶</a></h3>
 <p>Para mantermos o custo baixo sem perder a consistência, utilizaremos instâncias de núcleo compartilhado (<em>Shared Core</em>):</p>
 <ul>
-<li><strong>Homologação/Produção Inicial (<code>db-f1-micro</code>, 10GB SSD)</strong>: <span class="arithmatex">\(\approx \$9.00\)</span> a <span class="arithmatex">\(\$15.00\)</span> / mês.</li>
+<li><strong>Homologação/Produção Inicial (<code>db-f1-micro</code>, 10GB SSD)</strong>: ~ $9.00 a $15.00 / mês.</li>
 </ul>
 <h3 id="arquitetura-finops_custos-22-cloud-run-backend-da-api">2.2. <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run (<abbr title="Camada de servidor e banco de dados da aplicação">Backend</abbr> da <abbr title="Application Programming Interface — Interface de Programação de Aplicação">API</abbr>)<a class="headerlink" href="#arquitetura-finops_custos-22-cloud-run-backend-da-api" title="Permanent link">¶</a></h3>
 <p>Cálculo considerando:</p>
@@ -9288,8 +9288,8 @@ flowchart LR
 <p>Armazenamento Padrão (<em>Standard</em>):</p>
 <ul>
 <li><strong>Volume</strong>: 20 GB (documentos e metadados).</li>
-<li><strong>Custo de Armazenamento</strong>: <span class="arithmatex">\(\approx \$0.026\)</span> por GB = <strong><span class="arithmatex">\(\approx \$0.52\)</span> / mês</strong>.</li>
-<li><strong>Custo de Tráfego (<em>Egress</em>)</strong>: Assumindo 10 GB de download = <span class="arithmatex">\(\approx \$0.12\)</span> por GB = <strong><span class="arithmatex">\(\approx \$1.20\)</span> / mês</strong>.</li>
+<li><strong>Custo de Armazenamento</strong>: ~ $0.026 por GB = <strong>~ $0.52 / mês</strong>.</li>
+<li><strong>Custo de Tráfego (<em>Egress</em>)</strong>: Assumindo 10 GB de download = ~ $0.12 por GB = <strong>~ $1.20 / mês</strong>.</li>
 </ul>
 <h3 id="arquitetura-finops_custos-24-resumo-total-mensal">2.4. Resumo Total Mensal<a class="headerlink" href="#arquitetura-finops_custos-24-resumo-total-mensal" title="Permanent link">¶</a></h3>
 <table>
@@ -9302,28 +9302,28 @@ flowchart LR
 <tbody>
 <tr>
 <td style="text-align: left;"><abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> <abbr title="Structured Query Language — Linguagem de Consulta Estruturada">SQL</abbr> (F1-Micro)</td>
-<td style="text-align: left;">$ 15.00</td>
+<td style="text-align: left;">$15.00</td>
 </tr>
 <tr>
 <td style="text-align: left;"><abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run</td>
-<td style="text-align: left;">$ 0.00 (Coberto pela Cota Gratuita)</td>
+<td style="text-align: left;">$0.00 (Coberto pela Cota Gratuita)</td>
 </tr>
 <tr>
 <td style="text-align: left;"><abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Storage</td>
-<td style="text-align: left;">$ 1.72</td>
+<td style="text-align: left;">$1.72</td>
 </tr>
 <tr>
 <td style="text-align: left;">Firebase Hosting / Rede</td>
-<td style="text-align: left;">$ 0.00 (Coberto pela Cota Gratuita)</td>
+<td style="text-align: left;">$0.00 (Coberto pela Cota Gratuita)</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Total Estimado</strong></td>
-<td style="text-align: left;"><strong><span class="arithmatex">\(\approx \$16.72\)</span> / mês</strong></td>
+<td style="text-align: left;"><strong>~ $16.72 / mês</strong></td>
 </tr>
 </tbody>
 </table>
 <blockquote>
-<p><strong>Aviso</strong>: O custo estimado de <strong><span class="arithmatex">\(16.72** está perfeitamente alinhado com a restrição orçamentária do balancete acadêmico de **\)</span>50.00 USD</strong>.</p>
+<p><strong>Aviso</strong>: O custo estimado de <strong>$16.72</strong> está perfeitamente alinhado com a restrição orçamentária do balancete acadêmico de <strong>$50.00 USD</strong>.</p>
 </blockquote>
 <hr>
 <h2 id="arquitetura-finops_custos-3-praticas-de-otimizacao-adotadas">3. Práticas de Otimização Adotadas<a class="headerlink" href="#arquitetura-finops_custos-3-praticas-de-otimizacao-adotadas" title="Permanent link">¶</a></h2>

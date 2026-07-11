@@ -3904,7 +3904,7 @@
 <h3 id="21-cloud-sql-banco-de-dados">2.1. <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> <abbr title="Structured Query Language — Linguagem de Consulta Estruturada">SQL</abbr> (Banco de Dados)<a class="headerlink" href="#21-cloud-sql-banco-de-dados" title="Permanent link">¶</a></h3>
 <p>Para mantermos o custo baixo sem perder a consistência, utilizaremos instâncias de núcleo compartilhado (<em>Shared Core</em>):</p>
 <ul>
-<li><strong>Homologação/Produção Inicial (<code>db-f1-micro</code>, 10GB SSD)</strong>: <span class="arithmatex">\(\approx \$9.00\)</span> a <span class="arithmatex">\(\$15.00\)</span> / mês.</li>
+<li><strong>Homologação/Produção Inicial (<code>db-f1-micro</code>, 10GB SSD)</strong>: ~ $9.00 a $15.00 / mês.</li>
 </ul>
 <h3 id="22-cloud-run-backend-da-api">2.2. <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run (<abbr title="Camada de servidor e banco de dados da aplicação">Backend</abbr> da <abbr title="Application Programming Interface — Interface de Programação de Aplicação">API</abbr>)<a class="headerlink" href="#22-cloud-run-backend-da-api" title="Permanent link">¶</a></h3>
 <p>Cálculo considerando:</p>
@@ -3918,8 +3918,8 @@
 <p>Armazenamento Padrão (<em>Standard</em>):</p>
 <ul>
 <li><strong>Volume</strong>: 20 GB (documentos e metadados).</li>
-<li><strong>Custo de Armazenamento</strong>: <span class="arithmatex">\(\approx \$0.026\)</span> por GB = <strong><span class="arithmatex">\(\approx \$0.52\)</span> / mês</strong>.</li>
-<li><strong>Custo de Tráfego (<em>Egress</em>)</strong>: Assumindo 10 GB de download = <span class="arithmatex">\(\approx \$0.12\)</span> por GB = <strong><span class="arithmatex">\(\approx \$1.20\)</span> / mês</strong>.</li>
+<li><strong>Custo de Armazenamento</strong>: ~ $0.026 por GB = <strong>~ $0.52 / mês</strong>.</li>
+<li><strong>Custo de Tráfego (<em>Egress</em>)</strong>: Assumindo 10 GB de download = ~ $0.12 por GB = <strong>~ $1.20 / mês</strong>.</li>
 </ul>
 <h3 id="24-resumo-total-mensal">2.4. Resumo Total Mensal<a class="headerlink" href="#24-resumo-total-mensal" title="Permanent link">¶</a></h3>
 <table>
@@ -3932,28 +3932,28 @@
 <tbody>
 <tr>
 <td style="text-align: left;"><abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> <abbr title="Structured Query Language — Linguagem de Consulta Estruturada">SQL</abbr> (F1-Micro)</td>
-<td style="text-align: left;">$ 15.00</td>
+<td style="text-align: left;">$15.00</td>
 </tr>
 <tr>
 <td style="text-align: left;"><abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run</td>
-<td style="text-align: left;">$ 0.00 (Coberto pela Cota Gratuita)</td>
+<td style="text-align: left;">$0.00 (Coberto pela Cota Gratuita)</td>
 </tr>
 <tr>
 <td style="text-align: left;"><abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Storage</td>
-<td style="text-align: left;">$ 1.72</td>
+<td style="text-align: left;">$1.72</td>
 </tr>
 <tr>
 <td style="text-align: left;">Firebase Hosting / Rede</td>
-<td style="text-align: left;">$ 0.00 (Coberto pela Cota Gratuita)</td>
+<td style="text-align: left;">$0.00 (Coberto pela Cota Gratuita)</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Total Estimado</strong></td>
-<td style="text-align: left;"><strong><span class="arithmatex">\(\approx \$16.72\)</span> / mês</strong></td>
+<td style="text-align: left;"><strong>~ $16.72 / mês</strong></td>
 </tr>
 </tbody>
 </table>
 <blockquote>
-<p><strong>Aviso</strong>: O custo estimado de <strong><span class="arithmatex">\(16.72** está perfeitamente alinhado com a restrição orçamentária do balancete acadêmico de **\)</span>50.00 USD</strong>.</p>
+<p><strong>Aviso</strong>: O custo estimado de <strong>$16.72</strong> está perfeitamente alinhado com a restrição orçamentária do balancete acadêmico de <strong>$50.00 USD</strong>.</p>
 </blockquote>
 <hr>
 <h2 id="3-praticas-de-otimizacao-adotadas">3. Práticas de Otimização Adotadas<a class="headerlink" href="#3-praticas-de-otimizacao-adotadas" title="Permanent link">¶</a></h2>
@@ -4017,7 +4017,7 @@
     <span class="md-icon" title="Última atualização">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="11 de julho de 2026 20:15:29 UTC">11 de julho de 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="11 de julho de 2026 20:32:11 UTC">11 de julho de 2026</span>
   </span>
 
     
