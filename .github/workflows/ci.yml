@@ -337,6 +337,16 @@ jobs:
         working-directory: infra/terraform
         run: terraform init -backend-config="bucket=edtech-terraform-state-501117"
         
+      - name: Terraform Import Existing Bucket
+        working-directory: infra/terraform
+        run: |
+          terraform import \
+            -var="project_id=edtech-storage-501117" \
+            -var="backend_image_tag=${{ github.sha }}" \
+            -var="storage_bucket_name=edtech-vault-storage" \
+            -var="cors_allowed_origin=https://edtech-storage-501117.web.app" \
+            module.storage_app.google_storage_bucket.bucket edtech-vault-storage || echo "Import falhou ou já está no state, prosseguindo..."
+
       - name: Terraform Apply
         working-directory: infra/terraform
         run: |
