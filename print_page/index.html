@@ -1639,34 +1639,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../desenvolvimento/qualidade_e_testes/qualidade_testes/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Qualidade e Testes (JaCoCo)
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../desenvolvimento/qualidade_e_testes/jacoco_report/" class="md-nav__link">
         
   
@@ -4030,21 +4002,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#desenvolvimento-qualidade_e_testes-qualidade_testes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3.5.1 Qualidade e Testes (JaCoCo)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#desenvolvimento-qualidade_e_testes-jacoco_report" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.5.2 Relatório de Cobertura (JaCoCo)
+        3.5.1 Relatório de Cobertura (JaCoCo)
       
     </span>
   </a>
@@ -4055,7 +4016,7 @@
   <a href="#desenvolvimento-qualidade_e_testes-mutation_test_report" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.5.3 Relatório de Testes de Mutação
+        3.5.2 Relatório de Testes de Mutação
       
     </span>
   </a>
@@ -4066,7 +4027,7 @@
   <a href="#desenvolvimento-qualidade_e_testes-vitest_report" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.5.4 Relatório Vitest (Frontend)
+        3.5.3 Relatório Vitest (Frontend)
       
     </span>
   </a>
@@ -4077,7 +4038,7 @@
   <a href="#desenvolvimento-qualidade_e_testes-smoke_test_report" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.5.5 Relatório de Testes E2E (Smoke Tests)
+        3.5.4 Relatório de Testes E2E (Smoke Tests)
       
     </span>
   </a>
@@ -4088,7 +4049,7 @@
   <a href="#desenvolvimento-qualidade_e_testes-k6_report" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.5.6 Relatório K6 (Carga)
+        3.5.5 Relatório K6 (Carga)
       
     </span>
   </a>
@@ -4099,7 +4060,7 @@
   <a href="#desenvolvimento-qualidade_e_testes-lighthouse_report" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.5.7 Relatório de Produção (Lighthouse UX & SEO)
+        3.5.6 Relatório de Produção (Lighthouse UX & SEO)
       
     </span>
   </a>
@@ -8130,85 +8091,7 @@ Qualquer rota protegida passa pelo <code>JwtAuthenticationFilter</code> antes de
                     <section class='print-page md-section' id='section-3-5' heading-number='3.5'>
                         <h1>Qualidade e Testes<a class='headerlink' href='#section-3-5' title='Permanent link'></a>
                         </h1>
-                    <section class="print-page" id="desenvolvimento-qualidade_e_testes-qualidade_testes" heading-number="3.5.1"><html><head>
-        <script type="text/javascript">
-        document.addEventListener('DOMContentLoaded', function () {
-            remove_material_navigation();remove_mkdocs_theme_navigation();generate_toc();
-        })
-        </script>
-        </head><body><h1 id="qualidade-e-testes-jacoco"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m10 17-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9m-6-8L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5z"></path></svg></span> Qualidade e Testes (JaCoCo)<a class="headerlink" href="#desenvolvimento-qualidade_e_testes-qualidade_testes-qualidade-e-testes-jacoco" title="Permanent link">¶</a></h1>
-<p>Esta página centraliza as métricas de qualidade de código do backend.
-O nosso pipeline de CI está configurado para executar os testes e extrair a cobertura usando o <strong>JaCoCo</strong>.</p>
-<div class="admonition info">
-<p class="admonition-title">Cobertura vs. mutação</p>
-<p>O JaCoCo mostra cobertura de linhas e branches. Testes de mutação são avaliados pelo PiTest e ficam no <a href="#desenvolvimento-qualidade_e_testes-mutation_test_report">Relatório de Testes de Mutação</a>.</p>
-</div>
-<h2 id="desenvolvimento-qualidade_e_testes-qualidade_testes-relatorio-de-cobertura-jacoco">Relatório de Cobertura (JaCoCo)<a class="headerlink" href="#desenvolvimento-qualidade_e_testes-qualidade_testes-relatorio-de-cobertura-jacoco" title="Permanent link">¶</a></h2>
-<iframe id="jacoco-frame" src="https://pedrohpsantos.github.io/EdTech/jacoco/index.html" width="100%" height="800px" style="border:none; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);" onload="injectJacocoStyles()"></iframe>
-
-<script>
-function injectJacocoStyles() {
-    var iframe = document.getElementById('jacoco-frame');
-    try {
-        var doc = iframe.contentDocument || iframe.contentWindow.document;
-        var style = doc.createElement('style');
-        style.innerHTML = `
-            body { font-family: 'Inter', system-ui, sans-serif !important; background-color: #ffffff; color: #333; padding: 20px; }
-            table.coverage { width: 100%; border-collapse: collapse; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border: 1px solid #eaeaea; }
-            table.coverage thead { background-color: #f8f9fa; color: #202124; border-bottom: 2px solid #e0e0e0; }
-            table.coverage thead td { padding: 12px 16px; font-weight: 600; border: none; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px; }
-            table.coverage tbody tr { border-bottom: 1px solid #f0f0f0; background: white; transition: background-color 0.2s; }
-            table.coverage tbody tr:hover { background: #f8f9fa; }
-            table.coverage tbody td { padding: 12px 16px; border: none; font-size: 0.95rem; color: #444; }
-            a { color: #2563eb; text-decoration: none; font-weight: 500; }
-            a:hover { color: #1d4ed8; text-decoration: underline; }
-            img { border-radius: 3px; }
-            .bar { height: 8px !important; border-radius: 4px !important; margin-top: 4px; }
-            .ctr2 { font-weight: 600; color: #111; }
-            .footer { margin-top: 30px; color: #888; text-align: center; font-size: 0.85em; padding-top: 15px; border-top: 1px solid #eee; }
-            h1 { font-size: 1.75rem; color: #111; margin-bottom: 24px; font-weight: 700; letter-spacing: -0.5px; }
-            .breadcrumb { margin-bottom: 20px; font-size: 0.95em; color: #666; background: #f8f9fa; padding: 10px 15px; border-radius: 6px; }
-            .breadcrumb a { color: #2563eb; }
-        `;
-        doc.head.appendChild(style);
-    } catch(e) {
-        console.warn('Could not inject styles into JaCoCo iframe', e);
-    }
-}
-</script>
-
-<p><em>(O relatório acima é gerado automaticamente pelo pipeline de <abbr title="Continuous Integration / Continuous Delivery — Integração Contínua / Entrega Contínua">CI/CD</abbr>)</em></p>
-<h2 id="desenvolvimento-qualidade_e_testes-qualidade_testes-historico-de-versoes">Histórico de Versões<a class="headerlink" href="#desenvolvimento-qualidade_e_testes-qualidade_testes-historico-de-versoes" title="Permanent link">¶</a></h2>
-<table>
-<thead>
-<tr>
-<th>Versão</th>
-<th>Data</th>
-<th>Descrição</th>
-<th>Autor</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>1.0</code></td>
-<td>28/06/2026</td>
-<td>Criação e estruturação do documento</td>
-<td>Pedro Henrique P. Santos</td>
-</tr>
-<tr>
-<td><code>1.1</code></td>
-<td>04/07/2026</td>
-<td>Revisão profunda, correção de metadados e melhorias visuais</td>
-<td>Pedro Henrique P. Santos</td>
-</tr>
-<tr>
-<td><code>1.2</code></td>
-<td>09/07/2026</td>
-<td>Esclarece diferença entre JaCoCo e PiTest</td>
-<td>Pedro Henrique P. Santos</td>
-</tr>
-</tbody>
-</table></body></html></section><section class="print-page" id="desenvolvimento-qualidade_e_testes-jacoco_report" heading-number="3.5.2"><html><head>
+                    <section class="print-page" id="desenvolvimento-qualidade_e_testes-jacoco_report" heading-number="3.5.1"><html><head>
         <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function () {
             remove_material_navigation();remove_mkdocs_theme_navigation();generate_toc();
@@ -8297,7 +8180,7 @@ function injectJacocoStyles() {
 <td>Pedro Henrique P. Santos</td>
 </tr>
 </tbody>
-</table></body></html></section><section class="print-page" id="desenvolvimento-qualidade_e_testes-mutation_test_report" heading-number="3.5.3"><html><head>
+</table></body></html></section><section class="print-page" id="desenvolvimento-qualidade_e_testes-mutation_test_report" heading-number="3.5.2"><html><head>
         <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function () {
             remove_material_navigation();remove_mkdocs_theme_navigation();generate_toc();
@@ -8473,7 +8356,7 @@ function injectPitestStyles() {
 <td>Pedro Henrique P. Santos</td>
 </tr>
 </tbody>
-</table></body></html></section><section class="print-page" id="desenvolvimento-qualidade_e_testes-vitest_report" heading-number="3.5.4"><html><head>
+</table></body></html></section><section class="print-page" id="desenvolvimento-qualidade_e_testes-vitest_report" heading-number="3.5.3"><html><head>
         <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function () {
             remove_material_navigation();remove_mkdocs_theme_navigation();generate_toc();
@@ -8517,7 +8400,7 @@ function injectPitestStyles() {
 <td>Pedro Henrique P. Santos</td>
 </tr>
 </tbody>
-</table></body></html></section><section class="print-page" id="desenvolvimento-qualidade_e_testes-smoke_test_report" heading-number="3.5.5"><html><head>
+</table></body></html></section><section class="print-page" id="desenvolvimento-qualidade_e_testes-smoke_test_report" heading-number="3.5.4"><html><head>
         <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function () {
             remove_material_navigation();remove_mkdocs_theme_navigation();generate_toc();
@@ -8562,7 +8445,7 @@ function injectPitestStyles() {
 <td>Pedro Henrique P. Santos</td>
 </tr>
 </tbody>
-</table></body></html></section><section class="print-page" id="desenvolvimento-qualidade_e_testes-k6_report" heading-number="3.5.6"><html><head>
+</table></body></html></section><section class="print-page" id="desenvolvimento-qualidade_e_testes-k6_report" heading-number="3.5.5"><html><head>
         <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function () {
             remove_material_navigation();remove_mkdocs_theme_navigation();generate_toc();
@@ -8597,7 +8480,7 @@ function injectPitestStyles() {
 <td>Pedro Henrique P. Santos</td>
 </tr>
 </tbody>
-</table></body></html></section><section class="print-page" id="desenvolvimento-qualidade_e_testes-lighthouse_report" heading-number="3.5.7"><html><head>
+</table></body></html></section><section class="print-page" id="desenvolvimento-qualidade_e_testes-lighthouse_report" heading-number="3.5.6"><html><head>
         <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function () {
             remove_material_navigation();remove_mkdocs_theme_navigation();generate_toc();
@@ -14635,19 +14518,17 @@ Copie toda a estrutura abaixo para o novo arquivo, preencha os dados e adicione 
 .print-site-enumerate-headings #desenvolvimento-devops-runbooks > h1:before { content: '3.4.2 ' }
 
 .print-site-enumerate-headings #section-3-5 > h1:before { content: '3.5 ' }
-.print-site-enumerate-headings #desenvolvimento-qualidade_e_testes-qualidade_testes > h1:before { content: '3.5.1 ' }
+.print-site-enumerate-headings #desenvolvimento-qualidade_e_testes-jacoco_report > h1:before { content: '3.5.1 ' }
 
-.print-site-enumerate-headings #desenvolvimento-qualidade_e_testes-jacoco_report > h1:before { content: '3.5.2 ' }
+.print-site-enumerate-headings #desenvolvimento-qualidade_e_testes-mutation_test_report > h1:before { content: '3.5.2 ' }
 
-.print-site-enumerate-headings #desenvolvimento-qualidade_e_testes-mutation_test_report > h1:before { content: '3.5.3 ' }
+.print-site-enumerate-headings #desenvolvimento-qualidade_e_testes-vitest_report > h1:before { content: '3.5.3 ' }
 
-.print-site-enumerate-headings #desenvolvimento-qualidade_e_testes-vitest_report > h1:before { content: '3.5.4 ' }
+.print-site-enumerate-headings #desenvolvimento-qualidade_e_testes-smoke_test_report > h1:before { content: '3.5.4 ' }
 
-.print-site-enumerate-headings #desenvolvimento-qualidade_e_testes-smoke_test_report > h1:before { content: '3.5.5 ' }
+.print-site-enumerate-headings #desenvolvimento-qualidade_e_testes-k6_report > h1:before { content: '3.5.5 ' }
 
-.print-site-enumerate-headings #desenvolvimento-qualidade_e_testes-k6_report > h1:before { content: '3.5.6 ' }
-
-.print-site-enumerate-headings #desenvolvimento-qualidade_e_testes-lighthouse_report > h1:before { content: '3.5.7 ' }
+.print-site-enumerate-headings #desenvolvimento-qualidade_e_testes-lighthouse_report > h1:before { content: '3.5.6 ' }
 
 .print-site-enumerate-headings #section-4 > h1:before { content: '4 ' }
 .print-site-enumerate-headings #arquitetura-design_tecnico > h1:before { content: '4.1 ' }
