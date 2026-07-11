@@ -320,7 +320,7 @@ jobs:
           gcloud run jobs execute edtech-db-migration --region southamerica-east1 --wait || true
           
       - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
+        uses: hashicorp/setup-terraform@v4
         
       - name: Terraform Init
         working-directory: infra/terraform
