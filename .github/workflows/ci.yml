@@ -175,7 +175,8 @@ jobs:
         # unit       = Vitest unit tests
         # a11y       = Accessibility tests (WCAG)
         # components = Component integration tests
-        task: [lint, build, unit, a11y, components]
+        # mutation   = Mutation testing (Stryker)
+        task: [lint, build, unit, a11y, components, mutation]
     defaults:
       run:
         working-directory: frontend
@@ -262,6 +263,22 @@ jobs:
             echo "| Check | Result |"
             echo "| --- | --- |"
             echo "| Component tests | ${{ steps.component-tests.outcome }} |"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      # --- MUTATION TESTS (STRYKER) ---
+      - name: Run Mutation Tests (Stryker)
+        if: matrix.task == 'mutation'
+        id: mutation-tests
+        run: npx stryker run
+      - name: Frontend Mutation Test Summary
+        if: always() && matrix.task == 'mutation'
+        run: |
+          {
+            echo "## Mutation test summary (Stryker)"
+            echo
+            echo "| Check | Result |"
+            echo "| --- | --- |"
+            echo "| Mutation tests | ${{ steps.mutation-tests.outcome }} |"
           } >> "$GITHUB_STEP_SUMMARY"
 
   # ==========================================

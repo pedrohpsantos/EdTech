@@ -2,19 +2,30 @@
 title: 'Relatório de Testes de Mutação (PiTest)'
 ---
 
-# :material-dna: Relatório de Testes de Mutação (PiTest)
+# :material-dna: Relatórios de Testes de Mutação
 
-Esta pagina publica o relatorio HTML do **PiTest**, responsavel por avaliar a efetividade dos testes do backend por meio de mutacoes controladas no codigo.
+Esta página publica os relatórios HTML de **Testes de Mutação**, responsáveis por avaliar a efetividade dos testes automatizados inserindo "bugs" (mutações) intencionais no código para verificar se os testes falham.
 
-!!! note "JaCoCo e PiTest medem coisas diferentes"
-    O JaCoCo mede cobertura estrutural, como linhas e branches executados. Testes de mutacao nao aparecem no JaCoCo; eles sao gerados pelo PiTest em um relatorio HTML separado.
+!!! note "JaCoCo/Vitest e Testes de Mutação medem coisas diferentes"
+    Ferramentas de cobertura tradicionais medem linhas e branches executados. Testes de mutação vão além: eles avaliam a **qualidade** da suíte de testes.
 
-<div style="display: flex; justify-content: flex-end; margin-bottom: 15px;" markdown="1">
-  [Abrir em Tela Cheia :material-open-in-new:](https://pedrohpsantos.github.io/EdTech/pitest/index.html){ .md-button target="_blank" }
-</div>
+=== "Backend (PiTest)"
 
-<iframe id="pitest-frame" src="https://pedrohpsantos.github.io/EdTech/pitest/index.html" width="100%" height="860px" style="border:none; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); background-color: #fff;" onload="injectPitestStyles()">
-</iframe>
+    <div style="display: flex; justify-content: flex-end; margin-bottom: 15px;" markdown="1">
+      [Abrir em Tela Cheia :material-open-in-new:](https://pedrohpsantos.github.io/EdTech/pitest/index.html){ .md-button target="_blank" }
+    </div>
+
+    <iframe id="pitest-frame" src="https://pedrohpsantos.github.io/EdTech/pitest/index.html" width="100%" height="860px" style="border:none; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); background-color: #fff;" onload="injectPitestStyles()">
+    </iframe>
+
+=== "Frontend (Stryker)"
+
+    <div style="display: flex; justify-content: flex-end; margin-bottom: 15px;" markdown="1">
+      [Abrir em Tela Cheia :material-open-in-new:](https://pedrohpsantos.github.io/EdTech/stryker/index.html){ .md-button target="_blank" }
+    </div>
+
+    <iframe id="stryker-frame" src="https://pedrohpsantos.github.io/EdTech/stryker/index.html" width="100%" height="860px" style="border:none; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); background-color: #fff;">
+    </iframe>
 
 <script>
 function injectPitestStyles() {
@@ -139,3 +150,4 @@ function injectPitestStyles() {
 |--------|------|-----------|-------|
 | `1.0` | 09/07/2026 | Criacao da pagina de relatorio de mutacao PiTest | Pedro Henrique P. Santos |
 | `1.1` | 09/07/2026 | Melhoria visual do relatorio embarcado do PiTest | Pedro Henrique P. Santos |
+| `1.2` | 11/07/2026 | Adicao da aba de Frontend (Stryker) | Pedro Henrique P. Santos |
