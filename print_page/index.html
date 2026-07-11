@@ -1667,6 +1667,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../desenvolvimento/qualidade_e_testes/jacoco_report/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Relatório de Cobertura (JaCoCo)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../desenvolvimento/qualidade_e_testes/mutation_test_report/" class="md-nav__link">
         
   
@@ -1759,6 +1787,34 @@
     
   
     Relatório K6 (Carga)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../desenvolvimento/qualidade_e_testes/lighthouse_report/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Relatório de Produção (Lighthouse UX & SEO)
   
 
     
@@ -3985,10 +4041,21 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#desenvolvimento-qualidade_e_testes-jacoco_report" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.5.2 Relatório de Cobertura (JaCoCo)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#desenvolvimento-qualidade_e_testes-mutation_test_report" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.5.2 Relatório de Testes de Mutação
+        3.5.3 Relatório de Testes de Mutação
       
     </span>
   </a>
@@ -3999,7 +4066,7 @@
   <a href="#desenvolvimento-qualidade_e_testes-vitest_report" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.5.3 Relatório Vitest (Frontend)
+        3.5.4 Relatório Vitest (Frontend)
       
     </span>
   </a>
@@ -4010,7 +4077,7 @@
   <a href="#desenvolvimento-qualidade_e_testes-smoke_test_report" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.5.4 Relatório de Testes E2E (Smoke Tests)
+        3.5.5 Relatório de Testes E2E (Smoke Tests)
       
     </span>
   </a>
@@ -4021,7 +4088,18 @@
   <a href="#desenvolvimento-qualidade_e_testes-k6_report" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.5.5 Relatório K6 (Carga)
+        3.5.6 Relatório K6 (Carga)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#desenvolvimento-qualidade_e_testes-lighthouse_report" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.5.7 Relatório de Produção (Lighthouse UX & SEO)
       
     </span>
   </a>
@@ -8130,7 +8208,96 @@ function injectJacocoStyles() {
 <td>Pedro Henrique P. Santos</td>
 </tr>
 </tbody>
-</table></body></html></section><section class="print-page" id="desenvolvimento-qualidade_e_testes-mutation_test_report" heading-number="3.5.2"><html><head>
+</table></body></html></section><section class="print-page" id="desenvolvimento-qualidade_e_testes-jacoco_report" heading-number="3.5.2"><html><head>
+        <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            remove_material_navigation();remove_mkdocs_theme_navigation();generate_toc();
+        })
+        </script>
+        </head><body><h1 id="relatorio-de-cobertura-do-backend-jacoco"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m10 17-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9m-6-8L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5z"></path></svg></span> Relatório de Cobertura do <abbr title="Camada de servidor e banco de dados da aplicação">Backend</abbr> (JaCoCo)<a class="headerlink" href="#desenvolvimento-qualidade_e_testes-jacoco_report-relatorio-de-cobertura-do-backend-jacoco" title="Permanent link">¶</a></h1>
+<p>Esta página publica o relatório <abbr title="HyperText Markup Language — Linguagem de Marcação de Hipertexto">HTML</abbr> do <strong>JaCoCo</strong>, responsável por medir a cobertura estrutural (linhas, instruções e branches) dos testes unitários e de integração do backend.</p>
+<div class="admonition note">
+<p class="admonition-title">O que o JaCoCo mede?</p>
+<p>Diferente dos testes de mutação (PiTest), o JaCoCo mede <strong>quais linhas de código</strong> foram executadas durante a suíte de testes do Spring Boot. A meta do projeto é manter a cobertura global acima de 80%.</p>
+</div>
+<div style="display: flex; justify-content: flex-end; margin-bottom: 15px;">
+<p><a class="md-button" href="https://pedrohpsantos.github.io/EdTech/jacoco/index.html" target="_blank">Abrir em Tela Cheia <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"></path></svg></span></a></p>
+</div>
+<iframe id="jacoco-frame" src="https://pedrohpsantos.github.io/EdTech/jacoco/index.html" width="100%" height="860px" style="border:none; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); background-color: #fff;" onload="injectJacocoStyles()">
+</iframe>
+
+<script>
+function injectJacocoStyles() {
+    var iframe = document.getElementById('jacoco-frame');
+    try {
+        var doc = iframe.contentDocument || iframe.contentWindow.document;
+        var style = doc.createElement('style');
+        style.innerHTML = `
+            :root { color-scheme: light; }
+            body {
+                font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
+                background: #ffffff !important;
+                color: #202124 !important;
+                margin: 0 !important;
+                padding: 24px !important;
+                line-height: 1.5 !important;
+            }
+            h1 {
+                margin: 0 0 20px !important;
+                color: #111827 !important;
+                font-size: 1.8rem !important;
+                font-weight: 750 !important;
+            }
+            table {
+                width: 100% !important;
+                border-collapse: separate !important;
+                border-spacing: 0 !important;
+                border: 1px solid #e5e7eb !important;
+                border-radius: 8px !important;
+                box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06) !important;
+                background: #ffffff !important;
+                margin-bottom: 18px !important;
+            }
+            thead { background: #f8fafc !important; }
+            th, td {
+                padding: 12px 16px !important;
+                border: 0 !important;
+                border-bottom: 1px solid #e5e7eb !important;
+                color: #374151 !important;
+                text-align: left !important;
+            }
+            tbody tr:last-child td { border-bottom: 0 !important; }
+            tbody tr:hover { background: #f9fafb !important; }
+            a { color: #2563eb !important; text-decoration: none !important; font-weight: 600 !important; }
+            a:hover { text-decoration: underline !important; }
+        `;
+        doc.head.appendChild(style);
+    } catch(e) {
+        console.warn('Could not inject styles into JaCoCo iframe', e);
+    }
+}
+</script>
+
+<p><em>(O relatório acima é gerado automaticamente pelo pipeline de documentação.)</em></p>
+<h2 id="desenvolvimento-qualidade_e_testes-jacoco_report-historico-de-versoes">Histórico de Versões<a class="headerlink" href="#desenvolvimento-qualidade_e_testes-jacoco_report-historico-de-versoes" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Versão</th>
+<th>Data</th>
+<th>Descrição</th>
+<th>Autor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>1.0</code></td>
+<td>11/07/2026</td>
+<td>Criação da página de relatório JaCoCo</td>
+<td>Pedro Henrique P. Santos</td>
+</tr>
+</tbody>
+</table></body></html></section><section class="print-page" id="desenvolvimento-qualidade_e_testes-mutation_test_report" heading-number="3.5.3"><html><head>
         <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function () {
             remove_material_navigation();remove_mkdocs_theme_navigation();generate_toc();
@@ -8306,7 +8473,7 @@ function injectPitestStyles() {
 <td>Pedro Henrique P. Santos</td>
 </tr>
 </tbody>
-</table></body></html></section><section class="print-page" id="desenvolvimento-qualidade_e_testes-vitest_report" heading-number="3.5.3"><html><head>
+</table></body></html></section><section class="print-page" id="desenvolvimento-qualidade_e_testes-vitest_report" heading-number="3.5.4"><html><head>
         <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function () {
             remove_material_navigation();remove_mkdocs_theme_navigation();generate_toc();
@@ -8350,7 +8517,7 @@ function injectPitestStyles() {
 <td>Pedro Henrique P. Santos</td>
 </tr>
 </tbody>
-</table></body></html></section><section class="print-page" id="desenvolvimento-qualidade_e_testes-smoke_test_report" heading-number="3.5.4"><html><head>
+</table></body></html></section><section class="print-page" id="desenvolvimento-qualidade_e_testes-smoke_test_report" heading-number="3.5.5"><html><head>
         <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function () {
             remove_material_navigation();remove_mkdocs_theme_navigation();generate_toc();
@@ -8395,7 +8562,7 @@ function injectPitestStyles() {
 <td>Pedro Henrique P. Santos</td>
 </tr>
 </tbody>
-</table></body></html></section><section class="print-page" id="desenvolvimento-qualidade_e_testes-k6_report" heading-number="3.5.5"><html><head>
+</table></body></html></section><section class="print-page" id="desenvolvimento-qualidade_e_testes-k6_report" heading-number="3.5.6"><html><head>
         <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function () {
             remove_material_navigation();remove_mkdocs_theme_navigation();generate_toc();
@@ -8427,6 +8594,43 @@ function injectPitestStyles() {
 <td><code>1.0</code></td>
 <td>11/07/2026</td>
 <td>Criação da página de relatório interativo K6</td>
+<td>Pedro Henrique P. Santos</td>
+</tr>
+</tbody>
+</table></body></html></section><section class="print-page" id="desenvolvimento-qualidade_e_testes-lighthouse_report" heading-number="3.5.7"><html><head>
+        <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            remove_material_navigation();remove_mkdocs_theme_navigation();generate_toc();
+        })
+        </script>
+        </head><body><h1 id="auditoria-de-producao-lighthouse"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 10V8h1V4H8V3l4-2 4 2v1h-1v4h1v2h-1.26l-6.3 3.64L9 10zm5-2V4h-2v4zM7 23l.04-.24 9.11-5.26.52 3.38L13 23zm1.05-6.83L15.31 12l.52 3.37-8.4 4.85z"></path></svg></span> Auditoria de Produção (Lighthouse)<a class="headerlink" href="#desenvolvimento-qualidade_e_testes-lighthouse_report-auditoria-de-producao-lighthouse" title="Permanent link">¶</a></h1>
+<p>Esta página publica o relatório <abbr title="HyperText Markup Language — Linguagem de Marcação de Hipertexto">HTML</abbr> do <strong>Google Lighthouse</strong>, executado automaticamente na <abbr title="Uniform Resource Locator — Localizador Uniforme de Recursos">URL</abbr> de Produção do <abbr title="Camada de interface visual do usuário">Frontend</abbr>. O Lighthouse avalia Performance, Acessibilidade, Boas Práticas e <abbr title="Search Engine Optimization — Otimização para Motores de Busca">SEO</abbr>.</p>
+<div class="admonition note">
+<p class="admonition-title">Testes em Produção</p>
+<p>O Lighthouse roda como parte da <strong>Matrix: Production Tests</strong> (junto com o <abbr title="Teste rápido de fumaça (Validação básica de disponibilidade)">Smoke Test</abbr> e o Teste de Carga K6), garantindo que cada novo deploy em produção passe pelos rígidos padrões de usabilidade do Google.</p>
+</div>
+<div style="display: flex; justify-content: flex-end; margin-bottom: 15px;">
+<p><a class="md-button" href="https://pedrohpsantos.github.io/EdTech/lighthouse/index.html" target="_blank">Abrir em Tela Cheia <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"></path></svg></span></a></p>
+</div>
+<iframe id="lighthouse-frame" src="https://pedrohpsantos.github.io/EdTech/lighthouse/index.html" width="100%" height="860px" style="border:none; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); background-color: #fff;">
+</iframe>
+
+<p><em>(O relatório acima é gerado automaticamente pela ferramenta Google Lighthouse CLI durante o pipeline de <abbr title="Implantação (Colocar o sistema no ar)">Deploy</abbr> em Produção.)</em></p>
+<h2 id="desenvolvimento-qualidade_e_testes-lighthouse_report-historico-de-versoes">Histórico de Versões<a class="headerlink" href="#desenvolvimento-qualidade_e_testes-lighthouse_report-historico-de-versoes" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Versão</th>
+<th>Data</th>
+<th>Descrição</th>
+<th>Autor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>1.0</code></td>
+<td>11/07/2026</td>
+<td>Adição do relatório de performance de produção Lighthouse</td>
 <td>Pedro Henrique P. Santos</td>
 </tr>
 </tbody>
@@ -14433,13 +14637,17 @@ Copie toda a estrutura abaixo para o novo arquivo, preencha os dados e adicione 
 .print-site-enumerate-headings #section-3-5 > h1:before { content: '3.5 ' }
 .print-site-enumerate-headings #desenvolvimento-qualidade_e_testes-qualidade_testes > h1:before { content: '3.5.1 ' }
 
-.print-site-enumerate-headings #desenvolvimento-qualidade_e_testes-mutation_test_report > h1:before { content: '3.5.2 ' }
+.print-site-enumerate-headings #desenvolvimento-qualidade_e_testes-jacoco_report > h1:before { content: '3.5.2 ' }
 
-.print-site-enumerate-headings #desenvolvimento-qualidade_e_testes-vitest_report > h1:before { content: '3.5.3 ' }
+.print-site-enumerate-headings #desenvolvimento-qualidade_e_testes-mutation_test_report > h1:before { content: '3.5.3 ' }
 
-.print-site-enumerate-headings #desenvolvimento-qualidade_e_testes-smoke_test_report > h1:before { content: '3.5.4 ' }
+.print-site-enumerate-headings #desenvolvimento-qualidade_e_testes-vitest_report > h1:before { content: '3.5.4 ' }
 
-.print-site-enumerate-headings #desenvolvimento-qualidade_e_testes-k6_report > h1:before { content: '3.5.5 ' }
+.print-site-enumerate-headings #desenvolvimento-qualidade_e_testes-smoke_test_report > h1:before { content: '3.5.5 ' }
+
+.print-site-enumerate-headings #desenvolvimento-qualidade_e_testes-k6_report > h1:before { content: '3.5.6 ' }
+
+.print-site-enumerate-headings #desenvolvimento-qualidade_e_testes-lighthouse_report > h1:before { content: '3.5.7 ' }
 
 .print-site-enumerate-headings #section-4 > h1:before { content: '4 ' }
 .print-site-enumerate-headings #arquitetura-design_tecnico > h1:before { content: '4.1 ' }
