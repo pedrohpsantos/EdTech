@@ -125,11 +125,21 @@ jobs:
           PY
 
       # --- PITEST ---
+      - name: Cache PiTest History
+        if: matrix.task == 'pitest'
+        uses: actions/cache@v4
+        with:
+          path: backend/target/pitHistory.txt
+          key: pitest-history-${{ github.ref }}-${{ github.sha }}
+          restore-keys: |
+            pitest-history-${{ github.ref }}-
+            pitest-history-
+      
       - name: Run Mutation Tests (PiTest)
         if: matrix.task == 'pitest'
         run: |
           chmod +x mvnw
-          ./mvnw clean test-compile org.pitest:pitest-maven:mutationCoverage -B -Dpitest.threads=8
+          ./mvnw clean test-compile org.pitest:pitest-maven:mutationCoverage -B -Dpitest.threads=8 -DwithHistory=true
 
       # --- SECURITY ---
       - name: Cache NVD Vulnerability Database
@@ -266,6 +276,16 @@ jobs:
           } >> "$GITHUB_STEP_SUMMARY"
 
       # --- MUTATION TESTS (STRYKER) ---
+      - name: Cache Stryker History
+        if: matrix.task == 'mutation'
+        uses: actions/cache@v4
+        with:
+          path: frontend/reports/mutation/stryker-incremental.json
+          key: stryker-history-${{ github.ref }}-${{ github.sha }}
+          restore-keys: |
+            stryker-history-${{ github.ref }}-
+            stryker-history-
+
       - name: Run Mutation Tests (Stryker)
         if: matrix.task == 'mutation'
         id: mutation-tests
