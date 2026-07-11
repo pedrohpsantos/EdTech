@@ -112,7 +112,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#relatorio-de-testes-de-mutacao-pitest" class="md-skip">
+        <a href="#relatorios-de-testes-de-mutacao" class="md-skip">
           Pular para conteúdo
         </a>
       
@@ -3704,18 +3704,30 @@
   
 
 
-<h1 id="relatorio-de-testes-de-mutacao-pitest"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2h2v2c0 1.44.68 2.61 1.88 3.78.86.83 2.01 1.63 3.21 2.42l-1.83 1.19C8.27 10.72 7.31 10 6.5 9.21 5.07 7.82 4 6.1 4 4zm14 0h2v2c0 2.1-1.07 3.82-2.5 5.21-1.41 1.38-3.21 2.52-4.96 3.63-1.75 1.12-3.45 2.21-4.66 3.38C6.68 17.39 6 18.56 6 20v2H4v-2c0-2.1 1.07-3.82 2.5-5.21 1.41-1.38 3.21-2.52 4.96-3.63 1.75-1.12 3.45-2.21 4.66-3.38C17.32 6.61 18 5.44 18 4zm-3.26 10.61c.99.67 1.95 1.39 2.76 2.18C18.93 16.18 20 17.9 20 20v2h-2v-2c0-1.44-.68-2.61-1.88-3.78-.86-.83-2.01-1.63-3.21-2.42zM7 3h10v1l-.06.5H7.06L7 4zm.68 3h8.64c-.24.34-.52.69-.9 1.06l-.51.44H9.07l-.49-.44c-.38-.37-.66-.72-.9-1.06m1.41 10.5h5.84l.49.44c.38.37.66.72.9 1.06H7.68c.24-.34.52-.69.9-1.06zm-2.03 3h9.88l.06.5v1H7v-1z"></path></svg></span> Relatório de Testes de Mutação (PiTest)<a class="headerlink" href="#relatorio-de-testes-de-mutacao-pitest" title="Permanent link">¶</a></h1>
-<p>Esta pagina publica o relatorio <abbr title="HyperText Markup Language — Linguagem de Marcação de Hipertexto">HTML</abbr> do <strong>PiTest</strong>, responsavel por avaliar a efetividade dos testes do backend por meio de mutacoes controladas no codigo.</p>
+<h1 id="relatorios-de-testes-de-mutacao"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2h2v2c0 1.44.68 2.61 1.88 3.78.86.83 2.01 1.63 3.21 2.42l-1.83 1.19C8.27 10.72 7.31 10 6.5 9.21 5.07 7.82 4 6.1 4 4zm14 0h2v2c0 2.1-1.07 3.82-2.5 5.21-1.41 1.38-3.21 2.52-4.96 3.63-1.75 1.12-3.45 2.21-4.66 3.38C6.68 17.39 6 18.56 6 20v2H4v-2c0-2.1 1.07-3.82 2.5-5.21 1.41-1.38 3.21-2.52 4.96-3.63 1.75-1.12 3.45-2.21 4.66-3.38C17.32 6.61 18 5.44 18 4zm-3.26 10.61c.99.67 1.95 1.39 2.76 2.18C18.93 16.18 20 17.9 20 20v2h-2v-2c0-1.44-.68-2.61-1.88-3.78-.86-.83-2.01-1.63-3.21-2.42zM7 3h10v1l-.06.5H7.06L7 4zm.68 3h8.64c-.24.34-.52.69-.9 1.06l-.51.44H9.07l-.49-.44c-.38-.37-.66-.72-.9-1.06m1.41 10.5h5.84l.49.44c.38.37.66.72.9 1.06H7.68c.24-.34.52-.69.9-1.06zm-2.03 3h9.88l.06.5v1H7v-1z"></path></svg></span> Relatórios de Testes de Mutação<a class="headerlink" href="#relatorios-de-testes-de-mutacao" title="Permanent link">¶</a></h1>
+<p>Esta página publica os relatórios <abbr title="HyperText Markup Language — Linguagem de Marcação de Hipertexto">HTML</abbr> de <strong>Testes de Mutação</strong>, responsáveis por avaliar a efetividade dos testes automatizados inserindo "bugs" (mutações) intencionais no código para verificar se os testes falham.</p>
 <div class="admonition note">
-<p class="admonition-title">JaCoCo e PiTest medem coisas diferentes</p>
-<p>O JaCoCo mede cobertura estrutural, como linhas e branches executados. Testes de mutacao nao aparecem no JaCoCo; eles sao gerados pelo PiTest em um relatorio <abbr title="HyperText Markup Language — Linguagem de Marcação de Hipertexto">HTML</abbr> separado.</p>
+<p class="admonition-title">JaCoCo/Vitest e Testes de Mutação medem coisas diferentes</p>
+<p>Ferramentas de cobertura tradicionais medem linhas e branches executados. Testes de mutação vão além: eles avaliam a <strong>qualidade</strong> da suíte de testes.</p>
 </div>
-<div style="display: flex; justify-content: flex-end; margin-bottom: 15px;">
-<p><a class="md-button" href="https://pedrohpsantos.github.io/EdTech/pitest/index.html" target="_blank">Abrir em Tela Cheia <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"></path></svg></span></a></p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1"><abbr title="Camada de servidor e banco de dados da aplicação">Backend</abbr> (PiTest)</label><label for="__tabbed_1_2"><abbr title="Camada de interface visual do usuário">Frontend</abbr> (Stryker)</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p></p><div style="display: flex; justify-content: flex-end; margin-bottom: 15px;" markdown="1">
+  <a class="md-button" href="https://pedrohpsantos.github.io/EdTech/pitest/index.html" target="_blank">Abrir em Tela Cheia <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"></path></svg></span></a>
+</div><p></p>
+<p><iframe id="pitest-frame" src="https://pedrohpsantos.github.io/EdTech/pitest/index.html" width="100%" height="860px" style="border:none; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); background-color: #fff;" onload="injectPitestStyles()">
+</iframe></p>
 </div>
-<iframe id="pitest-frame" src="https://pedrohpsantos.github.io/EdTech/pitest/index.html" width="100%" height="860px" style="border:none; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); background-color: #fff;" onload="injectPitestStyles()">
-</iframe>
-
+<div class="tabbed-block">
+<p></p><div style="display: flex; justify-content: flex-end; margin-bottom: 15px;" markdown="1">
+  <a class="md-button" href="https://pedrohpsantos.github.io/EdTech/stryker/index.html" target="_blank">Abrir em Tela Cheia <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"></path></svg></span></a>
+</div><p></p>
+<p><iframe id="stryker-frame" src="https://pedrohpsantos.github.io/EdTech/stryker/index.html" width="100%" height="860px" style="border:none; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); background-color: #fff;">
+</iframe></p>
+</div>
+</div>
+</div>
 <script>
 function injectPitestStyles() {
     var iframe = document.getElementById('pitest-frame');
@@ -3855,6 +3867,12 @@ function injectPitestStyles() {
 <td>Melhoria visual do relatorio embarcado do PiTest</td>
 <td>Pedro Henrique P. Santos</td>
 </tr>
+<tr>
+<td><code>1.2</code></td>
+<td>11/07/2026</td>
+<td>Adicao da aba de <abbr title="Camada de interface visual do usuário">Frontend</abbr> (Stryker)</td>
+<td>Pedro Henrique P. Santos</td>
+</tr>
 </tbody>
 </table>
 
@@ -3877,7 +3895,7 @@ function injectPitestStyles() {
     <span class="md-icon" title="Última atualização">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="11 de julho de 2026 13:28:16 UTC">11 de julho de 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="11 de julho de 2026 20:54:51 UTC">11 de julho de 2026</span>
   </span>
 
     
