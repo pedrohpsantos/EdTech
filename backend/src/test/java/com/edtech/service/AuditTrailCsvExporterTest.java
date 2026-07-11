@@ -34,4 +34,20 @@ class AuditTrailCsvExporterTest {
     assertTrue(csv.contains(resourceId.toString()));
     assertTrue(csv.endsWith("\"linha, \"\"dois\"\"\nquebra\"\r\n"));
   }
+
+  @Test
+  void export_WithNullFields_ShouldHandleGracefully() {
+    AuditLog log = new AuditLog(null, null, null, null, null, null, null);
+
+    String csv = new String(exporter.export(List.of(log)), StandardCharsets.UTF_8);
+    // Deve retornar linhas em branco separadas por vírgula
+    assertTrue(csv.contains(",,,,,,")); 
+  }
+
+  @Test
+  void export_WithCarriageReturn_ShouldEscape() {
+    AuditLog log = new AuditLog(null, null, null, null, null, null, "carriage\rreturn");
+    String csv = new String(exporter.export(List.of(log)), StandardCharsets.UTF_8);
+    assertTrue(csv.contains("\"carriage\rreturn\""));
+  }
 }
