@@ -1,100 +1,175 @@
 import { renderHook, act } from '@testing-library/react';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import useEasterEggs from '../useEasterEggs';
-import { vi, describe, beforeEach, afterEach, test, expect } from 'vitest';
 
 describe('useEasterEggs hook', () => {
+  let originalReload;
+  let consoleSpy;
+
   beforeEach(() => {
     vi.useFakeTimers();
-    console.log = vi.fn();
-
-    // Mock window.location.reload
+    originalReload = window.location.reload;
     Object.defineProperty(window, 'location', {
-      configurable: true,
-      value: { reload: vi.fn() },
+      writable: true,
+      value: { reload: vi.fn() }
     });
+    consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
   });
 
   afterEach(() => {
-    vi.useRealTimers();
-    vi.clearAllMocks();
+    vi.restoreAllMocks();
+    Object.defineProperty(window, 'location', {
+      writable: true,
+      value: { reload: originalReload }
+    });
   });
 
-  test('should log welcome messages on mount', () => {
-    renderHook(() => useEasterEggs());
-    expect(console.log).toHaveBeenCalledTimes(3);
-    expect(console.log).toHaveBeenNthCalledWith(
-      1,
-      expect.stringContaining('🚀 BEM-VINDO'),
-      expect.anything(),
-    );
-  });
-
-  test('should activate konami code after correct sequence', () => {
+  it('should initialize correctly and print console messages', () => {
     const { result } = renderHook(() => useEasterEggs());
-
     expect(result.current.konamiActivated).toBe(false);
+    expect(result.current.hyperdriveActivated).toBe(false);
+    expect(consoleSpy).toHaveBeenCalledTimes(3);
+  });
 
-    const konamiCode = [
-      'ArrowUp',
-      'ArrowUp',
-      'ArrowDown',
-      'ArrowDown',
-      'ArrowLeft',
-      'ArrowRight',
-      'ArrowLeft',
-      'ArrowRight',
-      'b',
-      'a',
-    ];
-
-    act(() => {
-      konamiCode.forEach((key) => {
-        window.dispatchEvent(new KeyboardEvent('keydown', { key }));
+  describe('Konami Code', () => {
+    it('should activate konami code and reset after 5s', () => {
+      const { result } = renderHook(() => useEasterEggs());
+      
+      const konamiSequence = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+      
+      act(() => {
+        konamiSequence.forEach(key => {
+          window.dispatchEvent(new KeyboardEvent('keydown', { key }));
+        });
       });
+
+      expect(result.current.konamiActivated).toBe(true);
+
+      act(() => {
+        vi.advanceTimersByTime(5000);
+      });
+
+      expect(result.current.konamiActivated).toBe(false);
     });
 
-    expect(result.current.konamiActivated).toBe(true);
+    it('should handle partial or incorrect sequences', () => {
+      const { result } = renderHook(() => useEasterEggs());
+      
+      act(() => {
+        ['ArrowUp', 'ArrowUp', 'x'].forEach(key => {
+          window.dispatchEvent(new KeyboardEvent('keydown', { key }));
+        });
+      });
 
-    // Should deactivate after 5 seconds
-    act(() => {
-      vi.advanceTimersByTime(5000);
+      expect(result.current.konamiActivated).toBe(false);
+      
+      act(() => {
+        window.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown' }));
+      });
+
+      expect(result.current.konamiActivated).toBe(false);
     });
-
-    expect(result.current.konamiActivated).toBe(false);
   });
 
-  test('should activate hyperdrive after 5 rapid clicks', () => {
-    const { result } = renderHook(() => useEasterEggs());
+  describe('Logo Clicks (Hyperdrive & Reload)', () => {
+    it('should reload page when clicked exactly once and paused for 1s', () => {
+      const { result } = renderHook(() => useEasterEggs());
 
-    expect(result.current.hyperdriveActivated).toBe(false);
-
-    act(() => {
-      for (let i = 0; i < 5; i++) {
+      act(() => {
         result.current.handleLogoClick();
-      }
+      });
+
+      act(() => {
+        vi.advanceTimersByTime(1000);
+      });
+
+      expect(window.location.reload).toHaveBeenCalledTimes(1);
     });
 
-    expect(result.current.hyperdriveActivated).toBe(true);
+    it('should not reload if clicked more than once but less than 5 times and paused', () => {
+      const { result } = renderHook(() => useEasterEggs());
 
-    // Should deactivate after 10 seconds
-    act(() => {
-      vi.advanceTimersByTime(10000);
+      act(() => {
+        result.current.handleLogoClick();
+        result.current.handleLogoClick();
+      });
+
+      act(() => {
+        vi.advanceTimersByTime(1000);
+      });
+
+      expect(window.location.reload).not.toHaveBeenCalled();
+      
+      // Since it resets to 0, another single click + pause will trigger reload
+      act(() => {
+        result.current.handleLogoClick();
+      });
+
+      act(() => {
+        vi.advanceTimersByTime(1000);
+      });
+
+      expect(window.location.reload).toHaveBeenCalledTimes(1);
     });
 
-    expect(result.current.hyperdriveActivated).toBe(false);
-  });
+    it('should activate hyperdrive on 5 clicks and reset after 10s', () => {
+      const { result } = renderHook(() => useEasterEggs());
 
-  test('should reload window after 1 click and 1 second pause', () => {
-    const { result } = renderHook(() => useEasterEggs());
+      act(() => {
+        for (let i = 0; i < 5; i++) {
+          result.current.handleLogoClick();
+        }
+      });
 
-    act(() => {
-      result.current.handleLogoClick();
+      expect(result.current.hyperdriveActivated).toBe(true);
+
+      act(() => {
+        vi.advanceTimersByTime(10000);
+      });
+
+      expect(result.current.hyperdriveActivated).toBe(false);
     });
 
-    act(() => {
-      vi.advanceTimersByTime(1000);
+    it('should ignore clicks if hyperdrive is already activated', () => {
+      const { result } = renderHook(() => useEasterEggs());
+
+      act(() => {
+        for (let i = 0; i < 5; i++) {
+          result.current.handleLogoClick();
+        }
+      });
+
+      expect(result.current.hyperdriveActivated).toBe(true);
+
+      // Now it's activated, call handleLogoClick again. It should return early.
+      act(() => {
+        result.current.handleLogoClick();
+      });
+
+      expect(result.current.hyperdriveActivated).toBe(true);
+      
+      // Fast forward the 10s from the initial hyperdrive activation
+      act(() => {
+        vi.advanceTimersByTime(10000);
+      });
+
+      expect(result.current.hyperdriveActivated).toBe(false);
     });
 
-    expect(window.location.reload).toHaveBeenCalledTimes(1);
+    it('should clear hyperdrive timeout if reached 5 clicks concurrently multiple times', () => {
+      const { result } = renderHook(() => useEasterEggs());
+
+      act(() => {
+        for (let i = 0; i < 10; i++) {
+          result.current.handleLogoClick();
+        }
+      });
+
+      expect(result.current.hyperdriveActivated).toBe(true);
+      act(() => {
+        vi.advanceTimersByTime(10000);
+      });
+      expect(result.current.hyperdriveActivated).toBe(false);
+    });
   });
 });

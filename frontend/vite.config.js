@@ -30,9 +30,10 @@ export default defineConfig({
     css: true,
     setupFiles: './src/setupTests.jsx',
     slowTestThreshold: 1000,
-    exclude: ['node_modules', 'dist', '.idea', '.git', '.cache', 'e2e/**'],
+    exclude: ['node_modules', 'dist', '.idea', '.git', '.cache', 'e2e/**', '.stryker-tmp/**'],
     coverage: {
       provider: 'v8',
+      all: true,
       reporter: ['text', 'json', 'html'],
       thresholds: {
         lines: 60,

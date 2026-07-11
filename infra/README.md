@@ -56,10 +56,10 @@ O processo de deploy é automatizado pelo `cloudbuild.yaml` e disparado via push
 
 ## Infraestrutura como Código (Terraform)
 
-A pasta `infra/prod/terraform` contém a definição parametrizada da infraestrutura de produção. Nenhum identificador sensível ou específico de projeto deve ser versionado; use `terraform.tfvars` local a partir do template:
+A pasta `infra/terraform` contém a definição parametrizada da infraestrutura de produção. Nenhum identificador sensível ou específico de projeto deve ser versionado; use `terraform.tfvars` local a partir do template:
 
 ```bash
-cd infra/prod/terraform
+cd infra/terraform
 cp terraform.tfvars.example terraform.tfvars
 # Edite project_id, region, artifact_registry, bucket e demais variáveis
 

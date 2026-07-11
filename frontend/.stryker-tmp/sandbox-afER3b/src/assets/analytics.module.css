@@ -1,0 +1,274 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.kpiGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.kpiCard {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.kpiHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  color: var(--ed-text-muted);
+  font-weight: 500;
+}
+
+.kpiIcon {
+  color: var(--ed-purple-light);
+  font-size: 18px;
+}
+
+.kpiBody {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.kpiValue {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--ed-text-dark);
+}
+
+.kpiTrend {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 12px;
+}
+
+.kpiTrend.positive {
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--ed-status-success);
+}
+
+.kpiTrend.negative {
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--ed-status-danger);
+}
+
+.kpiTrend.warning {
+  background: rgba(245, 158, 11, 0.1);
+  color: var(--ed-orange);
+}
+
+.chartsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.chartCard {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.chartHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+.chartTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ed-text-dark);
+  margin: 0 0 4px 0;
+}
+
+.chartSubtitle {
+  font-size: 13px;
+  color: var(--ed-text-muted);
+  margin: 0;
+}
+
+.chartTrend {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ed-status-success);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.chartTrend.negative {
+  color: var(--ed-status-danger);
+}
+
+/* SVG Line/Area Charts */
+.svgChart {
+  width: 100%;
+  height: 200px;
+  overflow: visible;
+  padding-left: 20px; /* Prevent text clipping on left */
+  padding-bottom: 20px; /* Prevent text clipping on bottom */
+}
+
+.svgAxisText {
+  font-size: 10px;
+  fill: var(--ed-text-muted);
+  font-family: inherit;
+}
+
+.animateDraw {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: drawLine 2s ease-out forwards;
+}
+
+.animateDrawDots {
+  opacity: 0;
+  animation: fadeIn 0.5s ease-out 1.5s forwards;
+}
+
+@keyframes drawLine {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+/* Bar Charts */
+.barChartContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 10px 0;
+}
+
+.barRow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.barLabel {
+  width: 80px;
+  font-size: 12px;
+  color: var(--ed-text-dark);
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.barTrack {
+  flex: 1;
+  background: var(--border);
+  height: 12px;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.barFill {
+  height: 100%;
+  border-radius: 6px;
+  transition: width 1s ease-out;
+}
+
+/* Colors for bars */
+.fillPurple { background: var(--ed-purple-main); }
+.fillPurpleLight { background: #A78BFA; } /* Lighter purple */
+.fillOrange { background: var(--ed-orange); }
+
+/* Warning Alert */
+.alertBox {
+  margin-top: auto;
+  background: rgba(245, 158, 11, 0.05);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+  border-radius: 8px;
+  padding: 12px 16px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  color: var(--ed-orange);
+  font-size: 13px;
+}
+
+.alertIcon {
+  font-size: 16px;
+}
+
+/* -------------------------------------------------------------
+ * RESPONSIVE / MOBILE OPTIMIZATIONS (360px a 768px)
+ * ------------------------------------------------------------- */
+@media (max-width: 767.98px) {
+  .kpiGrid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .kpiCard {
+    padding: 16px;
+  }
+
+  .kpiValue {
+    font-size: 28px; 
+    white-space: nowrap; 
+  }
+
+  .chartsGrid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .chartCard {
+    padding: 16px;
+  }
+
+  .chartHeader {
+    margin-bottom: 16px;
+  }
+
+  .svgChart {
+    height: 160px;
+    padding-left: 10px;
+  }
+
+  .barRow {
+    gap: 8px; 
+  }
+
+  .notifications-dropdown {
+    position: fixed !important;
+    top: 70px !important; 
+    
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    
+    width: calc(100vw - 32px) !important;
+    max-width: 340px !important; 
+    
+    right: auto !important; 
+  }
+
+  .notification-text p,
+  .notification-text span {
+    white-space: normal !important;
+    word-break: break-word !important;
+  }
+}

@@ -204,22 +204,22 @@ jobs:
         if: matrix.report-type == 'lighthouse'
         run: |
           npm install -g @lhci/cli@0.13.0
-          mkdir -p reports/lighthouse
-          lhci collect --config=tests/lighthouserc.json --url="https://edtech-storage-501117.web.app/" --numberOfRuns=3
-          lhci assert --config=tests/lighthouserc.json
-          # Upload local file system report
-          lhci upload --config=tests/lighthouserc.json --target=filesystem --outputDir=./reports/lighthouse
-          FIRST_HTML=$(find reports/lighthouse -name "*.html" | head -n 1)
+          mkdir -p tests/lighthouse
+          lhci collect --config=tests/lighthouse/lighthouserc.json --url="https://edtech-storage-501117.web.app/" --numberOfRuns=3
+          lhci assert --config=tests/lighthouse/lighthouserc.json
+          npm install -g http-server
+          lhci upload --config=tests/lighthouse/lighthouserc.json --target=filesystem --outputDir=tests/lighthouse
+          FIRST_HTML=$(find tests/lighthouse -name "*.html" | head -n 1)
           if [ -n "$FIRST_HTML" ]; then
-            mv "$FIRST_HTML" reports/lighthouse/index.html
-            find reports/lighthouse -name "*.html" -not -name "index.html" -delete
+            mv "$FIRST_HTML" tests/lighthouse/index.html
+            find tests/lighthouse -name "*.html" -not -name "index.html" -delete
           fi
       - name: Upload Lighthouse Report
         if: matrix.report-type == 'lighthouse'
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v4
         with:
-          name: lighthouse-reports
-          path: reports/
+          name: lighthouse-report
+          path: tests/lighthouse/index.html
 
       # ==========================
       # PERFORMANCE

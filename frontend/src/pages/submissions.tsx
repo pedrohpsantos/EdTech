@@ -37,9 +37,10 @@ export default function Submissions() {
     loadData();
   }, []);
 
-  const handleApprove = async () => {
-    if (!selectedDoc) return;
-    const response = await reviewDocument(selectedDoc.id, 'APPROVED');
+  const handleApprove = async (docParam?: any) => {
+    const targetDoc = docParam?.id ? docParam : selectedDoc;
+    if (!targetDoc) return;
+    const response = await reviewDocument(targetDoc.id, 'APPROVED');
     if (response.sucesso) {
       setShowAnalysisModal(false);
       setSelectedDoc(null);
@@ -214,7 +215,7 @@ export default function Submissions() {
                     </button>
                     <button 
                       className={`${styles.btnAction} ${styles.btnApprove}`}
-                      onClick={() => { setSelectedDoc(doc); handleApprove(); }}
+                      onClick={() => { handleApprove(doc); }}
                     >
                       <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />

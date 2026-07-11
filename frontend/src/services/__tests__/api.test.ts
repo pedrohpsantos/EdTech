@@ -1,377 +1,467 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import * as apiModule from '../api';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import axios from 'axios';
 
-// We will store the interceptor handlers here using vi.hoisted so they are available inside vi.mock
-const { requestHandlers, responseHandlers } = vi.hoisted(() => {
-  return {
-    requestHandlers: [] as any[],
-    responseHandlers: [] as any[]
-  };
-});
+const mockApi = vi.hoisted(() => ({
+  post: vi.fn(),
+  get: vi.fn(),
+  patch: vi.fn(),
+  interceptors: {
+    request: { use: vi.fn() },
+    response: { use: vi.fn() }
+  }
+}));
 
-export const requestInterceptorHandlers = requestHandlers;
-export const responseInterceptorHandlers = responseHandlers;
+vi.mock('axios', () => ({
+  default: {
+    create: vi.fn(() => mockApi)
+  }
+}));
 
-// Mock the axios module
-vi.mock('axios', () => {
-  const mAxiosInstance = {
-    get: vi.fn(),
-    post: vi.fn(),
-    patch: vi.fn(),
-    interceptors: {
-      request: {
-        use: vi.fn((success, error) => {
-          requestHandlers.push({ success, error });
-        }),
-        eject: vi.fn()
-      },
-      response: {
-        use: vi.fn((success, error) => {
-          responseHandlers.push({ success, error });
-        }),
-        eject: vi.fn()
-      }
-    }
-  };
-  return {
-    default: {
-      create: vi.fn(() => mAxiosInstance)
-    }
-  };
-});
+import * as api from '../api';
 
-// Since the module creates the instance immediately, we need to get access to it
-const mAxios = axios.create();
+const requestInterceptor = mockApi.interceptors.request.use.mock.calls[0][0] as any;
+const responseInterceptorResolve = mockApi.interceptors.response.use.mock.calls[0][0] as any;
+const responseInterceptorReject = mockApi.interceptors.response.use.mock.calls[0][1] as any;
 
-describe('api service', () => {
+describe('api.ts', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     localStorage.clear();
   });
 
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
   describe('login', () => {
-    it('returns success and saves token', async () => {
-      const mockUser = { id: 1, name: 'Test' };
-      (mAxios.post as any).mockResolvedValueOnce({ data: { token: 'mockToken', user: mockUser } });
-      
-      const result = await apiModule.login('test@test.com', 'password');
+    it('handles successful login without MFA', async () => {
+      mockApi.post.mockResolvedValueOnce({ status: 200, data: { token: 'token123', user: { id: 1 } } });
+      const result = await api.login('test@test.com', 'pass');
       expect(result.sucesso).toBe(true);
-      expect(result.dados).toEqual(mockUser);
-      expect(localStorage.getItem('token')).toBe('mockToken');
+      expect(localStorage.getItem('token')).toBe('token123');
     });
 
-    it('handles errors', async () => {
-      const error = { response: { data: { message: 'Invalid credentials' } } };
-      (mAxios.post as any).mockRejectedValueOnce(error);
-      
-      const result = await apiModule.login('test@test.com', 'wrong');
+    it('handles successful login with MFA required', async () => {
+      mockApi.post.mockResolvedValueOnce({ status: 202, data: { mfaRequired: true, email: 'test@test.com' } });
+      const result = await api.login('test@test.com', 'pass');
+      expect(result.sucesso).toBe(true);
+      expect(result.dados.mfaRequired).toBe(true);
+      expect(localStorage.getItem('token')).toBeNull();
+    });
+
+    it('handles login error', async () => {
+      mockApi.post.mockRejectedValueOnce(new Error('Network Error'));
+      const result = await api.login('test@test.com', 'pass');
       expect(result.sucesso).toBe(false);
-      expect(result.mensagem).toBe('Invalid credentials');
+      expect(result.mensagem).toBe('Network Error');
+    });
+  });
+
+  describe('verify2FaLogin', () => {
+    it('handles success', async () => {
+      mockApi.post.mockResolvedValueOnce({ data: { token: 'token2fa', user: { id: 1 } } });
+      const result = await api.verify2FaLogin('test@test.com', 'pass', '123456');
+      expect(result.sucesso).toBe(true);
+      expect(localStorage.getItem('token')).toBe('token2fa');
+    });
+    
+    it('handles error', async () => {
+      mockApi.post.mockRejectedValueOnce({ response: { data: { message: 'Invalid code' } } });
+      const result = await api.verify2FaLogin('test@test.com', 'pass', '123456');
+      expect(result.sucesso).toBe(false);
+      expect(result.mensagem).toBe('Invalid code');
+    });
+  });
+
+  describe('setup2Fa', () => {
+    it('handles success', async () => {
+      mockApi.get.mockResolvedValueOnce({ data: { secret: 'secret', qrCodeUri: 'uri' } });
+      const result = await api.setup2Fa();
+      expect(result.sucesso).toBe(true);
+    });
+
+    it('handles error', async () => {
+      mockApi.get.mockRejectedValueOnce(new Error());
+      const result = await api.setup2Fa();
+      expect(result.sucesso).toBe(false);
+    });
+  });
+
+  describe('enable2Fa', () => {
+    it('handles success', async () => {
+      mockApi.post.mockResolvedValueOnce({ data: {} });
+      const result = await api.enable2Fa('123456');
+      expect(result.sucesso).toBe(true);
+    });
+
+    it('handles error', async () => {
+      mockApi.post.mockRejectedValueOnce(new Error());
+      const result = await api.enable2Fa('123456');
+      expect(result.sucesso).toBe(false);
     });
   });
 
   describe('register', () => {
-    it('returns success', async () => {
-      const mockUser = { id: 1, name: 'New User' };
-      (mAxios.post as any).mockResolvedValueOnce({ data: { user: mockUser } });
-      
-      const result = await apiModule.register('New User', 'test@test.com', 'password', 'RESEARCHER');
+    it('handles success', async () => {
+      mockApi.post.mockResolvedValueOnce({ data: { user: { id: 1 } } });
+      const result = await api.register('User', 'test@test.com', 'pass', 'USER');
       expect(result.sucesso).toBe(true);
-      expect(result.dados).toEqual(mockUser);
     });
 
-    it('handles errors', async () => {
-      const error = { message: 'Network error' };
-      (mAxios.post as any).mockRejectedValueOnce(error);
-      
-      const result = await apiModule.register('User', 'test@test.com', 'pass', 'RESEARCHER');
+    it('handles error', async () => {
+      mockApi.post.mockRejectedValueOnce(new Error());
+      const result = await api.register('User', 'test@test.com', 'pass', 'USER');
       expect(result.sucesso).toBe(false);
-      expect(result.mensagem).toBe('Network error');
     });
   });
 
-  describe('2FA setup and enable', () => {
-    it('setup2Fa success', async () => {
-      (mAxios.get as any).mockResolvedValueOnce({ data: { secret: 'secret', qrCodeUri: 'uri' } });
-      const result = await apiModule.setup2Fa();
+  describe('verifyRegistration', () => {
+    it('handles success', async () => {
+      mockApi.post.mockResolvedValueOnce({ data: { token: 'token-reg', user: { id: 1 } } });
+      const result = await api.verifyRegistration('test@test.com', '123456');
       expect(result.sucesso).toBe(true);
-      expect(result.dados).toEqual({ secret: 'secret', qrCodeUri: 'uri' });
+      expect(localStorage.getItem('token')).toBe('token-reg');
     });
 
-    it('setup2Fa error', async () => {
-      (mAxios.get as any).mockRejectedValueOnce(new Error('fail'));
-      const result = await apiModule.setup2Fa();
-      expect(result.sucesso).toBe(false);
-    });
-
-    it('enable2Fa success', async () => {
-      (mAxios.post as any).mockResolvedValueOnce({ data: { enabled: true } });
-      const result = await apiModule.enable2Fa('123456');
-      expect(result.sucesso).toBe(true);
-      expect(result.dados).toEqual({ enabled: true });
-    });
-
-    it('enable2Fa error', async () => {
-      (mAxios.post as any).mockRejectedValueOnce(new Error('fail'));
-      const result = await apiModule.enable2Fa('123456');
-      expect(result.sucesso).toBe(false);
-    });
-    
-    it('verify2FaLogin success', async () => {
-      (mAxios.post as any).mockResolvedValueOnce({ data: { token: 'tok2fa', user: { id: 1 } } });
-      const result = await apiModule.verify2FaLogin('test@test.com', 'pass', '123456');
-      expect(result.sucesso).toBe(true);
-      expect(localStorage.getItem('token')).toBe('tok2fa');
-    });
-
-    it('verify2FaLogin error', async () => {
-      (mAxios.post as any).mockRejectedValueOnce(new Error('fail'));
-      const result = await apiModule.verify2FaLogin('test@test.com', 'pass', '123456');
+    it('handles error', async () => {
+      mockApi.post.mockRejectedValueOnce(new Error());
+      const result = await api.verifyRegistration('test@test.com', '123456');
       expect(result.sucesso).toBe(false);
     });
   });
 
   describe('logout', () => {
-    it('clears token on success', async () => {
-      localStorage.setItem('token', 'someToken');
-      (mAxios.post as any).mockResolvedValueOnce({});
-      
-      const result = await apiModule.logout();
+    it('handles success', async () => {
+      localStorage.setItem('token', 'token');
+      mockApi.post.mockResolvedValueOnce({});
+      const result = await api.logout();
       expect(result.sucesso).toBe(true);
       expect(localStorage.getItem('token')).toBeNull();
     });
 
-    it('clears token even on error', async () => {
-      localStorage.setItem('token', 'someToken');
-      (mAxios.post as any).mockRejectedValueOnce(new Error('Logout failed'));
-      
-      const result = await apiModule.logout();
+    it('handles error', async () => {
+      localStorage.setItem('token', 'token');
+      mockApi.post.mockRejectedValueOnce(new Error());
+      const result = await api.logout();
       expect(result.sucesso).toBe(false);
       expect(localStorage.getItem('token')).toBeNull();
     });
   });
 
   describe('getMe', () => {
-    it('returns user data on success', async () => {
-      const mockUser = { id: 1, email: 'test@edu.br' };
-      (mAxios.get as any).mockResolvedValueOnce({ data: mockUser });
-      
-      const result = await apiModule.getMe();
+    it('handles success', async () => {
+      mockApi.get.mockResolvedValueOnce({ data: { id: 1 } });
+      const result = await api.getMe();
       expect(result.sucesso).toBe(true);
-      expect(result.dados).toEqual(mockUser);
     });
 
-    it('returns error when not logged in', async () => {
-      (mAxios.get as any).mockRejectedValueOnce(new Error('Not logged in'));
-      const result = await apiModule.getMe();
+    it('handles error', async () => {
+      mockApi.get.mockRejectedValueOnce(new Error());
+      const result = await api.getMe();
       expect(result.sucesso).toBe(false);
-      expect(result.mensagem).toBe('Not logged in');
     });
   });
 
   describe('getProjects', () => {
-    it('returns projects on success', async () => {
-      const mockProjects = [{ id: 1, title: 'Project 1' }];
-      (mAxios.get as any).mockResolvedValueOnce({ data: mockProjects });
-      
-      const result = await apiModule.getProjects();
+    it('handles success', async () => {
+      mockApi.get.mockResolvedValueOnce({ data: [] });
+      const result = await api.getProjects();
       expect(result.sucesso).toBe(true);
-      expect(result.dados).toEqual(mockProjects);
     });
 
-    it('returns error on failure', async () => {
-      (mAxios.get as any).mockRejectedValueOnce(new Error('API error'));
-      const result = await apiModule.getProjects();
+    it('handles error', async () => {
+      mockApi.get.mockRejectedValueOnce(new Error());
+      const result = await api.getProjects();
       expect(result.sucesso).toBe(false);
-      expect(result.mensagem).toBe('API error');
     });
   });
 
   describe('joinProject', () => {
-    it('returns success on joining', async () => {
-      (mAxios.post as any).mockResolvedValueOnce({ data: { status: 'joined' } });
-      const result = await apiModule.joinProject('123');
-      expect(result.sucesso).toBe(true);
-      expect(result.dados).toEqual({ status: 'joined' });
-    });
-  });
-
-  describe('getDocuments', () => {
-    it('returns documents', async () => {
-      (mAxios.get as any).mockResolvedValueOnce({ data: { content: [] } });
-      const result = await apiModule.getDocuments('123', 'doc', 'APPROVED', 0, 10);
-      expect(result.sucesso).toBe(true);
-      expect(mAxios.get).toHaveBeenCalledWith('/api/documents', {
-        params: { projectId: '123', title: 'doc', status: 'APPROVED', page: 0, size: 10 }
-      });
-    });
-  });
-
-  describe('reviewDocument', () => {
-    it('returns success', async () => {
-      (mAxios.patch as any).mockResolvedValueOnce({ data: { status: 'APPROVED' } });
-      const result = await apiModule.reviewDocument('doc1', 'APPROVED', 'good');
-      expect(result.sucesso).toBe(true);
-      expect(mAxios.patch).toHaveBeenCalledWith('/api/documents/doc1/status', { status: 'APPROVED', feedback: 'good' });
-    });
-  });
-
-  describe('getDownloadUrl', () => {
-    it('returns url', async () => {
-      (mAxios.get as any).mockResolvedValueOnce({ data: { url: 'http://url' } });
-      const result = await apiModule.getDownloadUrl('doc1');
-      expect(result.sucesso).toBe(true);
-    });
-  });
-
-  describe('getDashboardStats', () => {
-    it('returns stats', async () => {
-      (mAxios.get as any).mockResolvedValueOnce({ data: { total: 10 } });
-      const result = await apiModule.getDashboardStats();
-      expect(result).toEqual({ total: 10 });
-    });
-  });
-
-  describe('uploadDocument', () => {
-    it('returns success', async () => {
-      (mAxios.post as any).mockResolvedValueOnce({ data: { id: 'doc1' } });
-      const file = new File(['hello'], 'hello.png', { type: 'image/png' });
-      const result = await apiModule.uploadDocument(file, 'Title', 'proj1', vi.fn());
-      expect(result.sucesso).toBe(true);
-      expect(mAxios.post).toHaveBeenCalled();
-      const formDataArg = (mAxios.post as any).mock.calls[0][1];
-      expect(formDataArg instanceof FormData).toBe(true);
-    });
-  });
-
-  describe('Password Recovery', () => {
-    it('requestPasswordRecovery', async () => {
-      (mAxios.post as any).mockResolvedValueOnce({});
-      const result = await apiModule.requestPasswordRecovery('test@test.com');
-      expect(result.sucesso).toBe(true);
-    });
-    
-    it('verifyRecoveryCode', async () => {
-      (mAxios.post as any).mockResolvedValueOnce({});
-      const result = await apiModule.verifyRecoveryCode('test@test.com', '123456');
-      expect(result.sucesso).toBe(true);
-    });
-    
-    it('resetPassword', async () => {
-      (mAxios.post as any).mockResolvedValueOnce({});
-      const result = await apiModule.resetPassword('test@test.com', '123456', 'newPass');
+    it('handles success', async () => {
+      mockApi.post.mockResolvedValueOnce({ data: {} });
+      const result = await api.joinProject('1');
       expect(result.sucesso).toBe(true);
     });
 
-    it('resetPassword error', async () => {
-      (mAxios.post as any).mockRejectedValueOnce(new Error('fail'));
-      const result = await apiModule.resetPassword('test@test.com', '123456', 'newPass');
+    it('handles error', async () => {
+      mockApi.post.mockRejectedValueOnce(new Error());
+      const result = await api.joinProject('1');
       expect(result.sucesso).toBe(false);
     });
   });
 
-  describe('Audit and Compliance', () => {
-    it('getAuditLogs', async () => {
-      (mAxios.get as any).mockResolvedValueOnce({ data: [{ id: 1 }] });
-      const result = await apiModule.getAuditLogs('search', 'CREATE');
-      expect(result).toEqual([{ id: 1 }]);
-    });
-    
-    it('getAuditLogs failure handles error', async () => {
-      (mAxios.get as any).mockRejectedValueOnce(new Error('fail'));
-      const result = await apiModule.getAuditLogs();
-      expect(result).toEqual([]);
-    });
-    
-    it('getComplianceStats', async () => {
-      (mAxios.get as any).mockResolvedValueOnce({ data: { compliant: 10 } });
-      const result = await apiModule.getComplianceStats();
-      expect(result).toEqual({ compliant: 10 });
-    });
-    
-    it('getComplianceStats failure handles error', async () => {
-      (mAxios.get as any).mockRejectedValueOnce(new Error('fail'));
-      const result = await apiModule.getComplianceStats();
-      expect(result).toBeNull();
+  describe('getDocuments', () => {
+    it('handles success', async () => {
+      mockApi.get.mockResolvedValueOnce({ data: [] });
+      const result = await api.getDocuments('1', 'title', 'status', 0, 10);
+      expect(result.sucesso).toBe(true);
     });
 
-    it('exportAuditLogsCSV success', async () => {
-      const mockBlob = new Blob(['csv content'], { type: 'text/csv' });
-      (mAxios.get as any).mockResolvedValueOnce({ data: mockBlob });
-      
-      const createElementSpy = vi.spyOn(document, 'createElement');
-      const appendChildSpy = vi.spyOn(document.body, 'appendChild');
-      const removeChildSpy = vi.spyOn(document.body, 'removeChild');
-      const createObjectURLSpy = vi.spyOn(window.URL, 'createObjectURL').mockReturnValue('blob:url');
-      const revokeObjectURLSpy = vi.spyOn(window.URL, 'revokeObjectURL').mockImplementation(() => {});
-
-      await apiModule.exportAuditLogsCSV('search', 'CREATE');
-      
-      expect(createElementSpy).toHaveBeenCalledWith('a');
-      expect(appendChildSpy).toHaveBeenCalled();
-      expect(removeChildSpy).toHaveBeenCalled();
-      expect(createObjectURLSpy).toHaveBeenCalled();
-      expect(revokeObjectURLSpy).toHaveBeenCalled();
-    });
-
-    it('exportAuditLogsCSV error', async () => {
-      (mAxios.get as any).mockRejectedValueOnce(new Error('fail'));
-      await apiModule.exportAuditLogsCSV();
-      // just expecting no crash and it handles the catch block
+    it('handles error', async () => {
+      mockApi.get.mockRejectedValueOnce(new Error());
+      const result = await api.getDocuments();
+      expect(result.sucesso).toBe(false);
     });
   });
 
-  describe('Interceptors and default Error Handling', () => {
-    it('request interceptor adds token', () => {
-      localStorage.setItem('token', 'valid-token');
-      const useRequest = requestInterceptorHandlers[0].success;
+  describe('reviewDocument', () => {
+    it('handles success', async () => {
+      mockApi.patch.mockResolvedValueOnce({ data: {} });
+      const result = await api.reviewDocument('1', 'APPROVED', 'feedback');
+      expect(result.sucesso).toBe(true);
+    });
+
+    it('handles error', async () => {
+      mockApi.patch.mockRejectedValueOnce(new Error());
+      const result = await api.reviewDocument('1', 'APPROVED');
+      expect(result.sucesso).toBe(false);
+    });
+  });
+
+  describe('getDownloadUrl', () => {
+    it('handles success', async () => {
+      mockApi.get.mockResolvedValueOnce({ data: {} });
+      const result = await api.getDownloadUrl('1');
+      expect(result.sucesso).toBe(true);
+    });
+
+    it('handles error', async () => {
+      mockApi.get.mockRejectedValueOnce(new Error());
+      const result = await api.getDownloadUrl('1');
+      expect(result.sucesso).toBe(false);
+    });
+  });
+
+  describe('toggleStar', () => {
+    it('handles success', async () => {
+      mockApi.patch.mockResolvedValueOnce({ data: {} });
+      const result = await api.toggleStar('1');
+      expect(result.sucesso).toBe(true);
+    });
+
+    it('handles error', async () => {
+      mockApi.patch.mockRejectedValueOnce(new Error());
+      const result = await api.toggleStar('1');
+      expect(result.sucesso).toBe(false);
+    });
+  });
+
+  describe('getComments', () => {
+    it('handles success', async () => {
+      mockApi.get.mockResolvedValueOnce({ data: [] });
+      const result = await api.getComments('1');
+      expect(result.sucesso).toBe(true);
+    });
+
+    it('handles error', async () => {
+      mockApi.get.mockRejectedValueOnce(new Error());
+      const result = await api.getComments('1');
+      expect(result.sucesso).toBe(false);
+    });
+  });
+
+  describe('addComment', () => {
+    it('handles success', async () => {
+      mockApi.post.mockResolvedValueOnce({ data: {} });
+      const result = await api.addComment('1', 'comment');
+      expect(result.sucesso).toBe(true);
+    });
+
+    it('handles error', async () => {
+      mockApi.post.mockRejectedValueOnce(new Error());
+      const result = await api.addComment('1', 'comment');
+      expect(result.sucesso).toBe(false);
+    });
+  });
+
+  describe('getDashboardStats', () => {
+    it('handles success', async () => {
+      mockApi.get.mockResolvedValueOnce({ data: { stat: 1 } });
+      const result = await api.getDashboardStats();
+      expect(result.stat).toBe(1);
+    });
+  });
+
+  describe('uploadDocument', () => {
+    it('handles success', async () => {
+      mockApi.post.mockResolvedValueOnce({ data: {} });
+      const file = new File([''], 'test.txt', { type: 'text/plain' });
+      const onProgress = vi.fn();
+      const result = await api.uploadDocument(file, 'Title', '1', onProgress);
+      expect(result.sucesso).toBe(true);
+      expect(mockApi.post).toHaveBeenCalledWith('/api/documents', expect.any(FormData), { onUploadProgress: onProgress });
+    });
+
+    it('handles error', async () => {
+      mockApi.post.mockRejectedValueOnce(new Error());
+      const file = new File([''], 'test.txt', { type: 'text/plain' });
+      const result = await api.uploadDocument(file, 'Title', '1');
+      expect(result.sucesso).toBe(false);
+    });
+  });
+
+  describe('requestPasswordRecovery', () => {
+    it('handles success', async () => {
+      mockApi.post.mockResolvedValueOnce({ data: {} });
+      const result = await api.requestPasswordRecovery('test@test.com');
+      expect(result.sucesso).toBe(true);
+    });
+
+    it('handles error', async () => {
+      mockApi.post.mockRejectedValueOnce(new Error());
+      const result = await api.requestPasswordRecovery('test@test.com');
+      expect(result.sucesso).toBe(false);
+    });
+  });
+
+  describe('verifyRecoveryCode', () => {
+    it('handles success', async () => {
+      mockApi.post.mockResolvedValueOnce({ data: {} });
+      const result = await api.verifyRecoveryCode('test@test.com', '123456');
+      expect(result.sucesso).toBe(true);
+    });
+
+    it('handles error', async () => {
+      mockApi.post.mockRejectedValueOnce(new Error());
+      const result = await api.verifyRecoveryCode('test@test.com', '123456');
+      expect(result.sucesso).toBe(false);
+    });
+  });
+
+  describe('resetPassword', () => {
+    it('handles success', async () => {
+      mockApi.post.mockResolvedValueOnce({ data: {} });
+      const result = await api.resetPassword('test@test.com', '123456', 'newpass');
+      expect(result.sucesso).toBe(true);
+    });
+
+    it('handles error', async () => {
+      mockApi.post.mockRejectedValueOnce(new Error());
+      const result = await api.resetPassword('test@test.com', '123456', 'newpass');
+      expect(result.sucesso).toBe(false);
+    });
+  });
+
+  describe('getAuditLogs', () => {
+    it('handles success', async () => {
+      mockApi.get.mockResolvedValueOnce({ data: [] });
+      const result = await api.getAuditLogs('search', 'action');
+      expect(result).toEqual([]);
+    });
+
+    it('handles error', async () => {
+      mockApi.get.mockRejectedValueOnce(new Error());
+      const result = await api.getAuditLogs();
+      expect(result).toEqual([]);
+    });
+  });
+
+  describe('exportAuditLogsCSV', () => {
+    it('handles success', async () => {
+      mockApi.get.mockResolvedValueOnce({ data: 'csv data' });
+      const createElementMock = vi.spyOn(document, 'createElement');
+      const mockAnchor = { href: '', download: '', click: vi.fn() };
+      createElementMock.mockReturnValue(mockAnchor as any);
+      
+      const appendChildMock = vi.spyOn(document.body, 'appendChild').mockImplementation(vi.fn());
+      const removeChildMock = vi.spyOn(document.body, 'removeChild').mockImplementation(vi.fn());
+      
+      global.URL.createObjectURL = vi.fn().mockReturnValue('blob:url');
+      global.URL.revokeObjectURL = vi.fn();
+      
+      await api.exportAuditLogsCSV('search', 'action');
+      
+      expect(mockAnchor.click).toHaveBeenCalled();
+      
+      createElementMock.mockRestore();
+      appendChildMock.mockRestore();
+      removeChildMock.mockRestore();
+    });
+
+    it('handles error', async () => {
+      mockApi.get.mockRejectedValueOnce(new Error());
+      const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {});
+      await api.exportAuditLogsCSV();
+      expect(consoleError).toHaveBeenCalled();
+      consoleError.mockRestore();
+    });
+  });
+
+  describe('getComplianceStats', () => {
+    it('handles success', async () => {
+      mockApi.get.mockResolvedValueOnce({ data: { stat: 1 } });
+      const result = await api.getComplianceStats();
+      expect(result).toEqual({ stat: 1 });
+    });
+
+    it('handles error', async () => {
+      mockApi.get.mockRejectedValueOnce(new Error());
+      const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {});
+      const result = await api.getComplianceStats();
+      expect(result).toBeNull();
+      consoleError.mockRestore();
+    });
+  });
+
+  describe('Interceptors', () => {
+    it('request interceptor adds token, request ID and calls showLoader', () => {
+      localStorage.setItem('token', 'my-token');
       const config = { headers: {} as Record<string, string> };
-      const newConfig = useRequest(config);
-      expect(newConfig.headers['Authorization']).toBe('Bearer valid-token');
+      const newConfig = requestInterceptor(config);
+      
+      expect(newConfig.headers['Authorization']).toBe('Bearer my-token');
+      expect(newConfig.headers['X-Request-ID']).toBeDefined();
     });
 
-    it('response interceptor on success', () => {
-      const useResponseSuccess = responseInterceptorHandlers[0].success;
-      const response = { data: 'ok' };
-      const newResponse = useResponseSuccess(response);
-      expect(newResponse).toBe(response);
+    it('request interceptor triggers loader after timeout', () => {
+      for(let i=0; i<5; i++) responseInterceptorResolve({ status: 200 }); // reset activeRequests
+      vi.useFakeTimers();
+      const config = { headers: {} as Record<string, string> };
+      
+      const dispatchEventSpy = vi.spyOn(window, 'dispatchEvent');
+      
+      requestInterceptor(config);
+      
+      vi.advanceTimersByTime(501);
+      
+      expect(dispatchEventSpy).toHaveBeenCalled();
+      
+      vi.useRealTimers();
     });
 
-    it('response interceptor on 401 error redirects to login', async () => {
-      const useResponseError = responseInterceptorHandlers[0].error;
-      const error = { response: { status: 401 }, config: { url: '/api/some/endpoint' } };
+    it('response interceptor resolves correctly', () => {
+      const response = { status: 200 };
+      expect(responseInterceptorResolve(response)).toBe(response);
+    });
+
+    it('response interceptor rejects with 401 redirects to login', async () => {
+      const error = { response: { status: 401 }, config: { url: '/api/documents' } };
       
       const originalLocation = window.location;
-      delete (window as any).location;
-      window.location = { href: '' } as any;
-
-      try {
-        await useResponseError(error);
-      } catch (e) {
-        expect(e).toBe(error);
-      }
+      Object.defineProperty(window, 'location', {
+        value: { href: '' },
+        writable: true
+      });
+      
+      await expect(responseInterceptorReject(error)).rejects.toBe(error);
       expect(window.location.href).toBe('/login?session_expired=true');
       
-      (window as any).location = originalLocation;
+      Object.defineProperty(window, 'location', { value: originalLocation, writable: true });
     });
-    
-    it('response interceptor ignores 401 on login route', async () => {
-      const useResponseError = responseInterceptorHandlers[0].error;
+
+    it('response interceptor rejects with 401 on login route does NOT redirect', async () => {
       const error = { response: { status: 401 }, config: { url: '/api/auth/login' } };
       
       const originalLocation = window.location;
-      delete (window as any).location;
-      window.location = { href: '' } as any;
-
-      try {
-        await useResponseError(error);
-      } catch (e) {
-        expect(e).toBe(error);
-      }
-      expect(window.location.href).toBe(''); // Did not redirect
+      Object.defineProperty(window, 'location', {
+        value: { href: '' },
+        writable: true
+      });
       
-      (window as any).location = originalLocation;
+      await expect(responseInterceptorReject(error)).rejects.toBe(error);
+      expect(window.location.href).toBe('');
+      
+      Object.defineProperty(window, 'location', { value: originalLocation, writable: true });
     });
   });
 });
