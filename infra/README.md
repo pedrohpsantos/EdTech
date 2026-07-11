@@ -2,7 +2,7 @@
 
 ![Docker](https://img.shields.io/badge/Docker-24.0-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 ![Google Cloud](https://img.shields.io/badge/GCP-Cloud_Run-4285F4?style=for-the-badge&logo=googlecloud&logoColor=white)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
 
 Este diretório (`/infra`) contém a configuração de infraestrutura do EdTech como código (IaC): orquestração de containers para desenvolvimento local e definições de deploy para o ambiente de produção no GCP.
 
@@ -43,8 +43,7 @@ docker compose down -v
 ---
 
 ## Produção (GCP)
-
-Em produção, as imagens Docker são publicadas no **Artifact Registry** do GCP e operadas via **Cloud Run** (Serverless, auto-scaling). O banco de dados é gerenciado pelo **Cloud SQL** (PostgreSQL 15).
+Em produção, as imagens Docker são publicadas no **Artifact Registry** do GCP e operadas via **Cloud Run** (Serverless, auto-scaling). O banco de dados é gerenciado pelo **Cloud SQL** (PostgreSQL 16).
 
 Variáveis de ambiente sensíveis (credenciais de banco, chaves JWT) são armazenadas no **Secret Manager** e injetadas diretamente nos serviços do Cloud Run, sem exposição em arquivos de configuração.
 

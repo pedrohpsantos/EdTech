@@ -573,9 +573,9 @@ jobs:
         run: |
           npm install -g @lhci/cli@0.13.0
           mkdir -p lighthouse-report
-          lhci collect --url="https://edtech-storage-501117.web.app/" --numberOfRuns=3
-          lhci assert
-          lhci upload --target=filesystem --outputDir=./lighthouse-report
+          lhci collect --config=tests/lighthouserc.json --url="https://edtech-storage-501117.web.app/" --numberOfRuns=3
+          lhci assert --config=tests/lighthouserc.json
+          lhci upload --config=tests/lighthouserc.json --target=filesystem --outputDir=./lighthouse-report
       - name: Upload Lighthouse Report
         if: always()
         uses: actions/upload-artifact@v7

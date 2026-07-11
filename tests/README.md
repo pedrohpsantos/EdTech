@@ -2,8 +2,9 @@
 
 ![Playwright](https://img.shields.io/badge/Playwright-E2E-2EAD33?style=for-the-badge&logo=playwright&logoColor=white)
 ![k6](https://img.shields.io/badge/k6-Performance-7D64FF?style=for-the-badge&logo=k6&logoColor=white)
+![Lighthouse](https://img.shields.io/badge/Lighthouse-UX%2FSEO-F44336?style=for-the-badge&logo=lighthouse&logoColor=white)
 
-Este diretório (`/tests`) consolida as suítes de testes externos da plataforma EdTech. Ele atua como barreira secundária de qualidade, validando o comportamento da aplicação em nível de integração sistêmica, *End-to-End* (E2E) e testes de carga.
+Este diretório (`/tests`) consolida as suítes de testes externos da plataforma EdTech. Ele atua como barreira secundária de qualidade, validando o comportamento da aplicação em nível de integração sistêmica, *End-to-End* (E2E), performance de carga e métricas de UX/SEO.
 
 A garantia de qualidade em nível unitário (Backend com JUnit/Mockito e Frontend com Vitest) é mantida em seus respectivos diretórios de origem.
 
@@ -12,7 +13,8 @@ A garantia de qualidade em nível unitário (Backend com JUnit/Mockito e Fronten
 O repositório adota pastas específicas para isolar escopos de teste:
 
 - **`/tests/e2e` (Playwright):** Foca em cenários Ponta a Ponta. Navegadores automatizados (*Headless*) simulam as jornadas críticas dos usuários de forma realista: login (protegido por JWT e CSRF), upload de arquivos e validação de interfaces visuais. Interagem concomitantemente com Frontend e Backend.
-- **`/tests/k6` (Performance e Stress):** Scripts voltados para a simulação de tráfego denso contra a API (Backend). Usados para aferir o comportamento do Rate Limiting, resposta sob carga e latência no limite operacional. Podem receber a variável ambiente `API_URL` externa para dinamizar a execução entre local e CI/CD.
+- **`/tests/performance` (k6):** Scripts voltados para a simulação de tráfego denso contra a API (Backend). Usados para aferir o comportamento do Rate Limiting, resposta sob carga e latência no limite operacional. Podem receber a variável ambiente `API_URL` externa para dinamizar a execução entre local e CI/CD.
+- **`/tests/lighthouserc.json` (Lighthouse CI):** Arquivo de configuração base para assertivas de performance web, acessibilidade, melhores práticas e otimização para motores de busca (SEO) no frontend do sistema. O LHCI atua como gatekeeper (bloqueador) em CI/CD caso as métricas degradem.
 
 ---
 
