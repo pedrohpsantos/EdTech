@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DataSeeder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">edtech-api</a> &gt; <a href="index.source.html" class="el_package">com.edtech.config</a> &gt; <span class="el_source">DataSeeder.java</span></div><h1>DataSeeder.java</h1><pre class="source lang-java linenums">package com.edtech.config;
 
-import com.edtech.model.AcaoAuditoria;
+import com.edtech.model.AuditAction;
 import com.edtech.model.AuditLog;
 import com.edtech.model.Document;
 import com.edtech.model.DocumentStatus;
@@ -56,8 +56,8 @@ public class DataSeeder implements CommandLineRunner {
   @Override
   @Transactional
   public void run(String... args) throws Exception {
-<span class="fc bfc" id="L59" title="All 2 branches covered.">    if (userRepository.count() &gt; 0) {</span>
-<span class="fc" id="L60">      return; // Database already seeded</span>
+<span class="pc bpc" id="L59" title="1 of 2 branches missed.">    if (userRepository.count() &gt; 0) {</span>
+<span class="nc" id="L60">      return; // Database already seeded</span>
     }
 
 <span class="fc" id="L63">    UUID defaultInstitution = UUID.fromString(&quot;00000000-0000-0000-0000-000000000001&quot;);</span>
@@ -141,7 +141,7 @@ public class DataSeeder implements CommandLineRunner {
 
 <span class="fc" id="L142">    saveLog(</span>
         researcher,
-        AcaoAuditoria.UPLOAD_SUCCESS,
+        AuditAction.UPLOAD_SUCCESS,
         &quot;Document&quot;,
 <span class="fc" id="L146">        doc1.getId(),</span>
         &quot;143.107.42.88&quot;,
@@ -149,7 +149,7 @@ public class DataSeeder implements CommandLineRunner {
 <span class="fc" id="L149">        now.minusMinutes(10));</span>
 <span class="fc" id="L150">    saveLog(</span>
         researcher,
-        AcaoAuditoria.LOGIN_SUCCESS,
+        AuditAction.LOGIN_SUCCESS,
         &quot;System&quot;,
 <span class="fc" id="L154">        researcher.getId(),</span>
         &quot;143.107.42.88&quot;,
@@ -157,7 +157,7 @@ public class DataSeeder implements CommandLineRunner {
 <span class="fc" id="L157">        now.minusMinutes(25));</span>
 <span class="fc" id="L158">    saveLog(</span>
         advisor,
-        AcaoAuditoria.DOCUMENT_APPROVED,
+        AuditAction.DOCUMENT_APPROVED,
         &quot;Document&quot;,
 <span class="fc" id="L162">        doc2.getId(),</span>
         &quot;200.130.11.220&quot;,
@@ -165,7 +165,7 @@ public class DataSeeder implements CommandLineRunner {
 <span class="fc" id="L165">        now.minusMinutes(40));</span>
 <span class="fc" id="L166">    saveLog(</span>
         advisor,
-        AcaoAuditoria.LOGIN_FAILED,
+        AuditAction.LOGIN_FAILED,
         &quot;System&quot;,
 <span class="fc" id="L170">        advisor.getId(),</span>
         &quot;177.82.94.12&quot;,
@@ -173,7 +173,7 @@ public class DataSeeder implements CommandLineRunner {
 <span class="fc" id="L173">        now.minusHours(2));</span>
 <span class="fc" id="L174">    saveLog(</span>
         advisor,
-        AcaoAuditoria.REVIEW_DOCUMENT,
+        AuditAction.REVIEW_DOCUMENT,
         &quot;Document&quot;,
 <span class="fc" id="L178">        doc1.getId(),</span>
         &quot;200.130.11.220&quot;,
@@ -181,7 +181,7 @@ public class DataSeeder implements CommandLineRunner {
 <span class="fc" id="L181">        now.minusHours(3));</span>
 <span class="fc" id="L182">    saveLog(</span>
         auditor,
-        AcaoAuditoria.MEMBER_JOINED,
+        AuditAction.MEMBER_JOINED,
         &quot;Project&quot;,
 <span class="fc" id="L186">        project1.getId(),</span>
         &quot;10.0.0.1&quot;,
@@ -189,7 +189,7 @@ public class DataSeeder implements CommandLineRunner {
 <span class="fc" id="L189">        now.minusHours(4));</span>
 <span class="fc" id="L190">    saveLog(</span>
         researcher,
-        AcaoAuditoria.DELETE_DOCUMENT,
+        AuditAction.DELETE_DOCUMENT,
         &quot;Document&quot;,
 <span class="fc" id="L194">        doc1.getId(),</span>
         &quot;143.107.42.88&quot;,
@@ -197,7 +197,7 @@ public class DataSeeder implements CommandLineRunner {
 <span class="fc" id="L197">        now.minusDays(1).minusHours(1));</span>
 <span class="fc" id="L198">    saveLog(</span>
         advisor,
-        AcaoAuditoria.DOCUMENT_REJECTED,
+        AuditAction.DOCUMENT_REJECTED,
         &quot;Document&quot;,
 <span class="fc" id="L202">        doc3.getId(),</span>
         &quot;200.130.11.220&quot;,
@@ -205,7 +205,7 @@ public class DataSeeder implements CommandLineRunner {
 <span class="fc" id="L205">        now.minusDays(1).minusHours(2));</span>
 <span class="fc" id="L206">    saveLog(</span>
         advisor,
-        AcaoAuditoria.REVIEW_DOCUMENT,
+        AuditAction.REVIEW_DOCUMENT,
         &quot;Document&quot;,
 <span class="fc" id="L210">        doc1.getId(),</span>
         &quot;177.82.94.12&quot;,
@@ -213,7 +213,7 @@ public class DataSeeder implements CommandLineRunner {
 <span class="fc" id="L213">        now.minusDays(1).minusHours(3));</span>
 <span class="fc" id="L214">    saveLog(</span>
         auditor,
-        AcaoAuditoria.LOGIN_SUCCESS,
+        AuditAction.LOGIN_SUCCESS,
         &quot;System&quot;,
 <span class="fc" id="L218">        auditor.getId(),</span>
         &quot;189.102.55.74&quot;,
@@ -221,7 +221,7 @@ public class DataSeeder implements CommandLineRunner {
 <span class="fc" id="L221">        now.minusDays(1).minusHours(9));</span>
 <span class="fc" id="L222">    saveLog(</span>
         researcher2,
-        AcaoAuditoria.REGISTER,
+        AuditAction.REGISTER,
         &quot;System&quot;,
 <span class="fc" id="L226">        researcher2.getId(),</span>
         &quot;192.168.1.42&quot;,
@@ -229,7 +229,7 @@ public class DataSeeder implements CommandLineRunner {
 <span class="fc" id="L229">        now.minusDays(2).minusHours(4));</span>
 <span class="fc" id="L230">    saveLog(</span>
         researcher2,
-        AcaoAuditoria.UPLOAD_SUCCESS,
+        AuditAction.UPLOAD_SUCCESS,
         &quot;Document&quot;,
 <span class="fc" id="L234">        doc3.getId(),</span>
         &quot;192.168.1.42&quot;,
@@ -237,7 +237,7 @@ public class DataSeeder implements CommandLineRunner {
 <span class="fc" id="L237">        now.minusDays(2).minusHours(8));</span>
 <span class="fc" id="L238">    saveLog(</span>
         advisor,
-        AcaoAuditoria.LOGIN_FAILED,
+        AuditAction.LOGIN_FAILED,
         &quot;System&quot;,
 <span class="fc" id="L242">        advisor.getId(),</span>
         &quot;200.130.11.220&quot;,
@@ -245,7 +245,7 @@ public class DataSeeder implements CommandLineRunner {
 <span class="fc" id="L245">        now.minusDays(2).minusHours(11));</span>
 <span class="fc" id="L246">    saveLog(</span>
         researcher2,
-        AcaoAuditoria.REVIEW_DOCUMENT,
+        AuditAction.REVIEW_DOCUMENT,
         &quot;Document&quot;,
 <span class="fc" id="L250">        doc1.getId(),</span>
         &quot;192.168.1.42&quot;,
@@ -255,7 +255,7 @@ public class DataSeeder implements CommandLineRunner {
 
   private void saveLog(
       User user,
-      AcaoAuditoria action,
+      AuditAction action,
       String resourceType,
       UUID resourceId,
       String ip,

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DocumentService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">edtech-api</a> &gt; <a href="index.source.html" class="el_package">com.edtech.service</a> &gt; <span class="el_source">DocumentService.java</span></div><h1>DocumentService.java</h1><pre class="source lang-java linenums">package com.edtech.service;
 
 import com.edtech.dto.DocumentResponseDto;
-import com.edtech.model.AcaoAuditoria;
+import com.edtech.model.AuditAction;
 import com.edtech.model.Document;
 import com.edtech.model.DocumentStatus;
 import com.edtech.model.Project;
@@ -109,7 +109,7 @@ public class DocumentService {
 
 <span class="fc" id="L110">      auditLogService.logDocumentAction(</span>
           authorId,
-          AcaoAuditoria.UPLOAD_SUCCESS,
+          AuditAction.UPLOAD_SUCCESS,
 <span class="fc" id="L113">          document.getId(),</span>
           &quot;Documento anexado no Cloud Storage: &quot; + title);
 
@@ -149,7 +149,7 @@ public class DocumentService {
 
 <span class="fc" id="L150">    auditLogService.logDocumentAction(</span>
         userId,
-        AcaoAuditoria.DOWNLOAD,
+        AuditAction.DOWNLOAD,
         documentId,
 <span class="fc" id="L154">        &quot;Gerada URL presigned para download: &quot; + document.getTitle());</span>
 <span class="fc" id="L155">    return presignedUrl;</span>
@@ -187,7 +187,7 @@ public class DocumentService {
 <span class="fc" id="L187">    documentRepository.delete(document);</span>
 <span class="fc" id="L188">    auditLogService.logDocumentAction(</span>
         userId,
-        AcaoAuditoria.DELETE_DOCUMENT,
+        AuditAction.DELETE_DOCUMENT,
         documentId,
 <span class="fc" id="L192">        &quot;Documento excluido: &quot; + document.getTitle());</span>
 <span class="fc" id="L193">  }</span>
@@ -316,7 +316,7 @@ public class DocumentService {
 <span class="fc" id="L316">    comment = documentCommentRepository.save(comment);</span>
 
 <span class="fc" id="L318">    auditLogService.logDocumentAction(</span>
-        userId, AcaoAuditoria.REVIEW_DOCUMENT, documentId, &quot;Adicionou um comentário ao documento.&quot;);
+        userId, AuditAction.REVIEW_DOCUMENT, documentId, &quot;Adicionou um comentário ao documento.&quot;);
 
 <span class="fc" id="L321">    com.edtech.dto.CommentResponseDto dto = new com.edtech.dto.CommentResponseDto();</span>
 <span class="fc" id="L322">    dto.setId(comment.getId());</span>
@@ -358,16 +358,16 @@ public class DocumentService {
 <span class="fc" id="L358">    document.setStatus(newStatus);</span>
 <span class="fc" id="L359">    document.setFeedback(feedback);</span>
 <span class="fc" id="L360">    Document savedDocument = documentRepository.save(document);</span>
-    AcaoAuditoria acao =
+    AuditAction action =
 <span class="fc bfc" id="L362" title="All 2 branches covered.">        (newStatus == DocumentStatus.APPROVED)</span>
-<span class="fc" id="L363">            ? AcaoAuditoria.DOCUMENT_APPROVED</span>
-<span class="fc" id="L364">            : AcaoAuditoria.DOCUMENT_REJECTED;</span>
+<span class="fc" id="L363">            ? AuditAction.DOCUMENT_APPROVED</span>
+<span class="fc" id="L364">            : AuditAction.DOCUMENT_REJECTED;</span>
 <span class="fc" id="L365">    String details =</span>
         &quot;Status alterado para &quot;
             + newStatus
             + &quot;.Feedback: &quot;
 <span class="fc bfc" id="L369" title="All 4 branches covered.">            + (feedback != null &amp;&amp; !feedback.trim().isEmpty() ? feedback : &quot;Sem feedback&quot;);</span>
-<span class="fc" id="L370">    auditLogService.logDocumentAction(reviewerId, acao, documentId, details);</span>
+<span class="fc" id="L370">    auditLogService.logDocumentAction(reviewerId, action, documentId, details);</span>
 
 <span class="fc" id="L372">    DocumentResponseDto responseDto = mapToDto(savedDocument);</span>
 <span class="fc" id="L373">    notificationService.sendToTopic(</span>
