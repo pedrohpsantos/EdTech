@@ -54,6 +54,7 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
           cache: maven
+          cache-dependency-path: 'backend/pom.xml'
 
       # --- LINT ---
       - name: Run Lint / Code Style Check
@@ -81,7 +82,10 @@ jobs:
         id: backend-tests
         run: |
           chmod +x mvnw
-          ./mvnw clean test jacoco:report -B -T 1C
+          ./mvnw clean test jacoco:report -B -T 1C \
+            -Dsurefire.parallel=classes \
+            -Dsurefire.threadCount=4 \
+            -Dsurefire.perCoreThreadCount=false
       - name: Upload JaCoCo Report
         if: always() && matrix.task == 'test'
         uses: actions/upload-artifact@v7
@@ -125,7 +129,7 @@ jobs:
         if: matrix.task == 'pitest'
         run: |
           chmod +x mvnw
-          ./mvnw clean test-compile org.pitest:pitest-maven:mutationCoverage -B -Dpitest.threads=4
+          ./mvnw clean test-compile org.pitest:pitest-maven:mutationCoverage -B -Dpitest.threads=8
 
       # --- SECURITY ---
       - name: Cache NVD Vulnerability Database
