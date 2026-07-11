@@ -39,7 +39,6 @@ jobs:
   build-backend:
     name: Build Backend
     runs-on: ubuntu-latest
-    needs: lint-backend
     defaults:
       run:
         working-directory: backend
@@ -61,10 +60,9 @@ jobs:
           name: backend-target
           path: backend/target/
   
-  test-backend:
-    name: Test Backend
+  test-unit-backend:
+    name: Unit Tests & Coverage
     runs-on: ubuntu-latest
-    needs: build-backend
     services:
       postgres:
         image: postgres:15-alpine
@@ -90,16 +88,11 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
           cache: maven
-      - name: Download Build Target
-        uses: actions/download-artifact@v8
-        with:
-          name: backend-target
-          path: backend/target/
       - name: Run Tests & Coverage
         id: backend-tests
         run: |
           chmod +x mvnw
-          ./mvnw verify -B -T 1C
+          ./mvnw clean test jacoco:report -B -T 1C
       - name: Upload JaCoCo Report
         uses: actions/upload-artifact@v7
         if: always()
@@ -107,57 +100,6 @@ jobs:
           name: jacoco-report
           path: "**/site/jacoco"
           if-no-files-found: warn
-      - name: Run Mutation Tests (PiTest)
-        id: mutation-tests
-        run: ./mvnw org.pitest:pitest-maven:mutationCoverage -B -Dpitest.threads=4
-      - name: Cache NVD Vulnerability Database
-        uses: actions/cache@v6
-        with:
-          path: ~/.m2/repository/org/owasp/dependency-check-data
-          key: nvd-data-${{ github.run_id }}
-          restore-keys: |
-            nvd-data-
-      - name: Run Security Audit (OWASP)
-        id: security-audit
-        env:
-          NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
-        run: |
-          chmod +x mvnw
-          echo "Iniciando auditoria de segurança estrita. Falhas bloquearão a pipeline."
-          
-          # Tentativas máximas para tolerar a instabilidade da NVD API
-          MAX_RETRIES=3
-          RETRY_COUNT=0
-          SUCCESS=0
-          
-          while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
-            if [ -z "$NVD_API_KEY" ]; then
-              echo "NVD_API_KEY ausente. Executando sem chave (Maior chance de Rate Limit)... Tentativa $(($RETRY_COUNT+1))/$MAX_RETRIES"
-              if ./mvnw org.owasp:dependency-check-maven:check -B -T 1C -Ddependency-check.nvdApiDelay=16000; then
-                SUCCESS=1
-                break
-              fi
-            else
-              echo "NVD_API_KEY encontrada. Executando com chave... Tentativa $(($RETRY_COUNT+1))/$MAX_RETRIES"
-              if ./mvnw org.owasp:dependency-check-maven:check -B -T 1C -Ddependency-check.nvdApiKey=$NVD_API_KEY -Ddependency-check.nvdApiDelay=8000; then
-                SUCCESS=1
-                break
-              fi
-            fi
-            
-            RETRY_COUNT=$(($RETRY_COUNT+1))
-            if [ $RETRY_COUNT -lt $MAX_RETRIES ]; then
-              echo "Falha na comunicação com a NVD (403/404). Aguardando 30 segundos antes de tentar novamente..."
-              sleep 30
-            fi
-          done
-          
-          if [ $SUCCESS -eq 0 ]; then
-            echo "Auditoria de segurança falhou após $MAX_RETRIES tentativas. Bloqueando a pipeline!"
-            exit 1
-          else
-            echo "Auditoria de segurança concluída com sucesso."
-          fi
       - name: Backend Test Summary
         if: always()
         run: |
@@ -167,8 +109,6 @@ jobs:
             echo "| Check | Result |"
             echo "| --- | --- |"
             echo "| Unit tests and coverage | ${{ steps.backend-tests.outcome }} |"
-            echo "| Mutation tests (PiTest) | ${{ steps.mutation-tests.outcome }} |"
-            echo "| Security audit (OWASP) | ${{ steps.security-audit.outcome }} |"
             echo
             echo "### JUnit results"
           } >> "$GITHUB_STEP_SUMMARY"
@@ -190,6 +130,68 @@ jobs:
               print("| ---: | ---: | ---: | ---: |")
               print(f"| {totals['tests']} | {totals['failures']} | {totals['errors']} | {totals['skipped']} |")
           PY
+
+  test-mutation-backend:
+    name: Mutation Tests
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v7
+      - name: Set up JDK 21
+        uses: actions/setup-java@v5
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+      - name: Run Mutation Tests (PiTest)
+        id: mutation-tests
+        run: |
+          chmod +x mvnw
+          ./mvnw clean test-compile org.pitest:pitest-maven:mutationCoverage -B -Dpitest.threads=4
+
+  security-backend:
+    name: Security Audit
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v7
+      - name: Set up JDK 21
+        uses: actions/setup-java@v5
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+      - name: Cache NVD Vulnerability Database
+        uses: actions/cache@v6
+        with:
+          path: ~/.m2/repository/org/owasp/dependency-check-data
+          key: nvd-data-${{ github.run_id }}
+          restore-keys: |
+            nvd-data-
+      - name: Run Security Audit (OWASP)
+        id: security-audit
+        env:
+          NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
+        run: |
+          chmod +x mvnw
+          echo "Iniciando auditoria de segurança estrita. Falhas bloquearão a pipeline."
+          MAX_RETRIES=3
+          RETRY_COUNT=0
+          SUCCESS=0
+          while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
+            if [ -z "$NVD_API_KEY" ]; then
+              if ./mvnw org.owasp:dependency-check-maven:check -B -T 1C -Ddependency-check.nvdApiDelay=16000; then SUCCESS=1; break; fi
+            else
+              if ./mvnw org.owasp:dependency-check-maven:check -B -T 1C -Ddependency-check.nvdApiKey=$NVD_API_KEY -Ddependency-check.nvdApiDelay=8000; then SUCCESS=1; break; fi
+            fi
+            RETRY_COUNT=$(($RETRY_COUNT+1))
+            if [ $RETRY_COUNT -lt $MAX_RETRIES ]; then sleep 30; fi
+          done
+          if [ $SUCCESS -eq 0 ]; then exit 1; fi
 
   # ==========================================
   #                 FRONTEND
@@ -220,7 +222,6 @@ jobs:
   build-frontend:
     name: Build Frontend
     runs-on: ubuntu-latest
-    needs: lint-frontend
     defaults:
       run:
         working-directory: frontend
@@ -249,7 +250,6 @@ jobs:
   test-frontend:
     name: Test Frontend
     runs-on: ubuntu-latest
-    needs: build-frontend
     defaults:
       run:
         working-directory: frontend
@@ -285,13 +285,58 @@ jobs:
             echo "| Component tests | ${{ steps.component-tests.outcome }} |"
           } >> "$GITHUB_STEP_SUMMARY"
 
+
+  # ==========================================
+  #                 INFRASTRUCTURE
+  # ==========================================
+  infra-validation:
+    name: Validate Infrastructure
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: infra/terraform
+    steps:
+      - uses: actions/checkout@v7
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v4
+      - name: Terraform Format Check
+        run: terraform fmt -check
+      - name: Terraform Init
+        run: terraform init -backend=false
+      - name: Terraform Validate
+        run: terraform validate
+
+  # ==========================================
+  #                 GATEKEEPERS
+  # ==========================================
+  backend-approved:
+    name: Backend Approved
+    runs-on: ubuntu-latest
+    needs: [lint-backend, build-backend, test-unit-backend, test-mutation-backend, security-backend]
+    steps:
+      - run: echo "✅ All Backend Validations Passed"
+
+  frontend-approved:
+    name: Frontend Approved
+    runs-on: ubuntu-latest
+    needs: [lint-frontend, build-frontend, test-frontend]
+    steps:
+      - run: echo "✅ All Frontend Validations Passed"
+
+  infra-approved:
+    name: Infra Approved
+    runs-on: ubuntu-latest
+    needs: [infra-validation]
+    steps:
+      - run: echo "✅ All Infrastructure Validations Passed"
+
   # ==========================================
   #                 DEPLOY
   # ==========================================
   deploy-backend:
     name: Deploy Backend (Cloud Run)
     runs-on: ubuntu-latest
-    needs: test-backend
+    needs: [backend-approved, infra-approved]
     if: github.ref == 'refs/heads/main'
     permissions:
       contents: 'read'
@@ -317,9 +362,22 @@ jobs:
       - name: Configure Docker
         run: gcloud auth configure-docker southamerica-east1-docker.pkg.dev --quiet
 
-      - name: Build and Push Docker Image
+      - name: Build Docker Image
         run: |
           docker build -t southamerica-east1-docker.pkg.dev/edtech-storage-501117/cloud-run-source-deploy/edtech-backend:${{ github.sha }} -f backend/Dockerfile.ci backend/
+          
+      - name: Scan Docker Image (Trivy)
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'southamerica-east1-docker.pkg.dev/edtech-storage-501117/cloud-run-source-deploy/edtech-backend:${{ github.sha }}'
+          format: 'table'
+          exit-code: '1'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL'
+          
+      - name: Push Docker Image
+        run: |
           docker push southamerica-east1-docker.pkg.dev/edtech-storage-501117/cloud-run-source-deploy/edtech-backend:${{ github.sha }}
           
 
@@ -417,7 +475,7 @@ jobs:
   deploy-frontend:
     name: Deploy Frontend (Firebase)
     runs-on: ubuntu-latest
-    needs: test-frontend
+    needs: [frontend-approved]
     if: github.ref == 'refs/heads/main'
     permissions:
       contents: 'read'
@@ -464,6 +522,16 @@ jobs:
       - name: Install dependencies
         working-directory: frontend
         run: npm ci
+      - name: Get Playwright version
+        id: playwright-version
+        working-directory: frontend
+        run: |
+          echo "version=$(npm ls @playwright/test --json | grep -oP '(?<="version": ")[^"]*')" >> $GITHUB_OUTPUT
+      - name: Cache Playwright browsers
+        uses: actions/cache@v6
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-browsers-${{ steps.playwright-version.outputs.version }}
       - name: Install Playwright browsers
         working-directory: frontend
         run: npx playwright install --with-deps chromium

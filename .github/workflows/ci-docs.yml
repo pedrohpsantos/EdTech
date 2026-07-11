@@ -17,9 +17,129 @@ permissions:
   contents: write
 
 jobs:
-  deploy:
+  backend-reports:
     runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v7
 
+      - name: Configurar JDK 21
+        uses: actions/setup-java@v5
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Gerar Relatório JaCoCo
+        working-directory: backend
+        run: |
+          chmod +x mvnw
+          ./mvnw clean test jacoco:report -B -T 1C
+
+      - name: Gerar Relatório PiTest
+        working-directory: backend
+        run: ./mvnw org.pitest:pitest-maven:mutationCoverage -B -Dpitest.threads=4
+
+      - name: Preparar Artefatos Backend
+        run: |
+          mkdir -p reports/jacoco reports/pitest
+          if [ -d "backend/target/site/jacoco" ]; then cp -r backend/target/site/jacoco/* reports/jacoco/ || true; fi
+          if [ -d "backend/target/pit-reports" ]; then cp -r backend/target/pit-reports/* reports/pitest/ || true; fi
+
+      - name: Upload Backend Reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-reports
+          path: reports/
+
+  frontend-reports:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+
+      - name: Instalar Dependências e Playwright
+        working-directory: frontend
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+
+      - name: Executar Testes Unitários (Vitest)
+        working-directory: frontend
+        run: npm run test || true
+
+      - name: Restaurar Histórico do Allure (Trend)
+        uses: actions/checkout@v7
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: gh-pages-branch
+
+      - name: Executar Smoke Tests (Allure)
+        working-directory: frontend
+        run: npx playwright test || true
+        env:
+          BASE_URL: 'https://edtech-storage-501117.web.app'
+
+      - name: Gerar Allure Report
+        working-directory: frontend
+        run: |
+          mkdir -p allure-results/history
+          cp -R ../gh-pages-branch/allure/history/* allure-results/history/ || true
+          cp allure-categories.json allure-results/categories.json || true
+          echo '{"name": "GitHub Actions", "type": "github", "reportName": "EdTech Smoke Tests"}' > allure-results/executor.json
+          echo "Browser=Chromium\nEnvironment=Production Smoke" > allure-results/environment.properties
+          npx allure-commandline generate allure-results -o allure-report --clean
+
+      - name: Preparar Artefatos Frontend
+        run: |
+          mkdir -p reports/vitest reports/allure
+          if [ -d "frontend/html" ]; then cp -r frontend/html/* reports/vitest/ || true; fi
+          if [ -d "frontend/allure-report" ]; then cp -r frontend/allure-report/* reports/allure/ || true; fi
+
+      - name: Upload Frontend Reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-reports
+          path: reports/
+
+  performance-reports:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v7
+
+      - name: Install K6
+        run: |
+          sudo gpg -k
+          sudo gpg --no-default-keyring --keyring /usr/share/keyrings/k6-archive-keyring.gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C5AD17C747E3415A3642D57D77C6C491D6AC1D69
+          echo "deb [signed-by=/usr/share/keyrings/k6-archive-keyring.gpg] https://dl.k6.io/deb stable main" | sudo tee /etc/apt/sources.list.d/k6.list
+          sudo apt-get update
+          sudo apt-get install k6
+
+      - name: Executar Testes de Carga (K6)
+        working-directory: tests/performance
+        run: k6 run load-test.js || true
+
+      - name: Preparar Artefato K6
+        run: |
+          mkdir -p reports/k6
+          if [ -f "tests/performance/k6-summary.html" ]; then cp tests/performance/k6-summary.html reports/k6/index.html || true; fi
+
+      - name: Upload Performance Reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: performance-reports
+          path: reports/
+
+  deploy-mkdocs:
+    runs-on: ubuntu-latest
+    needs: [backend-reports, frontend-reports, performance-reports]
     steps:
       - name: Checkout do código
         uses: actions/checkout@v7
@@ -36,126 +156,26 @@ jobs:
         with:
           enable-cache: true
 
-      - name: Cache do MkDocs
-        uses: actions/cache@v6
-        with:
-          path: .cache
-          key: mkdocs-cache-${{ hashFiles('mkdocs.yml') }}
-          restore-keys: |
-            mkdocs-cache-
-
-      - name: Configurar JDK 21
-        uses: actions/setup-java@v5
-        with:
-          java-version: '21'
-          distribution: 'temurin'
-          cache: maven
-
-      - name: Gerar Relatório JaCoCo
-        working-directory: backend
-        run: |
-          chmod +x mvnw
-          ./mvnw clean test jacoco:report
-
-      - name: Gerar Relatório PiTest
-        working-directory: backend
-        run: |
-          chmod +x mvnw
-          ./mvnw org.pitest:pitest-maven:mutationCoverage -B -Dpitest.threads=4
-
-      - name: Integrar JaCoCo na Documentação
-        run: |
-          mkdir -p docs/jacoco
-          if [ -d "backend/target/site/jacoco" ]; then
-            cp -r backend/target/site/jacoco/* docs/jacoco/ || true
-          else
-            echo "Nenhum relatório JaCoCo encontrado (talvez não existam testes). Pulando."
-          fi
-
-      - name: Integrar PiTest na Documentação
-        run: |
-          mkdir -p docs/pitest
-          if [ -d "backend/target/pit-reports" ]; then
-            cp -r backend/target/pit-reports/* docs/pitest/ || true
-          else
-            echo "Nenhum relatório PiTest encontrado. Pulando."
-          fi
-
-      - name: Setup Node.js (E2E)
-        uses: actions/setup-node@v6
-        with:
-          node-version: '24'
-
-      - name: Instalar Dependências e Playwright
-        working-directory: frontend
-        run: |
-          npm ci
-          npx playwright install --with-deps chromium
-
-      - name: Executar Testes Unitários (Vitest)
-        working-directory: frontend
-        run: npm run test || true
-
-      - name: Integrar Vitest na Documentação
-        run: |
-          mkdir -p docs/vitest
-          if [ -d "frontend/html" ]; then
-            cp -r frontend/html/* docs/vitest/ || true
-          fi
-
-      - name: Executar Smoke Tests (Allure)
-        working-directory: frontend
-        run: npx playwright test || true
-        env:
-          BASE_URL: 'https://edtech-storage-501117.web.app'
-
-      - name: Install K6
-        run: |
-          sudo gpg -k
-          sudo gpg --no-default-keyring --keyring /usr/share/keyrings/k6-archive-keyring.gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C5AD17C747E3415A3642D57D77C6C491D6AC1D69
-          echo "deb [signed-by=/usr/share/keyrings/k6-archive-keyring.gpg] https://dl.k6.io/deb stable main" | sudo tee /etc/apt/sources.list.d/k6.list
-          sudo apt-get update
-          sudo apt-get install k6
-
-      - name: Executar Testes de Carga (K6)
-        working-directory: tests/performance
-        run: k6 run load-test.js || true
-
-      - name: Integrar K6 na Documentação
-        run: |
-          mkdir -p docs/k6
-          if [ -f "tests/performance/k6-summary.html" ]; then
-            cp tests/performance/k6-summary.html docs/k6/index.html || true
-          fi
-
-      - name: Restaurar Histórico do Allure (Trend)
-        uses: actions/checkout@v7
-        if: always()
-        continue-on-error: true
-        with:
-          ref: gh-pages
-          path: gh-pages-branch
-
-      - name: Preparar Dados do Allure (Trend, Categories, Executors)
-        if: always()
-        working-directory: frontend
-        run: |
-          mkdir -p allure-results/history
-          cp -R ../gh-pages-branch/allure/history/* allure-results/history/ || true
-          cp allure-categories.json allure-results/categories.json || true
-          echo '{"name": "GitHub Actions", "type": "github", "reportName": "EdTech Smoke Tests", "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}", "buildOrder": "${{ github.run_number }}", "buildName": "${{ github.workflow }}", "buildUrl": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"}' > allure-results/executor.json
-          echo "Browser=Chromium" > allure-results/environment.properties
-          echo "Environment=Production Smoke" >> allure-results/environment.properties
-          echo "OS=Ubuntu Latest" >> allure-results/environment.properties
-
-      - name: Gerar Allure Report
-        if: always()
-        working-directory: frontend
-        run: |
-          npx allure-commandline generate allure-results -o ../docs/allure --clean
-
-      - name: Instalar dependências
+      - name: Instalar dependências MkDocs
         run: uv sync
+
+      - name: Download Backend Reports
+        uses: actions/download-artifact@v4
+        with:
+          name: backend-reports
+          path: docs/
+
+      - name: Download Frontend Reports
+        uses: actions/download-artifact@v4
+        with:
+          name: frontend-reports
+          path: docs/
+
+      - name: Download Performance Reports
+        uses: actions/download-artifact@v4
+        with:
+          name: performance-reports
+          path: docs/
 
       - name: Verificar links quebrados (Strict Build)
         env:

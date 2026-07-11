@@ -101,4 +101,41 @@ public class RecoveryServiceTest {
     assertEquals("hash_novo", mockUser.getPasswordHash());
     verify(recoveryTokenRepository, times(1)).deleteByEmail(EMAIL);
   }
+
+  @Test
+  void requestRecovery_WhenIsDemoAccount_ShouldReturnEarly() {
+    recoveryService.requestRecovery("admin.demo@unb.br");
+    verify(recoveryTokenRepository, never()).save(any());
+    verify(emailService, never()).sendRecoveryEmail(anyString(), anyString());
+  }
+
+  @Test
+  void verifyCode_WhenTokenIsNotFound_ShouldReturnFalse() {
+    when(recoveryTokenRepository.findByEmailAndToken(EMAIL, "999999")).thenReturn(Optional.empty());
+    boolean isValid = recoveryService.verifyCode(EMAIL, "999999");
+    assertFalse(isValid);
+  }
+
+  @Test
+  void resetPassword_WhenIsDemoAccount_ShouldReturnFalse() {
+    boolean result = recoveryService.resetPassword("admin.demo@unb.br", "123456", "nova");
+    assertFalse(result);
+  }
+
+  @Test
+  void resetPassword_WhenTokenIsInvalid_ShouldReturnFalse() {
+    when(recoveryTokenRepository.findByEmailAndToken(EMAIL, "123456")).thenReturn(Optional.empty());
+    boolean result = recoveryService.resetPassword(EMAIL, "123456", "nova_senha");
+    assertFalse(result);
+  }
+
+  @Test
+  void resetPassword_WhenUserDoesNotExist_ShouldReturnFalse() {
+    RecoveryToken token = new RecoveryToken("123456", EMAIL, LocalDateTime.now().plusMinutes(10));
+    when(recoveryTokenRepository.findByEmailAndToken(EMAIL, "123456")).thenReturn(Optional.of(token));
+    when(userRepository.findByEmailIgnoreCase(EMAIL)).thenReturn(Optional.empty());
+    
+    boolean result = recoveryService.resetPassword(EMAIL, "123456", "nova_senha");
+    assertFalse(result);
+  }
 }

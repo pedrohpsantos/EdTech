@@ -6,11 +6,14 @@ import { check, sleep } from 'k6';
 
 // Aqui ficam as configurações principais do teste.
 export const options = {
-  // Configuração de estágios de VUs (Virtual Users) para o Ramp-up
+  // Inicia o teste com um mínimo de 50 VUs
+  startVUs: 50,
+  
+  // Configuração de estágios de VUs (Virtual Users)
   stages: [
-    { duration: '30s', target: 50 }, // Ramp-up para 50 VUs
-    { duration: '1m', target: 100 }, // Sobe até 100 VUs e mantém
-    { duration: '30s', target: 0 },  // Ramp-down
+    { duration: '30s', target: 50 }, // Mantém no mínimo de 50 VUs
+    { duration: '1m', target: 100 }, // Sobe até o máximo de 100 VUs e mantém
+    { duration: '30s', target: 50 },  // Desce de volta para 50 VUs
   ],
 
   // Define quais estatísticas queremos ver no resumo final.
