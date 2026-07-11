@@ -1,7 +1,9 @@
 title: 'Qualidade e Testes'
 nav:
   - qualidade_testes.md
+  - jacoco_report.md
   - mutation_test_report.md
   - vitest_report.md
   - smoke_test_report.md
   - k6_report.md
+  - lighthouse_report.md

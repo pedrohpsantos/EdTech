@@ -208,8 +208,11 @@ jobs:
           lhci collect --url="https://edtech-storage-501117.web.app/" --numberOfRuns=3
           # LHCI names the file dynamically. We will rename it to index.html for easier iframe embedding.
           lhci upload --target=filesystem --outputDir=./reports/lighthouse
-          mv reports/lighthouse/lhci-reports/*.html reports/lighthouse/index.html || mv reports/lighthouse/*.html reports/lighthouse/index.html || true
-          
+          FIRST_HTML=$(find reports/lighthouse -name "*.html" | head -n 1)
+          if [ -n "$FIRST_HTML" ]; then
+            mv "$FIRST_HTML" reports/lighthouse/index.html
+            find reports/lighthouse -name "*.html" -not -name "index.html" -delete
+          fi
       - name: Upload Lighthouse Report
         if: matrix.report-type == 'lighthouse'
         uses: actions/upload-artifact@v7
