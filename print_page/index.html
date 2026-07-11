@@ -6013,6 +6013,13 @@ Muda instantaneamente o humor de "conteúdo de marketing" para "ferramenta técn
 <td style="text-align: center;">F01</td>
 <td style="text-align: center;"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2m-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8z"></path></svg></span></td>
 </tr>
+<tr>
+<td style="text-align: center;">RF23</td>
+<td style="text-align: left;">O sistema deve suportar verificação em duas etapas (2FA) via app Autenticador</td>
+<td style="text-align: center;">Alta</td>
+<td style="text-align: center;">F23</td>
+<td style="text-align: center;"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2m-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8z"></path></svg></span></td>
+</tr>
 </tbody>
 </table>
 <hr>
@@ -6267,6 +6274,12 @@ Muda instantaneamente o humor de "conteúdo de marketing" para "ferramenta técn
 <td style="text-align: center;"><code>1.6</code></td>
 <td style="text-align: center;">09/07/2026</td>
 <td style="text-align: left;">Detalhamento de upload de datasets e exportação <abbr title="Comma-Separated Values — Valores Separados por Vírgula">CSV</abbr> da auditoria</td>
+<td style="text-align: left;">Pedro Henrique P. Santos</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>1.7</code></td>
+<td style="text-align: center;">11/07/2026</td>
+<td style="text-align: left;">Inclusão do RF23 para Autenticação em Duas Etapas (2FA)</td>
 <td style="text-align: left;">Pedro Henrique P. Santos</td>
 </tr>
 </tbody>
@@ -6631,6 +6644,20 @@ Muda instantaneamente o humor de "conteúdo de marketing" para "ferramenta técn
 </details>
 <p><strong>Rastreabilidade:</strong> RF03, RF18 · <strong>Persona:</strong> Todos · <strong>Sprint:</strong> 2</p>
 <hr>
+<h3 id="produto-requisitos-historias-us10-configuracao-e-uso-de-2fa">US10 — Configuração e Uso de 2FA<a class="headerlink" href="#produto-requisitos-historias-us10-configuracao-e-uso-de-2fa" title="Permanent link">¶</a></h3>
+<blockquote>
+<p><strong>Como</strong> usuário preocupado com segurança, <strong>quero</strong> habilitar e usar autenticação em duas etapas (2FA), <strong>para que</strong> minha conta fique protegida mesmo em caso de vazamento de senha.</p>
+</blockquote>
+<details class="note">
+<summary>Critérios de Aceitação</summary>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> O usuário pode ativar o 2FA via configurações de perfil com um app Authenticator.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> O login exige o código TOTP de 6 dígitos se ativado.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Códigos inválidos impedem o acesso à plataforma.</li>
+</ul>
+</details>
+<p><strong>Rastreabilidade:</strong> RF23 · <strong>Persona:</strong> Todos · <strong>Sprint:</strong> 7</p>
+<hr>
 <h2 id="produto-requisitos-historias-epico-2-documentos">Épico 2 — Documentos<a class="headerlink" href="#produto-requisitos-historias-epico-2-documentos" title="Permanent link">¶</a></h2>
 <h3 id="produto-requisitos-historias-us04-upload-de-artigo">US04 — Upload de artigo<a class="headerlink" href="#produto-requisitos-historias-us04-upload-de-artigo" title="Permanent link">¶</a></h3>
 <blockquote>
@@ -6755,6 +6782,20 @@ Muda instantaneamente o humor de "conteúdo de marketing" para "ferramenta técn
 </details>
 <p><strong>Rastreabilidade:</strong> RF21, RNF03.2 · <strong>Persona:</strong> Márcia · <strong>Sprint:</strong> 5</p>
 <hr>
+<h3 id="produto-requisitos-historias-us11-exportacao-de-relatorios-de-auditoria">US11 — Exportação de Relatórios de Auditoria<a class="headerlink" href="#produto-requisitos-historias-us11-exportacao-de-relatorios-de-auditoria" title="Permanent link">¶</a></h3>
+<blockquote>
+<p><strong>Como</strong> auditora, <strong>quero</strong> exportar a trilha de auditoria em <abbr title="Comma-Separated Values — Valores Separados por Vírgula">CSV</abbr>, <strong>para que</strong> eu possa processar e reportar os logs externamente.</p>
+</blockquote>
+<details class="note">
+<summary>Critérios de Aceitação</summary>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Botão de exportação visível e acessível na tela de auditoria.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Gera um arquivo <abbr title="Comma-Separated Values — Valores Separados por Vírgula">CSV</abbr> com as mesmas filtragens aplicadas na tela.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Proteção para download apenas por usuários com perfil AUDITOR.</li>
+</ul>
+</details>
+<p><strong>Rastreabilidade:</strong> RF22 · <strong>Persona:</strong> Márcia · <strong>Sprint:</strong> 7</p>
+<hr>
 <h2 id="produto-requisitos-historias-resumo-do-backlog">Resumo do Backlog<a class="headerlink" href="#produto-requisitos-historias-resumo-do-backlog" title="Permanent link">¶</a></h2>
 <table>
 <thead>
@@ -6769,8 +6810,8 @@ Muda instantaneamente o humor de "conteúdo de marketing" para "ferramenta técn
 <tbody>
 <tr>
 <td style="text-align: left;">Autenticação</td>
-<td style="text-align: center;">3</td>
-<td style="text-align: center;">3</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">4</td>
 <td style="text-align: center;">0</td>
 <td style="text-align: center;">0</td>
 </tr>
@@ -6790,15 +6831,15 @@ Muda instantaneamente o humor de "conteúdo de marketing" para "ferramenta técn
 </tr>
 <tr>
 <td style="text-align: left;">Auditoria</td>
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">1</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
 <td style="text-align: center;">0</td>
 <td style="text-align: center;">0</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Total</strong></td>
-<td style="text-align: center;"><strong>9</strong></td>
-<td style="text-align: center;"><strong>9</strong></td>
+<td style="text-align: center;"><strong>11</strong></td>
+<td style="text-align: center;"><strong>11</strong></td>
 <td style="text-align: center;"><strong>0</strong></td>
 <td style="text-align: center;"><strong>0</strong></td>
 </tr>
@@ -6834,6 +6875,12 @@ Muda instantaneamente o humor de "conteúdo de marketing" para "ferramenta técn
 <td style="text-align: left;">Revisão profunda, correção de metadados e melhorias visuais</td>
 <td style="text-align: left;">Pedro Henrique P. Santos</td>
 </tr>
+<tr>
+<td style="text-align: center;"><code>1.3</code></td>
+<td style="text-align: center;">11/07/2026</td>
+<td style="text-align: left;">Inclusão das histórias US10 (2FA) e US11 (<abbr title="Comma-Separated Values — Valores Separados por Vírgula">CSV</abbr> Auditoria)</td>
+<td style="text-align: left;">Pedro Henrique P. Santos</td>
+</tr>
 </tbody>
 </table></body></html></section></section>
                     <section class='print-page md-section' id='section-2-4' heading-number='2.4'>
@@ -6859,6 +6906,11 @@ Muda instantaneamente o humor de "conteúdo de marketing" para "ferramenta técn
 <p class="admonition-title">Tip</p>
 <p>São aceitos arquivos <code>.pdf</code>, <code>.csv</code> e <code>.json</code>. Arquivos executáveis ou com tipo incompatível são rejeitados pela validação de upload.</p>
 </div>
+<h3 id="produto-manuais-manual_usuario-13-seguranca-da-conta-2fa">1.3 Segurança da Conta (2FA)<a class="headerlink" href="#produto-manuais-manual_usuario-13-seguranca-da-conta-2fa" title="Permanent link">¶</a></h3>
+<p>Para garantir maior proteção, o usuário pode acessar a aba de Configurações (Settings) e habilitar a Autenticação em Duas Etapas (2FA).
+1. Faça o scan do QR Code gerado usando um aplicativo Authenticator (ex: Google Authenticator).
+2. Insira o código TOTP no sistema para confirmar a vinculação.
+3. No próximo login, o sistema exigirá a digitação desse código de 6 dígitos.</p>
 <hr>
 <h2 id="produto-manuais-manual_usuario-2-fluxo-do-orientador-professorgestor">2. Fluxo do Orientador (Professor/Gestor)<a class="headerlink" href="#produto-manuais-manual_usuario-2-fluxo-do-orientador-professorgestor" title="Permanent link">¶</a></h2>
 <p>O <strong>Orientador</strong> é o usuário responsável por validar as entregas do Pesquisador e assegurar a qualidade científica.</p>
@@ -6878,7 +6930,7 @@ Muda instantaneamente o humor de "conteúdo de marketing" para "ferramenta técn
 <p>O Auditor pode pesquisar qualquer evento que tenha ocorrido no ciclo de vida de um documento, incluindo visualizações, downloads, edições de metadados e aprovações.</p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../assets/imgs/auditor_logs.png" data-desc-position="bottom"><img alt="Logs do Auditor" src="../assets/imgs/auditor_logs.png"></a></p>
 <h3 id="produto-manuais-manual_usuario-32-exportacao-de-trilha-de-auditoria">3.2 Exportação de Trilha de Auditoria<a class="headerlink" href="#produto-manuais-manual_usuario-32-exportacao-de-trilha-de-auditoria" title="Permanent link">¶</a></h3>
-<p>A tabela permite aplicar filtros por intervalo de data, usuário e tipo de ação. A trilha de auditoria de um documento também pode ser exportada em <abbr title="Comma-Separated Values — Valores Separados por Vírgula">CSV</abbr> pelo endpoint <code>GET /api/documents/{id}/audit/export?format=csv</code>, permitindo uso em auditorias externas de compliance.</p>
+<p>A tabela permite aplicar filtros por intervalo de data, usuário e tipo de ação. A trilha de auditoria pode ser exportada em <abbr title="Comma-Separated Values — Valores Separados por Vírgula">CSV</abbr> pelo botão "Exportar <abbr title="Comma-Separated Values — Valores Separados por Vírgula">CSV</abbr>" na interface, ou diretamente pelo endpoint <code>GET /api/audit-logs/export</code>, permitindo uso em auditorias externas de compliance.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Os logs não podem ser apagados ou modificados nem por usuários com perfil de Administrador.</p>
@@ -6940,6 +6992,12 @@ Muda instantaneamente o humor de "conteúdo de marketing" para "ferramenta técn
 <td style="text-align: center;"><code>1.2</code></td>
 <td style="text-align: center;">09/07/2026</td>
 <td style="text-align: left;">Atualização de formatos de upload e exportação <abbr title="Comma-Separated Values — Valores Separados por Vírgula">CSV</abbr> da auditoria</td>
+<td style="text-align: left;">Pedro Henrique P. Santos</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>1.3</code></td>
+<td style="text-align: center;">11/07/2026</td>
+<td style="text-align: left;">Inclusão das diretrizes de uso do 2FA e ajuste na documentação de Auditoria</td>
 <td style="text-align: left;">Pedro Henrique P. Santos</td>
 </tr>
 </tbody>
@@ -8297,12 +8355,15 @@ erDiagram
     PROJETO {
         string titulo
         string orientador
+        boolean deleted
     }
 
     DOCUMENTO {
         string titulo
         string arquivo_pdf
         string status
+        boolean deleted
+        string feedback
     }
 
     AUDITORIA {
@@ -8310,11 +8371,17 @@ erDiagram
         datetime data
     }
 
+    VERIFICATION_TOKEN {
+        string token
+        datetime expires_at
+    }
+
     USUARIO }o--o{ PROJETO : participa
     PROJETO ||--o{ DOCUMENTO : possui
-    USUARIO ||--o{ AUDITORIA : gera</code></pre>
+    USUARIO ||--o{ AUDITORIA : gera
+    USUARIO ||--o| VERIFICATION_TOKEN : "confirma 2FA"</code></pre>
 <h3 id="arquitetura-diagramas-dados-walkthrough-do-diagrama">Walkthrough do diagrama<a class="headerlink" href="#arquitetura-diagramas-dados-walkthrough-do-diagrama" title="Permanent link">¶</a></h3>
-<p>O <abbr title="Entity-Relationship Diagram — Diagrama Entidade-Relacionamento">ERD</abbr> resume quatro entidades centrais e suas relações principais: usuários participam de projetos, projetos possuem documentos e usuários geram auditoria.</p>
+<p>O <abbr title="Entity-Relationship Diagram — Diagrama Entidade-Relacionamento">ERD</abbr> resume as entidades centrais e suas relações principais: usuários participam de projetos, projetos possuem documentos e usuários geram auditoria. A entidade de token lida com autenticação e validações temporárias.</p>
 <h2 id="arquitetura-diagramas-dados-regras-de-isolamento-multi-tenancy-logico">Regras de Isolamento (Multi-tenancy Lógico)<a class="headerlink" href="#arquitetura-diagramas-dados-regras-de-isolamento-multi-tenancy-logico" title="Permanent link">¶</a></h2>
 <p>Um Orientador (<code>advisor</code>) só consegue consultar metadados e arquivos dos artefatos de projetos nos quais ele está listado explicitamente na tabela de junção <code>project_members</code>. Consultas <abbr title="Structured Query Language">SQL</abbr> abstraídas via <abbr title="Java Persistence API">JPA</abbr> forçam <em>Query Filters</em> em tempo de compilação usando este relacionamento.</p>
 <h2 id="arquitetura-diagramas-dados-evolucao-do-esquema-migrations">Evolução do Esquema (Migrations)<a class="headerlink" href="#arquitetura-diagramas-dados-evolucao-do-esquema-migrations" title="Permanent link">¶</a></h2>
@@ -8353,6 +8420,12 @@ erDiagram
 <td style="text-align: center;"><code>1.3</code></td>
 <td style="text-align: center;">04/07/2026</td>
 <td style="text-align: left;">Revisão profunda, correção de metadados e melhorias visuais</td>
+<td style="text-align: left;">Pedro Henrique P. Santos</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>1.4</code></td>
+<td style="text-align: center;">11/07/2026</td>
+<td style="text-align: left;">Inclusão de VerificationToken, flags de soft-delete e feedback</td>
 <td style="text-align: left;">Pedro Henrique P. Santos</td>
 </tr>
 </tbody>
@@ -9133,6 +9206,9 @@ Além disso, o sistema conta com um módulo de Auditoria que exige um histórico
 </li>
 <li>
 <p><strong>Automação:</strong> O Flyway se integra nativamente ao Spring Boot (<abbr title="Architecture Decision Record — Registro de Decisão Arquitetural">ADR</abbr> 0005), executando as migrações automaticamente no momento em que a aplicação "sobe", sem necessidade de intervenção humana (Zero-downtime migrations se bem planejadas).</p>
+<ul>
+<li><strong>Nota Arquitetural (Deploy Cloud Run):</strong> Para evitar "drift" entre as versões de entidades do Hibernate e o banco na Cloud Run — o que causa falhas fatais (<code>SchemaManagementException</code>) no ambiente serverless —, as migrações não são aplicadas por Jobs paralelos, mas sim de forma <em>embutida</em> no ciclo de vida do Spring Boot ativando a variável <code>SPRING_FLYWAY_ENABLED=true</code> durante o <em>Terraform apply</em>.</li>
+</ul>
 </li>
 <li>
 <p><strong>Rastreabilidade:</strong> Cria uma tabela de histórico automática no PostgreSQL, permitindo saber exatamente quando cada migração foi aplicada.</p>
@@ -9175,6 +9251,12 @@ Além disso, o sistema conta com um módulo de Auditoria que exige um histórico
 <td style="text-align: center;"><code>1.2</code></td>
 <td style="text-align: center;">04/07/2026</td>
 <td style="text-align: left;">Revisão profunda, correção de metadados e melhorias visuais</td>
+<td style="text-align: left;">Pedro Henrique P. Santos</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>1.3</code></td>
+<td style="text-align: center;">11/07/2026</td>
+<td style="text-align: left;">Adicionada nota sobre a inicialização embutida com o Cloud Run</td>
 <td style="text-align: left;">Pedro Henrique P. Santos</td>
 </tr>
 </tbody>

@@ -1137,6 +1137,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#us10-configuracao-e-uso-de-2fa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US10 — Configuração e Uso de 2FA
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1248,6 +1259,17 @@
     <span class="md-ellipsis">
       
         US09 — Consulta de logs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#us11-exportacao-de-relatorios-de-auditoria" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US11 — Exportação de Relatórios de Auditoria
       
     </span>
   </a>
@@ -3773,6 +3795,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#us10-configuracao-e-uso-de-2fa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US10 — Configuração e Uso de 2FA
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -3884,6 +3917,17 @@
     <span class="md-ellipsis">
       
         US09 — Consulta de logs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#us11-exportacao-de-relatorios-de-auditoria" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US11 — Exportação de Relatórios de Auditoria
       
     </span>
   </a>
@@ -4013,6 +4057,20 @@
 </details>
 <p><strong>Rastreabilidade:</strong> RF03, RF18 · <strong>Persona:</strong> Todos · <strong>Sprint:</strong> 2</p>
 <hr>
+<h3 id="us10-configuracao-e-uso-de-2fa">US10 — Configuração e Uso de 2FA<a class="headerlink" href="#us10-configuracao-e-uso-de-2fa" title="Permanent link">¶</a></h3>
+<blockquote>
+<p><strong>Como</strong> usuário preocupado com segurança, <strong>quero</strong> habilitar e usar autenticação em duas etapas (2FA), <strong>para que</strong> minha conta fique protegida mesmo em caso de vazamento de senha.</p>
+</blockquote>
+<details class="note">
+<summary>Critérios de Aceitação</summary>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> O usuário pode ativar o 2FA via configurações de perfil com um app Authenticator.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> O login exige o código TOTP de 6 dígitos se ativado.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Códigos inválidos impedem o acesso à plataforma.</li>
+</ul>
+</details>
+<p><strong>Rastreabilidade:</strong> RF23 · <strong>Persona:</strong> Todos · <strong>Sprint:</strong> 7</p>
+<hr>
 <h2 id="epico-2-documentos">Épico 2 — Documentos<a class="headerlink" href="#epico-2-documentos" title="Permanent link">¶</a></h2>
 <h3 id="us04-upload-de-artigo">US04 — Upload de artigo<a class="headerlink" href="#us04-upload-de-artigo" title="Permanent link">¶</a></h3>
 <blockquote>
@@ -4137,6 +4195,20 @@
 </details>
 <p><strong>Rastreabilidade:</strong> RF21, RNF03.2 · <strong>Persona:</strong> Márcia · <strong>Sprint:</strong> 5</p>
 <hr>
+<h3 id="us11-exportacao-de-relatorios-de-auditoria">US11 — Exportação de Relatórios de Auditoria<a class="headerlink" href="#us11-exportacao-de-relatorios-de-auditoria" title="Permanent link">¶</a></h3>
+<blockquote>
+<p><strong>Como</strong> auditora, <strong>quero</strong> exportar a trilha de auditoria em <abbr title="Comma-Separated Values — Valores Separados por Vírgula">CSV</abbr>, <strong>para que</strong> eu possa processar e reportar os logs externamente.</p>
+</blockquote>
+<details class="note">
+<summary>Critérios de Aceitação</summary>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Botão de exportação visível e acessível na tela de auditoria.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Gera um arquivo <abbr title="Comma-Separated Values — Valores Separados por Vírgula">CSV</abbr> com as mesmas filtragens aplicadas na tela.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Proteção para download apenas por usuários com perfil AUDITOR.</li>
+</ul>
+</details>
+<p><strong>Rastreabilidade:</strong> RF22 · <strong>Persona:</strong> Márcia · <strong>Sprint:</strong> 7</p>
+<hr>
 <h2 id="resumo-do-backlog">Resumo do Backlog<a class="headerlink" href="#resumo-do-backlog" title="Permanent link">¶</a></h2>
 <table>
 <thead>
@@ -4151,8 +4223,8 @@
 <tbody>
 <tr>
 <td style="text-align: left;">Autenticação</td>
-<td style="text-align: center;">3</td>
-<td style="text-align: center;">3</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">4</td>
 <td style="text-align: center;">0</td>
 <td style="text-align: center;">0</td>
 </tr>
@@ -4172,15 +4244,15 @@
 </tr>
 <tr>
 <td style="text-align: left;">Auditoria</td>
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">1</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
 <td style="text-align: center;">0</td>
 <td style="text-align: center;">0</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Total</strong></td>
-<td style="text-align: center;"><strong>9</strong></td>
-<td style="text-align: center;"><strong>9</strong></td>
+<td style="text-align: center;"><strong>11</strong></td>
+<td style="text-align: center;"><strong>11</strong></td>
 <td style="text-align: center;"><strong>0</strong></td>
 <td style="text-align: center;"><strong>0</strong></td>
 </tr>
@@ -4216,6 +4288,12 @@
 <td style="text-align: left;">Revisão profunda, correção de metadados e melhorias visuais</td>
 <td style="text-align: left;">Pedro Henrique P. Santos</td>
 </tr>
+<tr>
+<td style="text-align: center;"><code>1.3</code></td>
+<td style="text-align: center;">11/07/2026</td>
+<td style="text-align: left;">Inclusão das histórias US10 (2FA) e US11 (<abbr title="Comma-Separated Values — Valores Separados por Vírgula">CSV</abbr> Auditoria)</td>
+<td style="text-align: left;">Pedro Henrique P. Santos</td>
+</tr>
 </tbody>
 </table>
 
@@ -4238,7 +4316,7 @@
     <span class="md-icon" title="Última atualização">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="6 de julho de 2026 14:17:20 UTC">6 de julho de 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="11 de julho de 2026 12:17:50 UTC">11 de julho de 2026</span>
   </span>
 
     
