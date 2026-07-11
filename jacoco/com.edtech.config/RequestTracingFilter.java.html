@@ -31,12 +31,14 @@ import org.springframework.web.filter.OncePerRequestFilter;
       }
 
 <span class="nc" id="L33">      MDC.put(MDC_TRACE_ID_KEY, traceId);</span>
-<span class="nc" id="L34">      response.setHeader(TRACE_ID_HEADER, traceId);</span>
+      // Sanitize before echoing back as HTTP header to prevent header injection (HRS)
+<span class="nc" id="L35">      String safeTraceId = traceId.replaceAll(&quot;[^a-zA-Z0-9\\-]&quot;, &quot;&quot;);</span>
+<span class="nc" id="L36">      response.setHeader(TRACE_ID_HEADER, safeTraceId);</span>
 
-<span class="nc" id="L36">      filterChain.doFilter(request, response);</span>
+<span class="nc" id="L38">      filterChain.doFilter(request, response);</span>
     } finally {
-<span class="nc" id="L38">      MDC.remove(MDC_TRACE_ID_KEY);</span>
+<span class="nc" id="L40">      MDC.remove(MDC_TRACE_ID_KEY);</span>
     }
-<span class="nc" id="L40">  }</span>
+<span class="nc" id="L42">  }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
