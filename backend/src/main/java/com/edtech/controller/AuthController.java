@@ -24,6 +24,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.edtech.service.TwoFactorAuthService;
+import java.util.Map;
 
 /** Documentação para AuthController. */
 @RestController
@@ -34,31 +36,40 @@ public class AuthController {
   private final JwtService jwtService;
   private final RecoveryService recoveryService;
   private final RateLimitingService rateLimitingService;
+  private final TwoFactorAuthService twoFactorAuthService;
 
   /** Documentação. */
   public AuthController(
       UserService userService,
       JwtService jwtService,
       RecoveryService recoveryService,
-      RateLimitingService rateLimitingService) {
+      RateLimitingService rateLimitingService,
+      TwoFactorAuthService twoFactorAuthService) {
     this.userService = userService;
     this.jwtService = jwtService;
     this.recoveryService = recoveryService;
     this.rateLimitingService = rateLimitingService;
+    this.twoFactorAuthService = twoFactorAuthService;
   }
 
   /** Documentação. */
   @PostMapping("/register")
-  public ResponseEntity<AuthResponseDto> register(@Valid @RequestBody RegisterRequestDto request) {
-    User registeredUser = userService.register(request);
-    String token = jwtService.generateToken(registeredUser);
-    return ResponseEntity.status(HttpStatus.CREATED)
-        .body(new AuthResponseDto(UserResponseDto.from(registeredUser), token));
+  public ResponseEntity<Void> register(@Valid @RequestBody RegisterRequestDto request) {
+    userService.register(request);
+    return ResponseEntity.status(HttpStatus.CREATED).build();
+  }
+
+  /** Documentação. */
+  @PostMapping("/register/verify")
+  public ResponseEntity<AuthResponseDto> verifyRegistration(@RequestBody VerifyCodeDto request) {
+    User user = userService.verifyRegistration(request.email(), request.code());
+    String token = jwtService.generateToken(user);
+    return ResponseEntity.ok(new AuthResponseDto(UserResponseDto.from(user), token));
   }
 
   /** Documentação. */
   @PostMapping("/login")
-  public ResponseEntity<AuthResponseDto> login(
+  public ResponseEntity<?> login(
       @Valid @RequestBody LoginRequestDto request, HttpServletRequest httpRequest) {
     Bucket bucket = rateLimitingService.resolveBucket(httpRequest.getRemoteAddr());
     if (!bucket.tryConsume(1)) {
@@ -67,9 +78,78 @@ public class AuthController {
     }
 
     User user = userService.authenticate(request.email(), request.password());
-    String token = jwtService.generateToken(user);
+    
+    if (user.isMfaEnabled()) {
+        return ResponseEntity.status(HttpStatus.ACCEPTED)
+            .body(Map.of("mfaRequired", true, "email", user.getEmail()));
+    }
 
+    String token = jwtService.generateToken(user);
     return ResponseEntity.ok(new AuthResponseDto(UserResponseDto.from(user), token));
+  }
+
+  @PostMapping("/login/verify-2fa")
+  public ResponseEntity<?> verify2FaLogin(
+      @Valid @RequestBody com.edtech.dto.Verify2FaLoginDto request, HttpServletRequest httpRequest) {
+    Bucket bucket = rateLimitingService.resolveBucket(httpRequest.getRemoteAddr());
+    if (!bucket.tryConsume(1)) {
+      throw new RateLimitExceededException(
+          "Limite de tentativas excedido. Tente novamente mais tarde.");
+    }
+
+    User user = userService.authenticate(request.email(), request.password());
+    if (!user.isMfaEnabled()) {
+      return ResponseEntity.badRequest().body("2FA is not enabled for this user.");
+    }
+
+    boolean isValid = twoFactorAuthService.verifyCode(user.getMfaSecret(), request.code());
+    if (!isValid) {
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid 2FA code.");
+    }
+
+    String token = jwtService.generateToken(user);
+    return ResponseEntity.ok(new AuthResponseDto(UserResponseDto.from(user), token));
+  }
+
+  @GetMapping("/2fa/setup")
+  public ResponseEntity<?> setup2Fa(Authentication authentication) {
+    User user = (User) authentication.getPrincipal();
+    
+    if (user.isMfaEnabled()) {
+        return ResponseEntity.badRequest().body("2FA is already enabled.");
+    }
+
+    String secret = user.getMfaSecret();
+    if (secret == null || secret.isEmpty()) {
+        secret = twoFactorAuthService.generateSecret();
+        user.setMfaSecret(secret);
+        userService.saveUserWithoutHash(user); // Wait, we need a method to save the user without rehashing
+    }
+
+    try {
+        String qrCodeUri = twoFactorAuthService.getQrCodeImageUri(secret, user.getEmail());
+        return ResponseEntity.ok(Map.of("secret", secret, "qrCodeUri", qrCodeUri));
+    } catch (Exception e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to generate QR Code");
+    }
+  }
+
+  @PostMapping("/2fa/enable")
+  public ResponseEntity<?> enable2Fa(@RequestBody VerifyCodeDto request, Authentication authentication) {
+    User user = (User) authentication.getPrincipal();
+
+    if (user.isMfaEnabled()) {
+        return ResponseEntity.badRequest().body("2FA is already enabled.");
+    }
+
+    boolean isValid = twoFactorAuthService.verifyCode(user.getMfaSecret(), request.code());
+    if (!isValid) {
+        return ResponseEntity.badRequest().body("Invalid 2FA code.");
+    }
+
+    user.setMfaEnabled(true);
+    userService.saveUserWithoutHash(user);
+    return ResponseEntity.ok().build();
   }
 
   /** Documentação. */

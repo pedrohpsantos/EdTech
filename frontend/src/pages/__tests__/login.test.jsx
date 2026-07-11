@@ -23,7 +23,7 @@ describe('Login Page', () => {
     render(<Login />, { wrapper: Wrapper });
     expect(screen.getByPlaceholderText('seu.nome@universidade.br')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('••••••••')).toBeInTheDocument();
-    expect(screen.getByText('Entrar')).toBeInTheDocument();
+    expect(screen.getByText(/Continuar/i)).toBeInTheDocument();
   });
 
   it('updates email and password fields on typing', () => {
@@ -54,7 +54,7 @@ describe('Login Page', () => {
     render(<Login />, { wrapper: Wrapper });
     const emailInput = screen.getByPlaceholderText('seu.nome@universidade.br');
     const passwordInput = screen.getByPlaceholderText('••••••••');
-    const submitButton = screen.getByRole('button', { name: /Entrar/i });
+    const submitButton = screen.getByRole('button', { name: /Continuar/i });
 
     fireEvent.change(emailInput, { target: { value: 'test@edu.br' } });
     fireEvent.change(passwordInput, { target: { value: 'password123' } });

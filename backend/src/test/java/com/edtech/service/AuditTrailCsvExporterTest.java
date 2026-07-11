@@ -19,6 +19,7 @@ class AuditTrailCsvExporterTest {
     UUID resourceId = UUID.randomUUID();
     AuditLog log =
         new AuditLog(
+            UUID.randomUUID(),
             userId,
             AcaoAuditoria.DOWNLOAD,
             "Document",

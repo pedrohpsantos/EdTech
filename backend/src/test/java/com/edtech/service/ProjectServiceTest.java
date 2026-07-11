@@ -41,7 +41,7 @@ public class ProjectServiceTest {
     request.setTitle("New Project");
     request.setDescription("Project Desc");
 
-    User advisor = new User("test", "test@unb.br", "hash", com.edtech.model.UserRole.RESEARCHER);
+    User advisor = new User("test", "test@unb.br", "hash", com.edtech.model.UserRole.RESEARCHER, java.util.UUID.randomUUID());
     org.springframework.test.util.ReflectionTestUtils.setField(advisor, "id", advisorId);
 
     Project savedProject = new Project();
@@ -82,7 +82,7 @@ public class ProjectServiceTest {
   @Test
   void listProjectsByUser_ReturnsList() {
     UUID userId = UUID.randomUUID();
-    User advisor = new User("test", "test@unb.br", "hash", com.edtech.model.UserRole.RESEARCHER);
+    User advisor = new User("test", "test@unb.br", "hash", com.edtech.model.UserRole.RESEARCHER, java.util.UUID.randomUUID());
     org.springframework.test.util.ReflectionTestUtils.setField(advisor, "id", UUID.randomUUID());
 
     Project p1 = new Project();
@@ -106,7 +106,7 @@ public class ProjectServiceTest {
     Project project = new Project();
     project.setId(projectId);
     project.setTitle("Proj");
-    User authUser = new User("Auth", "auth@test.com", "hash", com.edtech.model.UserRole.RESEARCHER);
+    User authUser = new User("Auth", "auth@test.com", "hash", com.edtech.model.UserRole.RESEARCHER, java.util.UUID.randomUUID());
     org.springframework.test.util.ReflectionTestUtils.setField(authUser, "id", userId);
     
     ProjectMemberRequestDto dto = new ProjectMemberRequestDto();
@@ -128,7 +128,7 @@ public class ProjectServiceTest {
   @Test
   void addMember_ProjectNotFound_ThrowsException() {
     UUID projectId = UUID.randomUUID();
-    User authUser = new User("Auth", "auth@test.com", "hash", com.edtech.model.UserRole.RESEARCHER);
+    User authUser = new User("Auth", "auth@test.com", "hash", com.edtech.model.UserRole.RESEARCHER, java.util.UUID.randomUUID());
     
     when(projectRepository.findById(projectId)).thenReturn(Optional.empty());
     
@@ -145,7 +145,7 @@ public class ProjectServiceTest {
     Project project = new Project();
     project.setId(projectId);
     
-    User authUser = new User("Auth", "auth@test.com", "hash", com.edtech.model.UserRole.RESEARCHER);
+    User authUser = new User("Auth", "auth@test.com", "hash", com.edtech.model.UserRole.RESEARCHER, java.util.UUID.randomUUID());
     org.springframework.test.util.ReflectionTestUtils.setField(authUser, "id", authUserId);
     
     ProjectMemberRequestDto dto = new ProjectMemberRequestDto();
@@ -167,7 +167,7 @@ public class ProjectServiceTest {
     Project project = new Project();
     project.setId(projectId);
     
-    User authUser = new User("Auth", "auth@test.com", "hash", com.edtech.model.UserRole.RESEARCHER);
+    User authUser = new User("Auth", "auth@test.com", "hash", com.edtech.model.UserRole.RESEARCHER, java.util.UUID.randomUUID());
     org.springframework.test.util.ReflectionTestUtils.setField(authUser, "id", authUserId);
     
     ProjectMemberRequestDto dto = new ProjectMemberRequestDto();
@@ -189,7 +189,7 @@ public class ProjectServiceTest {
     UUID userId = UUID.randomUUID();
     Project project = new Project();
     project.setId(projectId);
-    User authUser = new User("Auth", "auth@test.com", "hash", com.edtech.model.UserRole.RESEARCHER);
+    User authUser = new User("Auth", "auth@test.com", "hash", com.edtech.model.UserRole.RESEARCHER, java.util.UUID.randomUUID());
     org.springframework.test.util.ReflectionTestUtils.setField(authUser, "id", userId);
     
     ProjectMemberRequestDto dto = new ProjectMemberRequestDto();
@@ -208,7 +208,7 @@ public class ProjectServiceTest {
     Project project = new Project();
     project.setId(projectId);
     project.setTitle("Proj");
-    User authUser = new User("Auth", "auth@test.com", "hash", com.edtech.model.UserRole.RESEARCHER);
+    User authUser = new User("Auth", "auth@test.com", "hash", com.edtech.model.UserRole.RESEARCHER, java.util.UUID.randomUUID());
     org.springframework.test.util.ReflectionTestUtils.setField(authUser, "id", userId);
 
     when(projectRepository.findById(projectId)).thenReturn(Optional.of(project));
@@ -230,7 +230,7 @@ public class ProjectServiceTest {
     Project project = new Project();
     project.setId(projectId);
     project.setTitle("Proj");
-    User authUser = new User("Auth", "auth@test.com", "hash", com.edtech.model.UserRole.RESEARCHER);
+    User authUser = new User("Auth", "auth@test.com", "hash", com.edtech.model.UserRole.RESEARCHER, java.util.UUID.randomUUID());
     org.springframework.test.util.ReflectionTestUtils.setField(authUser, "id", userId);
     
     ProjectMemberRequestDto dto = new ProjectMemberRequestDto();
@@ -254,7 +254,7 @@ public class ProjectServiceTest {
     Project project = new Project();
     project.setId(projectId);
     project.setTitle("Proj");
-    User authUser = new User("Auth", "auth@test.com", "hash", com.edtech.model.UserRole.RESEARCHER);
+    User authUser = new User("Auth", "auth@test.com", "hash", com.edtech.model.UserRole.RESEARCHER, java.util.UUID.randomUUID());
     org.springframework.test.util.ReflectionTestUtils.setField(authUser, "id", userId);
     
     ProjectMemberRequestDto dto = new ProjectMemberRequestDto();
@@ -277,7 +277,7 @@ public class ProjectServiceTest {
     UUID userId = UUID.randomUUID();
     Project project = new Project();
     project.setId(projectId);
-    User authUser = new User("Auth", "auth@test.com", "hash", com.edtech.model.UserRole.RESEARCHER);
+    User authUser = new User("Auth", "auth@test.com", "hash", com.edtech.model.UserRole.RESEARCHER, java.util.UUID.randomUUID());
     org.springframework.test.util.ReflectionTestUtils.setField(authUser, "id", userId);
     
     ProjectMemberRequestDto dto = new ProjectMemberRequestDto();

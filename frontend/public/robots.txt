@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /dashboard/
+Disallow: /settings/
+Disallow: /admin/
+Disallow: /api/
+
+Sitemap: https://edtech-storage-501117.web.app/sitemap.xml

@@ -21,7 +21,7 @@ ENV VITE_API_URL=$VITE_API_URL
 RUN npm run build
 
 # Estágio de Produção (Nginx)
-FROM nginx:alpine
+FROM nginxinc/nginx-unprivileged:alpine
 
 # Copiar build gerado no estágio anterior
 COPY --from=build /app/dist /usr/share/nginx/html
@@ -42,8 +42,8 @@ RUN echo 'server { \
     } \
 }' > /etc/nginx/conf.d/default.conf
 
-# Expor porta 80 do Nginx
-EXPOSE 80
+# Expor porta 8080 do Nginx
+EXPOSE 8080
 
 # Iniciar Nginx
 CMD ["nginx", "-g", "daemon off;"]

@@ -60,17 +60,18 @@ public class DataSeeder implements CommandLineRunner {
       return; // Database already seeded
     }
 
+    UUID defaultInstitution = UUID.fromString("00000000-0000-0000-0000-000000000001");
     String defaultPassword = passwordEncoder.encode("senha123");
 
     // 1. Criar Usuários
     User auditor = new User("Auditor Externo", "auditor@demo.com", defaultPassword,
-        UserRole.AUDITOR);
+        UserRole.AUDITOR, defaultInstitution);
     User advisor = new User("Carlos Mendes", "carlos@demo.com", defaultPassword,
-        UserRole.ADVISOR);
+        UserRole.ADVISOR, defaultInstitution);
     User researcher = new User("Renata Silva", "renata@demo.com", defaultPassword,
-        UserRole.RESEARCHER);
+        UserRole.RESEARCHER, defaultInstitution);
     User researcher2 = new User("João Almeida", "joao@demo.com", defaultPassword,
-        UserRole.RESEARCHER);
+        UserRole.RESEARCHER, defaultInstitution);
     
     userRepository.saveAll(List.of(auditor, advisor, researcher, researcher2));
 
@@ -94,6 +95,7 @@ public class DataSeeder implements CommandLineRunner {
     doc1.setTitle("Metodologia_Qualitativa_v3.pdf");
     doc1.setStatus(DocumentStatus.PENDING_REVIEW);
     doc1.setFileUrl("fake/path/1.pdf");
+    doc1.setInstitutionId(defaultInstitution);
     documentRepository.save(doc1);
 
     Document doc2 = new Document();
@@ -102,6 +104,7 @@ public class DataSeeder implements CommandLineRunner {
     doc2.setTitle("Dataset_Experimento_A.csv");
     doc2.setStatus(DocumentStatus.APPROVED);
     doc2.setFileUrl("fake/path/2.csv");
+    doc2.setInstitutionId(defaultInstitution);
     documentRepository.save(doc2);
 
     Document doc3 = new Document();
@@ -110,6 +113,7 @@ public class DataSeeder implements CommandLineRunner {
     doc3.setTitle("Dataset_Experimento_B.csv");
     doc3.setStatus(DocumentStatus.PENDING_REVIEW);
     doc3.setFileUrl("fake/path/3.csv");
+    doc3.setInstitutionId(defaultInstitution);
     documentRepository.save(doc3);
 
     // 4. Criar Audit Logs (Os 14 eventos da tela)
@@ -147,7 +151,7 @@ public class DataSeeder implements CommandLineRunner {
 
   private void saveLog(User user, AcaoAuditoria action, String resourceType, UUID resourceId,
       String ip, String details, LocalDateTime time) {
-    AuditLog log = new AuditLog(user.getId(), action, resourceType, resourceId, ip, details);
+    AuditLog log = new AuditLog(user.getInstitutionId(), user.getId(), action, resourceType, resourceId, ip, details);
     try {
       java.lang.reflect.Field createdAtField = AuditLog.class.getDeclaredField("createdAt");
       createdAtField.setAccessible(true);

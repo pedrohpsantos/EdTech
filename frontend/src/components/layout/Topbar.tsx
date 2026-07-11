@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/authContext';
 import ThemeToggle from '../themeToggle';
+import SockJS from 'sockjs-client';
+import { Client } from '@stomp/stompjs';
 
 interface TopbarProps {
   title: string;
@@ -14,6 +16,48 @@ const Topbar: React.FC<TopbarProps> = ({ title, subtitle, breadcrumbs, customTop
   const { user } = useAuth();
   const navigate = useNavigate();
   const [showNotifications, setShowNotifications] = useState(false);
+  const [notifications, setNotifications] = useState<any[]>([]);
+
+  useEffect(() => {
+    if (!user) return;
+
+    const token = localStorage.getItem('token');
+    const socket = new SockJS((import.meta.env.VITE_API_URL || '') + '/ws-edtech');
+    const stompClient = new Client({
+      webSocketFactory: () => socket,
+      connectHeaders: {
+        Authorization: `Bearer ${token}`,
+      },
+      onConnect: () => {
+        // Inscricao para o topico global
+        stompClient.subscribe('/topic/global', (msg) => {
+          if (msg.body) {
+            const payload = JSON.parse(msg.body);
+            setNotifications((prev) => [payload, ...prev]);
+          }
+        });
+
+        // Opcional: Se for possivel descobrir o project_id, poderia se inscrever aqui tambem.
+        // Simulando a inscricao para o usuario logado
+        stompClient.subscribe(`/user/${user.id}/queue/notifications`, (msg) => {
+          if (msg.body) {
+            const payload = JSON.parse(msg.body);
+            setNotifications((prev) => [payload, ...prev]);
+          }
+        });
+      },
+      onStompError: (frame) => {
+        console.error('Broker reported error: ' + frame.headers['message']);
+        console.error('Additional details: ' + frame.body);
+      },
+    });
+
+    stompClient.activate();
+
+    return () => {
+      stompClient.deactivate();
+    };
+  }, [user]);
 
   return (
     <header className="topbar-container">
@@ -63,7 +107,7 @@ const Topbar: React.FC<TopbarProps> = ({ title, subtitle, breadcrumbs, customTop
             onClick={() => setShowNotifications(!showNotifications)}
           >
             <i className="bi bi-bell"></i>
-            <span className="notification-dot"></span>
+            {notifications.length > 0 && <span className="notification-dot"></span>}
 
             {showNotifications && (
               <div className="notifications-dropdown" onClick={(e) => e.stopPropagation()}>
@@ -71,28 +115,36 @@ const Topbar: React.FC<TopbarProps> = ({ title, subtitle, breadcrumbs, customTop
                   <h4>Notificações</h4>
                 </div>
                 <div className="dropdown-body">
-                  <div className="notification-item">
-                    <div className="notification-icon-circle bg-green-light">
-                      <i className="bi bi-check-circle"></i>
+                  {notifications.length === 0 ? (
+                    <div className="notification-item">
+                      <div className="notification-text">
+                        <p>Nenhuma notificação nova.</p>
+                      </div>
                     </div>
-                    <div className="notification-text">
-                      <p>
-                        <b>Prof. Faria</b> aprovou seu documento.
-                      </p>
-                      <span>há 3 h</span>
-                    </div>
-                  </div>
-                  <div className="notification-item">
-                    <div className="notification-icon-circle bg-orange-light">
-                      <i className="bi bi-chat-left-text"></i>
-                    </div>
-                    <div className="notification-text">
-                      <p>
-                        Novo comentário em <b>Referencial_Teorico_v2.pdf</b>.
-                      </p>
-                      <span>há 1 h</span>
-                    </div>
-                  </div>
+                  ) : (
+                    notifications.map((notif, idx) => (
+                      <div className="notification-item" key={idx}>
+                        <div className="notification-icon-circle bg-purple-light">
+                          <i className="bi bi-info-circle"></i>
+                        </div>
+                        <div className="notification-text">
+                          <p>
+                            {notif.type === 'DOCUMENT_REVIEWED' && (
+                              <span>Documento <b>{notif.document?.title}</b> foi revisado.</span>
+                            )}
+                            {notif.type === 'NEW_COMMENT' && (
+                              <span>Novo comentário de <b>{notif.comment?.authorName}</b>.</span>
+                            )}
+                            {notif.type === 'DOCUMENT_UPLOADED' && (
+                              <span>Documento <b>{notif.document?.title}</b> foi enviado.</span>
+                            )}
+                            {!notif.type && <span>Nova notificação recebida.</span>}
+                          </p>
+                          <span>agora</span>
+                        </div>
+                      </div>
+                    ))
+                  )}
                 </div>
               </div>
             )}

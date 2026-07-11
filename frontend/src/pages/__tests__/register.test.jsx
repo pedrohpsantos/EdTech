@@ -26,7 +26,7 @@ describe('Register Page', () => {
     // Register has two password fields: "Senha" and "Confirmar Senha", both use placeholder "••••••••"
     const passFields = screen.getAllByPlaceholderText('••••••••');
     expect(passFields.length).toBeGreaterThanOrEqual(1);
-    expect(screen.getByText('Criar Conta')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Avançar/i })).toBeInTheDocument();
   });
 
   it('updates input fields on typing', () => {
@@ -73,7 +73,7 @@ describe('Register Page', () => {
     const passFields = screen.getAllByPlaceholderText('••••••••');
     const passwordInput = passFields[0];
     const confirmPasswordInput = passFields[1];
-    const submitButton = screen.getByRole('button', { name: /Criar Conta/i });
+    const submitButton = screen.getByRole('button', { name: /Avançar/i });
 
     fireEvent.change(nameInput, { target: { value: 'Test User' } });
     fireEvent.change(emailInput, { target: { value: 'test@edu.br' } });

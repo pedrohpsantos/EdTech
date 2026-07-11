@@ -31,7 +31,7 @@ class DashboardControllerTest {
     @Test
     void testGetStats() {
         Authentication auth = mock(Authentication.class);
-        User mockUser = new User("Test", "test@test.com", "hash", com.edtech.model.UserRole.RESEARCHER);
+        User mockUser = new User("Test", "test@unb.br", "hash", com.edtech.model.UserRole.RESEARCHER, java.util.UUID.randomUUID());
         UUID userId = UUID.randomUUID();
         try {
             java.lang.reflect.Field idField = User.class.getDeclaredField("id");

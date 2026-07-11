@@ -10,7 +10,7 @@ updates:
     open-pull-requests-limit: 5
 
   - package-ecosystem: "maven"
-    directory: "/docvault/api"
+    directory: "/backend"
     target-branch: "develop"
     schedule:
       interval: "weekly"

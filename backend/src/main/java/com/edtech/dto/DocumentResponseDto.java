@@ -14,6 +14,7 @@ public class DocumentResponseDto {
   private UUID projectId;
   private ZonedDateTime createdAt;
   private String feedback;
+  private boolean starred;
 
   // Getters and Setters
   /** Documentação para o método getId. */
@@ -94,5 +95,13 @@ public class DocumentResponseDto {
   /** Documentação para o método setFeedback. */
   public void setFeedback(String feedback) {
     this.feedback = feedback;
+  }
+
+  public boolean isStarred() {
+    return starred;
+  }
+
+  public void setStarred(boolean starred) {
+    this.starred = starred;
   }
 }

@@ -18,19 +18,37 @@ function Login() {
   const navigate = useNavigate();
   const { handleLogin } = useAuth();
   const [isShaking, setIsShaking] = useState(false);
+  const [step, setStep] = useState<'credentials' | '2fa'>('credentials');
+  const [totpCode, setTotpCode] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErro('');
     try {
-      const resultado = await handleLogin(email, senha);
-      if (resultado.sucesso === true) {
-        navigate('/dashboard');
+      if (step === 'credentials') {
+        const resultado = await handleLogin(email, senha);
+        if (resultado.sucesso === true) {
+          if (resultado.dados?.mfaRequired) {
+            setStep('2fa');
+          } else {
+            navigate('/dashboard');
+          }
+        } else {
+          setErro(resultado.mensagem);
+        }
       } else {
-        setErro(resultado.mensagem);
+        const { verify2FaLogin } = await import('../services/api');
+        const resultado = await verify2FaLogin(email, senha, totpCode);
+        if (resultado.sucesso) {
+          navigate('/dashboard');
+          // Reload to update AuthContext if needed, or update it manually.
+          window.location.reload(); 
+        } else {
+          setErro(resultado.mensagem);
+        }
       }
-    } catch (erro) {
-      setErro(erro.message);
+    } catch (erro: any) {
+      setErro(erro.message || 'Erro ao realizar login');
     }
   };
 
@@ -138,6 +156,25 @@ function Login() {
           </div>
         </motion.div>
 
+        {step === '2fa' && (
+          <motion.div variants={itemVariants} className={styles.inputGroup} style={{ marginTop: '1rem' }}>
+            <div className={styles.labelRow}>
+              <label className={styles.inputLabel}>Código 2FA (Authenticator)</label>
+            </div>
+            <div className={styles.inputWrapper}>
+              <input
+                className={styles.inputField}
+                type="text"
+                value={totpCode}
+                onChange={(e) => setTotpCode(e.target.value.replace(/\D/g, ''))}
+                placeholder="000000"
+                maxLength={6}
+                required
+              />
+            </div>
+          </motion.div>
+        )}
+
         <motion.button
           variants={Object.assign({}, itemVariants, shakeVariants)}
           animate={isShaking ? 'shake' : 'visible'}
@@ -146,7 +183,7 @@ function Login() {
           className={styles.submitBtn}
           type="submit"
         >
-          Entrar <span>→</span>
+          {step === 'credentials' ? 'Continuar' : 'Verificar e Entrar'} <span>→</span>
         </motion.button>
       </form>
 

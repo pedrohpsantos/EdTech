@@ -36,7 +36,7 @@ class AuditControllerTest {
   }
 
   private AuditLog createMockLog(AcaoAuditoria action, String ip, String details) {
-    AuditLog log = new AuditLog(UUID.randomUUID(), action, "test", UUID.randomUUID(), ip, details);
+    AuditLog log = new AuditLog(UUID.randomUUID(), UUID.randomUUID(), action, "test", UUID.randomUUID(), ip, details);
     ReflectionTestUtils.setField(log, "id", UUID.randomUUID());
     ReflectionTestUtils.setField(log, "createdAt", LocalDateTime.now());
     return log;
@@ -44,12 +44,12 @@ class AuditControllerTest {
 
   @Test
   void getAuditLogs_WithoutFilters_ReturnsAllMappedLogs() {
-    AuditLog log1 = createMockLog(AcaoAuditoria.LOGIN_SUCCESS, "192.168.1.1", "Login ok");
+    AuditLog log1 = createMockLog(AcaoAuditoria.LOGIN_SUCCESS, "192.168.0.1", "Login success");
     AuditLog log2 = createMockLog(AcaoAuditoria.LOGIN_FAILED, "192.168.1.2", "Login falhou");
     AuditLog log3 = createMockLog(AcaoAuditoria.DELETE_DOCUMENT, "192.168.1.3", "Doc excluido");
     AuditLog log4 = createMockLog(AcaoAuditoria.LOGOUT, "192.168.1.4", "Logout");
 
-    User user1 = new User("John Doe", "john@unb.br", "pass", UserRole.RESEARCHER);
+    User user1 = new User("John Doe", "john@unb.br", "pass", UserRole.RESEARCHER, java.util.UUID.randomUUID());
     when(userRepository.findById(log1.getUserId())).thenReturn(Optional.of(user1));
 
     when(auditLogRepository.findAllByOrderByCreatedAtDesc()).thenReturn(Arrays.asList(log1, log2, log3, log4));
@@ -84,7 +84,7 @@ class AuditControllerTest {
     AuditLog log2 = createMockLog(AcaoAuditoria.LOGIN_FAILED, "192.168.1.2", "other details");
 
     when(auditLogRepository.findAllByOrderByCreatedAtDesc()).thenReturn(Arrays.asList(log1, log2));
-    User user = new User("John Doe", "john@unb.br", "pass", UserRole.RESEARCHER);
+    User user = new User("John Doe", "john@unb.br", "pass", UserRole.RESEARCHER, java.util.UUID.randomUUID());
     when(userRepository.findById(log1.getUserId())).thenReturn(Optional.of(user));
     when(userRepository.findById(log2.getUserId())).thenReturn(Optional.of(user));
 
@@ -101,7 +101,7 @@ class AuditControllerTest {
     AuditLog log2 = createMockLog(AcaoAuditoria.LOGIN_FAILED, "192.168.1.2", "details");
 
     when(auditLogRepository.findAllByOrderByCreatedAtDesc()).thenReturn(Arrays.asList(log1, log2));
-    User user = new User("John Doe", "john@unb.br", "pass", UserRole.RESEARCHER);
+    User user = new User("John Doe", "john@unb.br", "pass", UserRole.RESEARCHER, java.util.UUID.randomUUID());
     when(userRepository.findById(log1.getUserId())).thenReturn(Optional.of(user));
     when(userRepository.findById(log2.getUserId())).thenReturn(Optional.of(user));
 

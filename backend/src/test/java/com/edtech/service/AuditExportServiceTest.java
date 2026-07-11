@@ -47,7 +47,7 @@ class AuditExportServiceTest {
     UUID userId = UUID.randomUUID();
     Document document = documentWithProject(projectId);
     ProjectMember member = new ProjectMember();
-    List<AuditLog> logs = List.of(new AuditLog());
+    List<AuditLog> logs = List.of(new AuditLog(UUID.randomUUID(), UUID.randomUUID(), com.edtech.model.AcaoAuditoria.LOGIN_SUCCESS, "test", null, "192.168.0.1", "Login ok"));
     byte[] csv = "action,resource".getBytes();
 
     when(documentRepository.findById(documentId)).thenReturn(Optional.of(document));

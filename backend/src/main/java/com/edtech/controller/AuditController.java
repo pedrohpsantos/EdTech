@@ -106,4 +106,53 @@ public class AuditController {
 
     return ResponseEntity.ok(dtos);
   }
+
+  /**
+   * Exporta logs de auditoria para CSV.
+   *
+   * @param search texto de busca
+   * @param action acao filtrada
+   * @return Arquivo CSV
+   */
+  @GetMapping("/export")
+  @PreAuthorize("hasRole('AUDITOR')")
+  public ResponseEntity<String> exportAuditLogs(
+      @RequestParam(required = false) String search,
+      @RequestParam(required = false) String action) {
+
+    ResponseEntity<List<AuditLogDto>> response = getAuditLogs(search, action);
+    List<AuditLogDto> dtos = response.getBody();
+
+    StringBuilder csv = new StringBuilder();
+    csv.append("ID,Timestamp,Action,User,IP,Details,Severity\n");
+
+    if (dtos != null) {
+      for (AuditLogDto dto : dtos) {
+        csv.append(escapeCsv(dto.getId())).append(",")
+            .append(escapeCsv(dto.getTimestamp())).append(",")
+            .append(escapeCsv(dto.getAction())).append(",")
+            .append(escapeCsv(dto.getUserName())).append(",")
+            .append(escapeCsv(dto.getIp())).append(",")
+            .append(escapeCsv(dto.getDetails())).append(",")
+            .append(escapeCsv(dto.getSeverity())).append("\n");
+      }
+    }
+
+    org.springframework.http.HttpHeaders headers = new org.springframework.http.HttpHeaders();
+    headers.add("Content-Disposition", "attachment; filename=\"audit_logs.csv\"");
+    headers.add("Content-Type", "text/csv; charset=UTF-8");
+
+    return ResponseEntity.ok()
+        .headers(headers)
+        .body(csv.toString());
+  }
+
+  private String escapeCsv(String value) {
+    if (value == null) return "";
+    String escaped = value.replace("\"", "\"\"");
+    if (escaped.contains(",") || escaped.contains("\"") || escaped.contains("\n")) {
+      return "\"" + escaped + "\"";
+    }
+    return escaped;
+  }
 }

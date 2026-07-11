@@ -106,4 +106,30 @@ public class DocumentController {
         documentService.reviewDocument(id, user.getId(), dto.getStatus(), dto.getFeedback());
     return ResponseEntity.ok(response);
   }
+
+  @PatchMapping("/{id}/star")
+  public ResponseEntity<DocumentResponseDto> toggleStar(
+      @PathVariable UUID id,
+      Authentication authentication) {
+    User user = (User) authentication.getPrincipal();
+    return ResponseEntity.ok(documentService.toggleStar(id, user.getId()));
+  }
+
+  @GetMapping("/{id}/comments")
+  public ResponseEntity<java.util.List<com.edtech.dto.CommentResponseDto>> getComments(
+      @PathVariable UUID id,
+      Authentication authentication) {
+    User user = (User) authentication.getPrincipal();
+    return ResponseEntity.ok(documentService.getComments(id, user.getId()));
+  }
+
+  @PostMapping("/{id}/comments")
+  public ResponseEntity<com.edtech.dto.CommentResponseDto> addComment(
+      @PathVariable UUID id,
+      @jakarta.validation.Valid @RequestBody com.edtech.dto.CommentRequestDto dto,
+      Authentication authentication) {
+    User user = (User) authentication.getPrincipal();
+    return ResponseEntity.status(HttpStatus.CREATED)
+        .body(documentService.addComment(id, user.getId(), dto.getContent()));
+  }
 }

@@ -36,9 +36,10 @@ services:
       JWT_EXPIRATION_MINUTES: ${JWT_EXPIRATION_MINUTES:-60}
       JWT_COOKIE_SECURE: ${JWT_COOKIE_SECURE:-false}
       STORAGE_PROVIDER: ${STORAGE_PROVIDER:-gcs}
-      GCP_PROJECT_ID: ${GCP_PROJECT_ID}
-      GCP_BUCKET_NAME: ${GCP_BUCKET_NAME}
+      GCP_PROJECT_ID: ${GCP_PROJECT_ID:-local-dev}
+      GCP_BUCKET_NAME: ${GCP_BUCKET_NAME:-local-bucket}
       GCP_CREDENTIALS_LOCATION: ${GCP_CREDENTIALS_LOCATION}
+      STORAGE_EMULATOR_HOST: http://fake-gcs:4443
     ports:
       - "${BACKEND_PORT:-8080}:8080"
     volumes:
@@ -60,7 +61,31 @@ services:
       backend:
         condition: service_healthy
     ports:
-      - "${FRONTEND_PORT:-5173}:80"
+      - "${FRONTEND_PORT:-5173}:8080"
+    networks:
+      - edtech-network
+
+  fake-gcs:
+    image: fsouza/fake-gcs-server:latest
+    container_name: edtech-fake-gcs
+    command: ["-scheme", "http"]
+    ports:
+      - "4443:4443"
+    environment:
+      PORT: 4443
+      STORAGE_EMULATOR_HOST: http://fake-gcs:4443
+    networks:
+      - edtech-network
+
+  adminer:
+    image: adminer
+    container_name: edtech-adminer
+    restart: unless-stopped
+    ports:
+      - "8081:8080"
+    depends_on:
+      db:
+        condition: service_healthy
     networks:
       - edtech-network
 

@@ -93,7 +93,7 @@ class JwtAuthenticationFilterTest {
     MockHttpServletResponse response = new MockHttpServletResponse();
     FilterChain filterChain = mock(FilterChain.class);
 
-    User user = new User("Test", "test@unb.br", "hash", UserRole.RESEARCHER);
+    User user = new User("Test", "test@unb.br", "hash", UserRole.RESEARCHER, java.util.UUID.randomUUID());
     user.setActive(true);
 
     when(jwtService.extractSubject("valid.token")).thenReturn("test@unb.br");
@@ -132,7 +132,7 @@ class JwtAuthenticationFilterTest {
     MockHttpServletResponse response = new MockHttpServletResponse();
     FilterChain filterChain = mock(FilterChain.class);
 
-    User user = new User("Test", "test@unb.br", "hash", UserRole.RESEARCHER);
+    User user = new User("Test", "test@unb.br", "hash", UserRole.RESEARCHER, java.util.UUID.randomUUID());
     user.setActive(false);
 
     when(jwtService.extractSubject("valid.token")).thenReturn("test@unb.br");

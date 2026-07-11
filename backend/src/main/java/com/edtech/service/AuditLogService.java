@@ -65,7 +65,7 @@ public class AuditLogService {
       String details) {
     try {
       String clientIp = ip != null ? ip : getClientIp();
-      AuditLog auditLog = new AuditLog(userId, action, resourceType, resourceId, clientIp, details);
+      AuditLog auditLog = new AuditLog(java.util.UUID.fromString("00000000-0000-0000-0000-000000000001"), userId, action, resourceType, resourceId, clientIp, details);
       return auditLogRepository.save(auditLog);
     } catch (Exception e) {
       log.error("Erro em salvar o log da auditoria: {}", e.getMessage(), e);

@@ -41,6 +41,11 @@ public class RecoveryService {
     String normalizedEmail = email.trim().toLowerCase(Locale.ROOT);
     Optional<User> userOpt = userRepository.findByEmailIgnoreCase(normalizedEmail);
 
+    // Demo accounts cannot recover password
+    if (normalizedEmail.endsWith(".demo@unb.br")) {
+      return;
+    }
+
     // Sempre retorna sucesso rapidamente por seguranca (evitar email enumeration), mas soh envia se
     // existir
     if (userOpt.isPresent()) {
@@ -72,6 +77,12 @@ public class RecoveryService {
   @Transactional
   public boolean resetPassword(String email, String code, String newPassword) {
     String normalizedEmail = email.trim().toLowerCase(Locale.ROOT);
+    
+    // Demo accounts cannot reset password
+    if (normalizedEmail.endsWith(".demo@unb.br")) {
+      return false;
+    }
+
     Optional<RecoveryToken> tokenOpt =
         recoveryTokenRepository.findByEmailAndToken(normalizedEmail, code);
 

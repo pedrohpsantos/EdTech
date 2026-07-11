@@ -38,12 +38,7 @@ export default function AuthLayout({
       transition={{ duration: 1, ease: 'easeInOut' }}
     >
       {/* Left Panel - Branding */}
-      <motion.div
-        className={styles.leftPanel}
-        initial={{ opacity: 0, x: -50 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.6 }}
-      >
+      <div className={styles.leftPanel}>
         <NetworkBackground isHyperdrive={hyperdriveActivated} />
 
         <div className={styles.leftContent}>
@@ -132,21 +127,8 @@ export default function AuthLayout({
           </p>
         </div>
 
-        <div className={styles.statsGlass}>
-          <div className={styles.statItem}>
-            <span className={styles.statValue}>12.4K</span>
-            <span className={styles.statLabel}>Documentos</span>
-          </div>
-          <div className={styles.statItem}>
-            <span className={styles.statValue}>347</span>
-            <span className={styles.statLabel}>Pesquisadores</span>
-          </div>
-          <div className={styles.statItem}>
-            <span className={styles.statValue}>99.9%</span>
-            <span className={styles.statLabel}>Uptime</span>
-          </div>
-        </div>
-      </motion.div>
+
+      </div>
 
       {/* Right Panel - Form */}
       <motion.div

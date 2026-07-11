@@ -42,7 +42,7 @@ public class ProjectControllerTest {
   @BeforeEach
   void setUp() {
     mockMvc = MockMvcBuilders.standaloneSetup(projectController).build();
-    mockUser = new User("test", "test@unb.br", "hash", com.edtech.model.UserRole.RESEARCHER);
+    mockUser = new User("Test", "test@unb.br", "hash", com.edtech.model.UserRole.RESEARCHER, java.util.UUID.randomUUID());
     org.springframework.test.util.ReflectionTestUtils.setField(mockUser, "id", UUID.randomUUID());
 
     UsernamePasswordAuthenticationToken auth =

@@ -21,8 +21,10 @@ public class RateLimitingService {
 
   private Bucket newBucket(String key) {
     // 5 requisições por minuto por IP
-    Refill refill = Refill.intervally(5, Duration.ofMinutes(1));
-    Bandwidth limit = Bandwidth.classic(5, refill);
+    Bandwidth limit = Bandwidth.builder()
+        .capacity(5)
+        .refillIntervally(5, Duration.ofMinutes(1))
+        .build();
     return Bucket.builder()
         .addLimit(limit)
         .build();

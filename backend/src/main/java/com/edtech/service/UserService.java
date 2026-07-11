@@ -5,6 +5,7 @@ import com.edtech.model.User;
 import com.edtech.model.UserRole;
 import com.edtech.repository.UserRepository;
 import java.util.Locale;
+import java.util.Optional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,11 +18,18 @@ public class UserService {
 
   private final UserRepository userRepository;
   private final PasswordEncoder passwordEncoder;
+  private final com.edtech.repository.VerificationTokenRepository verificationTokenRepository;
+  private final EmailService emailService;
+  private static final java.security.SecureRandom SECURE_RANDOM = new java.security.SecureRandom();
 
   /** Documentação para o método UserService. */
-  public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+  public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder,
+      com.edtech.repository.VerificationTokenRepository verificationTokenRepository,
+      EmailService emailService) {
     this.userRepository = userRepository;
     this.passwordEncoder = passwordEncoder;
+    this.verificationTokenRepository = verificationTokenRepository;
+    this.emailService = emailService;
   }
 
   /** Documentação. */
@@ -69,20 +77,52 @@ public class UserService {
       throw new DuplicateEmailException("E-mail ja cadastrado.");
     }
 
-    UserRole initialRole = UserRole.RESEARCHER;
-    if (normalizedEmail.contains("auditor")) {
-      initialRole = UserRole.AUDITOR;
-    } else if (normalizedEmail.contains("orientador") || normalizedEmail.contains("advisor")) {
-      initialRole = UserRole.ADVISOR;
-    }
+    UserRole initialRole = request.role();
 
     User user =
         new User(
             request.name().trim(),
             normalizedEmail,
             passwordEncoder.encode(request.password()),
-            initialRole);
+            initialRole,
+            java.util.UUID.fromString("00000000-0000-0000-0000-000000000001"));
+    
+    user.setActive(false);
+    userRepository.save(user);
 
+    verificationTokenRepository.deleteByEmail(normalizedEmail);
+    String code = String.format("%06d", SECURE_RANDOM.nextInt(999999));
+    com.edtech.model.VerificationToken token =
+        new com.edtech.model.VerificationToken(code, normalizedEmail, java.time.LocalDateTime.now().plusMinutes(15));
+    verificationTokenRepository.save(token);
+
+    emailService.sendVerificationEmail(normalizedEmail, code);
+
+    return user;
+  }
+
+  /** Documentação. */
+  @Transactional
+  public User verifyRegistration(String email, String code) {
+    String normalizedEmail = email.trim().toLowerCase(Locale.ROOT);
+    Optional<com.edtech.model.VerificationToken> tokenOpt =
+        verificationTokenRepository.findByEmailAndToken(normalizedEmail, code);
+
+    if (tokenOpt.isPresent() && !tokenOpt.get().isExpired()) {
+      Optional<User> userOpt = userRepository.findByEmailIgnoreCase(normalizedEmail);
+      if (userOpt.isPresent()) {
+        User user = userOpt.get();
+        user.setActive(true);
+        userRepository.save(user);
+        verificationTokenRepository.deleteByEmail(normalizedEmail);
+        return user;
+      }
+    }
+    throw new InvalidCredentialsException("Código inválido ou expirado.");
+  }
+
+  @Transactional
+  public User saveUserWithoutHash(User user) {
     return userRepository.save(user);
   }
 }

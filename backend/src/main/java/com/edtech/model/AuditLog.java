@@ -10,36 +10,45 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.UUID;
+import org.hibernate.annotations.Filter;
+import org.hibernate.annotations.FilterDef;
+import org.hibernate.annotations.ParamDef;
 
 /** Documentação para AuditLog. */
 @Entity
 @Table(name = "audit_logs")
+@FilterDef(name = "tenantFilter", parameters = @ParamDef(name = "institutionId", type = UUID.class))
+@Filter(name = "tenantFilter", condition = "institution_id = :institutionId")
 public class AuditLog {
 
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
-  @Column(unique = true, nullable = false)
+  @Column(unique = true, nullable = false, updatable = false)
   private UUID id;
 
-  @Column(name = "user_id", nullable = false)
+  @Column(name = "institution_id", nullable = false, updatable = false)
+  private UUID institutionId;
+
+  @Column(name = "user_id", nullable = false, updatable = false)
   private UUID userId;
 
   @Enumerated(EnumType.STRING)
-  @Column(nullable = false)
+  @Column(nullable = false, updatable = false)
   private AcaoAuditoria action;
 
-  @Column(name = "resource_type", nullable = false)
+  @Column(name = "resource_type", nullable = false, updatable = false)
   private String resourceType;
 
-  @Column(name = "resource_id", nullable = false)
+  @Column(name = "resource_id", nullable = false, updatable = false)
   private UUID resourceId;
 
-  @Column(name = "ip_address", nullable = false)
+  @Column(name = "ip_address", nullable = false, updatable = false)
   private String ipAddress;
 
+  @Column(updatable = false)
   private String details;
 
-  @Column(name = "created_at", nullable = false)
+  @Column(name = "created_at", nullable = false, updatable = false)
   private LocalDateTime createdAt;
 
   /** Documentação para o método getId. */
@@ -52,19 +61,9 @@ public class AuditLog {
     return userId;
   }
 
-  /** Documentação para o método setUserId. */
-  public void setUserId(UUID userId) {
-    this.userId = userId;
-  }
-
   /** Documentação para o método getAction. */
   public AcaoAuditoria getAction() {
     return action;
-  }
-
-  /** Documentação para o método setAction. */
-  public void setAction(AcaoAuditoria action) {
-    this.action = action;
   }
 
   /** Documentação para o método getResourceType. */
@@ -72,19 +71,9 @@ public class AuditLog {
     return resourceType;
   }
 
-  /** Documentação para o método setResourceType. */
-  public void setResourceType(String resourceType) {
-    this.resourceType = resourceType;
-  }
-
   /** Documentação para o método getResourceId. */
   public UUID getResourceId() {
     return resourceId;
-  }
-
-  /** Documentação para o método setResourceId. */
-  public void setResourceId(UUID resourceId) {
-    this.resourceId = resourceId;
   }
 
   /** Documentação para o método getIpAddress. */
@@ -92,19 +81,9 @@ public class AuditLog {
     return ipAddress;
   }
 
-  /** Documentação para o método setIpAddress. */
-  public void setIpAddress(String ipAddress) {
-    this.ipAddress = ipAddress;
-  }
-
   /** Documentação para o método getDetails. */
   public String getDetails() {
     return details;
-  }
-
-  /** Documentação para o método setDetails. */
-  public void setDetails(String details) {
-    this.details = details;
   }
 
   /** Documentação para o método getCreatedAt. */
@@ -113,22 +92,24 @@ public class AuditLog {
   }
 
   /** Documentação para o método AuditLog. */
-  public AuditLog() {}
+  protected AuditLog() {}
 
   /** Documentação. */
   public AuditLog(
+      UUID institutionId,
       UUID userId,
       AcaoAuditoria action,
       String resourceType,
       UUID resourceId,
       String ipAddress,
       String details) {
-    setUserId(userId);
-    setAction(action);
-    setResourceType(resourceType);
-    setResourceId(resourceId);
-    setIpAddress(ipAddress);
-    setDetails(details);
+    this.institutionId = institutionId;
+    this.userId = userId;
+    this.action = action;
+    this.resourceType = resourceType;
+    this.resourceId = resourceId;
+    this.ipAddress = ipAddress;
+    this.details = details;
     onCreate();
   }
 

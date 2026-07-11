@@ -41,6 +41,7 @@ public class DocumentServiceTest {
   @Mock private ProjectMemberRepository projectMemberRepository;
   @Mock private AuditLogService auditLogService;
   @Mock private StorageService storageService;
+  @Mock private NotificationService notificationService;
 
   @InjectMocks private DocumentService documentService;
 
@@ -58,7 +59,7 @@ public class DocumentServiceTest {
     projectId = UUID.randomUUID();
     documentId = UUID.randomUUID();
 
-    author = new User("test", "test@unb.br", "hash", com.edtech.model.UserRole.RESEARCHER);
+    author = new User("test", "test@unb.br", "hash", com.edtech.model.UserRole.RESEARCHER, java.util.UUID.randomUUID());
     org.springframework.test.util.ReflectionTestUtils.setField(author, "id", authorId);
 
     project = new Project();

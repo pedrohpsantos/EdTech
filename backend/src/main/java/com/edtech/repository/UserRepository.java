@@ -13,4 +13,6 @@ public interface UserRepository extends JpaRepository<User, UUID> {
   Optional<User> findByEmailIgnoreCase(String email);
 
   Optional<User> findByEmail(String email);
+
+  java.util.List<User> findByRole(com.edtech.model.UserRole role);
 }
