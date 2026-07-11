@@ -263,11 +263,9 @@
                         <param>com.edtech.*Test</param>
                     </targetTests>
                     <excludedClasses>
-                        <param>com.edtech.config.*</param>
                         <param>com.edtech.dto.*</param>
                         <param>com.edtech.exception.*</param>
                         <param>com.edtech.model.*</param>
-                        <param>com.edtech.security.*</param>
                     </excludedClasses>
                     <threads>4</threads>
                     <withHistory>true</withHistory>

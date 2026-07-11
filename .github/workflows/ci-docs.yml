@@ -184,6 +184,8 @@ jobs:
       - name: Executar Testes de Carga (K6)
         if: matrix.report-type == 'performance'
         working-directory: tests/performance
+        env:
+          API_URL: 'https://edtech-backend-shv6qbpf4q-rj.a.run.app'
         run: k6 run load-test.js || true
 
       - name: Preparar Artefato K6

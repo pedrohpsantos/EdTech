@@ -27,7 +27,7 @@ Os principais ofensores de custo do projeto são:
 
 Para mantermos o custo baixo sem perder a consistência, utilizaremos instâncias de núcleo compartilhado (*Shared Core*):
 
-- **Homologação/Produção Inicial (`db-f1-micro`, 10GB SSD)**: ~$9.00 a $15.00 / mês.
+- **Homologação/Produção Inicial (`db-f1-micro`, 10GB SSD)**: $\approx \$9.00$ a $\$15.00$ / mês.
 
 ### 2.2. Cloud Run (Backend da API)
 
@@ -44,8 +44,8 @@ Cálculo considerando:
 Armazenamento Padrão (*Standard*):
 
 - **Volume**: 20 GB (documentos e metadados).
-- **Custo de Armazenamento**: ~$0.026 por GB = **~$0.52 / mês**.
-- **Custo de Tráfego (*Egress*)**: Assumindo 10 GB de download = ~$0.12 por GB = **~$1.20 / mês**.
+- **Custo de Armazenamento**: $\approx \$0.026$ por GB = **$\approx \$0.52$ / mês**.
+- **Custo de Tráfego (*Egress*)**: Assumindo 10 GB de download = $\approx \$0.12$ por GB = **$\approx \$1.20$ / mês**.
 
 ### 2.4. Resumo Total Mensal
 
@@ -55,7 +55,7 @@ Armazenamento Padrão (*Standard*):
 | Cloud Run | $ 0.00 (Coberto pela Cota Gratuita) |
 | Cloud Storage | $ 1.72 |
 | Firebase Hosting / Rede | $ 0.00 (Coberto pela Cota Gratuita) |
-| **Total Estimado** | **~$ 16.72 / mês** |
+| **Total Estimado** | **$\approx \$16.72$ / mês** |
 
 > **Aviso**: O custo estimado de **$16.72** está perfeitamente alinhado com a restrição orçamentária do balancete acadêmico de **$50.00 USD**.
 
@@ -85,5 +85,5 @@ Para evitar surpresas no cartão de crédito do estudante, é mandatório que a 
 
 | Versão | Data | Descrição | Autor |
 | :---: | :---: | :--- | :--- |
-| `1.1` | 11/07/2026 | Ajuste para orçamento estudantil (< $50) e correção de formatação | Pedro Henrique P. Santos |
 | `1.0` | 10/07/2026 | Criação do documento | Pedro Henrique P. Santos |
+| `1.1` | 11/07/2026 | Ajuste para orçamento estudantil (< $50) e correção de formatação | Pedro Henrique P. Santos |

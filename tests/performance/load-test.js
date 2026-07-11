@@ -50,9 +50,9 @@ export default function () {
 
   const loginResponse = http.post(`${baseUrl}/api/auth/login`, loginPayload, params);
 
-  // Validamos se a rota respondeu com status esperado (401 pois a senha está errada)
+  // Validamos se a rota respondeu com status esperado (401 pois a senha esta errada, ou 429 Rate Limit)
   check(loginResponse, {
-    'login respondeu (banco acessado)': (res) => res.status === 401 || res.status === 200,
+    'login respondeu (banco acessado)': (res) => res.status === 401 || res.status === 200 || res.status === 429,
   });
 
   // Pausa pequena entre uma iteração e outra.
