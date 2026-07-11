@@ -12,9 +12,11 @@ public class NotificationService {
 <span class="fc" id="L12">  private static final Logger logger = LoggerFactory.getLogger(NotificationService.class);</span>
   private final SimpMessagingTemplate messagingTemplate;
 
-<span class="fc" id="L15">  public NotificationService(SimpMessagingTemplate messagingTemplate) {</span>
-<span class="fc" id="L16">    this.messagingTemplate = messagingTemplate;</span>
-<span class="fc" id="L17">  }</span>
+  public NotificationService(
+      @org.springframework.beans.factory.annotation.Autowired(required = false)
+<span class="fc" id="L17">          SimpMessagingTemplate messagingTemplate) {</span>
+<span class="fc" id="L18">    this.messagingTemplate = messagingTemplate;</span>
+<span class="fc" id="L19">  }</span>
 
   /**
    * Envia uma notificação em tempo real (WebSocket) para um usuário específico.
@@ -23,10 +25,13 @@ public class NotificationService {
    * @param payload O conteúdo da mensagem
    */
   public void sendToUser(String userId, Object payload) {
-<span class="nc" id="L26">    String destination = &quot;/queue/notifications&quot;;</span>
-<span class="nc" id="L27">    logger.info(&quot;Enviando notificacao WS para o usuario {}: {}&quot;, userId, payload);</span>
-<span class="nc" id="L28">    messagingTemplate.convertAndSendToUser(userId, destination, payload);</span>
-<span class="nc" id="L29">  }</span>
+<span class="nc bnc" id="L28" title="All 2 branches missed.">    if (messagingTemplate == null) {</span>
+<span class="nc" id="L29">      return;</span>
+    }
+<span class="nc" id="L31">    String destination = &quot;/queue/notifications&quot;;</span>
+<span class="nc" id="L32">    logger.info(&quot;Enviando notificacao WS para o usuario {}: {}&quot;, userId, payload);</span>
+<span class="nc" id="L33">    messagingTemplate.convertAndSendToUser(userId, destination, payload);</span>
+<span class="nc" id="L34">  }</span>
 
   /**
    * Envia uma notificação para um tópico geral.
@@ -35,8 +40,11 @@ public class NotificationService {
    * @param payload O conteúdo da mensagem
    */
   public void sendToTopic(String topic, Object payload) {
-<span class="nc" id="L38">    logger.info(&quot;Enviando notificacao WS global para o topico {}: {}&quot;, topic, payload);</span>
-<span class="nc" id="L39">    messagingTemplate.convertAndSend(topic, payload);</span>
-<span class="nc" id="L40">  }</span>
+<span class="nc bnc" id="L43" title="All 2 branches missed.">    if (messagingTemplate == null) {</span>
+<span class="nc" id="L44">      return;</span>
+    }
+<span class="nc" id="L46">    logger.info(&quot;Enviando notificacao WS global para o topico {}: {}&quot;, topic, payload);</span>
+<span class="nc" id="L47">    messagingTemplate.convertAndSend(topic, payload);</span>
+<span class="nc" id="L48">  }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
