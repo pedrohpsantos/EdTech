@@ -2,6 +2,7 @@ package com.edtech.dto;
 
 import jakarta.validation.constraints.NotBlank;
 
+/** Javadoc. */
 public class CommentRequestDto {
   @NotBlank(message = "O conteúdo do comentário não pode estar vazio")
   private String content;

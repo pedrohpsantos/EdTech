@@ -46,10 +46,12 @@ public class EmailService {
       mailSender.send(message);
     } catch (MailException ex) {
       logger.warn(
-          "Não foi possível enviar e-mail real via SMTP (verifique credenciais). Usando apenas simulação no console.");
+          "Não foi possível enviar e-mail real via SMTP "
+              + "(verifique credenciais). Usando apenas simulação no console.");
     }
   }
 
+  /** Javadoc. */
   @Async
   public void sendVerificationEmail(String toEmail, String otpCode) {
     SimpleMailMessage message = new SimpleMailMessage();
@@ -78,7 +80,8 @@ public class EmailService {
       mailSender.send(message);
     } catch (MailException ex) {
       logger.warn(
-          "Não foi possível enviar e-mail real via SMTP (verifique credenciais). Usando apenas simulação no console.");
+          "Não foi possível enviar e-mail real via SMTP "
+              + "(verifique credenciais). Usando apenas simulação no console.");
     }
   }
 }

@@ -12,6 +12,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+/** Javadoc. */
 @Service
 public class LaboratoryTokenService {
 
@@ -25,6 +26,7 @@ public class LaboratoryTokenService {
     this.serverSecret = serverSecret;
   }
 
+  /** Javadoc. */
   public String generateToken(UUID advisorId) {
     long currentWeek = System.currentTimeMillis() / (7L * 24 * 60 * 60 * 1000);
     String rawData = advisorId.toString() + ":" + currentWeek + ":" + serverSecret;
@@ -47,6 +49,7 @@ public class LaboratoryTokenService {
     }
   }
 
+  /** Javadoc. */
   public Optional<User> findAdvisorByToken(String token) {
     List<User> advisors = userRepository.findByRole(UserRole.ADVISOR);
     for (User advisor : advisors) {

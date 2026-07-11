@@ -15,6 +15,7 @@ import dev.samstevens.totp.time.TimeProvider;
 import java.util.Base64;
 import org.springframework.stereotype.Service;
 
+/** Javadoc. */
 @Service
 public class TwoFactorAuthService {
 
@@ -22,6 +23,7 @@ public class TwoFactorAuthService {
   private final QrGenerator qrGenerator;
   private final CodeVerifier codeVerifier;
 
+  /** Javadoc. */
   public TwoFactorAuthService() {
     this.secretGenerator = new DefaultSecretGenerator();
     this.qrGenerator = new ZxingPngQrGenerator();

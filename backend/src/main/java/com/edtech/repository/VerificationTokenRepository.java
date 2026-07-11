@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+/** Javadoc. */
 @Repository
 public interface VerificationTokenRepository extends JpaRepository<VerificationToken, Long> {
 

@@ -24,6 +24,7 @@ public class DatabaseSeeder implements CommandLineRunner {
   private final ProjectRepository projectRepository;
   private final PasswordEncoder passwordEncoder;
 
+  /** Javadoc. */
   public DatabaseSeeder(
       UserRepository userRepository,
       ProjectRepository projectRepository,

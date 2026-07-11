@@ -88,6 +88,7 @@ public class AuthController {
     return ResponseEntity.ok(new AuthResponseDto(UserResponseDto.from(user), token));
   }
 
+  /** Javadoc. */
   @PostMapping("/login/verify-2fa")
   public ResponseEntity<?> verify2FaLogin(
       @Valid @RequestBody com.edtech.dto.Verify2FaLoginDto request,
@@ -112,6 +113,7 @@ public class AuthController {
     return ResponseEntity.ok(new AuthResponseDto(UserResponseDto.from(user), token));
   }
 
+  /** Javadoc. */
   @GetMapping("/2fa/setup")
   public ResponseEntity<?> setup2Fa(Authentication authentication) {
     User user = (User) authentication.getPrincipal();
@@ -137,6 +139,7 @@ public class AuthController {
     }
   }
 
+  /** Javadoc. */
   @PostMapping("/2fa/enable")
   public ResponseEntity<?> enable2Fa(
       @RequestBody VerifyCodeDto request, Authentication authentication) {

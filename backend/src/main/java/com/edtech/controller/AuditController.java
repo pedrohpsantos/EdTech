@@ -158,7 +158,9 @@ public class AuditController {
   }
 
   private String escapeCsv(String value) {
-    if (value == null) return "";
+    if (value == null) {
+      return "";
+    }
     String escaped = value.replace("\"", "\"\"");
     if (escaped.contains(",") || escaped.contains("\"") || escaped.contains("\n")) {
       return "\"" + escaped + "\"";

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/** Javadoc. */
 @RestController
 @RequestMapping("/api/v1/laboratory")
 public class LaboratoryController {
@@ -28,6 +29,7 @@ public class LaboratoryController {
     this.userRepository = userRepository;
   }
 
+  /** Javadoc. */
   @GetMapping("/token")
   public ResponseEntity<?> getLaboratoryToken(@AuthenticationPrincipal UserDetails userDetails) {
     Optional<User> userOpt = userRepository.findByEmailIgnoreCase(userDetails.getUsername());
@@ -40,6 +42,7 @@ public class LaboratoryController {
     return ResponseEntity.ok(Map.of("token", token, "expires_in", "Final da semana"));
   }
 
+  /** Javadoc. */
   @PostMapping("/join")
   public ResponseEntity<?> joinLaboratory(
       @AuthenticationPrincipal UserDetails userDetails, @RequestBody Map<String, String> request) {

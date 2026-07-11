@@ -268,6 +268,7 @@ public class DocumentService {
     return dto;
   }
 
+  /** Javadoc. */
   @Transactional(readOnly = true)
   public java.util.List<com.edtech.dto.CommentResponseDto> getComments(
       UUID documentId, UUID userId) {
@@ -293,6 +294,7 @@ public class DocumentService {
         .collect(java.util.stream.Collectors.toList());
   }
 
+  /** Javadoc. */
   @Transactional
   public com.edtech.dto.CommentResponseDto addComment(
       UUID documentId, UUID userId, String content) {
@@ -375,6 +377,7 @@ public class DocumentService {
     return responseDto;
   }
 
+  /** Javadoc. */
   @Transactional
   public DocumentResponseDto toggleStar(UUID documentId, UUID userId) {
     Document document =

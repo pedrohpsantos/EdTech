@@ -3,6 +3,7 @@ package com.edtech.dto;
 import java.time.ZonedDateTime;
 import java.util.UUID;
 
+/** Javadoc. */
 public class CommentResponseDto {
   private UUID id;
   private String content;

@@ -121,6 +121,7 @@ public class DocumentController {
     return ResponseEntity.ok(documentService.getComments(id, user.getId()));
   }
 
+  /** Javadoc. */
   @PostMapping("/{id}/comments")
   public ResponseEntity<com.edtech.dto.CommentResponseDto> addComment(
       @PathVariable UUID id,

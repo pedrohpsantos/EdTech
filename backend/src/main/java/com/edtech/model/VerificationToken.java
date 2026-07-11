@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 
+/** Javadoc. */
 @Entity
 @Table(name = "verification_tokens")
 public class VerificationToken {
@@ -27,6 +28,7 @@ public class VerificationToken {
 
   protected VerificationToken() {}
 
+  /** Javadoc. */
   public VerificationToken(String token, String email, LocalDateTime expiresAt) {
     this.token = token;
     this.email = email;
