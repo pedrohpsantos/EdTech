@@ -17,5 +17,8 @@
   ],
   "incremental": true,
   "incrementalFile": "reports/mutation/stryker-incremental.json",
+  "htmlReporter": {
+    "fileName": "reports/mutation/html/index.html"
+  },
   "concurrency": 4
 }
