@@ -34,7 +34,7 @@ public class AuditLog {
 
   @Enumerated(EnumType.STRING)
   @Column(nullable = false, updatable = false)
-  private AcaoAuditoria action;
+  private AuditAction action;
 
   @Column(name = "resource_type", nullable = false, updatable = false)
   private String resourceType;
@@ -62,7 +62,7 @@ public class AuditLog {
   }
 
   /** Documentação para o método getAction. */
-  public AcaoAuditoria getAction() {
+  public AuditAction getAction() {
     return action;
   }
 
@@ -98,7 +98,7 @@ public class AuditLog {
   public AuditLog(
       UUID institutionId,
       UUID userId,
-      AcaoAuditoria action,
+      AuditAction action,
       String resourceType,
       UUID resourceId,
       String ipAddress,

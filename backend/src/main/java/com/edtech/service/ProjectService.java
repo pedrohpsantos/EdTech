@@ -3,7 +3,7 @@ package com.edtech.service;
 import com.edtech.dto.ProjectMemberRequestDto;
 import com.edtech.dto.ProjectRequestDto;
 import com.edtech.dto.ProjectResponseDto;
-import com.edtech.model.AcaoAuditoria;
+import com.edtech.model.AuditAction;
 import com.edtech.model.Project;
 import com.edtech.model.ProjectMember;
 import com.edtech.model.ProjectRole;
@@ -119,7 +119,7 @@ public class ProjectService {
 
     auditLogService.logAction(
         authenticatedUser.getId(),
-        AcaoAuditoria.MEMBER_JOINED,
+        AuditAction.MEMBER_JOINED,
         "User " + newUser.getEmail() + " joined project " + project.getTitle());
   }
 

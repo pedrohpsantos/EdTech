@@ -6,7 +6,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import com.edtech.dto.AuditLogDto;
-import com.edtech.model.AcaoAuditoria;
+import com.edtech.model.AuditAction;
 import com.edtech.model.AuditLog;
 import com.edtech.model.User;
 import com.edtech.model.UserRole;
@@ -35,7 +35,7 @@ class AuditControllerTest {
     auditController = new AuditController(auditLogRepository, userRepository);
   }
 
-  private AuditLog createMockLog(AcaoAuditoria action, String ip, String details) {
+  private AuditLog createMockLog(AuditAction action, String ip, String details) {
     AuditLog log =
         new AuditLog(
             UUID.randomUUID(), UUID.randomUUID(), action, "test", UUID.randomUUID(), ip, details);
@@ -46,10 +46,10 @@ class AuditControllerTest {
 
   @Test
   void getAuditLogs_WithoutFilters_ReturnsAllMappedLogs() {
-    AuditLog log1 = createMockLog(AcaoAuditoria.LOGIN_SUCCESS, "192.168.0.1", "Login success");
-    AuditLog log2 = createMockLog(AcaoAuditoria.LOGIN_FAILED, "192.168.1.2", "Login falhou");
-    AuditLog log3 = createMockLog(AcaoAuditoria.DELETE_DOCUMENT, "192.168.1.3", "Doc excluido");
-    AuditLog log4 = createMockLog(AcaoAuditoria.LOGOUT, "192.168.1.4", "Logout");
+    AuditLog log1 = createMockLog(AuditAction.LOGIN_SUCCESS, "192.168.0.1", "Login success");
+    AuditLog log2 = createMockLog(AuditAction.LOGIN_FAILED, "192.168.1.2", "Login falhou");
+    AuditLog log3 = createMockLog(AuditAction.DELETE_DOCUMENT, "192.168.1.3", "Doc excluido");
+    AuditLog log4 = createMockLog(AuditAction.LOGOUT, "192.168.1.4", "Logout");
 
     User user1 =
         new User(
@@ -89,8 +89,8 @@ class AuditControllerTest {
   void getAuditLogs_WithSearchFilter() {
     AuditLog log1 =
         createMockLog(
-            AcaoAuditoria.LOGIN_SUCCESS, "192.168.1.1", "specific search term inside details");
-    AuditLog log2 = createMockLog(AcaoAuditoria.LOGIN_FAILED, "192.168.1.2", "other details");
+            AuditAction.LOGIN_SUCCESS, "192.168.1.1", "specific search term inside details");
+    AuditLog log2 = createMockLog(AuditAction.LOGIN_FAILED, "192.168.1.2", "other details");
 
     when(auditLogRepository.findAllByOrderByCreatedAtDesc()).thenReturn(Arrays.asList(log1, log2));
     User user =
@@ -109,8 +109,8 @@ class AuditControllerTest {
 
   @Test
   void getAuditLogs_WithActionFilter() {
-    AuditLog log1 = createMockLog(AcaoAuditoria.LOGIN_SUCCESS, "192.168.1.1", "details");
-    AuditLog log2 = createMockLog(AcaoAuditoria.LOGIN_FAILED, "192.168.1.2", "details");
+    AuditLog log1 = createMockLog(AuditAction.LOGIN_SUCCESS, "192.168.1.1", "details");
+    AuditLog log2 = createMockLog(AuditAction.LOGIN_FAILED, "192.168.1.2", "details");
 
     when(auditLogRepository.findAllByOrderByCreatedAtDesc()).thenReturn(Arrays.asList(log1, log2));
     User user =
@@ -128,7 +128,7 @@ class AuditControllerTest {
 
   @Test
   void exportAuditLogs_ReturnsCsv() {
-    AuditLog log1 = createMockLog(AcaoAuditoria.LOGIN_SUCCESS, "192.168.1.1", "details\nwith newline");
+    AuditLog log1 = createMockLog(AuditAction.LOGIN_SUCCESS, "192.168.1.1", "details\nwith newline");
     when(auditLogRepository.findAllByOrderByCreatedAtDesc()).thenReturn(Arrays.asList(log1));
     User user = new User("John Doe", "john@unb.br", "pass", UserRole.RESEARCHER, java.util.UUID.randomUUID());
     when(userRepository.findById(log1.getUserId())).thenReturn(Optional.of(user));

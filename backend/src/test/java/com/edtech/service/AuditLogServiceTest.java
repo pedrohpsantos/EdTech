@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-import com.edtech.model.AcaoAuditoria;
+import com.edtech.model.AuditAction;
 import com.edtech.model.AuditLog;
 import com.edtech.repository.AuditLogRepository;
 import java.util.UUID;
@@ -42,13 +42,13 @@ public class AuditLogServiceTest {
 
     AuditLog result =
         auditLogService.log(
-            AcaoAuditoria.LOGIN_SUCCESS, userId, "User", resourceId, "192.168.1.1", "Test log");
+            AuditAction.LOGIN_SUCCESS, userId, "User", resourceId, "192.168.1.1", "Test log");
 
     verify(auditLogRepository).save(logCaptor.capture());
     AuditLog captured = logCaptor.getValue();
 
     assertEquals(userId, captured.getUserId());
-    assertEquals(AcaoAuditoria.LOGIN_SUCCESS, captured.getAction());
+    assertEquals(AuditAction.LOGIN_SUCCESS, captured.getAction());
     assertEquals("User", captured.getResourceType());
     assertEquals(resourceId, captured.getResourceId());
     assertEquals("192.168.1.1", captured.getIpAddress());
@@ -67,7 +67,7 @@ public class AuditLogServiceTest {
     UUID userId = UUID.randomUUID();
     when(auditLogRepository.save(any(AuditLog.class))).thenAnswer(i -> i.getArguments()[0]);
 
-    AuditLog result = auditLogService.logAction(userId, AcaoAuditoria.UPLOAD_SUCCESS, "Test log");
+    AuditLog result = auditLogService.logAction(userId, AuditAction.UPLOAD_SUCCESS, "Test log");
 
     verify(auditLogRepository).save(logCaptor.capture());
     AuditLog captured = logCaptor.getValue();
@@ -86,7 +86,7 @@ public class AuditLogServiceTest {
     UUID userId = UUID.randomUUID();
     when(auditLogRepository.save(any(AuditLog.class))).thenAnswer(i -> i.getArguments()[0]);
 
-    AuditLog result = auditLogService.logAction(userId, AcaoAuditoria.DELETE_DOCUMENT, "Test log");
+    AuditLog result = auditLogService.logAction(userId, AuditAction.DELETE_DOCUMENT, "Test log");
 
     verify(auditLogRepository).save(logCaptor.capture());
     AuditLog captured = logCaptor.getValue();
@@ -100,7 +100,7 @@ public class AuditLogServiceTest {
     UUID userId = UUID.randomUUID();
     when(auditLogRepository.save(any(AuditLog.class))).thenAnswer(i -> i.getArguments()[0]);
 
-    AuditLog result = auditLogService.logAction(userId, AcaoAuditoria.DELETE_DOCUMENT, "Test log");
+    AuditLog result = auditLogService.logAction(userId, AuditAction.DELETE_DOCUMENT, "Test log");
 
     verify(auditLogRepository).save(logCaptor.capture());
     AuditLog captured = logCaptor.getValue();
@@ -115,7 +115,7 @@ public class AuditLogServiceTest {
         .thenThrow(new RuntimeException("Database error"));
 
     AuditLog result =
-        auditLogService.logAction(UUID.randomUUID(), AcaoAuditoria.LOGIN_FAILED, "Test error");
+        auditLogService.logAction(UUID.randomUUID(), AuditAction.LOGIN_FAILED, "Test error");
 
     assertNull(result);
   }

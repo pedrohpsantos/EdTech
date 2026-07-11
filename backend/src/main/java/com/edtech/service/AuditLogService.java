@@ -1,6 +1,6 @@
 package com.edtech.service;
 
-import com.edtech.model.AcaoAuditoria;
+import com.edtech.model.AuditAction;
 import com.edtech.model.AuditLog;
 import com.edtech.repository.AuditLogRepository;
 import jakarta.servlet.http.HttpServletRequest;
@@ -57,7 +57,7 @@ public class AuditLogService {
    * @return Log de auditoria salvo.
    */
   public AuditLog log(
-      AcaoAuditoria action,
+      AuditAction action,
       UUID userId,
       String resourceType,
       UUID resourceId,
@@ -89,7 +89,7 @@ public class AuditLogService {
    * @param details Detalhes adicionais.
    * @return Log de auditoria salvo.
    */
-  public AuditLog logAction(UUID userId, AcaoAuditoria action, String details) {
+  public AuditLog logAction(UUID userId, AuditAction action, String details) {
     return log(action, userId, null, null, null, details);
   }
 
@@ -103,7 +103,7 @@ public class AuditLogService {
    * @return Log de auditoria salvo.
    */
   public AuditLog logDocumentAction(
-      UUID userId, AcaoAuditoria action, UUID documentId, String details) {
+      UUID userId, AuditAction action, UUID documentId, String details) {
     return log(action, userId, DOCUMENT_RESOURCE_TYPE, documentId, null, details);
   }
 }

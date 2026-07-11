@@ -1,7 +1,7 @@
 package com.edtech.service;
 
 import com.edtech.dto.DocumentResponseDto;
-import com.edtech.model.AcaoAuditoria;
+import com.edtech.model.AuditAction;
 import com.edtech.model.Document;
 import com.edtech.model.DocumentStatus;
 import com.edtech.model.Project;
@@ -109,7 +109,7 @@ public class DocumentService {
 
       auditLogService.logDocumentAction(
           authorId,
-          AcaoAuditoria.UPLOAD_SUCCESS,
+          AuditAction.UPLOAD_SUCCESS,
           document.getId(),
           "Documento anexado no Cloud Storage: " + title);
 
@@ -149,7 +149,7 @@ public class DocumentService {
 
     auditLogService.logDocumentAction(
         userId,
-        AcaoAuditoria.DOWNLOAD,
+        AuditAction.DOWNLOAD,
         documentId,
         "Gerada URL presigned para download: " + document.getTitle());
     return presignedUrl;
@@ -187,7 +187,7 @@ public class DocumentService {
     documentRepository.delete(document);
     auditLogService.logDocumentAction(
         userId,
-        AcaoAuditoria.DELETE_DOCUMENT,
+        AuditAction.DELETE_DOCUMENT,
         documentId,
         "Documento excluido: " + document.getTitle());
   }
@@ -316,7 +316,7 @@ public class DocumentService {
     comment = documentCommentRepository.save(comment);
 
     auditLogService.logDocumentAction(
-        userId, AcaoAuditoria.REVIEW_DOCUMENT, documentId, "Adicionou um comentário ao documento.");
+        userId, AuditAction.REVIEW_DOCUMENT, documentId, "Adicionou um comentário ao documento.");
 
     com.edtech.dto.CommentResponseDto dto = new com.edtech.dto.CommentResponseDto();
     dto.setId(comment.getId());
@@ -358,16 +358,16 @@ public class DocumentService {
     document.setStatus(newStatus);
     document.setFeedback(feedback);
     Document savedDocument = documentRepository.save(document);
-    AcaoAuditoria acao =
+    AuditAction action =
         (newStatus == DocumentStatus.APPROVED)
-            ? AcaoAuditoria.DOCUMENT_APPROVED
-            : AcaoAuditoria.DOCUMENT_REJECTED;
+            ? AuditAction.DOCUMENT_APPROVED
+            : AuditAction.DOCUMENT_REJECTED;
     String details =
         "Status alterado para "
             + newStatus
             + ".Feedback: "
             + (feedback != null && !feedback.trim().isEmpty() ? feedback : "Sem feedback");
-    auditLogService.logDocumentAction(reviewerId, acao, documentId, details);
+    auditLogService.logDocumentAction(reviewerId, action, documentId, details);
 
     DocumentResponseDto responseDto = mapToDto(savedDocument);
     notificationService.sendToTopic(

@@ -1,7 +1,7 @@
 package com.edtech.model;
 
 /** Documentação para Enum. */
-public enum AcaoAuditoria {
+public enum AuditAction {
   LOGIN_SUCCESS, // — após login bem-sucedido
   LOGIN_FAILED, // — após tentativa com senha errada
   LOGOUT, // — ao limpar o cookie

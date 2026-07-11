@@ -1,6 +1,6 @@
 package com.edtech.config;
 
-import com.edtech.model.AcaoAuditoria;
+import com.edtech.model.AuditAction;
 import com.edtech.model.AuditLog;
 import com.edtech.model.Document;
 import com.edtech.model.DocumentStatus;
@@ -141,7 +141,7 @@ public class DataSeeder implements CommandLineRunner {
 
     saveLog(
         researcher,
-        AcaoAuditoria.UPLOAD_SUCCESS,
+        AuditAction.UPLOAD_SUCCESS,
         "Document",
         doc1.getId(),
         "143.107.42.88",
@@ -149,7 +149,7 @@ public class DataSeeder implements CommandLineRunner {
         now.minusMinutes(10));
     saveLog(
         researcher,
-        AcaoAuditoria.LOGIN_SUCCESS,
+        AuditAction.LOGIN_SUCCESS,
         "System",
         researcher.getId(),
         "143.107.42.88",
@@ -157,7 +157,7 @@ public class DataSeeder implements CommandLineRunner {
         now.minusMinutes(25));
     saveLog(
         advisor,
-        AcaoAuditoria.DOCUMENT_APPROVED,
+        AuditAction.DOCUMENT_APPROVED,
         "Document",
         doc2.getId(),
         "200.130.11.220",
@@ -165,7 +165,7 @@ public class DataSeeder implements CommandLineRunner {
         now.minusMinutes(40));
     saveLog(
         advisor,
-        AcaoAuditoria.LOGIN_FAILED,
+        AuditAction.LOGIN_FAILED,
         "System",
         advisor.getId(),
         "177.82.94.12",
@@ -173,7 +173,7 @@ public class DataSeeder implements CommandLineRunner {
         now.minusHours(2));
     saveLog(
         advisor,
-        AcaoAuditoria.REVIEW_DOCUMENT,
+        AuditAction.REVIEW_DOCUMENT,
         "Document",
         doc1.getId(),
         "200.130.11.220",
@@ -181,7 +181,7 @@ public class DataSeeder implements CommandLineRunner {
         now.minusHours(3));
     saveLog(
         auditor,
-        AcaoAuditoria.MEMBER_JOINED,
+        AuditAction.MEMBER_JOINED,
         "Project",
         project1.getId(),
         "10.0.0.1",
@@ -189,7 +189,7 @@ public class DataSeeder implements CommandLineRunner {
         now.minusHours(4));
     saveLog(
         researcher,
-        AcaoAuditoria.DELETE_DOCUMENT,
+        AuditAction.DELETE_DOCUMENT,
         "Document",
         doc1.getId(),
         "143.107.42.88",
@@ -197,7 +197,7 @@ public class DataSeeder implements CommandLineRunner {
         now.minusDays(1).minusHours(1));
     saveLog(
         advisor,
-        AcaoAuditoria.DOCUMENT_REJECTED,
+        AuditAction.DOCUMENT_REJECTED,
         "Document",
         doc3.getId(),
         "200.130.11.220",
@@ -205,7 +205,7 @@ public class DataSeeder implements CommandLineRunner {
         now.minusDays(1).minusHours(2));
     saveLog(
         advisor,
-        AcaoAuditoria.REVIEW_DOCUMENT,
+        AuditAction.REVIEW_DOCUMENT,
         "Document",
         doc1.getId(),
         "177.82.94.12",
@@ -213,7 +213,7 @@ public class DataSeeder implements CommandLineRunner {
         now.minusDays(1).minusHours(3));
     saveLog(
         auditor,
-        AcaoAuditoria.LOGIN_SUCCESS,
+        AuditAction.LOGIN_SUCCESS,
         "System",
         auditor.getId(),
         "189.102.55.74",
@@ -221,7 +221,7 @@ public class DataSeeder implements CommandLineRunner {
         now.minusDays(1).minusHours(9));
     saveLog(
         researcher2,
-        AcaoAuditoria.REGISTER,
+        AuditAction.REGISTER,
         "System",
         researcher2.getId(),
         "192.168.1.42",
@@ -229,7 +229,7 @@ public class DataSeeder implements CommandLineRunner {
         now.minusDays(2).minusHours(4));
     saveLog(
         researcher2,
-        AcaoAuditoria.UPLOAD_SUCCESS,
+        AuditAction.UPLOAD_SUCCESS,
         "Document",
         doc3.getId(),
         "192.168.1.42",
@@ -237,7 +237,7 @@ public class DataSeeder implements CommandLineRunner {
         now.minusDays(2).minusHours(8));
     saveLog(
         advisor,
-        AcaoAuditoria.LOGIN_FAILED,
+        AuditAction.LOGIN_FAILED,
         "System",
         advisor.getId(),
         "200.130.11.220",
@@ -245,7 +245,7 @@ public class DataSeeder implements CommandLineRunner {
         now.minusDays(2).minusHours(11));
     saveLog(
         researcher2,
-        AcaoAuditoria.REVIEW_DOCUMENT,
+        AuditAction.REVIEW_DOCUMENT,
         "Document",
         doc1.getId(),
         "192.168.1.42",
@@ -255,7 +255,7 @@ public class DataSeeder implements CommandLineRunner {
 
   private void saveLog(
       User user,
-      AcaoAuditoria action,
+      AuditAction action,
       String resourceType,
       UUID resourceId,
       String ip,

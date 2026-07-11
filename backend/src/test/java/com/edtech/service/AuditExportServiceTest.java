@@ -52,7 +52,7 @@ class AuditExportServiceTest {
             new AuditLog(
                 UUID.randomUUID(),
                 UUID.randomUUID(),
-                com.edtech.model.AcaoAuditoria.LOGIN_SUCCESS,
+                com.edtech.model.AuditAction.LOGIN_SUCCESS,
                 "test",
                 null,
                 "192.168.0.1",

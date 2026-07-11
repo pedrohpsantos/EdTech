@@ -2,7 +2,7 @@ package com.edtech.service;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.edtech.model.AcaoAuditoria;
+import com.edtech.model.AuditAction;
 import com.edtech.model.AuditLog;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -21,7 +21,7 @@ class AuditTrailCsvExporterTest {
         new AuditLog(
             UUID.randomUUID(),
             userId,
-            AcaoAuditoria.DOWNLOAD,
+            AuditAction.DOWNLOAD,
             "Document",
             resourceId,
             "127.0.0.1",

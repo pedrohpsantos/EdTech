@@ -6,7 +6,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 import com.edtech.dto.DocumentResponseDto;
-import com.edtech.model.AcaoAuditoria;
+import com.edtech.model.AuditAction;
 import com.edtech.model.Document;
 import com.edtech.model.DocumentStatus;
 import com.edtech.model.Project;
@@ -126,7 +126,7 @@ public class DocumentServiceTest {
     verify(storageService, times(1)).uploadFile(any(), anyString(), anyString());
     verify(auditLogService, times(1))
         .logDocumentAction(
-            eq(authorId), eq(AcaoAuditoria.UPLOAD_SUCCESS), eq(documentId), anyString());
+            eq(authorId), eq(AuditAction.UPLOAD_SUCCESS), eq(documentId), anyString());
   }
 
   @Test
@@ -153,7 +153,7 @@ public class DocumentServiceTest {
     verify(storageService, times(1)).uploadFile(any(), anyString(), eq("text/csv"));
     verify(auditLogService, times(1))
         .logDocumentAction(
-            eq(authorId), eq(AcaoAuditoria.UPLOAD_SUCCESS), eq(documentId), anyString());
+            eq(authorId), eq(AuditAction.UPLOAD_SUCCESS), eq(documentId), anyString());
   }
 
   @Test
@@ -181,7 +181,7 @@ public class DocumentServiceTest {
     verify(storageService, times(1)).uploadFile(any(), anyString(), eq("application/json"));
     verify(auditLogService, times(1))
         .logDocumentAction(
-            eq(authorId), eq(AcaoAuditoria.UPLOAD_SUCCESS), eq(documentId), anyString());
+            eq(authorId), eq(AuditAction.UPLOAD_SUCCESS), eq(documentId), anyString());
   }
 
   @Test
@@ -273,7 +273,7 @@ public class DocumentServiceTest {
     verify(documentRepository, times(1)).delete(document);
     verify(auditLogService, times(1))
         .logDocumentAction(
-            eq(authorId), eq(AcaoAuditoria.DELETE_DOCUMENT), eq(documentId), anyString());
+            eq(authorId), eq(AuditAction.DELETE_DOCUMENT), eq(documentId), anyString());
   }
 
   @Test
@@ -346,7 +346,7 @@ public class DocumentServiceTest {
     assertEquals("Great work", response.getFeedback());
     verify(auditLogService, times(1))
         .logDocumentAction(
-            eq(advisorId), eq(AcaoAuditoria.DOCUMENT_APPROVED), eq(documentId), anyString());
+            eq(advisorId), eq(AuditAction.DOCUMENT_APPROVED), eq(documentId), anyString());
   }
 
   @Test
@@ -431,7 +431,7 @@ public class DocumentServiceTest {
     assertNotNull(url);
     assertEquals("http://presigned.url", url);
     verify(auditLogService, times(1))
-        .logDocumentAction(eq(authorId), eq(AcaoAuditoria.DOWNLOAD), eq(documentId), anyString());
+        .logDocumentAction(eq(authorId), eq(AuditAction.DOWNLOAD), eq(documentId), anyString());
   }
 
   @Test
@@ -500,7 +500,7 @@ public class DocumentServiceTest {
     assertNull(response.getFeedback());
     verify(auditLogService, times(1))
         .logDocumentAction(
-            eq(advisorId), eq(AcaoAuditoria.DOCUMENT_REJECTED), eq(documentId), anyString());
+            eq(advisorId), eq(AuditAction.DOCUMENT_REJECTED), eq(documentId), anyString());
   }
 
   @Test
@@ -529,7 +529,7 @@ public class DocumentServiceTest {
     assertEquals("   ", response.getFeedback());
     verify(auditLogService, times(1))
         .logDocumentAction(
-            eq(advisorId), eq(AcaoAuditoria.DOCUMENT_REJECTED), eq(documentId), anyString());
+            eq(advisorId), eq(AuditAction.DOCUMENT_REJECTED), eq(documentId), anyString());
   }
 
   @Test
@@ -607,7 +607,7 @@ public class DocumentServiceTest {
     assertEquals("test", response.getAuthorName());
     org.junit.jupiter.api.Assertions.assertNotNull(response.getCreatedAt());
     verify(auditLogService, times(1))
-        .logDocumentAction(eq(authorId), eq(AcaoAuditoria.REVIEW_DOCUMENT), eq(documentId), anyString());
+        .logDocumentAction(eq(authorId), eq(AuditAction.REVIEW_DOCUMENT), eq(documentId), anyString());
     verify(notificationService, times(1)).sendToTopic(anyString(), any());
   }
 
