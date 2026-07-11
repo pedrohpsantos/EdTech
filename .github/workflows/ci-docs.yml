@@ -63,7 +63,7 @@ jobs:
 
       - name: Upload JaCoCo Report
         if: matrix.report-type == 'backend-jacoco'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: backend-jacoco-reports
           path: reports/
@@ -85,7 +85,7 @@ jobs:
         working-directory: backend
         run: |
           chmod +x mvnw
-          ./mvnw org.pitest:pitest-maven:mutationCoverage -B -Dpitest.threads=8
+          ./mvnw clean test-compile org.pitest:pitest-maven:mutationCoverage -B -Dpitest.threads=8
 
       - name: Preparar Artefatos PiTest
         if: matrix.report-type == 'backend-pitest'
@@ -97,7 +97,7 @@ jobs:
 
       - name: Upload PiTest Report
         if: matrix.report-type == 'backend-pitest'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: backend-pitest-reports
           path: reports/
@@ -160,7 +160,7 @@ jobs:
 
       - name: Upload Frontend Reports
         if: matrix.report-type == 'frontend'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: frontend-reports
           path: reports/
@@ -196,7 +196,7 @@ jobs:
 
       - name: Upload Performance Reports
         if: matrix.report-type == 'performance'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: performance-reports
           path: reports/
@@ -232,7 +232,7 @@ jobs:
         run: uv sync
 
       - name: Download JaCoCo Reports
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         continue-on-error: true
         with:
           name: backend-jacoco-reports
