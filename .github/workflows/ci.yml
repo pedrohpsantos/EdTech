@@ -316,7 +316,7 @@ jobs:
             --tasks 1 \
             --set-cloudsql-instances edtech-storage-501117:southamerica-east1:edtech-db-dev \
             --set-env-vars 'SPRING_PROFILES_ACTIVE=prod,SPRING_FLYWAY_ENABLED=true' \
-            --set-secrets 'SPRING_DATASOURCE_URL=SPRING_DATASOURCE_URL:latest,SPRING_DATASOURCE_USERNAME=SPRING_DATASOURCE_USERNAME:latest,SPRING_DATASOURCE_PASSWORD=SPRING_DATASOURCE_PASSWORD:latest' || true
+            --set-secrets 'JWT_SECRET=JWT_SECRET:latest,SPRING_DATASOURCE_URL=SPRING_DATASOURCE_URL:latest,SPRING_DATASOURCE_USERNAME=SPRING_DATASOURCE_USERNAME:latest,SPRING_DATASOURCE_PASSWORD=SPRING_DATASOURCE_PASSWORD:latest' || true
           
           gcloud run jobs execute edtech-db-migration --region southamerica-east1 --wait || {
             echo "Database Migration failed. Fetching logs..."
