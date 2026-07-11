@@ -11,9 +11,9 @@ export const options = {
   
   // Configuração de estágios de VUs (Virtual Users)
   stages: [
-    { duration: '30s', target: 50 }, // Mantém no mínimo de 50 VUs
-    { duration: '1m', target: 100 }, // Sobe até o máximo de 100 VUs e mantém
-    { duration: '30s', target: 50 },  // Desce de volta para 50 VUs
+    { duration: '10s', target: 50 }, // Mantém no mínimo de 50 VUs
+    { duration: '20s', target: 100 }, // Sobe até o máximo de 100 VUs e mantém
+    { duration: '10s', target: 50 },  // Desce de volta para 50 VUs
   ],
 
   // Define quais estatísticas queremos ver no resumo final.
