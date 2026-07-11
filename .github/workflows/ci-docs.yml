@@ -22,46 +22,84 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        report-type: [backend, frontend, performance]
+        # backend-jacoco = JUnit + JaCoCo coverage report
+        # backend-pitest = Mutation testing report (PiTest)
+        # frontend       = Vitest + Allure smoke test report
+        # performance    = K6 load test report
+        report-type: [backend-jacoco, backend-pitest, frontend, performance]
     steps:
-      - name: Checkout do código
+      - name: Checkout do codigo
         uses: actions/checkout@v7
 
       # ==========================
-      # BACKEND
+      # BACKEND — JaCoCo
       # ==========================
-      - name: Configurar JDK 21
-        if: matrix.report-type == 'backend'
+      - name: Configurar JDK 21 (JaCoCo)
+        if: matrix.report-type == 'backend-jacoco'
         uses: actions/setup-java@v5
         with:
           java-version: '21'
           distribution: 'temurin'
           cache: maven
+          cache-dependency-path: 'backend/pom.xml'
 
-      - name: Gerar Relatório JaCoCo
-        if: matrix.report-type == 'backend'
+      - name: Gerar Relatorio JaCoCo
+        if: matrix.report-type == 'backend-jacoco'
         working-directory: backend
         run: |
           chmod +x mvnw
-          ./mvnw clean test jacoco:report -B -T 1C
+          ./mvnw clean test jacoco:report -B -T 1C \
+            -Dsurefire.parallel=classes \
+            -Dsurefire.threadCount=4 \
+            -Dsurefire.perCoreThreadCount=false
 
-      - name: Gerar Relatório PiTest
-        if: matrix.report-type == 'backend'
-        working-directory: backend
-        run: ./mvnw org.pitest:pitest-maven:mutationCoverage -B -Dpitest.threads=4
-
-      - name: Preparar Artefatos Backend
-        if: matrix.report-type == 'backend'
+      - name: Preparar Artefatos JaCoCo
+        if: matrix.report-type == 'backend-jacoco'
         run: |
-          mkdir -p reports/jacoco reports/pitest
-          if [ -d "backend/target/site/jacoco" ]; then cp -r backend/target/site/jacoco/* reports/jacoco/ || true; fi
-          if [ -d "backend/target/pit-reports" ]; then cp -r backend/target/pit-reports/* reports/pitest/ || true; fi
+          mkdir -p reports/jacoco
+          if [ -d "backend/target/site/jacoco" ]; then
+            cp -r backend/target/site/jacoco/* reports/jacoco/ || true
+          fi
 
-      - name: Upload Backend Reports
-        if: matrix.report-type == 'backend'
+      - name: Upload JaCoCo Report
+        if: matrix.report-type == 'backend-jacoco'
         uses: actions/upload-artifact@v4
         with:
-          name: backend-reports
+          name: backend-jacoco-reports
+          path: reports/
+
+      # ==========================
+      # BACKEND — PiTest
+      # ==========================
+      - name: Configurar JDK 21 (PiTest)
+        if: matrix.report-type == 'backend-pitest'
+        uses: actions/setup-java@v5
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+          cache-dependency-path: 'backend/pom.xml'
+
+      - name: Gerar Relatorio PiTest
+        if: matrix.report-type == 'backend-pitest'
+        working-directory: backend
+        run: |
+          chmod +x mvnw
+          ./mvnw org.pitest:pitest-maven:mutationCoverage -B -Dpitest.threads=8
+
+      - name: Preparar Artefatos PiTest
+        if: matrix.report-type == 'backend-pitest'
+        run: |
+          mkdir -p reports/pitest
+          if [ -d "backend/target/pit-reports" ]; then
+            cp -r backend/target/pit-reports/* reports/pitest/ || true
+          fi
+
+      - name: Upload PiTest Report
+        if: matrix.report-type == 'backend-pitest'
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-pitest-reports
           path: reports/
 
       # ==========================
@@ -72,20 +110,22 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: '24'
+          cache: 'npm'
+          cache-dependency-path: 'frontend/package-lock.json'
 
-      - name: Instalar Dependências e Playwright
+      - name: Instalar Dependencias e Playwright
         if: matrix.report-type == 'frontend'
         working-directory: frontend
         run: |
           npm ci
           npx playwright install --with-deps chromium
 
-      - name: Executar Testes Unitários (Vitest)
+      - name: Executar Testes Unitarios (Vitest)
         if: matrix.report-type == 'frontend'
         working-directory: frontend
         run: npm run test || true
 
-      - name: Restaurar Histórico do Allure (Trend)
+      - name: Restaurar Historico do Allure (Trend)
         if: matrix.report-type == 'frontend'
         uses: actions/checkout@v7
         continue-on-error: true
@@ -132,8 +172,12 @@ jobs:
         if: matrix.report-type == 'performance'
         run: |
           sudo gpg -k
-          sudo gpg --no-default-keyring --keyring /usr/share/keyrings/k6-archive-keyring.gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C5AD17C747E3415A3642D57D77C6C491D6AC1D69
-          echo "deb [signed-by=/usr/share/keyrings/k6-archive-keyring.gpg] https://dl.k6.io/deb stable main" | sudo tee /etc/apt/sources.list.d/k6.list
+          sudo gpg --no-default-keyring \
+            --keyring /usr/share/keyrings/k6-archive-keyring.gpg \
+            --keyserver hkp://keyserver.ubuntu.com:80 \
+            --recv-keys C5AD17C747E3415A3642D57D77C6C491D6AC1D69
+          echo "deb [signed-by=/usr/share/keyrings/k6-archive-keyring.gpg] https://dl.k6.io/deb stable main" \
+            | sudo tee /etc/apt/sources.list.d/k6.list
           sudo apt-get update
           sudo apt-get install k6
 
@@ -146,7 +190,9 @@ jobs:
         if: matrix.report-type == 'performance'
         run: |
           mkdir -p reports/k6
-          if [ -f "tests/performance/k6-summary.html" ]; then cp tests/performance/k6-summary.html reports/k6/index.html || true; fi
+          if [ -f "tests/performance/k6-summary.html" ]; then
+            cp tests/performance/k6-summary.html reports/k6/index.html || true
+          fi
 
       - name: Upload Performance Reports
         if: matrix.report-type == 'performance'
@@ -159,7 +205,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [generate-reports]
     steps:
-      - name: Checkout do código
+      - name: Checkout do codigo
         uses: actions/checkout@v7
         with:
           fetch-depth: 0
@@ -174,14 +220,29 @@ jobs:
         with:
           enable-cache: true
 
-      - name: Instalar dependências MkDocs
+      - name: Cache dependencias uv
+        uses: actions/cache@v6
+        with:
+          path: ~/.cache/uv
+          key: uv-${{ hashFiles('pyproject.toml') }}
+          restore-keys: |
+            uv-
+
+      - name: Instalar dependencias MkDocs
         run: uv sync
 
-      - name: Download Backend Reports
+      - name: Download JaCoCo Reports
         uses: actions/download-artifact@v4
         continue-on-error: true
         with:
-          name: backend-reports
+          name: backend-jacoco-reports
+          path: docs/
+
+      - name: Download PiTest Reports
+        uses: actions/download-artifact@v4
+        continue-on-error: true
+        with:
+          name: backend-pitest-reports
           path: docs/
 
       - name: Download Frontend Reports
