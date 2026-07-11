@@ -25,13 +25,13 @@ public class NotificationService {
    * @param payload O conteúdo da mensagem
    */
   public void sendToUser(String userId, Object payload) {
-<span class="nc bnc" id="L28" title="All 2 branches missed.">    if (messagingTemplate == null) {</span>
-<span class="nc" id="L29">      return;</span>
+<span class="fc bfc" id="L28" title="All 2 branches covered.">    if (messagingTemplate == null) {</span>
+<span class="fc" id="L29">      return;</span>
     }
-<span class="nc" id="L31">    String destination = &quot;/queue/notifications&quot;;</span>
-<span class="nc" id="L32">    logger.info(&quot;Enviando notificacao WS para o usuario {}: {}&quot;, userId, payload);</span>
-<span class="nc" id="L33">    messagingTemplate.convertAndSendToUser(userId, destination, payload);</span>
-<span class="nc" id="L34">  }</span>
+<span class="fc" id="L31">    String destination = &quot;/queue/notifications&quot;;</span>
+<span class="fc" id="L32">    logger.info(&quot;Enviando notificacao WS para o usuario {}: {}&quot;, userId, payload);</span>
+<span class="fc" id="L33">    messagingTemplate.convertAndSendToUser(userId, destination, payload);</span>
+<span class="fc" id="L34">  }</span>
 
   /**
    * Envia uma notificação para um tópico geral.
@@ -40,11 +40,11 @@ public class NotificationService {
    * @param payload O conteúdo da mensagem
    */
   public void sendToTopic(String topic, Object payload) {
-<span class="nc bnc" id="L43" title="All 2 branches missed.">    if (messagingTemplate == null) {</span>
-<span class="nc" id="L44">      return;</span>
+<span class="fc bfc" id="L43" title="All 2 branches covered.">    if (messagingTemplate == null) {</span>
+<span class="fc" id="L44">      return;</span>
     }
-<span class="nc" id="L46">    logger.info(&quot;Enviando notificacao WS global para o topico {}: {}&quot;, topic, payload);</span>
-<span class="nc" id="L47">    messagingTemplate.convertAndSend(topic, payload);</span>
-<span class="nc" id="L48">  }</span>
+<span class="fc" id="L46">    logger.info(&quot;Enviando notificacao WS global para o topico {}: {}&quot;, topic, payload);</span>
+<span class="fc" id="L47">    messagingTemplate.convertAndSend(topic, payload);</span>
+<span class="fc" id="L48">  }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

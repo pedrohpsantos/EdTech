@@ -36,12 +36,12 @@ import org.springframework.stereotype.Component;
 <span class="fc" id="L36">        writeRow(</span>
             writer,
 <span class="pc bpc" id="L38" title="1 of 2 branches missed.">            log.getCreatedAt() != null ? log.getCreatedAt().toString() : &quot;&quot;,</span>
-<span class="pc bpc" id="L39" title="1 of 2 branches missed.">            log.getUserId() != null ? log.getUserId().toString() : &quot;&quot;,</span>
-<span class="pc bpc" id="L40" title="1 of 2 branches missed.">            log.getAction() != null ? log.getAction().name() : &quot;&quot;,</span>
-<span class="pc bpc" id="L41" title="1 of 2 branches missed.">            log.getResourceType() != null ? log.getResourceType() : &quot;&quot;,</span>
-<span class="pc bpc" id="L42" title="1 of 2 branches missed.">            log.getResourceId() != null ? log.getResourceId().toString() : &quot;&quot;,</span>
-<span class="pc bpc" id="L43" title="1 of 2 branches missed.">            log.getIpAddress() != null ? log.getIpAddress() : &quot;&quot;,</span>
-<span class="pc bpc" id="L44" title="1 of 2 branches missed.">            log.getDetails() != null ? log.getDetails() : &quot;&quot;);</span>
+<span class="fc bfc" id="L39" title="All 2 branches covered.">            log.getUserId() != null ? log.getUserId().toString() : &quot;&quot;,</span>
+<span class="fc bfc" id="L40" title="All 2 branches covered.">            log.getAction() != null ? log.getAction().name() : &quot;&quot;,</span>
+<span class="fc bfc" id="L41" title="All 2 branches covered.">            log.getResourceType() != null ? log.getResourceType() : &quot;&quot;,</span>
+<span class="fc bfc" id="L42" title="All 2 branches covered.">            log.getResourceId() != null ? log.getResourceId().toString() : &quot;&quot;,</span>
+<span class="fc bfc" id="L43" title="All 2 branches covered.">            log.getIpAddress() != null ? log.getIpAddress() : &quot;&quot;,</span>
+<span class="fc bfc" id="L44" title="All 2 branches covered.">            log.getDetails() != null ? log.getDetails() : &quot;&quot;);</span>
 <span class="fc" id="L45">      }</span>
 
 <span class="fc" id="L47">      writer.flush();</span>
@@ -66,7 +66,7 @@ import org.springframework.stereotype.Component;
 <span class="fc bfc" id="L66" title="All 2 branches covered.">    if (safeValue.contains(&quot;\&quot;&quot;)</span>
 <span class="pc bpc" id="L67" title="1 of 2 branches missed.">        || safeValue.contains(&quot;,&quot;)</span>
 <span class="pc bpc" id="L68" title="1 of 2 branches missed.">        || safeValue.contains(&quot;\n&quot;)</span>
-<span class="pc bpc" id="L69" title="1 of 2 branches missed.">        || safeValue.contains(&quot;\r&quot;)) {</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">        || safeValue.contains(&quot;\r&quot;)) {</span>
 <span class="fc" id="L70">      return &quot;\&quot;&quot; + safeValue.replace(&quot;\&quot;&quot;, &quot;\&quot;\&quot;&quot;) + &quot;\&quot;&quot;;</span>
     }
 <span class="fc" id="L72">    return safeValue;</span>

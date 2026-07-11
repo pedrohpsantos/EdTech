@@ -1,1 +1,1 @@
-[{"values":["Chromium"],"name":"Browser"},{"values":["Production Smoke"],"name":"Environment"},{"values":["Ubuntu Latest"],"name":"OS"}]
+[{"values":["Chromium\nEnvironment=Production Smoke"],"name":"Browser"}]

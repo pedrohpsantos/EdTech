@@ -42,8 +42,8 @@ public class RecoveryService {
 <span class="fc" id="L42">    Optional&lt;User&gt; userOpt = userRepository.findByEmailIgnoreCase(normalizedEmail);</span>
 
     // Demo accounts cannot recover password
-<span class="pc bpc" id="L45" title="1 of 2 branches missed.">    if (normalizedEmail.endsWith(&quot;.demo@unb.br&quot;)) {</span>
-<span class="nc" id="L46">      return;</span>
+<span class="fc bfc" id="L45" title="All 2 branches covered.">    if (normalizedEmail.endsWith(&quot;.demo@unb.br&quot;)) {</span>
+<span class="fc" id="L46">      return;</span>
     }
 
     // Sempre retorna sucesso rapidamente por seguranca (evitar email enumeration), mas soh envia se
@@ -67,7 +67,7 @@ public class RecoveryService {
 <span class="fc" id="L67">    Optional&lt;RecoveryToken&gt; tokenOpt =</span>
 <span class="fc" id="L68">        recoveryTokenRepository.findByEmailAndToken(normalizedEmail, code);</span>
 
-<span class="pc bpc" id="L70" title="1 of 4 branches missed.">    if (tokenOpt.isPresent() &amp;&amp; !tokenOpt.get().isExpired()) {</span>
+<span class="fc bfc" id="L70" title="All 4 branches covered.">    if (tokenOpt.isPresent() &amp;&amp; !tokenOpt.get().isExpired()) {</span>
 <span class="fc" id="L71">      return true;</span>
     }
 <span class="fc" id="L73">    return false;</span>
@@ -79,16 +79,16 @@ public class RecoveryService {
 <span class="fc" id="L79">    String normalizedEmail = email.trim().toLowerCase(Locale.ROOT);</span>
 
     // Demo accounts cannot reset password
-<span class="pc bpc" id="L82" title="1 of 2 branches missed.">    if (normalizedEmail.endsWith(&quot;.demo@unb.br&quot;)) {</span>
-<span class="nc" id="L83">      return false;</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">    if (normalizedEmail.endsWith(&quot;.demo@unb.br&quot;)) {</span>
+<span class="fc" id="L83">      return false;</span>
     }
 
 <span class="fc" id="L86">    Optional&lt;RecoveryToken&gt; tokenOpt =</span>
 <span class="fc" id="L87">        recoveryTokenRepository.findByEmailAndToken(normalizedEmail, code);</span>
 
-<span class="pc bpc" id="L89" title="2 of 4 branches missed.">    if (tokenOpt.isPresent() &amp;&amp; !tokenOpt.get().isExpired()) {</span>
+<span class="pc bpc" id="L89" title="1 of 4 branches missed.">    if (tokenOpt.isPresent() &amp;&amp; !tokenOpt.get().isExpired()) {</span>
 <span class="fc" id="L90">      Optional&lt;User&gt; userOpt = userRepository.findByEmailIgnoreCase(normalizedEmail);</span>
-<span class="pc bpc" id="L91" title="1 of 2 branches missed.">      if (userOpt.isPresent()) {</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">      if (userOpt.isPresent()) {</span>
 <span class="fc" id="L92">        User user = userOpt.get();</span>
 <span class="fc" id="L93">        user.setPasswordHash(passwordEncoder.encode(newPassword));</span>
 <span class="fc" id="L94">        userRepository.save(user);</span>
@@ -96,7 +96,7 @@ public class RecoveryService {
 <span class="fc" id="L96">        return true;</span>
       }
     }
-<span class="nc" id="L99">    return false;</span>
+<span class="fc" id="L99">    return false;</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
