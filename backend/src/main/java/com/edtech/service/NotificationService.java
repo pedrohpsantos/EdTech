@@ -25,7 +25,9 @@ public class NotificationService {
    * @param payload O conteúdo da mensagem
    */
   public void sendToUser(String userId, Object payload) {
-    if (messagingTemplate == null) return;
+    if (messagingTemplate == null) {
+      return;
+    }
     String destination = "/queue/notifications";
     logger.info("Enviando notificacao WS para o usuario {}: {}", userId, payload);
     messagingTemplate.convertAndSendToUser(userId, destination, payload);
@@ -38,7 +40,9 @@ public class NotificationService {
    * @param payload O conteúdo da mensagem
    */
   public void sendToTopic(String topic, Object payload) {
-    if (messagingTemplate == null) return;
+    if (messagingTemplate == null) {
+      return;
+    }
     logger.info("Enviando notificacao WS global para o topico {}: {}", topic, payload);
     messagingTemplate.convertAndSend(topic, payload);
   }
