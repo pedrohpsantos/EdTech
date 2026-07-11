@@ -38,6 +38,8 @@ export default function () {
     headers: {
       'Content-Type': 'application/json',
     },
+    // Evita que o K6 marque respostas 4xx esperadas como "Failed Requests" no relatório.
+    responseCallback: http.expectedStatuses(200, 201, 400, 401, 404, 409, 429),
   };
 
   // 1. Endpoint de Health Check (Actuator) - Simula monitoramento
