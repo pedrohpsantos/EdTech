@@ -1674,7 +1674,7 @@
   <span class="md-ellipsis">
     
   
-    Relatório de Testes de Mutação (PiTest)
+    Relatório de Testes de Mutação
   
 
     
@@ -3988,7 +3988,7 @@
   <a href="#desenvolvimento-qualidade_e_testes-mutation_test_report" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.5.2 Relatório de Testes de Mutação (PiTest)
+        3.5.2 Relatório de Testes de Mutação
       
     </span>
   </a>
@@ -9292,22 +9292,22 @@ flowchart LR
 <h3 id="arquitetura-finops_custos-21-cloud-sql-banco-de-dados">2.1. <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> <abbr title="Structured Query Language — Linguagem de Consulta Estruturada">SQL</abbr> (Banco de Dados)<a class="headerlink" href="#arquitetura-finops_custos-21-cloud-sql-banco-de-dados" title="Permanent link">¶</a></h3>
 <p>Para mantermos o custo baixo sem perder a consistência, utilizaremos instâncias de núcleo compartilhado (<em>Shared Core</em>):</p>
 <ul>
-<li><strong>Homologação/Produção Inicial (<code>db-f1-micro</code>, 10GB SSD)</strong>: ~ $9.00 a $15.00 / mês.</li>
+<li><strong>Homologação/Produção Inicial (<code>db-f1-micro</code>, 10GB SSD)</strong>: <span class="arithmatex">\(\approx \$9.00\)</span> a <span class="arithmatex">\(\$15.00 / \text{mês}\)</span>.</li>
 </ul>
 <h3 id="arquitetura-finops_custos-22-cloud-run-backend-da-api">2.2. <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run (<abbr title="Camada de servidor e banco de dados da aplicação">Backend</abbr> da <abbr title="Application Programming Interface — Interface de Programação de Aplicação">API</abbr>)<a class="headerlink" href="#arquitetura-finops_custos-22-cloud-run-backend-da-api" title="Permanent link">¶</a></h3>
 <p>Cálculo considerando:</p>
 <ul>
 <li><strong>Alocação</strong>: 1 vCPU, 1 GB RAM por contêiner.</li>
-<li><strong>Requisições</strong>: ~10.000 requisições / mês.</li>
+<li><strong>Requisições</strong>: <span class="arithmatex">\(\approx 10.000\)</span> requisições / mês.</li>
 <li><strong>Instâncias Mínimas</strong>: 0 (Escalonamento para zero habilitado para economizar recursos).</li>
 </ul>
-<p><strong>Custo Estimado</strong>: Graças à Cota Gratuita (<em>Free Tier</em>) de 2 milhões de requisições mensais do <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run, o custo deste serviço para o cenário base será de <strong>$0.00 a $2.00 / mês</strong>.</p>
+<p><strong>Custo Estimado</strong>: Graças à Cota Gratuita (<em>Free Tier</em>) de 2 milhões de requisições mensais do <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run, o custo deste serviço para o cenário base será de <strong><span class="arithmatex">\(\$0.00\)</span> a <span class="arithmatex">\(\$2.00 / \text{mês}\)</span></strong>.</p>
 <h3 id="arquitetura-finops_custos-23-cloud-storage-armazenamento-de-arquivos">2.3. <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Storage (Armazenamento de Arquivos)<a class="headerlink" href="#arquitetura-finops_custos-23-cloud-storage-armazenamento-de-arquivos" title="Permanent link">¶</a></h3>
 <p>Armazenamento Padrão (<em>Standard</em>):</p>
 <ul>
 <li><strong>Volume</strong>: 20 GB (documentos e metadados).</li>
-<li><strong>Custo de Armazenamento</strong>: ~ $0.026 por GB = <strong>~ $0.52 / mês</strong>.</li>
-<li><strong>Custo de Tráfego (<em>Egress</em>)</strong>: Assumindo 10 GB de download = ~ $0.12 por GB = <strong>~ $1.20 / mês</strong>.</li>
+<li><strong>Custo de Armazenamento</strong>: <span class="arithmatex">\(\approx \$0.026\)</span> por GB = <strong><span class="arithmatex">\(\approx \$0.52 / \text{mês}\)</span></strong>.</li>
+<li><strong>Custo de Tráfego (<em>Egress</em>)</strong>: Assumindo 10 GB de download = <span class="arithmatex">\(\approx \$0.12\)</span> por GB = <strong><span class="arithmatex">\(\approx \$1.20 / \text{mês}\)</span></strong>.</li>
 </ul>
 <h3 id="arquitetura-finops_custos-24-resumo-total-mensal">2.4. Resumo Total Mensal<a class="headerlink" href="#arquitetura-finops_custos-24-resumo-total-mensal" title="Permanent link">¶</a></h3>
 <table>
@@ -9320,28 +9320,28 @@ flowchart LR
 <tbody>
 <tr>
 <td style="text-align: left;"><abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> <abbr title="Structured Query Language — Linguagem de Consulta Estruturada">SQL</abbr> (F1-Micro)</td>
-<td style="text-align: left;">$15.00</td>
+<td style="text-align: left;"><span class="arithmatex">\(\$15.00\)</span></td>
 </tr>
 <tr>
 <td style="text-align: left;"><abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run</td>
-<td style="text-align: left;">$0.00 (Coberto pela Cota Gratuita)</td>
+<td style="text-align: left;"><span class="arithmatex">\(\$0.00\)</span> (Coberto pela Cota Gratuita)</td>
 </tr>
 <tr>
 <td style="text-align: left;"><abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Storage</td>
-<td style="text-align: left;">$1.72</td>
+<td style="text-align: left;"><span class="arithmatex">\(\approx \$1.72\)</span></td>
 </tr>
 <tr>
 <td style="text-align: left;">Firebase Hosting / Rede</td>
-<td style="text-align: left;">$0.00 (Coberto pela Cota Gratuita)</td>
+<td style="text-align: left;"><span class="arithmatex">\(\$0.00\)</span> (Coberto pela Cota Gratuita)</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Total Estimado</strong></td>
-<td style="text-align: left;"><strong>~ $16.72 / mês</strong></td>
+<td style="text-align: left;"><strong><span class="arithmatex">\(\approx \$16.72 / \text{mês}\)</span></strong></td>
 </tr>
 </tbody>
 </table>
 <blockquote>
-<p><strong>Aviso</strong>: O custo estimado de <strong>$16.72</strong> está perfeitamente alinhado com a restrição orçamentária do balancete acadêmico de <strong>$50.00 USD</strong>.</p>
+<p><strong>Aviso</strong>: O custo estimado de <strong><span class="arithmatex">\(\$16.72\)</span></strong> está perfeitamente alinhado com a restrição orçamentária do balancete acadêmico de <strong><span class="arithmatex">\(\$50.00 \text{ USD}\)</span></strong>.</p>
 </blockquote>
 <hr>
 <h2 id="arquitetura-finops_custos-3-praticas-de-otimizacao-adotadas">3. Práticas de Otimização Adotadas<a class="headerlink" href="#arquitetura-finops_custos-3-praticas-de-otimizacao-adotadas" title="Permanent link">¶</a></h2>
@@ -9372,15 +9372,15 @@ flowchart LR
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>1.0</code></td>
-<td style="text-align: center;">10/07/2026</td>
-<td style="text-align: left;">Criação do documento</td>
-<td style="text-align: left;">Pedro Henrique P. Santos</td>
-</tr>
-<tr>
 <td style="text-align: center;"><code>1.1</code></td>
 <td style="text-align: center;">11/07/2026</td>
 <td style="text-align: left;">Ajuste para orçamento estudantil (&lt; $50) e correção de formatação</td>
+<td style="text-align: left;">Pedro Henrique P. Santos</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>1.0</code></td>
+<td style="text-align: center;">10/07/2026</td>
+<td style="text-align: left;">Criação do documento</td>
 <td style="text-align: left;">Pedro Henrique P. Santos</td>
 </tr>
 </tbody>
