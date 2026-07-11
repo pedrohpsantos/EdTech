@@ -7,7 +7,7 @@ Este diretório (`/.postman`) contém a coleção oficial para iteração manual
 
 ## Escopo da Coleção
 
-O arquivo `EdTech.json` abrange todos os cenários transacionais e operacionais consolidados no sistema:
+O arquivo `EdTech_Collection.json` abrange todos os cenários transacionais e operacionais consolidados no sistema:
 
 - **Autenticação:** Emissão de tokens JWT (Bearer Token) e gestão de sessão via cabeçalho HTTP `Authorization`.
 - **Domínio de Projetos e Usuários:** Operações CRUD aplicadas a perfis, fluxos de vinculação de laboratório e acompanhamento de pesquisas.
@@ -20,7 +20,7 @@ O arquivo `EdTech.json` abrange todos os cenários transacionais e operacionais 
 
 Para aferir ou testar a API na sua máquina local:
 
-1. Importe o arquivo `EdTech.json` utilizando o Postman (ou software compatível como Insomnia).
+1. Importe o arquivo `EdTech_Collection.json` utilizando o Postman (ou software compatível como Insomnia).
 2. Estabeleça um **Environment** (*Ambiente*) e declare a variável base de rotas `{{base_url}}`.
    - Para instâncias locais padrão: `http://localhost:8080`
 3. **Autenticação de Rota:** Realize a chamada ao endpoint de Login. O token JWT retornado no corpo da resposta deve ser incluído no cabeçalho `Authorization: Bearer <token>` em todas as requisições subsequentes. O Postman pode ser configurado para automatizar essa inserção via aba *Authorization*.

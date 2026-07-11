@@ -23,6 +23,8 @@ Toda vez que um código é enviado ou um *Pull Request* é aberto em direção �
 2. **Qualidade e Testes (CI):** 
    - No Backend: Instalação das dependências (`mvn verify`), validação do Checkstyle e geração do relatório de cobertura do JaCoCo (que reprova sumariamente *builds* com menos de 80% de alcance).
    - No Frontend: Execução da suíte de testes do Node.js, validação de componentes e varredura de acessibilidade.
-3. **Deploy Contínuo (CD):** Após a aprovação técnica em todos os estágios isolados de CI, a esteira de deploy é autorizada a realizar a integração com o ambiente em nuvem, provisionando as atualizações para o Cloud Run e Firebase Hosting de maneira contínua.
+   - Testes de Carga: Validação de performance automatizada através do disparo do **K6**, atuando contra a API para atestar que o SLO de latência e o *Rate Limiting* seguem respeitados.
+3. **Migração Estrutural:** Execução do **Cloud Run Job** de migração do banco de dados (Flyway) logo antes da virada da release.
+4. **Deploy Contínuo (CD):** Após a aprovação técnica e migração estrutural, a esteira de deploy provisiona as atualizações para o Cloud Run (Backend) e Firebase Hosting (Frontend) de maneira contínua.
 
 > O uso estrito do padrão **Conventional Commits** e a aprovação mandatória nas barreiras de qualidade automatizadas são requisitos básicos para qualquer mesclagem (*merge*) neste repositório.

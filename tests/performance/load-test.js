@@ -43,7 +43,7 @@ export default function () {
     },
   };
 
-  const loginResponse = http.post(`${baseUrl}/api/auth/login`, loginPayload, params);
+  const loginResponse = http.post(`${baseUrl}/api/v1/auth/login`, loginPayload, params);
 
   // Validamos se a rota respondeu com status esperado (401 pois a senha está errada)
   check(loginResponse, {

@@ -103,7 +103,7 @@ resource "google_cloud_run_v2_service" "api" {
 
       env {
         name  = "SPRING_FLYWAY_ENABLED"
-        value = "true"
+        value = "false"
       }
 
       env {
@@ -168,5 +168,73 @@ resource "google_cloud_run_v2_service" "api" {
     ignore_changes = [
       template[0].labels
     ]
+  }
+}
+
+# Cloud Run Job para Migrações do Banco de Dados (Flyway)
+resource "google_cloud_run_v2_job" "flyway_migration" {
+  name     = "${var.service_name}-migration"
+  location = var.location
+  client   = "terraform"
+
+  template {
+    template {
+      containers {
+        image = var.image_url
+
+        # Argumento para o Spring Boot rodar sem subir o Tomcat e encerrar após as migrações
+        args = ["--spring.main.web-application-type=none"]
+
+        env {
+          name  = "SPRING_PROFILES_ACTIVE"
+          value = "prod"
+        }
+
+        env {
+          name  = "SPRING_FLYWAY_ENABLED"
+          value = "true"
+        }
+
+        env {
+          name = "SPRING_DATASOURCE_PASSWORD"
+          value_source {
+            secret_key_ref {
+              secret  = google_secret_manager_secret.spring_password.id
+              version = "latest"
+            }
+          }
+        }
+        env {
+          name = "SPRING_DATASOURCE_URL"
+          value_source {
+            secret_key_ref {
+              secret  = google_secret_manager_secret.spring_url.id
+              version = "latest"
+            }
+          }
+        }
+        env {
+          name = "SPRING_DATASOURCE_USERNAME"
+          value_source {
+            secret_key_ref {
+              secret  = google_secret_manager_secret.spring_username.id
+              version = "latest"
+            }
+          }
+        }
+
+        volume_mounts {
+          name       = "cloudsql"
+          mount_path = "/cloudsql"
+        }
+      }
+
+      volumes {
+        name = "cloudsql"
+        cloud_sql_instance {
+          instances = [var.db_connection_name]
+        }
+      }
+    }
   }
 }

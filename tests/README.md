@@ -12,7 +12,7 @@ A garantia de qualidade em nível unitário (Backend com JUnit/Mockito e Fronten
 O repositório adota pastas específicas para isolar escopos de teste:
 
 - **`/tests/e2e` (Playwright):** Foca em cenários Ponta a Ponta. Navegadores automatizados (*Headless*) simulam as jornadas críticas dos usuários de forma realista: login (protegido por JWT e CSRF), upload de arquivos e validação de interfaces visuais. Interagem concomitantemente com Frontend e Backend.
-- **`/tests/k6` (Performance e Stress):** Scripts voltados para a simulação de tráfego denso contra a API (Backend). Usados para aferir o comportamento do Rate Limiting, resposta sob carga e latência no limite operacional.
+- **`/tests/k6` (Performance e Stress):** Scripts voltados para a simulação de tráfego denso contra a API (Backend). Usados para aferir o comportamento do Rate Limiting, resposta sob carga e latência no limite operacional. Podem receber a variável ambiente `API_URL` externa para dinamizar a execução entre local e CI/CD.
 
 ---
 
