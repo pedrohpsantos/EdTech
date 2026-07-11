@@ -308,21 +308,7 @@ jobs:
           docker build -t southamerica-east1-docker.pkg.dev/edtech-storage-501117/cloud-run-source-deploy/edtech-backend:${{ github.sha }} -f backend/Dockerfile.ci backend/
           docker push southamerica-east1-docker.pkg.dev/edtech-storage-501117/cloud-run-source-deploy/edtech-backend:${{ github.sha }}
           
-      - name: Run Database Migrations (Cloud Run Job)
-        run: |
-          gcloud run jobs deploy edtech-db-migration \
-            --image southamerica-east1-docker.pkg.dev/edtech-storage-501117/cloud-run-source-deploy/edtech-backend:${{ github.sha }} \
-            --region southamerica-east1 \
-            --tasks 1 \
-            --set-cloudsql-instances edtech-storage-501117:southamerica-east1:edtech-db-dev \
-            --set-env-vars 'SPRING_PROFILES_ACTIVE=prod,SPRING_FLYWAY_ENABLED=true' \
-            --set-secrets 'JWT_SECRET=JWT_SECRET:latest,SPRING_DATASOURCE_URL=SPRING_DATASOURCE_URL:latest,SPRING_DATASOURCE_USERNAME=SPRING_DATASOURCE_USERNAME:latest,SPRING_DATASOURCE_PASSWORD=SPRING_DATASOURCE_PASSWORD:latest' || true
-          
-          gcloud run jobs execute edtech-db-migration --region southamerica-east1 --wait || {
-            echo "Database Migration failed. Fetching logs..."
-            gcloud logging read 'resource.type="cloud_run_job" AND resource.labels.job_name="edtech-db-migration" AND severity>=ERROR' --limit 50 --format="value(textPayload)" --project=edtech-storage-501117
-            exit 1
-          }
+
           
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v4
