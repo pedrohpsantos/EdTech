@@ -467,7 +467,8 @@ jobs:
       - name: Get Playwright version
         id: playwright-version
         working-directory: frontend
-        run: echo "version=$(npm ls @playwright/test --json | grep -oP '(?<="version": ")[^"]*')" >> $GITHUB_OUTPUT
+        run: |
+          echo "version=$(npm ls @playwright/test --json | grep -oP '(?<="version": ")[^"]*')" >> $GITHUB_OUTPUT
       - name: Cache Playwright browsers
         uses: actions/cache@v6
         with:
