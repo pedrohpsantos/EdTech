@@ -38,7 +38,8 @@ public class RecoveryServiceTest {
 
   @BeforeEach
   void setUp() {
-    mockUser = new User("Teste", EMAIL, "hash_antigo", UserRole.RESEARCHER);
+    mockUser =
+        new User("Teste", EMAIL, "hash_antigo", UserRole.RESEARCHER, java.util.UUID.randomUUID());
   }
 
   @Test

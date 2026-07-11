@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import DashboardLayout from '../components/layout/DashboardLayout';
 import { useAuth } from '../context/authContext';
-import { getAuditLogs } from '../services/api';
+import { getAuditLogs, exportAuditLogsCSV } from '../services/api';
 import '../assets/auditor.css';
 
 const AuditLogs: React.FC = () => {
@@ -31,6 +31,10 @@ const AuditLogs: React.FC = () => {
 
   const handleRefresh = () => {
     fetchLogs();
+  };
+
+  const handleExport = () => {
+    exportAuditLogsCSV(searchTerm, actionFilter);
   };
 
   return (
@@ -122,7 +126,7 @@ const AuditLogs: React.FC = () => {
         <button className="audit-btn audit-btn-outline" onClick={handleRefresh}>
           <i className="bi bi-arrow-clockwise"></i> Atualizar
         </button>
-        <button className="audit-btn audit-btn-primary">
+        <button className="audit-btn audit-btn-primary" onClick={handleExport}>
           <i className="bi bi-download"></i> Exportar CSV
         </button>
       </div>

@@ -13,9 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
- * Controller para endpoints de conformidade.
- */
+/** Controller para endpoints de conformidade. */
 @RestController
 @RequestMapping("/api/dashboard/compliance")
 public class ComplianceController {
@@ -30,8 +28,7 @@ public class ComplianceController {
    * @param auditLogRepository repo
    */
   public ComplianceController(
-      DocumentRepository documentRepository, 
-      AuditLogRepository auditLogRepository) {
+      DocumentRepository documentRepository, AuditLogRepository auditLogRepository) {
     this.documentRepository = documentRepository;
     this.auditLogRepository = auditLogRepository;
   }
@@ -46,14 +43,14 @@ public class ComplianceController {
   public ResponseEntity<ComplianceStatsDto> getComplianceStats() {
     List<Document> allDocs = documentRepository.findAll();
     long totalDocs = allDocs.size();
-    long approvedDocs = allDocs.stream()
-        .filter(d -> d.getStatus() == DocumentStatus.APPROVED).count();
-    long pendingDocs = allDocs.stream()
-        .filter(d -> d.getStatus() == DocumentStatus.PENDING_REVIEW).count();
+    long approvedDocs =
+        allDocs.stream().filter(d -> d.getStatus() == DocumentStatus.APPROVED).count();
+    long pendingDocs =
+        allDocs.stream().filter(d -> d.getStatus() == DocumentStatus.PENDING_REVIEW).count();
     long totalEvents = auditLogRepository.count();
 
-    int approvalPercentage = totalDocs == 0 ? 100 
-        : (int) Math.round(((double) approvedDocs / totalDocs) * 100);
+    int approvalPercentage =
+        totalDocs == 0 ? 100 : (int) Math.round(((double) approvedDocs / totalDocs) * 100);
 
     ComplianceStatsDto stats = new ComplianceStatsDto();
     stats.setScore(approvalPercentage);
@@ -72,20 +69,19 @@ public class ComplianceController {
     p1.setName("Anonimização de dados pessoais (LGPD)");
     p1.setStatus("conforme");
     p1.setPercentage(100);
-    p1.setText(noDocs 
-        ? "Sem documentos avaliados" 
-        : totalDocs + "/" + totalDocs + " documentos");
+    p1.setText(noDocs ? "Sem documentos avaliados" : totalDocs + "/" + totalDocs + " documentos");
     policies.add(p1);
 
     // Policy 2 - baseada na aprovação do orientador real
     ComplianceStatsDto.PolicyDto p2 = new ComplianceStatsDto.PolicyDto();
     p2.setName("Termo de consentimento informado");
-    p2.setStatus(approvalPercentage == 100 ? "conforme" 
-        : (approvalPercentage > 50 ? "parcial" : "pendente"));
+    p2.setStatus(
+        approvalPercentage == 100
+            ? "conforme"
+            : (approvalPercentage > 50 ? "parcial" : "pendente"));
     p2.setPercentage(approvalPercentage);
-    p2.setText(noDocs 
-        ? "Sem documentos avaliados" 
-        : approvedDocs + "/" + totalDocs + " documentos");
+    p2.setText(
+        noDocs ? "Sem documentos avaliados" : approvedDocs + "/" + totalDocs + " documentos");
     policies.add(p2);
 
     // Policy 3
@@ -93,9 +89,10 @@ public class ComplianceController {
     p3.setName("Versionamento e cadeia de custódia");
     p3.setStatus("conforme");
     p3.setPercentage(noDocs ? 100 : 96);
-    p3.setText(noDocs 
-        ? "Sem documentos avaliados" 
-        : (totalDocs > 0 ? totalDocs - 1 : 0) + "/" + totalDocs + " documentos");
+    p3.setText(
+        noDocs
+            ? "Sem documentos avaliados"
+            : (totalDocs > 0 ? totalDocs - 1 : 0) + "/" + totalDocs + " documentos");
     policies.add(p3);
 
     // Policy 4
@@ -103,9 +100,10 @@ public class ComplianceController {
     p4.setName("Retenção e descarte de dados");
     p4.setStatus(noDocs ? "conforme" : "pendente");
     p4.setPercentage(noDocs ? 100 : 58);
-    p4.setText(noDocs 
-        ? "Sem documentos pendentes" 
-        : pendingDocs + "/" + totalDocs + " documentos pendentes");
+    p4.setText(
+        noDocs
+            ? "Sem documentos pendentes"
+            : pendingDocs + "/" + totalDocs + " documentos pendentes");
     policies.add(p4);
 
     // Policy 5

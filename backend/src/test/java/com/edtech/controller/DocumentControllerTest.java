@@ -68,7 +68,6 @@ public class DocumentControllerTest {
         .andExpect(status().isCreated());
   }
 
-
   @Test
   void testExportAuditTrail_Success() throws Exception {
     UUID docId = UUID.randomUUID();

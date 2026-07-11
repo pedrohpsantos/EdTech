@@ -2,7 +2,6 @@ package com.edtech.security;
 
 import io.github.bucket4j.Bandwidth;
 import io.github.bucket4j.Bucket;
-import io.github.bucket4j.Refill;
 import java.time.Duration;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -21,10 +20,8 @@ public class RateLimitingService {
 
   private Bucket newBucket(String key) {
     // 5 requisições por minuto por IP
-    Refill refill = Refill.intervally(5, Duration.ofMinutes(1));
-    Bandwidth limit = Bandwidth.classic(5, refill);
-    return Bucket.builder()
-        .addLimit(limit)
-        .build();
+    Bandwidth limit =
+        Bandwidth.builder().capacity(5).refillIntervally(5, Duration.ofMinutes(1)).build();
+    return Bucket.builder().addLimit(limit).build();
   }
 }

@@ -5,13 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.edtech.dto.ErrorResponse;
 import com.edtech.service.DuplicateEmailException;
-import com.edtech.service.InvalidCredentialsException;
 import com.edtech.service.InvalidInstitutionalEmailException;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MethodArgumentNotValidException;
-import jakarta.validation.ConstraintViolationException;
 
 class ApiExceptionHandlerTest {
 
@@ -51,7 +48,8 @@ class ApiExceptionHandlerTest {
 
   @Test
   void handleValidationException_ReturnsBadRequest() {
-    ResponseEntity<ErrorResponse> response = exceptionHandler.handleValidationException(new Exception("validation error"));
+    ResponseEntity<ErrorResponse> response =
+        exceptionHandler.handleValidationException(new Exception("validation error"));
 
     assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     assertNotNull(response.getBody());

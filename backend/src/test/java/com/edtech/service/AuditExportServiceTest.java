@@ -47,7 +47,16 @@ class AuditExportServiceTest {
     UUID userId = UUID.randomUUID();
     Document document = documentWithProject(projectId);
     ProjectMember member = new ProjectMember();
-    List<AuditLog> logs = List.of(new AuditLog());
+    List<AuditLog> logs =
+        List.of(
+            new AuditLog(
+                UUID.randomUUID(),
+                UUID.randomUUID(),
+                com.edtech.model.AcaoAuditoria.LOGIN_SUCCESS,
+                "test",
+                null,
+                "192.168.0.1",
+                "Login ok"));
     byte[] csv = "action,resource".getBytes();
 
     when(documentRepository.findById(documentId)).thenReturn(Optional.of(document));
@@ -90,7 +99,8 @@ class AuditExportServiceTest {
   void buildFilename_NormalizesBlankAndUppercaseFormats() {
     UUID documentId = UUID.randomUUID();
 
-    assertEquals("audit-trail-" + documentId + ".csv", auditExportService.buildFilename(documentId, ""));
+    assertEquals(
+        "audit-trail-" + documentId + ".csv", auditExportService.buildFilename(documentId, ""));
     assertEquals(
         "audit-trail-" + documentId + ".csv", auditExportService.buildFilename(documentId, "CSV"));
   }
@@ -106,7 +116,8 @@ class AuditExportServiceTest {
             () -> auditExportService.exportDocumentAuditTrail(documentId, userId, "pdf"));
 
     assertEquals("Formato invalido. Use: csv", exception.getMessage());
-    verifyNoInteractions(documentRepository, projectMemberRepository, auditLogRepository, csvExporter);
+    verifyNoInteractions(
+        documentRepository, projectMemberRepository, auditLogRepository, csvExporter);
   }
 
   @Test

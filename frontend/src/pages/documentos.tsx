@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DashboardLayout from '../components/layout/DashboardLayout';
-import { useDocuments, useUploadDocument, useDownloadUrl } from '../hooks/useDocuments';
+import { useDocuments, useUploadDocument, useDownloadUrl, useToggleStar } from '../hooks/useDocuments';
 import { Document } from '../types';
+import DocumentComments from '../components/DocumentComments';
 import '../assets/documentos.css';
 
 const Documentos: React.FC = () => {
@@ -22,9 +23,10 @@ const Documentos: React.FC = () => {
   const [toastMessage, setToastMessage] = useState('');
 
   // React Query Hooks
-  const { data: _documents = [], isLoading: _loadingDocs } = useDocuments('', filterTitle);
+  const { data: documents = [], isLoading: loadingDocs } = useDocuments('', filterTitle);
   const { mutateAsync: getUrl } = useDownloadUrl();
   const { mutateAsync: _uploadDoc } = useUploadDocument();
+  const { mutateAsync: toggleStar } = useToggleStar();
 
   const showToast = (message: string) => {
     setToastMessage(message);
@@ -70,6 +72,15 @@ const Documentos: React.FC = () => {
     showToast(`Carregando opções para: ${docName}`);
   };
 
+  const handleToggleStar = async (docId: string) => {
+    try {
+      await toggleStar(docId);
+      showToast('Favorito atualizado!');
+    } catch {
+      showToast('Erro ao atualizar favorito.');
+    }
+  };
+
   // Modal Handlers
   const openUploadModal = () => setIsUploadModalOpen(true);
 
@@ -103,59 +114,8 @@ const Documentos: React.FC = () => {
     }
   };
 
-  // Mocks for prototype UI structure
-  const mockDocuments: Document[] = [
-    {
-      id: '1',
-      title: 'Metodologia_Qualitativa_v3.pdf',
-      project: 'Análise LGPD',
-      type: 'PDF',
-      size: '2.4 MB',
-      modified: 'Hoje, 14:32',
-      status: 'Em Revisão',
-      createdAt: new Date().toISOString(),
-    },
-    {
-      id: '2',
-      title: 'Dataset_Experimento_A.csv',
-      project: 'Sistemas de IA',
-      type: 'CSV',
-      size: '18.7 MB',
-      modified: 'Ontem, 09:15',
-      status: 'Aprovado',
-      createdAt: new Date().toISOString(),
-    },
-    {
-      id: '3',
-      title: 'Referencial_Teorico_v2.pdf',
-      project: 'Análise LGPD',
-      type: 'PDF',
-      size: '890 KB',
-      modified: '12 Jun 2026',
-      status: 'Submetido',
-      createdAt: new Date().toISOString(),
-    },
-    {
-      id: '4',
-      title: 'config_modelo_final.json',
-      project: 'Sistemas de IA',
-      type: 'JSON',
-      size: '12 KB',
-      modified: '10 Jun 2026',
-      status: 'Rascunho',
-      createdAt: new Date().toISOString(),
-    },
-    {
-      id: '5',
-      title: 'Resultados_Parciais_Q2.pdf',
-      project: 'Bioinformática',
-      type: 'PDF',
-      size: '4.1 MB',
-      modified: '08 Jun 2026',
-      status: 'Aprovado',
-      createdAt: new Date().toISOString(),
-    },
-  ];
+  // Using real data from React Query
+  const displayDocuments = documents.length > 0 ? documents : [];
 
   const getStatusClass = (status: string) => {
     switch (status) {
@@ -249,7 +209,7 @@ const Documentos: React.FC = () => {
         <div className="docs-list-header">
           <div className="d-flex align-items-center gap-2">
             <h3 className="docs-list-title m-0">Meus Documentos</h3>
-            <span className="docs-count-badge">7</span>
+            <span className="docs-count-badge">{displayDocuments.length}</span>
           </div>
           <div className="docs-filters">
             <div className="search-input-wrapper">
@@ -291,19 +251,38 @@ const Documentos: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              {mockDocuments.map((doc) => (
+              {loadingDocs ? (
+                <tr>
+                  <td colSpan={7} className="text-center py-4 text-muted">
+                    Carregando documentos...
+                  </td>
+                </tr>
+              ) : displayDocuments.length === 0 ? (
+                <tr>
+                  <td colSpan={7} className="text-center py-4 text-muted">
+                    Nenhum documento encontrado.
+                  </td>
+                </tr>
+              ) : displayDocuments.map((doc: any) => (
                 <tr key={doc.id}>
                   <td>
                     <div className="d-flex align-items-center gap-3">
-                      <div className={`doc-type-icon ${getTypeColor(doc.type)}-bg`}>
-                        <i className={`bi bi-file-earmark-text ${getTypeColor(doc.type)}-text`}></i>
+                      <button 
+                        className="btn-icon-action" 
+                        onClick={() => handleToggleStar(doc.id)}
+                        style={{ color: doc.starred ? '#f59e0b' : '#cbd5e1', padding: 0 }}
+                      >
+                        <i className={`bi ${doc.starred ? 'bi-star-fill' : 'bi-star'}`}></i>
+                      </button>
+                      <div className={`doc-type-icon ${getTypeColor(doc.type || 'PDF')}-bg`}>
+                        <i className={`bi bi-file-earmark-text ${getTypeColor(doc.type || 'PDF')}-text`}></i>
                       </div>
                       <span className="doc-title-cell">{doc.title}</span>
                     </div>
                   </td>
-                  <td className="text-muted">{doc.project}</td>
+                  <td className="text-muted">{doc.project || 'Projeto'}</td>
                   <td>
-                    <span className={`type-badge ${getTypeColor(doc.type)}-text`}>{doc.type}</span>
+                    <span className={`type-badge ${getTypeColor(doc.type || 'PDF')}-text`}>{doc.type || 'PDF'}</span>
                   </td>
                   <td className="text-muted">{doc.size}</td>
                   <td className="text-muted">
@@ -398,7 +377,7 @@ const Documentos: React.FC = () => {
       {/* Document Preview Modal */}
       {previewDoc && (
         <div className="modal-overlay" onClick={closePreviewModal} style={{ zIndex: 1050 }}>
-          <div className="preview-modal-content" onClick={(e) => e.stopPropagation()}>
+          <div className="preview-modal-content" style={{ maxWidth: '1200px', width: '90%' }} onClick={(e) => e.stopPropagation()}>
             <div className="preview-modal-header">
               <div className="d-flex align-items-center gap-3">
                 <span className={`type-badge ${getTypeColor(previewDoc.type)}-text`}>
@@ -423,23 +402,33 @@ const Documentos: React.FC = () => {
               </div>
             </div>
 
-            <div className="preview-modal-body" style={{ padding: '0', height: '65vh', display: 'flex', flexDirection: 'column', background: '#e2e8f0' }}>
-              {isPreviewLoading ? (
-                <div style={{ padding: '2rem', textAlign: 'center', color: '#64748B', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
-                  Carregando visualização do documento...
-                </div>
-              ) : previewUrl ? (
-                <object data={previewUrl} type="application/pdf" width="100%" height="100%" style={{ border: 'none', flex: 1 }}>
-                  <div style={{ padding: '2rem', textAlign: 'center' }}>
-                    Seu navegador não suporta a visualização nativa de PDFs. <br/><br/>
-                    <a href={previewUrl} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--ed-purple)' }}>Clique aqui para baixar</a>
+            <div className="preview-modal-body" style={{ padding: '0', height: '75vh', display: 'flex', flexDirection: 'row', background: '#e2e8f0' }}>
+              
+              {/* PDF Viewer Area */}
+              <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+                {isPreviewLoading ? (
+                  <div style={{ padding: '2rem', textAlign: 'center', color: '#64748B', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
+                    Carregando visualização do documento...
                   </div>
-                </object>
-              ) : (
-                <div style={{ padding: '2rem', textAlign: 'center', color: '#64748B', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
-                  Nenhum preview disponível.
-                </div>
-              )}
+                ) : previewUrl ? (
+                  <object data={previewUrl} type="application/pdf" width="100%" height="100%" style={{ border: 'none', flex: 1 }}>
+                    <div style={{ padding: '2rem', textAlign: 'center' }}>
+                      Seu navegador não suporta a visualização nativa de PDFs. <br/><br/>
+                      <a href={previewUrl} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--ed-purple)' }}>Clique aqui para baixar</a>
+                    </div>
+                  </object>
+                ) : (
+                  <div style={{ padding: '2rem', textAlign: 'center', color: '#64748B', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
+                    Nenhum preview disponível.
+                  </div>
+                )}
+              </div>
+
+              {/* Chat / Comments Drawer */}
+              <div style={{ width: '350px', flexShrink: 0, height: '100%' }}>
+                <DocumentComments documentId={previewDoc.id} />
+              </div>
+
             </div>
           </div>
         </div>

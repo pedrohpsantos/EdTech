@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { register } from '../services/api';
+import { register, verifyRegistration } from '../services/api';
 import { motion } from 'framer-motion';
 import AuthLayout from '../components/AuthLayout';
 import styles from './auth.module.css';
@@ -14,6 +14,9 @@ function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isShaking, setIsShaking] = useState(false);
+  const [role, setRole] = useState('RESEARCHER');
+  const [step, setStep] = useState(1);
+  const [otp, setOtp] = useState('');
 
   const navigate = useNavigate();
 
@@ -27,7 +30,28 @@ function Register() {
       return;
     }
     try {
-      const resultado = await register(nome, email, senha);
+      const resultado = await register(nome, email, senha, role);
+      if (resultado.sucesso === true) {
+        setStep(2);
+      } else {
+        setErro(resultado.mensagem);
+      }
+    } catch (erro) {
+      setErro(erro.message);
+    }
+  };
+
+  const handleVerify = async (e: React.FormEvent) => {
+    if (e) e.preventDefault();
+    setErro('');
+    if (otp.length < 6) {
+      setErro('Por favor, insira o código de 6 dígitos.');
+      setIsShaking(true);
+      setTimeout(() => setIsShaking(false), 500);
+      return;
+    }
+    try {
+      const resultado = await verifyRegistration(email, otp);
       if (resultado.sucesso === true) {
         navigate('/login');
       } else {
@@ -54,7 +78,7 @@ function Register() {
       subtitle="Junte-se à principal plataforma de governança acadêmica."
     >
       <form
-        onSubmit={handleSubmit}
+        onSubmit={step === 1 ? handleSubmit : handleVerify}
         onInvalid={(e) => {
           e.preventDefault();
           setIsShaking(true);
@@ -71,6 +95,27 @@ function Register() {
             {erro}
           </motion.div>
         )}
+
+        {step === 1 ? (
+          <>
+            <motion.div variants={itemVariants} className={styles.inputGroup}>
+              <div className={styles.labelRow}>
+                <label className={styles.inputLabel}>Perfil de Usuário</label>
+              </div>
+              <div className={styles.inputWrapper}>
+                <select
+                  className={styles.inputField}
+                  value={role}
+                  onChange={(e) => setRole(e.target.value)}
+                  aria-label="perfil"
+                  required
+                >
+                  <option value="RESEARCHER">Pesquisador</option>
+                  <option value="ADVISOR">Orientador</option>
+                  <option value="AUDITOR">Auditor</option>
+                </select>
+              </div>
+            </motion.div>
 
         <motion.div variants={itemVariants} className={styles.inputGroup}>
           <div className={styles.labelRow}>
@@ -235,8 +280,66 @@ function Register() {
           type="submit"
           className={styles.submitBtn}
         >
-          Criar Conta <span>→</span>
+          Avançar <span>→</span>
         </motion.button>
+          </>
+        ) : (
+          <>
+            <motion.div variants={itemVariants} className={styles.inputGroup}>
+              <div className={styles.labelRow}>
+                <label className={styles.inputLabel}>Código de Verificação</label>
+              </div>
+              <motion.p
+                style={{
+                  fontSize: '0.85rem',
+                  color: 'var(--text)',
+                  marginBottom: '1rem',
+                }}
+              >
+                Enviamos um código de 6 dígitos para <strong>{email}</strong>.
+              </motion.p>
+              <div className={styles.inputWrapper}>
+                <input
+                  className={styles.inputField}
+                  type="text"
+                  value={otp}
+                  onChange={(e) => setOtp(e.target.value)}
+                  placeholder="Ex: 123456"
+                  aria-label="código de verificação"
+                  maxLength={6}
+                  required
+                />
+              </div>
+            </motion.div>
+
+            <motion.button
+              variants={Object.assign({}, itemVariants, shakeVariants)}
+              animate={isShaking ? 'shake' : 'visible'}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              type="submit"
+              className={styles.submitBtn}
+            >
+              Verificar Conta <span>→</span>
+            </motion.button>
+            <motion.button
+              variants={itemVariants}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              type="button"
+              onClick={() => setStep(1)}
+              className={styles.submitBtn}
+              style={{
+                marginTop: '1rem',
+                backgroundColor: 'transparent',
+                border: '1px solid var(--border)',
+                color: 'var(--text)'
+              }}
+            >
+              Voltar
+            </motion.button>
+          </>
+        )}
       </form>
 
       <motion.p

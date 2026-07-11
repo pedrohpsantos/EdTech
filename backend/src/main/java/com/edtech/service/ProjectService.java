@@ -14,6 +14,8 @@ import com.edtech.repository.UserRepository;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,6 +42,7 @@ public class ProjectService {
 
   /** Documentação. */
   @Transactional
+  @CacheEvict(value = "projects", key = "#advisorId")
   public ProjectResponseDto createProject(ProjectRequestDto request, UUID advisorId) {
     User advisor =
         userRepository
@@ -63,6 +66,7 @@ public class ProjectService {
   }
 
   /** Documentação para o método listProjectsByUser. */
+  @Cacheable(value = "projects", key = "#userId")
   public List<ProjectResponseDto> listProjectsByUser(UUID userId) {
     return projectRepository.findProjectsByUserId(userId).stream()
         .map(this::mapToDto)
@@ -71,6 +75,7 @@ public class ProjectService {
 
   /** Documentação. */
   @Transactional
+  @CacheEvict(value = "projects", allEntries = true)
   public void addMember(UUID projectId, ProjectMemberRequestDto dto, User authenticatedUser) {
     Project project =
         projectRepository

@@ -13,10 +13,14 @@ import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import java.time.ZonedDateTime;
 import java.util.UUID;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 
 /** Documentação para Project. */
 @Entity
 @Table(name = "projects")
+@SQLDelete(sql = "UPDATE projects SET deleted = true WHERE id=?")
+@SQLRestriction("deleted = false")
 public class Project {
 
   @Id
@@ -38,6 +42,9 @@ public class Project {
 
   @Column(name = "updated_at", nullable = false)
   private ZonedDateTime updatedAt;
+
+  @Column(nullable = false)
+  private boolean deleted = false;
 
   @PrePersist
   protected void onCreate() {
@@ -109,5 +116,13 @@ public class Project {
   /** Documentação para o método setUpdatedAt. */
   public void setUpdatedAt(ZonedDateTime updatedAt) {
     this.updatedAt = updatedAt;
+  }
+
+  public boolean isDeleted() {
+    return deleted;
+  }
+
+  public void setDeleted(boolean deleted) {
+    this.deleted = deleted;
   }
 }
