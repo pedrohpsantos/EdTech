@@ -5,6 +5,7 @@ resource "google_sql_database_instance" "instance" {
 
   settings {
     tier = var.tier
+    edition = "ENTERPRISE"
 
     # Mantém a compatibilidade com a configuração atual (IP Público)
     ip_configuration {
