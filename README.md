@@ -31,12 +31,12 @@ O EdTech centraliza o ciclo de vida de documentos acadêmicos em um único repos
 
 | Módulo | Responsabilidade | Stack |
 | :--- | :--- | :--- |
-| **[🎨 Frontend (UI)](frontend/README.md)** | Interface SPA responsiva para os usuários da plataforma. | React 19, Vite 8, Vanilla CSS |
-| **[⚙️ Backend (API)](backend/README.md)** | API RESTful com regras de negócio, segurança e persistência. | Java 21, Spring Boot 4.1 |
-| **[☁️ Infraestrutura](infra/README.md)** | Orquestração de containers e configuração de infraestrutura em nuvem. | GCP, Terraform, Docker Compose |
-| **[📄 Documentação](docs/README.md)** | Portal de documentação técnica e arquitetural (Docs-as-Code). | MkDocs Material |
-| **[📊 Scripts](scripts/README.md)** | Scripts de telemetria e análise para o Orientador. | Python, Pandas |
-| **[🕵️ Testes](tests/README.md)** | Testes de integração, carga e qualidade da plataforma. | Playwright, K6 |
+| **[🎨 Frontend (UI)](frontend/README.md)** | Interface SPA responsiva para os usuários da plataforma. | ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black) ![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white) ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white) |
+| **[⚙️ Backend (API)](backend/README.md)** | API RESTful com regras de negócio, segurança e persistência. | ![Java](https://img.shields.io/badge/Java-21_LTS-007396?logo=openjdk&logoColor=white) ![Spring Boot](https://img.shields.io/badge/Spring_Boot-4.1-6DB33F?logo=springboot&logoColor=white) ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-4169E1?logo=postgresql&logoColor=white) |
+| **[☁️ Infraestrutura](infra/README.md)** | Orquestração de containers e configuração de infraestrutura em nuvem. | ![GCP](https://img.shields.io/badge/GCP-4285F4?logo=googlecloud&logoColor=white) ![Terraform](https://img.shields.io/badge/Terraform-7B42BC?logo=terraform&logoColor=white) ![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white) ![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?logo=githubactions&logoColor=white) |
+| **[📄 Documentação](docs/README.md)** | Portal de documentação técnica e arquitetural (Docs-as-Code). | ![MkDocs](https://img.shields.io/badge/MkDocs_Material-526CFE?logo=materialformkdocs&logoColor=white) |
+| **[📊 Scripts](scripts/README.md)** | Scripts de telemetria e análise para o Orientador. | ![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white) ![Pandas](https://img.shields.io/badge/Pandas-150458?logo=pandas&logoColor=white) |
+| **[🕵️ Testes & QA](tests/README.md)** | Cobertura, mutação, integração, carga e qualidade da plataforma. | ![JUnit5](https://img.shields.io/badge/JUnit5-25A162?logo=junit5&logoColor=white) ![Vitest](https://img.shields.io/badge/Vitest-729B1B?logo=vitest&logoColor=white) ![Stryker](https://img.shields.io/badge/Stryker-E36209?logo=stryker&logoColor=white) ![PiTest](https://img.shields.io/badge/PiTest-orange) ![JaCoCo](https://img.shields.io/badge/JaCoCo-red) ![Playwright](https://img.shields.io/badge/Playwright-2EAD33?logo=playwright&logoColor=white) ![K6](https://img.shields.io/badge/K6-7D64FF?logo=k6&logoColor=white) ![Lighthouse](https://img.shields.io/badge/Lighthouse-F44B21?logo=lighthouse&logoColor=white) |
 
 ---
 
