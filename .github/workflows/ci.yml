@@ -310,60 +310,48 @@ jobs:
     permissions:
       contents: 'read'
       id-token: 'write'
-    strategy:
-      fail-fast: false
-      matrix:
-        # validate     = Terraform fmt + init + validate
-        # docker-build = Maven package + Docker build & push (main only)
-        task: [validate, docker-build]
     steps:
       - uses: actions/checkout@v7
 
       # --- TERRAFORM VALIDATE ---
       - name: Setup Terraform
-        if: matrix.task == 'validate'
         uses: hashicorp/setup-terraform@v4
       - name: Terraform Format Check
-        if: matrix.task == 'validate'
         working-directory: infra/terraform
         run: terraform fmt -check
       - name: Terraform Init
-        if: matrix.task == 'validate'
         working-directory: infra/terraform
         run: terraform init -backend=false
       - name: Terraform Validate
-        if: matrix.task == 'validate'
         working-directory: infra/terraform
         run: terraform validate
 
       # --- DOCKER BUILD & PUSH ---
       - name: Set up JDK 21
-        if: matrix.task == 'docker-build'
         uses: actions/setup-java@v5
         with:
           java-version: '21'
           distribution: 'temurin'
           cache: maven
       - name: Compile Backend for Docker
-        if: matrix.task == 'docker-build'
         working-directory: backend
         run: |
           chmod +x mvnw
           ./mvnw clean package -DskipTests -T 1C -B
       - name: Authenticate to Google Cloud
         id: auth
-        if: matrix.task == 'docker-build' && github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main'
         uses: google-github-actions/auth@v3
         with:
           credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
       - name: Configure Docker Auth
-        if: matrix.task == 'docker-build' && github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main'
         run: gcloud auth configure-docker southamerica-east1-docker.pkg.dev --quiet
       - name: Set up Docker Buildx
-        if: matrix.task == 'docker-build' && github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main'
         uses: docker/setup-buildx-action@v3
       - name: Build and Push Docker Image
-        if: matrix.task == 'docker-build' && github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main'
         uses: docker/build-push-action@v6
         with:
           context: backend/
@@ -408,12 +396,6 @@ jobs:
     permissions:
       contents: 'read'
       id-token: 'write'
-    strategy:
-      fail-fast: false
-      matrix:
-        # backend  = Terraform Apply + Cloud Run + Flyway migrations
-        # frontend = Download artifact + Firebase Hosting deploy
-        target: [backend, frontend]
     steps:
       - uses: actions/checkout@v7
 
@@ -425,20 +407,16 @@ jobs:
 
       # --- BACKEND DEPLOY ---
       - name: Setup Cloud SDK
-        if: matrix.target == 'backend'
         uses: google-github-actions/setup-gcloud@v3
 
       - name: Setup Terraform
-        if: matrix.target == 'backend'
         uses: hashicorp/setup-terraform@v4
 
       - name: Terraform Init
-        if: matrix.target == 'backend'
         working-directory: infra/terraform
         run: terraform init -backend-config="bucket=edtech-terraform-state-501117"
 
       - name: Terraform Apply
-        if: matrix.target == 'backend'
         working-directory: infra/terraform
         run: |
           terraform apply -auto-approve \
@@ -453,7 +431,6 @@ jobs:
             }
 
       - name: Run Database Migrations (Flyway)
-        if: matrix.target == 'backend'
         run: |
           echo "Executando job de migracao do banco de dados (Flyway)..."
           gcloud run jobs execute edtech-backend-migration \
@@ -461,20 +438,17 @@ jobs:
 
       # --- FRONTEND DEPLOY ---
       - name: Set up Node 24
-        if: matrix.target == 'frontend'
         uses: actions/setup-node@v6
         with:
           node-version: '24'
 
       - name: Download Frontend Artifact
-        if: matrix.target == 'frontend'
         uses: actions/download-artifact@v8
         with:
           name: frontend-dist
           path: frontend/dist/
 
       - name: Deploy to Firebase Hosting
-        if: matrix.target == 'frontend'
         working-directory: frontend
         run: |
           npm install -g firebase-tools
