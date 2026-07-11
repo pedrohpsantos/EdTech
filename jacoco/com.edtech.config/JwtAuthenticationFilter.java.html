@@ -27,63 +27,65 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
   private final UserRepository userRepository;
 
   /** Documentação para o método JwtAuthenticationFilter. */
-<span class="fc" id="L30">  public JwtAuthenticationFilter(JwtService jwtService, @org.springframework.context.annotation.Lazy UserRepository userRepository) {</span>
-<span class="fc" id="L31">    this.jwtService = jwtService;</span>
-<span class="fc" id="L32">    this.userRepository = userRepository;</span>
-<span class="fc" id="L33">  }</span>
+  public JwtAuthenticationFilter(
+      JwtService jwtService,
+<span class="fc" id="L32">      @org.springframework.context.annotation.Lazy UserRepository userRepository) {</span>
+<span class="fc" id="L33">    this.jwtService = jwtService;</span>
+<span class="fc" id="L34">    this.userRepository = userRepository;</span>
+<span class="fc" id="L35">  }</span>
 
   @Override
   protected boolean shouldNotFilter(HttpServletRequest request) {
-<span class="fc" id="L37">    String path = request.getServletPath();</span>
-<span class="fc" id="L38">    String method = request.getMethod();</span>
+<span class="fc" id="L39">    String path = request.getServletPath();</span>
+<span class="fc" id="L40">    String method = request.getMethod();</span>
 
-<span class="fc bfc" id="L40" title="All 2 branches covered.">    return HttpMethod.OPTIONS.matches(method)</span>
-<span class="fc bfc" id="L41" title="All 4 branches covered.">        || (HttpMethod.POST.matches(method) &amp;&amp; &quot;/api/auth/login&quot;.equals(path))</span>
-<span class="fc bfc" id="L42" title="All 4 branches covered.">        || (HttpMethod.POST.matches(method) &amp;&amp; &quot;/api/auth/register&quot;.equals(path))</span>
-<span class="fc bfc" id="L43" title="All 2 branches covered.">        || path.startsWith(&quot;/api/auth/recovery/&quot;);</span>
+<span class="fc bfc" id="L42" title="All 2 branches covered.">    return HttpMethod.OPTIONS.matches(method)</span>
+<span class="fc bfc" id="L43" title="All 4 branches covered.">        || (HttpMethod.POST.matches(method) &amp;&amp; &quot;/api/auth/login&quot;.equals(path))</span>
+<span class="fc bfc" id="L44" title="All 4 branches covered.">        || (HttpMethod.POST.matches(method) &amp;&amp; &quot;/api/auth/register&quot;.equals(path))</span>
+<span class="fc bfc" id="L45" title="All 2 branches covered.">        || path.startsWith(&quot;/api/auth/recovery/&quot;);</span>
   }
 
   @Override
   protected void doFilterInternal(
       HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
       throws ServletException, IOException {
-<span class="fc" id="L50">    Optional&lt;String&gt; token = extractToken(request);</span>
+<span class="fc" id="L52">    Optional&lt;String&gt; token = extractToken(request);</span>
 
-<span class="fc bfc" id="L52" title="All 2 branches covered.">    if (token.isEmpty()) {</span>
-<span class="fc" id="L53">      filterChain.doFilter(request, response);</span>
-<span class="fc" id="L54">      return;</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">    if (token.isEmpty()) {</span>
+<span class="fc" id="L55">      filterChain.doFilter(request, response);</span>
+<span class="fc" id="L56">      return;</span>
     }
 
     try {
-<span class="fc" id="L58">      String email = jwtService.extractSubject(token.get());</span>
-<span class="pc bpc" id="L59" title="2 of 4 branches missed.">      if (email != null &amp;&amp; SecurityContextHolder.getContext().getAuthentication() == null) {</span>
-<span class="fc" id="L60">        userRepository</span>
-<span class="fc" id="L61">            .findByEmailIgnoreCase(email)</span>
-<span class="fc" id="L62">            .filter(User::isActive)</span>
-<span class="fc" id="L63">            .filter(user -&gt; jwtService.isValid(token.get(), user))</span>
-<span class="fc" id="L64">            .ifPresent(user -&gt; authenticateUser(request, user));</span>
+<span class="fc" id="L60">      String email = jwtService.extractSubject(token.get());</span>
+<span class="pc bpc" id="L61" title="2 of 4 branches missed.">      if (email != null &amp;&amp; SecurityContextHolder.getContext().getAuthentication() == null) {</span>
+<span class="fc" id="L62">        userRepository</span>
+<span class="fc" id="L63">            .findByEmailIgnoreCase(email)</span>
+<span class="fc" id="L64">            .filter(User::isActive)</span>
+<span class="fc" id="L65">            .filter(user -&gt; jwtService.isValid(token.get(), user))</span>
+<span class="fc" id="L66">            .ifPresent(user -&gt; authenticateUser(request, user));</span>
       }
-<span class="fc" id="L66">    } catch (JwtException | IllegalArgumentException exception) {</span>
-<span class="fc" id="L67">      SecurityContextHolder.clearContext();</span>
-<span class="fc" id="L68">    }</span>
+<span class="fc" id="L68">    } catch (JwtException | IllegalArgumentException exception) {</span>
+<span class="fc" id="L69">      SecurityContextHolder.clearContext();</span>
+<span class="fc" id="L70">    }</span>
 
-<span class="fc" id="L70">    filterChain.doFilter(request, response);</span>
-<span class="fc" id="L71">  }</span>
+<span class="fc" id="L72">    filterChain.doFilter(request, response);</span>
+<span class="fc" id="L73">  }</span>
 
   private Optional&lt;String&gt; extractToken(HttpServletRequest request) {
-<span class="fc" id="L74">    String authHeader = request.getHeader(&quot;Authorization&quot;);</span>
-<span class="pc bpc" id="L75" title="1 of 4 branches missed.">    if (authHeader != null &amp;&amp; authHeader.startsWith(&quot;Bearer &quot;)) {</span>
-<span class="fc" id="L76">      return Optional.of(authHeader.substring(7));</span>
+<span class="fc" id="L76">    String authHeader = request.getHeader(&quot;Authorization&quot;);</span>
+<span class="pc bpc" id="L77" title="1 of 4 branches missed.">    if (authHeader != null &amp;&amp; authHeader.startsWith(&quot;Bearer &quot;)) {</span>
+<span class="fc" id="L78">      return Optional.of(authHeader.substring(7));</span>
     }
 
-<span class="fc" id="L79">    return Optional.empty();</span>
+<span class="fc" id="L81">    return Optional.empty();</span>
   }
 
   private void authenticateUser(HttpServletRequest request, User user) {
-<span class="fc" id="L83">    var authorities = List.of(new SimpleGrantedAuthority(&quot;ROLE_&quot; + user.getRole().name()));</span>
-<span class="fc" id="L84">    var authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);</span>
-<span class="fc" id="L85">    authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));</span>
-<span class="fc" id="L86">    SecurityContextHolder.getContext().setAuthentication(authentication);</span>
-<span class="fc" id="L87">  }</span>
+<span class="fc" id="L85">    var authorities = List.of(new SimpleGrantedAuthority(&quot;ROLE_&quot; + user.getRole().name()));</span>
+<span class="fc" id="L86">    var authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);</span>
+<span class="fc" id="L87">    authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));</span>
+<span class="fc" id="L88">    SecurityContextHolder.getContext().setAuthentication(authentication);</span>
+<span class="fc" id="L89">  }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

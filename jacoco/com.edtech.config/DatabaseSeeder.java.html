@@ -64,30 +64,30 @@ public class DatabaseSeeder implements CommandLineRunner {
         demoInstitutionId);
 
     // 2. Criar projetos fake
-<span class="pc bpc" id="L67" title="1 of 2 branches missed.">    if (projectRepository.count() == 0) {</span>
-<span class="nc" id="L68">      logger.info(&quot;Populando banco com projetos falsos (Kaggle-like datasets)...&quot;);</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">    if (projectRepository.count() == 0) {</span>
+<span class="fc" id="L68">      logger.info(&quot;Populando banco com projetos falsos (Kaggle-like datasets)...&quot;);</span>
 
-<span class="nc" id="L70">      com.edtech.model.Project p1 = new com.edtech.model.Project();</span>
-<span class="nc" id="L71">      p1.setTitle(&quot;Previsão de Temperatura Oceânica&quot;);</span>
-<span class="nc" id="L72">      p1.setDescription(&quot;Análise de séries temporais de mudanças climáticas usando dados globais.&quot;);</span>
-<span class="nc" id="L73">      p1.setAdvisor(orientador);</span>
-<span class="nc" id="L74">      projectRepository.save(p1);</span>
+<span class="fc" id="L70">      com.edtech.model.Project p1 = new com.edtech.model.Project();</span>
+<span class="fc" id="L71">      p1.setTitle(&quot;Previsão de Temperatura Oceânica&quot;);</span>
+<span class="fc" id="L72">      p1.setDescription(&quot;Análise de séries temporais de mudanças climáticas usando dados globais.&quot;);</span>
+<span class="fc" id="L73">      p1.setAdvisor(orientador);</span>
+<span class="fc" id="L74">      projectRepository.save(p1);</span>
 
-<span class="nc" id="L76">      com.edtech.model.Project p2 = new com.edtech.model.Project();</span>
-<span class="nc" id="L77">      p2.setTitle(&quot;Classificação de Expressão Genômica&quot;);</span>
-<span class="nc" id="L78">      p2.setDescription(</span>
+<span class="fc" id="L76">      com.edtech.model.Project p2 = new com.edtech.model.Project();</span>
+<span class="fc" id="L77">      p2.setTitle(&quot;Classificação de Expressão Genômica&quot;);</span>
+<span class="fc" id="L78">      p2.setDescription(</span>
           &quot;Dataset com 10.000 perfis genômicos focados em detecção de anomalias raras.&quot;);
-<span class="nc" id="L80">      p2.setAdvisor(orientador);</span>
-<span class="nc" id="L81">      projectRepository.save(p2);</span>
+<span class="fc" id="L80">      p2.setAdvisor(orientador);</span>
+<span class="fc" id="L81">      projectRepository.save(p2);</span>
 
-<span class="nc" id="L83">      com.edtech.model.Project p3 = new com.edtech.model.Project();</span>
-<span class="nc" id="L84">      p3.setTitle(&quot;Auditoria Algorítmica em Modelos de Crédito&quot;);</span>
-<span class="nc" id="L85">      p3.setDescription(</span>
+<span class="fc" id="L83">      com.edtech.model.Project p3 = new com.edtech.model.Project();</span>
+<span class="fc" id="L84">      p3.setTitle(&quot;Auditoria Algorítmica em Modelos de Crédito&quot;);</span>
+<span class="fc" id="L85">      p3.setDescription(</span>
           &quot;Projeto voltado à detecção de bias em inteligência artificial do setor financeiro.&quot;);
-<span class="nc" id="L87">      p3.setAdvisor(orientador);</span>
-<span class="nc" id="L88">      projectRepository.save(p3);</span>
+<span class="fc" id="L87">      p3.setAdvisor(orientador);</span>
+<span class="fc" id="L88">      projectRepository.save(p3);</span>
 
-<span class="nc" id="L90">      logger.info(&quot;Projetos criados com sucesso.&quot;);</span>
+<span class="fc" id="L90">      logger.info(&quot;Projetos criados com sucesso.&quot;);</span>
     }
 
 <span class="fc" id="L93">    logger.info(&quot;DatabaseSeeder concluído.&quot;);</span>
