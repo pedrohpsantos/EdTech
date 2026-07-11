@@ -201,6 +201,16 @@ resource "google_cloud_run_v2_job" "flyway_migration" {
         }
 
         env {
+          name = "JWT_SECRET"
+          value_source {
+            secret_key_ref {
+              secret  = google_secret_manager_secret.jwt_secret.id
+              version = "latest"
+            }
+          }
+        }
+
+        env {
           name = "SPRING_DATASOURCE_PASSWORD"
           value_source {
             secret_key_ref {
