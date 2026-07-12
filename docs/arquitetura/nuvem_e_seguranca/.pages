@@ -1,5 +1,7 @@
-﻿title: 'Infraestrutura e Segurança'
+title: 'Infraestrutura e Segurança'
 nav:
   - nuvem.md
   - seguranca_app.md
+  - threat_model.md
+  - incident_response.md
 
