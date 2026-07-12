@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DataInitializer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">edtech-api</a> &gt; <a href="index.source.html" class="el_package">com.edtech.config</a> &gt; <span class="el_source">DataInitializer.java</span></div><h1>DataInitializer.java</h1><pre class="source lang-java linenums">package com.edtech.config;
+
+import com.edtech.model.AuditAction;
+import com.edtech.model.AuditLog;
+import com.edtech.model.Document;
+import com.edtech.model.DocumentStatus;
+import com.edtech.model.Project;
+import com.edtech.model.User;
+import com.edtech.model.UserRole;
+import com.edtech.repository.AuditLogRepository;
+import com.edtech.repository.DocumentRepository;
+import com.edtech.repository.ProjectRepository;
+import com.edtech.repository.UserRepository;
+import java.util.UUID;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+/** Data Initializer. */
+@Configuration
+<span class="fc" id="L22">public class DataInitializer {</span>
+
+  /** initData method. */
+  @Bean
+  public CommandLineRunner initData(
+      UserRepository userRepository,
+      ProjectRepository projectRepository,
+      DocumentRepository documentRepository,
+      AuditLogRepository auditLogRepository,
+      PasswordEncoder passwordEncoder) {
+
+<span class="fc" id="L33">    return args -&gt; {</span>
+      // Verificar se o admin ja existe
+<span class="pc bpc" id="L35" title="1 of 2 branches missed.">      if (userRepository.findByEmailIgnoreCase(&quot;admin@edtech.com&quot;).isEmpty()) {</span>
+<span class="fc" id="L36">        UUID commonInstitutionId = UUID.fromString(&quot;123e4567-e89b-12d3-a456-426614174000&quot;);</span>
+
+        // 1. Criar Orientador Demo
+<span class="fc" id="L39">        User advisor =</span>
+            new User(
+                &quot;Orientador Demo&quot;,
+                &quot;advisor@edtech.com&quot;,
+<span class="fc" id="L43">                passwordEncoder.encode(&quot;senha123&quot;),</span>
+                UserRole.ADVISOR,
+                commonInstitutionId);
+<span class="fc" id="L46">        userRepository.save(advisor);</span>
+
+        // 2. Criar Pesquisador Demo
+<span class="fc" id="L49">        User researcher =</span>
+            new User(
+                &quot;Pesquisador Demo&quot;,
+                &quot;researcher@edtech.com&quot;,
+<span class="fc" id="L53">                passwordEncoder.encode(&quot;senha123&quot;),</span>
+                UserRole.RESEARCHER,
+                commonInstitutionId);
+<span class="fc" id="L56">        userRepository.save(researcher);</span>
+
+        // 3. Criar Auditor Demo
+<span class="fc" id="L59">        User auditor =</span>
+            new User(
+                &quot;Auditor Demo&quot;,
+                &quot;auditor@edtech.com&quot;,
+<span class="fc" id="L63">                passwordEncoder.encode(&quot;senha123&quot;),</span>
+                UserRole.AUDITOR,
+                commonInstitutionId);
+<span class="fc" id="L66">        userRepository.save(auditor);</span>
+
+        // 4. Criar um admin
+<span class="fc" id="L69">        User admin =</span>
+            new User(
+                &quot;Admin&quot;,
+                &quot;admin@edtech.com&quot;,
+<span class="fc" id="L73">                passwordEncoder.encode(&quot;senha123&quot;),</span>
+                UserRole.AUDITOR,
+                commonInstitutionId);
+<span class="fc" id="L76">        userRepository.save(admin);</span>
+
+        // 5. Criar Projetos Demo
+<span class="fc" id="L79">        Project project1 = new Project();</span>
+<span class="fc" id="L80">        project1.setTitle(&quot;Análise LGPD Aplicada&quot;);</span>
+<span class="fc" id="L81">        project1.setDescription(&quot;Estudo sobre o impacto da LGPD em startups&quot;);</span>
+<span class="fc" id="L82">        project1.setAdvisor(advisor);</span>
+<span class="fc" id="L83">        projectRepository.save(project1);</span>
+
+<span class="fc" id="L85">        Project project2 = new Project();</span>
+<span class="fc" id="L86">        project2.setTitle(&quot;Bioinformática Estrutural&quot;);</span>
+<span class="fc" id="L87">        project2.setDescription(&quot;Pesquisa de novos fármacos&quot;);</span>
+<span class="fc" id="L88">        project2.setAdvisor(advisor);</span>
+<span class="fc" id="L89">        projectRepository.save(project2);</span>
+
+        // 6. Criar Documentos Demo
+<span class="fc" id="L92">        Document doc1 = new Document();</span>
+<span class="fc" id="L93">        doc1.setTitle(&quot;Referencial_Teorico_Final.pdf&quot;);</span>
+<span class="fc" id="L94">        doc1.setStatus(DocumentStatus.APPROVED);</span>
+<span class="fc" id="L95">        doc1.setProject(project1);</span>
+<span class="fc" id="L96">        doc1.setAuthor(researcher);</span>
+<span class="fc" id="L97">        doc1.setInstitutionId(commonInstitutionId);</span>
+<span class="fc" id="L98">        doc1.setFileUrl(&quot;demo/path/ref.pdf&quot;);</span>
+<span class="fc" id="L99">        documentRepository.save(doc1);</span>
+
+<span class="fc" id="L101">        Document doc2 = new Document();</span>
+<span class="fc" id="L102">        doc2.setTitle(&quot;Metodologia_Qualitativa_v3.pdf&quot;);</span>
+<span class="fc" id="L103">        doc2.setStatus(DocumentStatus.PENDING_REVIEW);</span>
+<span class="fc" id="L104">        doc2.setProject(project1);</span>
+<span class="fc" id="L105">        doc2.setAuthor(researcher);</span>
+<span class="fc" id="L106">        doc2.setInstitutionId(commonInstitutionId);</span>
+<span class="fc" id="L107">        doc2.setFileUrl(&quot;demo/path/met.pdf&quot;);</span>
+<span class="fc" id="L108">        documentRepository.save(doc2);</span>
+
+        // 7. Criar Logs de Auditoria Demo
+<span class="fc" id="L111">        AuditLog log1 =</span>
+            new AuditLog(
+                commonInstitutionId,
+<span class="fc" id="L114">                advisor.getId(),</span>
+                AuditAction.LOGIN_SUCCESS,
+                &quot;USER&quot;,
+<span class="fc" id="L117">                advisor.getId(),</span>
+                &quot;192.168.1.1&quot;,
+                &quot;Login realizado com sucesso&quot;);
+<span class="fc" id="L120">        auditLogRepository.save(log1);</span>
+
+<span class="fc" id="L122">        AuditLog log2 =</span>
+            new AuditLog(
+                commonInstitutionId,
+<span class="fc" id="L125">                researcher.getId(),</span>
+                AuditAction.UPLOAD_SUCCESS,
+                &quot;DOCUMENT&quot;,
+<span class="fc" id="L128">                doc1.getId(),</span>
+                &quot;192.168.1.2&quot;,
+                &quot;Documento Referencial_Teorico_Final.pdf enviado&quot;);
+<span class="fc" id="L131">        auditLogRepository.save(log2);</span>
+
+<span class="fc" id="L133">        AuditLog log3 =</span>
+            new AuditLog(
+                commonInstitutionId,
+<span class="fc" id="L136">                advisor.getId(),</span>
+                AuditAction.DOCUMENT_APPROVED,
+                &quot;DOCUMENT&quot;,
+<span class="fc" id="L139">                doc1.getId(),</span>
+                &quot;192.168.1.1&quot;,
+                &quot;Documento aprovado: Referencial_Teorico_Final.pdf&quot;);
+<span class="fc" id="L142">        auditLogRepository.save(log3);</span>
+
+<span class="fc" id="L144">        AuditLog log4 =</span>
+            new AuditLog(
+                commonInstitutionId,
+<span class="fc" id="L147">                auditor.getId(),</span>
+                AuditAction.REVIEW_DOCUMENT,
+                &quot;DOCUMENT&quot;,
+<span class="fc" id="L150">                doc1.getId(),</span>
+                &quot;192.168.1.5&quot;,
+                &quot;Documento visualizado&quot;);
+<span class="fc" id="L153">        auditLogRepository.save(log4);</span>
+
+<span class="fc" id="L155">        AuditLog log5 =</span>
+            new AuditLog(
+                commonInstitutionId,
+<span class="fc" id="L158">                admin.getId(),</span>
+                AuditAction.LOGIN_FAILED,
+                &quot;USER&quot;,
+<span class="fc" id="L161">                admin.getId(),</span>
+                &quot;192.168.1.99&quot;,
+                &quot;Tentativa de login falha&quot;);
+<span class="fc" id="L164">        auditLogRepository.save(log5);</span>
+
+<span class="fc" id="L166">        System.out.println(&quot;Banco de dados populado com contas demo com sucesso!&quot;);</span>
+      }
+<span class="fc" id="L168">    };</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">57.14% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>15/15</span>
+                <span class='fraction'>16/28</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">90% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>18/18</span>
+                <span class='fraction'>18/20</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">66.66% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>4/4</span>
+                <span class='fraction'>4/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">59.25% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>15/15</span>
+                <span class='fraction'>16/27</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -450,7 +450,21 @@
 <a name='L385'></a><a href='#L385'>385</a>
 <a name='L386'></a><a href='#L386'>386</a>
 <a name='L387'></a><a href='#L387'>387</a>
-<a name='L388'></a><a href='#L388'>388</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L388'></a><a href='#L388'>388</a>
+<a name='L389'></a><a href='#L389'>389</a>
+<a name='L390'></a><a href='#L390'>390</a>
+<a name='L391'></a><a href='#L391'>391</a>
+<a name='L392'></a><a href='#L392'>392</a>
+<a name='L393'></a><a href='#L393'>393</a>
+<a name='L394'></a><a href='#L394'>394</a>
+<a name='L395'></a><a href='#L395'>395</a>
+<a name='L396'></a><a href='#L396'>396</a>
+<a name='L397'></a><a href='#L397'>397</a>
+<a name='L398'></a><a href='#L398'>398</a>
+<a name='L399'></a><a href='#L399'>399</a>
+<a name='L400'></a><a href='#L400'>400</a>
+<a name='L401'></a><a href='#L401'>401</a>
+<a name='L402'></a><a href='#L402'>402</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -509,6 +523,20 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-yes">22x</span>
@@ -897,6 +925,20 @@ const ResearchTrail: React.FC = () =&gt; {
 &nbsp;
   const documents = user?.role === 'RESEARCHER' ? researcherDocuments : advisorDocuments;
 &nbsp;
+  const <span class="fstat-no" title="function not covered" >handleExportTrail = () =&gt; {</span>
+    const docToExport = <span class="cstat-no" title="statement not covered" >documents.<span class="fstat-no" title="function not covered" >find(d</span> =&gt; <span class="cstat-no" title="statement not covered" >d.id === selectedDocId)</span>;</span>
+    const content = <span class="cstat-no" title="statement not covered" >`Relatório de Trilha de Pesquisa\nDocumento: ${docToExport?.title}\nStatus: ${docToExport?.status}\n\nEventos:\n- Documento aprovado\n- Verificação LGPD aprovada\n- Nova versão criada\n`;</span>
+    const blob = <span class="cstat-no" title="statement not covered" >new Blob([content], { type: 'application/pdf' });</span>
+    const url = <span class="cstat-no" title="statement not covered" >URL.createObjectURL(blob);</span>
+    const a = <span class="cstat-no" title="statement not covered" >document.createElement('a');</span>
+<span class="cstat-no" title="statement not covered" >    a.href = url;</span>
+<span class="cstat-no" title="statement not covered" >    a.download = `trilha_${docToExport?.title || 'pesquisa'}.pdf`;</span>
+<span class="cstat-no" title="statement not covered" >    document.body.appendChild(a);</span>
+<span class="cstat-no" title="statement not covered" >    a.click();</span>
+<span class="cstat-no" title="statement not covered" >    document.body.removeChild(a);</span>
+<span class="cstat-no" title="statement not covered" >    URL.revokeObjectURL(url);</span>
+  };
+&nbsp;
   const getStatusBadgeClass = (status: string) =&gt; {
     switch (status) {
       case 'Aprovado':
@@ -991,7 +1033,7 @@ const ResearchTrail: React.FC = () =&gt; {
               &lt;span className="doc-status status-approved"&gt;
                 &lt;i className="bi bi-check-circle me-1"&gt;&lt;/i&gt; Aprovado
               &lt;/span&gt;
-              &lt;button className="btn-export-trail"&gt;
+              &lt;button className="btn-export-trail" onClick={handleExportTrail}&gt;
                 &lt;i className="bi bi-download"&gt;&lt;/i&gt; Exportar trilha (PDF)
               &lt;/button&gt;
             &lt;/div&gt;
@@ -1231,7 +1273,7 @@ export default ResearchTrail;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-07-12T05:36:17.700Z
+                at 2026-07-12T06:16:38.685Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

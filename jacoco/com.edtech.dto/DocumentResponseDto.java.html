@@ -11,7 +11,11 @@ import java.util.UUID;
   private String fileUrl;
   private DocumentStatus status;
   private UUID authorId;
+  private String authorName;
+  private String authorEmail;
   private UUID projectId;
+  private String projectTitle;
+  private String fileType;
   private ZonedDateTime createdAt;
   private String feedback;
   private boolean starred;
@@ -19,90 +23,122 @@ import java.util.UUID;
   // Getters and Setters
   /** Documentação para o método getId. */
   public UUID getId() {
-<span class="fc" id="L22">    return id;</span>
+<span class="fc" id="L26">    return id;</span>
   }
 
   /** Documentação para o método setId. */
   public void setId(UUID id) {
-<span class="fc" id="L27">    this.id = id;</span>
-<span class="fc" id="L28">  }</span>
+<span class="fc" id="L31">    this.id = id;</span>
+<span class="fc" id="L32">  }</span>
 
   /** Documentação para o método getTitle. */
   public String getTitle() {
-<span class="fc" id="L32">    return title;</span>
+<span class="fc" id="L36">    return title;</span>
   }
 
   /** Documentação para o método setTitle. */
   public void setTitle(String title) {
-<span class="fc" id="L37">    this.title = title;</span>
-<span class="fc" id="L38">  }</span>
+<span class="fc" id="L41">    this.title = title;</span>
+<span class="fc" id="L42">  }</span>
 
   /** Documentação para o método getFileUrl. */
   public String getFileUrl() {
-<span class="fc" id="L42">    return fileUrl;</span>
+<span class="fc" id="L46">    return fileUrl;</span>
   }
 
   /** Documentação para o método setFileUrl. */
   public void setFileUrl(String fileUrl) {
-<span class="fc" id="L47">    this.fileUrl = fileUrl;</span>
-<span class="fc" id="L48">  }</span>
+<span class="fc" id="L51">    this.fileUrl = fileUrl;</span>
+<span class="fc" id="L52">  }</span>
 
   /** Documentação para o método getStatus. */
   public DocumentStatus getStatus() {
-<span class="fc" id="L52">    return status;</span>
+<span class="fc" id="L56">    return status;</span>
   }
 
   /** Documentação para o método setStatus. */
   public void setStatus(DocumentStatus status) {
-<span class="fc" id="L57">    this.status = status;</span>
-<span class="fc" id="L58">  }</span>
+<span class="fc" id="L61">    this.status = status;</span>
+<span class="fc" id="L62">  }</span>
 
   /** Documentação para o método getAuthorId. */
   public UUID getAuthorId() {
-<span class="fc" id="L62">    return authorId;</span>
+<span class="fc" id="L66">    return authorId;</span>
   }
 
   /** Documentação para o método setAuthorId. */
   public void setAuthorId(UUID authorId) {
-<span class="fc" id="L67">    this.authorId = authorId;</span>
-<span class="fc" id="L68">  }</span>
+<span class="fc" id="L71">    this.authorId = authorId;</span>
+<span class="fc" id="L72">  }</span>
+
+  public String getAuthorName() {
+<span class="fc" id="L75">    return authorName;</span>
+  }
+
+  public void setAuthorName(String authorName) {
+<span class="fc" id="L79">    this.authorName = authorName;</span>
+<span class="fc" id="L80">  }</span>
+
+  public String getAuthorEmail() {
+<span class="fc" id="L83">    return authorEmail;</span>
+  }
+
+  public void setAuthorEmail(String authorEmail) {
+<span class="fc" id="L87">    this.authorEmail = authorEmail;</span>
+<span class="fc" id="L88">  }</span>
 
   /** Documentação para o método getProjectId. */
   public UUID getProjectId() {
-<span class="fc" id="L72">    return projectId;</span>
+<span class="fc" id="L92">    return projectId;</span>
   }
 
   /** Documentação para o método setProjectId. */
   public void setProjectId(UUID projectId) {
-<span class="fc" id="L77">    this.projectId = projectId;</span>
-<span class="fc" id="L78">  }</span>
+<span class="fc" id="L97">    this.projectId = projectId;</span>
+<span class="fc" id="L98">  }</span>
+
+  public String getProjectTitle() {
+<span class="fc" id="L101">    return projectTitle;</span>
+  }
+
+  public void setProjectTitle(String projectTitle) {
+<span class="fc" id="L105">    this.projectTitle = projectTitle;</span>
+<span class="fc" id="L106">  }</span>
+
+  public String getFileType() {
+<span class="fc" id="L109">    return fileType;</span>
+  }
+
+  public void setFileType(String fileType) {
+<span class="fc" id="L113">    this.fileType = fileType;</span>
+<span class="fc" id="L114">  }</span>
 
   /** Documentação para o método getCreatedAt. */
   public ZonedDateTime getCreatedAt() {
-<span class="fc" id="L82">    return createdAt;</span>
+<span class="fc" id="L118">    return createdAt;</span>
   }
 
   /** Documentação para o método setCreatedAt. */
   public void setCreatedAt(ZonedDateTime createdAt) {
-<span class="fc" id="L87">    this.createdAt = createdAt;</span>
-<span class="fc" id="L88">  }</span>
+<span class="fc" id="L123">    this.createdAt = createdAt;</span>
+<span class="fc" id="L124">  }</span>
 
   /** Documentação para o método getFeedback. */
   public String getFeedback() {
-<span class="fc" id="L92">    return feedback;</span>
+<span class="fc" id="L128">    return feedback;</span>
   }
 
   /** Documentação para o método setFeedback. */
   public void setFeedback(String feedback) {
-<span class="fc" id="L97">    this.feedback = feedback;</span>
-<span class="fc" id="L98">  }</span>
+<span class="fc" id="L133">    this.feedback = feedback;</span>
+<span class="fc" id="L134">  }</span>
 
   public boolean isStarred() {
-<span class="fc" id="L101">    return starred;</span>
+<span class="fc" id="L137">    return starred;</span>
   }
 
   public void setStarred(boolean starred) {
-<span class="fc" id="L105">    this.starred = starred;</span>
-<span class="fc" id="L106">  }</span>
+<span class="fc" id="L141">    this.starred = starred;</span>
+<span class="fc" id="L142">  }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
