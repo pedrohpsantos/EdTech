@@ -23,7 +23,14 @@ A execução deve ocorrer através do utilitário `uv run` a partir do diretóri
 
 ```bash
 # Execução a partir da raiz do monorepo
-uv run scripts/telemetry/main.py
+uv run scripts/telemetry/main.py --token "<JWT-de-uma-conta-autorizada>"
+```
+
+O comando consulta apenas `GET /api/documents` e gera um resumo agregado por status, tipo e projeto.
+Para salvar o resultado sem expor metadados individuais, use:
+
+```bash
+uv run scripts/telemetry/main.py --token "<JWT>" --output reports/telemetry.json
 ```
 
 ---

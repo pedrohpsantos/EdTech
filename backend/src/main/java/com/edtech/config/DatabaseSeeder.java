@@ -103,6 +103,16 @@ public class DatabaseSeeder implements CommandLineRunner {
       logger.info("Projetos criados com sucesso.");
     }
 
+    // DataSeeder pode ter criado projetos antes deste componente. Garanta que as
+    // contas demo usadas pela interface participem de qualquer projeto existente.
+    projectRepository
+        .findAll()
+        .forEach(
+            project -> {
+              ensureMember(project, orientador, com.edtech.model.ProjectRole.ADVISOR);
+              ensureMember(project, pesquisador, com.edtech.model.ProjectRole.RESEARCHER);
+            });
+
     logger.info("DatabaseSeeder concluído.");
   }
 
@@ -126,5 +136,12 @@ public class DatabaseSeeder implements CommandLineRunner {
     member.setUser(user);
     member.setRole(role);
     projectMemberRepository.save(member);
+  }
+
+  private void ensureMember(
+      com.edtech.model.Project project, User user, com.edtech.model.ProjectRole role) {
+    if (projectMemberRepository.findByProjectIdAndUserId(project.getId(), user.getId()).isEmpty()) {
+      addMember(project, user, role);
+    }
   }
 }
