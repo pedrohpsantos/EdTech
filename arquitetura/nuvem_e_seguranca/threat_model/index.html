@@ -2314,6 +2314,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#historico-de-versoes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Histórico de Versões
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -3868,6 +3879,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#historico-de-versoes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Histórico de Versões
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -3897,46 +3919,79 @@
 <p>O modelo de ameaças do EdTech utiliza a metodologia STRIDE desenvolvida pela Microsoft. Este documento detalha como nossa arquitetura mitiga ativamente cada uma das seis classes de ameaças.</p>
 <h2 id="1-spoofing-falsificacao-de-identidade">1. Spoofing (Falsificação de Identidade)<a class="headerlink" href="#1-spoofing-falsificacao-de-identidade" title="Permanent link">¶</a></h2>
 <p><strong>Ameaça:</strong> Um atacante se passa por um usuário legítimo (Pesquisador, Orientador ou Auditor) para acessar o sistema.</p>
-<p><strong>Controles Mitigatórios:</strong>
-- <strong>Autenticação <abbr title="JSON Web Token">JWT</abbr> Bearer:</strong> As sessões são validadas através de <abbr title="JSON Web Token">JWT</abbr> (<abbr title="JavaScript Object Notation">JSON</abbr> Web Token) assinados digitalmente.
-- <strong>Isolamento de Origem:</strong> Tokens ficam restritos ao <code>LocalStorage</code> e não são enviados via Cookies nativos, mitigando roubo via <abbr title="Cross-Site Request Forgery">CSRF</abbr> de forma natural.
-- <strong>Força Bruta e Credential Stuffing:</strong> Implementação de limite de taxa (<em>Rate Limiting</em>) agressivo via <strong>Bucket4j</strong>. Endpoints sensíveis como <code>/api/auth/login</code> admitem no máximo 5 requisições por minuto por endereço <abbr title="Internet Protocol — Protocolo de Internet">IP</abbr>.</p>
+<p><strong>Controles Mitigatórios:</strong></p>
+<ul>
+<li><strong>Autenticação <abbr title="JSON Web Token">JWT</abbr> Bearer:</strong> As sessões são validadas através de <abbr title="JSON Web Token">JWT</abbr> (<abbr title="JavaScript Object Notation">JSON</abbr> Web Token) assinados digitalmente.</li>
+<li><strong>Isolamento de Origem:</strong> Tokens ficam restritos ao <code>LocalStorage</code> e não são enviados via Cookies nativos, mitigando roubo via <abbr title="Cross-Site Request Forgery">CSRF</abbr> de forma natural.</li>
+<li><strong>Força Bruta e Credential Stuffing:</strong> Implementação de limite de taxa (<em>Rate Limiting</em>) agressivo via <strong>Bucket4j</strong>. Endpoints sensíveis como <code>/api/auth/login</code> admitem no máximo 5 requisições por minuto por endereço <abbr title="Internet Protocol — Protocolo de Internet">IP</abbr>.</li>
+</ul>
 <h2 id="2-tampering-violacao-de-dados">2. Tampering (Violação de Dados)<a class="headerlink" href="#2-tampering-violacao-de-dados" title="Permanent link">¶</a></h2>
 <p><strong>Ameaça:</strong> Modificação maliciosa de dados em trânsito (rede) ou em repouso (disco/storage).</p>
-<p><strong>Controles Mitigatórios:</strong>
-- <strong><abbr title="HyperText Transfer Protocol Secure">HTTPS</abbr>/TLS Obrigatório:</strong> Todo tráfego entre Cliente, <abbr title="Camada de interface visual do usuário">Frontend</abbr> (Firebase) e <abbr title="Camada de servidor e banco de dados da aplicação">Backend</abbr> (<abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run) é criptografado obrigatoriamente (TLS 1.2+).
-- <strong>Assinatura <abbr title="JSON Web Token">JWT</abbr> (<code>HMAC SHA-256</code>):</strong> Modificações na carga útil do token invalidam imediatamente a assinatura criptográfica no backend.
-- <strong>Proteção contra Malwares:</strong> Todo documento (<abbr title="Portable Document Format">PDF</abbr>) passa por escaneamento em tempo de fluxo usando a <strong><abbr title="Application Programming Interface — Interface de Programação de Aplicação">API</abbr> do ClamAV</strong>. Arquivos infectados são bloqueados antes de atingir o <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Storage e descartados com status <abbr title="HyperText Transfer Protocol — Protocolo de Transferência de Hipertexto">HTTP</abbr> 400.
-- <strong>Segurança Nativa <abbr title="Google Cloud Storage">GCS</abbr>:</strong> Os buckets do Google <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Storage garantem integridade através de validação de checksum MD5 no momento do upload.</p>
+<p><strong>Controles Mitigatórios:</strong></p>
+<ul>
+<li><strong><abbr title="HyperText Transfer Protocol Secure">HTTPS</abbr>/TLS Obrigatório:</strong> Todo tráfego entre Cliente, <abbr title="Camada de interface visual do usuário">Frontend</abbr> (Firebase) e <abbr title="Camada de servidor e banco de dados da aplicação">Backend</abbr> (<abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run) é criptografado obrigatoriamente (TLS 1.2+).</li>
+<li><strong>Assinatura <abbr title="JSON Web Token">JWT</abbr> (<code>HMAC SHA-256</code>):</strong> Modificações na carga útil do token invalidam imediatamente a assinatura criptográfica no backend.</li>
+<li><strong>Proteção contra Malwares:</strong> Todo documento (<abbr title="Portable Document Format">PDF</abbr>) passa por escaneamento em tempo de fluxo usando a <strong><abbr title="Application Programming Interface — Interface de Programação de Aplicação">API</abbr> do ClamAV</strong>. Arquivos infectados são bloqueados antes de atingir o <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Storage e descartados com status <abbr title="HyperText Transfer Protocol — Protocolo de Transferência de Hipertexto">HTTP</abbr> 400.</li>
+<li><strong>Segurança Nativa <abbr title="Google Cloud Storage">GCS</abbr>:</strong> Os buckets do Google <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Storage garantem integridade através de validação de checksum MD5 no momento do upload.</li>
+</ul>
 <h2 id="3-repudiation-repudio">3. Repudiation (Repúdio)<a class="headerlink" href="#3-repudiation-repudio" title="Permanent link">¶</a></h2>
 <p><strong>Ameaça:</strong> Um usuário realiza uma ação fraudulenta e alega não tê-la feito (ex: aprovar projeto sem consentimento).</p>
-<p><strong>Controles Mitigatórios:</strong>
-- <strong>Audit Logs Imutáveis:</strong> Eventos transacionais críticos gravam rastros de auditoria no PostgreSQL. Tabelas de auditoria (via gatilhos ou service layers) são configuradas como apenas inserção (<em>append-only</em>).
-- <strong>Vínculo Transacional:</strong> Todas as rotas autenticadas capturam o <code>user_id</code> originário através do Spring Security Context. Nenhuma ação pode ser executada sob contexto anônimo.
-- <strong>Exibição Transparente:</strong> O perfil de Auditor possui acesso em tempo real ao histórico, o que garante a rastreabilidade completa e refutação a repúdios.</p>
+<p><strong>Controles Mitigatórios:</strong></p>
+<ul>
+<li><strong>Audit Logs Imutáveis:</strong> Eventos transacionais críticos gravam rastros de auditoria no PostgreSQL. Tabelas de auditoria (via gatilhos ou service layers) são configuradas como apenas inserção (<em>append-only</em>).</li>
+<li><strong>Vínculo Transacional:</strong> Todas as rotas autenticadas capturam o <code>user_id</code> originário através do Spring Security Context. Nenhuma ação pode ser executada sob contexto anônimo.</li>
+<li><strong>Exibição Transparente:</strong> O perfil de Auditor possui acesso em tempo real ao histórico, o que garante a rastreabilidade completa e refutação a repúdios.</li>
+</ul>
 <h2 id="4-information-disclosure-divulgacao-de-informacao">4. Information Disclosure (Divulgação de Informação)<a class="headerlink" href="#4-information-disclosure-divulgacao-de-informacao" title="Permanent link">¶</a></h2>
 <p><strong>Ameaça:</strong> Exposição indevida de dados sensíveis ou informações do sistema para agentes externos.</p>
-<p><strong>Controles Mitigatórios:</strong>
-- <strong>Rede <abbr title="Virtual Private Cloud">VPC</abbr> Isolada:</strong> O <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> <abbr title="Structured Query Language — Linguagem de Consulta Estruturada">SQL</abbr> não tem endereço <abbr title="Internet Protocol — Protocolo de Internet">IP</abbr> público. Ele apenas aceita tráfego da Virtual Private <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> (<abbr title="Virtual Private Cloud">VPC</abbr>) proveniente do <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run através do <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> <abbr title="Structured Query Language — Linguagem de Consulta Estruturada">SQL</abbr> Auth Proxy.
-- <strong>Acesso Temporário a Arquivos:</strong> Os documentos do <abbr title="Google Cloud Storage">GCS</abbr> não são expostos publicamente. O download é garantido através da emissão de <strong>URLs Assinadas (Signed URLs)</strong> com curta validade, emitidas unicamente pelo <abbr title="Camada de servidor e banco de dados da aplicação">Backend</abbr> para usuários autenticados.
-- <strong>Sanitização de Pilhas de Erro:</strong> Exceções não expõem detalhes do stacktrace no corpo de respostas <abbr title="HyperText Transfer Protocol — Protocolo de Transferência de Hipertexto">HTTP</abbr>, sendo tratados uniformemente no <code>GlobalExceptionHandler</code>.</p>
+<p><strong>Controles Mitigatórios:</strong></p>
+<ul>
+<li><strong>Rede <abbr title="Virtual Private Cloud">VPC</abbr> Isolada:</strong> O <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> <abbr title="Structured Query Language — Linguagem de Consulta Estruturada">SQL</abbr> não tem endereço <abbr title="Internet Protocol — Protocolo de Internet">IP</abbr> público. Ele apenas aceita tráfego da Virtual Private <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> (<abbr title="Virtual Private Cloud">VPC</abbr>) proveniente do <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run através do <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> <abbr title="Structured Query Language — Linguagem de Consulta Estruturada">SQL</abbr> Auth Proxy.</li>
+<li><strong>Acesso Temporário a Arquivos:</strong> Os documentos do <abbr title="Google Cloud Storage">GCS</abbr> não são expostos publicamente. O download é garantido através da emissão de <strong>URLs Assinadas (Signed URLs)</strong> com curta validade, emitidas unicamente pelo <abbr title="Camada de servidor e banco de dados da aplicação">Backend</abbr> para usuários autenticados.</li>
+<li><strong>Sanitização de Pilhas de Erro:</strong> Exceções não expõem detalhes do stacktrace no corpo de respostas <abbr title="HyperText Transfer Protocol — Protocolo de Transferência de Hipertexto">HTTP</abbr>, sendo tratados uniformemente no <code>GlobalExceptionHandler</code>.</li>
+</ul>
 <h2 id="5-denial-of-service-negacao-de-servico-dos">5. Denial of Service (Negação de Serviço - DoS)<a class="headerlink" href="#5-denial-of-service-negacao-de-servico-dos" title="Permanent link">¶</a></h2>
 <p><strong>Ameaça:</strong> Interrupção proposital da disponibilidade do sistema inundando-o de requisições.</p>
-<p><strong>Controles Mitigatórios:</strong>
-- <strong>Escalonamento Automático Serverless:</strong> O <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run dimensiona instâncias automaticamente a partir de zero, suportando um alto pico de requisições paralelas e isolando CPU e Memória por requisição.
-- <strong>Defesas Borda do Google (<abbr title="Web Application Firewall — Firewall de Aplicação Web">WAF</abbr>):</strong> Proteção nativa no <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Load Balancing e Firebase Hosting contra ataques DDoS volumétricos (Layer 3/4).
-- <strong>Bucket4j de Borda:</strong> Proteção extra na camada de aplicação bloqueando spamers locais que passem do <abbr title="Web Application Firewall — Firewall de Aplicação Web">WAF</abbr>.</p>
+<p><strong>Controles Mitigatórios:</strong></p>
+<ul>
+<li><strong>Escalonamento Automático Serverless:</strong> O <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run dimensiona instâncias automaticamente a partir de zero, suportando um alto pico de requisições paralelas e isolando CPU e Memória por requisição.</li>
+<li><strong>Defesas Borda do Google (<abbr title="Web Application Firewall — Firewall de Aplicação Web">WAF</abbr>):</strong> Proteção nativa no <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Load Balancing e Firebase Hosting contra ataques DDoS volumétricos (Layer 3/4).</li>
+<li><strong>Bucket4j de Borda:</strong> Proteção extra na camada de aplicação bloqueando spamers locais que passem do <abbr title="Web Application Firewall — Firewall de Aplicação Web">WAF</abbr>.</li>
+</ul>
 <h2 id="6-elevation-of-privilege-elevacao-de-privilegio">6. Elevation of Privilege (Elevação de Privilégio)<a class="headerlink" href="#6-elevation-of-privilege-elevacao-de-privilegio" title="Permanent link">¶</a></h2>
 <p><strong>Ameaça:</strong> Um atacante ou usuário comum explora vulnerabilidades para executar ações como administrador ou outro perfil.</p>
-<p><strong>Controles Mitigatórios:</strong>
-- <strong><abbr title="Role-Based Access Control — Controle de Acesso Baseado em Papéis">RBAC</abbr> Estrito (Role-Based Access Control):</strong>
-    - Pesquisadores (<code>researcher</code>) apenas submetem relatórios e navegam nos próprios arquivos.
-    - Orientadores (<code>advisor</code>) revisam apenas artefatos atrelados ao seu próprio escopo.
-    - Auditores (<code>auditor</code>) têm privilégio estrito de <strong>leitura</strong> (Read-Only) nos logs globais.
-- <strong>Prevenção contra <abbr title="Cross-Site Scripting">XSS</abbr>:</strong> Renderização segura de <abbr title="HyperText Markup Language — Linguagem de Marcação de Hipertexto">HTML</abbr> através do ecossistema React.
-- <strong>Arquitetura Zero-Trust Interna:</strong> O <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run possui uma Service Account exclusiva e restrita no IAM do <abbr title="Google Cloud Platform">GCP</abbr> para acessar apenas os buckets e bancos de que precisa (Princípio do Menor Privilégio).</p>
+<p><strong>Controles Mitigatórios:</strong></p>
+<ul>
+<li><strong><abbr title="Role-Based Access Control — Controle de Acesso Baseado em Papéis">RBAC</abbr> Estrito (Role-Based Access Control):</strong><ul>
+<li>Pesquisadores (<code>researcher</code>) apenas submetem relatórios e navegam nos próprios arquivos.</li>
+<li>Orientadores (<code>advisor</code>) revisam apenas artefatos atrelados ao seu próprio escopo.</li>
+<li>Auditores (<code>auditor</code>) têm privilégio estrito de <strong>leitura</strong> (Read-Only) nos logs globais.</li>
+</ul>
+</li>
+<li><strong>Prevenção contra <abbr title="Cross-Site Scripting">XSS</abbr>:</strong> Renderização segura de <abbr title="HyperText Markup Language — Linguagem de Marcação de Hipertexto">HTML</abbr> através do ecossistema React.</li>
+<li><strong>Arquitetura Zero-Trust Interna:</strong> O <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run possui uma Service Account exclusiva e restrita no IAM do <abbr title="Google Cloud Platform">GCP</abbr> para acessar apenas os buckets e bancos de que precisa (Princípio do Menor Privilégio).</li>
+</ul>
 <hr>
 <p>Este documento será validado anualmente no ciclo de Governança de Segurança e após implantação de novos épicos massivos arquiteturais.</p>
+<h2 id="historico-de-versoes">Histórico de Versões<a class="headerlink" href="#historico-de-versoes" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Versão</th>
+<th style="text-align: center;">Data</th>
+<th style="text-align: left;">Descrição</th>
+<th style="text-align: left;">Autor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><code>1.0</code></td>
+<td style="text-align: center;">12/07/2026</td>
+<td style="text-align: left;">Criação do documento (Issue #163)</td>
+<td style="text-align: left;">Pedro Henrique P. Santos</td>
+</tr>
+</tbody>
+</table>
 
 
 
@@ -3957,7 +4012,7 @@
     <span class="md-icon" title="Última atualização">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="12 de julho de 2026 17:50:04 UTC">12 de julho de 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="12 de julho de 2026 18:04:16 UTC">12 de julho de 2026</span>
   </span>
 
     
