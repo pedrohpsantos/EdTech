@@ -101,7 +101,7 @@ public class DocumentService {
       Document document = new Document();
       document.setTitle(title);
       document.setFileUrl(fileKey);
-      document.setStatus(DocumentStatus.DRAFT);
+      document.setStatus(DocumentStatus.PENDING_REVIEW);
       document.setAuthor(author);
       document.setProject(project);
 
@@ -174,8 +174,8 @@ public class DocumentService {
     if (!document.getAuthor().getId().equals(userId)) {
       throw new RuntimeException("Only the author can delete this document");
     }
-    if (document.getStatus() != DocumentStatus.DRAFT) {
-      throw new RuntimeException("Only DRAFT documents can be deleted");
+    if (document.getStatus() == DocumentStatus.APPROVED) {
+      throw new RuntimeException("APPROVED documents cannot be deleted");
     }
 
     try {
