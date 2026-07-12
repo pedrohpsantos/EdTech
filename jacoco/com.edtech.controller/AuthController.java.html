@@ -134,8 +134,9 @@ public class AuthController {
 <span class="fc" id="L134">      String qrCodeUri = twoFactorAuthService.getQrCodeImageUri(secret, user.getEmail());</span>
 <span class="fc" id="L135">      return ResponseEntity.ok(Map.of(&quot;secret&quot;, secret, &quot;qrCodeUri&quot;, qrCodeUri));</span>
 <span class="fc" id="L136">    } catch (Exception e) {</span>
-<span class="fc" id="L137">      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)</span>
-<span class="fc" id="L138">          .body(&quot;Failed to generate QR Code&quot;);</span>
+<span class="fc" id="L137">      e.printStackTrace();</span>
+<span class="fc" id="L138">      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)</span>
+<span class="fc" id="L139">          .body(&quot;Failed to generate QR Code&quot;);</span>
     }
   }
 
@@ -143,68 +144,68 @@ public class AuthController {
   @PostMapping(&quot;/2fa/enable&quot;)
   public ResponseEntity&lt;?&gt; enable2Fa(
       @RequestBody VerifyCodeDto request, Authentication authentication) {
-<span class="fc" id="L146">    User user = (User) authentication.getPrincipal();</span>
+<span class="fc" id="L147">    User user = (User) authentication.getPrincipal();</span>
 
-<span class="fc bfc" id="L148" title="All 2 branches covered.">    if (user.isMfaEnabled()) {</span>
-<span class="fc" id="L149">      return ResponseEntity.badRequest().body(&quot;2FA is already enabled.&quot;);</span>
+<span class="fc bfc" id="L149" title="All 2 branches covered.">    if (user.isMfaEnabled()) {</span>
+<span class="fc" id="L150">      return ResponseEntity.badRequest().body(&quot;2FA is already enabled.&quot;);</span>
     }
 
-<span class="fc" id="L152">    boolean isValid = twoFactorAuthService.verifyCode(user.getMfaSecret(), request.code());</span>
-<span class="fc bfc" id="L153" title="All 2 branches covered.">    if (!isValid) {</span>
-<span class="fc" id="L154">      return ResponseEntity.badRequest().body(&quot;Invalid 2FA code.&quot;);</span>
+<span class="fc" id="L153">    boolean isValid = twoFactorAuthService.verifyCode(user.getMfaSecret(), request.code());</span>
+<span class="fc bfc" id="L154" title="All 2 branches covered.">    if (!isValid) {</span>
+<span class="fc" id="L155">      return ResponseEntity.badRequest().body(&quot;Invalid 2FA code.&quot;);</span>
     }
 
-<span class="fc" id="L157">    user.setMfaEnabled(true);</span>
-<span class="fc" id="L158">    userService.saveUserWithoutHash(user);</span>
-<span class="fc" id="L159">    return ResponseEntity.ok().build();</span>
+<span class="fc" id="L158">    user.setMfaEnabled(true);</span>
+<span class="fc" id="L159">    userService.saveUserWithoutHash(user);</span>
+<span class="fc" id="L160">    return ResponseEntity.ok().build();</span>
   }
 
   /** Documentação. */
   @PostMapping(&quot;/recovery/request&quot;)
   public ResponseEntity&lt;?&gt; requestRecovery(
       @RequestBody RecoveryRequestDto request, HttpServletRequest httpRequest) {
-<span class="fc" id="L166">    Bucket bucket = rateLimitingService.resolveBucket(httpRequest.getRemoteAddr());</span>
-<span class="fc bfc" id="L167" title="All 2 branches covered.">    if (!bucket.tryConsume(1)) {</span>
-<span class="fc" id="L168">      throw new RateLimitExceededException(</span>
+<span class="fc" id="L167">    Bucket bucket = rateLimitingService.resolveBucket(httpRequest.getRemoteAddr());</span>
+<span class="fc bfc" id="L168" title="All 2 branches covered.">    if (!bucket.tryConsume(1)) {</span>
+<span class="fc" id="L169">      throw new RateLimitExceededException(</span>
           &quot;Limite de tentativas excedido. Tente novamente mais tarde.&quot;);
     }
 
-<span class="fc" id="L172">    recoveryService.requestRecovery(request.email());</span>
-<span class="fc" id="L173">    return ResponseEntity.ok().build();</span>
+<span class="fc" id="L173">    recoveryService.requestRecovery(request.email());</span>
+<span class="fc" id="L174">    return ResponseEntity.ok().build();</span>
   }
 
   /** Documentação. */
   @PostMapping(&quot;/recovery/verify&quot;)
   public ResponseEntity&lt;?&gt; verifyCode(@RequestBody VerifyCodeDto request) {
-<span class="fc" id="L179">    boolean valid = recoveryService.verifyCode(request.email(), request.code());</span>
-<span class="fc bfc" id="L180" title="All 2 branches covered.">    if (valid) {</span>
-<span class="fc" id="L181">      return ResponseEntity.ok().build();</span>
+<span class="fc" id="L180">    boolean valid = recoveryService.verifyCode(request.email(), request.code());</span>
+<span class="fc bfc" id="L181" title="All 2 branches covered.">    if (valid) {</span>
+<span class="fc" id="L182">      return ResponseEntity.ok().build();</span>
     }
-<span class="fc" id="L183">    return ResponseEntity.badRequest().body(&quot;Código inválido ou expirado.&quot;);</span>
+<span class="fc" id="L184">    return ResponseEntity.badRequest().body(&quot;Código inválido ou expirado.&quot;);</span>
   }
 
   /** Documentação. */
   @PostMapping(&quot;/recovery/reset&quot;)
   public ResponseEntity&lt;?&gt; resetPassword(@RequestBody ResetPasswordDto request) {
-<span class="fc" id="L189">    boolean success =</span>
-<span class="fc" id="L190">        recoveryService.resetPassword(request.email(), request.code(), request.newPassword());</span>
-<span class="fc bfc" id="L191" title="All 2 branches covered.">    if (success) {</span>
-<span class="fc" id="L192">      return ResponseEntity.ok().build();</span>
+<span class="fc" id="L190">    boolean success =</span>
+<span class="fc" id="L191">        recoveryService.resetPassword(request.email(), request.code(), request.newPassword());</span>
+<span class="fc bfc" id="L192" title="All 2 branches covered.">    if (success) {</span>
+<span class="fc" id="L193">      return ResponseEntity.ok().build();</span>
     }
-<span class="fc" id="L194">    return ResponseEntity.badRequest().body(&quot;Erro ao redefinir a senha.&quot;);</span>
+<span class="fc" id="L195">    return ResponseEntity.badRequest().body(&quot;Erro ao redefinir a senha.&quot;);</span>
   }
 
   /** Documentação. */
   @PostMapping(&quot;/logout&quot;)
   public ResponseEntity&lt;Void&gt; logout() {
-<span class="fc" id="L200">    return ResponseEntity.ok().build();</span>
+<span class="fc" id="L201">    return ResponseEntity.ok().build();</span>
   }
 
   /** Documentação. */
   @GetMapping(&quot;/me&quot;)
   public ResponseEntity&lt;UserResponseDto&gt; me(Authentication authentication) {
-<span class="fc" id="L206">    User user = (User) authentication.getPrincipal();</span>
-<span class="fc" id="L207">    return ResponseEntity.ok(UserResponseDto.from(user));</span>
+<span class="fc" id="L207">    User user = (User) authentication.getPrincipal();</span>
+<span class="fc" id="L208">    return ResponseEntity.ok(UserResponseDto.from(user));</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

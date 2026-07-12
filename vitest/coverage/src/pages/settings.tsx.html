@@ -30,9 +30,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">60.37% </span>
+                <span class="strong">56.14% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>32/53</span>
+                <span class='fraction'>32/57</span>
             </div>
         
             
@@ -366,7 +366,23 @@
 <a name='L301'></a><a href='#L301'>301</a>
 <a name='L302'></a><a href='#L302'>302</a>
 <a name='L303'></a><a href='#L303'>303</a>
-<a name='L304'></a><a href='#L304'>304</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L304'></a><a href='#L304'>304</a>
+<a name='L305'></a><a href='#L305'>305</a>
+<a name='L306'></a><a href='#L306'>306</a>
+<a name='L307'></a><a href='#L307'>307</a>
+<a name='L308'></a><a href='#L308'>308</a>
+<a name='L309'></a><a href='#L309'>309</a>
+<a name='L310'></a><a href='#L310'>310</a>
+<a name='L311'></a><a href='#L311'>311</a>
+<a name='L312'></a><a href='#L312'>312</a>
+<a name='L313'></a><a href='#L313'>313</a>
+<a name='L314'></a><a href='#L314'>314</a>
+<a name='L315'></a><a href='#L315'>315</a>
+<a name='L316'></a><a href='#L316'>316</a>
+<a name='L317'></a><a href='#L317'>317</a>
+<a name='L318'></a><a href='#L318'>318</a>
+<a name='L319'></a><a href='#L319'>319</a>
+<a name='L320'></a><a href='#L320'>320</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -598,7 +614,23 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -847,12 +879,12 @@ const Settings: React.FC = () =&gt; {
             &lt;div className="settings-item no-border" style={{ flexDirection: 'column', alignItems: 'flex-start' }}&gt;
               &lt;div style={{ marginTop: '1rem', padding: '1rem', border: '1px solid #ddd', borderRadius: '8px', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}&gt;
                 &lt;p style={{ marginBottom: '1rem', fontWeight: 500 }}&gt;
-                  1. Escaneie este QR Code no seu aplicativo Autenticador
+                  1. Escaneie este QR Code no seu aplicativo Autenticador (Google Authenticator, Authy, etc.)
                 &lt;/p&gt;
                 &lt;img src={qrCodeUri} alt="QR Code 2FA" style={{ width: '200px', height: '200px', marginBottom: '1rem' }} /&gt;
                 
                 &lt;p style={{ marginBottom: '1rem', fontWeight: 500 }}&gt;
-                  2. Insira o código de 6 dígitos gerado
+                  2. Insira o código de 6 dígitos gerado (ele muda a cada 30 segundos)
                 &lt;/p&gt;
                 &lt;div style={{ display: 'flex', gap: '0.5rem', width: '100%', maxWidth: '300px' }}&gt;
                   &lt;input
@@ -878,44 +910,60 @@ const Settings: React.FC = () =&gt; {
 <span class="branch-2 cbranch-no" title="branch not covered" >          &lt;div className="settings-card"&gt;</span>
             &lt;h3 className="settings-section-title"&gt;Laboratório e Vínculo Institucional&lt;/h3&gt;
             
-            &lt;div className="settings-item no-border"&gt;
-              &lt;div className="settings-item-icon bg-purple-light"&gt;
-                &lt;i className="bi bi-diagram-3"&gt;&lt;/i&gt;
+            {user?.institutionId &amp;&amp; user.institutionId !== '00000000-0000-0000-0000-000000000001' ? (
+              &lt;div className="settings-item no-border"&gt;
+                &lt;div className="settings-item-icon bg-purple-light"&gt;
+                  &lt;i className="bi bi-check-circle-fill" style={{ color: 'var(--ed-status-success)' }}&gt;&lt;/i&gt;
+                &lt;/div&gt;
+                &lt;div className="settings-item-content"&gt;
+                  &lt;span className="settings-item-title"&gt;Vínculo Ativo&lt;/span&gt;
+                  &lt;span className="settings-item-desc"&gt;
+                    Você está vinculado permanentemente a um laboratório. Este vínculo permanece até que o orientador o remova ou a auditoria seja encerrada.
+                  &lt;/span&gt;
+                &lt;/div&gt;
               &lt;/div&gt;
-              &lt;div className="settings-item-content"&gt;
-                &lt;span className="settings-item-title"&gt;Vincular ao orientador&lt;/span&gt;
-                &lt;span className="settings-item-desc"&gt;
-                  {user?.role === 'RESEARCHER'
-                    ? 'Use o código de pesquisador emitido pelo orientador.'
-                    : 'Use o código de auditor emitido pelo orientador.'} Os códigos expiram ao fim da semana.
-                &lt;/span&gt;
-              &lt;/div&gt;
-            &lt;/div&gt;
-            
-            &lt;div className="settings-item no-border" style={{ paddingTop: 0 }}&gt;
-              &lt;div className="settings-code-form"&gt;
-                &lt;input
-                  type="text"
-                  className="ed-input"
-                  placeholder="Código de 6 dígitos"
-                  value={advisorCode}
-                  maxLength={6}
-                  inputMode="numeric"
-<span class="fstat-no" title="function not covered" >                  onChange={(e</span>) =&gt; <span class="cstat-no" title="statement not covered" >setAdvisorCode(e.target.value.replace(/\D/g, ''))}</span>
-                /&gt;
-                &lt;button 
-                  className="btn-primary" 
-                  onClick={handleJoinLaboratory} 
-                  disabled={!advisorCode.trim() || isJoining}
-                &gt;
-                  {isJoining ? 'Vinculando...' : 'Vincular'}
-                &lt;/button&gt;
-              &lt;/div&gt;
-            &lt;/div&gt;
-            {joinMessage &amp;&amp; (
-              &lt;div style={{ marginLeft: '56px', marginTop: '0.5rem', fontSize: '0.875rem', color: joinMessage.includes('sucesso') ? 'var(--ed-status-success)' : '#d32f2f' }}&gt;
-                {joinMessage}
-              &lt;/div&gt;
+            ) : (
+              &lt;&gt;
+                &lt;div className="settings-item no-border"&gt;
+                  &lt;div className="settings-item-icon bg-purple-light"&gt;
+                    &lt;i className="bi bi-diagram-3"&gt;&lt;/i&gt;
+                  &lt;/div&gt;
+                  &lt;div className="settings-item-content"&gt;
+                    &lt;span className="settings-item-title"&gt;Vincular ao orientador&lt;/span&gt;
+                    &lt;span className="settings-item-desc"&gt;
+                      {user?.role === 'RESEARCHER'
+                        ? 'Use o código de pesquisador emitido pelo orientador.'
+                        : 'Use o código de auditor emitido pelo orientador.'} Os códigos expiram ao fim da semana.
+                    &lt;/span&gt;
+                  &lt;/div&gt;
+                &lt;/div&gt;
+                
+                &lt;div className="settings-item no-border" style={{ paddingTop: 0 }}&gt;
+                  &lt;div className="settings-code-form"&gt;
+                    &lt;input
+                      type="text"
+                      className="ed-input"
+                      placeholder="Código de 6 dígitos"
+                      value={advisorCode}
+                      maxLength={6}
+                      inputMode="numeric"
+<span class="fstat-no" title="function not covered" >                      onChange={(e</span>) =&gt; <span class="cstat-no" title="statement not covered" >setAdvisorCode(e.target.value.replace(/\D/g, ''))}</span>
+                    /&gt;
+                    &lt;button 
+                      className="btn-primary" 
+                      onClick={handleJoinLaboratory} 
+                      disabled={!advisorCode.trim() || isJoining}
+                    &gt;
+                      {isJoining ? 'Vinculando...' : 'Vincular'}
+                    &lt;/button&gt;
+                  &lt;/div&gt;
+                &lt;/div&gt;
+                {joinMessage &amp;&amp; (
+                  &lt;div style={{ marginLeft: '56px', marginTop: '0.5rem', fontSize: '0.875rem', color: joinMessage.includes('sucesso') ? 'var(--ed-status-success)' : '#d32f2f' }}&gt;
+                    {joinMessage}
+                  &lt;/div&gt;
+                )}
+              &lt;/&gt;
             )}
           &lt;/div&gt;
         )}
@@ -979,7 +1027,7 @@ export default Settings;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-07-12T13:23:38.566Z
+                at 2026-07-12T14:17:21.687Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

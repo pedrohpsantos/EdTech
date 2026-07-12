@@ -1595,8 +1595,8 @@ const Dashboard: React.FC = () =&gt; {
       {/* 2. BARRA DE ALERTA DE GOVERNANÇA (FLEXBOX RESPONSIVO) */}
       {user?.role === 'RESEARCHER' ? (
         &lt;div className="governance-alert d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-4" style={{ background: 'linear-gradient(90deg, #f58a07 0%, #ffb057 100%)', boxShadow: '0 4px 15px rgba(245, 138, 7, 0.3)' }}&gt;
-          &lt;div className="alert-content"&gt;
-            &lt;div className="alert-icon"&gt;
+          &lt;div className="alert-content flex-grow-1"&gt;
+            &lt;div className="alert-icon flex-shrink-0"&gt;
               &lt;i className="bi bi-exclamation-triangle"&gt;&lt;/i&gt;
             &lt;/div&gt;
             &lt;div className="alert-text-container"&gt;
@@ -1606,14 +1606,14 @@ const Dashboard: React.FC = () =&gt; {
               &lt;/span&gt;
             &lt;/div&gt;
           &lt;/div&gt;
-          &lt;button className="btn-alert" style={{ background: 'white', color: 'var(--ed-orange)', border: 'none', padding: '8px 20px', borderRadius: '8px', fontWeight: 600, cursor: 'pointer', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px', whiteSpace: 'nowrap', width: 'max-content', flexShrink: 0 }} onClick={() =&gt; navigate('/trail')}&gt;
+          &lt;button className="btn-alert text-nowrap flex-shrink-0 mt-3 mt-md-0" style={{ background: 'white', color: 'var(--ed-orange)', border: 'none', padding: '8px 20px', borderRadius: '8px', fontWeight: 600, cursor: 'pointer', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }} onClick={() =&gt; navigate('/trail')}&gt;
             Corrigir agora &lt;i className="bi bi-arrow-right-short" style={{ fontSize: '18px' }}&gt;&lt;/i&gt;
           &lt;/button&gt;
         &lt;/div&gt;
       ) : user?.role === 'AUDITOR' ? (
         &lt;div className="governance-alert d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-4" style={{ background: 'linear-gradient(90deg, #dc2626 0%, #ef4444 100%)', boxShadow: '0 4px 15px rgba(220, 38, 38, 0.3)' }}&gt;
-          &lt;div className="alert-content"&gt;
-            &lt;div className="alert-icon"&gt;
+          &lt;div className="alert-content flex-grow-1"&gt;
+            &lt;div className="alert-icon flex-shrink-0"&gt;
               &lt;i className="bi bi-shield-x"&gt;&lt;/i&gt;
             &lt;/div&gt;
             &lt;div className="alert-text-container"&gt;
@@ -1623,14 +1623,14 @@ const Dashboard: React.FC = () =&gt; {
               &lt;/span&gt;
             &lt;/div&gt;
           &lt;/div&gt;
-          &lt;button className="btn-alert w-100 w-md-auto" style={{ background: 'white', color: '#dc2626', width: 'max-content', flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', border: 'none', padding: '8px 20px', borderRadius: '8px', fontWeight: 600, cursor: 'pointer' }} onClick={() =&gt; navigate('/compliance-center')}&gt;
+          &lt;button className="btn-alert text-nowrap flex-shrink-0 mt-3 mt-md-0 w-100 w-md-auto" style={{ background: 'white', color: '#dc2626', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', border: 'none', padding: '8px 20px', borderRadius: '8px', fontWeight: 600, cursor: 'pointer' }} onClick={() =&gt; navigate('/compliance-center')}&gt;
             &lt;i className="bi bi-arrow-right-short" style={{ fontSize: '18px', marginRight: '4px' }}&gt;&lt;/i&gt; Investigar
           &lt;/button&gt;
         &lt;/div&gt;
       ) : (
         &lt;div className="governance-alert d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-4"&gt;
-          &lt;div className="alert-content"&gt;
-            &lt;div className="alert-icon"&gt;
+          &lt;div className="alert-content flex-grow-1"&gt;
+            &lt;div className="alert-icon flex-shrink-0"&gt;
               &lt;i className="bi bi-shield-exclamation"&gt;&lt;/i&gt;
             &lt;/div&gt;
             &lt;div className="alert-text-container"&gt;
@@ -1640,7 +1640,7 @@ const Dashboard: React.FC = () =&gt; {
               &lt;/span&gt;
             &lt;/div&gt;
           &lt;/div&gt;
-          &lt;button className="btn-alert w-100 w-md-auto" style={{ width: 'max-content', flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', border: 'none', padding: '8px 20px', borderRadius: '8px', fontWeight: 600, cursor: 'pointer', background: 'var(--ed-purple-main)', color: 'white' }} onClick={() =&gt; navigate('/trail')}&gt;
+          &lt;button className="btn-alert text-nowrap flex-shrink-0 mt-3 mt-md-0 w-100 w-md-auto" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', border: 'none', padding: '8px 20px', borderRadius: '8px', fontWeight: 600, cursor: 'pointer', background: 'var(--ed-purple-main)', color: 'white' }} onClick={() =&gt; navigate('/trail')}&gt;
             Ver detalhes &lt;i className="bi bi-arrow-right-short" style={{ fontSize: '18px', marginLeft: '4px' }}&gt;&lt;/i&gt;
           &lt;/button&gt;
         &lt;/div&gt;
@@ -1945,7 +1945,7 @@ export default Dashboard;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-07-12T13:23:38.566Z
+                at 2026-07-12T14:17:21.687Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
