@@ -44,6 +44,7 @@ public class Document {
   private String fileUrl;
 
   @Enumerated(EnumType.STRING)
+  @org.hibernate.annotations.JdbcTypeCode(org.hibernate.type.SqlTypes.NAMED_ENUM)
   @Column(nullable = false)
   private DocumentStatus status = DocumentStatus.DRAFT;
 

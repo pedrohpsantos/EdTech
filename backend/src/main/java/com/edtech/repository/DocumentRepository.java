@@ -20,8 +20,8 @@ public interface DocumentRepository extends JpaRepository<Document, UUID> {
       "SELECT d FROM Document d JOIN ProjectMember pm ON d.project.id = pm.project.id "
           + "WHERE pm.user.id = :userId "
           + "AND (:projectId IS NULL OR d.project.id = :projectId) "
-          + "AND (:title IS NULL OR LOWER(d.title) LIKE LOWER(CONCAT('%', :title, '%'))) "
-          + "AND (:status IS NULL OR d.status = :status)")
+          + "AND (:title IS NULL OR LOWER(d.title) LIKE LOWER(CONCAT('%', CAST(:title AS string), '%'))) "
+          + "AND (:status IS NULL OR CAST(d.status AS string) = CAST(:status AS string))")
   Page<Document> findDocumentsByUserIdAndFilters(
       @Param("userId") UUID userId,
       @Param("projectId") UUID projectId,
@@ -36,7 +36,7 @@ public interface DocumentRepository extends JpaRepository<Document, UUID> {
 
   @Query(
       "SELECT COUNT(d) FROM Document d JOIN ProjectMember pm ON d.project.id = pm.project.id "
-          + "WHERE pm.user.id = :userId AND d.status = :status")
+          + "WHERE pm.user.id = :userId AND CAST(d.status AS string) = CAST(:status AS string)")
   long countDocumentsByUserIdAndStatus(
       @Param("userId") UUID userId, @Param("status") com.edtech.model.DocumentStatus status);
 }
