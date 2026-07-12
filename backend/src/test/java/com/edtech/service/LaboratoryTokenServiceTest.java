@@ -27,7 +27,7 @@ class LaboratoryTokenServiceTest {
     @Test
     void testGenerateToken() {
         UUID advisorId = UUID.randomUUID();
-        String token = service.generateToken(advisorId);
+        String token = service.generateToken(advisorId, UserRole.RESEARCHER);
         assertNotNull(token);
         assertEquals(6, token.length());
     }
@@ -36,7 +36,7 @@ class LaboratoryTokenServiceTest {
     void testGenerateToken_Deterministic() throws Exception {
         UUID advisorId = UUID.fromString("00000000-0000-0000-0000-000000000000");
         long currentWeek = System.currentTimeMillis() / (7L * 24 * 60 * 60 * 1000);
-        String rawData = advisorId.toString() + ":" + currentWeek + ":" + secret;
+        String rawData = advisorId.toString() + ":" + currentWeek + ":" + secret + ":" + UserRole.RESEARCHER.name();
         
         java.security.MessageDigest digest = java.security.MessageDigest.getInstance("SHA-256");
         byte[] hash = digest.digest(rawData.getBytes(java.nio.charset.StandardCharsets.UTF_8));
@@ -49,7 +49,7 @@ class LaboratoryTokenServiceTest {
         int otp = binary % 1000000;
         String expectedToken = String.format("%06d", otp);
         
-        String token = service.generateToken(advisorId);
+        String token = service.generateToken(advisorId, UserRole.RESEARCHER);
         assertEquals(expectedToken, token);
     }
 
@@ -62,8 +62,8 @@ class LaboratoryTokenServiceTest {
         
         when(userRepository.findByRole(UserRole.ADVISOR)).thenReturn(Collections.singletonList(advisor));
         
-        String token = service.generateToken(advisorId);
-        Optional<User> found = service.findAdvisorByToken(token);
+        String token = service.generateToken(advisorId, UserRole.RESEARCHER);
+        Optional<User> found = service.findAdvisorByToken(token, UserRole.RESEARCHER);
         
         assertTrue(found.isPresent());
         assertEquals(advisorId, found.get().getId());
@@ -72,7 +72,7 @@ class LaboratoryTokenServiceTest {
     @Test
     void testFindAdvisorByToken_NotFound() {
         when(userRepository.findByRole(UserRole.ADVISOR)).thenReturn(Collections.emptyList());
-        Optional<User> found = service.findAdvisorByToken("123456");
+        Optional<User> found = service.findAdvisorByToken("123456", UserRole.RESEARCHER);
         assertFalse(found.isPresent());
     }
 }

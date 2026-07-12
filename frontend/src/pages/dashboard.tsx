@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DashboardLayout from '../components/layout/DashboardLayout';
 import { useAuth } from '../context/authContext';
-import { getDashboardStats, getAuditLogs, getComplianceStats, getDocuments } from '../services/api';
+import { getDashboardStats, getAuditLogs, getComplianceStats, getDocuments, getLaboratoryTokens, joinLaboratory } from '../services/api';
 
 const Dashboard: React.FC = () => {
   const navigate = useNavigate();
@@ -18,6 +18,12 @@ const Dashboard: React.FC = () => {
   const [auditorStats, setAuditorStats] = useState<any>(null);
   const [recentLogs, setRecentLogs] = useState<any[]>([]);
   const [recentDocs, setRecentDocs] = useState<any[]>([]);
+
+  // Token & Join states
+  const [labTokens, setLabTokens] = useState<{researcher: string, auditor: string} | null>(null);
+  const [advisorCode, setAdvisorCode] = useState('');
+  const [isJoining, setIsJoining] = useState(false);
+  const [joinMessage, setJoinMessage] = useState('');
 
   useEffect(() => {
     if (user?.role === 'RESEARCHER' || user?.role === 'ADVISOR') {
@@ -37,7 +43,28 @@ const Dashboard: React.FC = () => {
         setRecentLogs(logs.slice(0, 3));
       });
     }
+
+    if (user?.role === 'ADVISOR') {
+      getLaboratoryTokens().then((res) => {
+        if (res.sucesso) {
+          setLabTokens({ researcher: res.dados.researcher_token, auditor: res.dados.auditor_token });
+        }
+      });
+    }
   }, [user]);
+
+  const handleJoinLaboratory = async () => {
+    setJoinMessage('');
+    setIsJoining(true);
+    const res = await joinLaboratory(advisorCode);
+    if (res.sucesso) {
+      setJoinMessage('Vinculado ao laboratório com sucesso!');
+      setAdvisorCode('');
+    } else {
+      setJoinMessage(res.mensagem || 'Erro ao vincular');
+    }
+    setIsJoining(false);
+  };
 
   const customTopbar = (
     <div className="topbar-responsive-container">
@@ -112,6 +139,60 @@ const Dashboard: React.FC = () => {
       breadcrumbs={['EdTech', 'Visão Geral']}
       customTopbarElement={customTopbar}
     >
+
+      {/* PAINEL DE VÍNCULO DE LABORATÓRIO */}
+      {user?.role === 'ADVISOR' && labTokens && (
+        <div className="dashboard-card mb-4" style={{ background: 'var(--ed-purple-light)', color: 'white', border: 'none' }}>
+          <div className="card-header-flex pb-2" style={{ borderBottom: '1px solid rgba(255,255,255,0.2)' }}>
+            <h3 className="card-title text-white">Códigos de Vínculo do seu Laboratório</h3>
+          </div>
+          <div className="d-flex flex-column flex-md-row gap-4 mt-3">
+            <div style={{ flex: 1, background: 'rgba(255,255,255,0.1)', padding: '16px', borderRadius: '8px' }}>
+              <div style={{ fontSize: '12px', opacity: 0.9, textTransform: 'uppercase', letterSpacing: '1px' }}>Código para Pesquisadores</div>
+              <div style={{ fontSize: '24px', fontWeight: 'bold', letterSpacing: '4px', marginTop: '8px' }}>{labTokens.researcher}</div>
+            </div>
+            <div style={{ flex: 1, background: 'rgba(255,255,255,0.1)', padding: '16px', borderRadius: '8px' }}>
+              <div style={{ fontSize: '12px', opacity: 0.9, textTransform: 'uppercase', letterSpacing: '1px' }}>Código para Auditores</div>
+              <div style={{ fontSize: '24px', fontWeight: 'bold', letterSpacing: '4px', marginTop: '8px' }}>{labTokens.auditor}</div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {(user?.role === 'RESEARCHER' || user?.role === 'AUDITOR') && (
+        <div className="dashboard-card mb-4" style={{ border: '1px solid var(--ed-purple-main)' }}>
+          <div className="card-header-flex pb-2">
+            <div>
+              <h3 className="card-title" style={{ color: 'var(--ed-purple-main)' }}>Vincular a um Laboratório</h3>
+              <p className="card-title-muted mt-1">Insira o código fornecido pelo orientador para se vincular ao laboratório</p>
+            </div>
+          </div>
+          <div style={{ display: 'flex', gap: '0.5rem', width: '100%', maxWidth: '500px', marginTop: '16px' }}>
+            <input
+              type="text"
+              className="ed-input"
+              placeholder="Digite o código de 6 dígitos"
+              value={advisorCode}
+              onChange={(e) => setAdvisorCode(e.target.value)}
+              style={{ flex: 1 }}
+            />
+            <button 
+              className="btn-alert" 
+              style={{ background: 'var(--ed-purple-main)', color: 'white', border: 'none', padding: '8px 20px', borderRadius: '8px', fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap' }}
+              onClick={handleJoinLaboratory} 
+              disabled={!advisorCode.trim() || isJoining}
+            >
+              {isJoining ? 'Vinculando...' : 'Vincular'}
+            </button>
+          </div>
+          {joinMessage && (
+            <div style={{ marginTop: '0.5rem', fontSize: '0.875rem', color: joinMessage.includes('sucesso') ? 'var(--ed-status-success)' : '#d32f2f', fontWeight: 500 }}>
+              {joinMessage}
+            </div>
+          )}
+        </div>
+      )}
+
       
       {/* 1. SEÇÃO DE CARDS INDICADORES (STATS ROW REFACTORADO) */}
       <div className="row g-3 mb-4">

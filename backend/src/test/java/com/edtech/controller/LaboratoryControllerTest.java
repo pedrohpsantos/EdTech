@@ -40,12 +40,14 @@ class LaboratoryControllerTest {
         advisor.setRole(UserRole.ADVISOR);
 
         when(userRepository.findByEmailIgnoreCase("advisor@unb.br")).thenReturn(Optional.of(advisor));
-        when(tokenService.generateToken(advisorId)).thenReturn("123456");
+        when(tokenService.generateToken(advisorId, UserRole.RESEARCHER)).thenReturn("123456");
+        when(tokenService.generateToken(advisorId, UserRole.AUDITOR)).thenReturn("654321");
 
         ResponseEntity<?> response = controller.getLaboratoryToken(userDetails);
         assertEquals(200, response.getStatusCode().value());
         Map<?, ?> body = (Map<?, ?>) response.getBody();
-        assertEquals("123456", body.get("token"));
+        assertEquals("123456", body.get("researcher_token"));
+        assertEquals("654321", body.get("auditor_token"));
     }
 
     @Test
@@ -70,7 +72,7 @@ class LaboratoryControllerTest {
 
         User advisor = new User("Dr. Advisor", "advisor@unb.br", "hash", UserRole.ADVISOR, UUID.randomUUID());
 
-        when(tokenService.findAdvisorByToken("123456")).thenReturn(Optional.of(advisor));
+        when(tokenService.findAdvisorByToken(eq("123456"), any())).thenReturn(Optional.of(advisor));
         when(userRepository.findByEmailIgnoreCase("student@unb.br")).thenReturn(Optional.of(student));
 
         ResponseEntity<?> response = controller.joinLaboratory(userDetails, Map.of("token", "123456"));
@@ -89,7 +91,10 @@ class LaboratoryControllerTest {
     @Test
     void joinLaboratory_InvalidToken() {
         UserDetails userDetails = mock(UserDetails.class);
-        when(tokenService.findAdvisorByToken("123456")).thenReturn(Optional.empty());
+        when(userDetails.getUsername()).thenReturn("student@unb.br");
+        User student = new User("Student", "student@unb.br", "hash", UserRole.RESEARCHER, UUID.randomUUID());
+        when(userRepository.findByEmailIgnoreCase("student@unb.br")).thenReturn(Optional.of(student));
+        when(tokenService.findAdvisorByToken("123456", UserRole.RESEARCHER)).thenReturn(Optional.empty());
         ResponseEntity<?> response = controller.joinLaboratory(userDetails, Map.of("token", "123456"));
         assertEquals(400, response.getStatusCode().value());
     }
@@ -99,7 +104,6 @@ class LaboratoryControllerTest {
         UserDetails userDetails = mock(UserDetails.class);
         when(userDetails.getUsername()).thenReturn("student@unb.br");
         User advisor = new User("Dr. Advisor", "advisor@unb.br", "hash", UserRole.ADVISOR, UUID.randomUUID());
-        when(tokenService.findAdvisorByToken("123456")).thenReturn(Optional.of(advisor));
         when(userRepository.findByEmailIgnoreCase("student@unb.br")).thenReturn(Optional.empty());
         
         ResponseEntity<?> response = controller.joinLaboratory(userDetails, Map.of("token", "123456"));

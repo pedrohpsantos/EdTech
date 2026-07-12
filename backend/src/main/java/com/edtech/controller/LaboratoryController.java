@@ -38,8 +38,13 @@ public class LaboratoryController {
           .body(Map.of("error", "Apenas orientadores podem gerar tokens do laboratorio"));
     }
 
-    String token = laboratoryTokenService.generateToken(userOpt.get().getId());
-    return ResponseEntity.ok(Map.of("token", token, "expires_in", "Final da semana"));
+    String researcherToken = laboratoryTokenService.generateToken(userOpt.get().getId(), UserRole.RESEARCHER);
+    String auditorToken = laboratoryTokenService.generateToken(userOpt.get().getId(), UserRole.AUDITOR);
+    return ResponseEntity.ok(Map.of(
+        "researcher_token", researcherToken,
+        "auditor_token", auditorToken,
+        "expires_in", "Final da semana"
+    ));
   }
 
   /** Javadoc. */
@@ -51,17 +56,17 @@ public class LaboratoryController {
       return ResponseEntity.badRequest().body(Map.of("error", "O campo token e obrigatorio"));
     }
 
-    Optional<User> advisorOpt = laboratoryTokenService.findAdvisorByToken(token);
-    if (advisorOpt.isEmpty()) {
-      return ResponseEntity.status(400).body(Map.of("error", "Token invalido ou expirado"));
-    }
-
     Optional<User> currentUserOpt = userRepository.findByEmailIgnoreCase(userDetails.getUsername());
     if (currentUserOpt.isEmpty()) {
       return ResponseEntity.status(401).build();
     }
-
     User currentUser = currentUserOpt.get();
+
+    Optional<User> advisorOpt = laboratoryTokenService.findAdvisorByToken(token, currentUser.getRole());
+    if (advisorOpt.isEmpty()) {
+      return ResponseEntity.status(400).body(Map.of("error", "Token invalido ou expirado para o seu cargo"));
+    }
+
     User advisor = advisorOpt.get();
 
     currentUser.setInstitutionId(advisor.getInstitutionId());

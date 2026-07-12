@@ -194,6 +194,15 @@ export const joinProject = async (projectId: string): Promise<ApiResponse<any>> 
   }
 };
 
+export const getLaboratoryTokens = async (): Promise<ApiResponse<{researcher_token: string; auditor_token: string; expires_in: string}>> => {
+  try {
+    const resposta = await api.get('/api/v1/laboratory/token');
+    return { sucesso: true, dados: resposta.data };
+  } catch (error) {
+    return handleApiError(error, 'Erro ao buscar tokens do laboratório.');
+  }
+};
+
 export const joinLaboratory = async (token: string): Promise<ApiResponse<any>> => {
   try {
     const resposta = await api.post('/api/v1/laboratory/join', { token });

@@ -27,9 +27,9 @@ public class LaboratoryTokenService {
   }
 
   /** Javadoc. */
-  public String generateToken(UUID advisorId) {
+  public String generateToken(UUID advisorId, UserRole targetRole) {
     long currentWeek = System.currentTimeMillis() / (7L * 24 * 60 * 60 * 1000);
-    String rawData = advisorId.toString() + ":" + currentWeek + ":" + serverSecret;
+    String rawData = advisorId.toString() + ":" + currentWeek + ":" + serverSecret + ":" + targetRole.name();
     try {
       MessageDigest digest = MessageDigest.getInstance("SHA-256");
       byte[] hash = digest.digest(rawData.getBytes(StandardCharsets.UTF_8));
@@ -50,10 +50,10 @@ public class LaboratoryTokenService {
   }
 
   /** Javadoc. */
-  public Optional<User> findAdvisorByToken(String token) {
+  public Optional<User> findAdvisorByToken(String token, UserRole targetRole) {
     List<User> advisors = userRepository.findByRole(UserRole.ADVISOR);
     for (User advisor : advisors) {
-      if (generateToken(advisor.getId()).equals(token)) {
+      if (generateToken(advisor.getId(), targetRole).equals(token)) {
         return Optional.of(advisor);
       }
     }
