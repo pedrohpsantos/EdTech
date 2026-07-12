@@ -29,6 +29,15 @@ export const options = {
   },
 };
 
+// Função setup roda uma vez antes do teste iniciar para acordar o backend (Cold Start)
+export function setup() {
+  const baseUrl = __ENV.API_URL || 'http://localhost:8080';
+  // Requisição de aquecimento com timeout longo para garantir que o Cloud Run suba
+  http.get(`${baseUrl}/actuator/health`, { timeout: '120s' });
+  // Pequena pausa para garantir que os pools de conexão do banco se estabilizem
+  sleep(5);
+}
+
 // Esta função roda repetidamente para cada usuário virtual.
 export default function () {
   // Definimos a URL base da API.
@@ -38,12 +47,14 @@ export default function () {
     headers: {
       'Content-Type': 'application/json',
     },
+    timeout: '120s',
     // Evita que o K6 marque respostas 4xx esperadas como "Failed Requests" no relatório.
     responseCallback: http.expectedStatuses(200, 201, 400, 401, 404, 409, 429),
   };
 
   // 1. Endpoint de Health Check (Actuator) - Simula monitoramento
   const healthResponse = http.get(`${baseUrl}/actuator/health`, {
+    timeout: '120s',
     responseCallback: http.expectedStatuses(200, 429, 503),
   });
   check(healthResponse, {
