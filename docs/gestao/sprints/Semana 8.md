@@ -27,6 +27,9 @@ Nesta semana, fechamos o escopo técnico do projeto com chave de ouro:
 - [x] Implementação de bateria de testes de Carga e Stress via **K6**, com integração na pipeline CI recebendo a `API_URL` dinamicamente.
 - [x] Suporte e visualização inteligente de arquivos **CSV e JSON** no frontend através do componente `DatasetPreview`, essencial para o Painel do Orientador.
 
+### :material-shield-check: Segurança
+- [x] Implementação de **Verificação de Malwares** no fluxo de upload de documentos, bloqueando assinaturas maliciosas com integração à API do ClamAV antes da persistência no Storage.
+
 ### :material-file-document-edit: Developer Experience e Documentação
 - [x] Criação da documentação de **FinOps e Custos (TCO)**, trazendo previsibilidade orçamentária à nossa arquitetura Cloud.
 - [x] Criação de **Runbooks** para Troubleshooting e Resposta a Incidentes, orientando a operação contra falhas comuns.
