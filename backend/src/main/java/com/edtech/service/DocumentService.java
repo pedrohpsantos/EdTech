@@ -98,8 +98,9 @@ public class DocumentService {
 
       String contentType = validateAllowedFile(file, originalFilename);
 
-      if(!clamAvService.isFileSafe(file)) {
-        throw new IllegalArgumentException("Upload rejeitado: Assinatura de vírus detectada no arquivo.");
+      if (!clamAvService.isFileSafe(file)) {
+        throw new IllegalArgumentException(
+            "Upload rejeitado: Assinatura de vírus detectada no arquivo.");
       }
 
       String fileKey = UUID.randomUUID() + "_" + originalFilename;

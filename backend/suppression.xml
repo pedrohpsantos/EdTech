@@ -46,6 +46,20 @@
         <cve>CVE-2026-49458</cve>
         <cve>CVE-2026-49459</cve>
         <cve>CVE-2026-49978</cve>
+        <vulnerabilityName>GHSA-39q2-94rc-95cp</vulnerabilityName>
+        <vulnerabilityName>GHSA-76mc-f452-cxcm</vulnerabilityName>
+        <vulnerabilityName>GHSA-cmwh-pvxp-8882</vulnerabilityName>
+        <vulnerabilityName>GHSA-gvmj-g25r-r7wr</vulnerabilityName>
+        <vulnerabilityName>GHSA-vxr8-fq34-vvx9</vulnerabilityName>
+        <vulnerabilityName>GHSA-x4vx-rjvf-j5p4</vulnerabilityName>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[
+        Suppressing Kotlin Stdlib vulnerabilities coming from clamav-client
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.jetbrains\.kotlin/kotlin-stdlib.*@.*$</packageUrl>
+        <cve>CVE-2026-53914</cve>
+        <cve>CVE-2020-29582</cve>
     </suppress>
     <suppress>
         <notes><![CDATA[
