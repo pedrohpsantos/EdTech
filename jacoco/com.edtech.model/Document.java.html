@@ -72,9 +72,9 @@ import org.hibernate.annotations.SQLRestriction;
 
   @PrePersist
   protected void onCreate() {
-<span class="fc" id="L75">    this.createdAt = ZonedDateTime.now();</span>
-<span class="fc" id="L76">    this.updatedAt = ZonedDateTime.now();</span>
-<span class="fc" id="L77">  }</span>
+<span class="nc" id="L75">    this.createdAt = ZonedDateTime.now();</span>
+<span class="nc" id="L76">    this.updatedAt = ZonedDateTime.now();</span>
+<span class="nc" id="L77">  }</span>
 
   @PreUpdate
   protected void onUpdate() {
@@ -99,8 +99,8 @@ import org.hibernate.annotations.SQLRestriction;
 
   /** Documentação para o método setInstitutionId. */
   public void setInstitutionId(UUID institutionId) {
-<span class="fc" id="L102">    this.institutionId = institutionId;</span>
-<span class="fc" id="L103">  }</span>
+<span class="nc" id="L102">    this.institutionId = institutionId;</span>
+<span class="nc" id="L103">  }</span>
 
   /** Documentação para o método getTitle. */
   public String getTitle() {
