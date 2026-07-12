@@ -24,7 +24,7 @@ spring:
     locations: classpath:db/migration
 
 cors:
-  allowed-origins: ${CORS_ALLOWED_ORIGINS:https://edtech-academic.web.app,https://edtech-academic.vercel.app,https://edtech-storage-501117.web.app}
+  allowed-origins: ${CORS_ALLOWED_ORIGINS:https://edtech-academic.web.app,https://edtech-academic.vercel.app,https://edtechacademic.com.br}
 
 jwt:
   cookie-secure: true

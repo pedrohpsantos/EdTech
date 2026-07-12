@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Production Smoke Test', () => {
   
-  const BASE_URL = process.env.BASE_URL || 'https://edtech-storage-501117.web.app';
+  const BASE_URL = process.env.BASE_URL || 'https://edtechacademic.com.br';
   const API_URL = process.env.API_URL || 'https://edtech-backend-shv6qbpf4q-rj.a.run.app';
   
   test('A aplicação frontend está acessível e HTTPS (TLS) é forçado', async ({ page }) => {

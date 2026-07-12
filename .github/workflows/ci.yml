@@ -429,7 +429,7 @@ jobs:
             -var="project_id=edtech-storage-501117" \
             -var="backend_image_tag=${{ github.sha }}" \
             -var="storage_bucket_name=edtech-vault-storage" \
-            -var="cors_allowed_origin=https://edtech-storage-501117.web.app" || {
+            -var="cors_allowed_origin=https://edtechacademic.com.br" || {
               echo "Terraform Apply failed. Fetching Cloud Run logs for debugging:"
               gcloud logging read 'resource.type="cloud_run_revision" AND resource.labels.service_name="edtech-backend" AND severity>=ERROR' \
                 --limit 50 --format="value(textPayload)" --project=edtech-storage-501117
@@ -510,7 +510,7 @@ jobs:
         working-directory: frontend
         run: npx playwright test
         env:
-          BASE_URL: 'https://edtech-storage-501117.web.app'
+          BASE_URL: 'https://edtechacademic.com.br'
       - name: Production E2E Summary
         if: always()
         run: |
@@ -521,7 +521,7 @@ jobs:
             echo "| --- | --- |"
             echo "| Playwright smoke tests | ${{ steps.e2e-production-tests.outcome }} |"
             echo
-            echo "Base URL: https://edtech-storage-501117.web.app"
+            echo "Base URL: https://edtechacademic.com.br"
           } >> "$GITHUB_STEP_SUMMARY"
 
   prod-performance:
@@ -586,7 +586,7 @@ jobs:
       - name: Run Lighthouse Audit
         run: |
           npm install -g @lhci/cli@0.13.0
-          lhci collect --config=tests/lighthouse/lighthouserc.json --url="https://edtech-storage-501117.web.app/" --numberOfRuns=3
+          lhci collect --config=tests/lighthouse/lighthouserc.json --url="https://edtechacademic.com.br/" --numberOfRuns=3
           lhci assert --config=tests/lighthouse/lighthouserc.json
           lhci upload --config=tests/lighthouse/lighthouserc.json --target=filesystem --outputDir=tests/lighthouse
       - name: Upload Lighthouse Report

@@ -164,7 +164,7 @@ jobs:
         working-directory: frontend
         run: npx playwright test || true
         env:
-          BASE_URL: 'https://edtech-storage-501117.web.app'
+          BASE_URL: 'https://edtechacademic.com.br'
 
       - name: Gerar Allure Report
         if: matrix.report-type == 'frontend'
@@ -208,7 +208,7 @@ jobs:
         run: |
           npm install -g @lhci/cli@0.13.0
           mkdir -p tests/lighthouse
-          lhci collect --config=tests/lighthouse/lighthouserc.json --url="https://edtech-storage-501117.web.app/" --numberOfRuns=3
+          lhci collect --config=tests/lighthouse/lighthouserc.json --url="https://edtechacademic.com.br/" --numberOfRuns=3
           lhci assert --config=tests/lighthouse/lighthouserc.json
           npm install -g http-server
           lhci upload --config=tests/lighthouse/lighthouserc.json --target=filesystem --outputDir=tests/lighthouse
