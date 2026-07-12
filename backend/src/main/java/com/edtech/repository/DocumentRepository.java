@@ -20,7 +20,8 @@ public interface DocumentRepository extends JpaRepository<Document, UUID> {
       "SELECT d FROM Document d JOIN ProjectMember pm ON d.project.id = pm.project.id "
           + "WHERE pm.user.id = :userId "
           + "AND (:projectId IS NULL OR d.project.id = :projectId) "
-          + "AND (:title IS NULL OR LOWER(d.title) LIKE LOWER(CONCAT('%', CAST(:title AS string), '%'))) "
+          + "AND (:title IS NULL OR LOWER(d.title) LIKE "
+          + "LOWER(CONCAT('%', CAST(:title AS string), '%'))) "
           + "AND (:status IS NULL OR CAST(d.status AS string) = CAST(:status AS string))")
   Page<Document> findDocumentsByUserIdAndFilters(
       @Param("userId") UUID userId,
