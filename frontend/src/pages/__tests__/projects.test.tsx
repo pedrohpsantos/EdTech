@@ -81,20 +81,17 @@ describe('Projects Page', () => {
       { id: '1', name: 'Project 1', description: 'Desc 1', createdAt: '2023-01-01T00:00:00Z' },
       { id: '2', name: 'Project 2', description: 'Desc 2', createdAt: null }
     ];
-    (getProjects as any).mockResolvedValueOnce({ sucesso: true, dados: mockProjects });
-    (getProjects as any).mockResolvedValueOnce({ sucesso: true, dados: mockProjects }); // For the reload
-    
+    (getProjects as any).mockResolvedValue({ sucesso: true, dados: mockProjects });
     (joinProject as any).mockResolvedValueOnce({ sucesso: true });
 
     render(<Projects />);
     
+    // Flush initial promises to render projects
     await act(async () => {
-      vi.runAllTimers();
+      await vi.advanceTimersByTimeAsync(1); 
     });
 
-    await waitFor(() => {
-      expect(screen.getByText('Project 1')).toBeInTheDocument();
-    });
+    expect(screen.getByText('Project 1')).toBeInTheDocument();
     expect(screen.getByText('Desc 1')).toBeInTheDocument();
     expect(screen.getByText(/N\/A/)).toBeInTheDocument(); // For null createdAt
 
@@ -111,16 +108,18 @@ describe('Projects Page', () => {
 
     expect(joinProject).toHaveBeenCalledWith('1');
 
-    await waitFor(() => {
-      expect(screen.getByText('Associado ao projeto com sucesso!')).toBeInTheDocument();
-    });
-
+    // Wait for the join to succeed and toast to show
     await act(async () => {
-      vi.advanceTimersByTime(3100);
+      await vi.advanceTimersByTimeAsync(1);
+    });
+    expect(screen.getByText('Associado ao projeto com sucesso!')).toBeInTheDocument();
+
+    // Advance 3s to hide toast
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(3100);
     });
 
     expect(screen.queryByText('Associado ao projeto com sucesso!')).not.toBeInTheDocument();
-    vi.useRealTimers();
   });
 
   it('handles join failure', async () => {
