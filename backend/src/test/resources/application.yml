@@ -9,6 +9,7 @@ spring:
     password:
     driver-class-name: org.h2.Driver
   jpa:
+    open-in-view: false
     hibernate:
       ddl-auto: create-drop
   mail:
@@ -28,3 +29,9 @@ jwt:
 
 storage:
   provider: local
+
+springdoc:
+  api-docs:
+    enabled: false
+  swagger-ui:
+    enabled: false

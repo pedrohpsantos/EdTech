@@ -1,24 +1,28 @@
 [
   {
-    "name": "Ignored tests", 
-    "matchedStatuses": ["skipped"] 
+    "name": "Smoke tests aprovados",
+    "matchedStatuses": ["passed"]
   },
   {
-    "name": "Infrastructure problems",
+    "name": "Testes ignorados",
+    "matchedStatuses": ["skipped"]
+  },
+  {
+    "name": "Problemas de infraestrutura",
     "matchedStatuses": ["broken", "failed"],
     "messageRegex": ".*timeout.*" 
   },
   {
-    "name": "Outdated tests",
+    "name": "Testes desatualizados",
     "matchedStatuses": ["broken"],
     "traceRegex": ".*FileNotFoundException.*" 
   },
   {
-    "name": "Product defects",
+    "name": "Defeitos do produto",
     "matchedStatuses": ["failed"] 
   },
   {
-    "name": "Test defects",
+    "name": "Defeitos dos testes",
     "matchedStatuses": ["broken"] 
   }
 ]

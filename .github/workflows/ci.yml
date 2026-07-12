@@ -127,7 +127,7 @@ jobs:
       # --- PITEST ---
       - name: Cache PiTest History
         if: matrix.task == 'pitest'
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: backend/target/pitHistory.txt
           key: pitest-history-${{ github.ref }}-${{ github.sha }}
@@ -160,16 +160,16 @@ jobs:
           MAX_RETRIES=3
           RETRY_COUNT=0
           SUCCESS=0
-          while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
+          while [ "$RETRY_COUNT" -lt "$MAX_RETRIES" ]; do
             if [ -z "$NVD_API_KEY" ]; then
               if ./mvnw org.owasp:dependency-check-maven:check -B -T 1C -Ddependency-check.nvdApiDelay=16000; then SUCCESS=1; break; fi
             else
-              if ./mvnw org.owasp:dependency-check-maven:check -B -T 1C -Ddependency-check.nvdApiKey=$NVD_API_KEY -Ddependency-check.nvdApiDelay=8000; then SUCCESS=1; break; fi
+              if ./mvnw org.owasp:dependency-check-maven:check -B -T 1C -Ddependency-check.nvdApiKey="$NVD_API_KEY" -Ddependency-check.nvdApiDelay=8000; then SUCCESS=1; break; fi
             fi
-            RETRY_COUNT=$(($RETRY_COUNT+1))
-            if [ $RETRY_COUNT -lt $MAX_RETRIES ]; then sleep 30; fi
+            RETRY_COUNT=$((RETRY_COUNT + 1))
+            if [ "$RETRY_COUNT" -lt "$MAX_RETRIES" ]; then sleep 30; fi
           done
-          if [ $SUCCESS -eq 0 ]; then exit 1; fi
+          if [ "$SUCCESS" -eq 0 ]; then exit 1; fi
 
   # ==========================================
   #                 FRONTEND
@@ -272,7 +272,7 @@ jobs:
       # --- MUTATION TESTS (STRYKER) ---
       - name: Cache Stryker History
         if: matrix.task == 'mutation'
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: frontend/reports/mutation/stryker-incremental.json
           key: stryker-history-${{ github.ref }}-${{ github.sha }}
@@ -294,6 +294,13 @@ jobs:
             echo "| --- | --- |"
             echo "| Mutation tests | ${{ steps.mutation-tests.outcome }} |"
           } >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload Stryker Report
+        if: always() && matrix.task == 'mutation'
+        uses: actions/upload-artifact@v7
+        with:
+          name: stryker-report
+          path: frontend/reports/mutation/html/
+          if-no-files-found: error
 
   # ==========================================
   #                 INFRASTRUCTURE
@@ -353,10 +360,10 @@ jobs:
         run: gcloud auth configure-docker southamerica-east1-docker.pkg.dev --quiet
       - name: Set up Docker Buildx
         if: github.ref == 'refs/heads/main' && matrix.task == 'docker'
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4
       - name: Build and Push Backend Image
         if: github.ref == 'refs/heads/main' && matrix.task == 'docker'
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: backend/
           file: backend/Dockerfile.ci
@@ -487,7 +494,7 @@ jobs:
         working-directory: frontend
         run: |
           PLAYWRIGHT_VERSION=$(npx playwright --version | awk '{print $2}')
-          echo "version=$PLAYWRIGHT_VERSION" >> $GITHUB_OUTPUT
+          echo "version=$PLAYWRIGHT_VERSION" >> "$GITHUB_OUTPUT"
       - name: Cache Playwright browsers
         uses: actions/cache@v6
         with:
@@ -577,12 +584,11 @@ jobs:
       - name: Run Lighthouse Audit
         run: |
           npm install -g @lhci/cli@0.13.0
-          mkdir -p lighthouse-report
           lhci collect --config=tests/lighthouse/lighthouserc.json --url="https://edtech-storage-501117.web.app/" --numberOfRuns=3
           lhci assert --config=tests/lighthouse/lighthouserc.json
           lhci upload --config=tests/lighthouse/lighthouserc.json --target=filesystem --outputDir=tests/lighthouse
       - name: Upload Lighthouse Report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: lighthouse-report
           path: tests/lighthouse/

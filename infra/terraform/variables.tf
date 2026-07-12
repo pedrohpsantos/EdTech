@@ -51,7 +51,7 @@ variable "database_instance_name" {
 variable "database_version" {
   description = "Cloud SQL PostgreSQL version."
   type        = string
-  default     = "POSTGRES_16"
+  default     = "POSTGRES_18"
 }
 
 variable "database_tier" {

@@ -2,7 +2,6 @@ package com.edtech.security;
 
 import io.github.bucket4j.Bandwidth;
 import io.github.bucket4j.Bucket;
-import io.github.bucket4j.Refill;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,8 +22,8 @@ public class RateLimitFilter extends OncePerRequestFilter {
 
   private Bucket createNewBucket() {
     // Limit: 5 requests per minute
-    Refill refill = Refill.intervally(5, Duration.ofMinutes(1));
-    Bandwidth limit = Bandwidth.classic(5, refill);
+    Bandwidth limit =
+        Bandwidth.builder().capacity(5).refillIntervally(5, Duration.ofMinutes(1)).build();
     return Bucket.builder().addLimit(limit).build();
   }
 

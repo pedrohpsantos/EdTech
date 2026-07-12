@@ -2,6 +2,11 @@ import React from 'react';
 import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import Documentos from '../documentos';
+import { useDocuments, useUploadDocument, useDownloadUrl, useToggleStar } from '../../hooks/useDocuments';
+
+vi.mock('react-router-dom', () => ({
+  useNavigate: () => vi.fn(),
+}));
 vi.mock('../../hooks/useDocuments', () => ({
   useDocuments: vi.fn(),
   useUploadDocument: vi.fn(),

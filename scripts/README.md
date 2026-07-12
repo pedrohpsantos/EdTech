@@ -23,7 +23,7 @@ A execução deve ocorrer através do utilitário `uv run` a partir do diretóri
 
 ```bash
 # Execução a partir da raiz do monorepo
-uv run scripts/gerar_relatorio_orientador.py
+uv run scripts/telemetry/main.py
 ```
 
 ---

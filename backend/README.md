@@ -2,7 +2,7 @@
 
 ![Java](https://img.shields.io/badge/Java-21_LTS-007396?style=for-the-badge&logo=openjdk&logoColor=white)
 ![Spring Boot](https://img.shields.io/badge/Spring_Boot-4.1-6DB33F?style=for-the-badge&logo=springboot&logoColor=white)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-18-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
 ![Security](https://img.shields.io/badge/Security-JWT-red?style=for-the-badge&logo=springsecurity)
 
 API RESTful do EdTech desenvolvida em **Java 21** com **Spring Boot 4.1**. Responsável pelas regras de negócio, autenticação, controle de acesso e persistência de dados.

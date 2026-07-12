@@ -20,7 +20,7 @@ services:
 
   backend:
     build:
-      context: ../backend
+      context: ../../backend
       dockerfile: Dockerfile
     container_name: edtech-backend
     depends_on:
@@ -38,12 +38,10 @@ services:
       STORAGE_PROVIDER: ${STORAGE_PROVIDER:-gcs}
       GCP_PROJECT_ID: ${GCP_PROJECT_ID:-local-dev}
       GCP_BUCKET_NAME: ${GCP_BUCKET_NAME:-local-bucket}
-      GCP_CREDENTIALS_LOCATION: ${GCP_CREDENTIALS_LOCATION}
+      GCP_CREDENTIALS_LOCATION: ${GCP_CREDENTIALS_LOCATION:-}
       STORAGE_EMULATOR_HOST: http://fake-gcs:4443
     ports:
       - "${BACKEND_PORT:-8080}:8080"
-    volumes:
-      - ./gcp-credentials.json:/app/gcp-credentials.json:ro
     healthcheck:
       test: ["CMD-SHELL", "wget -qO- http://localhost:8080/actuator/health | grep -q 'UP'"]
       interval: 10s
@@ -54,8 +52,10 @@ services:
 
   frontend:
     build:
-      context: ../frontend
+      context: ../../frontend
       dockerfile: Dockerfile
+      args:
+        VITE_API_URL: http://localhost:${BACKEND_PORT:-8080}
     container_name: edtech-frontend
     depends_on:
       backend:

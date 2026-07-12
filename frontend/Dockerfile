@@ -1,5 +1,5 @@
 # Estágio de Build
-FROM node:20-alpine AS build
+FROM node:24-alpine AS build
 
 # Diretório de trabalho
 WORKDIR /app
@@ -29,7 +29,7 @@ COPY --from=build /app/dist /usr/share/nginx/html
 # Copiar arquivo de configuração do nginx se necessário (fallback para SPA router)
 # Como é React Router, o fallback pro index.html é essencial
 RUN echo 'server { \
-    listen       80; \
+    listen       8080; \
     server_name  localhost; \
     location / { \
         root   /usr/share/nginx/html; \

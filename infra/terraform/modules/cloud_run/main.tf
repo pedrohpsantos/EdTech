@@ -59,9 +59,9 @@ resource "google_secret_manager_secret_iam_member" "spring_username_permission" 
 resource "google_cloud_run_v2_service" "api" {
   client         = "gcloud"
   client_version = "568.0.0"
-  name     = var.service_name
-  location = var.location
-  ingress  = "INGRESS_TRAFFIC_ALL"
+  name           = var.service_name
+  location       = var.location
+  ingress        = "INGRESS_TRAFFIC_ALL"
 
 
   template {

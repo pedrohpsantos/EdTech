@@ -29,3 +29,9 @@ cors:
 jwt:
   cookie-secure: true
   cookie-same-site: None
+
+springdoc:
+  api-docs:
+    enabled: false
+  swagger-ui:
+    enabled: false

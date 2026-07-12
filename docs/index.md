@@ -109,12 +109,12 @@ Tecnologias selecionadas para máxima robustez, segurança e automação.
 
 | Camada | Tecnologias |
 | :--- | :--- |
-| **Frontend** | ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black) ![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white) ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white) ![Bootstrap](https://img.shields.io/badge/Bootstrap-5-7952B3?logo=bootstrap&logoColor=white) |
-| **Backend** | ![Java](https://img.shields.io/badge/Java-21_LTS-007396?logo=openjdk&logoColor=white) ![Spring Boot](https://img.shields.io/badge/Spring_Boot-4.1-6DB33F?logo=springboot&logoColor=white) ![Spring Security](https://img.shields.io/badge/Spring_Security-JWT-6DB33F?logo=springsecurity&logoColor=white) |
-| **Dados** | ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-4169E1?logo=postgresql&logoColor=white) ![Cloud Storage](https://img.shields.io/badge/Google_Cloud_Storage-4285F4?logo=googlecloud&logoColor=white) ![Flyway](https://img.shields.io/badge/Flyway-Migrations-CC0200?logo=flyway&logoColor=white) |
-| **Infraestrutura e Nuvem** | ![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white) ![Terraform](https://img.shields.io/badge/Terraform-7B42BC?logo=terraform&logoColor=white) ![Cloud Run](https://img.shields.io/badge/Cloud_Run-4285F4?logo=googlecloud&logoColor=white) ![Firebase](https://img.shields.io/badge/Firebase_Hosting-FFCA28?logo=firebase&logoColor=white) ![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?logo=githubactions&logoColor=white) |
-| **Garantia de Qualidade (QA)** | ![JUnit5](https://img.shields.io/badge/JUnit_5-25A162?logo=junit5&logoColor=white) ![Vitest](https://img.shields.io/badge/Vitest-729B1B?logo=vitest&logoColor=white) ![JaCoCo](https://img.shields.io/badge/JaCoCo-Coverage-red) ![PiTest](https://img.shields.io/badge/PiTest-Mutation-orange) ![Stryker](https://img.shields.io/badge/Stryker-Mutation-E36209?logo=stryker&logoColor=white) ![Playwright](https://img.shields.io/badge/Playwright-E2E-2EAD33?logo=playwright&logoColor=white) ![K6](https://img.shields.io/badge/K6-Load_Testing-7D64FF?logo=k6&logoColor=white) ![Lighthouse](https://img.shields.io/badge/Lighthouse-UX_%26_SEO-F44B21?logo=lighthouse&logoColor=white) |
-| **Scripts e Documentação** | ![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white) ![Pandas](https://img.shields.io/badge/Pandas-150458?logo=pandas&logoColor=white) ![MkDocs](https://img.shields.io/badge/MkDocs_Material-526CFE?logo=materialformkdocs&logoColor=white) |
+| **Frontend** | React, Vite, TypeScript, Bootstrap, TanStack Query, Axios |
+| **Backend** | Java, Spring Boot, Spring Security, Maven |
+| **Dados** | PostgreSQL, Google Cloud Storage, Flyway |
+| **Infraestrutura e Nuvem** | Docker, Terraform, Google Cloud Run, Firebase Hosting, GitHub Actions |
+| **Garantia de Qualidade (QA)** | JUnit, Vitest, JaCoCo, PiTest, Stryker, Playwright, k6, Lighthouse, Allure |
+| **Scripts e Documentação** | Python, Pandas, MkDocs Material, uv |
 
 [:material-arrow-right: Ver C4 Model Completo](arquitetura/diagramas/c4_model.md){ .md-button style="margin-top: 1rem;" }
 

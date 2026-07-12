@@ -2,8 +2,8 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Production Smoke Test', () => {
   
-  const BASE_URL = 'https://edtech-storage-501117.web.app';
-  const API_URL = 'https://edtech-backend-shv6qbpf4q-rj.a.run.app';
+  const BASE_URL = process.env.BASE_URL || 'https://edtech-storage-501117.web.app';
+  const API_URL = process.env.API_URL || 'https://edtech-backend-shv6qbpf4q-rj.a.run.app';
   
   test('A aplicação frontend está acessível e HTTPS (TLS) é forçado', async ({ page }) => {
     const response = await page.goto(BASE_URL);
@@ -33,12 +33,10 @@ test.describe('Production Smoke Test', () => {
     expect(allowOrigin).toBeDefined();
   });
 
-  test('Servidor devolve cookie XSRF-TOKEN na raiz da API', async ({ request }) => {
-    const response = await request.fetch(`${API_URL}/`);
-    const cookies = response.headers()['set-cookie'];
-    if (cookies) {
-      expect(cookies).toContain('XSRF-TOKEN');
-    }
+  test('Health check do backend está disponível', async ({ request }) => {
+    const response = await request.get(`${API_URL}/actuator/health`, { timeout: 30_000 });
+    expect(response.ok()).toBeTruthy();
+    expect((await response.json()).status).toBe('UP');
   });
 
   test('Rotas protegidas bloqueiam acesso e redirecionam para o Login', async ({ page }) => {
@@ -59,7 +57,7 @@ test.describe('Production Smoke Test', () => {
     await expect(page.locator('input[type="password"]')).toBeVisible();
     
     // Verifica botão de Entrar
-    await expect(page.getByRole('button', { name: /Entrar/i })).toBeVisible();
+    await expect(page.getByRole('button', { name: /continuar/i })).toBeVisible();
   });
 
   test('Tentativa de login com credenciais inválidas exibe alerta', async ({ page }) => {
@@ -67,7 +65,7 @@ test.describe('Production Smoke Test', () => {
     
     await page.locator('input[type="email"]').fill('teste_invalido@edu.br');
     await page.locator('input[type="password"]').fill('senha_errada');
-    await page.getByRole('button', { name: /Entrar/i }).click();
+    await page.getByRole('button', { name: /continuar/i }).click();
 
     // Aguarda o Toast ou Alerta de erro (procurando pelo ícone de aviso)
     const errorMessage = page.locator('text=⚠️');

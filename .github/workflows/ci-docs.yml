@@ -83,7 +83,7 @@ jobs:
 
       - name: Cache PiTest History
         if: matrix.report-type == 'backend-pitest'
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: backend/target/pitHistory.txt
           key: pitest-history-${{ github.ref }}-${{ github.sha }}
@@ -138,7 +138,7 @@ jobs:
 
       - name: Cache Stryker History
         if: matrix.report-type == 'frontend'
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: frontend/reports/mutation/stryker-incremental.json
           key: stryker-history-${{ github.ref }}-${{ github.sha }}
@@ -174,7 +174,7 @@ jobs:
           cp -R ../gh-pages-branch/allure/history/* allure-results/history/ || true
           cp allure-categories.json allure-results/categories.json || true
           echo '{"name": "GitHub Actions", "type": "github", "reportName": "EdTech Smoke Tests"}' > allure-results/executor.json
-          echo "Browser=Chromium\nEnvironment=Production Smoke" > allure-results/environment.properties
+          printf 'Browser=Chromium\nEnvironment=Production Smoke\n' > allure-results/environment.properties
           npx allure-commandline generate allure-results -o allure-report --clean
 
       - name: Preparar Artefatos Frontend
@@ -184,6 +184,9 @@ jobs:
           if [ -d "frontend/html" ]; then cp -r frontend/html/* reports/vitest/ || true; fi
           if [ -d "frontend/allure-report" ]; then cp -r frontend/allure-report/* reports/allure/ || true; fi
           if [ -d "frontend/reports/mutation/html" ]; then cp -r frontend/reports/mutation/html/* reports/stryker/ || true; fi
+          test -f reports/vitest/index.html
+          test -f reports/allure/index.html
+          test -f reports/stryker/index.html
 
       - name: Upload Frontend Reports
         if: matrix.report-type == 'frontend'
@@ -216,9 +219,9 @@ jobs:
           fi
       - name: Upload Lighthouse Report
         if: matrix.report-type == 'lighthouse'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
-          name: lighthouse-report
+          name: lighthouse-reports
           path: tests/lighthouse/index.html
 
       # ==========================

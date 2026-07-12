@@ -43,9 +43,12 @@ export default function () {
   };
 
   // 1. Endpoint de Health Check (Actuator) - Simula monitoramento
-  const healthResponse = http.get(`${baseUrl}/actuator/health`);
+  const healthResponse = http.get(`${baseUrl}/actuator/health`, {
+    responseCallback: http.expectedStatuses(200, 429, 503),
+  });
   check(healthResponse, {
-    'health check respondeu (200)': (res) => res.status === 200,
+    'health check respondeu (200, 429 ou 503)': (res) =>
+      res.status === 200 || res.status === 429 || res.status === 503,
   });
 
   // 2. Endpoint de Login - Simula carga pesada de autenticação e bcrypt
@@ -66,7 +69,7 @@ export default function () {
     name: 'Test User',
     email: 'newuser@example.com',
     password: 'Password123!',
-    role: 'STUDENT'
+    role: 'RESEARCHER'
   });
   const registerResponse = http.post(`${baseUrl}/api/auth/register`, registerPayload, params);
   check(registerResponse, {

@@ -11,6 +11,7 @@ import static org.mockito.Mockito.when;
 import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
+import java.net.URI;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.BeforeEach;
@@ -43,7 +44,7 @@ class GcsStorageServiceImplTest {
 
   @Test
   void testGetPresignedUrl() throws Exception {
-    URL mockUrl = new URL("http://localhost/test");
+    URL mockUrl = URI.create("http://localhost/test").toURL();
     when(storage.signUrl(
             any(BlobInfo.class), eq(15L), eq(TimeUnit.MINUTES), any(Storage.SignUrlOption.class)))
         .thenReturn(mockUrl);

@@ -6,10 +6,10 @@
 
 [![Deploy MkDocs](https://github.com/pedrohpsantos/EdTech/actions/workflows/ci-docs.yml/badge.svg)](https://github.com/pedrohpsantos/EdTech/actions/workflows/ci-docs.yml)
 [![CI Pipeline](https://github.com/pedrohpsantos/EdTech/actions/workflows/ci.yml/badge.svg)](https://github.com/pedrohpsantos/EdTech/actions/workflows/ci.yml)
-![NodeJS](https://img.shields.io/badge/Node.js-24-339933?logo=nodedotjs&logoColor=white)
-![Java](https://img.shields.io/badge/Java-21_LTS-007396?logo=openjdk&logoColor=white)
-![Google Cloud](https://img.shields.io/badge/GCP-Cloud_Run_%26_SQL-4285F4?logo=googlecloud&logoColor=white)
-![Firebase](https://img.shields.io/badge/Firebase-Hosting-FFCA28?logo=firebase&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-_-339933?logo=nodedotjs&logoColor=white)
+![Java](https://img.shields.io/badge/Java-_-007396?logo=openjdk&logoColor=white)
+![Google Cloud](https://img.shields.io/badge/Google_Cloud-_-4285F4?logo=googlecloud&logoColor=white)
+![Firebase](https://img.shields.io/badge/Firebase-_-FFCA28?logo=firebase&logoColor=black)
 
 **EdTech** é uma plataforma de software para digitalizar, armazenar e auditar publicações científicas, relatórios de pesquisa e datasets de laboratórios acadêmicos. O sistema foi projetado com foco em rastreabilidade, controle de acesso baseado em perfis e integridade de dados.
 
@@ -31,12 +31,12 @@ O EdTech centraliza o ciclo de vida de documentos acadêmicos em um único repos
 
 | Módulo | Responsabilidade | Stack |
 | :--- | :--- | :--- |
-| **[🎨 Frontend (UI)](frontend/README.md)** | Interface SPA responsiva para os usuários da plataforma. | ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black) ![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white) ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white) ![Bootstrap](https://img.shields.io/badge/Bootstrap-5-7952B3?logo=bootstrap&logoColor=white) |
-| **[⚙️ Backend (API)](backend/README.md)** | API RESTful com regras de negócio, segurança e persistência. | ![Java](https://img.shields.io/badge/Java-21_LTS-007396?logo=openjdk&logoColor=white) ![Spring Boot](https://img.shields.io/badge/Spring_Boot-4.1-6DB33F?logo=springboot&logoColor=white) ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-4169E1?logo=postgresql&logoColor=white) |
-| **[☁️ Infraestrutura](infra/README.md)** | Orquestração de containers e configuração de infraestrutura em nuvem. | ![GCP](https://img.shields.io/badge/GCP-4285F4?logo=googlecloud&logoColor=white) ![Terraform](https://img.shields.io/badge/Terraform-7B42BC?logo=terraform&logoColor=white) ![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white) ![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?logo=githubactions&logoColor=white) |
-| **[📄 Documentação](docs/README.md)** | Portal de documentação técnica e arquitetural (Docs-as-Code). | ![MkDocs](https://img.shields.io/badge/MkDocs_Material-526CFE?logo=materialformkdocs&logoColor=white) |
-| **[📊 Scripts](scripts/README.md)** | Scripts de telemetria e análise para o Orientador. | ![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white) ![Pandas](https://img.shields.io/badge/Pandas-150458?logo=pandas&logoColor=white) |
-| **[🕵️ Testes & QA](tests/README.md)** | Cobertura, mutação, integração, carga e qualidade da plataforma. | ![JUnit5](https://img.shields.io/badge/JUnit5-25A162?logo=junit5&logoColor=white) ![Vitest](https://img.shields.io/badge/Vitest-729B1B?logo=vitest&logoColor=white) ![Stryker](https://img.shields.io/badge/Stryker-E36209?logo=stryker&logoColor=white) ![PiTest](https://img.shields.io/badge/PiTest-orange) ![JaCoCo](https://img.shields.io/badge/JaCoCo-red) ![Playwright](https://img.shields.io/badge/Playwright-2EAD33?logo=playwright&logoColor=white) ![K6](https://img.shields.io/badge/K6-7D64FF?logo=k6&logoColor=white) ![Lighthouse](https://img.shields.io/badge/Lighthouse-F44B21?logo=lighthouse&logoColor=white) |
+| **[🎨 Frontend (UI)](frontend/README.md)** | Interface SPA responsiva para os usuários da plataforma. | ![React](https://img.shields.io/badge/React-_-61DAFB?logo=react&logoColor=black) ![Vite](https://img.shields.io/badge/Vite-_-646CFF?logo=vite&logoColor=white) ![TypeScript](https://img.shields.io/badge/TypeScript-_-3178C6?logo=typescript&logoColor=white) ![Bootstrap](https://img.shields.io/badge/Bootstrap-_-7952B3?logo=bootstrap&logoColor=white) |
+| **[⚙️ Backend (API)](backend/README.md)** | API RESTful com regras de negócio, segurança e persistência. | ![Java](https://img.shields.io/badge/Java-_-007396?logo=openjdk&logoColor=white) ![Spring Boot](https://img.shields.io/badge/Spring_Boot-_-6DB33F?logo=springboot&logoColor=white) ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-_-4169E1?logo=postgresql&logoColor=white) |
+| **[☁️ Infraestrutura](infra/README.md)** | Orquestração de containers e configuração de infraestrutura em nuvem. | ![Google Cloud](https://img.shields.io/badge/Google_Cloud-_-4285F4?logo=googlecloud&logoColor=white) ![Terraform](https://img.shields.io/badge/Terraform-_-7B42BC?logo=terraform&logoColor=white) ![Docker](https://img.shields.io/badge/Docker-_-2496ED?logo=docker&logoColor=white) ![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-_-2088FF?logo=githubactions&logoColor=white) |
+| **[📄 Documentação](docs/README.md)** | Portal de documentação técnica e arquitetural (Docs-as-Code). | ![MkDocs Material](https://img.shields.io/badge/MkDocs_Material-_-526CFE?logo=materialformkdocs&logoColor=white) |
+| **[📊 Scripts](scripts/README.md)** | Scripts de telemetria e análise para o Orientador. | ![Python](https://img.shields.io/badge/Python-_-3776AB?logo=python&logoColor=white) ![Pandas](https://img.shields.io/badge/Pandas-_-150458?logo=pandas&logoColor=white) |
+| **[🕵️ Testes & QA](tests/README.md)** | Cobertura, mutação, integração, carga e qualidade da plataforma. | ![JUnit](https://img.shields.io/badge/JUnit-_-25A162?logo=junit5&logoColor=white) ![Vitest](https://img.shields.io/badge/Vitest-_-729B1B?logo=vitest&logoColor=white) ![Stryker](https://img.shields.io/badge/Stryker-_-E36209?logo=stryker&logoColor=white) ![PiTest](https://img.shields.io/badge/PiTest-_-F28C28) ![JaCoCo](https://img.shields.io/badge/JaCoCo-_-C40D42) ![Playwright](https://img.shields.io/badge/Playwright-_-2EAD33?logo=playwright&logoColor=white) ![k6](https://img.shields.io/badge/k6-_-7D64FF?logo=k6&logoColor=white) ![Lighthouse](https://img.shields.io/badge/Lighthouse-_-F44B21?logo=lighthouse&logoColor=white) |
 
 ---
 

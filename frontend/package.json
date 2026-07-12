@@ -46,6 +46,7 @@
     "@vitejs/plugin-react": "^6.0.1",
     "@vitest/coverage-v8": "^4.1.9",
     "@vitest/ui": "^4.1.10",
+    "allure-commandline": "^2.43.0",
     "allure-playwright": "^3.10.2",
     "axe-core": "^4.12.1",
     "eslint": "^10.7.0",
