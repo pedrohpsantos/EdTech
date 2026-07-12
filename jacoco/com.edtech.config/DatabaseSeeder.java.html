@@ -103,29 +103,46 @@ public class DatabaseSeeder implements CommandLineRunner {
 <span class="fc" id="L103">      logger.info(&quot;Projetos criados com sucesso.&quot;);</span>
     }
 
-<span class="fc" id="L106">    logger.info(&quot;DatabaseSeeder concluído.&quot;);</span>
-<span class="fc" id="L107">  }</span>
+    // DataSeeder pode ter criado projetos antes deste componente. Garanta que as
+    // contas demo usadas pela interface participem de qualquer projeto existente.
+<span class="fc" id="L108">    projectRepository</span>
+<span class="fc" id="L109">        .findAll()</span>
+<span class="fc" id="L110">        .forEach(</span>
+            project -&gt; {
+<span class="fc" id="L112">              ensureMember(project, orientador, com.edtech.model.ProjectRole.ADVISOR);</span>
+<span class="fc" id="L113">              ensureMember(project, pesquisador, com.edtech.model.ProjectRole.RESEARCHER);</span>
+<span class="fc" id="L114">            });</span>
+
+<span class="fc" id="L116">    logger.info(&quot;DatabaseSeeder concluído.&quot;);</span>
+<span class="fc" id="L117">  }</span>
 
   private User seedUser(
       String name, String email, String passwordHash, UserRole role, UUID institutionId) {
-<span class="fc" id="L111">    String normalizedEmail = email.toLowerCase(Locale.ROOT);</span>
-<span class="fc" id="L112">    Optional&lt;User&gt; existing = userRepository.findByEmailIgnoreCase(normalizedEmail);</span>
-<span class="fc bfc" id="L113" title="All 2 branches covered.">    if (existing.isEmpty()) {</span>
-<span class="fc" id="L114">      User user = new User(name, normalizedEmail, passwordHash, role, institutionId);</span>
-<span class="fc" id="L115">      user.setActive(true);</span>
-<span class="fc" id="L116">      logger.info(&quot;Criando usuário demo: {}&quot;, email);</span>
-<span class="fc" id="L117">      return userRepository.save(user);</span>
+<span class="fc" id="L121">    String normalizedEmail = email.toLowerCase(Locale.ROOT);</span>
+<span class="fc" id="L122">    Optional&lt;User&gt; existing = userRepository.findByEmailIgnoreCase(normalizedEmail);</span>
+<span class="fc bfc" id="L123" title="All 2 branches covered.">    if (existing.isEmpty()) {</span>
+<span class="fc" id="L124">      User user = new User(name, normalizedEmail, passwordHash, role, institutionId);</span>
+<span class="fc" id="L125">      user.setActive(true);</span>
+<span class="fc" id="L126">      logger.info(&quot;Criando usuário demo: {}&quot;, email);</span>
+<span class="fc" id="L127">      return userRepository.save(user);</span>
     }
-<span class="fc" id="L119">    return existing.get();</span>
+<span class="fc" id="L129">    return existing.get();</span>
   }
 
   private void addMember(
       com.edtech.model.Project project, User user, com.edtech.model.ProjectRole role) {
-<span class="fc" id="L124">    com.edtech.model.ProjectMember member = new com.edtech.model.ProjectMember();</span>
-<span class="fc" id="L125">    member.setProject(project);</span>
-<span class="fc" id="L126">    member.setUser(user);</span>
-<span class="fc" id="L127">    member.setRole(role);</span>
-<span class="fc" id="L128">    projectMemberRepository.save(member);</span>
-<span class="fc" id="L129">  }</span>
+<span class="fc" id="L134">    com.edtech.model.ProjectMember member = new com.edtech.model.ProjectMember();</span>
+<span class="fc" id="L135">    member.setProject(project);</span>
+<span class="fc" id="L136">    member.setUser(user);</span>
+<span class="fc" id="L137">    member.setRole(role);</span>
+<span class="fc" id="L138">    projectMemberRepository.save(member);</span>
+<span class="fc" id="L139">  }</span>
+
+  private void ensureMember(
+      com.edtech.model.Project project, User user, com.edtech.model.ProjectRole role) {
+<span class="fc bfc" id="L143" title="All 2 branches covered.">    if (projectMemberRepository.findByProjectIdAndUserId(project.getId(), user.getId()).isEmpty()) {</span>
+<span class="fc" id="L144">      addMember(project, user, role);</span>
+    }
+<span class="fc" id="L146">  }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
