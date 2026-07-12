@@ -33,6 +33,11 @@ const Settings: React.FC = () => {
 
   const userName = user?.name || 'Usuário';
   const userEmail = user?.email || 'usuario@edtech.com';
+  const roleLabel: Record<string, string> = {
+    RESEARCHER: 'Pesquisador',
+    ADVISOR: 'Orientador',
+    AUDITOR: 'Auditor',
+  };
   const userInitials = userName
     .split(' ')
     .map((n: string) => n[0])
@@ -92,7 +97,7 @@ const Settings: React.FC = () => {
               <span className="profile-email">{userEmail}</span>
             </div>
             <div className="settings-profile-actions">
-              <span className="settings-badge-role">Pesquisador</span>
+              <span className="settings-badge-role">{roleLabel[user?.role || ''] || 'Conta'}</span>
               <button className="btn-outline" onClick={() => alert('A edição de perfil estará disponível na próxima versão. Em breve você poderá alterar seu nome e avatar.')}>Editar perfil</button>
             </div>
           </div>
@@ -197,7 +202,7 @@ const Settings: React.FC = () => {
           )}
         </div>
 
-        {/* Laboratório e Orientador */}
+        {/* Vínculo por código: cada perfil só aceita o código emitido para seu papel. */}
         {(user?.role === 'RESEARCHER' || user?.role === 'AUDITOR') && (
           <div className="settings-card">
             <h3 className="settings-section-title">Laboratório e Vínculo Institucional</h3>
@@ -207,21 +212,25 @@ const Settings: React.FC = () => {
                 <i className="bi bi-diagram-3"></i>
               </div>
               <div className="settings-item-content">
-                <span className="settings-item-title">Vincular Orientador</span>
+                <span className="settings-item-title">Vincular ao orientador</span>
                 <span className="settings-item-desc">
-                  Insira o código fornecido pelo orientador para estabelecer o vínculo (o código muda semanalmente por segurança)
+                  {user?.role === 'RESEARCHER'
+                    ? 'Use o código de pesquisador emitido pelo orientador.'
+                    : 'Use o código de auditor emitido pelo orientador.'} Os códigos expiram ao fim da semana.
                 </span>
               </div>
             </div>
             
             <div className="settings-item no-border" style={{ paddingTop: 0 }}>
-              <div style={{ display: 'flex', gap: '0.5rem', width: '100%', maxWidth: '400px', marginLeft: '56px' }}>
+              <div className="settings-code-form">
                 <input
                   type="text"
                   className="ed-input"
-                  placeholder="Código do Orientador (ex: token...)"
+                  placeholder="Código de 6 dígitos"
                   value={advisorCode}
-                  onChange={(e) => setAdvisorCode(e.target.value)}
+                  maxLength={6}
+                  inputMode="numeric"
+                  onChange={(e) => setAdvisorCode(e.target.value.replace(/\D/g, ''))}
                 />
                 <button 
                   className="btn-primary" 
@@ -248,11 +257,11 @@ const Settings: React.FC = () => {
               Compartilhe os códigos abaixo com sua equipe. Por motivos de segurança, os códigos para pesquisadores e auditores são diferentes.
             </p>
             <div style={{ display: 'flex', gap: '16px', flexDirection: 'column' }}>
-              <div style={{ background: 'var(--bg)', padding: '16px', borderRadius: '8px', border: '1px solid var(--border)' }}>
+              <div className="settings-access-code">
                 <div style={{ fontSize: '12px', fontWeight: 600, color: 'var(--ed-text-muted)', textTransform: 'uppercase' }}>Token para Pesquisadores</div>
                 <div style={{ fontSize: '20px', fontWeight: 'bold', letterSpacing: '2px', color: 'var(--ed-purple-main)', marginTop: '4px' }}>{labTokens.researcher}</div>
               </div>
-              <div style={{ background: 'var(--bg)', padding: '16px', borderRadius: '8px', border: '1px solid var(--border)' }}>
+              <div className="settings-access-code">
                 <div style={{ fontSize: '12px', fontWeight: 600, color: 'var(--ed-text-muted)', textTransform: 'uppercase' }}>Token para Auditores</div>
                 <div style={{ fontSize: '20px', fontWeight: 'bold', letterSpacing: '2px', color: 'var(--ed-purple-main)', marginTop: '4px' }}>{labTokens.auditor}</div>
               </div>

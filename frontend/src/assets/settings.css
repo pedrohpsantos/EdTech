@@ -308,3 +308,25 @@ input:checked + .ed-slider:before {
     word-break: break-word !important;
   }
 }
+
+@media (max-width: 320px) {
+  .settings-container { gap: 10px; }
+  .settings-card { padding: 12px; border-radius: 10px; }
+  .settings-avatar { width: 48px; height: 48px; font-size: 18px; }
+  .settings-profile-actions, .settings-code-form { flex-direction: column; align-items: stretch; margin-left: 0; }
+  .settings-profile-actions .btn-outline, .settings-code-form .btn-primary { width: 100%; }
+  .settings-item { grid-template-columns: 32px 1fr; gap: 10px; }
+  .settings-item-icon { width: 32px; height: 32px; font-size: 14px; }
+}
+
+@media (min-width: 1024px) { .settings-container { max-width: 960px; } .settings-access-code { min-width: 320px; } }
+@media (min-width: 1920px) { .settings-container { max-width: 1200px; } .settings-card { padding: 32px; } }
+
+.settings-code-form { display: flex; gap: .5rem; width: 100%; max-width: 400px; margin-left: 56px; }
+.settings-access-code { background: var(--bg); padding: 16px; border-radius: 8px; border: 1px solid var(--border); }
+
+@media (max-width: 768px) {
+  .settings-code-form { margin-left: 0; max-width: none; flex-wrap: wrap; }
+  .settings-code-form .ed-input { flex: 1 1 180px; min-height: 44px; }
+  .settings-code-form .btn-primary { min-height: 44px; }
+}
