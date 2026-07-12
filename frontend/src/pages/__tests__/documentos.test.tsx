@@ -4,6 +4,9 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import Documentos from '../documentos';
 import { useDocuments, useUploadDocument, useDownloadUrl, useToggleStar } from '../../hooks/useDocuments';
 
+vi.mock('../../hooks/useProjects', () => ({ useProjects: vi.fn() }));
+import { useProjects } from '../../hooks/useProjects';
+
 vi.mock('react-router-dom', () => ({
   useNavigate: () => vi.fn(),
 }));
@@ -38,6 +41,7 @@ describe('Documentos Page', () => {
     (useToggleStar as any).mockReturnValue({ mutateAsync: mockToggleStar });
     (useDownloadUrl as any).mockReturnValue({ mutateAsync: mockGetUrl });
     (useUploadDocument as any).mockReturnValue({ mutateAsync: mockUploadDoc });
+    (useProjects as any).mockReturnValue({ data: [{ id: 'project-1', name: 'Projeto de teste' }] });
 
     // Mock window.open
     window.open = vi.fn();
@@ -77,8 +81,8 @@ describe('Documentos Page', () => {
     // Check if badges rendered correct status
     expect(screen.getAllByText('Em Revisão')[1]).toBeInTheDocument(); // 0 is the select option
     expect(screen.getAllByText('Aprovado')[1]).toBeInTheDocument();
-    expect(screen.getAllByText('Submetido')[1]).toBeInTheDocument();
-    expect(screen.getAllByText('Rascunho')[1]).toBeInTheDocument();
+    expect(screen.getByText('Submetido')).toBeInTheDocument();
+    expect(screen.getByText('Rascunho')).toBeInTheDocument();
   });
 
   it('handles filtering inputs', () => {
@@ -238,13 +242,17 @@ describe('Documentos Page', () => {
     });
     
     expect(screen.getByText('test.pdf')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Enviar Arquivo' })).not.toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Enviar Arquivo' })).toBeDisabled();
     
     // Test file input change
     const fileInput = document.getElementById('modalFileInput') as HTMLInputElement;
     const file2 = new File(['dummy'], 'test2.csv', { type: 'text/csv' });
     fireEvent.change(fileInput, { target: { files: [file2] } });
     expect(screen.getByText('test2.csv')).toBeInTheDocument();
+
+    fireEvent.change(screen.getByLabelText('Título do documento'), { target: { value: 'Documento de teste' } });
+    fireEvent.change(screen.getByLabelText('Projeto'), { target: { value: 'project-1' } });
+    expect(screen.getByRole('button', { name: 'Enviar Arquivo' })).not.toBeDisabled();
 
     const cancelBtn = screen.getByText('Cancelar');
     fireEvent.click(cancelBtn);

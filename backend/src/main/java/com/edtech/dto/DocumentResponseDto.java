@@ -11,7 +11,11 @@ public class DocumentResponseDto {
   private String fileUrl;
   private DocumentStatus status;
   private UUID authorId;
+  private String authorName;
+  private String authorEmail;
   private UUID projectId;
+  private String projectTitle;
+  private String fileType;
   private ZonedDateTime createdAt;
   private String feedback;
   private boolean starred;
@@ -67,6 +71,14 @@ public class DocumentResponseDto {
     this.authorId = authorId;
   }
 
+  public String getAuthorName() { return authorName; }
+
+  public void setAuthorName(String authorName) { this.authorName = authorName; }
+
+  public String getAuthorEmail() { return authorEmail; }
+
+  public void setAuthorEmail(String authorEmail) { this.authorEmail = authorEmail; }
+
   /** Documentação para o método getProjectId. */
   public UUID getProjectId() {
     return projectId;
@@ -76,6 +88,14 @@ public class DocumentResponseDto {
   public void setProjectId(UUID projectId) {
     this.projectId = projectId;
   }
+
+  public String getProjectTitle() { return projectTitle; }
+
+  public void setProjectTitle(String projectTitle) { this.projectTitle = projectTitle; }
+
+  public String getFileType() { return fileType; }
+
+  public void setFileType(String fileType) { this.fileType = fileType; }
 
   /** Documentação para o método getCreatedAt. */
   public ZonedDateTime getCreatedAt() {

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DashboardLayout from '../components/layout/DashboardLayout';
 import { useDocuments, useUploadDocument, useDownloadUrl, useToggleStar } from '../hooks/useDocuments';
+import { useProjects } from '../hooks/useProjects';
 import { Document } from '../types';
 import DocumentComments from '../components/DocumentComments';
 import DatasetPreview from '../components/DatasetPreview';
@@ -21,12 +22,24 @@ const Documentos: React.FC = () => {
   const [isPreviewLoading, setIsPreviewLoading] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [uploadFile, setUploadFile] = useState<File | null>(null);
+  const [uploadTitle, setUploadTitle] = useState('');
+  const [uploadProjectId, setUploadProjectId] = useState('');
   const [toastMessage, setToastMessage] = useState('');
 
   // React Query Hooks
-  const { data: documents = [], isLoading: loadingDocs } = useDocuments('', filterTitle);
+  const statusByLabel: Record<string, string> = {
+    Aprovado: 'APPROVED',
+    'Em Revisão': 'PENDING_REVIEW',
+    Rejeitado: 'REJECTED',
+  };
+  const { data: documents = [], isLoading: loadingDocs } = useDocuments(
+    undefined,
+    filterTitle,
+    statusByLabel[filterStatus],
+  );
   const { mutateAsync: getUrl } = useDownloadUrl();
   const { mutateAsync: _uploadDoc } = useUploadDocument();
+  const { data: projects = [] } = useProjects();
   const { mutateAsync: toggleStar } = useToggleStar();
 
   const showToast = (message: string) => {
@@ -88,7 +101,23 @@ const Documentos: React.FC = () => {
   const closeUploadModal = () => {
     setIsUploadModalOpen(false);
     setUploadFile(null);
+    setUploadTitle('');
+    setUploadProjectId('');
     setIsDragging(false);
+  };
+
+  const handleModalUpload = async () => {
+    if (!uploadFile || !uploadTitle.trim() || !uploadProjectId) {
+      showToast('Informe o título, o projeto e o arquivo antes de enviar.');
+      return;
+    }
+    try {
+      await _uploadDoc({ file: uploadFile, title: uploadTitle.trim(), projectId: uploadProjectId });
+      closeUploadModal();
+      showToast('Documento enviado para revisão com sucesso!');
+    } catch (error: any) {
+      showToast(`Falha no upload: ${error.message || 'tente novamente.'}`);
+    }
   };
 
   const handleDragOver = (e: React.DragEvent) => {
@@ -120,13 +149,13 @@ const Documentos: React.FC = () => {
 
   const getStatusClass = (status: string) => {
     switch (status) {
-      case 'Em Revisão':
+      case 'PENDING_REVIEW':
         return 'status-review';
-      case 'Aprovado':
+      case 'APPROVED':
         return 'status-approved';
-      case 'Submetido':
+      case 'REJECTED':
         return 'status-submitted';
-      case 'Rascunho':
+      case 'DRAFT':
         return 'status-draft';
       default:
         return 'status-draft';
@@ -231,8 +260,7 @@ const Documentos: React.FC = () => {
               <option value="">Todos os status</option>
               <option value="Aprovado">Aprovado</option>
               <option value="Em Revisão">Em Revisão</option>
-              <option value="Submetido">Submetido</option>
-              <option value="Rascunho">Rascunho</option>
+              <option value="Rejeitado">Rejeitado</option>
             </select>
           </div>
         </div>
@@ -275,22 +303,22 @@ const Documentos: React.FC = () => {
                       >
                         <i className={`bi ${doc.starred ? 'bi-star-fill' : 'bi-star'}`}></i>
                       </button>
-                      <div className={`doc-type-icon ${getTypeColor(doc.type || 'PDF')}-bg`}>
-                        <i className={`bi bi-file-earmark-text ${getTypeColor(doc.type || 'PDF')}-text`}></i>
+                      <div className={`doc-type-icon ${getTypeColor(doc.fileType || doc.type || 'PDF')}-bg`}>
+                        <i className={`bi bi-file-earmark-text ${getTypeColor(doc.fileType || doc.type || 'PDF')}-text`}></i>
                       </div>
                       <span className="doc-title-cell">{doc.title}</span>
                     </div>
                   </td>
-                  <td className="text-muted">{doc.project || 'Projeto'}</td>
+                  <td className="text-muted">{doc.projectTitle || doc.project || 'Projeto'}</td>
                   <td>
-                    <span className={`type-badge ${getTypeColor(doc.type || 'PDF')}-text`}>{doc.type || 'PDF'}</span>
+                    <span className={`type-badge ${getTypeColor(doc.fileType || doc.type || 'PDF')}-text`}>{doc.fileType || doc.type || 'PDF'}</span>
                   </td>
                   <td className="text-muted">{doc.size}</td>
                   <td className="text-muted">
                     <i className="bi bi-clock me-1"></i> {doc.modified}
                   </td>
                   <td>
-                    <span className={`doc-status ${getStatusClass(doc.status)}`}>{doc.status}</span>
+                    <span className={`doc-status ${getStatusClass(doc.status)}`}>{({ PENDING_REVIEW: 'Em revisão', APPROVED: 'Aprovado', REJECTED: 'Rejeitado', DRAFT: 'Rascunho' } as Record<string, string>)[doc.status] || doc.status}</span>
                   </td>
                   <td>
                     <div className="table-actions">
@@ -339,6 +367,26 @@ const Documentos: React.FC = () => {
             </div>
 
             <div className="modal-body">
+              <label className="form-label" htmlFor="modalDocumentTitle">Título do documento</label>
+              <input
+                id="modalDocumentTitle"
+                className="form-control mb-3"
+                value={uploadTitle}
+                onChange={(e) => setUploadTitle(e.target.value)}
+                placeholder="Ex.: Relatório de pesquisa"
+              />
+              <label className="form-label" htmlFor="modalProject">Projeto</label>
+              <select
+                id="modalProject"
+                className="form-select mb-3"
+                value={uploadProjectId}
+                onChange={(e) => setUploadProjectId(e.target.value)}
+              >
+                <option value="">Selecione um projeto</option>
+                {projects.map((project: any) => (
+                  <option key={project.id} value={project.id}>{project.name || project.title}</option>
+                ))}
+              </select>
               <div
                 className={`upload-area ${isDragging ? 'dragging' : ''}`}
                 onDragOver={handleDragOver}
@@ -367,7 +415,7 @@ const Documentos: React.FC = () => {
               <button className="btn-modal-cancel" onClick={closeUploadModal}>
                 Cancelar
               </button>
-              <button className="btn-modal-submit" disabled={!uploadFile}>
+              <button className="btn-modal-submit" disabled={!uploadFile || !uploadTitle.trim() || !uploadProjectId} onClick={handleModalUpload}>
                 Enviar Arquivo
               </button>
             </div>

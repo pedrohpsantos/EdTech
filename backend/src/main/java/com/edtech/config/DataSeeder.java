@@ -10,6 +10,7 @@ import com.edtech.model.UserRole;
 import com.edtech.repository.AuditLogRepository;
 import com.edtech.repository.DocumentRepository;
 import com.edtech.repository.ProjectRepository;
+import com.edtech.repository.ProjectMemberRepository;
 import com.edtech.repository.UserRepository;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -27,6 +28,7 @@ public class DataSeeder implements CommandLineRunner {
 
   private final UserRepository userRepository;
   private final ProjectRepository projectRepository;
+  private final ProjectMemberRepository projectMemberRepository;
   private final DocumentRepository documentRepository;
   private final AuditLogRepository auditLogRepository;
   private final PasswordEncoder passwordEncoder;
@@ -43,11 +45,13 @@ public class DataSeeder implements CommandLineRunner {
   public DataSeeder(
       UserRepository userRepository,
       ProjectRepository projectRepository,
+      ProjectMemberRepository projectMemberRepository,
       DocumentRepository documentRepository,
       AuditLogRepository auditLogRepository,
       PasswordEncoder passwordEncoder) {
     this.userRepository = userRepository;
     this.projectRepository = projectRepository;
+    this.projectMemberRepository = projectMemberRepository;
     this.documentRepository = documentRepository;
     this.auditLogRepository = auditLogRepository;
     this.passwordEncoder = passwordEncoder;
@@ -107,6 +111,14 @@ public class DataSeeder implements CommandLineRunner {
     project2.setDescription("Projeto demonstração 2");
     project2.setAdvisor(advisor);
     projectRepository.save(project2);
+
+    // Os documentos so ficam visiveis para membros do projeto. Criar estes vinculos
+    // tambem faz com que as tres contas demo exercitem o mesmo fluxo de trabalho.
+    saveMembership(project1, advisor, com.edtech.model.ProjectRole.ADVISOR);
+    saveMembership(project1, researcher, com.edtech.model.ProjectRole.RESEARCHER);
+    saveMembership(project1, researcher2, com.edtech.model.ProjectRole.RESEARCHER);
+    saveMembership(project2, advisor, com.edtech.model.ProjectRole.ADVISOR);
+    saveMembership(project2, researcher, com.edtech.model.ProjectRole.RESEARCHER);
 
     // 3. Criar Documentos
     Document doc1 = new Document();
@@ -272,5 +284,13 @@ public class DataSeeder implements CommandLineRunner {
       // ignored reflection error
     }
     auditLogRepository.save(log);
+  }
+
+  private void saveMembership(Project project, User user, com.edtech.model.ProjectRole role) {
+    com.edtech.model.ProjectMember member = new com.edtech.model.ProjectMember();
+    member.setProject(project);
+    member.setUser(user);
+    member.setRole(role);
+    projectMemberRepository.save(member);
   }
 }

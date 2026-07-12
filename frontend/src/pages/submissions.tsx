@@ -78,7 +78,10 @@ export default function Submissions() {
     import('../services/api').then(async ({ getDownloadUrl }) => {
       const resp = await getDownloadUrl(doc.id);
       if (resp.sucesso) {
-        setPreviewUrl(resp.dados.downloadUrl);
+        const url = typeof resp.dados === 'string'
+          ? resp.dados
+          : resp.dados?.url || resp.dados?.downloadUrl || resp.dados?.fileUrl;
+        setPreviewUrl(url || '');
       }
     });
   };

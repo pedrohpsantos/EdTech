@@ -261,7 +261,11 @@ public class DocumentService {
     dto.setFileUrl(document.getFileUrl());
     dto.setStatus(document.getStatus());
     dto.setAuthorId(document.getAuthor().getId());
+    dto.setAuthorName(document.getAuthor().getName());
+    dto.setAuthorEmail(document.getAuthor().getEmail());
     dto.setProjectId(document.getProject().getId());
+    dto.setProjectTitle(document.getProject().getTitle());
+    dto.setFileType(extractExtension(document.getTitle()).replace(".", "").toUpperCase(Locale.ROOT));
     dto.setCreatedAt(document.getCreatedAt());
     dto.setFeedback(document.getFeedback());
     dto.setStarred(document.isStarred());

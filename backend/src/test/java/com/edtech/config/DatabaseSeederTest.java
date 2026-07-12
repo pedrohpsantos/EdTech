@@ -10,6 +10,7 @@ import static org.mockito.Mockito.mock;
 
 import com.edtech.model.User;
 import com.edtech.repository.ProjectRepository;
+import com.edtech.repository.ProjectMemberRepository;
 import com.edtech.repository.UserRepository;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
@@ -24,6 +25,7 @@ class DatabaseSeederTest {
 
   @Mock private UserRepository userRepository;
   @Mock private ProjectRepository projectRepository;
+  @Mock private ProjectMemberRepository projectMemberRepository;
   @Mock private PasswordEncoder passwordEncoder;
 
   @InjectMocks private DatabaseSeeder databaseSeeder;
@@ -41,6 +43,7 @@ class DatabaseSeederTest {
     verify(userRepository, times(3)).save(any(User.class));
     // 3 projects should be saved
     verify(projectRepository, times(3)).save(any(com.edtech.model.Project.class));
+    verify(projectMemberRepository, times(6)).save(any(com.edtech.model.ProjectMember.class));
   }
 
   @Test
