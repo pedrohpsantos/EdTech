@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, waitFor, fireEvent } from '@testing-library/react';
+import { render, screen, waitFor, fireEvent, act } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import Documentos from '../documentos';
 import { useDocuments, useUploadDocument, useDownloadUrl, useToggleStar } from '../../hooks/useDocuments';
@@ -90,6 +90,7 @@ describe('Documentos Page', () => {
   });
 
   it('handles options click', async () => {
+    vi.useFakeTimers();
     const mockData = [{ id: '1', title: 'Doc 1', status: 'Aprovado' }];
     (useDocuments as any).mockReturnValue({ data: mockData, isLoading: false });
     render(<Documentos />);
@@ -99,10 +100,13 @@ describe('Documentos Page', () => {
     
     expect(screen.getByText('Carregando opções para: Doc 1')).toBeInTheDocument();
     
-    await waitFor(() => {
-      expect(screen.queryByText('Carregando opções para: Doc 1')).not.toBeInTheDocument();
-    }, { timeout: 4000 });
-  }, 10000);
+    await act(async () => {
+      vi.advanceTimersByTime(3100);
+    });
+    
+    expect(screen.queryByText('Carregando opções para: Doc 1')).not.toBeInTheDocument();
+    vi.useRealTimers();
+  });
 
   it('handles toggle star success and failure', async () => {
     const mockData = [{ id: '1', title: 'Doc 1', status: 'Aprovado' }];

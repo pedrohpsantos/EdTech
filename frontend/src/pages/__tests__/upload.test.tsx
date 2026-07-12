@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, waitFor, fireEvent } from '@testing-library/react';
+import { render, screen, waitFor, fireEvent, act } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import Upload from '../upload';
 import { useAuth } from '../../context/authContext';
@@ -153,6 +153,7 @@ describe('Upload Page', () => {
   });
 
   it('handles successful upload and redirects', async () => {
+    vi.useFakeTimers();
     render(<Upload />);
     
     const titleInput = screen.getByPlaceholderText('Ex: Metodologia Qualitativa v3');
@@ -177,10 +178,12 @@ describe('Upload Page', () => {
       expect(screen.getByText('50%')).toBeInTheDocument();
     });
 
-    await waitFor(() => {
-      expect(mockNavigate).toHaveBeenCalledWith('/documentos');
-    }, { timeout: 3000 });
+    await act(async () => {
+      vi.advanceTimersByTime(2100);
+    });
 
+    expect(mockNavigate).toHaveBeenCalledWith('/documentos');
+    vi.useRealTimers();
   });
 
   it('handles upload failure', async () => {

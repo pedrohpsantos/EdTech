@@ -318,7 +318,7 @@ jobs:
         continue-on-error: true
         with:
           name: lighthouse-reports
-          path: docs/
+          path: docs/lighthouse/
 
       - name: Download Performance Reports
         uses: actions/download-artifact@v7

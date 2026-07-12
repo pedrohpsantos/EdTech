@@ -72,6 +72,7 @@ describe('Projects Page', () => {
   });
 
   it('renders projects and handles join success', async () => {
+    vi.useFakeTimers();
     const mockProjects = [
       { id: '1', name: 'Project 1', description: 'Desc 1', createdAt: '2023-01-01T00:00:00Z' },
       { id: '2', name: 'Project 2', description: 'Desc 2', createdAt: null }
@@ -83,6 +84,10 @@ describe('Projects Page', () => {
 
     render(<Projects />);
     
+    await act(async () => {
+      vi.runAllTimers();
+    });
+
     await waitFor(() => {
       expect(screen.getByText('Project 1')).toBeInTheDocument();
     });
@@ -106,10 +111,13 @@ describe('Projects Page', () => {
       expect(screen.getByText('Associado ao projeto com sucesso!')).toBeInTheDocument();
     });
 
-    await waitFor(() => {
-      expect(screen.queryByText('Associado ao projeto com sucesso!')).not.toBeInTheDocument();
-    }, { timeout: 4000 });
-  }, 10000);
+    await act(async () => {
+      vi.advanceTimersByTime(3100);
+    });
+
+    expect(screen.queryByText('Associado ao projeto com sucesso!')).not.toBeInTheDocument();
+    vi.useRealTimers();
+  });
 
   it('handles join failure', async () => {
     const mockProjects = [
