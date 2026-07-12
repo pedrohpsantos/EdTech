@@ -404,6 +404,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [backend-approved, infra-approved]
     if: github.ref == 'refs/heads/main'
+    concurrency: production-deployment
     permissions:
       contents: 'read'
       id-token: 'write'
@@ -445,6 +446,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [frontend-approved, infra-approved]
     if: github.ref == 'refs/heads/main'
+    concurrency: production-deployment
     permissions:
       contents: 'read'
       id-token: 'write'
