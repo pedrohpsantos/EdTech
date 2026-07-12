@@ -135,4 +135,32 @@ describe('Settings Page', () => {
       expect(screen.getByText('Ativado')).toBeInTheDocument();
       expect(screen.queryByText('Configurar 2FA')).not.toBeInTheDocument();
   });
+
+  it('renders default values when user is null', () => {
+    (authContext.useAuth as any).mockReturnValue({ user: null });
+    render(<Settings />);
+    expect(screen.getByText('U')).toBeInTheDocument();
+    expect(screen.getByText('Usuário')).toBeInTheDocument();
+    expect(screen.getByText('usuario@edtech.com')).toBeInTheDocument();
+  });
+
+  it('handles 2FA enable error fallback message', async () => {
+    (apiServices.setup2Fa as any).mockResolvedValue({ sucesso: true, dados: { qrCodeUri: 'mock-uri' } });
+    (apiServices.enable2Fa as any).mockResolvedValue({ sucesso: false }); // No message
+    
+    render(<Settings />);
+    fireEvent.click(screen.getByText('Configurar 2FA'));
+    
+    await waitFor(() => {
+      expect(screen.getByPlaceholderText('000000')).toBeInTheDocument();
+    });
+    
+    const input = screen.getByPlaceholderText('000000');
+    fireEvent.change(input, { target: { value: '123456' } });
+    fireEvent.click(screen.getByText('Ativar'));
+    
+    await waitFor(() => {
+      expect(screen.getByText('Código inválido')).toBeInTheDocument();
+    });
+  });
 });

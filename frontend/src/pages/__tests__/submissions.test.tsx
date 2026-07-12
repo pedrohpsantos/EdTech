@@ -268,4 +268,45 @@ describe('Submissions Page', () => {
           expect(screen.queryByText('Cancelar')).not.toBeInTheDocument();
       });
   });
+
+  it('handles getDownloadUrl failure', async () => {
+    (apiServices.getDownloadUrl as any).mockResolvedValue({ sucesso: false });
+    render(<Submissions />);
+    
+    await waitFor(() => expect(screen.getByText('Doc 1.pdf')).toBeInTheDocument());
+    
+    const analyzeBtns = screen.getAllByText('Analisar');
+    fireEvent.click(analyzeBtns[0]); 
+    
+    await waitFor(() => {
+      expect(screen.getByText(/Carregando visualização/i)).toBeInTheDocument();
+    });
+    
+    // It should stay loading since success is false and no fallback logic is implemented
+    await new Promise(r => setTimeout(r, 100));
+    expect(screen.getByText(/Carregando visualização/i)).toBeInTheDocument();
+  });
+
+  it('handles document with missing author', async () => {
+    (apiServices.getDocuments as any).mockResolvedValueOnce({
+      sucesso: true,
+      dados: { 
+        content: [
+          { 
+            id: '3', 
+            title: 'No Author.pdf', 
+            createdAt: '2023-01-01T00:00:00Z', 
+            fileUrl: 's3://url/3', 
+            type: 'PDF', 
+            author: null 
+          }
+        ] 
+      }
+    });
+    render(<Submissions />);
+    
+    expect(await screen.findByText('No Author.pdf')).toBeInTheDocument();
+    expect(screen.getByText('Dr. Pesquisador')).toBeInTheDocument();
+    expect(screen.getByText('U')).toBeInTheDocument();
+  });
 });

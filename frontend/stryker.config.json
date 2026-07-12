@@ -12,6 +12,8 @@
     "src/hooks/**/*.tsx",
     "src/services/**/*.ts",
     "src/context/**/*.tsx",
+    "src/pages/**/*.tsx",
+    "src/components/**/*.tsx",
     "!src/**/*.test.ts",
     "!src/**/*.test.tsx"
   ],
