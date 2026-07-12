@@ -41,7 +41,7 @@ class AuditTrailCsvExporterTest {
 
     String csv = new String(exporter.export(List.of(log)), StandardCharsets.UTF_8);
     // Deve retornar linhas em branco separadas por vírgula
-    assertTrue(csv.contains(",,,,,,")); 
+    assertTrue(csv.contains(",,,,,,"));
   }
 
   @Test

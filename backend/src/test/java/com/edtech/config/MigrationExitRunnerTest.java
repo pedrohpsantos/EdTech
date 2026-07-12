@@ -11,7 +11,7 @@ class MigrationExitRunnerTest {
   void testRunWithServlet() {
     MigrationExitRunner runner = new MigrationExitRunner();
     ReflectionTestUtils.setField(runner, "webAppType", "servlet");
-    
+
     // Should do nothing and not exit
     assertDoesNotThrow(() -> runner.run());
   }

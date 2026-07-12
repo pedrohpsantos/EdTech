@@ -69,12 +69,14 @@ public class DocumentServiceTest {
             java.util.UUID.randomUUID());
     org.springframework.test.util.ReflectionTestUtils.setField(author, "id", authorId);
 
-    org.mockito.Mockito.lenient().when(documentRepository.save(any(Document.class)))
-        .thenAnswer(invocation -> {
-            Document saved = invocation.getArgument(0);
-            org.springframework.test.util.ReflectionTestUtils.setField(saved, "id", documentId);
-            return saved;
-        });
+    org.mockito.Mockito.lenient()
+        .when(documentRepository.save(any(Document.class)))
+        .thenAnswer(
+            invocation -> {
+              Document saved = invocation.getArgument(0);
+              org.springframework.test.util.ReflectionTestUtils.setField(saved, "id", documentId);
+              return saved;
+            });
 
     project = new Project();
     org.springframework.test.util.ReflectionTestUtils.setField(project, "id", projectId);
@@ -103,13 +105,16 @@ public class DocumentServiceTest {
     when(projectRepository.findById(projectId)).thenReturn(Optional.of(project));
     when(projectMemberRepository.findByProjectIdAndUserId(projectId, authorId))
         .thenReturn(Optional.of(projectMember));
-    org.mockito.Mockito.lenient().when(documentRepository.save(any(Document.class))).thenAnswer(i -> {
-      Document saved = i.getArgument(0);
-      if (saved.getId() == null) {
-          org.springframework.test.util.ReflectionTestUtils.setField(saved, "id", documentId);
-      }
-      return saved;
-    });
+    org.mockito.Mockito.lenient()
+        .when(documentRepository.save(any(Document.class)))
+        .thenAnswer(
+            i -> {
+              Document saved = i.getArgument(0);
+              if (saved.getId() == null) {
+                org.springframework.test.util.ReflectionTestUtils.setField(saved, "id", documentId);
+              }
+              return saved;
+            });
 
     DocumentResponseDto response =
         documentService.uploadDocument(file, "Test Doc", projectId, authorId);
@@ -138,13 +143,16 @@ public class DocumentServiceTest {
     when(projectRepository.findById(projectId)).thenReturn(Optional.of(project));
     when(projectMemberRepository.findByProjectIdAndUserId(projectId, authorId))
         .thenReturn(Optional.of(projectMember));
-    org.mockito.Mockito.lenient().when(documentRepository.save(any(Document.class))).thenAnswer(i -> {
-      Document saved = i.getArgument(0);
-      if (saved.getId() == null) {
-          org.springframework.test.util.ReflectionTestUtils.setField(saved, "id", documentId);
-      }
-      return saved;
-    });
+    org.mockito.Mockito.lenient()
+        .when(documentRepository.save(any(Document.class)))
+        .thenAnswer(
+            i -> {
+              Document saved = i.getArgument(0);
+              if (saved.getId() == null) {
+                org.springframework.test.util.ReflectionTestUtils.setField(saved, "id", documentId);
+              }
+              return saved;
+            });
 
     DocumentResponseDto response =
         documentService.uploadDocument(file, "Dataset CSV", projectId, authorId);
@@ -166,13 +174,16 @@ public class DocumentServiceTest {
     when(projectRepository.findById(projectId)).thenReturn(Optional.of(project));
     when(projectMemberRepository.findByProjectIdAndUserId(projectId, authorId))
         .thenReturn(Optional.of(projectMember));
-    org.mockito.Mockito.lenient().when(documentRepository.save(any(Document.class))).thenAnswer(i -> {
-      Document saved = i.getArgument(0);
-      if (saved.getId() == null) {
-          org.springframework.test.util.ReflectionTestUtils.setField(saved, "id", documentId);
-      }
-      return saved;
-    });
+    org.mockito.Mockito.lenient()
+        .when(documentRepository.save(any(Document.class)))
+        .thenAnswer(
+            i -> {
+              Document saved = i.getArgument(0);
+              if (saved.getId() == null) {
+                org.springframework.test.util.ReflectionTestUtils.setField(saved, "id", documentId);
+              }
+              return saved;
+            });
 
     DocumentResponseDto response =
         documentService.uploadDocument(file, "Dataset JSON", projectId, authorId);
@@ -329,13 +340,16 @@ public class DocumentServiceTest {
     when(documentRepository.findById(documentId)).thenReturn(Optional.of(document));
     when(projectMemberRepository.findByProjectIdAndUserId(projectId, advisorId))
         .thenReturn(Optional.of(advisor));
-    org.mockito.Mockito.lenient().when(documentRepository.save(any(Document.class))).thenAnswer(i -> {
-      Document saved = i.getArgument(0);
-      if (saved.getId() == null) {
-          org.springframework.test.util.ReflectionTestUtils.setField(saved, "id", documentId);
-      }
-      return saved;
-    });
+    org.mockito.Mockito.lenient()
+        .when(documentRepository.save(any(Document.class)))
+        .thenAnswer(
+            i -> {
+              Document saved = i.getArgument(0);
+              if (saved.getId() == null) {
+                org.springframework.test.util.ReflectionTestUtils.setField(saved, "id", documentId);
+              }
+              return saved;
+            });
 
     DocumentResponseDto response =
         documentService.reviewDocument(
@@ -484,13 +498,16 @@ public class DocumentServiceTest {
     when(documentRepository.findById(documentId)).thenReturn(Optional.of(document));
     when(projectMemberRepository.findByProjectIdAndUserId(projectId, advisorId))
         .thenReturn(Optional.of(advisor));
-    org.mockito.Mockito.lenient().when(documentRepository.save(any(Document.class))).thenAnswer(i -> {
-      Document saved = i.getArgument(0);
-      if (saved.getId() == null) {
-          org.springframework.test.util.ReflectionTestUtils.setField(saved, "id", documentId);
-      }
-      return saved;
-    });
+    org.mockito.Mockito.lenient()
+        .when(documentRepository.save(any(Document.class)))
+        .thenAnswer(
+            i -> {
+              Document saved = i.getArgument(0);
+              if (saved.getId() == null) {
+                org.springframework.test.util.ReflectionTestUtils.setField(saved, "id", documentId);
+              }
+              return saved;
+            });
 
     DocumentResponseDto response =
         documentService.reviewDocument(documentId, advisorId, DocumentStatus.REJECTED, null);
@@ -513,13 +530,16 @@ public class DocumentServiceTest {
     when(documentRepository.findById(documentId)).thenReturn(Optional.of(document));
     when(projectMemberRepository.findByProjectIdAndUserId(projectId, advisorId))
         .thenReturn(Optional.of(advisor));
-    org.mockito.Mockito.lenient().when(documentRepository.save(any(Document.class))).thenAnswer(i -> {
-      Document saved = i.getArgument(0);
-      if (saved.getId() == null) {
-          org.springframework.test.util.ReflectionTestUtils.setField(saved, "id", documentId);
-      }
-      return saved;
-    });
+    org.mockito.Mockito.lenient()
+        .when(documentRepository.save(any(Document.class)))
+        .thenAnswer(
+            i -> {
+              Document saved = i.getArgument(0);
+              if (saved.getId() == null) {
+                org.springframework.test.util.ReflectionTestUtils.setField(saved, "id", documentId);
+              }
+              return saved;
+            });
 
     DocumentResponseDto response =
         documentService.reviewDocument(documentId, advisorId, DocumentStatus.REJECTED, "   ");
@@ -590,12 +610,17 @@ public class DocumentServiceTest {
     when(userRepository.findById(authorId)).thenReturn(Optional.of(author));
     when(projectMemberRepository.findByProjectIdAndUserId(projectId, authorId))
         .thenReturn(Optional.of(projectMember));
-    org.mockito.Mockito.lenient().when(documentCommentRepository.save(any(com.edtech.model.DocumentComment.class))).thenAnswer(i -> {
-      com.edtech.model.DocumentComment saved = i.getArgument(0);
-      org.springframework.test.util.ReflectionTestUtils.setField(saved, "id", UUID.randomUUID());
-      org.springframework.test.util.ReflectionTestUtils.setField(saved, "createdAt", java.time.ZonedDateTime.now());
-      return saved;
-    });
+    org.mockito.Mockito.lenient()
+        .when(documentCommentRepository.save(any(com.edtech.model.DocumentComment.class)))
+        .thenAnswer(
+            i -> {
+              com.edtech.model.DocumentComment saved = i.getArgument(0);
+              org.springframework.test.util.ReflectionTestUtils.setField(
+                  saved, "id", UUID.randomUUID());
+              org.springframework.test.util.ReflectionTestUtils.setField(
+                  saved, "createdAt", java.time.ZonedDateTime.now());
+              return saved;
+            });
 
     com.edtech.dto.CommentResponseDto response =
         documentService.addComment(documentId, authorId, "New Comment");
@@ -607,7 +632,8 @@ public class DocumentServiceTest {
     assertEquals("test", response.getAuthorName());
     org.junit.jupiter.api.Assertions.assertNotNull(response.getCreatedAt());
     verify(auditLogService, times(1))
-        .logDocumentAction(eq(authorId), eq(AuditAction.REVIEW_DOCUMENT), eq(documentId), anyString());
+        .logDocumentAction(
+            eq(authorId), eq(AuditAction.REVIEW_DOCUMENT), eq(documentId), anyString());
     verify(notificationService, times(1)).sendToTopic(anyString(), any());
   }
 
@@ -618,13 +644,16 @@ public class DocumentServiceTest {
     when(documentRepository.findById(documentId)).thenReturn(Optional.of(document));
     when(projectMemberRepository.findByProjectIdAndUserId(projectId, authorId))
         .thenReturn(Optional.of(projectMember));
-    org.mockito.Mockito.lenient().when(documentRepository.save(any(Document.class))).thenAnswer(i -> {
-      Document saved = i.getArgument(0);
-      if (saved.getId() == null) {
-          org.springframework.test.util.ReflectionTestUtils.setField(saved, "id", documentId);
-      }
-      return saved;
-    });
+    org.mockito.Mockito.lenient()
+        .when(documentRepository.save(any(Document.class)))
+        .thenAnswer(
+            i -> {
+              Document saved = i.getArgument(0);
+              if (saved.getId() == null) {
+                org.springframework.test.util.ReflectionTestUtils.setField(saved, "id", documentId);
+              }
+              return saved;
+            });
 
     DocumentResponseDto response = documentService.toggleStar(documentId, authorId);
 

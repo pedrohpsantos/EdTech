@@ -38,15 +38,15 @@ public class LaboratoryController {
           .body(Map.of("error", "Apenas orientadores podem gerar tokens do laboratorio"));
     }
 
-    String researcherToken = 
+    String researcherToken =
         laboratoryTokenService.generateToken(userOpt.get().getId(), UserRole.RESEARCHER);
-    String auditorToken = 
+    String auditorToken =
         laboratoryTokenService.generateToken(userOpt.get().getId(), UserRole.AUDITOR);
-    return ResponseEntity.ok(Map.of(
-        "researcher_token", researcherToken,
-        "auditor_token", auditorToken,
-        "expires_in", "Final da semana"
-    ));
+    return ResponseEntity.ok(
+        Map.of(
+            "researcher_token", researcherToken,
+            "auditor_token", auditorToken,
+            "expires_in", "Final da semana"));
   }
 
   /** Javadoc. */
@@ -64,7 +64,7 @@ public class LaboratoryController {
     }
     User currentUser = currentUserOpt.get();
 
-    Optional<User> advisorOpt = 
+    Optional<User> advisorOpt =
         laboratoryTokenService.findAdvisorByToken(token, currentUser.getRole());
     if (advisorOpt.isEmpty()) {
       return ResponseEntity.status(400)

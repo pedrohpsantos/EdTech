@@ -1,6 +1,5 @@
 package com.edtech.config;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -17,13 +16,13 @@ class WebSocketConfigTest {
   void testConfigureMessageBroker() {
     WebSocketConfig config = new WebSocketConfig();
     MessageBrokerRegistry registry = mock(MessageBrokerRegistry.class);
-    
+
     when(registry.enableSimpleBroker(anyString(), anyString())).thenReturn(null);
     when(registry.setApplicationDestinationPrefixes(anyString())).thenReturn(registry);
     when(registry.setUserDestinationPrefix(anyString())).thenReturn(registry);
-    
+
     config.configureMessageBroker(registry);
-    
+
     verify(registry).enableSimpleBroker("/topic", "/queue");
     verify(registry).setApplicationDestinationPrefixes("/app");
     verify(registry).setUserDestinationPrefix("/user");
@@ -33,13 +32,14 @@ class WebSocketConfigTest {
   void testRegisterStompEndpoints() {
     WebSocketConfig config = new WebSocketConfig();
     StompEndpointRegistry registry = mock(StompEndpointRegistry.class);
-    StompWebSocketEndpointRegistration registration = mock(StompWebSocketEndpointRegistration.class);
-    
+    StompWebSocketEndpointRegistration registration =
+        mock(StompWebSocketEndpointRegistration.class);
+
     when(registry.addEndpoint("/ws-edtech")).thenReturn(registration);
     when(registration.setAllowedOriginPatterns("*")).thenReturn(registration);
-    
+
     config.registerStompEndpoints(registry);
-    
+
     verify(registry).addEndpoint("/ws-edtech");
     verify(registration).setAllowedOriginPatterns("*");
     verify(registration).withSockJS();

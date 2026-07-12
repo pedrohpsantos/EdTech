@@ -265,7 +265,8 @@ public class DocumentService {
     dto.setAuthorEmail(document.getAuthor().getEmail());
     dto.setProjectId(document.getProject().getId());
     dto.setProjectTitle(document.getProject().getTitle());
-    dto.setFileType(extractExtension(document.getTitle()).replace(".", "").toUpperCase(Locale.ROOT));
+    dto.setFileType(
+        extractExtension(document.getTitle()).replace(".", "").toUpperCase(Locale.ROOT));
     dto.setCreatedAt(document.getCreatedAt());
     dto.setFeedback(document.getFeedback());
     dto.setStarred(document.isStarred());

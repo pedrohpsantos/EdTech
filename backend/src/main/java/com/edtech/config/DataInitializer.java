@@ -36,39 +36,43 @@ public class DataInitializer {
         UUID commonInstitutionId = UUID.fromString("123e4567-e89b-12d3-a456-426614174000");
 
         // 1. Criar Orientador Demo
-        User advisor = new User(
-            "Orientador Demo", 
-            "advisor@edtech.com", 
-            passwordEncoder.encode("senha123"), 
-            UserRole.ADVISOR, 
-            commonInstitutionId);
+        User advisor =
+            new User(
+                "Orientador Demo",
+                "advisor@edtech.com",
+                passwordEncoder.encode("senha123"),
+                UserRole.ADVISOR,
+                commonInstitutionId);
         userRepository.save(advisor);
 
         // 2. Criar Pesquisador Demo
-        User researcher = new User(
-            "Pesquisador Demo", 
-            "researcher@edtech.com", 
-            passwordEncoder.encode("senha123"), 
-            UserRole.RESEARCHER, 
-            commonInstitutionId);
+        User researcher =
+            new User(
+                "Pesquisador Demo",
+                "researcher@edtech.com",
+                passwordEncoder.encode("senha123"),
+                UserRole.RESEARCHER,
+                commonInstitutionId);
         userRepository.save(researcher);
 
         // 3. Criar Auditor Demo
-        User auditor = new User(
-            "Auditor Demo", 
-            "auditor@edtech.com", 
-            passwordEncoder.encode("senha123"), 
-            UserRole.AUDITOR, 
-            commonInstitutionId);
+        User auditor =
+            new User(
+                "Auditor Demo",
+                "auditor@edtech.com",
+                passwordEncoder.encode("senha123"),
+                UserRole.AUDITOR,
+                commonInstitutionId);
         userRepository.save(auditor);
 
         // 4. Criar um admin
-        User admin = new User(
-            "Admin", 
-            "admin@edtech.com", 
-            passwordEncoder.encode("senha123"), 
-            UserRole.AUDITOR, 
-            commonInstitutionId);
+        User admin =
+            new User(
+                "Admin",
+                "admin@edtech.com",
+                passwordEncoder.encode("senha123"),
+                UserRole.AUDITOR,
+                commonInstitutionId);
         userRepository.save(admin);
 
         // 5. Criar Projetos Demo
@@ -104,54 +108,59 @@ public class DataInitializer {
         documentRepository.save(doc2);
 
         // 7. Criar Logs de Auditoria Demo
-        AuditLog log1 = new AuditLog(
-            commonInstitutionId, 
-            advisor.getId(), 
-            AuditAction.LOGIN_SUCCESS, 
-            "USER", 
-            advisor.getId(), 
-            "192.168.1.1", 
-            "Login realizado com sucesso");
+        AuditLog log1 =
+            new AuditLog(
+                commonInstitutionId,
+                advisor.getId(),
+                AuditAction.LOGIN_SUCCESS,
+                "USER",
+                advisor.getId(),
+                "192.168.1.1",
+                "Login realizado com sucesso");
         auditLogRepository.save(log1);
 
-        AuditLog log2 = new AuditLog(
-            commonInstitutionId, 
-            researcher.getId(), 
-            AuditAction.UPLOAD_SUCCESS, 
-            "DOCUMENT", 
-            doc1.getId(), 
-            "192.168.1.2", 
-            "Documento Referencial_Teorico_Final.pdf enviado");
+        AuditLog log2 =
+            new AuditLog(
+                commonInstitutionId,
+                researcher.getId(),
+                AuditAction.UPLOAD_SUCCESS,
+                "DOCUMENT",
+                doc1.getId(),
+                "192.168.1.2",
+                "Documento Referencial_Teorico_Final.pdf enviado");
         auditLogRepository.save(log2);
 
-        AuditLog log3 = new AuditLog(
-            commonInstitutionId, 
-            advisor.getId(), 
-            AuditAction.DOCUMENT_APPROVED, 
-            "DOCUMENT", 
-            doc1.getId(), 
-            "192.168.1.1", 
-            "Documento aprovado: Referencial_Teorico_Final.pdf");
+        AuditLog log3 =
+            new AuditLog(
+                commonInstitutionId,
+                advisor.getId(),
+                AuditAction.DOCUMENT_APPROVED,
+                "DOCUMENT",
+                doc1.getId(),
+                "192.168.1.1",
+                "Documento aprovado: Referencial_Teorico_Final.pdf");
         auditLogRepository.save(log3);
-        
-        AuditLog log4 = new AuditLog(
-            commonInstitutionId, 
-            auditor.getId(), 
-            AuditAction.REVIEW_DOCUMENT, 
-            "DOCUMENT", 
-            doc1.getId(), 
-            "192.168.1.5", 
-            "Documento visualizado");
+
+        AuditLog log4 =
+            new AuditLog(
+                commonInstitutionId,
+                auditor.getId(),
+                AuditAction.REVIEW_DOCUMENT,
+                "DOCUMENT",
+                doc1.getId(),
+                "192.168.1.5",
+                "Documento visualizado");
         auditLogRepository.save(log4);
-        
-        AuditLog log5 = new AuditLog(
-            commonInstitutionId, 
-            admin.getId(), 
-            AuditAction.LOGIN_FAILED, 
-            "USER", 
-            admin.getId(), 
-            "192.168.1.99", 
-            "Tentativa de login falha");
+
+        AuditLog log5 =
+            new AuditLog(
+                commonInstitutionId,
+                admin.getId(),
+                AuditAction.LOGIN_FAILED,
+                "USER",
+                admin.getId(),
+                "192.168.1.99",
+                "Tentativa de login falha");
         auditLogRepository.save(log5);
 
         System.out.println("Banco de dados populado com contas demo com sucesso!");

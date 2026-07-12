@@ -71,13 +71,21 @@ public class DocumentResponseDto {
     this.authorId = authorId;
   }
 
-  public String getAuthorName() { return authorName; }
+  public String getAuthorName() {
+    return authorName;
+  }
 
-  public void setAuthorName(String authorName) { this.authorName = authorName; }
+  public void setAuthorName(String authorName) {
+    this.authorName = authorName;
+  }
 
-  public String getAuthorEmail() { return authorEmail; }
+  public String getAuthorEmail() {
+    return authorEmail;
+  }
 
-  public void setAuthorEmail(String authorEmail) { this.authorEmail = authorEmail; }
+  public void setAuthorEmail(String authorEmail) {
+    this.authorEmail = authorEmail;
+  }
 
   /** Documentação para o método getProjectId. */
   public UUID getProjectId() {
@@ -89,13 +97,21 @@ public class DocumentResponseDto {
     this.projectId = projectId;
   }
 
-  public String getProjectTitle() { return projectTitle; }
+  public String getProjectTitle() {
+    return projectTitle;
+  }
 
-  public void setProjectTitle(String projectTitle) { this.projectTitle = projectTitle; }
+  public void setProjectTitle(String projectTitle) {
+    this.projectTitle = projectTitle;
+  }
 
-  public String getFileType() { return fileType; }
+  public String getFileType() {
+    return fileType;
+  }
 
-  public void setFileType(String fileType) { this.fileType = fileType; }
+  public void setFileType(String fileType) {
+    this.fileType = fileType;
+  }
 
   /** Documentação para o método getCreatedAt. */
   public ZonedDateTime getCreatedAt() {

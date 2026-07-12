@@ -40,9 +40,11 @@ public class DocumentControllerTest {
 
   @BeforeEach
   void setUp() {
-    mockMvc = MockMvcBuilders.standaloneSetup(documentController)
-        .setCustomArgumentResolvers(new org.springframework.data.web.PageableHandlerMethodArgumentResolver())
-        .build();
+    mockMvc =
+        MockMvcBuilders.standaloneSetup(documentController)
+            .setCustomArgumentResolvers(
+                new org.springframework.data.web.PageableHandlerMethodArgumentResolver())
+            .build();
 
     mockUser = mock(User.class);
     when(mockUser.getId()).thenReturn(UUID.randomUUID());
@@ -128,7 +130,11 @@ public class DocumentControllerTest {
 
   @Test
   void testListDocuments_Success() throws Exception {
-    org.springframework.data.domain.Page<DocumentResponseDto> page = new org.springframework.data.domain.PageImpl<>(java.util.Collections.emptyList(), org.springframework.data.domain.PageRequest.of(0, 20), 0);
+    org.springframework.data.domain.Page<DocumentResponseDto> page =
+        new org.springframework.data.domain.PageImpl<>(
+            java.util.Collections.emptyList(),
+            org.springframework.data.domain.PageRequest.of(0, 20),
+            0);
     when(documentService.listDocumentsByUser(any(), any(), any(), any(), any())).thenReturn(page);
 
     mockMvc
@@ -148,7 +154,9 @@ public class DocumentControllerTest {
             get("/api/documents/" + docId + "/download")
                 .principal(new UsernamePasswordAuthenticationToken(mockUser, null)))
         .andExpect(status().isOk())
-        .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.content().string("http://download"));
+        .andExpect(
+            org.springframework.test.web.servlet.result.MockMvcResultMatchers.content()
+                .string("http://download"));
   }
 
   @Test
@@ -168,7 +176,8 @@ public class DocumentControllerTest {
   @Test
   void testGetComments_Success() throws Exception {
     UUID docId = UUID.randomUUID();
-    when(documentService.getComments(eq(docId), any())).thenReturn(java.util.Collections.emptyList());
+    when(documentService.getComments(eq(docId), any()))
+        .thenReturn(java.util.Collections.emptyList());
 
     mockMvc
         .perform(

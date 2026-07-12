@@ -132,9 +132,10 @@ public class RecoveryServiceTest {
   @Test
   void resetPassword_WhenUserDoesNotExist_ShouldReturnFalse() {
     RecoveryToken token = new RecoveryToken("123456", EMAIL, LocalDateTime.now().plusMinutes(10));
-    when(recoveryTokenRepository.findByEmailAndToken(EMAIL, "123456")).thenReturn(Optional.of(token));
+    when(recoveryTokenRepository.findByEmailAndToken(EMAIL, "123456"))
+        .thenReturn(Optional.of(token));
     when(userRepository.findByEmailIgnoreCase(EMAIL)).thenReturn(Optional.empty());
-    
+
     boolean result = recoveryService.resetPassword(EMAIL, "123456", "nova_senha");
     assertFalse(result);
   }

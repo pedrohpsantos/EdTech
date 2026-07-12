@@ -2,8 +2,8 @@ package com.edtech.config;
 
 import com.edtech.model.User;
 import com.edtech.model.UserRole;
-import com.edtech.repository.ProjectRepository;
 import com.edtech.repository.ProjectMemberRepository;
+import com.edtech.repository.ProjectRepository;
 import com.edtech.repository.UserRepository;
 import java.util.Locale;
 import java.util.Optional;
@@ -49,12 +49,13 @@ public class DatabaseSeeder implements CommandLineRunner {
     String defaultPasswordHash = passwordEncoder.encode("Demo@1234");
 
     // 1. Criar usuários
-    User pesquisador = seedUser(
-        "Pesquisador Demo",
-        "pesquisador.demo@unb.br",
-        defaultPasswordHash,
-        UserRole.RESEARCHER,
-        demoInstitutionId);
+    User pesquisador =
+        seedUser(
+            "Pesquisador Demo",
+            "pesquisador.demo@unb.br",
+            defaultPasswordHash,
+            UserRole.RESEARCHER,
+            demoInstitutionId);
     User orientador =
         seedUser(
             "Orientador Demo",

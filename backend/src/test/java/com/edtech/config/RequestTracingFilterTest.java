@@ -5,8 +5,6 @@ import static org.mockito.Mockito.*;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,7 +24,8 @@ class RequestTracingFilterTest {
   }
 
   @Test
-  void doFilterInternal_WhenTraceIdIsMissing_ShouldGenerateOne() throws ServletException, IOException {
+  void doFilterInternal_WhenTraceIdIsMissing_ShouldGenerateOne()
+      throws ServletException, IOException {
     MockHttpServletRequest request = new MockHttpServletRequest();
     MockHttpServletResponse response = new MockHttpServletResponse();
 
@@ -38,7 +37,8 @@ class RequestTracingFilterTest {
   }
 
   @Test
-  void doFilterInternal_WhenTraceIdExists_ShouldUseExistingAndSanitize() throws ServletException, IOException {
+  void doFilterInternal_WhenTraceIdExists_ShouldUseExistingAndSanitize()
+      throws ServletException, IOException {
     MockHttpServletRequest request = new MockHttpServletRequest();
     request.addHeader("X-Request-ID", "my-custom_trace*id-123");
     MockHttpServletResponse response = new MockHttpServletResponse();
@@ -50,7 +50,8 @@ class RequestTracingFilterTest {
   }
 
   @Test
-  void doFilterInternal_WhenTraceIdIsEmpty_ShouldGenerateOne() throws ServletException, IOException {
+  void doFilterInternal_WhenTraceIdIsEmpty_ShouldGenerateOne()
+      throws ServletException, IOException {
     MockHttpServletRequest request = new MockHttpServletRequest();
     request.addHeader("X-Request-ID", "");
     MockHttpServletResponse response = new MockHttpServletResponse();

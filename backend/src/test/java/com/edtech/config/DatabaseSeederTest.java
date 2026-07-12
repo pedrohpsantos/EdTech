@@ -2,15 +2,15 @@ package com.edtech.config;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.mock;
 
 import com.edtech.model.User;
-import com.edtech.repository.ProjectRepository;
 import com.edtech.repository.ProjectMemberRepository;
+import com.edtech.repository.ProjectRepository;
 import com.edtech.repository.UserRepository;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
@@ -50,7 +50,8 @@ class DatabaseSeederTest {
   void testRunWhenDatabaseIsPopulated() {
     when(passwordEncoder.encode(anyString())).thenReturn("hashed-password");
     // Return a dummy user so it doesn't create new ones
-    when(userRepository.findByEmailIgnoreCase(anyString())).thenReturn(Optional.of(mock(User.class)));
+    when(userRepository.findByEmailIgnoreCase(anyString()))
+        .thenReturn(Optional.of(mock(User.class)));
     when(projectRepository.count()).thenReturn(3L);
 
     databaseSeeder.run();

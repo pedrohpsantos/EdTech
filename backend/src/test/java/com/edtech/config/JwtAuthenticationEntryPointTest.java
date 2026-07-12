@@ -19,20 +19,20 @@ class JwtAuthenticationEntryPointTest {
   @Test
   void testCommence() throws IOException {
     JwtAuthenticationEntryPoint entryPoint = new JwtAuthenticationEntryPoint();
-    
+
     MockHttpServletRequest request = new MockHttpServletRequest();
     HttpServletResponse response = Mockito.mock(HttpServletResponse.class);
     AuthenticationException authException = Mockito.mock(AuthenticationException.class);
-    
+
     StringWriter stringWriter = new StringWriter();
     PrintWriter printWriter = new PrintWriter(stringWriter);
     Mockito.when(response.getWriter()).thenReturn(printWriter);
-    
+
     entryPoint.commence(request, response, authException);
-    
+
     Mockito.verify(response).setStatus(HttpStatus.UNAUTHORIZED.value());
     Mockito.verify(response).setContentType(MediaType.APPLICATION_JSON_VALUE);
-    
+
     String responseBody = stringWriter.toString();
     // Validate that it returns a valid JSON matching ErrorResponse
     ObjectMapper mapper = new ObjectMapper();

@@ -12,7 +12,7 @@ class WebMvcConfigTest {
   void testAddResourceHandlers() {
     WebMvcConfig config = new WebMvcConfig();
     ResourceHandlerRegistry registry = mock(ResourceHandlerRegistry.class);
-    
+
     // Config shouldn't add anything right now (Mitigation SEC-001)
     config.addResourceHandlers(registry);
     verifyNoInteractions(registry);

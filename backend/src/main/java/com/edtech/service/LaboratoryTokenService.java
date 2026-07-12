@@ -29,7 +29,7 @@ public class LaboratoryTokenService {
   /** Javadoc. */
   public String generateToken(UUID advisorId, UserRole targetRole) {
     long currentWeek = System.currentTimeMillis() / (7L * 24 * 60 * 60 * 1000);
-    String rawData = 
+    String rawData =
         advisorId.toString() + ":" + currentWeek + ":" + serverSecret + ":" + targetRole.name();
     try {
       MessageDigest digest = MessageDigest.getInstance("SHA-256");
