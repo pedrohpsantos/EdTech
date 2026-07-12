@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import DashboardLayout from '../components/layout/DashboardLayout';
 import '../assets/settings.css';
 import { useAuth } from '../context/authContext';
-import { setup2Fa, enable2Fa } from '../services/api';
+import { setup2Fa, enable2Fa, joinLaboratory } from '../services/api';
 
 const Settings: React.FC = () => {
   const { user } = useAuth();
@@ -13,6 +13,10 @@ const Settings: React.FC = () => {
   const [totpCode, setTotpCode] = useState('');
   const [is2FaEnabled, setIs2FaEnabled] = useState(user?.mfaEnabled || false);
   const [setupError, setSetupError] = useState('');
+
+  const [advisorCode, setAdvisorCode] = useState('');
+  const [isJoining, setIsJoining] = useState(false);
+  const [joinMessage, setJoinMessage] = useState('');
 
   const userName = user?.name || 'Usuário';
   const userEmail = user?.email || 'usuario@edtech.com';
@@ -43,6 +47,19 @@ const Settings: React.FC = () => {
     } else {
       setSetupError(res.mensagem || 'Código inválido');
     }
+  };
+
+  const handleJoinLaboratory = async () => {
+    setJoinMessage('');
+    setIsJoining(true);
+    const res = await joinLaboratory(advisorCode);
+    if (res.sucesso) {
+      setJoinMessage('Vinculado ao laboratório com sucesso!');
+      setAdvisorCode('');
+    } else {
+      setJoinMessage(res.mensagem || 'Erro ao vincular');
+    }
+    setIsJoining(false);
   };
 
   return (
@@ -166,6 +183,49 @@ const Settings: React.FC = () => {
             </div>
           )}
         </div>
+
+        {/* Laboratório e Orientador (Apenas para Pesquisadores) */}
+        {user?.role === 'RESEARCHER' && (
+          <div className="settings-card">
+            <h3 className="settings-section-title">Laboratório e Orientador</h3>
+            
+            <div className="settings-item no-border">
+              <div className="settings-item-icon bg-purple-light">
+                <i className="bi bi-diagram-3"></i>
+              </div>
+              <div className="settings-item-content">
+                <span className="settings-item-title">Vincular Orientador</span>
+                <span className="settings-item-desc">
+                  Insira o código do seu orientador para compartilhar o acesso aos seus documentos
+                </span>
+              </div>
+            </div>
+            
+            <div className="settings-item no-border" style={{ paddingTop: 0 }}>
+              <div style={{ display: 'flex', gap: '0.5rem', width: '100%', maxWidth: '400px', marginLeft: '56px' }}>
+                <input
+                  type="text"
+                  className="ed-input"
+                  placeholder="Código do Orientador (ex: token...)"
+                  value={advisorCode}
+                  onChange={(e) => setAdvisorCode(e.target.value)}
+                />
+                <button 
+                  className="btn-primary" 
+                  onClick={handleJoinLaboratory} 
+                  disabled={!advisorCode.trim() || isJoining}
+                >
+                  {isJoining ? 'Vinculando...' : 'Vincular'}
+                </button>
+              </div>
+            </div>
+            {joinMessage && (
+              <div style={{ marginLeft: '56px', marginTop: '0.5rem', fontSize: '0.875rem', color: joinMessage.includes('sucesso') ? 'var(--ed-status-success)' : '#d32f2f' }}>
+                {joinMessage}
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Governança */}
         <div className="settings-card">

@@ -289,8 +289,8 @@ const Dashboard: React.FC = () => {
               </span>
             </div>
           </div>
-          <button className="btn-alert w-100 w-md-auto" style={{ background: 'white', color: 'var(--ed-orange)' }} onClick={() => navigate('/trail')}>
-            <i className="bi bi-arrow-right-short"></i> Corrigir agora
+          <button className="btn-alert" style={{ background: 'white', color: 'var(--ed-orange)', border: 'none', padding: '8px 20px', borderRadius: '8px', fontWeight: 600, cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '8px', whiteSpace: 'nowrap' }} onClick={() => navigate('/trail')}>
+            Corrigir agora <i className="bi bi-arrow-right-short" style={{ fontSize: '18px' }}></i>
           </button>
         </div>
       ) : user?.role === 'AUDITOR' ? (

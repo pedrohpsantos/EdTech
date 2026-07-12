@@ -194,6 +194,15 @@ export const joinProject = async (projectId: string): Promise<ApiResponse<any>> 
   }
 };
 
+export const joinLaboratory = async (token: string): Promise<ApiResponse<any>> => {
+  try {
+    const resposta = await api.post('/api/v1/laboratory/join', { token });
+    return { sucesso: true, dados: resposta.data };
+  } catch (error) {
+    return handleApiError(error, 'Erro ao vincular ao laboratório. Token inválido.');
+  }
+};
+
 export const getDocuments = async (
   projectId?: string,
   title?: string,

@@ -94,6 +94,32 @@
   background-color: var(--border);
 }
 
+.btn-primary {
+  background-color: var(--ed-purple-main);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-primary:hover {
+  background-color: var(--ed-purple-dark, #3b1480);
+}
+
+.btn-primary:disabled {
+  background-color: var(--ed-text-muted);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
 /* Settings Items */
 .settings-item {
   display: flex;
