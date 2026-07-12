@@ -43,6 +43,10 @@ describe('Documentos Page', () => {
     window.open = vi.fn();
   });
 
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
   it('renders loading state', () => {
     (useDocuments as any).mockReturnValue({ data: [], isLoading: true });
     render(<Documentos />);

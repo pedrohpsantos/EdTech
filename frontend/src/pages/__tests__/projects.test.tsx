@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, waitFor, fireEvent, act } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import Projects from '../projects';
 import { getProjects, joinProject } from '../../services/api';
 
@@ -21,6 +21,10 @@ vi.mock('../../components/layout/DashboardLayout', () => ({
 describe('Projects Page', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
   });
 
   it('shows loading state initially', async () => {

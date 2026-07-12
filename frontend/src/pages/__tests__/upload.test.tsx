@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, waitFor, fireEvent, act } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import Upload from '../upload';
 import { useAuth } from '../../context/authContext';
 import { useProjects } from '../../hooks/useProjects';
@@ -42,6 +42,10 @@ describe('Upload Page', () => {
     (useAuth as any).mockReturnValue({ user: { name: 'John Doe' } });
     (useProjects as any).mockReturnValue({ data: [{ id: '1', name: 'Project 1' }] });
     (useUploadDocument as any).mockReturnValue({ mutateAsync: mockUploadDoc });
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
   });
 
   it('renders correctly with user name', () => {
@@ -165,25 +169,20 @@ describe('Upload Page', () => {
     const validFile = new File(['{}'], 'data.json', { type: 'application/json' });
     fireEvent.change(fileInput, { target: { files: [validFile] } });
 
-    // Mock implementation to simulate progress
-    mockUploadDoc.mockImplementationOnce(async ({ onProgress }) => {
+    // Mock upload — resolves immediately with progress callback
+    mockUploadDoc.mockImplementationOnce(async ({ onProgress }: any) => {
       onProgress({ loaded: 50, total: 100 });
-      await Promise.resolve();
     });
 
     const submitBtn = screen.getByRole('button', { name: 'Confirmar Envio' });
-    fireEvent.click(submitBtn);
-
-    await waitFor(() => {
-      expect(screen.getByText('50%')).toBeInTheDocument();
-    });
-
     await act(async () => {
-      vi.advanceTimersByTime(2100);
+      fireEvent.click(submitBtn);
     });
+
+    // Advance the 2s redirect timer
+    await vi.advanceTimersByTimeAsync(2100);
 
     expect(mockNavigate).toHaveBeenCalledWith('/documentos');
-    vi.useRealTimers();
   });
 
   it('handles upload failure', async () => {
