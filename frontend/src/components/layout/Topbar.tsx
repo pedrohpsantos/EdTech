@@ -17,6 +17,7 @@ const Topbar: React.FC<TopbarProps> = ({ title, subtitle, breadcrumbs, customTop
   const navigate = useNavigate();
   const [showNotifications, setShowNotifications] = useState(false);
   const [notifications, setNotifications] = useState<any[]>([]);
+  const [hasUnread, setHasUnread] = useState(false);
 
   useEffect(() => {
     if (!user) return;
@@ -34,6 +35,7 @@ const Topbar: React.FC<TopbarProps> = ({ title, subtitle, breadcrumbs, customTop
           if (msg.body) {
             const payload = JSON.parse(msg.body);
             setNotifications((prev) => [payload, ...prev]);
+            setHasUnread(true);
           }
         });
 
@@ -43,6 +45,7 @@ const Topbar: React.FC<TopbarProps> = ({ title, subtitle, breadcrumbs, customTop
           if (msg.body) {
             const payload = JSON.parse(msg.body);
             setNotifications((prev) => [payload, ...prev]);
+            setHasUnread(true);
           }
         });
       },
@@ -104,10 +107,13 @@ const Topbar: React.FC<TopbarProps> = ({ title, subtitle, breadcrumbs, customTop
           <div
             className="action-icon-wrapper notification-icon"
             style={{ position: 'relative', cursor: 'pointer' }}
-            onClick={() => setShowNotifications(!showNotifications)}
+            onClick={() => {
+              setShowNotifications(!showNotifications);
+              if (!showNotifications) setHasUnread(false);
+            }}
           >
             <i className="bi bi-bell"></i>
-            {notifications.length > 0 && <span className="notification-dot"></span>}
+            {hasUnread && notifications.length > 0 && <span className="notification-dot"></span>}
 
             {showNotifications && (
               <div className="notifications-dropdown" onClick={(e) => e.stopPropagation()}>

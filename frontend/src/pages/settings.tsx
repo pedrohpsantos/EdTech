@@ -80,7 +80,7 @@ const Settings: React.FC = () => {
             </div>
             <div className="settings-profile-actions">
               <span className="settings-badge-role">Pesquisador</span>
-              <button className="btn-outline">Editar perfil</button>
+              <button className="btn-outline" onClick={() => alert('A edição de perfil estará disponível na próxima versão. Em breve você poderá alterar seu nome e avatar.')}>Editar perfil</button>
             </div>
           </div>
         </div>

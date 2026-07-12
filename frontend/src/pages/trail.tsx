@@ -58,6 +58,20 @@ const ResearchTrail: React.FC = () => {
 
   const documents = user?.role === 'RESEARCHER' ? researcherDocuments : advisorDocuments;
 
+  const handleExportTrail = () => {
+    const docToExport = documents.find(d => d.id === selectedDocId);
+    const content = `Relatório de Trilha de Pesquisa\nDocumento: ${docToExport?.title}\nStatus: ${docToExport?.status}\n\nEventos:\n- Documento aprovado\n- Verificação LGPD aprovada\n- Nova versão criada\n`;
+    const blob = new Blob([content], { type: 'application/pdf' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `trilha_${docToExport?.title || 'pesquisa'}.pdf`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
   const getStatusBadgeClass = (status: string) => {
     switch (status) {
       case 'Aprovado':
@@ -152,7 +166,7 @@ const ResearchTrail: React.FC = () => {
               <span className="doc-status status-approved">
                 <i className="bi bi-check-circle me-1"></i> Aprovado
               </span>
-              <button className="btn-export-trail">
+              <button className="btn-export-trail" onClick={handleExportTrail}>
                 <i className="bi bi-download"></i> Exportar trilha (PDF)
               </button>
             </div>
