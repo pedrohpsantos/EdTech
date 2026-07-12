@@ -49,6 +49,7 @@ public class DocumentService {
   private final NotificationService notificationService;
   private final Tika tika = new Tika();
   private final ObjectMapper objectMapper = new ObjectMapper();
+  private final ClamAvService clamAvService;
 
   /** Documentacao. */
   public DocumentService(
@@ -59,7 +60,8 @@ public class DocumentService {
       DocumentCommentRepository documentCommentRepository,
       AuditLogService auditLogService,
       StorageService storageService,
-      NotificationService notificationService) {
+      NotificationService notificationService,
+      ClamAvService clamAvService) {
     this.documentRepository = documentRepository;
     this.projectRepository = projectRepository;
     this.userRepository = userRepository;
@@ -68,6 +70,7 @@ public class DocumentService {
     this.auditLogService = auditLogService;
     this.storageService = storageService;
     this.notificationService = notificationService;
+    this.clamAvService = clamAvService;
   }
 
   /** Documentacao. */
@@ -94,6 +97,12 @@ public class DocumentService {
       }
 
       String contentType = validateAllowedFile(file, originalFilename);
+
+      if (!clamAvService.isFileSafe(file)) {
+        throw new IllegalArgumentException(
+            "Upload rejeitado: Assinatura de vírus detectada no arquivo.");
+      }
+
       String fileKey = UUID.randomUUID() + "_" + originalFilename;
 
       storageService.uploadFile(file, fileKey, contentType);
