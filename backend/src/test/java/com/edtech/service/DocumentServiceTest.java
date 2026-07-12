@@ -31,6 +31,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
 @ExtendWith(MockitoExtension.class)
 public class DocumentServiceTest {
@@ -43,6 +44,7 @@ public class DocumentServiceTest {
   @Mock private AuditLogService auditLogService;
   @Mock private StorageService storageService;
   @Mock private NotificationService notificationService;
+  @Mock private ClamAvService clamAvService;
 
   @InjectMocks private DocumentService documentService;
 
@@ -93,6 +95,8 @@ public class DocumentServiceTest {
     document.setStatus(DocumentStatus.DRAFT);
     document.setAuthor(author);
     document.setProject(project);
+
+    org.mockito.Mockito.lenient().when(clamAvService.isFileSafe(any(MultipartFile.class))).thenReturn(true);
   }
 
   @Test
@@ -660,5 +664,24 @@ public class DocumentServiceTest {
     assertNotNull(response);
     assertTrue(response.isStarred());
     assertTrue(document.isStarred());
+  }
+
+  @Test
+  void testUploadDocument_RejectsMalware() {
+    byte[] content = "%PDF-1.4\n%EOF".getBytes();
+    MockMultipartFile file = new MockMultipartFile("file", "infected_file.pdf", "application/pdf", content);
+
+    when(userRepository.findById(authorId)).thenReturn(Optional.of(author));
+    when(projectRepository.findById(projectId)).thenReturn(Optional.of(project));
+    when(projectMemberRepository.findByProjectIdAndUserId(projectId, authorId))
+        .thenReturn(Optional.of(projectMember));
+
+    when(clamAvService.isFileSafe(any(MultipartFile.class))).thenReturn(false);
+
+    IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+        documentService.uploadDocument(file, "Infected File", projectId, authorId);
+    });
+
+    assertEquals("Upload rejeitado: Assinatura de vírus detectada no arquivo.", exception.getMessage());
   }
 }
