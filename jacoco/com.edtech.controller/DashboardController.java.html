@@ -32,14 +32,24 @@ public class DashboardController {
 <span class="fc" id="L32">    long pendingReviewDocs =</span>
 <span class="fc" id="L33">        documentRepository.countDocumentsByUserIdAndStatus(</span>
 <span class="fc" id="L34">            user.getId(), DocumentStatus.PENDING_REVIEW);</span>
+<span class="fc" id="L35">    long approvedDocs =</span>
+<span class="fc" id="L36">        documentRepository.countDocumentsByUserIdAndStatus(user.getId(), DocumentStatus.APPROVED);</span>
+<span class="fc" id="L37">    long publishedDocs =</span>
+<span class="fc" id="L38">        documentRepository.countDocumentsByUserIdAndStatus(user.getId(), DocumentStatus.PUBLISHED);</span>
+    int complianceScore =
+<span class="pc bpc" id="L40" title="1 of 2 branches missed.">        totalDocs == 0 ? 100 : (int) Math.round((approvedDocs * 100.0) / totalDocs);</span>
+    int researchProgress =
+<span class="pc bpc" id="L42" title="1 of 2 branches missed.">        totalDocs == 0</span>
+<span class="nc" id="L43">            ? 0</span>
+<span class="fc" id="L44">            : (int) Math.round(((approvedDocs + publishedDocs) * 100.0) / totalDocs);</span>
 
-<span class="fc" id="L36">    Map&lt;String, Object&gt; stats = new HashMap&lt;&gt;();</span>
-<span class="fc" id="L37">    stats.put(&quot;activeDocuments&quot;, totalDocs);</span>
-<span class="fc" id="L38">    stats.put(&quot;pendingReview&quot;, pendingReviewDocs);</span>
-<span class="fc" id="L39">    stats.put(&quot;complianceScore&quot;, 92); // TODO: Implementar lógica de conformidade real</span>
-<span class="fc" id="L40">    stats.put(&quot;researchProgress&quot;, 68); // TODO: Implementar lógica de progresso real</span>
+<span class="fc" id="L46">    Map&lt;String, Object&gt; stats = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L47">    stats.put(&quot;activeDocuments&quot;, totalDocs);</span>
+<span class="fc" id="L48">    stats.put(&quot;pendingReview&quot;, pendingReviewDocs);</span>
+<span class="fc" id="L49">    stats.put(&quot;complianceScore&quot;, complianceScore);</span>
+<span class="fc" id="L50">    stats.put(&quot;researchProgress&quot;, Math.min(researchProgress, 100));</span>
 
-<span class="fc" id="L42">    return ResponseEntity.ok(stats);</span>
+<span class="fc" id="L52">    return ResponseEntity.ok(stats);</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
