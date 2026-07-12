@@ -3,7 +3,7 @@ import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import Dashboard from '../dashboard';
 import { useAuth } from '../../context/authContext';
-import { getDashboardStats, getAuditLogs, getComplianceStats, getDocuments } from '../../services/api';
+import { getDashboardStats, getAuditLogs, getComplianceStats, getDocuments, getLaboratoryTokens } from '../../services/api';
 import { useNavigate } from 'react-router-dom';
 
 vi.mock('react-router-dom', () => ({
@@ -19,6 +19,7 @@ vi.mock('../../services/api', () => ({
   getAuditLogs: vi.fn(),
   getComplianceStats: vi.fn(),
   getDocuments: vi.fn(),
+  getLaboratoryTokens: vi.fn(),
 }));
 
 vi.mock('../../components/layout/DashboardLayout', () => ({
@@ -58,6 +59,10 @@ describe('Dashboard Page', () => {
       scoreTrend: 5,
     });
     (getAuditLogs as any).mockResolvedValue([]);
+    (getLaboratoryTokens as any).mockResolvedValue({
+      sucesso: true,
+      dados: { researcher_token: 'RTK123', auditor_token: 'ATK123' },
+    });
   });
 
   it('renders default user and UNKNOWN role properly', async () => {

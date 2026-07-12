@@ -370,7 +370,7 @@ const Dashboard: React.FC = () => {
               </span>
             </div>
           </div>
-          <button className="btn-alert" style={{ background: 'white', color: 'var(--ed-orange)', border: 'none', padding: '8px 20px', borderRadius: '8px', fontWeight: 600, cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '8px', whiteSpace: 'nowrap' }} onClick={() => navigate('/trail')}>
+          <button className="btn-alert" style={{ background: 'white', color: 'var(--ed-orange)', border: 'none', padding: '8px 20px', borderRadius: '8px', fontWeight: 600, cursor: 'pointer', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px', whiteSpace: 'nowrap', width: 'max-content', flexShrink: 0 }} onClick={() => navigate('/trail')}>
             Corrigir agora <i className="bi bi-arrow-right-short" style={{ fontSize: '18px' }}></i>
           </button>
         </div>
@@ -387,8 +387,8 @@ const Dashboard: React.FC = () => {
               </span>
             </div>
           </div>
-          <button className="btn-alert w-100 w-md-auto" style={{ background: 'white', color: '#dc2626' }} onClick={() => navigate('/compliance-center')}>
-            <i className="bi bi-arrow-right-short"></i> Investigar
+          <button className="btn-alert w-100 w-md-auto" style={{ background: 'white', color: '#dc2626', width: 'max-content', flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', border: 'none', padding: '8px 20px', borderRadius: '8px', fontWeight: 600, cursor: 'pointer' }} onClick={() => navigate('/compliance-center')}>
+            <i className="bi bi-arrow-right-short" style={{ fontSize: '18px', marginRight: '4px' }}></i> Investigar
           </button>
         </div>
       ) : (
@@ -404,8 +404,8 @@ const Dashboard: React.FC = () => {
               </span>
             </div>
           </div>
-          <button className="btn-alert w-100 w-md-auto" onClick={() => navigate('/trail')}>
-            <i className="bi bi-arrow-right-short"></i> Ver detalhes
+          <button className="btn-alert w-100 w-md-auto" style={{ width: 'max-content', flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', border: 'none', padding: '8px 20px', borderRadius: '8px', fontWeight: 600, cursor: 'pointer', background: 'var(--ed-purple-main)', color: 'white' }} onClick={() => navigate('/trail')}>
+            Ver detalhes <i className="bi bi-arrow-right-short" style={{ fontSize: '18px', marginLeft: '4px' }}></i>
           </button>
         </div>
       )}

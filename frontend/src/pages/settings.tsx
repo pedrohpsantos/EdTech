@@ -17,6 +17,19 @@ const Settings: React.FC = () => {
   const [advisorCode, setAdvisorCode] = useState('');
   const [isJoining, setIsJoining] = useState(false);
   const [joinMessage, setJoinMessage] = useState('');
+  const [labTokens, setLabTokens] = useState<{researcher: string, auditor: string} | null>(null);
+
+  React.useEffect(() => {
+    if (user?.role === 'ADVISOR') {
+      import('../services/api').then(({ getLaboratoryTokens }) => {
+        getLaboratoryTokens().then((res) => {
+          if (res.sucesso) {
+            setLabTokens({ researcher: res.dados.researcher_token, auditor: res.dados.auditor_token });
+          }
+        });
+      });
+    }
+  }, [user]);
 
   const userName = user?.name || 'Usuário';
   const userEmail = user?.email || 'usuario@edtech.com';
@@ -184,10 +197,10 @@ const Settings: React.FC = () => {
           )}
         </div>
 
-        {/* Laboratório e Orientador (Apenas para Pesquisadores) */}
-        {user?.role === 'RESEARCHER' && (
+        {/* Laboratório e Orientador */}
+        {(user?.role === 'RESEARCHER' || user?.role === 'AUDITOR') && (
           <div className="settings-card">
-            <h3 className="settings-section-title">Laboratório e Orientador</h3>
+            <h3 className="settings-section-title">Laboratório e Vínculo Institucional</h3>
             
             <div className="settings-item no-border">
               <div className="settings-item-icon bg-purple-light">
@@ -196,7 +209,7 @@ const Settings: React.FC = () => {
               <div className="settings-item-content">
                 <span className="settings-item-title">Vincular Orientador</span>
                 <span className="settings-item-desc">
-                  Insira o código do seu orientador para compartilhar o acesso aos seus documentos
+                  Insira o código fornecido pelo orientador para estabelecer o vínculo (o código muda semanalmente por segurança)
                 </span>
               </div>
             </div>
@@ -224,6 +237,26 @@ const Settings: React.FC = () => {
                 {joinMessage}
               </div>
             )}
+          </div>
+        )}
+
+        {/* Painel do Orientador (Apenas para Orientadores) */}
+        {user?.role === 'ADVISOR' && labTokens && (
+          <div className="settings-card">
+            <h3 className="settings-section-title">Códigos de Acesso do Laboratório</h3>
+            <p style={{ color: 'var(--ed-text-muted)', fontSize: '13px', marginBottom: '16px' }}>
+              Compartilhe os códigos abaixo com sua equipe. Por motivos de segurança, os códigos para pesquisadores e auditores são diferentes.
+            </p>
+            <div style={{ display: 'flex', gap: '16px', flexDirection: 'column' }}>
+              <div style={{ background: 'var(--bg)', padding: '16px', borderRadius: '8px', border: '1px solid var(--border)' }}>
+                <div style={{ fontSize: '12px', fontWeight: 600, color: 'var(--ed-text-muted)', textTransform: 'uppercase' }}>Token para Pesquisadores</div>
+                <div style={{ fontSize: '20px', fontWeight: 'bold', letterSpacing: '2px', color: 'var(--ed-purple-main)', marginTop: '4px' }}>{labTokens.researcher}</div>
+              </div>
+              <div style={{ background: 'var(--bg)', padding: '16px', borderRadius: '8px', border: '1px solid var(--border)' }}>
+                <div style={{ fontSize: '12px', fontWeight: 600, color: 'var(--ed-text-muted)', textTransform: 'uppercase' }}>Token para Auditores</div>
+                <div style={{ fontSize: '20px', fontWeight: 'bold', letterSpacing: '2px', color: 'var(--ed-purple-main)', marginTop: '4px' }}>{labTokens.auditor}</div>
+              </div>
+            </div>
           </div>
         )}
 

@@ -118,7 +118,7 @@ public class DocumentServiceTest {
     assertEquals("Test Doc", response.getTitle());
     assertEquals(documentId, response.getId());
     org.junit.jupiter.api.Assertions.assertTrue(response.getFileUrl().endsWith("_test.pdf"));
-    assertEquals(DocumentStatus.DRAFT, response.getStatus());
+    assertEquals(DocumentStatus.PENDING_REVIEW, response.getStatus());
     assertEquals(authorId, response.getAuthorId());
     assertEquals(projectId, response.getProjectId());
     assertNull(response.getFeedback());
@@ -298,14 +298,14 @@ public class DocumentServiceTest {
   }
 
   @Test
-  void testDeleteDocument_NotDraft_ThrowsException() {
+  void testDeleteDocument_Approved_ThrowsException() {
     document.setStatus(DocumentStatus.APPROVED);
     when(documentRepository.findById(documentId)).thenReturn(Optional.of(document));
 
     RuntimeException exception =
         assertThrows(
             RuntimeException.class, () -> documentService.deleteDocument(documentId, authorId));
-    assertEquals("Only DRAFT documents can be deleted", exception.getMessage());
+    assertEquals("APPROVED documents cannot be deleted", exception.getMessage());
   }
 
   @Test
