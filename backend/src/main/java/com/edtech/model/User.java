@@ -32,7 +32,7 @@ public class User {
   @Column(updatable = false, nullable = false)
   private UUID id;
 
-  @Column(name = "institution_id", nullable = false, updatable = false)
+  @Column(name = "institution_id", nullable = false)
   private UUID institutionId;
 
   @Column(nullable = false, length = 120)

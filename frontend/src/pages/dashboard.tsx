@@ -280,8 +280,8 @@ const Dashboard: React.FC = () => {
       {/* 2. BARRA DE ALERTA DE GOVERNANÇA (FLEXBOX RESPONSIVO) */}
       {user?.role === 'RESEARCHER' ? (
         <div className="governance-alert d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-4" style={{ background: 'linear-gradient(90deg, #f58a07 0%, #ffb057 100%)', boxShadow: '0 4px 15px rgba(245, 138, 7, 0.3)' }}>
-          <div className="alert-content">
-            <div className="alert-icon">
+          <div className="alert-content flex-grow-1">
+            <div className="alert-icon flex-shrink-0">
               <i className="bi bi-exclamation-triangle"></i>
             </div>
             <div className="alert-text-container">
@@ -291,14 +291,14 @@ const Dashboard: React.FC = () => {
               </span>
             </div>
           </div>
-          <button className="btn-alert" style={{ background: 'white', color: 'var(--ed-orange)', border: 'none', padding: '8px 20px', borderRadius: '8px', fontWeight: 600, cursor: 'pointer', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px', whiteSpace: 'nowrap', width: 'max-content', flexShrink: 0 }} onClick={() => navigate('/trail')}>
+          <button className="btn-alert text-nowrap flex-shrink-0 mt-3 mt-md-0" style={{ background: 'white', color: 'var(--ed-orange)', border: 'none', padding: '8px 20px', borderRadius: '8px', fontWeight: 600, cursor: 'pointer', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }} onClick={() => navigate('/trail')}>
             Corrigir agora <i className="bi bi-arrow-right-short" style={{ fontSize: '18px' }}></i>
           </button>
         </div>
       ) : user?.role === 'AUDITOR' ? (
         <div className="governance-alert d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-4" style={{ background: 'linear-gradient(90deg, #dc2626 0%, #ef4444 100%)', boxShadow: '0 4px 15px rgba(220, 38, 38, 0.3)' }}>
-          <div className="alert-content">
-            <div className="alert-icon">
+          <div className="alert-content flex-grow-1">
+            <div className="alert-icon flex-shrink-0">
               <i className="bi bi-shield-x"></i>
             </div>
             <div className="alert-text-container">
@@ -308,14 +308,14 @@ const Dashboard: React.FC = () => {
               </span>
             </div>
           </div>
-          <button className="btn-alert w-100 w-md-auto" style={{ background: 'white', color: '#dc2626', width: 'max-content', flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', border: 'none', padding: '8px 20px', borderRadius: '8px', fontWeight: 600, cursor: 'pointer' }} onClick={() => navigate('/compliance-center')}>
+          <button className="btn-alert text-nowrap flex-shrink-0 mt-3 mt-md-0 w-100 w-md-auto" style={{ background: 'white', color: '#dc2626', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', border: 'none', padding: '8px 20px', borderRadius: '8px', fontWeight: 600, cursor: 'pointer' }} onClick={() => navigate('/compliance-center')}>
             <i className="bi bi-arrow-right-short" style={{ fontSize: '18px', marginRight: '4px' }}></i> Investigar
           </button>
         </div>
       ) : (
         <div className="governance-alert d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-4">
-          <div className="alert-content">
-            <div className="alert-icon">
+          <div className="alert-content flex-grow-1">
+            <div className="alert-icon flex-shrink-0">
               <i className="bi bi-shield-exclamation"></i>
             </div>
             <div className="alert-text-container">
@@ -325,7 +325,7 @@ const Dashboard: React.FC = () => {
               </span>
             </div>
           </div>
-          <button className="btn-alert w-100 w-md-auto" style={{ width: 'max-content', flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', border: 'none', padding: '8px 20px', borderRadius: '8px', fontWeight: 600, cursor: 'pointer', background: 'var(--ed-purple-main)', color: 'white' }} onClick={() => navigate('/trail')}>
+          <button className="btn-alert text-nowrap flex-shrink-0 mt-3 mt-md-0 w-100 w-md-auto" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', border: 'none', padding: '8px 20px', borderRadius: '8px', fontWeight: 600, cursor: 'pointer', background: 'var(--ed-purple-main)', color: 'white' }} onClick={() => navigate('/trail')}>
             Ver detalhes <i className="bi bi-arrow-right-short" style={{ fontSize: '18px', marginLeft: '4px' }}></i>
           </button>
         </div>

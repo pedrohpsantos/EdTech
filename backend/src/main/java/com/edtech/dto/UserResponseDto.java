@@ -6,7 +6,7 @@ import java.util.UUID;
 
 /** Documentação. */
 public record UserResponseDto(
-    UUID id, String name, String email, String role, boolean active, Instant createdAt) {
+    UUID id, String name, String email, String role, boolean active, Instant createdAt, boolean mfaEnabled, UUID institutionId) {
 
   /** Documentação para o método from. */
   public static UserResponseDto from(User user) {
@@ -16,6 +16,8 @@ public record UserResponseDto(
         user.getEmail(),
         user.getRole().name(),
         user.isActive(),
-        user.getCreatedAt());
+        user.getCreatedAt(),
+        user.isMfaEnabled(),
+        user.getInstitutionId());
   }
 }

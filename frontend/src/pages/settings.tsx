@@ -176,12 +176,12 @@ const Settings: React.FC = () => {
             <div className="settings-item no-border" style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
               <div style={{ marginTop: '1rem', padding: '1rem', border: '1px solid #ddd', borderRadius: '8px', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <p style={{ marginBottom: '1rem', fontWeight: 500 }}>
-                  1. Escaneie este QR Code no seu aplicativo Autenticador
+                  1. Escaneie este QR Code no seu aplicativo Autenticador (Google Authenticator, Authy, etc.)
                 </p>
                 <img src={qrCodeUri} alt="QR Code 2FA" style={{ width: '200px', height: '200px', marginBottom: '1rem' }} />
                 
                 <p style={{ marginBottom: '1rem', fontWeight: 500 }}>
-                  2. Insira o código de 6 dígitos gerado
+                  2. Insira o código de 6 dígitos gerado (ele muda a cada 30 segundos)
                 </p>
                 <div style={{ display: 'flex', gap: '0.5rem', width: '100%', maxWidth: '300px' }}>
                   <input
@@ -207,44 +207,60 @@ const Settings: React.FC = () => {
           <div className="settings-card">
             <h3 className="settings-section-title">Laboratório e Vínculo Institucional</h3>
             
-            <div className="settings-item no-border">
-              <div className="settings-item-icon bg-purple-light">
-                <i className="bi bi-diagram-3"></i>
+            {user?.institutionId && user.institutionId !== '00000000-0000-0000-0000-000000000001' ? (
+              <div className="settings-item no-border">
+                <div className="settings-item-icon bg-purple-light">
+                  <i className="bi bi-check-circle-fill" style={{ color: 'var(--ed-status-success)' }}></i>
+                </div>
+                <div className="settings-item-content">
+                  <span className="settings-item-title">Vínculo Ativo</span>
+                  <span className="settings-item-desc">
+                    Você está vinculado permanentemente a um laboratório. Este vínculo permanece até que o orientador o remova ou a auditoria seja encerrada.
+                  </span>
+                </div>
               </div>
-              <div className="settings-item-content">
-                <span className="settings-item-title">Vincular ao orientador</span>
-                <span className="settings-item-desc">
-                  {user?.role === 'RESEARCHER'
-                    ? 'Use o código de pesquisador emitido pelo orientador.'
-                    : 'Use o código de auditor emitido pelo orientador.'} Os códigos expiram ao fim da semana.
-                </span>
-              </div>
-            </div>
-            
-            <div className="settings-item no-border" style={{ paddingTop: 0 }}>
-              <div className="settings-code-form">
-                <input
-                  type="text"
-                  className="ed-input"
-                  placeholder="Código de 6 dígitos"
-                  value={advisorCode}
-                  maxLength={6}
-                  inputMode="numeric"
-                  onChange={(e) => setAdvisorCode(e.target.value.replace(/\D/g, ''))}
-                />
-                <button 
-                  className="btn-primary" 
-                  onClick={handleJoinLaboratory} 
-                  disabled={!advisorCode.trim() || isJoining}
-                >
-                  {isJoining ? 'Vinculando...' : 'Vincular'}
-                </button>
-              </div>
-            </div>
-            {joinMessage && (
-              <div style={{ marginLeft: '56px', marginTop: '0.5rem', fontSize: '0.875rem', color: joinMessage.includes('sucesso') ? 'var(--ed-status-success)' : '#d32f2f' }}>
-                {joinMessage}
-              </div>
+            ) : (
+              <>
+                <div className="settings-item no-border">
+                  <div className="settings-item-icon bg-purple-light">
+                    <i className="bi bi-diagram-3"></i>
+                  </div>
+                  <div className="settings-item-content">
+                    <span className="settings-item-title">Vincular ao orientador</span>
+                    <span className="settings-item-desc">
+                      {user?.role === 'RESEARCHER'
+                        ? 'Use o código de pesquisador emitido pelo orientador.'
+                        : 'Use o código de auditor emitido pelo orientador.'} Os códigos expiram ao fim da semana.
+                    </span>
+                  </div>
+                </div>
+                
+                <div className="settings-item no-border" style={{ paddingTop: 0 }}>
+                  <div className="settings-code-form">
+                    <input
+                      type="text"
+                      className="ed-input"
+                      placeholder="Código de 6 dígitos"
+                      value={advisorCode}
+                      maxLength={6}
+                      inputMode="numeric"
+                      onChange={(e) => setAdvisorCode(e.target.value.replace(/\D/g, ''))}
+                    />
+                    <button 
+                      className="btn-primary" 
+                      onClick={handleJoinLaboratory} 
+                      disabled={!advisorCode.trim() || isJoining}
+                    >
+                      {isJoining ? 'Vinculando...' : 'Vincular'}
+                    </button>
+                  </div>
+                </div>
+                {joinMessage && (
+                  <div style={{ marginLeft: '56px', marginTop: '0.5rem', fontSize: '0.875rem', color: joinMessage.includes('sucesso') ? 'var(--ed-status-success)' : '#d32f2f' }}>
+                    {joinMessage}
+                  </div>
+                )}
+              </>
             )}
           </div>
         )}

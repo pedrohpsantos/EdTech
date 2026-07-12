@@ -2,8 +2,9 @@ export interface User {
   id: string;
   name: string;
   email: string;
-  role?: string;
+  role: 'RESEARCHER' | 'ADVISOR' | 'AUDITOR' | 'ADMIN';
   mfaEnabled?: boolean;
+  institutionId?: string;
 }
 
 export interface Project {

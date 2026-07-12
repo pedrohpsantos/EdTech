@@ -134,8 +134,9 @@ public class AuthController {
       String qrCodeUri = twoFactorAuthService.getQrCodeImageUri(secret, user.getEmail());
       return ResponseEntity.ok(Map.of("secret", secret, "qrCodeUri", qrCodeUri));
     } catch (Exception e) {
+      e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-          .body("Failed to generate QR Code");
+          .body("Failed to generate QR Code: " + e.getMessage());
     }
   }
 
