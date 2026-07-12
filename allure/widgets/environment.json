@@ -1,1 +1,1 @@
-[{"values":["Chromium\nEnvironment=Production Smoke"],"name":"Browser"}]
+[{"values":["Chromium"],"name":"Browser"},{"values":["Production Smoke"],"name":"Environment"}]
