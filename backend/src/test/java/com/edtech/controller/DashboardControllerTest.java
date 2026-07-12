@@ -51,6 +51,10 @@ class DashboardControllerTest {
     when(documentRepository.countDocumentsByUserIdAndStatus(
             mockUser.getId(), DocumentStatus.PENDING_REVIEW))
         .thenReturn(2L);
+    when(documentRepository.countDocumentsByUserIdAndStatus(mockUser.getId(), DocumentStatus.APPROVED))
+        .thenReturn(6L);
+    when(documentRepository.countDocumentsByUserIdAndStatus(mockUser.getId(), DocumentStatus.PUBLISHED))
+        .thenReturn(1L);
 
     ResponseEntity<Map<String, Object>> response = dashboardController.getStats(auth);
 
@@ -60,7 +64,7 @@ class DashboardControllerTest {
     assertNotNull(body);
     assertEquals(10L, body.get("activeDocuments"));
     assertEquals(2L, body.get("pendingReview"));
-    assertEquals(92, body.get("complianceScore"));
-    assertEquals(68, body.get("researchProgress"));
+    assertEquals(60, body.get("complianceScore"));
+    assertEquals(70, body.get("researchProgress"));
   }
 }

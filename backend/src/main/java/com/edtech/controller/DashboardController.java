@@ -32,12 +32,22 @@ public class DashboardController {
     long pendingReviewDocs =
         documentRepository.countDocumentsByUserIdAndStatus(
             user.getId(), DocumentStatus.PENDING_REVIEW);
+    long approvedDocs =
+        documentRepository.countDocumentsByUserIdAndStatus(user.getId(), DocumentStatus.APPROVED);
+    long publishedDocs =
+        documentRepository.countDocumentsByUserIdAndStatus(user.getId(), DocumentStatus.PUBLISHED);
+    int complianceScore =
+        totalDocs == 0 ? 100 : (int) Math.round((approvedDocs * 100.0) / totalDocs);
+    int researchProgress =
+        totalDocs == 0
+            ? 0
+            : (int) Math.round(((approvedDocs + publishedDocs) * 100.0) / totalDocs);
 
     Map<String, Object> stats = new HashMap<>();
     stats.put("activeDocuments", totalDocs);
     stats.put("pendingReview", pendingReviewDocs);
-    stats.put("complianceScore", 92); // TODO: Implementar lógica de conformidade real
-    stats.put("researchProgress", 68); // TODO: Implementar lógica de progresso real
+    stats.put("complianceScore", complianceScore);
+    stats.put("researchProgress", Math.min(researchProgress, 100));
 
     return ResponseEntity.ok(stats);
   }
