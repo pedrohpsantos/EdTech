@@ -2153,6 +2153,62 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../arquitetura/nuvem_e_seguranca/threat_model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modelo de Ameaças (STRIDE)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../arquitetura/nuvem_e_seguranca/incident_response/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plano de Resposta a Incidentes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -4178,6 +4234,28 @@
     <span class="md-ellipsis">
       
         4.4.2 AppSec e Segurança
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#arquitetura-nuvem_e_seguranca-threat_model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4.3 Modelo de Ameaças (STRIDE)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#arquitetura-nuvem_e_seguranca-incident_response" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4.4 Plano de Resposta a Incidentes
       
     </span>
   </a>
@@ -9360,7 +9438,143 @@ flowchart LR
 <td style="text-align: left;">Pedro Henrique P. Santos</td>
 </tr>
 </tbody>
-</table></body></html></section></section><section class="print-page" id="arquitetura-finops_custos" heading-number="4.5"><html><head>
+</table></body></html></section><section class="print-page" id="arquitetura-nuvem_e_seguranca-threat_model" heading-number="4.4.3"><html><head>
+        <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            remove_material_navigation();remove_mkdocs_theme_navigation();generate_toc();
+        })
+        </script>
+        </head><body><h1 id="modelo-de-ameacas-stride"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 7h-2.81c-.45-.8-1.07-1.5-1.82-2L16 3.41 14.59 2l-2.17 2.17a6 6 0 0 0-2.83 0L7.41 2 6 3.41 7.62 5c-.75.5-1.36 1.21-1.81 2H3v2h2.09c-.06.33-.09.66-.09 1v1H3v2h2v1c0 .34.03.67.09 1H3v2h2.81A6 6 0 0 0 13 19.65V19c0-2.54 1.61-4.8 4-5.65V13h2v-2h-2v-1c0-.34-.03-.67-.09-1H19zm-6 8H9v-2h4zm0-4H9V9h4zm4.75 11.16-2.75-3L16.16 18l1.59 1.59L21.34 16l1.16 1.41z"></path></svg></span> Modelo de Ameaças (STRIDE)<a class="headerlink" href="#arquitetura-nuvem_e_seguranca-threat_model-modelo-de-ameacas-stride" title="Permanent link">¶</a></h1>
+<p>O modelo de ameaças do EdTech utiliza a metodologia STRIDE desenvolvida pela Microsoft. Este documento detalha como nossa arquitetura mitiga ativamente cada uma das seis classes de ameaças.</p>
+<h2 id="arquitetura-nuvem_e_seguranca-threat_model-1-spoofing-falsificacao-de-identidade">1. Spoofing (Falsificação de Identidade)<a class="headerlink" href="#arquitetura-nuvem_e_seguranca-threat_model-1-spoofing-falsificacao-de-identidade" title="Permanent link">¶</a></h2>
+<p><strong>Ameaça:</strong> Um atacante se passa por um usuário legítimo (Pesquisador, Orientador ou Auditor) para acessar o sistema.</p>
+<p><strong>Controles Mitigatórios:</strong>
+- <strong>Autenticação <abbr title="JSON Web Token">JWT</abbr> Bearer:</strong> As sessões são validadas através de <abbr title="JSON Web Token">JWT</abbr> (<abbr title="JavaScript Object Notation">JSON</abbr> Web Token) assinados digitalmente.
+- <strong>Isolamento de Origem:</strong> Tokens ficam restritos ao <code>LocalStorage</code> e não são enviados via Cookies nativos, mitigando roubo via <abbr title="Cross-Site Request Forgery">CSRF</abbr> de forma natural.
+- <strong>Força Bruta e Credential Stuffing:</strong> Implementação de limite de taxa (<em>Rate Limiting</em>) agressivo via <strong>Bucket4j</strong>. Endpoints sensíveis como <code>/api/auth/login</code> admitem no máximo 5 requisições por minuto por endereço <abbr title="Internet Protocol — Protocolo de Internet">IP</abbr>.</p>
+<h2 id="arquitetura-nuvem_e_seguranca-threat_model-2-tampering-violacao-de-dados">2. Tampering (Violação de Dados)<a class="headerlink" href="#arquitetura-nuvem_e_seguranca-threat_model-2-tampering-violacao-de-dados" title="Permanent link">¶</a></h2>
+<p><strong>Ameaça:</strong> Modificação maliciosa de dados em trânsito (rede) ou em repouso (disco/storage).</p>
+<p><strong>Controles Mitigatórios:</strong>
+- <strong><abbr title="HyperText Transfer Protocol Secure">HTTPS</abbr>/TLS Obrigatório:</strong> Todo tráfego entre Cliente, <abbr title="Camada de interface visual do usuário">Frontend</abbr> (Firebase) e <abbr title="Camada de servidor e banco de dados da aplicação">Backend</abbr> (<abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run) é criptografado obrigatoriamente (TLS 1.2+).
+- <strong>Assinatura <abbr title="JSON Web Token">JWT</abbr> (<code>HMAC SHA-256</code>):</strong> Modificações na carga útil do token invalidam imediatamente a assinatura criptográfica no backend.
+- <strong>Proteção contra Malwares:</strong> Todo documento (<abbr title="Portable Document Format">PDF</abbr>) passa por escaneamento em tempo de fluxo usando a <strong><abbr title="Application Programming Interface — Interface de Programação de Aplicação">API</abbr> do ClamAV</strong>. Arquivos infectados são bloqueados antes de atingir o <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Storage e descartados com status <abbr title="HyperText Transfer Protocol — Protocolo de Transferência de Hipertexto">HTTP</abbr> 400.
+- <strong>Segurança Nativa <abbr title="Google Cloud Storage">GCS</abbr>:</strong> Os buckets do Google <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Storage garantem integridade através de validação de checksum MD5 no momento do upload.</p>
+<h2 id="arquitetura-nuvem_e_seguranca-threat_model-3-repudiation-repudio">3. Repudiation (Repúdio)<a class="headerlink" href="#arquitetura-nuvem_e_seguranca-threat_model-3-repudiation-repudio" title="Permanent link">¶</a></h2>
+<p><strong>Ameaça:</strong> Um usuário realiza uma ação fraudulenta e alega não tê-la feito (ex: aprovar projeto sem consentimento).</p>
+<p><strong>Controles Mitigatórios:</strong>
+- <strong>Audit Logs Imutáveis:</strong> Eventos transacionais críticos gravam rastros de auditoria no PostgreSQL. Tabelas de auditoria (via gatilhos ou service layers) são configuradas como apenas inserção (<em>append-only</em>).
+- <strong>Vínculo Transacional:</strong> Todas as rotas autenticadas capturam o <code>user_id</code> originário através do Spring Security Context. Nenhuma ação pode ser executada sob contexto anônimo.
+- <strong>Exibição Transparente:</strong> O perfil de Auditor possui acesso em tempo real ao histórico, o que garante a rastreabilidade completa e refutação a repúdios.</p>
+<h2 id="arquitetura-nuvem_e_seguranca-threat_model-4-information-disclosure-divulgacao-de-informacao">4. Information Disclosure (Divulgação de Informação)<a class="headerlink" href="#arquitetura-nuvem_e_seguranca-threat_model-4-information-disclosure-divulgacao-de-informacao" title="Permanent link">¶</a></h2>
+<p><strong>Ameaça:</strong> Exposição indevida de dados sensíveis ou informações do sistema para agentes externos.</p>
+<p><strong>Controles Mitigatórios:</strong>
+- <strong>Rede <abbr title="Virtual Private Cloud">VPC</abbr> Isolada:</strong> O <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> <abbr title="Structured Query Language — Linguagem de Consulta Estruturada">SQL</abbr> não tem endereço <abbr title="Internet Protocol — Protocolo de Internet">IP</abbr> público. Ele apenas aceita tráfego da Virtual Private <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> (<abbr title="Virtual Private Cloud">VPC</abbr>) proveniente do <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run através do <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> <abbr title="Structured Query Language — Linguagem de Consulta Estruturada">SQL</abbr> Auth Proxy.
+- <strong>Acesso Temporário a Arquivos:</strong> Os documentos do <abbr title="Google Cloud Storage">GCS</abbr> não são expostos publicamente. O download é garantido através da emissão de <strong>URLs Assinadas (Signed URLs)</strong> com curta validade, emitidas unicamente pelo <abbr title="Camada de servidor e banco de dados da aplicação">Backend</abbr> para usuários autenticados.
+- <strong>Sanitização de Pilhas de Erro:</strong> Exceções não expõem detalhes do stacktrace no corpo de respostas <abbr title="HyperText Transfer Protocol — Protocolo de Transferência de Hipertexto">HTTP</abbr>, sendo tratados uniformemente no <code>GlobalExceptionHandler</code>.</p>
+<h2 id="arquitetura-nuvem_e_seguranca-threat_model-5-denial-of-service-negacao-de-servico-dos">5. Denial of Service (Negação de Serviço - DoS)<a class="headerlink" href="#arquitetura-nuvem_e_seguranca-threat_model-5-denial-of-service-negacao-de-servico-dos" title="Permanent link">¶</a></h2>
+<p><strong>Ameaça:</strong> Interrupção proposital da disponibilidade do sistema inundando-o de requisições.</p>
+<p><strong>Controles Mitigatórios:</strong>
+- <strong>Escalonamento Automático Serverless:</strong> O <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run dimensiona instâncias automaticamente a partir de zero, suportando um alto pico de requisições paralelas e isolando CPU e Memória por requisição.
+- <strong>Defesas Borda do Google (<abbr title="Web Application Firewall — Firewall de Aplicação Web">WAF</abbr>):</strong> Proteção nativa no <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Load Balancing e Firebase Hosting contra ataques DDoS volumétricos (Layer 3/4).
+- <strong>Bucket4j de Borda:</strong> Proteção extra na camada de aplicação bloqueando spamers locais que passem do <abbr title="Web Application Firewall — Firewall de Aplicação Web">WAF</abbr>.</p>
+<h2 id="arquitetura-nuvem_e_seguranca-threat_model-6-elevation-of-privilege-elevacao-de-privilegio">6. Elevation of Privilege (Elevação de Privilégio)<a class="headerlink" href="#arquitetura-nuvem_e_seguranca-threat_model-6-elevation-of-privilege-elevacao-de-privilegio" title="Permanent link">¶</a></h2>
+<p><strong>Ameaça:</strong> Um atacante ou usuário comum explora vulnerabilidades para executar ações como administrador ou outro perfil.</p>
+<p><strong>Controles Mitigatórios:</strong>
+- <strong><abbr title="Role-Based Access Control — Controle de Acesso Baseado em Papéis">RBAC</abbr> Estrito (Role-Based Access Control):</strong>
+    - Pesquisadores (<code>researcher</code>) apenas submetem relatórios e navegam nos próprios arquivos.
+    - Orientadores (<code>advisor</code>) revisam apenas artefatos atrelados ao seu próprio escopo.
+    - Auditores (<code>auditor</code>) têm privilégio estrito de <strong>leitura</strong> (Read-Only) nos logs globais.
+- <strong>Prevenção contra <abbr title="Cross-Site Scripting">XSS</abbr>:</strong> Renderização segura de <abbr title="HyperText Markup Language — Linguagem de Marcação de Hipertexto">HTML</abbr> através do ecossistema React.
+- <strong>Arquitetura Zero-Trust Interna:</strong> O <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run possui uma Service Account exclusiva e restrita no IAM do <abbr title="Google Cloud Platform">GCP</abbr> para acessar apenas os buckets e bancos de que precisa (Princípio do Menor Privilégio).</p>
+<hr>
+<p>Este documento será validado anualmente no ciclo de Governança de Segurança e após implantação de novos épicos massivos arquiteturais.</p></body></html></section><section class="print-page" id="arquitetura-nuvem_e_seguranca-incident_response" heading-number="4.4.4"><html><head>
+        <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            remove_material_navigation();remove_mkdocs_theme_navigation();generate_toc();
+        })
+        </script>
+        </head><body><h1 id="plano-de-resposta-a-incidentes"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6 6.9 3.87 4.78l1.41-1.41L7.4 5.5zM13 1v3h-2V1zm7.13 3.78L18 6.9l-1.4-1.4 2.12-2.13zM4.5 10.5v2h-3v-2zm15 0h3v2h-3zM6 20h12a2 2 0 0 1 2 2H4a2 2 0 0 1 2-2m6-15a6 6 0 0 1 6 6v8H6v-8a6 6 0 0 1 6-6"></path></svg></span> Plano de Resposta a Incidentes<a class="headerlink" href="#arquitetura-nuvem_e_seguranca-incident_response-plano-de-resposta-a-incidentes" title="Permanent link">¶</a></h1>
+<p>Este documento orienta os procedimentos de contingência do EdTech em casos de falhas graves e violações de segurança. Os protocolos listados aqui foram definidos adotando premissas básicas e diretrizes da norma <strong>ISO 27001</strong>.</p>
+<h2 id="arquitetura-nuvem_e_seguranca-incident_response-1-organograma-de-resposta">1. Organograma de Resposta<a class="headerlink" href="#arquitetura-nuvem_e_seguranca-incident_response-1-organograma-de-resposta" title="Permanent link">¶</a></h2>
+<p>O acionamento de um protocolo de crise (P1) escala hierarquicamente na seguinte ordem:</p>
+<ol>
+<li><strong>DevOps / Infraestrutura em Nuvem (L1):</strong> Detecção anômala via Google <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Monitoring ou denúncia anônima; primeiro isolamento do incidente.</li>
+<li><strong>Tech Lead (L2):</strong> Acesso a logs de produção, análise forense da aplicação e autorização de manutenções de rede.</li>
+<li><strong>C-Level / Comitê Diretivo (L3):</strong> Acionado exclusivamente em caso de exfiltração de dados (Vazamento) que fira a <abbr title="Lei Geral de Proteção de Dados Pessoais">LGPD</abbr>, orientando a postura legal e comunicação.</li>
+</ol>
+<h2 id="arquitetura-nuvem_e_seguranca-incident_response-2-fases-de-resposta-a-incidentes">2. Fases de Resposta a Incidentes<a class="headerlink" href="#arquitetura-nuvem_e_seguranca-incident_response-2-fases-de-resposta-a-incidentes" title="Permanent link">¶</a></h2>
+<p>Em conformidade com a ISO 27001, um incidente de Segurança da Informação é tratado nas seguintes fases:</p>
+<h3 id="arquitetura-nuvem_e_seguranca-incident_response-21-preparacao">2.1 Preparação<a class="headerlink" href="#arquitetura-nuvem_e_seguranca-incident_response-21-preparacao" title="Permanent link">¶</a></h3>
+<ul>
+<li>Realização de backups automáticos diários assíncronos no <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Storage (<code>edtech-backups</code>).</li>
+<li>Implantação prévia de <abbr title="Web Application Firewall — Firewall de Aplicação Web">WAF</abbr> e controle de autenticação (<abbr title="JSON Web Token">JWT</abbr> / Bucket4j).</li>
+<li>Simulação de testes de estresse (<abbr title="Ciclo curto de desenvolvimento de software">Sprint</abbr> 8 K6 Tests) para medir resiliência sob carga.</li>
+</ul>
+<h3 id="arquitetura-nuvem_e_seguranca-incident_response-22-identificacao">2.2 Identificação<a class="headerlink" href="#arquitetura-nuvem_e_seguranca-incident_response-22-identificacao" title="Permanent link">¶</a></h3>
+<p>O incidente pode ser identificado via:
+- Alertas gerados pelo Google <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Operations (Ex: Spike de CPU na <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run).
+- Reporte direto de usuários à central de Suporte.
+- Alertas bloqueados pela <abbr title="Application Programming Interface — Interface de Programação de Aplicação">API</abbr> do ClamAV em múltiplos <em>attempts</em> de infecção no mesmo intervalo de <abbr title="Internet Protocol — Protocolo de Internet">IP</abbr>.</p>
+<h3 id="arquitetura-nuvem_e_seguranca-incident_response-23-contencao">2.3 Contenção<a class="headerlink" href="#arquitetura-nuvem_e_seguranca-incident_response-23-contencao" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Curto Prazo:</strong> Desativar temporariamente o endpoint afetado ou isolar a instância específica bloqueando faixas de IPs maliciosos pelo Firewall <abbr title="Virtual Private Cloud">VPC</abbr> / <abbr title="Web Application Firewall — Firewall de Aplicação Web">WAF</abbr>.</li>
+<li><strong>Ações Imediatas:</strong> Se for comprometimento de dados ou banco de dados, interromper o tráfego <abbr title="HyperText Transfer Protocol — Protocolo de Transferência de Hipertexto">HTTP</abbr> na <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run (scale to 0) para cessar qualquer interação com o banco.</li>
+</ul>
+<h3 id="arquitetura-nuvem_e_seguranca-incident_response-24-erradicacao">2.4 Erradicação<a class="headerlink" href="#arquitetura-nuvem_e_seguranca-incident_response-24-erradicacao" title="Permanent link">¶</a></h3>
+<ul>
+<li>Remoção da vulnerabilidade por meio da correção do código fonte (Patch de emergência - Hotfix).</li>
+<li>Rotação completa de Segredos, <abbr title="JSON Web Token">JWT</abbr> Secrets, Credenciais do Banco e Chaves de Serviço (Service Accounts do <abbr title="Google Cloud Platform">GCP</abbr>).</li>
+</ul>
+<h3 id="arquitetura-nuvem_e_seguranca-incident_response-25-recuperacao">2.5 Recuperação<a class="headerlink" href="#arquitetura-nuvem_e_seguranca-incident_response-25-recuperacao" title="Permanent link">¶</a></h3>
+<ul>
+<li>Restauração de integridade utilizando o dump PostgreSQL mais recente e limpo, caso tenha ocorrido exclusão ou violação em massa.</li>
+<li>Redirecionamento gradual do tráfego para a plataforma acompanhado de logs detalhados (Warm-up).</li>
+</ul>
+<h3 id="arquitetura-nuvem_e_seguranca-incident_response-26-licoes-aprendidas">2.6 Lições Aprendidas<a class="headerlink" href="#arquitetura-nuvem_e_seguranca-incident_response-26-licoes-aprendidas" title="Permanent link">¶</a></h3>
+<ul>
+<li>Em até <strong>48 horas</strong> após o restabelecimento total, toda a equipe técnica e Tech Lead realizam um <em>Post-Mortem</em>. O registro documentará a brecha, o tempo de inatividade (Downtime) e medidas técnicas corretivas definitivas para o backlog.</li>
+</ul>
+<h2 id="arquitetura-nuvem_e_seguranca-incident_response-3-sla-e-matriz-de-comunicacao">3. SLA e Matriz de Comunicação<a class="headerlink" href="#arquitetura-nuvem_e_seguranca-incident_response-3-sla-e-matriz-de-comunicacao" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Nível (Severidade)</th>
+<th style="text-align: left;">Descrição do Impacto</th>
+<th style="text-align: center;">Tempo de Resposta Alvo</th>
+<th style="text-align: left;">Canal Principal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>P1 - Crítico</strong></td>
+<td style="text-align: left;">Indisponibilidade total do <abbr title="Camada de servidor e banco de dados da aplicação">Backend</abbr> (Downtime) ou Exfiltração massiva (Risco <abbr title="Lei Geral de Proteção de Dados Pessoais">LGPD</abbr>).</td>
+<td style="text-align: center;">30 minutos</td>
+<td style="text-align: left;">Pager / Chamada</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>P2 - Alto</strong></td>
+<td style="text-align: left;">Degradação severa (ex: Uploads parados, <abbr title="Portable Document Format">PDF</abbr> não carregam).</td>
+<td style="text-align: center;">2 Horas</td>
+<td style="text-align: left;">Slack / Email</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>P3 - Médio</strong></td>
+<td style="text-align: left;">Bugs funcionais que afetam a visualização, mas com "Workarounds" disponíveis.</td>
+<td style="text-align: center;">1 Dia Útil</td>
+<td style="text-align: left;">Jira / Issue Board</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>P4 - Baixo</strong></td>
+<td style="text-align: left;">Erros de formatação e instabilidades não interruptivas.</td>
+<td style="text-align: center;">Backlog Padrão</td>
+<td style="text-align: left;">Jira / Issue Board</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<blockquote>
+<p><em>Em caso de detecção confirmada de incidente P1 envolvendo exfiltração, acione o Tech Lead de imediato e não reinicie as máquinas corrompidas antes de copiar um snapshot dos logs para análise forense externa.</em></p>
+</blockquote></body></html></section></section><section class="print-page" id="arquitetura-finops_custos" heading-number="4.5"><html><head>
         <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function () {
             remove_material_navigation();remove_mkdocs_theme_navigation();generate_toc();
@@ -14558,6 +14772,10 @@ Copie toda a estrutura abaixo para o novo arquivo, preencha os dados e adicione 
 .print-site-enumerate-headings #arquitetura-nuvem_e_seguranca-nuvem > h1:before { content: '4.4.1 ' }
 
 .print-site-enumerate-headings #arquitetura-nuvem_e_seguranca-seguranca_app > h1:before { content: '4.4.2 ' }
+
+.print-site-enumerate-headings #arquitetura-nuvem_e_seguranca-threat_model > h1:before { content: '4.4.3 ' }
+
+.print-site-enumerate-headings #arquitetura-nuvem_e_seguranca-incident_response > h1:before { content: '4.4.4 ' }
 
 .print-site-enumerate-headings #arquitetura-finops_custos > h1:before { content: '4.5 ' }
 
