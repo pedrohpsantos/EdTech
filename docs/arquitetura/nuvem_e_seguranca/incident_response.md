@@ -56,3 +56,9 @@ O incidente pode ser identificado via:
 ---
 
 > *Em caso de detecção confirmada de incidente P1 envolvendo exfiltração, acione o Tech Lead de imediato e não reinicie as máquinas corrompidas antes de copiar um snapshot dos logs para análise forense externa.*
+
+## Histórico de Versões
+
+| Versão |    Data    | Descrição                                | Autor                    |
+| :---: | :---: | :--- | :--- |
+| `1.0`  | 12/07/2026 | Criação do documento (Issue #163)        | Pedro Henrique P. Santos |
