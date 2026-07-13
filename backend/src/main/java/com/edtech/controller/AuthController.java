@@ -79,6 +79,12 @@ public class AuthController {
         .body(new AuthResponseDto(UserResponseDto.from(user), null));
   }
 
+  @PostMapping("/register/resend")
+  public ResponseEntity<Void> resendRegistrationCode(@RequestBody VerifyCodeDto request) {
+    userService.resendVerificationCode(request.email());
+    return ResponseEntity.noContent().build();
+  }
+
   /** Documentação. */
   @PostMapping("/login")
   public ResponseEntity<?> login(

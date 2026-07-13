@@ -41,8 +41,11 @@ public class UserService {
     User user =
         userRepository
             .findByEmailIgnoreCase(normalizedEmail)
-            .filter(User::isActive)
             .orElseThrow(() -> new InvalidCredentialsException("Credenciais inválidas."));
+
+    if (!user.isActive()) {
+      throw new AccountNotVerifiedException();
+    }
 
     if (!passwordEncoder.matches(password, user.getPasswordHash())) {
       throw new InvalidCredentialsException("Credenciais inválidas.");
@@ -121,6 +124,21 @@ public class UserService {
       }
     }
     throw new InvalidCredentialsException("Código inválido ou expirado.");
+  }
+
+  @Transactional
+  public void resendVerificationCode(String email) {
+    String normalizedEmail = email.trim().toLowerCase(Locale.ROOT);
+    User user = userRepository.findByEmailIgnoreCase(normalizedEmail)
+        .orElseThrow(() -> new InvalidCredentialsException("Credenciais inválidas."));
+    if (user.isActive()) {
+      return;
+    }
+    verificationTokenRepository.deleteByEmail(normalizedEmail);
+    String code = String.format("%06d", SECURE_RANDOM.nextInt(999999));
+    verificationTokenRepository.save(new com.edtech.model.VerificationToken(
+        code, normalizedEmail, java.time.LocalDateTime.now().plusMinutes(15)));
+    emailService.sendVerificationEmail(normalizedEmail, code);
   }
 
   @Transactional

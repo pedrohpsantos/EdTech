@@ -34,7 +34,11 @@ function Login() {
             navigate('/dashboard');
           }
         } else {
-          setErro(resultado.mensagem);
+          if (resultado.mensagem?.includes('Conta ainda não verificada')) {
+            navigate(`/register?email=${encodeURIComponent(email)}&verify=true`);
+          } else {
+            setErro(resultado.mensagem);
+          }
         }
       } else {
         const { verify2FaLogin } = await import('../services/api');

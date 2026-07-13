@@ -151,7 +151,7 @@ public class UserServiceTest {
         .thenReturn(java.util.Optional.of(user));
 
     assertThrows(
-        InvalidCredentialsException.class,
+        AccountNotVerifiedException.class,
         () -> userService.authenticate("test@unb.br", "password"));
   }
 

@@ -1,13 +1,13 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { register, verifyRegistration } from '../services/api';
+import { register, resendRegistrationCode, verifyRegistration } from '../services/api';
 import { motion } from 'framer-motion';
 import AuthLayout from '../components/AuthLayout';
 import styles from './auth.module.css';
 
 function Register() {
   const [nome, setNome] = useState('');
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState(() => new URLSearchParams(window.location.search).get('email') || '');
   const [senha, setSenha] = useState('');
   const [confirmarSenha, setConfirmarSenha] = useState('');
   const [erro, setErro] = useState('');
@@ -15,10 +15,17 @@ function Register() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isShaking, setIsShaking] = useState(false);
   const [role, setRole] = useState('RESEARCHER');
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(() => new URLSearchParams(window.location.search).get('verify') === 'true' ? 2 : 1);
   const [otp, setOtp] = useState('');
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (step !== 2 || !email) return;
+    resendRegistrationCode(email).then((result) => {
+      if (!result.sucesso) setErro(result.mensagem);
+    });
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     if (e) e.preventDefault();

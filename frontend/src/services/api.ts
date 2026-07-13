@@ -144,6 +144,15 @@ export const verifyRegistration = async (
   }
 };
 
+export const resendRegistrationCode = async (email: string): Promise<ApiResponse<void>> => {
+  try {
+    await api.post('/api/auth/register/resend', { email, code: '' });
+    return { sucesso: true };
+  } catch (error) {
+    return handleApiError(error, 'Não foi possível reenviar o código.');
+  }
+};
+
 export const logout = async (): Promise<ApiResponse<void>> => {
   try {
     await api.post('/api/auth/logout');
