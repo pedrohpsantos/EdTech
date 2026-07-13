@@ -1,4 +1,4 @@
-```markdown
+
 # ☁️ EdTech Infraestrutura
 
 ![Docker](https://img.shields.io/badge/Docker-24.0-2496ED?style=for-the-badge&logo=docker&logoColor=white)
@@ -42,8 +42,6 @@ gcloud auth application-default login
 ./cloud-sql-proxy <PROJECT_ID>:<REGION>:<INSTANCE_NAME>
 
 # 3. Conecte a sua ferramenta de banco de dados em localhost (ex: 127.0.0.1:5432)
-
-```
 
 ---
 
@@ -109,5 +107,3 @@ bash infra/prod/setup_backup.sh
 ```
 
 Detalhes da política de backup estão documentados no [ADR-0013](https://www.google.com/search?q=../docs/arquitetura/decisoes_adrs/0013-backup-automatico.md).
-
-```
