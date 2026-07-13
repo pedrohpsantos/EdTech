@@ -4,6 +4,18 @@ import { useAuth } from '../../context/authContext';
 
 import '../../assets/dashboard.css';
 
+type NavigationItem = {
+  to: string;
+  icon: string;
+  label: string;
+};
+
+const roleLabel: Record<string, string> = {
+  ADVISOR: 'ORIENTADOR',
+  AUDITOR: 'AUDITOR',
+  RESEARCHER: 'PESQUISADOR',
+};
+
 const Sidebar: React.FC = () => {
   const { user, handleLogout } = useAuth();
   const [clickCount, setClickCount] = useState(0);
@@ -24,13 +36,50 @@ const Sidebar: React.FC = () => {
     setIsMobileOpen(false);
   };
 
+  const workspaceItems: NavigationItem[] =
+    user?.role === 'RESEARCHER'
+      ? [
+          { to: '/documentos', icon: 'bi-folder2-open', label: 'Documentos' },
+          { to: '/projects', icon: 'bi-briefcase', label: 'Projetos' },
+        ]
+      : user?.role === 'ADVISOR'
+        ? [
+            { to: '/submissions', icon: 'bi-inbox', label: 'Submissões' },
+            { to: '/projects', icon: 'bi-briefcase', label: 'Projetos' },
+          ]
+        : [{ to: '/audit-logs', icon: 'bi-journal-text', label: 'Logs de auditoria' }];
+
+  const insightItems: NavigationItem[] =
+    user?.role === 'ADVISOR'
+      ? [
+          { to: '/trail', icon: 'bi-diagram-3', label: 'Trilha de pesquisa' },
+          { to: '/analytics', icon: 'bi-graph-up-arrow', label: 'Análises' },
+        ]
+      : user?.role === 'RESEARCHER'
+        ? [{ to: '/trail', icon: 'bi-diagram-3', label: 'Trilha de pesquisa' }]
+        : [{ to: '/compliance-center', icon: 'bi-shield-check', label: 'Centro de conformidade' }];
+
+  const renderNavigationItem = (item: NavigationItem) => (
+    <NavLink
+      key={item.to}
+      to={item.to}
+      className={({ isActive }) => `nav-link-item ${isActive ? 'active' : ''}`}
+      onClick={closeMobileSidebar}
+    >
+      <i className={`bi ${item.icon}`}></i>
+      {item.label}
+      <i className="bi bi-chevron-right arrow-icon ms-auto" aria-hidden="true"></i>
+    </NavLink>
+  );
+
   return (
     <>
       {/* Botão Hambúrguer flutuante: Visível APENAS em telas menores (Mobile/Tablet) */}
       <button 
         className={`sidebar-mobile-toggle d-md-none ${isMobileOpen ? 'open' : ''}`}
         onClick={() => setIsMobileOpen(!isMobileOpen)}
-        aria-label="Toggle Navigation"
+        aria-label={isMobileOpen ? 'Fechar navegação' : 'Abrir navegação'}
+        aria-expanded={isMobileOpen}
       >
         <i className={`bi ${isMobileOpen ? 'bi-x-lg' : 'bi-list'}`}></i>
       </button>
@@ -60,7 +109,7 @@ const Sidebar: React.FC = () => {
           </div>
           <div className="role-badge">
             <span className="badge-dot"></span>
-            {user?.role === 'ADVISOR' ? 'ORIENTADOR' : user?.role === 'AUDITOR' ? 'AUDITOR' : 'PESQUISADOR'}
+            {roleLabel[user?.role || 'RESEARCHER']}
           </div>
         </div>
 
@@ -68,103 +117,24 @@ const Sidebar: React.FC = () => {
           <div className="nav-section">
             <span className="nav-section-title">GERAL</span>
             <div className="nav-links">
-              <NavLink
-                to="/dashboard"
-                className={({ isActive }) => `nav-link-item ${isActive ? 'active' : ''}`}
-                onClick={closeMobileSidebar}
-              >
-                <i className="bi bi-grid-1x2"></i> Visão Geral
-                <i className="bi bi-chevron-right arrow-icon ms-auto"></i>
-              </NavLink>
-              {user?.role === 'RESEARCHER' && (
-                <>
-                  <NavLink
-                    to="/documentos"
-                    className={({ isActive }) => `nav-link-item ${isActive ? 'active' : ''}`}
-                    onClick={closeMobileSidebar}
-                  >
-                    <i className="bi bi-folder2-open"></i> Área de Pesquisa
-                    <i className="bi bi-chevron-right arrow-icon ms-auto"></i>
-                  </NavLink>
-                  <NavLink
-                    to="/projects"
-                    className={({ isActive }) => `nav-link-item ${isActive ? 'active' : ''}`}
-                    onClick={closeMobileSidebar}
-                  >
-                    <i className="bi bi-briefcase"></i> Projetos
-                    <i className="bi bi-chevron-right arrow-icon ms-auto"></i>
-                  </NavLink>
-                </>
-              )}
-              {user?.role === 'ADVISOR' && (
-                <NavLink
-                  to="/submissions"
-                  className={({ isActive }) => `nav-link-item ${isActive ? 'active' : ''}`}
-                  onClick={closeMobileSidebar}
-                >
-                  <i className="bi bi-play-circle"></i> Submissões
-                  <i className="bi bi-chevron-right arrow-icon ms-auto"></i>
-                </NavLink>
-              )}
+              {renderNavigationItem({ to: '/dashboard', icon: 'bi-grid-1x2', label: 'Visão geral' })}
             </div>
           </div>
 
-          {user?.role !== 'AUDITOR' && (
-            <div className="nav-section">
-              <span className="nav-section-title">INTELIGÊNCIA</span>
-              <div className="nav-links">
-                <NavLink
-                  to="/trail"
-                  className={({ isActive }) => `nav-link-item ${isActive ? 'active' : ''}`}
-                  onClick={closeMobileSidebar}
-                >
-                  <i className="bi bi-diagram-3"></i> Trilha de Pesquisa
-                  <i className="bi bi-chevron-right arrow-icon ms-auto"></i>
-                </NavLink>
-                {user?.role === 'ADVISOR' && (
-                  <NavLink
-                    to="/analytics"
-                    className={({ isActive }) => `nav-link-item ${isActive ? 'active' : ''}`}
-                    onClick={closeMobileSidebar}
-                  >
-                    <i className="bi bi-graph-up-arrow"></i> Análises
-                    <i className="bi bi-chevron-right arrow-icon ms-auto"></i>
-                  </NavLink>
-                )}
-              </div>
-            </div>
-          )}
+          <div className="nav-section">
+            <span className="nav-section-title">TRABALHO</span>
+            <div className="nav-links">{workspaceItems.map(renderNavigationItem)}</div>
+          </div>
 
           <div className="nav-section">
-            <span className="nav-section-title">GOVERNANÇA</span>
+            <span className="nav-section-title">INTELIGÊNCIA</span>
+            <div className="nav-links">{insightItems.map(renderNavigationItem)}</div>
+          </div>
+
+          <div className="nav-section">
+            <span className="nav-section-title">CONTA</span>
             <div className="nav-links">
-              {user?.role === 'AUDITOR' && (
-                <>
-                  <NavLink
-                    to="/compliance-center"
-                    className={({ isActive }) => `nav-link-item ${isActive ? 'active' : ''}`}
-                    onClick={closeMobileSidebar}
-                  >
-                    <i className="bi bi-shield-check"></i> Centro de Conformidade
-                    <i className="bi bi-chevron-right arrow-icon ms-auto"></i>
-                  </NavLink>
-                  <NavLink
-                    to="/audit-logs"
-                    className={({ isActive }) => `nav-link-item ${isActive ? 'active' : ''}`}
-                    onClick={closeMobileSidebar}
-                  >
-                    <i className="bi bi-journal-text"></i> Logs de Auditoria
-                    <i className="bi bi-chevron-right arrow-icon ms-auto"></i>
-                  </NavLink>
-                </>
-              )}
-              <NavLink
-                to="/settings"
-                className={({ isActive }) => `nav-link-item ${isActive ? 'active' : ''}`}
-                onClick={closeMobileSidebar}
-              >
-                <i className="bi bi-gear"></i> Configurações
-              </NavLink>
+              {renderNavigationItem({ to: '/settings', icon: 'bi-gear', label: 'Configurações' })}
             </div>
           </div>
         </div>
