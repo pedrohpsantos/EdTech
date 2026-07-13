@@ -24,7 +24,7 @@ module "database" {
 
   vpc_network_id = data.google_compute_network.default.id
 
-  depends_on = [ google_service_networking_connection.private_vpc_connection ]
+  depends_on = [google_service_networking_connection.private_vpc_connection]
 }
 
 module "backend_api" {
@@ -43,7 +43,7 @@ module "backend_api" {
 
 resource "google_vpc_access_connector" "connector" {
   name          = "cloud-run-vpc-connector"
-  region        = var.region 
+  region        = var.region
   network       = "default"
   ip_cidr_range = "10.8.0.0/28"
 
