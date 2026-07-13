@@ -51,3 +51,25 @@ import {
   to = module.database.google_sql_database.prod_db
   id = "${var.project_id}/${var.database_instance_name}/edtech_prod"
 }
+
+# Os secrets também já existem nos dois ambientes e precisam ser adotados
+# antes que os jobs de migração possam referenciá-los.
+import {
+  to = module.backend_api.google_secret_manager_secret.jwt_secret
+  id = "projects/${var.project_id}/secrets/JWT_SECRET${var.environment_suffix}"
+}
+
+import {
+  to = module.backend_api.google_secret_manager_secret.spring_password
+  id = "projects/${var.project_id}/secrets/SPRING_DATASOURCE_PASSWORD${var.environment_suffix}"
+}
+
+import {
+  to = module.backend_api.google_secret_manager_secret.spring_url
+  id = "projects/${var.project_id}/secrets/SPRING_DATASOURCE_URL${var.environment_suffix}"
+}
+
+import {
+  to = module.backend_api.google_secret_manager_secret.spring_username
+  id = "projects/${var.project_id}/secrets/SPRING_DATASOURCE_USERNAME${var.environment_suffix}"
+}

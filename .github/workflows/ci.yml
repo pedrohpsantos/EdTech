@@ -423,7 +423,7 @@ jobs:
           - target: production
             branch: refs/heads/main
             state_bucket: edtech-terraform-state-501117
-            state_prefix: production/backend
+            state_prefix: ''
             service_name: edtech-backend
             storage_bucket: edtech-vault-storage
             environment_suffix: ''
