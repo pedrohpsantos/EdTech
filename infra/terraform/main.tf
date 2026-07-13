@@ -21,6 +21,10 @@ module "database" {
   database_version = var.database_version
   tier             = var.database_tier
   region           = var.region
+
+  vpc_network_id = data.google_compute_network.default.id
+
+  depends_on = [ google_service_networking_connection.private_vpc_connection ]
 }
 
 module "backend_api" {
@@ -33,6 +37,28 @@ module "backend_api" {
   cors_allowed_origin = var.cors_allowed_origin
   db_connection_name  = module.database.connection_name
   environment_suffix  = var.environment_suffix
+
+  vpc_connector_id = google_vpc_access_connector.connector.id
+}
+
+resource "google_vpc_access_connector" "connector" {
+  name          = "cloud-run-vpc-connector"
+  region        = var.region 
+  network       = "default"
+  ip_cidr_range = "10.8.0.0/28"
+
+  min_instances = 2
+  max_instances = 10
+}
+
+resource "google_service_networking_connection" "private_vpc_connection" {
+  network                 = "projects/edtech-storage-501117/global/networks/default"
+  service                 = "servicenetworking.googleapis.com"
+  reserved_peering_ranges = ["google-managed-services-range"]
+}
+
+data "google_compute_network" "default" {
+  name = "default" # Ou o nome da sua VPC, se não for 'default'
 }
 
 # Os bancos foram criados antes da adoção do state remoto. Importá-los evita

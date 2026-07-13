@@ -33,3 +33,7 @@ variable "db_connection_name" {
   description = "Cloud SQL connection name."
   type        = string
 }
+
+variable "vpc_connector_id" {
+  type = string
+}

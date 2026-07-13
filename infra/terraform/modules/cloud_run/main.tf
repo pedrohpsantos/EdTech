@@ -75,6 +75,10 @@ resource "google_cloud_run_v2_service" "api" {
 
 
   template {
+    vpc_access {
+      connector = var.vpc_connector_id
+      egress    = "PRIVATE_RANGES_ONLY"
+    }
     containers {
       name  = "edtech-backend-1"
       image = var.image_url
@@ -224,6 +228,10 @@ resource "google_cloud_run_v2_job" "flyway_migration" {
 
   template {
     template {
+      vpc_access {
+        connector = var.vpc_connector_id
+        egress    = "PRIVATE_RANGES_ONLY"
+      }
       containers {
         image = var.image_url
 
