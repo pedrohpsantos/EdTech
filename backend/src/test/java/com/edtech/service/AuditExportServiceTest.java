@@ -113,9 +113,9 @@ class AuditExportServiceTest {
     IllegalArgumentException exception =
         assertThrows(
             IllegalArgumentException.class,
-            () -> auditExportService.exportDocumentAuditTrail(documentId, userId, "pdf"));
+            () -> auditExportService.exportDocumentAuditTrail(documentId, userId, "xlsx"));
 
-    assertEquals("Formato invalido. Use: csv", exception.getMessage());
+    assertEquals("Formato invalido. Use: csv ou pdf", exception.getMessage());
     verifyNoInteractions(
         documentRepository, projectMemberRepository, auditLogRepository, csvExporter);
   }

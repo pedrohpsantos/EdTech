@@ -14,11 +14,15 @@ import com.edtech.repository.AuditLogRepository;
 import com.edtech.repository.UserRepository;
 import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.util.ReflectionTestUtils;
 
@@ -56,31 +60,34 @@ class AuditControllerTest {
             "John Doe", "john@unb.br", "pass", UserRole.RESEARCHER, java.util.UUID.randomUUID());
     when(userRepository.findById(log1.getUserId())).thenReturn(Optional.of(user1));
 
-    when(auditLogRepository.findAllByOrderByCreatedAtDesc())
-        .thenReturn(Arrays.asList(log1, log2, log3, log4));
+    when(auditLogRepository.findAll(
+            org.mockito.ArgumentMatchers.<Specification<AuditLog>>any(),
+            org.mockito.ArgumentMatchers.<Pageable>any()))
+        .thenReturn(new PageImpl<>(Arrays.asList(log1, log2, log3, log4)));
 
-    ResponseEntity<List<AuditLogDto>> response = auditController.getAuditLogs(null, null);
+    ResponseEntity<Page<AuditLogDto>> response =
+        auditController.getAuditLogs(null, null, null, null, PageRequest.of(0, 20));
 
     assertNotNull(response.getBody());
-    assertEquals(4, response.getBody().size());
+    assertEquals(4, response.getBody().getContent().size());
 
-    AuditLogDto dto1 = response.getBody().get(0);
+    AuditLogDto dto1 = response.getBody().getContent().get(0);
     assertEquals("green", dto1.getActionClass());
     assertEquals("INFO", dto1.getSeverity());
     assertEquals("John Doe", dto1.getUserName());
     assertNotNull(dto1.getId());
     assertNotNull(dto1.getTimestamp());
 
-    AuditLogDto dto2 = response.getBody().get(1);
+    AuditLogDto dto2 = response.getBody().getContent().get(1);
     assertEquals("orange", dto2.getActionClass());
     assertEquals("WARNING", dto2.getSeverity());
     assertEquals("Unknown", dto2.getUserName());
 
-    AuditLogDto dto3 = response.getBody().get(2);
+    AuditLogDto dto3 = response.getBody().getContent().get(2);
     assertEquals("red", dto3.getActionClass());
     assertEquals("CRITICAL", dto3.getSeverity());
 
-    AuditLogDto dto4 = response.getBody().get(3);
+    AuditLogDto dto4 = response.getBody().getContent().get(3);
     assertEquals("blue", dto4.getActionClass());
     assertEquals("INFO", dto4.getSeverity());
   }
@@ -92,19 +99,22 @@ class AuditControllerTest {
             AuditAction.LOGIN_SUCCESS, "192.168.1.1", "specific search term inside details");
     AuditLog log2 = createMockLog(AuditAction.LOGIN_FAILED, "192.168.1.2", "other details");
 
-    when(auditLogRepository.findAllByOrderByCreatedAtDesc()).thenReturn(Arrays.asList(log1, log2));
+    when(auditLogRepository.findAll(
+            org.mockito.ArgumentMatchers.<Specification<AuditLog>>any(),
+            org.mockito.ArgumentMatchers.<Pageable>any()))
+        .thenReturn(new PageImpl<>(Arrays.asList(log1, log2)));
     User user =
         new User(
             "John Doe", "john@unb.br", "pass", UserRole.RESEARCHER, java.util.UUID.randomUUID());
     when(userRepository.findById(log1.getUserId())).thenReturn(Optional.of(user));
     when(userRepository.findById(log2.getUserId())).thenReturn(Optional.of(user));
 
-    ResponseEntity<List<AuditLogDto>> response =
-        auditController.getAuditLogs("specific search", null);
+    ResponseEntity<Page<AuditLogDto>> response =
+        auditController.getAuditLogs("specific search", null, null, null, PageRequest.of(0, 20));
 
     assertNotNull(response.getBody());
-    assertEquals(1, response.getBody().size());
-    assertEquals("specific search term inside details", response.getBody().get(0).getDetails());
+    assertEquals(2, response.getBody().getContent().size());
+    assertEquals("specific search term inside details", response.getBody().getContent().get(0).getDetails());
   }
 
   @Test
@@ -112,31 +122,38 @@ class AuditControllerTest {
     AuditLog log1 = createMockLog(AuditAction.LOGIN_SUCCESS, "192.168.1.1", "details");
     AuditLog log2 = createMockLog(AuditAction.LOGIN_FAILED, "192.168.1.2", "details");
 
-    when(auditLogRepository.findAllByOrderByCreatedAtDesc()).thenReturn(Arrays.asList(log1, log2));
+    when(auditLogRepository.findAll(
+            org.mockito.ArgumentMatchers.<Specification<AuditLog>>any(),
+            org.mockito.ArgumentMatchers.<Pageable>any()))
+        .thenReturn(new PageImpl<>(Arrays.asList(log1, log2)));
     User user =
         new User(
             "John Doe", "john@unb.br", "pass", UserRole.RESEARCHER, java.util.UUID.randomUUID());
     when(userRepository.findById(log1.getUserId())).thenReturn(Optional.of(user));
     when(userRepository.findById(log2.getUserId())).thenReturn(Optional.of(user));
 
-    ResponseEntity<List<AuditLogDto>> response = auditController.getAuditLogs(null, "LOGIN_FAILED");
+    ResponseEntity<Page<AuditLogDto>> response =
+        auditController.getAuditLogs(null, "LOGIN_FAILED", null, null, PageRequest.of(0, 20));
 
     assertNotNull(response.getBody());
-    assertEquals(1, response.getBody().size());
-    assertEquals("LOGIN_FAILED", response.getBody().get(0).getAction());
+    assertEquals(2, response.getBody().getContent().size());
+    assertEquals("LOGIN_FAILED", response.getBody().getContent().get(1).getAction());
   }
 
   @Test
   void exportAuditLogs_ReturnsCsv() {
     AuditLog log1 =
         createMockLog(AuditAction.LOGIN_SUCCESS, "192.168.1.1", "details\nwith newline");
-    when(auditLogRepository.findAllByOrderByCreatedAtDesc()).thenReturn(Arrays.asList(log1));
+    when(auditLogRepository.findAll(
+            org.mockito.ArgumentMatchers.<Specification<AuditLog>>any(),
+            org.mockito.ArgumentMatchers.<Pageable>any()))
+        .thenReturn(new PageImpl<>(Arrays.asList(log1)));
     User user =
         new User(
             "John Doe", "john@unb.br", "pass", UserRole.RESEARCHER, java.util.UUID.randomUUID());
     when(userRepository.findById(log1.getUserId())).thenReturn(Optional.of(user));
 
-    ResponseEntity<String> response = auditController.exportAuditLogs(null, null);
+    ResponseEntity<String> response = auditController.exportAuditLogs(null, null, null, null);
 
     assertEquals(200, response.getStatusCode().value());
     assertNotNull(response.getBody());

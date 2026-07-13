@@ -14,6 +14,7 @@ import com.edtech.security.RateLimitingService;
 import com.edtech.service.JwtService;
 import com.edtech.service.RecoveryService;
 import io.github.bucket4j.Bucket;
+import jakarta.servlet.http.Cookie;
 import java.time.Duration;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
@@ -155,7 +156,7 @@ class AuthControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(loginPayload(email, password)))
         .andExpect(status().isOk())
-        .andExpect(jsonPath("$.token").isString())
+        .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.header().exists("Set-Cookie"))
         .andExpect(jsonPath("$.user.email").value(email))
         .andExpect(jsonPath("$.user.password").doesNotExist())
         .andExpect(jsonPath("$.user.passwordHash").doesNotExist());
@@ -178,7 +179,7 @@ class AuthControllerTest {
     String token = loginAndGetToken(email, password);
 
     mockMvc
-        .perform(get("/api/auth/me").header("Authorization", "Bearer " + token))
+        .perform(get("/api/auth/me").cookie(new Cookie("jwt", token)))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.email").value(email))
         .andExpect(jsonPath("$.role").value("RESEARCHER"))
@@ -195,7 +196,7 @@ class AuthControllerTest {
     String expireDtoken = jwtService.generateToken(user, Duration.ofSeconds(-1));
 
     mockMvc
-        .perform(get("/api/auth/me").header("Authorization", "Bearer " + expireDtoken))
+        .perform(get("/api/auth/me").cookie(new Cookie("jwt", expireDtoken)))
         .andExpect(status().isUnauthorized())
         .andExpect(jsonPath("$.code").value("unauthorized"));
   }
@@ -284,7 +285,7 @@ class AuthControllerTest {
     String token = loginAndGetToken(email, password);
 
     mockMvc
-        .perform(post("/api/auth/logout").with(csrf()).header("Authorization", "Bearer " + token))
+        .perform(post("/api/auth/logout").with(csrf()).cookie(new Cookie("jwt", token)))
         .andExpect(status().isOk());
   }
 
@@ -312,8 +313,8 @@ class AuthControllerTest {
             .andExpect(status().isOk())
             .andReturn();
 
-    String content = result.getResponse().getContentAsString();
-    return com.jayway.jsonpath.JsonPath.read(content, "$.token");
+    String setCookie = result.getResponse().getHeader("Set-Cookie");
+    return setCookie.substring(setCookie.indexOf('=') + 1, setCookie.indexOf(';'));
   }
 
   private String registerPayload(String email, String password) {
@@ -422,7 +423,7 @@ class AuthControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"email\":\"" + email + "\", \"code\":\"123456\"}"))
         .andExpect(status().isOk())
-        .andExpect(jsonPath("$.token").isString());
+        .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.header().exists("Set-Cookie"));
   }
 
   @Test
@@ -449,7 +450,7 @@ class AuthControllerTest {
                         + password
                         + "\", \"code\":\"123456\"}"))
         .andExpect(status().isOk())
-        .andExpect(jsonPath("$.token").isString());
+        .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.header().exists("Set-Cookie"));
   }
 
   @Test
@@ -464,7 +465,7 @@ class AuthControllerTest {
         .thenReturn("http://qrcode");
 
     mockMvc
-        .perform(get("/api/auth/2fa/setup").header("Authorization", "Bearer " + token))
+        .perform(get("/api/auth/2fa/setup").cookie(new Cookie("jwt", token)))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.secret").value("newsecret"))
         .andExpect(jsonPath("$.qrCodeUri").value("http://qrcode"));
@@ -489,7 +490,7 @@ class AuthControllerTest {
         .perform(
             post("/api/auth/2fa/enable")
                 .with(csrf())
-                .header("Authorization", "Bearer " + token)
+                .cookie(new Cookie("jwt", token))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"email\":\"" + email + "\", \"code\":\"123456\"}"))
         .andExpect(status().isOk());
@@ -599,7 +600,7 @@ class AuthControllerTest {
     userRepository.save(user);
 
     mockMvc
-        .perform(get("/api/auth/2fa/setup").header("Authorization", "Bearer " + token))
+        .perform(get("/api/auth/2fa/setup").cookie(new Cookie("jwt", token)))
         .andExpect(status().isBadRequest())
         .andExpect(
             org.springframework.test.web.servlet.result.MockMvcResultMatchers.content()
@@ -618,7 +619,7 @@ class AuthControllerTest {
         .thenThrow(new RuntimeException("QR Error"));
 
     mockMvc
-        .perform(get("/api/auth/2fa/setup").header("Authorization", "Bearer " + token))
+        .perform(get("/api/auth/2fa/setup").cookie(new Cookie("jwt", token)))
         .andExpect(status().isInternalServerError())
         .andExpect(
             org.springframework.test.web.servlet.result.MockMvcResultMatchers.content()
@@ -639,7 +640,7 @@ class AuthControllerTest {
         .perform(
             post("/api/auth/2fa/enable")
                 .with(csrf())
-                .header("Authorization", "Bearer " + token)
+                .cookie(new Cookie("jwt", token))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"email\":\"" + email + "\", \"code\":\"123456\"}"))
         .andExpect(status().isBadRequest())
@@ -664,7 +665,7 @@ class AuthControllerTest {
         .perform(
             post("/api/auth/2fa/enable")
                 .with(csrf())
-                .header("Authorization", "Bearer " + token)
+                .cookie(new Cookie("jwt", token))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"email\":\"" + email + "\", \"code\":\"123457\"}"))
         .andExpect(status().isBadRequest())

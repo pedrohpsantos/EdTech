@@ -23,6 +23,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 
 @ExtendWith(MockitoExtension.class)
 public class ProjectServiceTest {
@@ -105,13 +107,15 @@ public class ProjectServiceTest {
     p1.setTitle("P1");
     p1.setAdvisor(advisor);
 
-    when(projectRepository.findProjectsByUserId(userId)).thenReturn(Collections.singletonList(p1));
+    when(projectRepository.findProjectsByUserId(eq(userId), any()))
+        .thenReturn(new PageImpl<>(Collections.singletonList(p1)));
 
-    List<ProjectResponseDto> list = projectService.listProjectsByUser(userId);
+    org.springframework.data.domain.Page<ProjectResponseDto> list =
+        projectService.listProjectsByUser(userId, PageRequest.of(0, 20));
 
-    assertEquals(1, list.size());
-    assertEquals("P1", list.get(0).getTitle());
-    assertEquals(p1.getId(), list.get(0).getId());
+    assertEquals(1, list.getContent().size());
+    assertEquals("P1", list.getContent().get(0).getTitle());
+    assertEquals(p1.getId(), list.getContent().get(0).getId());
   }
 
   @Test

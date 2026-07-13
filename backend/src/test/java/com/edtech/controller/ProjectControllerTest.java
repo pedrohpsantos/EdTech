@@ -3,7 +3,6 @@ package com.edtech.controller;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -22,11 +21,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 
 @ExtendWith(MockitoExtension.class)
 public class ProjectControllerTest {
@@ -41,7 +43,10 @@ public class ProjectControllerTest {
 
   @BeforeEach
   void setUp() {
-    mockMvc = MockMvcBuilders.standaloneSetup(projectController).build();
+    mockMvc =
+        MockMvcBuilders.standaloneSetup(projectController)
+            .setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver())
+            .build();
     mockUser =
         new User(
             "Test",
@@ -83,19 +88,19 @@ public class ProjectControllerTest {
   }
 
   @Test
-  void listProjects_ReturnsOk() throws Exception {
+  void listProjects_ReturnsOk() {
     ProjectResponseDto response = new ProjectResponseDto();
     response.setTitle("P1");
 
-    when(projectService.listProjectsByUser(mockUser.getId()))
-        .thenReturn(Collections.singletonList(response));
+    when(projectService.listProjectsByUser(eq(mockUser.getId()), any()))
+        .thenReturn(new PageImpl<>(Collections.singletonList(response)));
 
-    mockMvc
-        .perform(
-            get("/api/projects")
-                .principal(SecurityContextHolder.getContext().getAuthentication())
-                .accept(MediaType.APPLICATION_JSON))
-        .andExpect(status().isOk())
-        .andExpect(jsonPath("$[0].title").value("P1"));
+    org.springframework.http.ResponseEntity<org.springframework.data.domain.Page<ProjectResponseDto>>
+        result =
+            projectController.listProjects(
+                SecurityContextHolder.getContext().getAuthentication(), PageRequest.of(0, 20));
+
+    org.junit.jupiter.api.Assertions.assertEquals(200, result.getStatusCode().value());
+    org.junit.jupiter.api.Assertions.assertEquals("P1", result.getBody().getContent().get(0).getTitle());
   }
 }
