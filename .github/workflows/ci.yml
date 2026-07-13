@@ -399,93 +399,35 @@ jobs:
   # ==========================================
   #                 DEPLOY
   # ==========================================
-  deploy-backend-staging:
-    name: Deploy Staging (Backend)
-    runs-on: ubuntu-latest
-    needs: [backend-approved, infra-approved]
-    # Staging não possui state nem infraestrutura isolada; não pode reutilizar produção.
-    if: false
-    concurrency: staging-deployment-backend
-    permissions:
-      contents: 'read'
-      id-token: 'write'
-    steps:
-      - uses: actions/checkout@v7
-      - name: Authenticate to Google Cloud
-        id: auth
-        uses: google-github-actions/auth@v3
-        with:
-          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
-      - name: Setup Cloud SDK
-        uses: google-github-actions/setup-gcloud@v3
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v4
-      - name: Terraform Init
-        working-directory: infra/terraform
-        run: terraform init -backend-config="bucket=edtech-terraform-state-staging-501117"
-      - name: Terraform Apply
-        working-directory: infra/terraform
-        run: |
-          terraform apply -auto-approve \
-            -var="project_id=edtech-storage-501117" \
-            -var="backend_image_tag=${{ github.sha }}" \
-            -var="storage_bucket_name=edtech-vault-storage-staging" \
-            -var="backend_service_name=edtech-backend-staging" \
-            -var="environment_suffix=_STAGING" \
-            -var="cors_allowed_origin=https://staging.edtechacademic.com.br" || exit 1
-      - name: Run Database Migrations (Flyway)
-        run: |
-          echo "Executando job de migracao do banco de dados (Flyway) Staging..."
-          gcloud run jobs execute edtech-backend-staging-migration \
-            --region southamerica-east1 --wait --project edtech-storage-501117
-
-  deploy-frontend-staging:
-    name: Deploy Staging (Frontend)
-    runs-on: ubuntu-latest
-    needs: [frontend-approved, infra-approved]
-    # Staging não possui state nem infraestrutura isolada; não pode reutilizar produção.
-    if: false
-    concurrency: staging-deployment-frontend
-    permissions:
-      contents: 'read'
-      id-token: 'write'
-    steps:
-      - uses: actions/checkout@v7
-      - name: Authenticate to Google Cloud
-        id: auth
-        uses: google-github-actions/auth@v3
-        with:
-          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
-      - name: Set up Node 24
-        uses: actions/setup-node@v6
-        with:
-          node-version: '24'
-      - name: Download Frontend Artifact
-        uses: actions/download-artifact@v8
-        with:
-          name: frontend-dist
-          path: frontend/dist/
-      - name: Deploy to Firebase Hosting (Staging)
-        working-directory: frontend
-        run: |
-          npm install -g firebase-tools
-          firebase deploy --project=edtech-storage-501117 --only hosting:staging -m "Deploy via GitHub Actions ${{ github.sha }}" --non-interactive
-        env:
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ steps.auth.outputs.credentials_file_path }}
-
   deploy-backend:
     name: Deploy Backend (${{ matrix.target }})
     runs-on: ubuntu-latest
     needs: [backend-approved, infra-approved]
-    if: github.ref == 'refs/heads/main'
-    concurrency: production-deployment-backend
+    if: github.ref == matrix.branch
+    concurrency: deploy-backend-${{ matrix.target }}
     permissions:
       contents: 'read'
       id-token: 'write'
     strategy:
       fail-fast: false
       matrix:
-        target: [production]
+        include:
+          - target: staging
+            branch: refs/heads/develop
+            state_bucket: edtech-terraform-state-501117
+            state_prefix: staging/backend
+            service_name: edtech-backend-staging
+            storage_bucket: edtech-vault-storage-staging
+            environment_suffix: _STAGING
+            cors_origin: https://staging.edtechacademic.com.br
+          - target: production
+            branch: refs/heads/main
+            state_bucket: edtech-terraform-state-501117
+            state_prefix: production/backend
+            service_name: edtech-backend
+            storage_bucket: edtech-vault-storage
+            environment_suffix: ''
+            cors_origin: https://edtechacademic.com.br
     steps:
       - uses: actions/checkout@v7
       - name: Authenticate to Google Cloud
@@ -499,7 +441,7 @@ jobs:
         uses: hashicorp/setup-terraform@v4
       - name: Terraform Init
         working-directory: infra/terraform
-        run: terraform init -backend-config="bucket=edtech-terraform-state-501117"
+        run: terraform init -backend-config="bucket=${{ matrix.state_bucket }}" -backend-config="prefix=${{ matrix.state_prefix }}"
       - name: Update migration job before rollout
         working-directory: infra/terraform
         run: |
@@ -507,8 +449,10 @@ jobs:
             -target=module.backend_api.google_cloud_run_v2_job.flyway_migration \
             -var="project_id=edtech-storage-501117" \
             -var="backend_image_tag=${{ github.sha }}" \
-            -var="storage_bucket_name=edtech-vault-storage" \
-            -var="cors_allowed_origin=https://edtechacademic.com.br" || {
+            -var="storage_bucket_name=${{ matrix.storage_bucket }}" \
+            -var="backend_service_name=${{ matrix.service_name }}" \
+            -var="environment_suffix=${{ matrix.environment_suffix }}" \
+            -var="cors_allowed_origin=${{ matrix.cors_origin }}" || {
               echo "Terraform Apply failed. Fetching Cloud Run logs for debugging:"
               gcloud logging read 'resource.type="cloud_run_revision" AND resource.labels.service_name="edtech-backend" AND severity>=ERROR' \
                 --limit 50 --format="value(textPayload)" --project=edtech-storage-501117
@@ -517,7 +461,7 @@ jobs:
       - name: Run Database Migrations (Flyway)
         run: |
           echo "Executando job de migracao do banco de dados (Flyway)..."
-          gcloud run jobs execute edtech-backend-migration \
+          gcloud run jobs execute ${{ matrix.service_name }}-migration \
             --region southamerica-east1 --wait --project edtech-storage-501117
       - name: Deploy migrated backend revision
         working-directory: infra/terraform
@@ -525,22 +469,30 @@ jobs:
           terraform apply -auto-approve \
             -var="project_id=edtech-storage-501117" \
             -var="backend_image_tag=${{ github.sha }}" \
-            -var="storage_bucket_name=edtech-vault-storage" \
-            -var="cors_allowed_origin=https://edtechacademic.com.br"
+            -var="storage_bucket_name=${{ matrix.storage_bucket }}" \
+            -var="backend_service_name=${{ matrix.service_name }}" \
+            -var="environment_suffix=${{ matrix.environment_suffix }}" \
+            -var="cors_allowed_origin=${{ matrix.cors_origin }}"
 
   deploy-frontend:
     name: Deploy Frontend (${{ matrix.target }})
     runs-on: ubuntu-latest
     needs: [frontend-approved, infra-approved]
-    if: github.ref == 'refs/heads/main'
-    concurrency: production-deployment-frontend
+    if: github.ref == matrix.branch
+    concurrency: deploy-frontend-${{ matrix.target }}
     permissions:
       contents: 'read'
       id-token: 'write'
     strategy:
       fail-fast: false
       matrix:
-        target: [production]
+        include:
+          - target: staging
+            branch: refs/heads/develop
+            hosting_target: staging
+          - target: production
+            branch: refs/heads/main
+            hosting_target: ''
     steps:
       - uses: actions/checkout@v7
       - name: Authenticate to Google Cloud
@@ -561,7 +513,7 @@ jobs:
         working-directory: frontend
         run: |
           npm install -g firebase-tools
-          firebase deploy --project=edtech-storage-501117 --only hosting -m "Deploy via GitHub Actions ${{ github.sha }}" --non-interactive
+          firebase deploy --project=edtech-storage-501117 --only hosting${{ matrix.hosting_target && format(':{0}', matrix.hosting_target) || '' }} -m "Deploy via GitHub Actions ${{ github.sha }}" --non-interactive
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ steps.auth.outputs.credentials_file_path }}
 

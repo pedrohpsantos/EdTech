@@ -38,6 +38,11 @@ module "backend_api" {
 # Os bancos foram criados antes da adoção do state remoto. Importá-los evita
 # tentativas de recriação durante o deploy e passa a mantê-los sob gestão.
 import {
+  to = module.database.google_sql_database_instance.instance
+  id = "${var.project_id}/${var.database_instance_name}"
+}
+
+import {
   to = module.database.google_sql_database.dev_db
   id = "${var.project_id}/${var.database_instance_name}/edtech_dev"
 }
