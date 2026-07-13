@@ -212,8 +212,6 @@ jobs:
         run: |
           npm run build
           echo ${{ github.sha }} > dist/version.txt
-        env:
-          VITE_API_URL: https://edtech-backend-shv6qbpf4q-rj.a.run.app
       - name: Upload Frontend Artifact
         if: matrix.task == 'build'
         uses: actions/upload-artifact@v7
