@@ -64,9 +64,15 @@ public class AuthController {
   public ResponseEntity<AuthResponseDto> verifyRegistration(@RequestBody VerifyCodeDto request) {
     User user = userService.verifyRegistration(request.email(), request.code());
     String token = jwtService.generateToken(user);
-    
-    org.springframework.http.ResponseCookie cookie = org.springframework.http.ResponseCookie.from("jwt", token)
-        .httpOnly(true).secure(true).path("/").maxAge(24 * 60 * 60).sameSite("Strict").build();
+
+    org.springframework.http.ResponseCookie cookie =
+        org.springframework.http.ResponseCookie.from("jwt", token)
+            .httpOnly(true)
+            .secure(true)
+            .path("/")
+            .maxAge(24 * 60 * 60)
+            .sameSite("Strict")
+            .build();
 
     return ResponseEntity.ok()
         .header(org.springframework.http.HttpHeaders.SET_COOKIE, cookie.toString())
@@ -91,9 +97,15 @@ public class AuthController {
     }
 
     String token = jwtService.generateToken(user);
-    
-    org.springframework.http.ResponseCookie cookie = org.springframework.http.ResponseCookie.from("jwt", token)
-        .httpOnly(true).secure(true).path("/").maxAge(24 * 60 * 60).sameSite("Strict").build();
+
+    org.springframework.http.ResponseCookie cookie =
+        org.springframework.http.ResponseCookie.from("jwt", token)
+            .httpOnly(true)
+            .secure(true)
+            .path("/")
+            .maxAge(24 * 60 * 60)
+            .sameSite("Strict")
+            .build();
 
     return ResponseEntity.ok()
         .header(org.springframework.http.HttpHeaders.SET_COOKIE, cookie.toString())
@@ -123,8 +135,14 @@ public class AuthController {
 
     String token = jwtService.generateToken(user);
 
-    org.springframework.http.ResponseCookie cookie = org.springframework.http.ResponseCookie.from("jwt", token)
-        .httpOnly(true).secure(true).path("/").maxAge(24 * 60 * 60).sameSite("Strict").build();
+    org.springframework.http.ResponseCookie cookie =
+        org.springframework.http.ResponseCookie.from("jwt", token)
+            .httpOnly(true)
+            .secure(true)
+            .path("/")
+            .maxAge(24 * 60 * 60)
+            .sameSite("Strict")
+            .build();
 
     return ResponseEntity.ok()
         .header(org.springframework.http.HttpHeaders.SET_COOKIE, cookie.toString())
@@ -216,8 +234,14 @@ public class AuthController {
   /** Documentação. */
   @PostMapping("/logout")
   public ResponseEntity<Void> logout() {
-    org.springframework.http.ResponseCookie cookie = org.springframework.http.ResponseCookie.from("jwt", "")
-        .httpOnly(true).secure(true).path("/").maxAge(0).sameSite("Strict").build();
+    org.springframework.http.ResponseCookie cookie =
+        org.springframework.http.ResponseCookie.from("jwt", "")
+            .httpOnly(true)
+            .secure(true)
+            .path("/")
+            .maxAge(0)
+            .sameSite("Strict")
+            .build();
     return ResponseEntity.ok()
         .header(org.springframework.http.HttpHeaders.SET_COOKIE, cookie.toString())
         .build();

@@ -38,7 +38,9 @@ const AuditLogs: React.FC = () => {
             const parts = endDate.split('/');
             if (parts.length === 3) isoEnd = new Date(`${parts[2]}-${parts[1]}-${parts[0]}T23:59:59`).toISOString();
         }
-    } catch(e) {}
+    } catch {
+      // ignore parse error
+    }
 
     const action = actionFilter === 'Todas as Ações' ? '' : actionFilter;
     const data = await getAuditLogs(searchTerm, action, isoStart, isoEnd, page, 20);
@@ -71,7 +73,9 @@ const AuditLogs: React.FC = () => {
             const parts = endDate.split('/');
             if (parts.length === 3) isoEnd = new Date(`${parts[2]}-${parts[1]}-${parts[0]}T23:59:59`).toISOString();
         }
-    } catch(e) {}
+    } catch {
+      // ignore parse error
+    }
     const action = actionFilter === 'Todas as Ações' ? '' : actionFilter;
     exportAuditLogsCSV(searchTerm, action, isoStart, isoEnd);
   };

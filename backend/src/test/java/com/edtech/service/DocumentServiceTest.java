@@ -96,7 +96,9 @@ public class DocumentServiceTest {
     document.setAuthor(author);
     document.setProject(project);
 
-    org.mockito.Mockito.lenient().when(clamAvService.isFileSafe(any(MultipartFile.class))).thenReturn(true);
+    org.mockito.Mockito.lenient()
+        .when(clamAvService.isFileSafe(any(MultipartFile.class)))
+        .thenReturn(true);
   }
 
   @Test
@@ -669,7 +671,8 @@ public class DocumentServiceTest {
   @Test
   void testUploadDocument_RejectsMalware() {
     byte[] content = "%PDF-1.4\n%EOF".getBytes();
-    MockMultipartFile file = new MockMultipartFile("file", "infected_file.pdf", "application/pdf", content);
+    MockMultipartFile file =
+        new MockMultipartFile("file", "infected_file.pdf", "application/pdf", content);
 
     when(userRepository.findById(authorId)).thenReturn(Optional.of(author));
     when(projectRepository.findById(projectId)).thenReturn(Optional.of(project));
@@ -678,10 +681,14 @@ public class DocumentServiceTest {
 
     when(clamAvService.isFileSafe(any(MultipartFile.class))).thenReturn(false);
 
-    IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-        documentService.uploadDocument(file, "Infected File", projectId, authorId);
-    });
+    IllegalArgumentException exception =
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> {
+              documentService.uploadDocument(file, "Infected File", projectId, authorId);
+            });
 
-    assertEquals("Upload rejeitado: Assinatura de vírus detectada no arquivo.", exception.getMessage());
+    assertEquals(
+        "Upload rejeitado: Assinatura de vírus detectada no arquivo.", exception.getMessage());
   }
 }

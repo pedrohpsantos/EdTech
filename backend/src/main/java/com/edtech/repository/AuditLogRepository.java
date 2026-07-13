@@ -9,7 +9,8 @@ import org.springframework.stereotype.Repository;
 
 /** Documentacao para AuditLogRepository. */
 @Repository
-public interface AuditLogRepository extends JpaRepository<AuditLog, UUID>, JpaSpecificationExecutor<AuditLog> {
+public interface AuditLogRepository
+    extends JpaRepository<AuditLog, UUID>, JpaSpecificationExecutor<AuditLog> {
   List<AuditLog> findAllByOrderByCreatedAtDesc();
 
   List<AuditLog> findByResourceTypeAndResourceIdOrderByCreatedAtAsc(

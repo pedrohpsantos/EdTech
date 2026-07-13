@@ -7,9 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import xyz.capybara.clamav.ClamavClient;
 import xyz.capybara.clamav.commands.scan.result.ScanResult;
 
-/**
- * Service for malware scanning using ClamAV.
- */
+/** Service for malware scanning using ClamAV. */
 @Service
 public class ClamAvService {
   private final ClamavClient clamavClient;
@@ -21,8 +19,7 @@ public class ClamAvService {
    * @param port ClamAV port
    */
   public ClamAvService(
-      @Value("${clamav.host:localhost}") String host,
-      @Value("${clamav.port:3310}") int port) {
+      @Value("${clamav.host:localhost}") String host, @Value("${clamav.port:3310}") int port) {
     this.clamavClient = new ClamavClient(host, port);
   }
 

@@ -81,7 +81,10 @@ public class DocumentController {
     byte[] file = auditExportService.exportDocumentAuditTrail(id, user.getId(), format);
     String filename = auditExportService.buildFilename(id, format);
 
-    MediaType mediaType = "pdf".equalsIgnoreCase(format) ? MediaType.APPLICATION_PDF : MediaType.parseMediaType("text/csv");
+    MediaType mediaType =
+        "pdf".equalsIgnoreCase(format)
+            ? MediaType.APPLICATION_PDF
+            : MediaType.parseMediaType("text/csv");
 
     return ResponseEntity.ok()
         .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + filename + "\"")

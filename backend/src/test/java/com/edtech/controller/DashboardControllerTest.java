@@ -51,9 +51,11 @@ class DashboardControllerTest {
     when(documentRepository.countDocumentsByUserIdAndStatus(
             mockUser.getId(), DocumentStatus.PENDING_REVIEW))
         .thenReturn(2L);
-    when(documentRepository.countDocumentsByUserIdAndStatus(mockUser.getId(), DocumentStatus.APPROVED))
+    when(documentRepository.countDocumentsByUserIdAndStatus(
+            mockUser.getId(), DocumentStatus.APPROVED))
         .thenReturn(6L);
-    when(documentRepository.countDocumentsByUserIdAndStatus(mockUser.getId(), DocumentStatus.PUBLISHED))
+    when(documentRepository.countDocumentsByUserIdAndStatus(
+            mockUser.getId(), DocumentStatus.PUBLISHED))
         .thenReturn(1L);
 
     ResponseEntity<Map<String, Object>> response = dashboardController.getStats(auth);

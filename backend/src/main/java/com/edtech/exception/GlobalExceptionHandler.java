@@ -20,6 +20,7 @@ public class GlobalExceptionHandler {
     return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
   }
 
+  /** Documentação. */
   @ExceptionHandler(UserAlreadyMemberException.class)
   public ResponseEntity<Map<String, String>> handleUserAlreadyMemberException(
       UserAlreadyMemberException ex) {

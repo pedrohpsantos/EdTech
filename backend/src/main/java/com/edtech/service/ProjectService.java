@@ -11,9 +11,7 @@ import com.edtech.model.User;
 import com.edtech.repository.ProjectMemberRepository;
 import com.edtech.repository.ProjectRepository;
 import com.edtech.repository.UserRepository;
-import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -66,10 +64,12 @@ public class ProjectService {
   }
 
   /** Documentação para o método listProjectsByUser. */
-  @Cacheable(value = "projects", key = "#userId + '-' + #pageable.pageNumber + '-' + #pageable.pageSize")
-  public org.springframework.data.domain.Page<ProjectResponseDto> listProjectsByUser(UUID userId, org.springframework.data.domain.Pageable pageable) {
-    return projectRepository.findProjectsByUserId(userId, pageable)
-        .map(this::mapToDto);
+  @Cacheable(
+      value = "projects",
+      key = "#userId + '-' + #pageable.pageNumber + '-' + #pageable.pageSize")
+  public org.springframework.data.domain.Page<ProjectResponseDto> listProjectsByUser(
+      UUID userId, org.springframework.data.domain.Pageable pageable) {
+    return projectRepository.findProjectsByUserId(userId, pageable).map(this::mapToDto);
   }
 
   /** Documentação. */
@@ -99,7 +99,8 @@ public class ProjectService {
     }
 
     if (projectMemberRepository.findByProjectIdAndUserId(projectId, targetUserId).isPresent()) {
-      throw new com.edtech.exception.UserAlreadyMemberException("User is already a member of this project");
+      throw new com.edtech.exception.UserAlreadyMemberException(
+          "User is already a member of this project");
     }
 
     User newUser =

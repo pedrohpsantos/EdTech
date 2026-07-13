@@ -5,10 +5,6 @@ import com.edtech.model.Document;
 import com.edtech.repository.AuditLogRepository;
 import com.edtech.repository.DocumentRepository;
 import com.edtech.repository.ProjectMemberRepository;
-import java.util.List;
-import java.util.Locale;
-import java.util.UUID;
-import org.springframework.stereotype.Service;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.Font;
 import com.lowagie.text.FontFactory;
@@ -20,6 +16,10 @@ import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 import java.io.ByteArrayOutputStream;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Locale;
+import java.util.UUID;
+import org.springframework.stereotype.Service;
 
 /** Service responsavel por exportar trilhas de auditoria de documentos. */
 @Service
@@ -75,9 +75,9 @@ public class AuditExportService {
             DOCUMENT_RESOURCE_TYPE, documentId);
 
     if (PDF_FORMAT.equals(normalizedFormat)) {
-        return exportPdf(logs);
+      return exportPdf(logs);
     }
-    
+
     return csvExporter.export(logs);
   }
 
@@ -112,12 +112,15 @@ public class AuditExportService {
       Font fontData = FontFactory.getFont(FontFactory.HELVETICA);
       fontData.setSize(8);
       DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-      
+
       for (AuditLog log : logs) {
         table.addCell(new Phrase(log.getId() != null ? log.getId().toString() : "", fontData));
-        table.addCell(new Phrase(log.getCreatedAt() != null ? log.getCreatedAt().format(formatter) : "", fontData));
+        table.addCell(
+            new Phrase(
+                log.getCreatedAt() != null ? log.getCreatedAt().format(formatter) : "", fontData));
         table.addCell(new Phrase(log.getAction() != null ? log.getAction().name() : "", fontData));
-        table.addCell(new Phrase(log.getUserId() != null ? log.getUserId().toString() : "", fontData));
+        table.addCell(
+            new Phrase(log.getUserId() != null ? log.getUserId().toString() : "", fontData));
         table.addCell(new Phrase(log.getIpAddress() != null ? log.getIpAddress() : "", fontData));
         table.addCell(new Phrase(log.getDetails() != null ? log.getDetails() : "", fontData));
       }

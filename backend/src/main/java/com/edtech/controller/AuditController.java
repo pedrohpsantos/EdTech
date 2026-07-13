@@ -4,21 +4,21 @@ import com.edtech.dto.AuditLogDto;
 import com.edtech.model.AuditLog;
 import com.edtech.model.User;
 import com.edtech.repository.AuditLogRepository;
+import com.edtech.repository.AuditLogSpecification;
 import com.edtech.repository.UserRepository;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeParseException;
-import com.edtech.repository.AuditLogSpecification;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -61,14 +61,19 @@ public class AuditController {
     LocalDateTime start = null;
     LocalDateTime end = null;
     try {
-        if (startDate != null && !startDate.isEmpty()) start = LocalDateTime.parse(startDate);
-        if (endDate != null && !endDate.isEmpty()) end = LocalDateTime.parse(endDate);
-    } catch (DateTimeParseException ignored) {}
+      if (startDate != null && !startDate.isEmpty()) {
+        start = LocalDateTime.parse(startDate);
+      }
+      if (endDate != null && !endDate.isEmpty()) {
+        end = LocalDateTime.parse(endDate);
+      }
+    } catch (DateTimeParseException ignored) {
+      // ignored
+    }
 
-    Page<AuditLog> logsPage = auditLogRepository.findAll(
-        AuditLogSpecification.getFilter(search, action, start, end), 
-        pageable
-    );
+    Page<AuditLog> logsPage =
+        auditLogRepository.findAll(
+            AuditLogSpecification.getFilter(search, action, start, end), pageable);
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
 
     List<AuditLogDto> dtos =
@@ -128,7 +133,14 @@ public class AuditController {
       @RequestParam(required = false) String startDate,
       @RequestParam(required = false) String endDate) {
 
-    ResponseEntity<Page<AuditLogDto>> response = getAuditLogs(search, action, startDate, endDate, org.springframework.data.domain.PageRequest.of(0, 10000, Sort.by(Sort.Direction.DESC, "createdAt")));
+    ResponseEntity<Page<AuditLogDto>> response =
+        getAuditLogs(
+            search,
+            action,
+            startDate,
+            endDate,
+            org.springframework.data.domain.PageRequest.of(
+                0, 10000, Sort.by(Sort.Direction.DESC, "createdAt")));
     List<AuditLogDto> dtos = response.getBody().getContent();
 
     StringBuilder csv = new StringBuilder();

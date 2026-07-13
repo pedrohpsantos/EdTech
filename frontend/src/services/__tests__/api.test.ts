@@ -34,10 +34,10 @@ describe('api.ts', () => {
 
   describe('login', () => {
     it('handles successful login without MFA', async () => {
-      mockApi.post.mockResolvedValueOnce({ status: 200, data: { token: 'token123', user: { id: 1 } } });
+      mockApi.post.mockResolvedValueOnce({ status: 200, data: { user: { id: 1 } } });
       const result = await api.login('test@test.com', 'pass');
       expect(result.sucesso).toBe(true);
-      expect(localStorage.getItem('token')).toBe('token123');
+      expect(result.dados.id).toBe(1);
     });
 
     it('handles successful login with MFA required', async () => {
@@ -45,7 +45,6 @@ describe('api.ts', () => {
       const result = await api.login('test@test.com', 'pass');
       expect(result.sucesso).toBe(true);
       expect(result.dados.mfaRequired).toBe(true);
-      expect(localStorage.getItem('token')).toBeNull();
     });
 
     it('handles login error', async () => {

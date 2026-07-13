@@ -39,9 +39,7 @@ public class DashboardController {
     int complianceScore =
         totalDocs == 0 ? 100 : (int) Math.round((approvedDocs * 100.0) / totalDocs);
     int researchProgress =
-        totalDocs == 0
-            ? 0
-            : (int) Math.round(((approvedDocs + publishedDocs) * 100.0) / totalDocs);
+        totalDocs == 0 ? 0 : (int) Math.round(((approvedDocs + publishedDocs) * 100.0) / totalDocs);
 
     Map<String, Object> stats = new HashMap<>();
     stats.put("activeDocuments", totalDocs);

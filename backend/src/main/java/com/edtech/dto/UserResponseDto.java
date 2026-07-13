@@ -6,13 +6,13 @@ import java.util.UUID;
 
 /** Documentação. */
 public record UserResponseDto(
-    UUID id, 
-    String name, 
-    String email, 
-    String role, 
-    boolean active, 
-    Instant createdAt, 
-    boolean mfaEnabled, 
+    UUID id,
+    String name,
+    String email,
+    String role,
+    boolean active,
+    Instant createdAt,
+    boolean mfaEnabled,
     UUID institutionId) {
 
   /** Documentação para o método from. */

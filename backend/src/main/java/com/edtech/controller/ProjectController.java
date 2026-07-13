@@ -5,7 +5,6 @@ import com.edtech.dto.ProjectRequestDto;
 import com.edtech.dto.ProjectResponseDto;
 import com.edtech.model.User;
 import com.edtech.service.ProjectService;
-import java.util.List;
 import java.util.UUID;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,7 +38,8 @@ public class ProjectController {
   }
 
   @GetMapping
-  public ResponseEntity<org.springframework.data.domain.Page<ProjectResponseDto>> listProjects(Authentication authentication, org.springframework.data.domain.Pageable pageable) {
+  public ResponseEntity<org.springframework.data.domain.Page<ProjectResponseDto>> listProjects(
+      Authentication authentication, org.springframework.data.domain.Pageable pageable) {
     User user = (User) authentication.getPrincipal();
     return ResponseEntity.ok(projectService.listProjectsByUser(user.getId(), pageable));
   }
