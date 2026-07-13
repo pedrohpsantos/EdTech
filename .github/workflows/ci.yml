@@ -403,7 +403,7 @@ jobs:
     name: Deploy Backend (${{ matrix.target }})
     runs-on: ubuntu-latest
     needs: [backend-approved, infra-approved]
-    if: github.ref == matrix.branch
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
     concurrency: deploy-backend-${{ matrix.target }}
     permissions:
       contents: 'read'
@@ -443,6 +443,7 @@ jobs:
         working-directory: infra/terraform
         run: terraform init -backend-config="bucket=${{ matrix.state_bucket }}" -backend-config="prefix=${{ matrix.state_prefix }}"
       - name: Update migration job before rollout
+        if: github.ref == matrix.branch
         working-directory: infra/terraform
         run: |
           terraform apply -auto-approve \
@@ -459,11 +460,13 @@ jobs:
               exit 1
             }
       - name: Run Database Migrations (Flyway)
+        if: github.ref == matrix.branch
         run: |
           echo "Executando job de migracao do banco de dados (Flyway)..."
           gcloud run jobs execute ${{ matrix.service_name }}-migration \
             --region southamerica-east1 --wait --project edtech-storage-501117
       - name: Deploy migrated backend revision
+        if: github.ref == matrix.branch
         working-directory: infra/terraform
         run: |
           terraform apply -auto-approve \
@@ -478,7 +481,7 @@ jobs:
     name: Deploy Frontend (${{ matrix.target }})
     runs-on: ubuntu-latest
     needs: [frontend-approved, infra-approved]
-    if: github.ref == matrix.branch
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
     concurrency: deploy-frontend-${{ matrix.target }}
     permissions:
       contents: 'read'
@@ -510,6 +513,7 @@ jobs:
           name: frontend-dist
           path: frontend/dist/
       - name: Deploy to Firebase Hosting
+        if: github.ref == matrix.branch
         working-directory: frontend
         run: |
           npm install -g firebase-tools
