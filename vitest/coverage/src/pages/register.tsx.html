@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">95.58% </span>
+                <span class="strong">98.33% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>65/68</span>
+                <span class='fraction'>59/60</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">82.5% </span>
+                <span class="strong">93.33% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>33/40</span>
+                <span class='fraction'>28/30</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">95% </span>
+                <span class="strong">93.75% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>19/20</span>
+                <span class='fraction'>15/16</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">96.61% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>57/59</span>
+                <span class='fraction'>55/55</span>
             </div>
         
             
@@ -421,14 +421,7 @@
 <a name='L356'></a><a href='#L356'>356</a>
 <a name='L357'></a><a href='#L357'>357</a>
 <a name='L358'></a><a href='#L358'>358</a>
-<a name='L359'></a><a href='#L359'>359</a>
-<a name='L360'></a><a href='#L360'>360</a>
-<a name='L361'></a><a href='#L361'>361</a>
-<a name='L362'></a><a href='#L362'>362</a>
-<a name='L363'></a><a href='#L363'>363</a>
-<a name='L364'></a><a href='#L364'>364</a>
-<a name='L365'></a><a href='#L365'>365</a>
-<a name='L366'></a><a href='#L366'>366</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L359'></a><a href='#L359'>359</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -449,13 +442,6 @@
 <span class="cline-any cline-yes">73x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">73x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">73x</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">73x</span>
 <span class="cline-any cline-yes">7x</span>
@@ -793,16 +779,16 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { useEffect, useState } from 'react';
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { register, resendRegistrationCode, verifyRegistration } from '../services/api';
+import { register, verifyRegistration } from '../services/api';
 import { motion } from 'framer-motion';
 import AuthLayout from '../components/AuthLayout';
 import styles from './auth.module.css';
 &nbsp;
 function Register() {
   const [nome, setNome] = useState('');
-  const [email, setEmail] = useState(() =&gt; new URLSearchParams(window.location.search).get('email') || '');
+  const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [confirmarSenha, setConfirmarSenha] = useState('');
   const [erro, setErro] = useState('');
@@ -810,17 +796,10 @@ function Register() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isShaking, setIsShaking] = useState(false);
   const [role, setRole] = useState('RESEARCHER');
-  const [step, setStep] = useState(() =&gt; new URLSearchParams(window.location.search).get('verify') === 'true' ? <span class="branch-0 cbranch-no" title="branch not covered" >2 : 1</span>);
+  const [step, setStep] = useState(1);
   const [otp, setOtp] = useState('');
 &nbsp;
   const navigate = useNavigate();
-&nbsp;
-  useEffect(() =&gt; {
-    <span class="missing-if-branch" title="else path not taken" >E</span>if (step !== 2 || <span class="branch-1 cbranch-no" title="branch not covered" >!email) r</span>eturn;
-<span class="cstat-no" title="statement not covered" >    resendRegistrationCode(email).<span class="fstat-no" title="function not covered" >then((r</span>esult) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >      if (!result.sucesso) <span class="cstat-no" title="statement not covered" >setErro(result.mensagem);</span></span>
-    });
-  }, []);
 &nbsp;
   const handleSubmit = async (e: React.FormEvent) =&gt; {
     <span class="missing-if-branch" title="else path not taken" >E</span>if (e) e.preventDefault();
@@ -849,7 +828,7 @@ function Register() {
     if (otp.length &lt; 6) {
       setErro('Por favor, insira o código de 6 dígitos.');
       setIsShaking(true);
-      setTimeout(() =&gt; setIsShaking(false), 500);
+<span class="fstat-no" title="function not covered" >      setTimeout(() =&gt; <span class="cstat-no" title="statement not covered" >s</span>etIsShaking(false), 5</span>00);
       return;
     }
     try {
@@ -1165,7 +1144,7 @@ export default Register;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-07-13T13:45:50.780Z
+                at 2026-07-13T13:49:22.578Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

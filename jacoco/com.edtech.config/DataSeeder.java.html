@@ -60,36 +60,36 @@ public class DataSeeder implements CommandLineRunner {
   @Override
   @Transactional
   public void run(String... args) throws Exception {
-<span class="pc bpc" id="L63" title="1 of 2 branches missed.">    if (userRepository.count() &gt; 0) {</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">    if (userRepository.count() &gt; 0) {</span>
 <span class="fc" id="L64">      return; // Database already seeded</span>
     }
 
-<span class="nc" id="L67">    UUID defaultInstitution = UUID.fromString(&quot;00000000-0000-0000-0000-000000000001&quot;);</span>
-<span class="nc" id="L68">    String defaultPassword = passwordEncoder.encode(&quot;senha123&quot;);</span>
+<span class="fc" id="L67">    UUID defaultInstitution = UUID.fromString(&quot;00000000-0000-0000-0000-000000000001&quot;);</span>
+<span class="fc" id="L68">    String defaultPassword = passwordEncoder.encode(&quot;senha123&quot;);</span>
 
     // 1. Criar Usuários
-<span class="nc" id="L71">    User auditor =</span>
+<span class="fc" id="L71">    User auditor =</span>
         new User(
             &quot;Auditor Externo&quot;,
             &quot;auditor@demo.com&quot;,
             defaultPassword,
             UserRole.AUDITOR,
             defaultInstitution);
-<span class="nc" id="L78">    User advisor =</span>
+<span class="fc" id="L78">    User advisor =</span>
         new User(
             &quot;Carlos Mendes&quot;,
             &quot;carlos@demo.com&quot;,
             defaultPassword,
             UserRole.ADVISOR,
             defaultInstitution);
-<span class="nc" id="L85">    User researcher =</span>
+<span class="fc" id="L85">    User researcher =</span>
         new User(
             &quot;Renata Silva&quot;,
             &quot;renata@demo.com&quot;,
             defaultPassword,
             UserRole.RESEARCHER,
             defaultInstitution);
-<span class="nc" id="L92">    User researcher2 =</span>
+<span class="fc" id="L92">    User researcher2 =</span>
         new User(
             &quot;João Almeida&quot;,
             &quot;joao@demo.com&quot;,
@@ -97,173 +97,173 @@ public class DataSeeder implements CommandLineRunner {
             UserRole.RESEARCHER,
             defaultInstitution);
 
-<span class="nc" id="L100">    userRepository.saveAll(List.of(auditor, advisor, researcher, researcher2));</span>
+<span class="fc" id="L100">    userRepository.saveAll(List.of(auditor, advisor, researcher, researcher2));</span>
 
     // 2. Criar Projetos
-<span class="nc" id="L103">    Project project1 = new Project();</span>
-<span class="nc" id="L104">    project1.setTitle(&quot;Projeto IA na Saúde&quot;);</span>
-<span class="nc" id="L105">    project1.setDescription(&quot;Projeto demonstração&quot;);</span>
-<span class="nc" id="L106">    project1.setAdvisor(advisor);</span>
-<span class="nc" id="L107">    projectRepository.save(project1);</span>
+<span class="fc" id="L103">    Project project1 = new Project();</span>
+<span class="fc" id="L104">    project1.setTitle(&quot;Projeto IA na Saúde&quot;);</span>
+<span class="fc" id="L105">    project1.setDescription(&quot;Projeto demonstração&quot;);</span>
+<span class="fc" id="L106">    project1.setAdvisor(advisor);</span>
+<span class="fc" id="L107">    projectRepository.save(project1);</span>
 
-<span class="nc" id="L109">    Project project2 = new Project();</span>
-<span class="nc" id="L110">    project2.setTitle(&quot;Pesquisa Clima&quot;);</span>
-<span class="nc" id="L111">    project2.setDescription(&quot;Projeto demonstração 2&quot;);</span>
-<span class="nc" id="L112">    project2.setAdvisor(advisor);</span>
-<span class="nc" id="L113">    projectRepository.save(project2);</span>
+<span class="fc" id="L109">    Project project2 = new Project();</span>
+<span class="fc" id="L110">    project2.setTitle(&quot;Pesquisa Clima&quot;);</span>
+<span class="fc" id="L111">    project2.setDescription(&quot;Projeto demonstração 2&quot;);</span>
+<span class="fc" id="L112">    project2.setAdvisor(advisor);</span>
+<span class="fc" id="L113">    projectRepository.save(project2);</span>
 
     // Os documentos so ficam visiveis para membros do projeto. Criar estes vinculos
     // tambem faz com que as tres contas demo exercitem o mesmo fluxo de trabalho.
-<span class="nc" id="L117">    saveMembership(project1, advisor, com.edtech.model.ProjectRole.ADVISOR);</span>
-<span class="nc" id="L118">    saveMembership(project1, researcher, com.edtech.model.ProjectRole.RESEARCHER);</span>
-<span class="nc" id="L119">    saveMembership(project1, researcher2, com.edtech.model.ProjectRole.RESEARCHER);</span>
-<span class="nc" id="L120">    saveMembership(project2, advisor, com.edtech.model.ProjectRole.ADVISOR);</span>
-<span class="nc" id="L121">    saveMembership(project2, researcher, com.edtech.model.ProjectRole.RESEARCHER);</span>
+<span class="fc" id="L117">    saveMembership(project1, advisor, com.edtech.model.ProjectRole.ADVISOR);</span>
+<span class="fc" id="L118">    saveMembership(project1, researcher, com.edtech.model.ProjectRole.RESEARCHER);</span>
+<span class="fc" id="L119">    saveMembership(project1, researcher2, com.edtech.model.ProjectRole.RESEARCHER);</span>
+<span class="fc" id="L120">    saveMembership(project2, advisor, com.edtech.model.ProjectRole.ADVISOR);</span>
+<span class="fc" id="L121">    saveMembership(project2, researcher, com.edtech.model.ProjectRole.RESEARCHER);</span>
 
     // 3. Criar Documentos
-<span class="nc" id="L124">    Document doc1 = new Document();</span>
-<span class="nc" id="L125">    doc1.setProject(project1);</span>
-<span class="nc" id="L126">    doc1.setAuthor(researcher);</span>
-<span class="nc" id="L127">    doc1.setTitle(&quot;Metodologia_Qualitativa_v3.pdf&quot;);</span>
-<span class="nc" id="L128">    doc1.setStatus(DocumentStatus.PENDING_REVIEW);</span>
-<span class="nc" id="L129">    doc1.setFileUrl(&quot;fake/path/1.pdf&quot;);</span>
-<span class="nc" id="L130">    doc1.setInstitutionId(defaultInstitution);</span>
-<span class="nc" id="L131">    documentRepository.save(doc1);</span>
+<span class="fc" id="L124">    Document doc1 = new Document();</span>
+<span class="fc" id="L125">    doc1.setProject(project1);</span>
+<span class="fc" id="L126">    doc1.setAuthor(researcher);</span>
+<span class="fc" id="L127">    doc1.setTitle(&quot;Metodologia_Qualitativa_v3.pdf&quot;);</span>
+<span class="fc" id="L128">    doc1.setStatus(DocumentStatus.PENDING_REVIEW);</span>
+<span class="fc" id="L129">    doc1.setFileUrl(&quot;fake/path/1.pdf&quot;);</span>
+<span class="fc" id="L130">    doc1.setInstitutionId(defaultInstitution);</span>
+<span class="fc" id="L131">    documentRepository.save(doc1);</span>
 
-<span class="nc" id="L133">    Document doc2 = new Document();</span>
-<span class="nc" id="L134">    doc2.setProject(project2);</span>
-<span class="nc" id="L135">    doc2.setAuthor(researcher);</span>
-<span class="nc" id="L136">    doc2.setTitle(&quot;Dataset_Experimento_A.csv&quot;);</span>
-<span class="nc" id="L137">    doc2.setStatus(DocumentStatus.APPROVED);</span>
-<span class="nc" id="L138">    doc2.setFileUrl(&quot;fake/path/2.csv&quot;);</span>
-<span class="nc" id="L139">    doc2.setInstitutionId(defaultInstitution);</span>
-<span class="nc" id="L140">    documentRepository.save(doc2);</span>
+<span class="fc" id="L133">    Document doc2 = new Document();</span>
+<span class="fc" id="L134">    doc2.setProject(project2);</span>
+<span class="fc" id="L135">    doc2.setAuthor(researcher);</span>
+<span class="fc" id="L136">    doc2.setTitle(&quot;Dataset_Experimento_A.csv&quot;);</span>
+<span class="fc" id="L137">    doc2.setStatus(DocumentStatus.APPROVED);</span>
+<span class="fc" id="L138">    doc2.setFileUrl(&quot;fake/path/2.csv&quot;);</span>
+<span class="fc" id="L139">    doc2.setInstitutionId(defaultInstitution);</span>
+<span class="fc" id="L140">    documentRepository.save(doc2);</span>
 
-<span class="nc" id="L142">    Document doc3 = new Document();</span>
-<span class="nc" id="L143">    doc3.setProject(project1);</span>
-<span class="nc" id="L144">    doc3.setAuthor(researcher2);</span>
-<span class="nc" id="L145">    doc3.setTitle(&quot;Dataset_Experimento_B.csv&quot;);</span>
-<span class="nc" id="L146">    doc3.setStatus(DocumentStatus.PENDING_REVIEW);</span>
-<span class="nc" id="L147">    doc3.setFileUrl(&quot;fake/path/3.csv&quot;);</span>
-<span class="nc" id="L148">    doc3.setInstitutionId(defaultInstitution);</span>
-<span class="nc" id="L149">    documentRepository.save(doc3);</span>
+<span class="fc" id="L142">    Document doc3 = new Document();</span>
+<span class="fc" id="L143">    doc3.setProject(project1);</span>
+<span class="fc" id="L144">    doc3.setAuthor(researcher2);</span>
+<span class="fc" id="L145">    doc3.setTitle(&quot;Dataset_Experimento_B.csv&quot;);</span>
+<span class="fc" id="L146">    doc3.setStatus(DocumentStatus.PENDING_REVIEW);</span>
+<span class="fc" id="L147">    doc3.setFileUrl(&quot;fake/path/3.csv&quot;);</span>
+<span class="fc" id="L148">    doc3.setInstitutionId(defaultInstitution);</span>
+<span class="fc" id="L149">    documentRepository.save(doc3);</span>
 
     // 4. Criar Audit Logs (Os 14 eventos da tela)
-<span class="nc" id="L152">    LocalDateTime now = LocalDateTime.now();</span>
+<span class="fc" id="L152">    LocalDateTime now = LocalDateTime.now();</span>
 
-<span class="nc" id="L154">    saveLog(</span>
+<span class="fc" id="L154">    saveLog(</span>
         researcher,
         AuditAction.UPLOAD_SUCCESS,
         &quot;Document&quot;,
-<span class="nc" id="L158">        doc1.getId(),</span>
+<span class="fc" id="L158">        doc1.getId(),</span>
         &quot;143.107.42.88&quot;,
         &quot;Metodologia_Qualitativa_v3.pdf · 2.4 MB&quot;,
-<span class="nc" id="L161">        now.minusMinutes(10));</span>
-<span class="nc" id="L162">    saveLog(</span>
+<span class="fc" id="L161">        now.minusMinutes(10));</span>
+<span class="fc" id="L162">    saveLog(</span>
         researcher,
         AuditAction.LOGIN_SUCCESS,
         &quot;System&quot;,
-<span class="nc" id="L166">        researcher.getId(),</span>
+<span class="fc" id="L166">        researcher.getId(),</span>
         &quot;143.107.42.88&quot;,
         &quot;UA: Chrome/126 · 2FA: TOTP_OK&quot;,
-<span class="nc" id="L169">        now.minusMinutes(25));</span>
-<span class="nc" id="L170">    saveLog(</span>
+<span class="fc" id="L169">        now.minusMinutes(25));</span>
+<span class="fc" id="L170">    saveLog(</span>
         advisor,
         AuditAction.DOCUMENT_APPROVED,
         &quot;Document&quot;,
-<span class="nc" id="L174">        doc2.getId(),</span>
+<span class="fc" id="L174">        doc2.getId(),</span>
         &quot;200.130.11.220&quot;,
         &quot;Dataset_Experimento_A.csv · proj:ia-02&quot;,
-<span class="nc" id="L177">        now.minusMinutes(40));</span>
-<span class="nc" id="L178">    saveLog(</span>
+<span class="fc" id="L177">        now.minusMinutes(40));</span>
+<span class="fc" id="L178">    saveLog(</span>
         advisor,
         AuditAction.LOGIN_FAILED,
         &quot;System&quot;,
-<span class="nc" id="L182">        advisor.getId(),</span>
+<span class="fc" id="L182">        advisor.getId(),</span>
         &quot;177.82.94.12&quot;,
         &quot;Attempt 3/5 · wrong_password&quot;,
-<span class="nc" id="L185">        now.minusHours(2));</span>
-<span class="nc" id="L186">    saveLog(</span>
+<span class="fc" id="L185">        now.minusHours(2));</span>
+<span class="fc" id="L186">    saveLog(</span>
         advisor,
         AuditAction.REVIEW_DOCUMENT,
         &quot;Document&quot;,
-<span class="nc" id="L190">        doc1.getId(),</span>
+<span class="fc" id="L190">        doc1.getId(),</span>
         &quot;200.130.11.220&quot;,
         &quot;Referencial_Teorico_Final.pdf · dur:00:04:12&quot;,
-<span class="nc" id="L193">        now.minusHours(3));</span>
-<span class="nc" id="L194">    saveLog(</span>
+<span class="fc" id="L193">        now.minusHours(3));</span>
+<span class="fc" id="L194">    saveLog(</span>
         auditor,
         AuditAction.MEMBER_JOINED,
         &quot;Project&quot;,
-<span class="nc" id="L198">        project1.getId(),</span>
+<span class="fc" id="L198">        project1.getId(),</span>
         &quot;10.0.0.1&quot;,
         &quot;target:usr-7b1e5d80 · ROLE researcher&gt;reviewer&quot;,
-<span class="nc" id="L201">        now.minusHours(4));</span>
-<span class="nc" id="L202">    saveLog(</span>
+<span class="fc" id="L201">        now.minusHours(4));</span>
+<span class="fc" id="L202">    saveLog(</span>
         researcher,
         AuditAction.DELETE_DOCUMENT,
         &quot;Document&quot;,
-<span class="nc" id="L206">        doc1.getId(),</span>
+<span class="fc" id="L206">        doc1.getId(),</span>
         &quot;143.107.42.88&quot;,
         &quot;rascunho_inicial_v1.pdf · PERMANENT&quot;,
-<span class="nc" id="L209">        now.minusDays(1).minusHours(1));</span>
-<span class="nc" id="L210">    saveLog(</span>
+<span class="fc" id="L209">        now.minusDays(1).minusHours(1));</span>
+<span class="fc" id="L210">    saveLog(</span>
         advisor,
         AuditAction.DOCUMENT_REJECTED,
         &quot;Document&quot;,
-<span class="nc" id="L214">        doc3.getId(),</span>
+<span class="fc" id="L214">        doc3.getId(),</span>
         &quot;200.130.11.220&quot;,
         &quot;analise_estatistica_v1.json · reason: incomplete_dataset&quot;,
-<span class="nc" id="L217">        now.minusDays(1).minusHours(2));</span>
-<span class="nc" id="L218">    saveLog(</span>
+<span class="fc" id="L217">        now.minusDays(1).minusHours(2));</span>
+<span class="fc" id="L218">    saveLog(</span>
         advisor,
         AuditAction.REVIEW_DOCUMENT,
         &quot;Document&quot;,
-<span class="nc" id="L222">        doc1.getId(),</span>
+<span class="fc" id="L222">        doc1.getId(),</span>
         &quot;177.82.94.12&quot;,
         &quot;Referencial_Teorico_Final.pdf · v1&gt;v2 · diff:34_lines&quot;,
-<span class="nc" id="L225">        now.minusDays(1).minusHours(3));</span>
-<span class="nc" id="L226">    saveLog(</span>
+<span class="fc" id="L225">        now.minusDays(1).minusHours(3));</span>
+<span class="fc" id="L226">    saveLog(</span>
         auditor,
         AuditAction.LOGIN_SUCCESS,
         &quot;System&quot;,
-<span class="nc" id="L230">        auditor.getId(),</span>
+<span class="fc" id="L230">        auditor.getId(),</span>
         &quot;189.102.55.74&quot;,
         &quot;Audit session initiated · UA: Firefox/127&quot;,
-<span class="nc" id="L233">        now.minusDays(1).minusHours(9));</span>
-<span class="nc" id="L234">    saveLog(</span>
+<span class="fc" id="L233">        now.minusDays(1).minusHours(9));</span>
+<span class="fc" id="L234">    saveLog(</span>
         researcher2,
         AuditAction.REGISTER,
         &quot;System&quot;,
-<span class="nc" id="L238">        researcher2.getId(),</span>
+<span class="fc" id="L238">        researcher2.getId(),</span>
         &quot;192.168.1.42&quot;,
         &quot;Email link · token_expiry:3600s · completed_ok&quot;,
-<span class="nc" id="L241">        now.minusDays(2).minusHours(4));</span>
-<span class="nc" id="L242">    saveLog(</span>
+<span class="fc" id="L241">        now.minusDays(2).minusHours(4));</span>
+<span class="fc" id="L242">    saveLog(</span>
         researcher2,
         AuditAction.UPLOAD_SUCCESS,
         &quot;Document&quot;,
-<span class="nc" id="L246">        doc3.getId(),</span>
+<span class="fc" id="L246">        doc3.getId(),</span>
         &quot;192.168.1.42&quot;,
         &quot;Dataset_Experimento_B.csv · 23.1 MB · virus_scan: CLEAN&quot;,
-<span class="nc" id="L249">        now.minusDays(2).minusHours(8));</span>
-<span class="nc" id="L250">    saveLog(</span>
+<span class="fc" id="L249">        now.minusDays(2).minusHours(8));</span>
+<span class="fc" id="L250">    saveLog(</span>
         advisor,
         AuditAction.LOGIN_FAILED,
         &quot;System&quot;,
-<span class="nc" id="L254">        advisor.getId(),</span>
+<span class="fc" id="L254">        advisor.getId(),</span>
         &quot;200.130.11.220&quot;,
         &quot;Attempt 1/5 · wrong_password&quot;,
-<span class="nc" id="L257">        now.minusDays(2).minusHours(11));</span>
-<span class="nc" id="L258">    saveLog(</span>
+<span class="fc" id="L257">        now.minusDays(2).minusHours(11));</span>
+<span class="fc" id="L258">    saveLog(</span>
         researcher2,
         AuditAction.REVIEW_DOCUMENT,
         &quot;Document&quot;,
-<span class="nc" id="L262">        doc1.getId(),</span>
+<span class="fc" id="L262">        doc1.getId(),</span>
         &quot;192.168.1.42&quot;,
         &quot;Metodologia_Qualitativa_v3.pdf · dur:00:12:05&quot;,
-<span class="nc" id="L265">        now.minusDays(3));</span>
-<span class="nc" id="L266">  }</span>
+<span class="fc" id="L265">        now.minusDays(3));</span>
+<span class="fc" id="L266">  }</span>
 
   private void saveLog(
       User user,
@@ -273,25 +273,25 @@ public class DataSeeder implements CommandLineRunner {
       String ip,
       String details,
       LocalDateTime time) {
-<span class="nc" id="L276">    AuditLog log =</span>
+<span class="fc" id="L276">    AuditLog log =</span>
         new AuditLog(
-<span class="nc" id="L278">            user.getInstitutionId(), user.getId(), action, resourceType, resourceId, ip, details);</span>
+<span class="fc" id="L278">            user.getInstitutionId(), user.getId(), action, resourceType, resourceId, ip, details);</span>
     try {
-<span class="nc" id="L280">      java.lang.reflect.Field createdAtField = AuditLog.class.getDeclaredField(&quot;createdAt&quot;);</span>
-<span class="nc" id="L281">      createdAtField.setAccessible(true);</span>
-<span class="nc" id="L282">      createdAtField.set(log, time);</span>
+<span class="fc" id="L280">      java.lang.reflect.Field createdAtField = AuditLog.class.getDeclaredField(&quot;createdAt&quot;);</span>
+<span class="fc" id="L281">      createdAtField.setAccessible(true);</span>
+<span class="fc" id="L282">      createdAtField.set(log, time);</span>
 <span class="nc" id="L283">    } catch (Exception ignored) {</span>
       // ignored reflection error
-<span class="nc" id="L285">    }</span>
-<span class="nc" id="L286">    auditLogRepository.save(log);</span>
-<span class="nc" id="L287">  }</span>
+<span class="fc" id="L285">    }</span>
+<span class="fc" id="L286">    auditLogRepository.save(log);</span>
+<span class="fc" id="L287">  }</span>
 
   private void saveMembership(Project project, User user, com.edtech.model.ProjectRole role) {
-<span class="nc" id="L290">    com.edtech.model.ProjectMember member = new com.edtech.model.ProjectMember();</span>
-<span class="nc" id="L291">    member.setProject(project);</span>
-<span class="nc" id="L292">    member.setUser(user);</span>
-<span class="nc" id="L293">    member.setRole(role);</span>
-<span class="nc" id="L294">    projectMemberRepository.save(member);</span>
-<span class="nc" id="L295">  }</span>
+<span class="fc" id="L290">    com.edtech.model.ProjectMember member = new com.edtech.model.ProjectMember();</span>
+<span class="fc" id="L291">    member.setProject(project);</span>
+<span class="fc" id="L292">    member.setUser(user);</span>
+<span class="fc" id="L293">    member.setRole(role);</span>
+<span class="fc" id="L294">    projectMemberRepository.save(member);</span>
+<span class="fc" id="L295">  }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
