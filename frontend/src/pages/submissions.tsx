@@ -16,6 +16,7 @@ export default function Submissions() {
   const [showAnalysisModal, setShowAnalysisModal] = useState(false);
   const [showRejectionModal, setShowRejectionModal] = useState(false);
   const [rejectionFeedback, setRejectionFeedback] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
 
   const loadData = async () => {
     try {
@@ -86,9 +87,14 @@ export default function Submissions() {
     });
   };
 
-  const formatSize = (_url: string) => {
-    return '2.4 MB'; // Mock placeholder, since we don't return size from backend yet
-  };
+  const dashboardStats = _stats?.dados ?? _stats ?? {};
+  const filteredDocuments = documents.filter((doc) => {
+    const query = searchTerm.trim().toLocaleLowerCase();
+    if (!query) return true;
+    return [doc.title, doc.author?.name, doc.author?.email, doc.project?.name]
+      .filter(Boolean)
+      .some((value) => String(value).toLocaleLowerCase().includes(query));
+  });
 
   const getInitials = (name: string) => {
     if (!name) return '??';
@@ -105,14 +111,14 @@ export default function Submissions() {
       <div className={styles.statsGrid}>
         <div className={styles.statCard}>
           <div className={styles.statHeader}>
-            <span className={styles.statTitle}>Projetos Ativos</span>
+            <span className={styles.statTitle}>Documentos monitorados</span>
             <div className={`${styles.statIcon} ${styles.purple}`}>
               <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
               </svg>
             </div>
           </div>
-          <span className={styles.statValue}>8</span>
+          <span className={styles.statValue}>{dashboardStats.totalDocuments ?? 0}</span>
         </div>
         <div className={styles.statCard}>
           <div className={styles.statHeader}>
@@ -127,25 +133,25 @@ export default function Submissions() {
         </div>
         <div className={styles.statCard}>
           <div className={styles.statHeader}>
-            <span className={styles.statTitle}>Pesquisadores Orientados</span>
+            <span className={styles.statTitle}>Em revisão</span>
             <div className={`${styles.statIcon} ${styles.blue}`}>
               <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
               </svg>
             </div>
           </div>
-          <span className={styles.statValue}>14</span>
+          <span className={styles.statValue}>{dashboardStats.pendingReview ?? documents.length}</span>
         </div>
         <div className={styles.statCard}>
           <div className={styles.statHeader}>
-            <span className={styles.statTitle}>Aprovados este mês</span>
+            <span className={styles.statTitle}>Documentos aprovados</span>
             <div className={`${styles.statIcon} ${styles.green}`}>
               <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
           </div>
-          <span className={styles.statValue}>23</span>
+          <span className={styles.statValue}>{dashboardStats.approved ?? 0}</span>
         </div>
       </div>
 
@@ -155,7 +161,14 @@ export default function Submissions() {
             Submissões Pendentes
             <span className={styles.badgePending}>{documents.length} pendentes</span>
           </div>
-          <input type="text" className={styles.searchInput} placeholder="Buscar pesquisador ou arquivo..." />
+          <input
+            type="search"
+            className={styles.searchInput}
+            value={searchTerm}
+            onChange={(event) => setSearchTerm(event.target.value)}
+            placeholder="Buscar pesquisador, projeto ou arquivo..."
+            aria-label="Buscar submissões pendentes"
+          />
         </div>
 
         <table className={styles.table}>
@@ -170,7 +183,7 @@ export default function Submissions() {
             </tr>
           </thead>
           <tbody>
-            {documents.map((doc) => (
+            {filteredDocuments.map((doc) => (
               <tr key={doc.id}>
                 <td>
                   <div className={styles.researcherCell}>
@@ -190,11 +203,11 @@ export default function Submissions() {
                     </div>
                     <div className={styles.fileInfo}>
                       <span className={styles.fileName}>{doc.title}</span>
-                      <span className={styles.fileSize}>{formatSize(doc.fileUrl)}</span>
+                      <span className={styles.fileSize}>Tamanho disponível no download</span>
                     </div>
                   </div>
                 </td>
-                <td className={styles.projectCell}>Análise LGPD</td>
+                <td className={styles.projectCell}>{doc.project?.name || 'Projeto não informado'}</td>
                 <td className={styles.dateCell}>{new Date(doc.createdAt).toLocaleDateString()}</td>
                 <td>
                   <span className={`${styles.priorityBadge} ${styles.alta}`}>
