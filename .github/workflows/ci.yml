@@ -41,7 +41,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        task: [checkstyle, spotbugs, build, test, pitest, security]
+        task: [checkstyle, spotbugs, build, unit, pitest, security]
     defaults:
       run:
         working-directory: backend
@@ -82,7 +82,7 @@ jobs:
 
       # --- TEST ---
       - name: Run Tests & Coverage
-        if: matrix.task == 'test'
+        if: matrix.task == 'unit'
         id: backend-tests
         run: |
           chmod +x mvnw
@@ -91,14 +91,14 @@ jobs:
             -Dsurefire.threadCount=4 \
             -Dsurefire.perCoreThreadCount=false
       - name: Upload JaCoCo Report
-        if: always() && matrix.task == 'test'
+        if: always() && matrix.task == 'unit'
         uses: actions/upload-artifact@v7
         with:
           name: jacoco-report
           path: "**/site/jacoco"
           if-no-files-found: warn
       - name: Backend Test Summary
-        if: always() && matrix.task == 'test'
+        if: always() && matrix.task == 'unit'
         run: |
           {
             echo "## Backend test summary"
