@@ -225,7 +225,9 @@ jobs:
       - name: Run Unit Tests (Vitest)
         if: matrix.task == 'unit'
         id: unit-tests
-        run: npm run test || true
+        run: npm run test
+        env:
+          GITHUB_ACTIONS: 'false'
       - name: Frontend Unit Test Summary
         if: always() && matrix.task == 'unit'
         run: |
@@ -242,6 +244,8 @@ jobs:
         if: matrix.task == 'a11y'
         id: a11y-tests
         run: npm run test:a11y
+        env:
+          GITHUB_ACTIONS: 'false'
       - name: Frontend A11y Test Summary
         if: always() && matrix.task == 'a11y'
         run: |
@@ -258,6 +262,8 @@ jobs:
         if: matrix.task == 'components'
         id: component-tests
         run: npm run test:components
+        env:
+          GITHUB_ACTIONS: 'false'
       - name: Frontend Component Test Summary
         if: always() && matrix.task == 'components'
         run: |
@@ -284,6 +290,8 @@ jobs:
         if: matrix.task == 'mutation'
         id: mutation-tests
         run: npx stryker run
+        env:
+          GITHUB_ACTIONS: 'false'
       - name: Frontend Mutation Test Summary
         if: always() && matrix.task == 'mutation'
         run: |
@@ -545,6 +553,28 @@ jobs:
           fi
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ steps.auth.outputs.credentials_file_path }}
+
+  pipeline-summary:
+    name: Pipeline Summary
+    runs-on: ubuntu-latest
+    if: always()
+    needs: [backend-approved, frontend-approved, infra-approved, deploy-backend, deploy-frontend]
+    steps:
+      - name: Publish consolidated summary
+        run: |
+          {
+            echo "## CI/CD consolidated summary"
+            echo
+            echo "| Stage | Result |"
+            echo "| --- | --- |"
+            echo "| Backend validation | ${{ needs.backend-approved.result }} |"
+            echo "| Frontend validation | ${{ needs.frontend-approved.result }} |"
+            echo "| Infrastructure validation | ${{ needs.infra-approved.result }} |"
+            echo "| Backend deploy | ${{ needs.deploy-backend.result }} |"
+            echo "| Frontend deploy | ${{ needs.deploy-frontend.result }} |"
+            echo
+            echo "Detailed reports are available as workflow artifacts."
+          } >> "$GITHUB_STEP_SUMMARY"
 
   # ==========================================
   #                 PRODUCTION TESTS
