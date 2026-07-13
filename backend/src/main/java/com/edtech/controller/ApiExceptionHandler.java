@@ -1,8 +1,8 @@
 package com.edtech.controller;
 
 import com.edtech.dto.ErrorResponse;
-import com.edtech.service.DuplicateEmailException;
 import com.edtech.service.AccountNotVerifiedException;
+import com.edtech.service.DuplicateEmailException;
 import com.edtech.service.InvalidCredentialsException;
 import com.edtech.service.InvalidInstitutionalEmailException;
 import jakarta.validation.ConstraintViolationException;
@@ -36,7 +36,8 @@ public class ApiExceptionHandler {
   }
 
   @ExceptionHandler(AccountNotVerifiedException.class)
-  public ResponseEntity<ErrorResponse> handleAccountNotVerified(AccountNotVerifiedException exception) {
+  public ResponseEntity<ErrorResponse> handleAccountNotVerified(
+      AccountNotVerifiedException exception) {
     return ResponseEntity.status(HttpStatus.FORBIDDEN)
         .body(new ErrorResponse("account_not_verified", exception.getMessage()));
   }

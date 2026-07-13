@@ -77,7 +77,8 @@ public class UserService {
     String normalizedEmail = request.email().trim().toLowerCase(Locale.ROOT);
 
     if (!hasAllowedInstitutionalDomain(normalizedEmail)) {
-      throw new InvalidInstitutionalEmailException("O e-mail deve pertencer a um domínio institucional permitido.");
+      throw new InvalidInstitutionalEmailException(
+          "O e-mail deve pertencer a um domínio institucional permitido.");
     }
 
     if (userRepository.existsByEmailIgnoreCase(normalizedEmail)) {
@@ -109,6 +110,7 @@ public class UserService {
     return user;
   }
 
+  /** Checks whether an email belongs to one of the configured institutional domains. */
   private boolean hasAllowedInstitutionalDomain(String email) {
     return Arrays.stream(allowedInstitutionalDomains.split(","))
         .map(domain -> domain.trim().toLowerCase(Locale.ROOT))
@@ -136,18 +138,22 @@ public class UserService {
     throw new InvalidCredentialsException("Código inválido ou expirado.");
   }
 
+  /** Generates and sends a fresh verification code for an inactive account. */
   @Transactional
   public void resendVerificationCode(String email) {
     String normalizedEmail = email.trim().toLowerCase(Locale.ROOT);
-    User user = userRepository.findByEmailIgnoreCase(normalizedEmail)
-        .orElseThrow(() -> new InvalidCredentialsException("Credenciais inválidas."));
+    User user =
+        userRepository
+            .findByEmailIgnoreCase(normalizedEmail)
+            .orElseThrow(() -> new InvalidCredentialsException("Credenciais inválidas."));
     if (user.isActive()) {
       return;
     }
     verificationTokenRepository.deleteByEmail(normalizedEmail);
     String code = String.format("%06d", SECURE_RANDOM.nextInt(999999));
-    verificationTokenRepository.save(new com.edtech.model.VerificationToken(
-        code, normalizedEmail, java.time.LocalDateTime.now().plusMinutes(15)));
+    verificationTokenRepository.save(
+        new com.edtech.model.VerificationToken(
+            code, normalizedEmail, java.time.LocalDateTime.now().plusMinutes(15)));
     emailService.sendVerificationEmail(normalizedEmail, code);
   }
 
