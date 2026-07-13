@@ -16,6 +16,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: ci-docs-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   generate-reports:
     runs-on: ubuntu-latest
@@ -124,12 +128,28 @@ jobs:
           cache: 'npm'
           cache-dependency-path: 'frontend/package-lock.json'
 
-      - name: Instalar Dependencias e Playwright
+      - name: Instalar Dependencias
         if: matrix.report-type == 'frontend'
         working-directory: frontend
-        run: |
-          npm ci
-          npx playwright install --with-deps chromium
+        run: npm ci
+
+      - name: Obter versÃ£o do Playwright
+        if: matrix.report-type == 'frontend'
+        id: playwright-version
+        working-directory: frontend
+        run: echo "version=$(npx playwright --version | awk '{print $2}')" >> "$GITHUB_OUTPUT"
+
+      - name: Cache dos navegadores Playwright
+        if: matrix.report-type == 'frontend'
+        uses: actions/cache@v6
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-browsers-${{ steps.playwright-version.outputs.version }}
+
+      - name: Instalar navegador Chromium
+        if: matrix.report-type == 'frontend'
+        working-directory: frontend
+        run: npx playwright install --with-deps chromium
 
       - name: Executar Testes Unitarios (Vitest)
         if: matrix.report-type == 'frontend'
