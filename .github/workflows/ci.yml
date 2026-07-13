@@ -456,7 +456,7 @@ jobs:
         if: github.ref == matrix.branch
         working-directory: infra/terraform
         run: |
-          terraform apply -auto-approve \
+          terraform apply -auto-approve -lock-timeout=10m \
             -target=module.backend_api.google_cloud_run_v2_job.flyway_migration \
             -var="project_id=edtech-storage-501117" \
             -var="backend_image_tag=${{ github.sha }}" \
@@ -500,7 +500,7 @@ jobs:
         if: github.ref == matrix.branch
         working-directory: infra/terraform
         run: |
-          terraform apply -auto-approve \
+          terraform apply -auto-approve -lock-timeout=10m \
             -var="project_id=edtech-storage-501117" \
             -var="backend_image_tag=${{ github.sha }}" \
             -var="storage_bucket_name=${{ matrix.storage_bucket }}" \
