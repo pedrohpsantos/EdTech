@@ -108,5 +108,3 @@ bash infra/prod/setup_backup.sh
 ```
 
 Detalhes da política de backup estão documentados no [ADR-0013](https://www.google.com/search?q=../docs/arquitetura/decisoes_adrs/0013-backup-automatico.md).
-
-Agora o arquivo reflete exatamente a segurança que você implementou! Se precisar ajustar mais alguma coisa, é só avisar.
