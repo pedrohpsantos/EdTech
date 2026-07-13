@@ -556,28 +556,6 @@ jobs:
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ steps.auth.outputs.credentials_file_path }}
 
-  pipeline-summary:
-    name: Pipeline Summary
-    runs-on: ubuntu-latest
-    if: always()
-    needs: [backend-approved, frontend-approved, infra-approved, deploy-backend, deploy-frontend]
-    steps:
-      - name: Publish consolidated summary
-        run: |
-          {
-            echo "## CI/CD consolidated summary"
-            echo
-            echo "| Stage | Result |"
-            echo "| --- | --- |"
-            echo "| Backend validation | ${{ needs.backend-approved.result }} |"
-            echo "| Frontend validation | ${{ needs.frontend-approved.result }} |"
-            echo "| Infrastructure validation | ${{ needs.infra-approved.result }} |"
-            echo "| Backend deploy | ${{ needs.deploy-backend.result }} |"
-            echo "| Frontend deploy | ${{ needs.deploy-frontend.result }} |"
-            echo
-            echo "Detailed reports are available as workflow artifacts."
-          } >> "$GITHUB_STEP_SUMMARY"
-
   # ==========================================
   #                 PRODUCTION TESTS
   # ==========================================
