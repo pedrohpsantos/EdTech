@@ -463,6 +463,27 @@ jobs:
                 --limit 50 --format="value(textPayload)" --project=edtech-storage-501117
               exit 1
             }
+      - name: Validate staging secret values
+        if: github.ref == matrix.branch && matrix.target == 'staging'
+        shell: bash
+        run: |
+          set -euo pipefail
+          for secret in JWT_SECRET SPRING_DATASOURCE_URL SPRING_DATASOURCE_USERNAME SPRING_DATASOURCE_PASSWORD; do
+            secret_file="$(mktemp)"
+            trap 'rm -f "$secret_file"' EXIT
+            gcloud secrets versions access latest \
+              --secret="${secret}_STAGING" \
+              --project=edtech-storage-501117 \
+              --out-file="$secret_file" >/dev/null
+
+            if tail -c 1 "$secret_file" | od -An -t x1 | tr -d '[:space:]' | grep -Eq '^(0a|0d)$'; then
+              echo "::error title=Invalid staging secret::${secret}_STAGING ends with a newline. Create a new version without CR/LF."
+              exit 1
+            fi
+
+            rm -f "$secret_file"
+            trap - EXIT
+          done
       - name: Run Database Migrations (Flyway)
         if: github.ref == matrix.branch
         run: |
