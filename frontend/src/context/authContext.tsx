@@ -15,6 +15,10 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+const requiresSessionValidation = () =>
+  ['/dashboard', '/documentos', '/submissions', '/projects', '/upload', '/trail', '/analytics', '/compliance-center', '/audit-logs', '/settings']
+    .some((path) => window.location.pathname === path || window.location.pathname.startsWith(`${path}/`));
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
@@ -66,8 +70,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return resultado;
   };
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    checkAuth();
+    if (requiresSessionValidation()) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      checkAuth();
+    } else {
+      setIsLoading(false);
+    }
   }, []);
   return (
     <AuthContext.Provider

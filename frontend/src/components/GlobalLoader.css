@@ -127,6 +127,13 @@
   }
   100% {
     opacity: 1;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .global-loader-overlay,
+  .cube-folding span::before,
+  .loading-text {
+    animation: none;
   }
 }

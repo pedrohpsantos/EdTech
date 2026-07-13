@@ -1,7 +1,8 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import AuthProvider from './context/authContext';
+import { useAuth } from './context/authContext';
 import PrivateRoute from './components/privateRoute';
 import GlobalLoader from './components/GlobalLoader';
 
@@ -31,17 +32,22 @@ const NotFound = () => (
   </div>
 );
 
-function App() {
+function ApplicationRoutes() {
+  const { isAuthenticated } = useAuth();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      void import('bootstrap/dist/css/bootstrap.min.css');
+      void import('bootstrap-icons/font/bootstrap-icons.css');
+    }
+  }, [isAuthenticated]);
+
   return (
-    <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <BrowserRouter>
-          <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100svh' }}>
-            <GlobalLoader />
-            <Suspense
-              fallback={<GlobalLoader forceShow />}
-            >
-              <Routes>
+    <BrowserRouter>
+      <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100svh' }}>
+        <GlobalLoader />
+        <Suspense fallback={<GlobalLoader forceShow />}>
+          <Routes>
                 <Route path="/" element={<Login />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
@@ -128,10 +134,18 @@ function App() {
                   }
                 />
                 <Route path="*" element={<NotFound />} />
-              </Routes>
-            </Suspense>
-          </div>
-        </BrowserRouter>
+          </Routes>
+        </Suspense>
+      </div>
+    </BrowserRouter>
+  );
+}
+
+function App() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <ApplicationRoutes />
       </AuthProvider>
     </QueryClientProvider>
   );
