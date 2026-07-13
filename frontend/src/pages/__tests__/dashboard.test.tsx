@@ -71,7 +71,7 @@ describe('Dashboard Page', () => {
     
     expect(screen.getByText('Bom dia, Usuário')).toBeInTheDocument();
     expect(screen.getByText('Ver Trilha de Pesquisa')).toBeInTheDocument(); // Default topbar
-    expect(screen.getByText('24')).toBeInTheDocument(); // Default fallback activeDocuments if stats not fetched
+    expect(screen.getAllByText('0').length).toBeGreaterThan(0); // New accounts never receive invented metrics
   });
 
   it('renders correctly for RESEARCHER role', async () => {
@@ -160,10 +160,10 @@ describe('Dashboard Page', () => {
     expect(mockNavigate).toHaveBeenCalledWith('/submissions');
 
     // Check alert
-    expect(screen.getByText('ALERTA DE GOVERNANÇA GERAL')).toBeInTheDocument();
-    const detailsBtn = screen.getByText('Ver detalhes');
+    expect(screen.getByText('PRÓXIMO PASSO')).toBeInTheDocument();
+    const detailsBtn = screen.getByText('Começar');
     fireEvent.click(detailsBtn);
-    expect(mockNavigate).toHaveBeenCalledWith('/trail');
+    expect(mockNavigate).toHaveBeenCalledWith('/projects');
 
     // Check recent docs
     expect(screen.getByText('Revisões Pendentes')).toBeInTheDocument();

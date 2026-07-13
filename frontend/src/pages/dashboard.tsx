@@ -18,6 +18,8 @@ const Dashboard: React.FC = () => {
   const [auditorStats, setAuditorStats] = useState<any>(null);
   const [recentLogs, setRecentLogs] = useState<any[]>([]);
   const [recentDocs, setRecentDocs] = useState<any[]>([]);
+  const hasResearchActivity = stats.activeDocuments > 0;
+  const hasAuditActivity = (auditorStats?.totalEvents ?? 0) > 0;
 
 
   useEffect(() => {
@@ -126,8 +128,8 @@ const Dashboard: React.FC = () => {
                   <i className="bi bi-file-earmark-text stat-icon" style={{ color: 'var(--ed-purple-light)' }}></i>
                 </span>
                 <div className="stat-body">
-                  <span className="stat-value">{stats.activeDocuments || 12}</span>
-                  <span className="stat-trend" style={{ background: 'rgba(16, 185, 129, 0.1)', color: 'var(--ed-status-success)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}>+1</span>
+                  <span className="stat-value">{stats.activeDocuments}</span>
+                  <span className="stat-trend" style={{ background: 'var(--border)', color: 'var(--ed-text-muted)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}>total atual</span>
                 </div>
               </div>
             </div>
@@ -139,7 +141,7 @@ const Dashboard: React.FC = () => {
                   <i className="bi bi-clock stat-icon" style={{ color: 'var(--ed-orange)' }}></i>
                 </div>
                 <div className="stat-body">
-                  <span className="stat-value">{stats.pendingReview || 2}</span>
+                  <span className="stat-value">{stats.pendingReview}</span>
                   <span className="stat-trend" style={{ background: 'var(--border)', color: 'var(--ed-text-muted)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}>aguardando</span>
                 </div>
               </div>
@@ -148,12 +150,12 @@ const Dashboard: React.FC = () => {
             <div className="col-12 col-sm-6 col-xl-3">
               <div className="stat-card h-100 m-0">
                 <span className="stat-header">
-                  Aprovados
+                  Progresso da pesquisa
                   <i className="bi bi-check-circle stat-icon" style={{ color: 'var(--ed-status-success)' }}></i>
                 </span>
                 <div className="stat-body">
-                  <span className="stat-value">8</span>
-                  <span className="stat-trend" style={{ background: 'rgba(16, 185, 129, 0.1)', color: 'var(--ed-status-success)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}>+2 este mês</span>
+                  <span className="stat-value">{stats.researchProgress}%</span>
+                  <span className="stat-trend" style={{ background: 'rgba(16, 185, 129, 0.1)', color: 'var(--ed-status-success)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}>atualizado</span>
                 </div>
               </div>
             </div>
@@ -165,8 +167,8 @@ const Dashboard: React.FC = () => {
                   <i className="bi bi-shield-check stat-icon" style={{ color: 'var(--ed-status-info)' }}></i>
                 </span>
                 <div className="stat-body">
-                  <span className="stat-value">98%</span>
-                  <span className="stat-trend" style={{ background: 'rgba(59, 130, 246, 0.1)', color: 'var(--ed-status-info)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}>ótimo</span>
+                  <span className="stat-value">{stats.complianceScore}%</span>
+                  <span className="stat-trend" style={{ background: 'rgba(59, 130, 246, 0.1)', color: 'var(--ed-status-info)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}>calculado</span>
                 </div>
               </div>
             </div>
@@ -229,8 +231,8 @@ const Dashboard: React.FC = () => {
                   <i className="bi bi-file-earmark-text stat-icon" style={{ color: 'var(--ed-purple-light)' }}></i>
                 </span>
                 <div className="stat-body">
-                  <span className="stat-value">{stats.activeDocuments || 24}</span>
-                  <span className="stat-trend" style={{ background: 'rgba(16, 185, 129, 0.1)', color: 'var(--ed-status-success)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}>+3</span>
+                  <span className="stat-value">{stats.activeDocuments}</span>
+                  <span className="stat-trend" style={{ background: 'var(--border)', color: 'var(--ed-text-muted)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}>total atual</span>
                 </div>
               </div>
             </div>
@@ -242,8 +244,8 @@ const Dashboard: React.FC = () => {
                   <i className="bi bi-clock stat-icon" style={{ color: 'var(--ed-orange)' }}></i>
                 </div>
                 <div className="stat-body">
-                  <span className="stat-value">{stats.pendingReview || 5}</span>
-                  <span className="stat-trend" style={{ background: 'rgba(16, 185, 129, 0.1)', color: 'var(--ed-status-success)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}>-1</span>
+                  <span className="stat-value">{stats.pendingReview}</span>
+                  <span className="stat-trend" style={{ background: 'var(--border)', color: 'var(--ed-text-muted)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}>total atual</span>
                 </div>
               </div>
             </div>
@@ -255,8 +257,8 @@ const Dashboard: React.FC = () => {
                   <i className="bi bi-shield-check stat-icon" style={{ color: 'var(--ed-status-success)' }}></i>
                 </span>
                 <div className="stat-body">
-                  <span className="stat-value">{stats.complianceScore || 92}%</span>
-                  <span className="stat-trend" style={{ background: 'rgba(16, 185, 129, 0.1)', color: 'var(--ed-status-success)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}>+4 pts</span>
+                  <span className="stat-value">{stats.complianceScore}%</span>
+                  <span className="stat-trend" style={{ background: 'var(--border)', color: 'var(--ed-text-muted)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}>calculado</span>
                 </div>
               </div>
             </div>
@@ -268,8 +270,8 @@ const Dashboard: React.FC = () => {
                   <i className="bi bi-graph-up stat-icon" style={{ color: 'var(--ed-status-info)' }}></i>
                 </span>
                 <div className="stat-body">
-                  <span className="stat-value">{stats.researchProgress || 68}%</span>
-                  <span className="stat-trend" style={{ background: 'rgba(59, 130, 246, 0.1)', color: 'var(--ed-status-info)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}>no prazo</span>
+                  <span className="stat-value">{stats.researchProgress}%</span>
+                  <span className="stat-trend" style={{ background: 'var(--border)', color: 'var(--ed-text-muted)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}>calculado</span>
                 </div>
               </div>
             </div>
@@ -278,7 +280,7 @@ const Dashboard: React.FC = () => {
       </div>
 
       {/* 2. BARRA DE ALERTA DE GOVERNANÇA (FLEXBOX RESPONSIVO) */}
-      {user?.role === 'RESEARCHER' ? (
+      {user?.role === 'RESEARCHER' && hasResearchActivity ? (
         <div className="governance-alert d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-4" style={{ background: 'linear-gradient(90deg, #f58a07 0%, #ffb057 100%)', boxShadow: '0 4px 15px rgba(245, 138, 7, 0.3)' }}>
           <div className="alert-content flex-grow-1">
             <div className="alert-icon flex-shrink-0">
@@ -295,7 +297,7 @@ const Dashboard: React.FC = () => {
             Corrigir agora <i className="bi bi-arrow-right-short" style={{ fontSize: '18px' }}></i>
           </button>
         </div>
-      ) : user?.role === 'AUDITOR' ? (
+      ) : user?.role === 'AUDITOR' && hasAuditActivity ? (
         <div className="governance-alert d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-4" style={{ background: 'linear-gradient(90deg, #dc2626 0%, #ef4444 100%)', boxShadow: '0 4px 15px rgba(220, 38, 38, 0.3)' }}>
           <div className="alert-content flex-grow-1">
             <div className="alert-icon flex-shrink-0">
@@ -319,14 +321,18 @@ const Dashboard: React.FC = () => {
               <i className="bi bi-shield-exclamation"></i>
             </div>
             <div className="alert-text-container">
-              <span className="alert-title">ALERTA DE GOVERNANÇA GERAL</span>
+              <span className="alert-title">PRÓXIMO PASSO</span>
               <span className="alert-desc">
-                2 documentos do seu laboratório têm seções de metodologia incompletas e 1 dataset precisa de anonimização LGPD antes da publicação.
+                {user?.role === 'RESEARCHER'
+                  ? 'Envie seu primeiro documento para iniciar a trilha de pesquisa e as métricas do painel.'
+                  : user?.role === 'ADVISOR'
+                    ? 'Associe-se a um projeto para acompanhar submissões e orientar pesquisadores.'
+                    : 'Consulte os logs de auditoria para acompanhar eventos e indicadores de conformidade.'}
               </span>
             </div>
           </div>
-          <button className="btn-alert text-nowrap flex-shrink-0 mt-3 mt-md-0 w-100 w-md-auto" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', border: 'none', padding: '8px 20px', borderRadius: '8px', fontWeight: 600, cursor: 'pointer', background: 'var(--ed-purple-main)', color: 'white' }} onClick={() => navigate('/trail')}>
-            Ver detalhes <i className="bi bi-arrow-right-short" style={{ fontSize: '18px', marginLeft: '4px' }}></i>
+          <button className="btn-alert text-nowrap flex-shrink-0 mt-3 mt-md-0 w-100 w-md-auto" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', border: 'none', padding: '8px 20px', borderRadius: '8px', fontWeight: 600, cursor: 'pointer', background: 'var(--ed-purple-main)', color: 'white' }} onClick={() => navigate(user?.role === 'RESEARCHER' ? '/documentos' : user?.role === 'ADVISOR' ? '/projects' : '/audit-logs')}>
+            Começar <i className="bi bi-arrow-right-short" style={{ fontSize: '18px', marginLeft: '4px' }}></i>
           </button>
         </div>
       )}
@@ -449,7 +455,7 @@ const Dashboard: React.FC = () => {
                 </div>
                 <div className="score-content">
                   <div className="score-circle">
-                    <span className="score-number">98</span>
+                    <span className="score-number">{stats.complianceScore}</span>
                     <span className="score-label-small">PONTOS</span>
                   </div>
                   <div className="score-breakdown">
@@ -557,7 +563,7 @@ const Dashboard: React.FC = () => {
                 </div>
                 <div className="score-content">
                   <div className="score-circle">
-                    <span className="score-number">92</span>
+                    <span className="score-number">{stats.complianceScore}</span>
                     <span className="score-label-small">PONTOS</span>
                   </div>
                   <div className="score-breakdown">
