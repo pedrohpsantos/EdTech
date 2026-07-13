@@ -4,8 +4,10 @@ import com.edtech.dto.RegisterRequestDto;
 import com.edtech.model.User;
 import com.edtech.model.UserRole;
 import com.edtech.repository.UserRepository;
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.Optional;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,7 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UserService {
 
-  private static final String INSTITUTIONAL_DOMAIN = "@unb.br";
+  @Value("${institutional-email.allowed-domains:unb.br}")
+  private String allowedInstitutionalDomains = "unb.br";
 
   private final UserRepository userRepository;
   private final PasswordEncoder passwordEncoder;
@@ -73,8 +76,8 @@ public class UserService {
   public User register(RegisterRequestDto request) {
     String normalizedEmail = request.email().trim().toLowerCase(Locale.ROOT);
 
-    if (!normalizedEmail.endsWith("@unb.br") && !normalizedEmail.endsWith(".unb.br")) {
-      throw new InvalidInstitutionalEmailException("O e-mail deve pertencer ao dominio unb.br.");
+    if (!hasAllowedInstitutionalDomain(normalizedEmail)) {
+      throw new InvalidInstitutionalEmailException("O e-mail deve pertencer a um domínio institucional permitido.");
     }
 
     if (userRepository.existsByEmailIgnoreCase(normalizedEmail)) {
@@ -104,6 +107,13 @@ public class UserService {
     emailService.sendVerificationEmail(normalizedEmail, code);
 
     return user;
+  }
+
+  private boolean hasAllowedInstitutionalDomain(String email) {
+    return Arrays.stream(allowedInstitutionalDomains.split(","))
+        .map(domain -> domain.trim().toLowerCase(Locale.ROOT))
+        .filter(domain -> !domain.isBlank())
+        .anyMatch(domain -> email.endsWith("@" + domain) || email.endsWith("." + domain));
   }
 
   /** Documentação. */

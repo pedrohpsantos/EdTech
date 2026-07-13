@@ -14,6 +14,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.util.ReflectionTestUtils;
 
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
@@ -101,6 +102,20 @@ public class UserServiceTest {
     assertNotNull(result);
     assertEquals("student@fga.unb.br", result.getEmail());
     verify(userRepository, times(1)).save(any(User.class));
+  }
+
+  @Test
+  void register_UsesConfiguredInstitutionalDomains() {
+    ReflectionTestUtils.setField(userService, "allowedInstitutionalDomains", "example.edu.br,unb.br");
+    RegisterRequestDto dto = new RegisterRequestDto(
+        "Researcher", "student@example.edu.br", "not_alive12", UserRole.RESEARCHER);
+    when(passwordEncoder.encode(anyString())).thenReturn("hashed_password");
+    when(userRepository.existsByEmailIgnoreCase(dto.email())).thenReturn(false);
+    when(userRepository.save(any())).thenAnswer(invocation -> invocation.getArgument(0));
+
+    User result = userService.register(dto);
+
+    assertEquals("student@example.edu.br", result.getEmail());
   }
 
   @Test

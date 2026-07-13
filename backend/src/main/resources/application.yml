@@ -56,6 +56,9 @@ jwt:
 cors:
   allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:5173}
 
+institutional-email:
+  allowed-domains: ${INSTITUTIONAL_EMAIL_ALLOWED_DOMAINS:unb.br}
+
 storage:
   provider: ${STORAGE_PROVIDER:local}
 
