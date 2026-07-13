@@ -43,6 +43,7 @@ gcloud auth application-default login
 
 # 3. Conecte a sua ferramenta de banco de dados em localhost (ex: 127.0.0.1:5432)
 
+```
 ---
 
 ## Ambiente Local (Docker Compose)
