@@ -1,55 +1,55 @@
-# 🎨 EdTech Frontend
+# Frontend — SPA EdTech
 
-![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black)
-![Vite](https://img.shields.io/badge/Vite-8-646CFF?style=for-the-badge&logo=vite&logoColor=white)
-![CSS](https://img.shields.io/badge/Vanilla_CSS-3-ff69b4?style=for-the-badge&logo=css3&logoColor=white)
+![React](https://img.shields.io/badge/React-61DAFB?logo=react&logoColor=black)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=white)
 
-Interface web do EdTech — uma Single Page Application (SPA) construída com **React 19** e **Vite 8**, com estilização em Vanilla CSS para controle total sobre o design sem dependência de frameworks utilitários.
+SPA React 19, TypeScript e Vite. Oferece jornadas específicas para Pesquisador, Orientador e Auditor, com design responsivo, acessibilidade e comunicação autenticada com a API.
 
-## Estrutura de Diretórios
+## Estrutura
 
-| Diretório | Responsabilidade |
-| :--- | :--- |
-| `/src/components` | Componentes reutilizáveis (botões, cards, modais, layouts) |
-| `/src/pages` | Páginas associadas às rotas da SPA |
-| `/src/assets` | Imagens, ícones SVG e recursos estáticos |
-| `/src/styles` | Variáveis globais de CSS e keyframes de animação |
+| Diretório | Conteúdo |
+| --- | --- |
+| `src/pages` | Rotas e telas da aplicação |
+| `src/components` | Componentes reutilizáveis, layout e controles de interface |
+| `src/context` | Estado global, incluindo sessão/autenticação |
+| `src/services` | Cliente HTTP e serviços da API |
+| `src/hooks` | Hooks reutilizáveis |
+| `src/assets` | Ícones, imagens e recursos estáticos |
 
----
+## Desenvolvimento
 
-## Setup Local
+Pré-requisito: Node.js 24.
 
 ```bash
-# Instale as dependências
-npm install
-
-# Configure a variável de ambiente com a URL do backend
-# Crie ou edite o arquivo .env na raiz do frontend:
+cd frontend
+cp .env.example .env
 # VITE_API_URL=http://localhost:8080
 
-# Inicie o servidor de desenvolvimento (com HMR)
+npm ci
 npm run dev
 ```
 
-Acesse `http://localhost:5173` após iniciar o servidor.
+A aplicação abre em `http://localhost:5173`. O cliente Axios usa `withCredentials`; para desenvolvimento completo, inicie também o backend e mantenha a origem em `CORS_ALLOWED_ORIGINS`.
 
----
-
-## Decisões de Design
-
-- **Vanilla CSS:** Sem frameworks de utilitários (como Tailwind). As variáveis de design são centralizadas no `:root` do `index.css`, garantindo consistência e manutenibilidade.
-- **Responsividade:** A interface é desenvolvida para funcionar corretamente em diferentes tamanhos de tela — de smartphones a monitores ultrawide.
-- **Componentes reutilizáveis:** Novos elementos visuais devem verificar se já existe um componente padronizado em `/src/components` antes de criar um novo.
-- **Suporte a Datasets:** Interfaces de revisão (Orientador) contam com renderização nativa de grandes volumes de dados via componente utilitário `DatasetPreview` para arquivos `.csv` e `.json`.
-
----
-
-## Testes
+## Comandos
 
 ```bash
-# Testes unitários e de componente (Vitest)
-npm run test
-
-# Testes E2E (Playwright — requer backend em execução)
-npm run test:e2e
+npm run build          # build de produção
+npm run lint           # Oxlint + ESLint sem warnings
+npm run type-check     # TypeScript
+npm run security-audit # npm audit (high)
+npm run test           # Vitest, cobertura e relatório HTML
+npm run test:a11y      # testes WCAG/axe
+npm run test:components
+npx stryker run        # testes de mutação
 ```
+
+Os testes E2E Playwright de produção ficam em `../tests/e2e`; veja [tests/README.md](../tests/README.md).
+
+## Convenções de interface
+
+- Mantenha componentes reutilizáveis e acessíveis: rótulos, foco visível, estados de carregamento e mensagens de erro.
+- Preserve o mesmo padrão de navegação lateral e ações nos três perfis.
+- Use os serviços em `src/services` para comunicação com a API; não duplique chamadas HTTP nas páginas.
+- Não armazene tokens no navegador: a sessão é mantida por cookie `HttpOnly` emitido pela API.

@@ -5,4 +5,5 @@ nav:
   - vitest_report.md
   - smoke_test_report.md
   - k6_report.md
+  - api_security_contract.md
   - lighthouse_report.md

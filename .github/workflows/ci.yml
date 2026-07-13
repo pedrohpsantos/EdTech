@@ -41,7 +41,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        task: [checkstyle, spotbugs, build, test, pitest, security]
+        task: [checkstyle, spotbugs, build, unit, pitest, security]
     defaults:
       run:
         working-directory: backend
@@ -82,7 +82,7 @@ jobs:
 
       # --- TEST ---
       - name: Run Tests & Coverage
-        if: matrix.task == 'test'
+        if: matrix.task == 'unit'
         id: backend-tests
         run: |
           chmod +x mvnw
@@ -91,14 +91,14 @@ jobs:
             -Dsurefire.threadCount=4 \
             -Dsurefire.perCoreThreadCount=false
       - name: Upload JaCoCo Report
-        if: always() && matrix.task == 'test'
+        if: always() && matrix.task == 'unit'
         uses: actions/upload-artifact@v7
         with:
           name: jacoco-report
           path: "**/site/jacoco"
           if-no-files-found: warn
       - name: Backend Test Summary
-        if: always() && matrix.task == 'test'
+        if: always() && matrix.task == 'unit'
         run: |
           {
             echo "## Backend test summary"
@@ -420,24 +420,8 @@ jobs:
       id-token: 'write'
     strategy:
       fail-fast: false
-      matrix:
-        include:
-          - target: staging
-            branch: refs/heads/develop
-            state_bucket: edtech-terraform-state-501117
-            state_prefix: staging/backend
-            service_name: edtech-backend-staging
-            storage_bucket: edtech-vault-storage-staging
-            environment_suffix: _STAGING
-            cors_origin: https://staging.edtechacademic.com.br
-          - target: production
-            branch: refs/heads/main
-            state_bucket: edtech-terraform-state-501117
-            state_prefix: ''
-            service_name: edtech-backend
-            storage_bucket: edtech-vault-storage
-            environment_suffix: ''
-            cors_origin: https://edtechacademic.com.br
+      matrix: >-
+        ${{ fromJSON(github.ref == 'refs/heads/main' && '{"include":[{"target":"production","state_bucket":"edtech-terraform-state-501117","state_prefix":"","service_name":"edtech-backend","storage_bucket":"edtech-vault-storage","environment_suffix":"","cors_origin":"https://edtechacademic.com.br","hosting_target":""}]}' || '{"include":[{"target":"staging","state_bucket":"edtech-terraform-state-501117","state_prefix":"staging/backend","service_name":"edtech-backend-staging","storage_bucket":"edtech-vault-storage-staging","environment_suffix":"_STAGING","cors_origin":"https://staging.edtechacademic.com.br","hosting_target":"staging"}]}') }}
     steps:
       - uses: actions/checkout@v7
       - name: Authenticate to Google Cloud
@@ -454,7 +438,6 @@ jobs:
         working-directory: infra/terraform
         run: terraform init -backend-config="bucket=${{ matrix.state_bucket }}" -backend-config="prefix=${{ matrix.state_prefix }}"
       - name: Update migration job before rollout
-        if: github.ref == matrix.branch
         working-directory: infra/terraform
         run: |
           terraform apply -auto-approve -lock-timeout=10m \
@@ -471,7 +454,7 @@ jobs:
               exit 1
             }
       - name: Validate staging secret values
-        if: github.ref == matrix.branch && matrix.target == 'staging'
+        if: matrix.target == 'staging'
         shell: bash
         run: |
           set -euo pipefail
@@ -492,13 +475,11 @@ jobs:
             trap - EXIT
           done
       - name: Run Database Migrations (Flyway)
-        if: github.ref == matrix.branch
         run: |
           echo "Executando job de migracao do banco de dados (Flyway)..."
           gcloud run jobs execute ${{ matrix.service_name }}-migration \
             --region southamerica-east1 --wait --project edtech-storage-501117
       - name: Deploy migrated backend revision
-        if: github.ref == matrix.branch
         working-directory: infra/terraform
         run: |
           terraform apply -auto-approve -lock-timeout=10m \
@@ -520,14 +501,8 @@ jobs:
       id-token: 'write'
     strategy:
       fail-fast: false
-      matrix:
-        include:
-          - target: staging
-            branch: refs/heads/develop
-            hosting_target: staging
-          - target: production
-            branch: refs/heads/main
-            hosting_target: ''
+      matrix: >-
+        ${{ fromJSON(github.ref == 'refs/heads/main' && '{"include":[{"target":"production","state_bucket":"edtech-terraform-state-501117","state_prefix":"","service_name":"edtech-backend","storage_bucket":"edtech-vault-storage","environment_suffix":"","cors_origin":"https://edtechacademic.com.br","hosting_target":""}]}' || '{"include":[{"target":"staging","state_bucket":"edtech-terraform-state-501117","state_prefix":"staging/backend","service_name":"edtech-backend-staging","storage_bucket":"edtech-vault-storage-staging","environment_suffix":"_STAGING","cors_origin":"https://staging.edtechacademic.com.br","hosting_target":"staging"}]}') }}
     steps:
       - uses: actions/checkout@v7
       - name: Authenticate to Google Cloud
@@ -546,7 +521,6 @@ jobs:
           name: frontend-dist
           path: frontend/dist/
       - name: Deploy to Firebase Hosting
-        if: github.ref == matrix.branch
         working-directory: frontend
         run: |
           npm install -g firebase-tools
@@ -611,7 +585,7 @@ jobs:
   prod-performance:
     name: Prod (Performance)
     runs-on: ubuntu-latest
-    needs: [deploy-backend, deploy-frontend]
+    needs: [deploy-backend]
     if: github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v7
@@ -655,6 +629,43 @@ jobs:
         with:
           name: k6-summary
           path: tests/performance/k6-summary.json
+          if-no-files-found: error
+
+  prod-api-security-contract:
+    name: Prod (API Security Contract)
+    runs-on: ubuntu-latest
+    needs: [deploy-backend]
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v7
+      - name: Set up Node 24
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+      - name: Run API Security Contract
+        id: api-security-contract
+        env:
+          API_URL: 'https://edtech-backend-shv6qbpf4q-rj.a.run.app'
+        run: node tests/api-contract/production-security-contract.mjs
+      - name: API Security Contract Summary
+        if: always()
+        run: |
+          {
+            echo "## Production API security contract summary"
+            echo
+            echo "| Check | Result |"
+            echo "| --- | --- |"
+            echo "| Read-only HTTP security contract | ${{ steps.api-security-contract.outcome }} |"
+            echo
+            echo "The HTML and JSON reports are available in the api-security-contract-report artifact."
+          } >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload API Security Contract Report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: api-security-contract-report
+          path: tests/api-contract/reports/
+          if-no-files-found: error
 
   prod-lighthouse:
     name: Prod (Lighthouse)
@@ -678,3 +689,4 @@ jobs:
         with:
           name: lighthouse-report
           path: tests/lighthouse/
+          if-no-files-found: error

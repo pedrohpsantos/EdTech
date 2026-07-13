@@ -1,24 +1,21 @@
 
 # ☁️ EdTech Infraestrutura
 
-![Docker](https://img.shields.io/badge/Docker-24.0-2496ED?style=for-the-badge&logo=docker&logoColor=white)
-![Google Cloud](https://img.shields.io/badge/GCP-Cloud_Run-4285F4?style=for-the-badge&logo=googlecloud&logoColor=white)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-18-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
-![Terraform](https://img.shields.io/badge/Terraform-IaC-7B42BC?style=for-the-badge&logo=terraform&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)
+![Terraform](https://img.shields.io/badge/Terraform-7B42BC?logo=terraform&logoColor=white)
+![Google Cloud](https://img.shields.io/badge/Google_Cloud-4285F4?logo=googlecloud&logoColor=white)
 
-Este diretório (`/infra`) contém a configuração de infraestrutura do EdTech como código (IaC): orquestração de containers para desenvolvimento local e definições de deploy para o ambiente de produção no GCP.
+Este diretório reúne o ambiente local Docker Compose e a infraestrutura GCP declarada em Terraform.
 
-## Conteúdo do Diretório
+## Organização
 
-| Arquivo / Pasta | Descrição |
-| :--- | :--- |
-| `dev/docker-compose.yml` | Orquestra os serviços de Backend, Frontend e PostgreSQL para o ambiente local |
-| `dev/.env.example` | Template das variáveis de ambiente necessárias (nunca commitar o `.env` real) |
-| `dev/database/schema.sql` | Schema SQL de referência do banco de dados |
-| `prod/docker-compose.prod.yml`| Configuração docker para teste ou deploy do ambiente produtivo |
-| `prod/cloudbuild.yaml` | Pipeline de build e deploy para o Google Cloud Build |
-| `prod/setup_backup.sh` | Script de provisionamento do backup automático diário no GCS via Cloud Scheduler |
-| `prod/terraform/` | Módulos Terraform parametrizados para Cloud Run, Cloud SQL e Cloud Storage |
+| Caminho | Responsabilidade |
+| --- | --- |
+| `dev/docker-compose.yml` | Frontend, backend, PostgreSQL, Fake GCS e Adminer para desenvolvimento local |
+| `dev/.env.example` | Variáveis obrigatórias do Compose local |
+| `terraform/` | Cloud Run, Cloud Run Job do Flyway, Cloud SQL, GCS e secrets referenciados pelo deploy |
+| `prod/cloudbuild.yaml` | Configuração legada do Cloud Build; não é o fluxo primário de deploy |
+| `prod/setup_backup.sh` | Provisionamento do backup agendado |
 
 ---
 
@@ -49,17 +46,8 @@ gcloud auth application-default login
 ## Ambiente Local (Docker Compose)
 
 ```bash
-# 1. Copie e configure as variáveis de ambiente
-cd dev
-cp .env.example .env
-# Edite o arquivo .env com as credenciais locais
-
-# 2. Suba todos os serviços em background
-docker compose up --build -d
-
-# 3. Acompanhe os logs do backend
-docker compose logs -f backend
-# Aguarde a mensagem "Started EdTechApplication" para confirmar que o serviço está pronto
+cp infra/dev/.env.example infra/dev/.env
+# Defina ao menos POSTGRES_PASSWORD e JWT_SECRET.
 
 # 4. Para encerrar os serviços
 docker compose down
@@ -69,11 +57,14 @@ docker compose down -v
 
 ```
 
----
+O deploy atual é acionado por GitHub Actions, não por Cloud Build:
 
-## Infraestrutura como Código (Terraform)
+- `develop` atualiza **staging**;
+- `main` atualiza **produção**;
+- a pipeline inicializa o backend GCS, atualiza o Cloud Run Job de migração, executa Flyway e só então atualiza o serviço Cloud Run;
+- frontend é publicado no Firebase Hosting em paralelo ao deploy do backend.
 
-A pasta `infra/terraform` contém a definição parametrizada da infraestrutura de produção. Nenhum identificador sensível ou específico de projeto deve ser versionado; use `terraform.tfvars` local a partir do template:
+O state Terraform é remoto. Nunca execute `apply` contra produção sem uma mudança revisada e uma autenticação GCP autorizada.
 
 ```bash
 cd infra/terraform

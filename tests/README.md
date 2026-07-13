@@ -1,52 +1,53 @@
-# Testes e Qualidade de Software
+# Testes externos e qualidade
 
-![Playwright](https://img.shields.io/badge/Playwright-E2E-2EAD33?style=for-the-badge&logo=playwright&logoColor=white)
-![k6](https://img.shields.io/badge/k6-Performance-7D64FF?style=for-the-badge&logo=k6&logoColor=white)
-![Lighthouse](https://img.shields.io/badge/Lighthouse-UX%2FSEO-F44336?style=for-the-badge&logo=lighthouse&logoColor=white)
+Este diretório contém verificações que exercitam a aplicação fora dos módulos de código. Testes unitários, cobertura e mutação do backend/frontend permanecem nos próprios módulos e são executados pela CI.
 
-Este diretório (`/tests`) consolida as suítes de testes externos da plataforma EdTech. Ele atua como barreira secundária de qualidade, validando o comportamento da aplicação em nível de integração sistêmica, *End-to-End* (E2E), performance de carga e métricas de UX/SEO.
+## Suítes
 
-A garantia de qualidade em nível unitário (Backend com JUnit/Mockito e Frontend com Vitest) é mantida em seus respectivos diretórios de origem.
+| Caminho | Ferramenta | Escopo | Relatório |
+| --- | --- | --- | --- |
+| `e2e/` | Playwright | Jornadas da SPA, CORS, login, rotas protegidas e fluxos críticos | HTML e Allure |
+| `performance/` | k6 | Carga e latência da API publicada | `k6-summary.json` e HTML |
+| `api-contract/` | Node.js | Contrato read-only de segurança HTTP da API | JSON e HTML |
+| `lighthouse/` | Lighthouse CI | Performance web, acessibilidade, boas práticas e SEO | relatório Lighthouse |
 
-## Cobertura e Estratégia
+## E2E local
 
-O repositório adota pastas específicas para isolar escopos de teste:
-
-- **`/tests/e2e` (Playwright):** Foca em cenários Ponta a Ponta. Navegadores automatizados (*Headless*) simulam as jornadas críticas dos usuários de forma realista: login (protegido por JWT e CSRF), upload de arquivos e validação de interfaces visuais. Interagem concomitantemente com Frontend e Backend.
-- **`/tests/performance` (k6):** Scripts voltados para a simulação de tráfego denso contra a API (Backend). Usados para aferir o comportamento do Rate Limiting, resposta sob carga e latência no limite operacional. Podem receber a variável ambiente `API_URL` externa para dinamizar a execução entre local e CI/CD.
-- **`/tests/lighthouserc.json` (Lighthouse CI):** Arquivo de configuração base para assertivas de performance web, acessibilidade, melhores práticas e otimização para motores de busca (SEO) no frontend do sistema. O LHCI atua como gatekeeper (bloqueador) em CI/CD caso as métricas degradem.
-
----
-
-## Execução Local (E2E)
-
-Para garantir que novos fluxos não afetem a integridade do sistema, a execução local de testes deve ser efetuada com o ambiente em funcionamento simultâneo (API + SPA).
-
-### Pré-requisitos
-- Node.js (>= 20).
-- Os serviços da aplicação (Frontend em `http://localhost:5173` e Backend em `http://localhost:8080`) devem estar em execução.
-
-### Comandos
+Pré-requisitos: Node.js 24, frontend e backend acessíveis localmente.
 
 ```bash
-# Navegue até o diretório de testes
 cd tests
-
-# Instale dependências e navegadores (Playwright)
-npm install
-npx playwright install
-
-# Execute a bateria no modo headless (terminal)
+npm ci
+npx playwright install chromium
 npm run test:e2e
-
-# Execute os testes com interface de inspeção (UI Mode)
-npx playwright test --ui
 ```
 
----
+Para o modo interativo: `npm run test:e2e:ui`.
 
-## Diretrizes de Qualidade Contínua
+## Contrato de segurança da API
 
-1. **Tolerância a Flaky Tests:** Testes que falham de forma intermitente devem ser sanados antes do envio ao pipeline de CI. Utilize mecanismos formais de espera explícita (e.g., aguardar componentes renderizarem) ao invés de *timeouts* arbitrários.
-2. **Cobertura Baseada em Risco:** Toda nova jornada crítica deve possuir cobertura E2E refletida no Playwright.
-3. **Isolamento de Estado:** Os testes devem operar sobre o ambiente de forma idêntica e independente. Scripts de configuração devem garantir o isolamento da massa de dados, expurgando registros de teste nas fases de *teardown*. Nenhuma bateria de teste deve ser executada sobre bases produtivas reais.
+Não altera dados nem cria contas. Verifica HSTS, CSP, proteção de frame/MIME/cache e correlação `X-Request-ID`.
+
+```bash
+$env:API_URL = "http://localhost:8080" # PowerShell
+node tests/api-contract/production-security-contract.mjs
+```
+
+O resultado fica em `tests/api-contract/reports/`. Em produção, a CI publica o artefato `api-security-contract-report` após o deploy do backend.
+
+## k6 e Lighthouse
+
+Essas verificações contra produção são executadas pela CI após o deploy; não execute carga contra produção manualmente sem autorização. Para um alvo controlado, use `API_URL`:
+
+```bash
+cd tests/performance
+k6 run load-test.js
+```
+
+O Lighthouse usa `tests/lighthouse/lighthouserc.json` e é executado pela pipeline contra a URL publicada.
+
+## Diretrizes
+
+- Evite cenários que dependam de massa de dados real de produção.
+- Cada suíte deve ter escopo próprio; não duplique uma jornada E2E como teste de carga ou contrato.
+- Gere relatórios determinísticos e publique-os como artefatos quando a suíte rodar na CI.
