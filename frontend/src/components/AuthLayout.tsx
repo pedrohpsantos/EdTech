@@ -134,7 +134,7 @@ export default function AuthLayout({
       <motion.div
         className={styles.rightPanel}
         variants={formVariants}
-        initial="hidden"
+        initial={false}
         animate="visible"
         style={{ position: 'relative' }}
       >

@@ -145,7 +145,7 @@
 }
 
 .acessoLabel {
-  color: #8b5cf6;
+  color: #6d28d9;
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 1px;
@@ -186,13 +186,19 @@
 
 .forgotLink {
   font-size: 0.8rem;
-  color: #8b5cf6;
+  color: #6d28d9;
   text-decoration: none;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .forgotLink:hover {
   text-decoration: underline;
+}
+
+.forgotLink:focus-visible {
+  outline: 3px solid rgba(109, 40, 217, 0.35);
+  outline-offset: 3px;
+  border-radius: 3px;
 }
 
 .inputWrapper {
