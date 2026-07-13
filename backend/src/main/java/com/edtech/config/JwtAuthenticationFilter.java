@@ -73,6 +73,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
   }
 
   private Optional<String> extractToken(HttpServletRequest request) {
+    if (request.getCookies() != null) {
+      for (jakarta.servlet.http.Cookie cookie : request.getCookies()) {
+        if ("jwt".equals(cookie.getName())) {
+          return Optional.of(cookie.getValue());
+        }
+      }
+    }
+    // Fallback to Bearer token if necessary, or just remove it
     String authHeader = request.getHeader("Authorization");
     if (authHeader != null && authHeader.startsWith("Bearer ")) {
       return Optional.of(authHeader.substring(7));

@@ -20,3 +20,13 @@ resource "google_sql_database_instance" "instance" {
   # Trava de segurança para o Terraform não deletar o banco por engano
   deletion_protection = true
 }
+
+resource "google_sql_database" "dev_db" {
+  name     = "edtech_dev"
+  instance = google_sql_database_instance.instance.name
+}
+
+resource "google_sql_database" "prod_db" {
+  name     = "edtech_prod"
+  instance = google_sql_database_instance.instance.name
+}

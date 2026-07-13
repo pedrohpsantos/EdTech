@@ -3,25 +3,25 @@ data "google_project" "project" {}
 
 # Declaração dos Secrets no Terraform
 resource "google_secret_manager_secret" "jwt_secret" {
-  secret_id = "JWT_SECRET"
+  secret_id = "JWT_SECRET${var.environment_suffix}"
   replication {
     auto {}
   }
 }
 resource "google_secret_manager_secret" "spring_password" {
-  secret_id = "SPRING_DATASOURCE_PASSWORD"
+  secret_id = "SPRING_DATASOURCE_PASSWORD${var.environment_suffix}"
   replication {
     auto {}
   }
 }
 resource "google_secret_manager_secret" "spring_url" { #
-  secret_id = "SPRING_DATASOURCE_URL"
+  secret_id = "SPRING_DATASOURCE_URL${var.environment_suffix}"
   replication {
     auto {}
   }
 }
 resource "google_secret_manager_secret" "spring_username" {
-  secret_id = "SPRING_DATASOURCE_USERNAME"
+  secret_id = "SPRING_DATASOURCE_USERNAME${var.environment_suffix}"
   replication {
     auto {}
   }

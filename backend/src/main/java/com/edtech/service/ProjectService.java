@@ -66,11 +66,10 @@ public class ProjectService {
   }
 
   /** Documentação para o método listProjectsByUser. */
-  @Cacheable(value = "projects", key = "#userId")
-  public List<ProjectResponseDto> listProjectsByUser(UUID userId) {
-    return projectRepository.findProjectsByUserId(userId).stream()
-        .map(this::mapToDto)
-        .collect(Collectors.toList());
+  @Cacheable(value = "projects", key = "#userId + '-' + #pageable.pageNumber + '-' + #pageable.pageSize")
+  public org.springframework.data.domain.Page<ProjectResponseDto> listProjectsByUser(UUID userId, org.springframework.data.domain.Pageable pageable) {
+    return projectRepository.findProjectsByUserId(userId, pageable)
+        .map(this::mapToDto);
   }
 
   /** Documentação. */
@@ -100,7 +99,7 @@ public class ProjectService {
     }
 
     if (projectMemberRepository.findByProjectIdAndUserId(projectId, targetUserId).isPresent()) {
-      throw new RuntimeException("User is already a member of this project");
+      throw new com.edtech.exception.UserAlreadyMemberException("User is already a member of this project");
     }
 
     User newUser =

@@ -11,6 +11,14 @@ import java.util.stream.Collectors;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
+import com.edtech.repository.AuditLogSpecification;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,15 +51,28 @@ public class AuditController {
    */
   @GetMapping
   @PreAuthorize("hasRole('AUDITOR')")
-  public ResponseEntity<List<AuditLogDto>> getAuditLogs(
+  public ResponseEntity<Page<AuditLogDto>> getAuditLogs(
       @RequestParam(required = false) String search,
-      @RequestParam(required = false) String action) {
+      @RequestParam(required = false) String action,
+      @RequestParam(required = false) String startDate,
+      @RequestParam(required = false) String endDate,
+      @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
 
-    List<AuditLog> logs = auditLogRepository.findAllByOrderByCreatedAtDesc();
+    LocalDateTime start = null;
+    LocalDateTime end = null;
+    try {
+        if (startDate != null && !startDate.isEmpty()) start = LocalDateTime.parse(startDate);
+        if (endDate != null && !endDate.isEmpty()) end = LocalDateTime.parse(endDate);
+    } catch (DateTimeParseException ignored) {}
+
+    Page<AuditLog> logsPage = auditLogRepository.findAll(
+        AuditLogSpecification.getFilter(search, action, start, end), 
+        pageable
+    );
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
 
     List<AuditLogDto> dtos =
-        logs.stream()
+        logsPage.getContent().stream()
             .map(
                 log -> {
                   AuditLogDto dto = new AuditLogDto();
@@ -65,7 +86,6 @@ public class AuditController {
                   dto.setIp(log.getIpAddress());
                   dto.setDetails(log.getDetails());
 
-                  // Determine Action Class and Severity based on Action
                   switch (log.getAction()) {
                     case LOGIN_SUCCESS:
                     case DOCUMENT_APPROVED:
@@ -90,26 +110,7 @@ public class AuditController {
                 })
             .collect(Collectors.toList());
 
-    if (search != null && !search.isEmpty()) {
-      String s = search.toLowerCase();
-      dtos =
-          dtos.stream()
-              .filter(
-                  dto ->
-                      dto.getAction().toLowerCase().contains(s)
-                          || (dto.getDetails() != null
-                              && dto.getDetails().toLowerCase().contains(s))
-                          || dto.getUserName().toLowerCase().contains(s)
-                          || dto.getIp().contains(s))
-              .collect(Collectors.toList());
-    }
-
-    if (action != null && !action.isEmpty() && !action.equals("Todas as Ações")) {
-      dtos =
-          dtos.stream().filter(dto -> dto.getAction().equals(action)).collect(Collectors.toList());
-    }
-
-    return ResponseEntity.ok(dtos);
+    return ResponseEntity.ok(new PageImpl<>(dtos, pageable, logsPage.getTotalElements()));
   }
 
   /**
@@ -123,10 +124,12 @@ public class AuditController {
   @PreAuthorize("hasRole('AUDITOR')")
   public ResponseEntity<String> exportAuditLogs(
       @RequestParam(required = false) String search,
-      @RequestParam(required = false) String action) {
+      @RequestParam(required = false) String action,
+      @RequestParam(required = false) String startDate,
+      @RequestParam(required = false) String endDate) {
 
-    ResponseEntity<List<AuditLogDto>> response = getAuditLogs(search, action);
-    List<AuditLogDto> dtos = response.getBody();
+    ResponseEntity<Page<AuditLogDto>> response = getAuditLogs(search, action, startDate, endDate, org.springframework.data.domain.PageRequest.of(0, 10000, Sort.by(Sort.Direction.DESC, "createdAt")));
+    List<AuditLogDto> dtos = response.getBody().getContent();
 
     StringBuilder csv = new StringBuilder();
     csv.append("ID,Timestamp,Action,User,IP,Details,Severity\n");

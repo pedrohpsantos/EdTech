@@ -39,9 +39,9 @@ public class ProjectController {
   }
 
   @GetMapping
-  public ResponseEntity<List<ProjectResponseDto>> listProjects(Authentication authentication) {
+  public ResponseEntity<org.springframework.data.domain.Page<ProjectResponseDto>> listProjects(Authentication authentication, org.springframework.data.domain.Pageable pageable) {
     User user = (User) authentication.getPrincipal();
-    return ResponseEntity.ok(projectService.listProjectsByUser(user.getId()));
+    return ResponseEntity.ok(projectService.listProjectsByUser(user.getId(), pageable));
   }
 
   /** Documentação. */

@@ -17,24 +17,63 @@ const AuditLogs: React.FC = () => {
   };
 
   const [logs, setLogs] = useState<any[]>([]);
+  const [totalElements, setTotalElements] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
   const [actionFilter, setActionFilter] = useState('Todas as Ações');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [page, setPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(1);
 
   const fetchLogs = async () => {
-    const data = await getAuditLogs(searchTerm, actionFilter);
-    setLogs(data);
+    let isoStart = '';
+    let isoEnd = '';
+    
+    try {
+        if (startDate) {
+            const parts = startDate.split('/');
+            if (parts.length === 3) isoStart = new Date(`${parts[2]}-${parts[1]}-${parts[0]}T00:00:00`).toISOString();
+        }
+        if (endDate) {
+            const parts = endDate.split('/');
+            if (parts.length === 3) isoEnd = new Date(`${parts[2]}-${parts[1]}-${parts[0]}T23:59:59`).toISOString();
+        }
+    } catch(e) {}
+
+    const action = actionFilter === 'Todas as Ações' ? '' : actionFilter;
+    const data = await getAuditLogs(searchTerm, action, isoStart, isoEnd, page, 20);
+    if (data && data.content) {
+        setLogs(data.content);
+        setTotalPages(data.totalPages || 1);
+        setTotalElements(data.totalElements || 0);
+    } else if (Array.isArray(data)) {
+        setLogs(data);
+    }
   };
 
   useEffect(() => {
     fetchLogs();
-  }, [actionFilter]);
+  }, [actionFilter, page]);
 
   const handleRefresh = () => {
     fetchLogs();
   };
 
   const handleExport = () => {
-    exportAuditLogsCSV(searchTerm, actionFilter);
+    let isoStart = '';
+    let isoEnd = '';
+    try {
+        if (startDate) {
+            const parts = startDate.split('/');
+            if (parts.length === 3) isoStart = new Date(`${parts[2]}-${parts[1]}-${parts[0]}T00:00:00`).toISOString();
+        }
+        if (endDate) {
+            const parts = endDate.split('/');
+            if (parts.length === 3) isoEnd = new Date(`${parts[2]}-${parts[1]}-${parts[0]}T23:59:59`).toISOString();
+        }
+    } catch(e) {}
+    const action = actionFilter === 'Todas as Ações' ? '' : actionFilter;
+    exportAuditLogsCSV(searchTerm, action, isoStart, isoEnd);
   };
 
   return (
@@ -59,7 +98,7 @@ const AuditLogs: React.FC = () => {
             <span>Total de Eventos</span>
             <div className="audit-stat-dot purple"></div>
           </div>
-          <div className="audit-stat-value">{logs.length}</div>
+          <div className="audit-stat-value">{totalElements}</div>
         </div>
         
         <div className="audit-stat-card">
@@ -120,8 +159,22 @@ const AuditLogs: React.FC = () => {
           <option>PASSWORD_RESET</option>
         </select>
         
-        <input type="text" className="audit-input" placeholder="dd/mm/aaaa" style={{ width: '130px' }} />
-        <input type="text" className="audit-input" placeholder="Usuário" style={{ width: '150px' }} />
+        <input 
+          type="text" 
+          className="audit-input" 
+          placeholder="Início (dd/mm/aaaa)" 
+          style={{ width: '150px' }} 
+          value={startDate}
+          onChange={(e) => setStartDate(e.target.value)}
+        />
+        <input 
+          type="text" 
+          className="audit-input" 
+          placeholder="Fim (dd/mm/aaaa)" 
+          style={{ width: '150px' }} 
+          value={endDate}
+          onChange={(e) => setEndDate(e.target.value)}
+        />
         
         <button className="audit-btn audit-btn-outline" onClick={handleRefresh}>
           <i className="bi bi-arrow-clockwise"></i> Atualizar
@@ -202,7 +255,28 @@ const AuditLogs: React.FC = () => {
           </tbody>
         </table>
         <div className="audit-table-footer">
-          <span className="footer-stats">{logs.length} events · sorted by timestamp desc · retention: 90d</span>
+          <span className="footer-stats">{totalElements} events · sorted by timestamp desc · retention: 90d</span>
+          
+          {totalPages > 1 && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <button 
+                className="audit-btn audit-btn-outline" 
+                onClick={() => setPage(p => Math.max(0, p - 1))}
+                disabled={page === 0}
+              >
+                Anterior
+              </button>
+              <span style={{ color: 'var(--ed-text-muted)', fontSize: '13px' }}>Página {page + 1} de {totalPages}</span>
+              <button 
+                className="audit-btn audit-btn-outline" 
+                onClick={() => setPage(p => Math.min(totalPages - 1, p + 1))}
+                disabled={page >= totalPages - 1}
+              >
+                Próxima
+              </button>
+            </div>
+          )}
+          
           <span className="footer-brand">ResearchTrail AuditLog v2.1</span>
         </div>
       </div>

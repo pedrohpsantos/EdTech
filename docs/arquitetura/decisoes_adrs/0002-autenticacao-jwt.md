@@ -1,33 +1,36 @@
 ---
-title: 'ADR 0002: Autenticação baseada em JWT com Bearer Token'
+title: 'ADR 0002: Autenticação baseada em JWT com Cookies HttpOnly via Firebase Rewrites'
 ---
 
-# :material-text-box-check: ADR 0002: Autenticação baseada em JWT com Bearer Token
+# :material-text-box-check: ADR 0002: Autenticação baseada em JWT com Cookies HttpOnly via Firebase Rewrites
 
 ## Status
 
-Aceito (Substitui decisão anterior de Cookies HttpOnly)
+Aceito (Substitui decisão anterior de LocalStorage / Bearer Token)
 
 ## Contexto
 
-A plataforma EdTech lida com dados acadêmicos sensíveis (artigos não publicados, patentes e datasets sigilosos). Precisamos garantir que as sessões dos pesquisadores e orientadores sejam seguras. 
-Originalmente, havíamos optado por armazenar o JSON Web Token (JWT) em cookies com as flags `HttpOnly` e `Secure`. No entanto, como o Frontend (Firebase em `.web.app`) e o Backend (Cloud Run em `.run.app`) estão hospedados em domínios diferentes, os navegadores modernos (como Safari, Chrome, Firefox) bloqueiam os cookies em solicitações cross-site por padrão, devido a políticas de privacidade contra rastreamento de Terceiros (Third-Party Cookies).
+A plataforma EdTech lida com dados acadêmicos sensíveis (artigos não publicados, patentes e datasets sigilosos). Precisamos garantir que as sessões dos pesquisadores e orientadores sejam seguras contra ataques de Cross-Site Scripting (XSS).
+Originalmente (versão 1.3), devido à hospedagem do frontend (Firebase em `.web.app`) e do backend (Cloud Run em `.run.app`) em domínios diferentes, os navegadores modernos bloqueavam os cookies `HttpOnly` considerando-os "Third-Party Cookies". Para resolver provisoriamente, utilizamos o LocalStorage e `Bearer Token`.
+Entretanto, essa abordagem expôs o token a ataques XSS e falhou em auditorias de segurança. Para resolver o bloqueio sem comprometer a segurança, utilizamos os Rewrites do Firebase Hosting.
 
 ## Decisão
 
-Optamos por utilizar **JWT (JSON Web Token)** armazenado no **LocalStorage** do navegador, sendo enviado explicitamente via cabeçalho HTTP `Authorization: Bearer <token>` em todas as requisições para a API. A proteção contra CSRF no backend foi completamente desabilitada, uma vez que não há envio automático de credenciais pelo navegador.
+Optamos por utilizar **JWT (JSON Web Token)** armazenado exclusivamente em **Cookies HttpOnly, Secure e SameSite=Strict**. 
+Para permitir que o navegador trate os cookies como First-Party (Primeira Parte), configuramos o `firebase.json` do frontend para atuar como um proxy reverso (`rewrites`). Todas as requisições para `/api/**` são roteadas internamente pelo Firebase para o serviço do Cloud Run correspondente. Dessa forma, tanto o frontend quanto a API compartilham a mesma origem (origin).
 
 ## Consequências
 
 ### Positivas
 
-- **Compatibilidade Cross-Origin:** O login funciona perfeitamente independente dos domínios em que a SPA e a API estejam hospedados.
-- **Fim da Vulnerabilidade CSRF:** Sem envio automático de cookies de autenticação pelo navegador, ataques de Cross-Site Request Forgery (CSRF) tornam-se impossíveis para a autenticação baseada em Bearer Token.
-- **Simplificação do Backend:** O backend não precisa gerenciar geração e envio de cookies CSRF e a configuração de CORS fica mais simples e permissiva (`credentials: include` não é estritamente necessário).
+- **Segurança contra XSS:** Tokens JWT não são acessíveis via JavaScript (graças à flag `HttpOnly`), mitigando significativamente o impacto de ataques XSS.
+- **First-Party Cookies:** O proxy resolve as restrições de navegadores modernos (Safari, Chrome) sobre Cookies de Terceiros, mantendo a interoperabilidade.
+- **Transparência:** O gerenciamento de credenciais na API do frontend torna-se automático através do `axios.defaults.withCredentials = true`.
 
 ### Negativas / Riscos
 
-- **Exposição a XSS:** O token fica vulnerável a ataques de Cross-Site Scripting (XSS), pois pode ser lido pelo JavaScript. Devemos reforçar as políticas de CSP (Content Security Policy) e garantir a sanitização rigorosa de qualquer input exibido na interface.
+- **Acoplamento de Infraestrutura:** Dependemos do Firebase Hosting para fazer o roteamento reverso para o Cloud Run. Mudar de provedor de frontend exigiria uma reconfiguração do proxy (ex: Nginx, Cloudflare).
+- **Proteção CSRF:** Retorna a necessidade de nos preocuparmos com ataques CSRF, exigindo verificações rígidas de origem ou tokens CSRF se o atributo `SameSite=Strict` não for suportado por navegadores muito antigos.
 
 ---
 
@@ -39,5 +42,5 @@ Optamos por utilizar **JWT (JSON Web Token)** armazenado no **LocalStorage** do 
 | `1.1` | 13/06/2026 | Revisão técnica | Pedro Henrique P. Santos |
 | `1.2` | 04/07/2026 | Revisão e formatação | Pedro Henrique P. Santos |
 | `1.3` | 06/07/2026 | Migração de Cookies para Bearer Token no LocalStorage devido ao bloqueio Third-Party Cookies | Pedro Henrique P. Santos |
-
+| `1.4` | 13/07/2026 | Retorno para Cookies HttpOnly mitigando bloqueio através de Firebase Rewrites | Antigravity |
 

@@ -6,20 +6,27 @@ import { Project } from '../types';
 export default function Projects() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(1);
   const [toastMessage, setToastMessage] = useState('');
 
   const loadProjects = async () => {
     setLoading(true);
-    const resp = await getProjects();
+    const resp = await getProjects(page, 20);
     if (resp.sucesso) {
-      setProjects(resp.dados || []);
+      if (resp.dados && resp.dados.content) {
+        setProjects(resp.dados.content);
+        setTotalPages(resp.dados.totalPages || 1);
+      } else if (Array.isArray(resp.dados)) {
+        setProjects(resp.dados);
+      }
     }
     setLoading(false);
   };
 
   useEffect(() => {
     loadProjects();
-  }, []);
+  }, [page]);
 
   const showToast = (message: string) => {
     setToastMessage(message);
@@ -104,6 +111,26 @@ export default function Projects() {
                 </div>
               </div>
             ))}
+          </div>
+        )}
+        
+        {totalPages > 1 && (
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1rem', marginTop: '2rem' }}>
+            <button
+              onClick={() => setPage((p) => Math.max(0, p - 1))}
+              disabled={page === 0}
+              className="btn btn-outline"
+            >
+              Anterior
+            </button>
+            <span style={{ color: 'var(--ed-text-dark)' }}>Página {page + 1} de {totalPages}</span>
+            <button
+              onClick={() => setPage((p) => Math.min(totalPages - 1, p + 1))}
+              disabled={page >= totalPages - 1}
+              className="btn btn-outline"
+            >
+              Próxima
+            </button>
           </div>
         )}
       </div>

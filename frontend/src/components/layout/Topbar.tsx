@@ -22,13 +22,9 @@ const Topbar: React.FC<TopbarProps> = ({ title, subtitle, breadcrumbs, customTop
   useEffect(() => {
     if (!user) return;
 
-    const token = localStorage.getItem('token');
     const socket = new SockJS((import.meta.env.VITE_API_URL || '') + '/ws-edtech');
     const stompClient = new Client({
       webSocketFactory: () => socket,
-      connectHeaders: {
-        Authorization: `Bearer ${token}`,
-      },
       onConnect: () => {
         // Inscricao para o topico global
         stompClient.subscribe('/topic/global', (msg) => {

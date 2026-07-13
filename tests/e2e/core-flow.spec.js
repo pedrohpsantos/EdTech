@@ -8,36 +8,63 @@ test.describe('Core Business Flow: Upload & Approve', () => {
     allure.feature('Fluxo Principal do Pesquisador');
     allure.story('Caminho Feliz: Login, Upload e Visualização de Trilha');
     
-    // Note: Em um ambiente real de CI, isso deveria bater em um banco de dados
-    // limpo ou mockado. Aqui estamos garantindo que a tela inicial abre.
-    
     // 1. Acessa a página principal
     await page.goto('/');
     
-    // 2. Verifica se a página de login/registro carregou (depende da rota default)
-    // Se a rota default for o login:
+    // 2. Verifica se a página de login/registro carregou
     await expect(page).toHaveURL(/.*login|.*\//);
     
-    // Como é um MVP e os seletores podem variar, deixaremos o skeleton
-    // pronto para ser preenchido pelos padawans de QA de acordo com os IDs da UI.
+    // Login as Researcher
+    await page.fill('input[type="email"]', 'pesquisador.demo@unb.br');
+    await page.fill('input[type="password"]', 'Demo@1234');
+    await page.click('button[type="submit"]');
     
-    // Exemplo do fluxo esperado a ser preenchido:
-    // await page.fill('[data-testid="email-input"]', 'researcher@test.com');
-    // await page.fill('[data-testid="password-input"]', 'password123');
-    // await page.click('[data-testid="login-button"]');
+    // Verify Dashboard
+    await expect(page).toHaveURL(/.*dashboard/);
     
-    // await page.click('[data-testid="upload-document-btn"]');
-    // await page.setInputFiles('input[type="file"]', 'test-doc.pdf');
-    // await page.click('[data-testid="submit-upload-btn"]');
+    // Navigate to Upload
+    await page.click('a[href="/upload"]');
+    await expect(page).toHaveURL(/.*upload/);
     
-    // await page.click('[data-testid="logout-btn"]');
+    // Upload document
+    await page.fill('input[placeholder="Ex: Metodologia Qualitativa v3"]', 'Documento de Teste E2E');
+    // Select project (assuming first option is available)
+    await page.locator('select').first().selectOption({ index: 1 });
+    // Upload file
+    await page.setInputFiles('input[type="file"]', {
+      name: 'test-doc.pdf',
+      mimeType: 'application/pdf',
+      buffer: Buffer.from('PDF_CONTENT_MOCK')
+    });
+    await page.click('button[type="submit"]');
     
-    // await page.fill('[data-testid="email-input"]', 'advisor@test.com');
-    // ...
-    // await page.click('[data-testid="approve-doc-btn"]');
+    // Should redirect to documents
+    await expect(page).toHaveURL(/.*documentos/);
     
-    // Check final
-    // await expect(page.locator('.status-badge')).toHaveText('APPROVED');
+    // Logout
+    await page.click('button:has-text("Sair")');
+    await expect(page).toHaveURL(/.*login/);
+    
+    // Login as Advisor
+    await page.fill('input[type="email"]', 'orientador.demo@unb.br');
+    await page.fill('input[type="password"]', 'Demo@1234');
+    await page.click('button[type="submit"]');
+    
+    // Verify Dashboard
+    await expect(page).toHaveURL(/.*dashboard/);
+    
+    // Navigate to submissions
+    await page.click('a[href="/submissions"]');
+    await expect(page).toHaveURL(/.*submissions/);
+    
+    // Find the document and approve (mocking the approval action)
+    // We look for "Documento de Teste E2E" and click the approve button
+    const row = page.locator('tr:has-text("Documento de Teste E2E")').first();
+    // In our UI, the view details button is usually a magnifying glass or "Avaliar"
+    await row.locator('button').first().click();
+    
+    // Check final status
+    // Example: await expect(page.locator('.status-badge')).toHaveText('APPROVED');
   });
 
 });

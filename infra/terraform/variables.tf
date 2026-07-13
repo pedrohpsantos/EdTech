@@ -59,3 +59,9 @@ variable "database_tier" {
   type        = string
   default     = "db-f1-micro"
 }
+
+variable "environment_suffix" {
+  description = "Sufixo para recursos especificos do ambiente (vazio para producao, -staging para staging)"
+  type        = string
+  default     = ""
+}

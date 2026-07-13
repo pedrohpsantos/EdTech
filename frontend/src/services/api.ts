@@ -5,6 +5,7 @@ const BASE_URL = import.meta.env?.VITE_API_URL ?? '';
 
 const api = axios.create({
   baseURL: BASE_URL,
+  withCredentials: true,
 });
 
 let activeRequests = 0;
@@ -37,13 +38,9 @@ const generateRequestId = () => {
   });
 };
 
-// Interceptor para adicionar o token de autorização, X-Request-ID e mostrar o loader
+// Interceptor para adicionar o X-Request-ID e mostrar o loader
 api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
   showLoader();
-  const token = localStorage.getItem('token');
-  if (token) {
-    config.headers['Authorization'] = `Bearer ${token}`;
-  }
   config.headers['X-Request-ID'] = generateRequestId();
   return config;
 });
@@ -81,10 +78,7 @@ export const login = async (email: string, senha: string): Promise<ApiResponse<a
     if (resposta.status === 202 && resposta.data.mfaRequired) {
       return { sucesso: true, dados: { mfaRequired: true, email: resposta.data.email } };
     }
-    if (resposta.data.token) {
-      localStorage.setItem('token', resposta.data.token);
-    }
-    return { sucesso: true, dados: resposta.data.user };
+    return { sucesso: true, dados: resposta.data.user || resposta.data };
   } catch (error) {
     return handleApiError(
       error,
@@ -96,10 +90,7 @@ export const login = async (email: string, senha: string): Promise<ApiResponse<a
 export const verify2FaLogin = async (email: string, senha: string, code: string): Promise<ApiResponse<any>> => {
   try {
     const resposta = await api.post('/api/auth/login/verify-2fa', { email, password: senha, code });
-    if (resposta.data.token) {
-      localStorage.setItem('token', resposta.data.token);
-    }
-    return { sucesso: true, dados: resposta.data.user };
+    return { sucesso: true, dados: resposta.data.user || resposta.data };
   } catch (error) {
     return handleApiError(error, 'Código de verificação 2FA inválido.');
   }
@@ -147,10 +138,7 @@ export const verifyRegistration = async (
 ): Promise<ApiResponse<any>> => {
   try {
     const resposta = await api.post('/api/auth/register/verify', { email, code });
-    if (resposta.data.token) {
-      localStorage.setItem('token', resposta.data.token);
-    }
-    return { sucesso: true, dados: resposta.data.user };
+    return { sucesso: true, dados: resposta.data.user || resposta.data };
   } catch (error) {
     return handleApiError(error, 'Código de verificação inválido ou expirado.');
   }
@@ -159,10 +147,8 @@ export const verifyRegistration = async (
 export const logout = async (): Promise<ApiResponse<void>> => {
   try {
     await api.post('/api/auth/logout');
-    localStorage.removeItem('token');
     return { sucesso: true };
   } catch (error) {
-    localStorage.removeItem('token');
     return handleApiError(error, 'Falha ao encerrar sessão');
   }
 };
@@ -176,9 +162,9 @@ export const getMe = async (): Promise<ApiResponse<User>> => {
   }
 };
 
-export const getProjects = async (): Promise<ApiResponse<Project[]>> => {
+export const getProjects = async (page = 0, size = 20): Promise<ApiResponse<any>> => {
   try {
-    const resposta = await api.get('/api/projects');
+    const resposta = await api.get('/api/projects', { params: { page, size } });
     return { sucesso: true, dados: resposta.data };
   } catch (error) {
     return handleApiError(error, 'Erro ao listar projetos.');
@@ -345,30 +331,40 @@ export const resetPassword = async (
 export const getAuditLogs = async (
   search?: string,
   action?: string,
-): Promise<any[]> => {
+  startDate?: string,
+  endDate?: string,
+  page = 0,
+  size = 20,
+): Promise<any> => {
   try {
-    const params: any = {};
+    const params: any = { page, size };
     if (search) params.search = search;
     if (action) params.action = action;
+    if (startDate) params.startDate = startDate;
+    if (endDate) params.endDate = endDate;
     const response = await api.get('/api/audit-logs', { params });
     return response.data;
   } catch (error) {
     console.error('Erro ao buscar logs de auditoria:', error);
-    return [];
+    return { content: [], totalPages: 1 };
   }
 };
 
 export const exportAuditLogsCSV = async (
   search?: string,
   action?: string,
+  startDate?: string,
+  endDate?: string,
 ): Promise<void> => {
   try {
     const params: any = {};
     if (search) params.search = search;
     if (action) params.action = action;
+    if (startDate) params.startDate = startDate;
+    if (endDate) params.endDate = endDate;
     const response = await api.get('/api/audit-logs/export', {
       params,
-      responseType: 'blob'
+      responseType: 'blob',
     });
     
     const blob = new Blob([response.data], { type: 'text/csv' });
@@ -378,10 +374,37 @@ export const exportAuditLogsCSV = async (
     a.download = 'audit_logs.csv';
     document.body.appendChild(a);
     a.click();
-    window.URL.revokeObjectURL(url);
     document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
   } catch (error) {
     console.error('Erro ao exportar logs de auditoria:', error);
+  }
+};
+
+export const exportDocumentAuditTrail = async (
+  documentId: string,
+  format: 'csv' | 'pdf' = 'pdf',
+): Promise<void> => {
+  try {
+    const response = await api.get(`/api/documents/${documentId}/audit/export`, {
+      params: { format },
+      responseType: 'blob',
+    });
+    
+    const mimeType = format === 'pdf' ? 'application/pdf' : 'text/csv';
+    const extension = format;
+    
+    const blob = new Blob([response.data], { type: mimeType });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `audit_trail_${documentId}.${extension}`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
+  } catch (error) {
+    console.error(`Erro ao exportar trilha de auditoria do documento ${documentId}:`, error);
   }
 };
 

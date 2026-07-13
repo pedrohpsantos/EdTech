@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import DashboardLayout from '../components/layout/DashboardLayout';
 import { useAuth } from '../context/authContext';
+import { exportDocumentAuditTrail } from '../services/api';
 import '../assets/trail.css';
 
 const ResearchTrail: React.FC = () => {
@@ -58,18 +59,13 @@ const ResearchTrail: React.FC = () => {
 
   const documents = user?.role === 'RESEARCHER' ? researcherDocuments : advisorDocuments;
 
-  const handleExportTrail = () => {
-    const docToExport = documents.find(d => d.id === selectedDocId);
-    const content = `Relatório de Trilha de Pesquisa\nDocumento: ${docToExport?.title}\nStatus: ${docToExport?.status}\n\nEventos:\n- Documento aprovado\n- Verificação LGPD aprovada\n- Nova versão criada\n`;
-    const blob = new Blob([content], { type: 'application/pdf' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `trilha_${docToExport?.title || 'pesquisa'}.pdf`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+  const handleExportTrail = async () => {
+    if (!selectedDocId) return;
+    try {
+      await exportDocumentAuditTrail(selectedDocId, 'pdf');
+    } catch(e) {
+      console.error('Failed to export', e);
+    }
   };
 
   const getStatusBadgeClass = (status: string) => {

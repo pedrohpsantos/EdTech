@@ -20,6 +20,14 @@ public class GlobalExceptionHandler {
     return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
   }
 
+  @ExceptionHandler(UserAlreadyMemberException.class)
+  public ResponseEntity<Map<String, String>> handleUserAlreadyMemberException(
+      UserAlreadyMemberException ex) {
+    Map<String, String> response = new HashMap<>();
+    response.put("error", ex.getMessage());
+    return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+  }
+
   /** Trata requisições bloqueadas por excesso de tentativas (HTTP 429). */
   @ExceptionHandler(RateLimitExceededException.class)
   public ResponseEntity<Map<String, String>> handleRateLimitExceededException(

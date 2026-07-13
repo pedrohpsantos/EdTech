@@ -13,5 +13,5 @@ public interface ProjectRepository extends JpaRepository<Project, UUID> {
   @Query(
       "SELECT p FROM Project p JOIN ProjectMember pm ON p.id = pm.project.id "
           + "WHERE pm.user.id = :userId")
-  List<Project> findProjectsByUserId(@Param("userId") UUID userId);
+  org.springframework.data.domain.Page<Project> findProjectsByUserId(@Param("userId") UUID userId, org.springframework.data.domain.Pageable pageable);
 }

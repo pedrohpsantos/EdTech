@@ -32,4 +32,5 @@ module "backend_api" {
   bucket_name         = var.storage_bucket_name
   cors_allowed_origin = var.cors_allowed_origin
   db_connection_name  = module.database.connection_name
+  environment_suffix  = var.environment_suffix
 }

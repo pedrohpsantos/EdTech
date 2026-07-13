@@ -3,6 +3,12 @@ variable "service_name" {
   type        = string
 }
 
+variable "environment_suffix" {
+  description = "Suffix for resources like Secrets (empty for prod)"
+  type        = string
+  default     = ""
+}
+
 variable "location" {
   description = "Region where the service is deployed."
   type        = string
