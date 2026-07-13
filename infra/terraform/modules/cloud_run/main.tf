@@ -133,6 +133,10 @@ resource "google_cloud_run_v2_service" "api" {
         value = "true"
       }
       env {
+        name  = "SMTP_STARTTLS_ENABLED"
+        value = "false"
+      }
+      env {
         name  = "SMTP_FROM"
         value = "noreply@edtechacademic.com.br"
       }
