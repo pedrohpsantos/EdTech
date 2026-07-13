@@ -442,10 +442,6 @@ jobs:
       - name: Terraform Init
         working-directory: infra/terraform
         run: terraform init -backend-config="bucket=${{ matrix.state_bucket }}" -backend-config="prefix=${{ matrix.state_prefix }}"
-      - name: Clear failed migration job state
-        if: github.ref == matrix.branch
-        working-directory: infra/terraform
-        run: terraform untaint module.backend_api.google_cloud_run_v2_job.flyway_migration || true
       - name: Update migration job before rollout
         if: github.ref == matrix.branch
         working-directory: infra/terraform
