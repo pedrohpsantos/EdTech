@@ -1,3 +1,4 @@
+```markdown
 # ☁️ EdTech Infraestrutura
 
 ![Docker](https://img.shields.io/badge/Docker-24.0-2496ED?style=for-the-badge&logo=docker&logoColor=white)
@@ -21,6 +22,31 @@ Este diretório (`/infra`) contém a configuração de infraestrutura do EdTech 
 
 ---
 
+## 🔒 Segurança e Arquitetura de Produção (GCP)
+
+Em produção, as imagens Docker são publicadas no **Artifact Registry** e operadas via **Cloud Run** (Serverless, auto-scaling). Nossa infraestrutura segue os princípios de *Zero Trust*, com foco no isolamento de rede e automação segura:
+
+* **Isolamento de Rede (Cloud Run & Cloud SQL):** O backend Cloud Run está configurado com tráfego interno (`INGRESS_TRAFFIC_INTERNAL_ONLY`) e o banco de dados Cloud SQL possui apenas IP Privado. Nenhuma dessas camadas está exposta diretamente à internet pública.
+* **Secret Manager:** Variáveis sensíveis (credenciais de banco, chaves JWT) são injetadas diretamente nos serviços do Cloud Run no momento da execução, sem exposição em arquivos de configuração.
+* **CI/CD com OIDC:** O processo de deploy automatizado pelo `cloudbuild.yaml` (disparado via push na branch `main`) é autenticado de forma segura utilizando **Workload Identity Federation (OIDC)**, eliminando a necessidade e os riscos de chaves de serviço JSON estáticas.
+
+### Acesso ao Banco de Dados (Cloud SQL)
+
+Como o IP público da instância foi desativado por questões de segurança, para conectar-se ao banco de dados em nuvem utilizando sua máquina local (para DBeaver, pgAdmin, etc.), é obrigatório o uso do **Cloud SQL Auth Proxy**:
+
+```bash
+# 1. Autentique-se no GCP localmente
+gcloud auth application-default login
+
+# 2. Inicie o túnel seguro apontando para a sua instância
+./cloud-sql-proxy <PROJECT_ID>:<REGION>:<INSTANCE_NAME>
+
+# 3. Conecte a sua ferramenta de banco de dados em localhost (ex: 127.0.0.1:5432)
+
+```
+
+---
+
 ## Ambiente Local (Docker Compose)
 
 ```bash
@@ -41,16 +67,8 @@ docker compose down
 
 # Para remover também os volumes de dados (banco de dados local)
 docker compose down -v
+
 ```
-
----
-
-## Produção (GCP)
-Em produção, as imagens Docker são publicadas no **Artifact Registry** do GCP e operadas via **Cloud Run** (Serverless, auto-scaling). O banco de dados é gerenciado pelo **Cloud SQL** (PostgreSQL 18).
-
-Variáveis de ambiente sensíveis (credenciais de banco, chaves JWT) são armazenadas no **Secret Manager** e injetadas diretamente nos serviços do Cloud Run, sem exposição em arquivos de configuração.
-
-O processo de deploy é automatizado pelo `cloudbuild.yaml` e disparado via push na branch `main`.
 
 ---
 
@@ -66,15 +84,16 @@ cp terraform.tfvars.example terraform.tfvars
 terraform init -backend-config="bucket=<bucket-tfstate>"
 terraform plan
 terraform apply
+
 ```
 
 Módulos disponíveis:
 
 | Módulo | Recursos |
-| :--- | :--- |
-| `modules/cloud_run` | Serviço backend escalável, variáveis, integração com storage e **Cloud Run Job** isolado para execução de migrações (Flyway). |
-| `modules/cloud_sql` | Instância PostgreSQL gerenciada |
-| `modules/cloud_storage` | Bucket de arquivos acadêmicos |
+| --- | --- |
+| `modules/cloud_run` | Serviço backend escalável, integração com VPC Connector, storage e **Cloud Run Job** isolado para execução de migrações (Flyway). |
+| `modules/cloud_sql` | Instância PostgreSQL gerenciada e restrita. |
+| `modules/cloud_storage` | Bucket de arquivos acadêmicos. |
 
 O estado remoto deve ficar em um bucket GCS controlado pela equipe de plataforma. O arquivo `terraform.tfvars` real e a pasta `.terraform/` permanecem fora do Git.
 
@@ -86,6 +105,9 @@ O backup automático é provisionado pelo script `setup_backup.sh`. Executar uma
 
 ```bash
 bash infra/prod/setup_backup.sh
+
 ```
 
-Detalhes da política de backup estão documentados no [ADR-0013](../docs/arquitetura/decisoes_adrs/0013-backup-automatico.md).
+Detalhes da política de backup estão documentados no [ADR-0013](https://www.google.com/search?q=../docs/arquitetura/decisoes_adrs/0013-backup-automatico.md).
+
+```
