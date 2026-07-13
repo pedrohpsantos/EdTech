@@ -25,14 +25,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>36/36</span>
+                <span class='fraction'>38/38</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">94.59% </span>
+                <span class="strong">92.1% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>70/74</span>
+                <span class='fraction'>70/76</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>34/34</span>
+                <span class='fraction'>36/36</span>
             </div>
         
             
@@ -688,7 +688,13 @@
 <a name='L623'></a><a href='#L623'>623</a>
 <a name='L624'></a><a href='#L624'>624</a>
 <a name='L625'></a><a href='#L625'>625</a>
-<a name='L626'></a><a href='#L626'>626</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L626'></a><a href='#L626'>626</a>
+<a name='L627'></a><a href='#L627'>627</a>
+<a name='L628'></a><a href='#L628'>628</a>
+<a name='L629'></a><a href='#L629'>629</a>
+<a name='L630'></a><a href='#L630'>630</a>
+<a name='L631'></a><a href='#L631'>631</a>
+<a name='L632'></a><a href='#L632'>632</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -705,6 +711,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-yes">13x</span>
@@ -999,6 +1007,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1333,6 +1345,8 @@ const Dashboard: React.FC = () =&gt; {
   const [auditorStats, setAuditorStats] = useState&lt;any&gt;(null);
   const [recentLogs, setRecentLogs] = useState&lt;any[]&gt;([]);
   const [recentDocs, setRecentDocs] = useState&lt;any[]&gt;([]);
+  const hasResearchActivity = stats.activeDocuments &gt; 0;
+  const hasAuditActivity = (auditorStats?.totalEvents ?? 0) &gt; 0;
 &nbsp;
 &nbsp;
   useEffect(() =&gt; {
@@ -1441,8 +1455,8 @@ const Dashboard: React.FC = () =&gt; {
                   &lt;i className="bi bi-file-earmark-text stat-icon" style={{ color: 'var(--ed-purple-light)' }}&gt;&lt;/i&gt;
                 &lt;/span&gt;
                 &lt;div className="stat-body"&gt;
-                  &lt;span className="stat-value"&gt;{stats.activeDocuments || 12}&lt;/span&gt;
-                  &lt;span className="stat-trend" style={{ background: 'rgba(16, 185, 129, 0.1)', color: 'var(--ed-status-success)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}&gt;+1&lt;/span&gt;
+                  &lt;span className="stat-value"&gt;{stats.activeDocuments}&lt;/span&gt;
+                  &lt;span className="stat-trend" style={{ background: 'var(--border)', color: 'var(--ed-text-muted)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}&gt;total atual&lt;/span&gt;
                 &lt;/div&gt;
               &lt;/div&gt;
             &lt;/div&gt;
@@ -1454,7 +1468,7 @@ const Dashboard: React.FC = () =&gt; {
                   &lt;i className="bi bi-clock stat-icon" style={{ color: 'var(--ed-orange)' }}&gt;&lt;/i&gt;
                 &lt;/div&gt;
                 &lt;div className="stat-body"&gt;
-                  &lt;span className="stat-value"&gt;{stats.pendingReview || 2}&lt;/span&gt;
+                  &lt;span className="stat-value"&gt;{stats.pendingReview}&lt;/span&gt;
                   &lt;span className="stat-trend" style={{ background: 'var(--border)', color: 'var(--ed-text-muted)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}&gt;aguardando&lt;/span&gt;
                 &lt;/div&gt;
               &lt;/div&gt;
@@ -1463,12 +1477,12 @@ const Dashboard: React.FC = () =&gt; {
             &lt;div className="col-12 col-sm-6 col-xl-3"&gt;
               &lt;div className="stat-card h-100 m-0"&gt;
                 &lt;span className="stat-header"&gt;
-                  Aprovados
+                  Progresso da pesquisa
                   &lt;i className="bi bi-check-circle stat-icon" style={{ color: 'var(--ed-status-success)' }}&gt;&lt;/i&gt;
                 &lt;/span&gt;
                 &lt;div className="stat-body"&gt;
-                  &lt;span className="stat-value"&gt;8&lt;/span&gt;
-                  &lt;span className="stat-trend" style={{ background: 'rgba(16, 185, 129, 0.1)', color: 'var(--ed-status-success)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}&gt;+2 este mês&lt;/span&gt;
+                  &lt;span className="stat-value"&gt;{stats.researchProgress}%&lt;/span&gt;
+                  &lt;span className="stat-trend" style={{ background: 'rgba(16, 185, 129, 0.1)', color: 'var(--ed-status-success)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}&gt;atualizado&lt;/span&gt;
                 &lt;/div&gt;
               &lt;/div&gt;
             &lt;/div&gt;
@@ -1480,8 +1494,8 @@ const Dashboard: React.FC = () =&gt; {
                   &lt;i className="bi bi-shield-check stat-icon" style={{ color: 'var(--ed-status-info)' }}&gt;&lt;/i&gt;
                 &lt;/span&gt;
                 &lt;div className="stat-body"&gt;
-                  &lt;span className="stat-value"&gt;98%&lt;/span&gt;
-                  &lt;span className="stat-trend" style={{ background: 'rgba(59, 130, 246, 0.1)', color: 'var(--ed-status-info)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}&gt;ótimo&lt;/span&gt;
+                  &lt;span className="stat-value"&gt;{stats.complianceScore}%&lt;/span&gt;
+                  &lt;span className="stat-trend" style={{ background: 'rgba(59, 130, 246, 0.1)', color: 'var(--ed-status-info)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}&gt;calculado&lt;/span&gt;
                 &lt;/div&gt;
               &lt;/div&gt;
             &lt;/div&gt;
@@ -1544,8 +1558,8 @@ const Dashboard: React.FC = () =&gt; {
                   &lt;i className="bi bi-file-earmark-text stat-icon" style={{ color: 'var(--ed-purple-light)' }}&gt;&lt;/i&gt;
                 &lt;/span&gt;
                 &lt;div className="stat-body"&gt;
-                  &lt;span className="stat-value"&gt;{stats.activeDocuments || 24}&lt;/span&gt;
-                  &lt;span className="stat-trend" style={{ background: 'rgba(16, 185, 129, 0.1)', color: 'var(--ed-status-success)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}&gt;+3&lt;/span&gt;
+                  &lt;span className="stat-value"&gt;{stats.activeDocuments}&lt;/span&gt;
+                  &lt;span className="stat-trend" style={{ background: 'var(--border)', color: 'var(--ed-text-muted)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}&gt;total atual&lt;/span&gt;
                 &lt;/div&gt;
               &lt;/div&gt;
             &lt;/div&gt;
@@ -1557,8 +1571,8 @@ const Dashboard: React.FC = () =&gt; {
                   &lt;i className="bi bi-clock stat-icon" style={{ color: 'var(--ed-orange)' }}&gt;&lt;/i&gt;
                 &lt;/div&gt;
                 &lt;div className="stat-body"&gt;
-                  &lt;span className="stat-value"&gt;{stats.pendingReview || 5}&lt;/span&gt;
-                  &lt;span className="stat-trend" style={{ background: 'rgba(16, 185, 129, 0.1)', color: 'var(--ed-status-success)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}&gt;-1&lt;/span&gt;
+                  &lt;span className="stat-value"&gt;{stats.pendingReview}&lt;/span&gt;
+                  &lt;span className="stat-trend" style={{ background: 'var(--border)', color: 'var(--ed-text-muted)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}&gt;total atual&lt;/span&gt;
                 &lt;/div&gt;
               &lt;/div&gt;
             &lt;/div&gt;
@@ -1570,8 +1584,8 @@ const Dashboard: React.FC = () =&gt; {
                   &lt;i className="bi bi-shield-check stat-icon" style={{ color: 'var(--ed-status-success)' }}&gt;&lt;/i&gt;
                 &lt;/span&gt;
                 &lt;div className="stat-body"&gt;
-                  &lt;span className="stat-value"&gt;{stats.complianceScore || 92}%&lt;/span&gt;
-                  &lt;span className="stat-trend" style={{ background: 'rgba(16, 185, 129, 0.1)', color: 'var(--ed-status-success)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}&gt;+4 pts&lt;/span&gt;
+                  &lt;span className="stat-value"&gt;{stats.complianceScore}%&lt;/span&gt;
+                  &lt;span className="stat-trend" style={{ background: 'var(--border)', color: 'var(--ed-text-muted)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}&gt;calculado&lt;/span&gt;
                 &lt;/div&gt;
               &lt;/div&gt;
             &lt;/div&gt;
@@ -1583,8 +1597,8 @@ const Dashboard: React.FC = () =&gt; {
                   &lt;i className="bi bi-graph-up stat-icon" style={{ color: 'var(--ed-status-info)' }}&gt;&lt;/i&gt;
                 &lt;/span&gt;
                 &lt;div className="stat-body"&gt;
-                  &lt;span className="stat-value"&gt;{stats.researchProgress || 68}%&lt;/span&gt;
-                  &lt;span className="stat-trend" style={{ background: 'rgba(59, 130, 246, 0.1)', color: 'var(--ed-status-info)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}&gt;no prazo&lt;/span&gt;
+                  &lt;span className="stat-value"&gt;{stats.researchProgress}%&lt;/span&gt;
+                  &lt;span className="stat-trend" style={{ background: 'var(--border)', color: 'var(--ed-text-muted)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}&gt;calculado&lt;/span&gt;
                 &lt;/div&gt;
               &lt;/div&gt;
             &lt;/div&gt;
@@ -1593,7 +1607,7 @@ const Dashboard: React.FC = () =&gt; {
       &lt;/div&gt;
 &nbsp;
       {/* 2. BARRA DE ALERTA DE GOVERNANÇA (FLEXBOX RESPONSIVO) */}
-      {user?.role === 'RESEARCHER' ? (
+      {user?.role === 'RESEARCHER' &amp;&amp; hasResearchActivity ? (
         &lt;div className="governance-alert d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-4" style={{ background: 'linear-gradient(90deg, #f58a07 0%, #ffb057 100%)', boxShadow: '0 4px 15px rgba(245, 138, 7, 0.3)' }}&gt;
           &lt;div className="alert-content flex-grow-1"&gt;
             &lt;div className="alert-icon flex-shrink-0"&gt;
@@ -1610,7 +1624,7 @@ const Dashboard: React.FC = () =&gt; {
             Corrigir agora &lt;i className="bi bi-arrow-right-short" style={{ fontSize: '18px' }}&gt;&lt;/i&gt;
           &lt;/button&gt;
         &lt;/div&gt;
-      ) : user?.role === 'AUDITOR' ? (
+      ) : user?.role === 'AUDITOR' &amp;&amp; hasAuditActivity ? (
         &lt;div className="governance-alert d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-4" style={{ background: 'linear-gradient(90deg, #dc2626 0%, #ef4444 100%)', boxShadow: '0 4px 15px rgba(220, 38, 38, 0.3)' }}&gt;
           &lt;div className="alert-content flex-grow-1"&gt;
             &lt;div className="alert-icon flex-shrink-0"&gt;
@@ -1634,14 +1648,18 @@ const Dashboard: React.FC = () =&gt; {
               &lt;i className="bi bi-shield-exclamation"&gt;&lt;/i&gt;
             &lt;/div&gt;
             &lt;div className="alert-text-container"&gt;
-              &lt;span className="alert-title"&gt;ALERTA DE GOVERNANÇA GERAL&lt;/span&gt;
+              &lt;span className="alert-title"&gt;PRÓXIMO PASSO&lt;/span&gt;
               &lt;span className="alert-desc"&gt;
-                2 documentos do seu laboratório têm seções de metodologia incompletas e 1 dataset precisa de anonimização LGPD antes da publicação.
+                {user?.role === 'RESEARCHER'
+                  ? 'Envie seu primeiro documento para iniciar a trilha de pesquisa e as métricas do painel.'
+                  : user?.role === 'ADVISOR'
+                    ? 'Associe-se a um projeto para acompanhar submissões e orientar pesquisadores.'
+                    : 'Consulte os logs de auditoria para acompanhar eventos e indicadores de conformidade.'}
               &lt;/span&gt;
             &lt;/div&gt;
           &lt;/div&gt;
-          &lt;button className="btn-alert text-nowrap flex-shrink-0 mt-3 mt-md-0 w-100 w-md-auto" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', border: 'none', padding: '8px 20px', borderRadius: '8px', fontWeight: 600, cursor: 'pointer', background: 'var(--ed-purple-main)', color: 'white' }} onClick={() =&gt; navigate('/trail')}&gt;
-            Ver detalhes &lt;i className="bi bi-arrow-right-short" style={{ fontSize: '18px', marginLeft: '4px' }}&gt;&lt;/i&gt;
+          &lt;button className="btn-alert text-nowrap flex-shrink-0 mt-3 mt-md-0 w-100 w-md-auto" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', border: 'none', padding: '8px 20px', borderRadius: '8px', fontWeight: 600, cursor: 'pointer', background: 'var(--ed-purple-main)', color: 'white' }} onClick={() =&gt; navigate(user?.role === 'RESEARCHER' ? <span class="branch-0 cbranch-no" title="branch not covered" >'/documentos' : u</span>ser?.role === 'ADVISOR' ? '/projects' : <span class="branch-1 cbranch-no" title="branch not covered" >'/audit-logs')</span>}&gt;
+            Começar &lt;i className="bi bi-arrow-right-short" style={{ fontSize: '18px', marginLeft: '4px' }}&gt;&lt;/i&gt;
           &lt;/button&gt;
         &lt;/div&gt;
       )}
@@ -1764,7 +1782,7 @@ const Dashboard: React.FC = () =&gt; {
                 &lt;/div&gt;
                 &lt;div className="score-content"&gt;
                   &lt;div className="score-circle"&gt;
-                    &lt;span className="score-number"&gt;98&lt;/span&gt;
+                    &lt;span className="score-number"&gt;{stats.complianceScore}&lt;/span&gt;
                     &lt;span className="score-label-small"&gt;PONTOS&lt;/span&gt;
                   &lt;/div&gt;
                   &lt;div className="score-breakdown"&gt;
@@ -1872,7 +1890,7 @@ const Dashboard: React.FC = () =&gt; {
                 &lt;/div&gt;
                 &lt;div className="score-content"&gt;
                   &lt;div className="score-circle"&gt;
-                    &lt;span className="score-number"&gt;92&lt;/span&gt;
+                    &lt;span className="score-number"&gt;{stats.complianceScore}&lt;/span&gt;
                     &lt;span className="score-label-small"&gt;PONTOS&lt;/span&gt;
                   &lt;/div&gt;
                   &lt;div className="score-breakdown"&gt;
@@ -1945,7 +1963,7 @@ export default Dashboard;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-07-13T04:36:27.171Z
+                at 2026-07-13T06:10:20.840Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

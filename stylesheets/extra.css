@@ -1205,7 +1205,8 @@ div[align="center"] .md-typeset__table {
   color: var(--md-primary-fg-color);
 }
 .md-nav__item .md-nav__link--active {
-  animation: linkPulse 3s infinite;
+  animation: none;
+  font-weight: 700;
 }
 @keyframes linkPulse {
   0% { text-shadow: 0 0 0 transparent; }
@@ -1230,7 +1231,7 @@ div[align="center"] .md-typeset__table {
   border-radius: 8px;
 }
 .md-typeset img:not(.twemoji):not(.emojione):hover {
-  transform: scale(1.03);
+  transform: scale(1.01);
   box-shadow: 0 15px 35px rgba(0,0,0,0.15);
   z-index: 10;
   position: relative;
@@ -1257,7 +1258,7 @@ div[align="center"] .md-typeset__table {
 }
 .md-typeset table tbody tr:hover {
   background-color: var(--glass-bg);
-  transform: scale(1.01);
+  transform: none;
   box-shadow: 0 4px 15px rgba(0,0,0,0.05);
   z-index: 2;
   position: relative;
