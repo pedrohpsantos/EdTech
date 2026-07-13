@@ -444,7 +444,8 @@ jobs:
         id: auth
         uses: google-github-actions/auth@v3
         with:
-          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+          workload_identity_provider: projects/128660331605/locations/global/workloadIdentityPools/pool-1d-edt3ch/providers/github-actions-provider
+          service_account: edtech-backend@edtech-storage-501117.iam.gserviceaccount.com
       - name: Setup Cloud SDK
         uses: google-github-actions/setup-gcloud@v3
       - name: Setup Terraform
@@ -533,7 +534,8 @@ jobs:
         id: auth
         uses: google-github-actions/auth@v3
         with:
-          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+          workload_identity_provider: projects/128660331605/locations/global/workloadIdentityPools/pool-1d-edt3ch/providers/github-actions-provider
+          service_account: edtech-backend@edtech-storage-501117.iam.gserviceaccount.com
       - name: Set up Node 24
         uses: actions/setup-node@v6
         with:
