@@ -176,6 +176,7 @@ resource "google_cloud_run_v2_job" "flyway_migration" {
   name     = "${var.service_name}-migration"
   location = var.location
   client   = "terraform"
+  deletion_protection = false
 
   template {
     template {
