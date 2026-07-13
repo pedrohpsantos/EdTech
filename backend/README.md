@@ -1,87 +1,64 @@
-# ⚙️ EdTech Backend
+# Backend — API EdTech
 
-![Java](https://img.shields.io/badge/Java-21_LTS-007396?style=for-the-badge&logo=openjdk&logoColor=white)
-![Spring Boot](https://img.shields.io/badge/Spring_Boot-4.1-6DB33F?style=for-the-badge&logo=springboot&logoColor=white)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-18-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
-![Security](https://img.shields.io/badge/Security-JWT-red?style=for-the-badge&logo=springsecurity)
+![Java](https://img.shields.io/badge/Java-007396?logo=openjdk&logoColor=white)
+![Spring Boot](https://img.shields.io/badge/Spring_Boot-6DB33F?logo=springboot&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?logo=postgresql&logoColor=white)
 
-API RESTful do EdTech desenvolvida em **Java 21** com **Spring Boot 4.1**. Responsável pelas regras de negócio, autenticação, controle de acesso e persistência de dados.
+API REST em Java 21 e Spring Boot. Concentra as regras de negócio, autenticação, autorização, auditoria, armazenamento de arquivos e integração com Cloud SQL/GCS.
 
-## Arquitetura em Camadas
+## Autenticação e segurança
 
-| Camada | Pacote | Responsabilidade |
-| :--- | :--- | :--- |
-| Controllers | `/controller` | Recepção de requisições HTTP, validação de entrada (Bean Validation) e serialização de resposta |
-| Services | `/service` | Regras de negócio e coordenação de transações |
-| Repositories | `/repository` | Acesso ao banco de dados via Spring Data JPA |
-| Configurações | `/config` | Segurança (CORS, JWT), beans de infraestrutura e integração com GCS |
+- A sessão é um JWT entregue no cookie `jwt`, com `HttpOnly`, `Secure` e `SameSite=Strict`.
+- O cliente deve enviar credenciais de cookie (`withCredentials` no frontend). Não há token JWT no `localStorage`.
+- As rotas de autenticação e recuperação têm rate limiting; respostas `429` devem ser tratadas pelo cliente.
+- A API fornece `X-Request-ID`, HSTS, CSP, `X-Frame-Options: DENY` e `X-Content-Type-Options: nosniff`.
+- CORS é limitado à origem configurada em `CORS_ALLOWED_ORIGINS`.
 
----
+## Rotas principais
 
-## Segurança
+| Área | Rota base | Exemplos |
+| --- | --- | --- |
+| Autenticação | `/api/auth` | cadastro, verificação, login, 2FA, recuperação, logout e `/me` |
+| Projetos | `/api/projects` | criar, listar e adicionar membros |
+| Documentos | `/api/documents` | upload multipart, listagem, download, revisão, comentários e auditoria por documento |
+| Auditoria | `/api/audit-logs` | consulta paginada e exportação CSV para Auditor |
+| Painel | `/api/dashboard` | métricas e conformidade |
+| Laboratório | `/api/v1/laboratory` | emissão e uso de tokens de vínculo |
+| Operação | `/actuator/health` | health check público |
 
-- **JWT via Cabeçalho:** A comunicação entre SPA e API utiliza tokens no cabeçalho `Authorization` (Bearer), sem uso de cookies e anulando riscos de CSRF.
-- **CORS Restrito:** Apenas origens cadastradas explicitamente têm permissão de consumir a API.
-- **Rate Limiting (Bucket4j):** Endpoints de autenticação bloqueiam IPs após 5 tentativas por minuto (HTTP 429).
-- **Auditoria:** Operações críticas (upload, download, aprovação, rejeição) geram registros imutáveis na trilha de auditoria, com exportação CSV por documento.
+Em desenvolvimento, a especificação pode ser explorada em [Swagger UI](http://localhost:8080/swagger-ui.html). Em produção, a interface OpenAPI fica desabilitada.
 
----
+## Desenvolvimento local
 
-## Documentos e Auditoria
-
-O módulo de documentos aceita uploads `multipart/form-data` nos formatos:
-
-| Extensão | Content-Type esperado | Uso |
-| :--- | :--- | :--- |
-| `.pdf` | `application/pdf` | Artigos, teses e relatórios acadêmicos |
-| `.csv` | `text/csv` | Datasets tabulares |
-| `.json` | `application/json` | Datasets estruturados |
-
-Endpoints principais:
-
-| Método | Rota | Descrição |
-| :---: | :--- | :--- |
-| `POST` | `/api/documents` | Faz upload de documento ou dataset vinculado a um projeto |
-| `GET` | `/api/documents` | Lista documentos com filtros por projeto, título, status e paginação |
-| `GET` | `/api/documents/{id}/download` | Retorna URL assinada para download autorizado |
-| `GET` | `/api/documents/{id}/audit/export?format=csv` | Exporta a trilha de auditoria do documento em CSV |
-| `PATCH` | `/api/documents/{id}/status` | Aprova ou rejeita documento em revisão |
-| `DELETE` | `/api/documents/{id}` | Remove documento em rascunho pelo autor |
-
----
-
-## Setup Local
-
-**Pré-requisitos:**
-- JDK 21
-- Maven 3.9+
-- PostgreSQL em execução (pode ser iniciado via Docker Compose em `/infra`)
+Pré-requisitos: JDK 21. Para banco, variáveis e serviços auxiliares, prefira o [Docker Compose](../infra/README.md).
 
 ```bash
-# Compile e instale as dependências sem executar os testes
-./mvnw clean install -DskipTests
+cd backend
 
-# Inicie a aplicação com o perfil de desenvolvimento
+# Unix/macOS
 ./mvnw spring-boot:run
+
+# Windows PowerShell
+.\mvnw.cmd spring-boot:run
 ```
 
-A forma recomendada para desenvolvimento local é utilizar o Docker Compose disponível em `/infra`, que provisiona automaticamente o banco de dados e as dependências de infraestrutura. Em ambiente produtivo, as migrações estruturais do banco (Flyway) não rodam na inicialização da API, mas sim via um **Cloud Run Job** isolado para evitar falhas de concorrência.
+Para executar sem Docker, copie `.env.example`, configure PostgreSQL e SMTP de desenvolvimento e exporte as variáveis antes de iniciar a aplicação.
 
-**Documentação da API:**
-Com a aplicação em execução, acesse o [Swagger UI](http://localhost:8080/swagger-ui.html) para explorar os endpoints e interagir com a especificação OpenAPI dinamicamente.
-
----
-
-## Testes
+## Validações
 
 ```bash
-# Executar todos os testes unitários e de integração
-./mvnw test
+# testes e cobertura JaCoCo
+./mvnw clean test jacoco:report -B
 
-# Gerar relatório de cobertura JaCoCo (mínimo: 80%)
-./mvnw test jacoco:report
+# qualidade estática
+./mvnw compile checkstyle:check spotbugs:check -B
+
+# mutação
+./mvnw test-compile org.pitest:pitest-maven:mutationCoverage -B
 ```
 
-O relatório de cobertura é gerado em `target/site/jacoco/index.html`. A pipeline de CI bloqueia merges com cobertura abaixo de **80% de instruções** e **80% de branches**.
+Os relatórios locais ficam em `target/site/jacoco/` e `target/pit-reports/`. A CI também executa OWASP Dependency-Check.
 
-Novos endpoints devem vir acompanhados de testes unitários ou de integração antes de serem submetidos via PR.
+## Produção
+
+O deploy é realizado pela pipeline GitHub Actions: a imagem é publicada no Artifact Registry, o Job Flyway é executado e o Terraform atualiza o Cloud Run. Não execute migrações diretamente na inicialização da API de produção.

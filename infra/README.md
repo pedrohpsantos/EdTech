@@ -1,91 +1,66 @@
-# ☁️ EdTech Infraestrutura
+# Infraestrutura EdTech
 
-![Docker](https://img.shields.io/badge/Docker-24.0-2496ED?style=for-the-badge&logo=docker&logoColor=white)
-![Google Cloud](https://img.shields.io/badge/GCP-Cloud_Run-4285F4?style=for-the-badge&logo=googlecloud&logoColor=white)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-18-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
-![Terraform](https://img.shields.io/badge/Terraform-IaC-7B42BC?style=for-the-badge&logo=terraform&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)
+![Terraform](https://img.shields.io/badge/Terraform-7B42BC?logo=terraform&logoColor=white)
+![Google Cloud](https://img.shields.io/badge/Google_Cloud-4285F4?logo=googlecloud&logoColor=white)
 
-Este diretório (`/infra`) contém a configuração de infraestrutura do EdTech como código (IaC): orquestração de containers para desenvolvimento local e definições de deploy para o ambiente de produção no GCP.
+Este diretório reúne o ambiente local Docker Compose e a infraestrutura GCP declarada em Terraform.
 
-## Conteúdo do Diretório
+## Organização
 
-| Arquivo / Pasta | Descrição |
-| :--- | :--- |
-| `dev/docker-compose.yml` | Orquestra os serviços de Backend, Frontend e PostgreSQL para o ambiente local |
-| `dev/.env.example` | Template das variáveis de ambiente necessárias (nunca commitar o `.env` real) |
-| `dev/database/schema.sql` | Schema SQL de referência do banco de dados |
-| `prod/docker-compose.prod.yml`| Configuração docker para teste ou deploy do ambiente produtivo |
-| `prod/cloudbuild.yaml` | Pipeline de build e deploy para o Google Cloud Build |
-| `prod/setup_backup.sh` | Script de provisionamento do backup automático diário no GCS via Cloud Scheduler |
-| `prod/terraform/` | Módulos Terraform parametrizados para Cloud Run, Cloud SQL e Cloud Storage |
+| Caminho | Responsabilidade |
+| --- | --- |
+| `dev/docker-compose.yml` | Frontend, backend, PostgreSQL, Fake GCS e Adminer para desenvolvimento local |
+| `dev/.env.example` | Variáveis obrigatórias do Compose local |
+| `terraform/` | Cloud Run, Cloud Run Job do Flyway, Cloud SQL, GCS e secrets referenciados pelo deploy |
+| `prod/cloudbuild.yaml` | Configuração legada do Cloud Build; não é o fluxo primário de deploy |
+| `prod/setup_backup.sh` | Provisionamento do backup agendado |
 
----
-
-## Ambiente Local (Docker Compose)
+## Ambiente local
 
 ```bash
-# 1. Copie e configure as variáveis de ambiente
-cd dev
-cp .env.example .env
-# Edite o arquivo .env com as credenciais locais
+cp infra/dev/.env.example infra/dev/.env
+# Defina ao menos POSTGRES_PASSWORD e JWT_SECRET.
 
-# 2. Suba todos os serviços em background
-docker compose up --build -d
-
-# 3. Acompanhe os logs do backend
-docker compose logs -f backend
-# Aguarde a mensagem "Started EdTechApplication" para confirmar que o serviço está pronto
-
-# 4. Para encerrar os serviços
-docker compose down
-
-# Para remover também os volumes de dados (banco de dados local)
-docker compose down -v
+docker compose --env-file infra/dev/.env -f infra/dev/docker-compose.yml up --build -d
+docker compose --env-file infra/dev/.env -f infra/dev/docker-compose.yml ps
 ```
 
----
+Serviços locais:
 
-## Produção (GCP)
-Em produção, as imagens Docker são publicadas no **Artifact Registry** do GCP e operadas via **Cloud Run** (Serverless, auto-scaling). O banco de dados é gerenciado pelo **Cloud SQL** (PostgreSQL 18).
+| Serviço | Endereço |
+| --- | --- |
+| Frontend | `http://localhost:5173` |
+| Backend | `http://localhost:8080/actuator/health` |
+| Adminer | `http://localhost:8081` |
+| Fake GCS | `http://localhost:4443` |
 
-Variáveis de ambiente sensíveis (credenciais de banco, chaves JWT) são armazenadas no **Secret Manager** e injetadas diretamente nos serviços do Cloud Run, sem exposição em arquivos de configuração.
+Para encerrar, execute `docker compose --env-file infra/dev/.env -f infra/dev/docker-compose.yml down`. Acrescente `-v` somente se quiser apagar o volume local do PostgreSQL.
 
-O processo de deploy é automatizado pelo `cloudbuild.yaml` e disparado via push na branch `main`.
+## Terraform e ambientes publicados
 
----
+O deploy atual é acionado por GitHub Actions, não por Cloud Build:
 
-## Infraestrutura como Código (Terraform)
+- `develop` atualiza **staging**;
+- `main` atualiza **produção**;
+- a pipeline inicializa o backend GCS, atualiza o Cloud Run Job de migração, executa Flyway e só então atualiza o serviço Cloud Run;
+- frontend é publicado no Firebase Hosting em paralelo ao deploy do backend.
 
-A pasta `infra/terraform` contém a definição parametrizada da infraestrutura de produção. Nenhum identificador sensível ou específico de projeto deve ser versionado; use `terraform.tfvars` local a partir do template:
+O state Terraform é remoto. Nunca execute `apply` contra produção sem uma mudança revisada e uma autenticação GCP autorizada.
 
 ```bash
 cd infra/terraform
-cp terraform.tfvars.example terraform.tfvars
-# Edite project_id, region, artifact_registry, bucket e demais variáveis
-
-terraform init -backend-config="bucket=<bucket-tfstate>"
-terraform plan
-terraform apply
+terraform init -backend-config="bucket=<bucket-de-state>" -backend-config="prefix=<prefix-do-ambiente>"
+terraform fmt -check
+terraform validate
+terraform plan \
+  -var="project_id=<projeto>" \
+  -var="backend_image_tag=<tag>" \
+  -var="storage_bucket_name=<bucket>"
 ```
 
-Módulos disponíveis:
+Os valores sensíveis ficam no Secret Manager e não devem ser colocados em `terraform.tfvars`, commits ou logs.
 
-| Módulo | Recursos |
-| :--- | :--- |
-| `modules/cloud_run` | Serviço backend escalável, variáveis, integração com storage e **Cloud Run Job** isolado para execução de migrações (Flyway). |
-| `modules/cloud_sql` | Instância PostgreSQL gerenciada |
-| `modules/cloud_storage` | Bucket de arquivos acadêmicos |
+## Backup
 
-O estado remoto deve ficar em um bucket GCS controlado pela equipe de plataforma. O arquivo `terraform.tfvars` real e a pasta `.terraform/` permanecem fora do Git.
-
----
-
-## Backup do Banco de Dados
-
-O backup automático é provisionado pelo script `setup_backup.sh`. Executar uma única vez com um usuário que tenha permissão `roles/owner` ou `roles/iam.securityAdmin`:
-
-```bash
-bash infra/prod/setup_backup.sh
-```
-
-Detalhes da política de backup estão documentados no [ADR-0013](../docs/arquitetura/decisoes_adrs/0013-backup-automatico.md).
+`prod/setup_backup.sh` provisiona o backup agendado. Para verificar a idade dos backups já existentes, use `uv run scripts/backup_status.py` com ADC/gcloud autenticado e `GCP_PROJECT_ID` configurado.

@@ -1,28 +1,20 @@
-# Coleção Postman e Testes de API
+# Coleção Postman da API EdTech
 
-![Postman](https://img.shields.io/badge/Postman-API_Testing-FF6C37?style=for-the-badge&logo=postman&logoColor=white)
-![REST API](https://img.shields.io/badge/API-RESTful-005571?style=for-the-badge)
+`EdTech_Collection.json` é a coleção manual da API. Ela acompanha as rotas efetivas do backend e deve ser atualizada sempre que um contrato HTTP mudar.
 
-Este diretório (`/.postman`) contém a coleção oficial para iteração manual, depuração e validação de contratos da API do EdTech. Ele permite que desenvolvedores reproduzam requisições sistêmicas contra a aplicação sem necessidade de desenvolver scripts dedicados.
+## Importar e configurar
 
-## Escopo da Coleção
+1. Importe `EdTech_Collection.json` no Postman.
+2. Defina `baseUrl` como `http://localhost:8080` para desenvolvimento ou como a URL autorizada do ambiente publicado.
+3. Faça login em `POST {{baseUrl}}/api/auth/login`.
 
-O arquivo `EdTech_Collection.json` abrange todos os cenários transacionais e operacionais consolidados no sistema:
+O backend estabelece a sessão no cookie `jwt` (`HttpOnly`). Portanto, não copie um JWT para variável ou cabeçalho manualmente: use o cookie jar do Postman e habilite o envio de cookies para o domínio da API.
 
-- **Autenticação:** Emissão de tokens JWT (Bearer Token) e gestão de sessão via cabeçalho HTTP `Authorization`.
-- **Domínio de Projetos e Usuários:** Operações CRUD aplicadas a perfis, fluxos de vinculação de laboratório e acompanhamento de pesquisas.
-- **Armazenamento e Upload:** Operações de armazenamento externo via *multipart/form-data*.
-- **Governança:** Acesso restrito e paginação das matrizes da Trilha de Auditoria.
+## Cobertura atual
 
----
+- autenticação, cadastro/verificação e recuperação de senha;
+- projetos e documentos;
+- comentários, revisão e exportações de auditoria;
+- vínculo de laboratório em `/api/v1/laboratory`.
 
-## Importação e Configuração de Ambiente
-
-Para aferir ou testar a API na sua máquina local:
-
-1. Importe o arquivo `EdTech_Collection.json` utilizando o Postman (ou software compatível como Insomnia).
-2. Estabeleça um **Environment** (*Ambiente*) e declare a variável base de rotas `{{base_url}}`.
-   - Para instâncias locais padrão: `http://localhost:8080`
-3. **Autenticação de Rota:** Realize a chamada ao endpoint de Login. O token JWT retornado no corpo da resposta deve ser incluído no cabeçalho `Authorization: Bearer <token>` em todas as requisições subsequentes. O Postman pode ser configurado para automatizar essa inserção via aba *Authorization*.
-
-> A inobservância das regras de negócio ou omissão de campos obrigatórios resultará em respostas estruturadas `400 Bad Request`. Respostas arbitrárias do tipo `500 Internal Server Error` representam anomalias na blindagem de entrada e devem ser reportadas como Issues na rastreabilidade do GitHub.
+Use apenas contas de desenvolvimento/demonstração. A coleção não substitui testes automatizados e não deve ser executada como carga contra produção.

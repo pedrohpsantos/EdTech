@@ -1,44 +1,36 @@
-# 📊 Scripts de Telemetria e Análise
+# Scripts operacionais
 
-![Python](https://img.shields.io/badge/Python-Analytics-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![Pandas](https://img.shields.io/badge/Pandas-Data-150458?style=for-the-badge&logo=pandas&logoColor=white)
+Scripts de suporte administrativo e de desenvolvimento. Eles não participam do fluxo da aplicação em tempo de execução.
 
-Este diretório (`/scripts`) armazena ferramentas construídas em **Python** voltadas para telemetria, extração de dados e análises gerenciais da plataforma EdTech. 
+## `backup_status.py`
 
-O foco destes utilitários é a inteligência de dados: fornecer aos usuários com perfil de Orientador métricas claras sobre a utilização do sistema, acompanhamento de projetos e engajamento nas linhas de pesquisa.
+Consulta o bucket `edtech-backups-<projeto>` e falha quando o backup mais recente tem mais de 25 horas. É um comando somente leitura.
 
-## Escopo das Ferramentas
-
-Os scripts operam sob o gerenciador `uv`, garantindo isolamento de dependências e previsibilidade em qualquer ambiente de execução.
-
-- **Geração de Relatórios Consolidados:** Extração quantitativa de documentos (pdfs, datasets CSV/JSON, volumes aprovados, pendentes e rejeitados) segmentados por projeto.
-- **Telemetria de Usuários:** Monitoramento de acessos, frequência de submissões e funil de conversão de documentos.
-- **Processamento de Dados:** Consolidação de métricas provenientes do Banco de Dados (PostgreSQL) e da API para exportação ou exibição em painéis analíticos.
-
----
-
-## Execução Padrão
-
-A execução deve ocorrer através do utilitário `uv run` a partir do diretório raiz do projeto, para que dependências isoladas (como `pandas`, `requests` ou `matplotlib`) sejam resolvidas automaticamente sem interferência no ambiente global Python.
+Pré-requisitos: Python 3.11+, [uv](https://docs.astral.sh/uv/), credenciais ADC/gcloud com acesso de leitura ao bucket e projeto configurado.
 
 ```bash
-# Execução a partir da raiz do monorepo
-uv run scripts/telemetry/main.py --token "<JWT-de-uma-conta-autorizada>"
+$env:GCP_PROJECT_ID = "edtech-storage-501117" # PowerShell
+uv run scripts/backup_status.py
 ```
 
-O comando consulta apenas `GET /api/documents` e gera um resumo agregado por status, tipo e projeto.
-Para salvar o resultado sem expor metadados individuais, use:
+Em shells POSIX:
 
 ```bash
-uv run scripts/telemetry/main.py --token "<JWT>" --output reports/telemetry.json
+GCP_PROJECT_ID=edtech-storage-501117 uv run scripts/backup_status.py
 ```
 
----
+## `populate_demo.py`
 
-## Diretrizes de Desenvolvimento de Scripts
+Insere as três contas demo no PostgreSQL local, caso ainda não existam: Pesquisador, Orientador e Auditor. O script conecta diretamente ao banco e usa valores locais fixos; não execute contra staging ou produção.
 
-A criação de novos scripts de análise deve seguir normas estritas de integridade de dados e segurança da informação:
+```bash
+python scripts/populate_demo.py
+```
 
-1. **Acesso Somente-Leitura:** Scripts de telemetria e análise não podem alterar dados produtivos em nenhuma hipótese. As operações devem consumir bases de leitura (*Read Replicas*) no PostgreSQL ou interagir unicamente via requisições `GET` na API autenticada.
-2. **Proteção e Anonimização (LGPD):** Informações de identificação pessoal (PII) devem ser anonimizadas ou agregadas. É proibido o vazamento de dados sensíveis em extrações brutas (ex: geração de `.csv` indiscriminada).
-3. **Gestão Dinâmica de Dependências:** Declarações de dependência devem estar integradas ao escopo do script (via PEP 723 - *inline script metadata*), permitindo que o `uv` construa o contexto sob demanda de maneira autossuficiente e replicável.
+Antes, ajuste os parâmetros de conexão do próprio script para o banco local em uso. Para uma carga mais completa, prefira o seeder da aplicação quando disponível.
+
+## Diretrizes
+
+- Não grave segredos, tokens ou dados pessoais em saídas/arquivos de relatório.
+- Scripts operacionais de produção devem ser idempotentes, documentados e executados com a menor permissão possível.
+- Não adicione acessos de escrita a dados publicados sem aprovação explícita e trilha de auditoria.

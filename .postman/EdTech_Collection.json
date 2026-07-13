@@ -1,180 +1,99 @@
 {
   "info": {
     "name": "EdTech API",
-    "description": "Postman Collection for EdTech Monolith API",
+    "description": "Coleção manual da API EdTech. O login estabelece um cookie HttpOnly; use o cookie jar do Postman em vez de copiar tokens.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
     {
-      "name": "Authentication",
+      "name": "Autenticação",
       "item": [
         {
           "name": "Login",
           "request": {
             "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"email\": \"admin@edtech.com\",\n  \"password\": \"admin123\"\n}"
-            },
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/auth/login",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "auth",
-                "login"
-              ]
-            }
-          }
-        }
-      ]
-    },
-    {
-      "name": "Documents",
-      "item": [
-        {
-          "name": "Upload Document",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{jwt_token}}"
-              }
-            ],
-            "body": {
-              "mode": "formdata",
-              "formdata": [
-                {
-                  "key": "file",
-                  "type": "file",
-                  "src": []
-                }
-              ]
-            },
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/documents/upload",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "documents",
-                "upload"
-              ]
-            }
-          }
-        }
-      ]
-    },
-    {
-      "name": "Audit",
-      "item": [
-        {
-          "name": "Get Audit Logs",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{jwt_token}}"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/audit",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "audit"
-              ]
-            }
-          }
-        }
-      ]
-    },
-    {
-      "name": "Laboratory",
-      "item": [
-        {
-          "name": "Get Laboratory Token",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{jwt_token}}"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/laboratory/token",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "laboratory",
-                "token"
-              ]
-            }
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"pesquisador.demo@unb.br\",\n  \"password\": \"Demo@1234\"\n}" },
+            "url": "{{baseUrl}}/api/auth/login"
           }
         },
         {
-          "name": "Join Laboratory",
+          "name": "Perfil da sessão atual",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/auth/me" }
+        },
+        {
+          "name": "Solicitar recuperação de senha",
           "request": {
             "method": "POST",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{jwt_token}}"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"pesquisador.demo@unb.br\"\n}" },
+            "url": "{{baseUrl}}/api/auth/recovery/request"
+          }
+        },
+        {
+          "name": "Logout",
+          "request": { "method": "POST", "url": "{{baseUrl}}/api/auth/logout" }
+        }
+      ]
+    },
+    {
+      "name": "Projetos e documentos",
+      "item": [
+        {
+          "name": "Listar projetos",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/projects?page=0&size=20" }
+        },
+        {
+          "name": "Listar documentos",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/documents?page=0&size=20" }
+        },
+        {
+          "name": "Enviar documento",
+          "request": {
+            "method": "POST",
             "body": {
-              "mode": "raw",
-              "raw": "{\n  \"token\": \"123456\"\n}"
-            },
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/laboratory/join",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "laboratory",
-                "join"
+              "mode": "formdata",
+              "formdata": [
+                { "key": "file", "type": "file", "src": [] },
+                { "key": "title", "type": "text", "value": "Documento de teste" },
+                { "key": "projectId", "type": "text", "value": "{{projectId}}" }
               ]
-            }
+            },
+            "url": "{{baseUrl}}/api/documents"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Governança",
+      "item": [
+        {
+          "name": "Listar auditoria (Auditor)",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/audit-logs?page=0&size=20" }
+        },
+        {
+          "name": "Exportar auditoria CSV (Auditor)",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/audit-logs/export" }
+        },
+        {
+          "name": "Gerar tokens de laboratório (Orientador)",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/v1/laboratory/token" }
+        },
+        {
+          "name": "Vincular ao laboratório",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"token\": \"{{laboratoryToken}}\"\n}" },
+            "url": "{{baseUrl}}/api/v1/laboratory/join"
           }
         }
       ]
     }
   ],
   "variable": [
-    {
-      "key": "baseUrl",
-      "value": "http://localhost:8080"
-    },
-    {
-      "key": "jwt_token",
-      "value": "YOUR_TOKEN_HERE"
-    }
+    { "key": "baseUrl", "value": "http://localhost:8080" },
+    { "key": "projectId", "value": "" },
+    { "key": "laboratoryToken", "value": "" }
   ]
 }

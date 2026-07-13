@@ -1,30 +1,72 @@
-# Integração e Entrega Contínuas (CI/CD)
+# Pipelines do EdTech
 
-![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-Automated-2088FF?style=for-the-badge&logo=github-actions&logoColor=white)
-![CI/CD](https://img.shields.io/badge/CI%2FCD-Active-brightgreen?style=for-the-badge)
-![CodeQL](https://img.shields.io/badge/CodeQL-Security_Scan-black?style=for-the-badge)
+Este diretório contém políticas, templates e automações GitHub Actions. Os workflows estão em `.github/workflows/`.
 
-Este diretório (`.github`) concentra a configuração das esteiras automatizadas do GitHub Actions, além dos templates e políticas que orientam o fluxo de trabalho e a padronização no repositório do EdTech.
+## Workflows
 
-## Estrutura do Diretório
+| Workflow | Gatilho | Responsabilidade |
+| --- | --- | --- |
+| `ci.yml` | push e pull request para `develop`/`main` | validação, deploy e testes pós-deploy |
+| `ci-docs.yml` | mudanças relevantes na `main` | build/publicação do portal MkDocs e relatórios |
+| CodeQL | conforme configuração em `workflows/` | análise de segurança estática |
 
-- **`/workflows`**: Contém os arquivos YAML responsáveis por toda automação de Integração Contínua (CI) e Entrega Contínua (CD).
-- **`PULL_REQUEST_TEMPLATE.md`**: Template obrigatório para submissão de Pull Requests. Padroniza a descrição do que foi alterado e o checklist de aceite técnico.
-- **`ISSUE_TEMPLATE`**: Formulários estruturados para criação padronizada de relatórios de bugs e propostas de funcionalidades.
-- **Políticas e Manuais**: Documentação estática sobre diretrizes e regras de convivência, como `SECURITY.md` (Protocolo de Segurança) e `CODE_OF_CONDUCT.md`.
+## Fluxo de `ci.yml`
 
----
+```mermaid
+flowchart LR
+  B[Backend: 6 validações] --> BA[Backend Approved]
+  F[Frontend: 8 validações] --> FA[Frontend Approved]
+  I[Infra: validate e docker] --> IA[Infra Approved]
+  BA --> DB[Deploy Backend]
+  IA --> DB
+  FA --> DF[Deploy Frontend]
+  IA --> DF
+  DB --> K[k6]
+  DB --> C[Contrato de Segurança API]
+  DB --> E[E2E]
+  DF --> E
+  DB --> L[Lighthouse]
+  DF --> L
+```
 
-## Fluxo Automatizado (CI/CD)
+### Validações paralelas
 
-Toda vez que um código é enviado ou um *Pull Request* é aberto em direção à branch `main` ou `develop`, o sistema dispara as seguintes rotinas de automação:
+- **Backend:** Checkstyle, SpotBugs, build, testes unitários/JaCoCo, PiTest e OWASP Dependency-Check.
+- **Frontend:** lint, type-check, segurança, build, unitários, acessibilidade, componentes e Stryker.
+- **Infra:** formatação/validação Terraform e build/publicação da imagem do backend nos branches de deploy.
 
-1. **Varredura de Segurança (CodeQL):** Análise estática do código buscando vulnerabilidades conhecidas, credenciais expostas e falhas estruturais.
-2. **Qualidade e Testes (CI):** 
-   - No Backend: Instalação das dependências (`mvn verify`), validação do Checkstyle e geração do relatório de cobertura do JaCoCo (que reprova sumariamente *builds* com menos de 80% de alcance).
-   - No Frontend: Execução da suíte de testes do Node.js, validação de componentes e varredura de acessibilidade.
-   - Testes de Carga: Validação de performance automatizada através do disparo do **K6**, atuando contra a API para atestar que o SLO de latência e o *Rate Limiting* seguem respeitados.
-3. **Migração Estrutural:** Execução do **Cloud Run Job** de migração do banco de dados (Flyway) logo antes da virada da release.
-4. **Deploy Contínuo (CD):** Após a aprovação técnica e migração estrutural, a esteira de deploy provisiona as atualizações para o Cloud Run (Backend) e Firebase Hosting (Frontend) de maneira contínua.
+Os jobs `Backend Approved`, `Frontend Approved` e `Infra Approved` são gates: só liberam o deploy quando todas as tarefas da respectiva matriz passam.
 
-> O uso estrito do padrão **Conventional Commits** e a aprovação mandatória nas barreiras de qualidade automatizadas são requisitos básicos para qualquer mesclagem (*merge*) neste repositório.
+### Ambientes de deploy
+
+| Branch | Backend | Frontend |
+| --- | --- | --- |
+| `develop` | Cloud Run staging + Job Flyway staging | Firebase Hosting channel `staging` |
+| `main` | Cloud Run produção + Job Flyway produção | Firebase Hosting produção |
+
+Backend e frontend são independentes e fazem deploy em paralelo. Cada matriz de deploy mostra apenas o ambiente aplicável à branch atual.
+
+### Testes pós-deploy de produção
+
+| Job | Dependência | Artefato |
+| --- | --- | --- |
+| `Prod (Performance)` | Deploy Backend | `k6-summary` |
+| `Prod (API Security Contract)` | Deploy Backend | `api-security-contract-report` |
+| `Prod (E2E)` | Deploy Backend + Frontend | resumo do job/Allure quando aplicável |
+| `Prod (Lighthouse)` | Deploy Backend + Frontend | `lighthouse-report` |
+
+Essa separação evita que k6 e o contrato de API aguardem o frontend, enquanto E2E e Lighthouse só começam quando a aplicação completa está disponível.
+
+## Concorrência e relatórios
+
+- Execuções concorrentes da mesma branch são canceladas em favor do commit mais recente.
+- Deploys têm grupos de concorrência próprios por domínio/ambiente para evitar disputa do state Terraform e releases sobrepostas.
+- Falhas de teste e artefatos ausentes bloqueiam a pipeline; relatórios não são copiados silenciosamente.
+
+## Segurança de credenciais
+
+O workflow usa segredos GitHub para autenticação GCP enquanto a migração para Workload Identity Federation não é concluída. Não imprima, versiona ou replique valores de segredo. Jobs que adotarem WIF precisam de `id-token: write` e devem limitar a identidade ao repositório autorizado.
+
+## Contribuição
+
+Mudanças em workflows exigem validação YAML e revisão cuidadosa de dependências, condições de branch, permissões e caminhos de artefato. Consulte também [CONTRIBUTING.md](CONTRIBUTING.md) e [SECURITY.md](SECURITY.md).
