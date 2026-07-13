@@ -27,6 +27,10 @@ resource "google_secret_manager_secret" "spring_username" {
   }
 }
 
+data "google_secret_manager_secret" "smtp_password" {
+  secret_id = "SMTP_PASSWORD${var.environment_suffix}"
+}
+
 # 2. permissões de acesso para o cloud run
 resource "google_secret_manager_secret_iam_member" "jwt_secret_permission" {
 
@@ -53,6 +57,12 @@ resource "google_secret_manager_secret_iam_member" "spring_username_permission" 
 
   role   = "roles/secretmanager.secretAccessor"
   member = "serviceAccount:${data.google_project.project.number}-compute@developer.gserviceaccount.com"
+}
+
+resource "google_secret_manager_secret_iam_member" "smtp_password_permission" {
+  secret_id = data.google_secret_manager_secret.smtp_password.id
+  role      = "roles/secretmanager.secretAccessor"
+  member    = "serviceAccount:${data.google_project.project.number}-compute@developer.gserviceaccount.com"
 }
 
 
@@ -104,6 +114,36 @@ resource "google_cloud_run_v2_service" "api" {
       env {
         name  = "SPRING_FLYWAY_ENABLED"
         value = "false"
+      }
+
+      env {
+        name  = "SMTP_HOST"
+        value = "smtp.resend.com"
+      }
+      env {
+        name  = "SMTP_PORT"
+        value = "465"
+      }
+      env {
+        name  = "SMTP_USERNAME"
+        value = "resend"
+      }
+      env {
+        name  = "SMTP_SSL_ENABLED"
+        value = "true"
+      }
+      env {
+        name  = "SMTP_FROM"
+        value = "noreply@edtechacademic.com.br"
+      }
+      env {
+        name = "SMTP_PASSWORD"
+        value_source {
+          secret_key_ref {
+            secret  = data.google_secret_manager_secret.smtp_password.id
+            version = "latest"
+          }
+        }
       }
 
       env {

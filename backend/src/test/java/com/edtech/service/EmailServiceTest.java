@@ -30,7 +30,7 @@ class EmailServiceTest {
     verify(mailSender).send(messageCaptor.capture());
 
     SimpleMailMessage captured = messageCaptor.getValue();
-    assertEquals("noreply@edtech.com", captured.getFrom());
+    assertEquals("noreply@edtechacademic.com.br", captured.getFrom());
     assertEquals("test@example.com", captured.getTo()[0]);
     assertEquals("Código de Recuperação de Senha - EdTech", captured.getSubject());
     assertTrue(captured.getText().contains("123456"));

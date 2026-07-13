@@ -3,6 +3,7 @@ package com.edtech.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -17,11 +18,14 @@ public class EmailService {
 
   @Autowired private JavaMailSender mailSender;
 
+  @Value("${SMTP_FROM:noreply@edtechacademic.com.br}")
+  private String fromAddress;
+
   /** Documentação. */
   @Async
   public void sendRecoveryEmail(String toEmail, String otpCode) {
     SimpleMailMessage message = new SimpleMailMessage();
-    message.setFrom("noreply@edtech.com");
+    message.setFrom(resolveFromAddress());
     message.setTo(toEmail);
     message.setSubject("Código de Recuperação de Senha - EdTech");
     message.setText(
@@ -34,16 +38,9 @@ public class EmailService {
             + "Se você não solicitou isso, ignore este e-mail.\n\n"
             + "Equipe EdTech");
 
-    logger.info("======= E-MAIL SIMULADO NO CONSOLE =======");
-    logger.info(
-        "De: noreply@edtech.com\nPara: {}\nAssunto: {}\nCorpo:\n{}",
-        message.getTo()[0],
-        message.getSubject(),
-        message.getText());
-    logger.info("=========================================");
-
     try {
       mailSender.send(message);
+      logger.info("Recovery email dispatched to {}.", toEmail);
     } catch (MailException ex) {
       logger.warn(
           "Não foi possível enviar e-mail real via SMTP "
@@ -55,7 +52,7 @@ public class EmailService {
   @Async
   public void sendVerificationEmail(String toEmail, String otpCode) {
     SimpleMailMessage message = new SimpleMailMessage();
-    message.setFrom("noreply@edtech.com");
+    message.setFrom(resolveFromAddress());
     message.setTo(toEmail);
     message.setSubject("Código de Verificação de Conta - EdTech");
     message.setText(
@@ -68,20 +65,19 @@ public class EmailService {
             + "Se você não solicitou isso, ignore este e-mail.\n\n"
             + "Equipe EdTech");
 
-    logger.info("======= E-MAIL SIMULADO NO CONSOLE =======");
-    logger.info(
-        "De: noreply@edtech.com\nPara: {}\nAssunto: {}\nCorpo:\n{}",
-        message.getTo()[0],
-        message.getSubject(),
-        message.getText());
-    logger.info("=========================================");
-
     try {
       mailSender.send(message);
+      logger.info("Verification email dispatched to {}.", toEmail);
     } catch (MailException ex) {
       logger.warn(
           "Não foi possível enviar e-mail real via SMTP "
               + "(verifique credenciais). Usando apenas simulação no console.");
     }
+  }
+
+  private String resolveFromAddress() {
+    return fromAddress == null || fromAddress.isBlank()
+        ? "noreply@edtechacademic.com.br"
+        : fromAddress;
   }
 }
