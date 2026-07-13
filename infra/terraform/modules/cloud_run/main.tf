@@ -71,7 +71,7 @@ resource "google_cloud_run_v2_service" "api" {
   client_version = "568.0.0"
   name           = var.service_name
   location       = var.location
-  ingress        = "INGRESS_TRAFFIC_ALL"
+  ingress        = "INGRESS_TRAFFIC_INTERNAL_ONLY"
 
 
   template {
