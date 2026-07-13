@@ -3,6 +3,7 @@
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -11,20 +12,23 @@ import org.springframework.stereotype.Service;
 
 /** Documentação para EmailService. */
 @Service
-<span class="fc" id="L14">public class EmailService {</span>
+<span class="fc" id="L15">public class EmailService {</span>
 
-<span class="fc" id="L16">  private static final Logger logger = LoggerFactory.getLogger(EmailService.class);</span>
+<span class="fc" id="L17">  private static final Logger logger = LoggerFactory.getLogger(EmailService.class);</span>
 
   @Autowired private JavaMailSender mailSender;
+
+  @Value(&quot;${SMTP_FROM:noreply@edtechacademic.com.br}&quot;)
+  private String fromAddress;
 
   /** Documentação. */
   @Async
   public void sendRecoveryEmail(String toEmail, String otpCode) {
-<span class="fc" id="L23">    SimpleMailMessage message = new SimpleMailMessage();</span>
-<span class="fc" id="L24">    message.setFrom(&quot;noreply@edtech.com&quot;);</span>
-<span class="fc" id="L25">    message.setTo(toEmail);</span>
-<span class="fc" id="L26">    message.setSubject(&quot;Código de Recuperação de Senha - EdTech&quot;);</span>
-<span class="fc" id="L27">    message.setText(</span>
+<span class="fc" id="L27">    SimpleMailMessage message = new SimpleMailMessage();</span>
+<span class="fc" id="L28">    message.setFrom(resolveFromAddress());</span>
+<span class="fc" id="L29">    message.setTo(toEmail);</span>
+<span class="fc" id="L30">    message.setSubject(&quot;Código de Recuperação de Senha - EdTech&quot;);</span>
+<span class="fc" id="L31">    message.setText(</span>
         &quot;Olá,\n\n&quot;
             + &quot;Você solicitou a recuperação da sua senha na EdTech.\n&quot;
             + &quot;Seu código de segurança (OTP) de 6 dígitos é: &quot;
@@ -34,31 +38,24 @@ import org.springframework.stereotype.Service;
             + &quot;Se você não solicitou isso, ignore este e-mail.\n\n&quot;
             + &quot;Equipe EdTech&quot;);
 
-<span class="fc" id="L37">    logger.info(&quot;======= E-MAIL SIMULADO NO CONSOLE =======&quot;);</span>
-<span class="fc" id="L38">    logger.info(</span>
-        &quot;De: noreply@edtech.com\nPara: {}\nAssunto: {}\nCorpo:\n{}&quot;,
-<span class="fc" id="L40">        message.getTo()[0],</span>
-<span class="fc" id="L41">        message.getSubject(),</span>
-<span class="fc" id="L42">        message.getText());</span>
-<span class="fc" id="L43">    logger.info(&quot;=========================================&quot;);</span>
-
     try {
-<span class="fc" id="L46">      mailSender.send(message);</span>
-<span class="nc" id="L47">    } catch (MailException ex) {</span>
-<span class="nc" id="L48">      logger.warn(</span>
+<span class="fc" id="L42">      mailSender.send(message);</span>
+<span class="fc" id="L43">      logger.info(&quot;Recovery email dispatched to {}.&quot;, toEmail);</span>
+<span class="nc" id="L44">    } catch (MailException ex) {</span>
+<span class="nc" id="L45">      logger.warn(</span>
           &quot;Não foi possível enviar e-mail real via SMTP &quot;
               + &quot;(verifique credenciais). Usando apenas simulação no console.&quot;);
-<span class="fc" id="L51">    }</span>
-<span class="fc" id="L52">  }</span>
+<span class="fc" id="L48">    }</span>
+<span class="fc" id="L49">  }</span>
 
   /** Javadoc. */
   @Async
   public void sendVerificationEmail(String toEmail, String otpCode) {
-<span class="fc" id="L57">    SimpleMailMessage message = new SimpleMailMessage();</span>
-<span class="fc" id="L58">    message.setFrom(&quot;noreply@edtech.com&quot;);</span>
-<span class="fc" id="L59">    message.setTo(toEmail);</span>
-<span class="fc" id="L60">    message.setSubject(&quot;Código de Verificação de Conta - EdTech&quot;);</span>
-<span class="fc" id="L61">    message.setText(</span>
+<span class="fc" id="L54">    SimpleMailMessage message = new SimpleMailMessage();</span>
+<span class="fc" id="L55">    message.setFrom(resolveFromAddress());</span>
+<span class="fc" id="L56">    message.setTo(toEmail);</span>
+<span class="fc" id="L57">    message.setSubject(&quot;Código de Verificação de Conta - EdTech&quot;);</span>
+<span class="fc" id="L58">    message.setText(</span>
         &quot;Olá,\n\n&quot;
             + &quot;Bem-vindo à EdTech!\n&quot;
             + &quot;Seu código de verificação (OTP) de 6 dígitos é: &quot;
@@ -68,21 +65,20 @@ import org.springframework.stereotype.Service;
             + &quot;Se você não solicitou isso, ignore este e-mail.\n\n&quot;
             + &quot;Equipe EdTech&quot;);
 
-<span class="fc" id="L71">    logger.info(&quot;======= E-MAIL SIMULADO NO CONSOLE =======&quot;);</span>
-<span class="fc" id="L72">    logger.info(</span>
-        &quot;De: noreply@edtech.com\nPara: {}\nAssunto: {}\nCorpo:\n{}&quot;,
-<span class="fc" id="L74">        message.getTo()[0],</span>
-<span class="fc" id="L75">        message.getSubject(),</span>
-<span class="fc" id="L76">        message.getText());</span>
-<span class="fc" id="L77">    logger.info(&quot;=========================================&quot;);</span>
-
     try {
-<span class="nc" id="L80">      mailSender.send(message);</span>
-<span class="fc" id="L81">    } catch (MailException ex) {</span>
-<span class="fc" id="L82">      logger.warn(</span>
+<span class="nc" id="L69">      mailSender.send(message);</span>
+<span class="nc" id="L70">      logger.info(&quot;Verification email dispatched to {}.&quot;, toEmail);</span>
+<span class="fc" id="L71">    } catch (MailException ex) {</span>
+<span class="fc" id="L72">      logger.warn(</span>
           &quot;Não foi possível enviar e-mail real via SMTP &quot;
               + &quot;(verifique credenciais). Usando apenas simulação no console.&quot;);
-<span class="nc" id="L85">    }</span>
-<span class="fc" id="L86">  }</span>
+<span class="nc" id="L75">    }</span>
+<span class="fc" id="L76">  }</span>
+
+  private String resolveFromAddress() {
+<span class="pc bpc" id="L79" title="1 of 4 branches missed.">    return fromAddress == null || fromAddress.isBlank()</span>
+<span class="fc" id="L80">        ? &quot;noreply@edtechacademic.com.br&quot;</span>
+<span class="fc" id="L81">        : fromAddress;</span>
+  }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
