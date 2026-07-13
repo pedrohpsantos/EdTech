@@ -61,10 +61,10 @@ O EdTech centraliza o ciclo de vida de documentos acadêmicos em um único repos
 
 | Método | Endpoint | Autenticação | Descrição |
 | :--- | :--- | :---: | :--- |
-| `POST` | `/api/v1/auth/login` | ❌ | Autentica o usuário e retorna o token JWT |
-| `GET` | `/api/v1/documents` | ✅ | Lista os documentos paginados (conforme perfil) |
-| `POST` | `/api/v1/documents/upload` | ✅ | Realiza o upload de novo documento para o GCS |
-| `POST` | `/api/v1/documents/{id}/review` | ✅ | (Orientador) Aprova ou rejeita uma submissão |
+| `POST` | `/api/auth/login` | ❌ | Autentica o usuário e retorna o token JWT |
+| `GET` | `/api/documents` | ✅ | Lista os documentos paginados (conforme perfil) |
+| `POST` | `/api/documents/upload` | ✅ | Realiza o upload de novo documento para o GCS |
+| `POST` | `/api/documents/{id}/review` | ✅ | (Orientador) Aprova ou rejeita uma submissão |
 
 > 📌 Para a especificação OpenAPI completa, inicie a API localmente e acesse o [Swagger UI](http://localhost:8080/swagger-ui.html), ou explore a coleção pronta na pasta `.postman/`.
 

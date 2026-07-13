@@ -34,7 +34,7 @@ Adotamos um **Git Flow Simplificado** em combinação com **Trunk-Based Developm
 | :--- | :--- | :--- |
 | Pastas/Arquivos (Frontend) | `kebab-case` ou `PascalCase` | `user-profile.tsx` / `UserProfile.tsx` |
 | Pastas/Arquivos (Backend Java) | `PascalCase` (Classes) | `DocumentController.java` |
-| Endpoints REST | Nomes no plural, `kebab-case` | `POST /api/v1/documents` |
+| Endpoints REST | Nomes no plural, `kebab-case` | `POST /api/documents` |
 | Variáveis de Ambiente | `UPPER_SNAKE_CASE` | `DATABASE_URL` |
 | Commits | Conventional Commits | `feat: adiciona swagger` |
 

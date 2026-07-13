@@ -57,7 +57,7 @@ theme:
 
 extra:
   announce: >
-    **🚀 Aviso da Equipe:** Confira nosso mais novo [Roadmap do Produto](produto/planejamento/roadmap.md) e as [Atualizações Críticas de Nuvem](https://github.com/pedrohpsantos/EdTech/issues/102).
+    **🚀 Aviso da Equipe:** Confira o [Roadmap do Produto](gestao/planejamento/roadmap.md) e as [atualizações de infraestrutura](https://github.com/pedrohpsantos/EdTech/actions/workflows/ci.yml).
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/pedrohpsantos/EdTech

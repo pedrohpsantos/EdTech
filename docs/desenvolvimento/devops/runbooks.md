@@ -54,7 +54,7 @@ Uma falha abrupta (*crash*) prematura na execução anterior deixou a tabela `fl
 ## 3. Storage GCS: Permissão Negada em Downloads
 
 ### Sintomas
-- A rota `/api/v1/documents/{id}/download` retorna a URL pré-assinada sem erros.
+- A rota `/api/documents/{id}/download` retorna a URL pré-assinada sem erros.
 - Porém, a interface do usuário recebe um erro HTTP `403 AccessDenied` do Google APIs ao abrir o link do arquivo.
 
 ### Causa Comum

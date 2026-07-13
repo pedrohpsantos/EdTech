@@ -37,10 +37,10 @@ Pesquisadores precisam de um lugar seguro, organizado e auditável para armazena
 
 <div class="grid cards" markdown>
 
-- :material-shield-lock: **Autenticação Inquebrável**
+- :material-shield-lock: **Autenticação e Controle de Acesso**
   
     ---
-    Sessões blindadas contra XSS e CSRF usando JWT em cookies `HttpOnly` + `Secure`. A segurança vem primeiro.
+    Autenticação JWT com autorização por perfil, HTTPS em produção e proteções contra abuso nas rotas sensíveis.
 
 - :material-file-upload: **Uploads de Alta Performance**
   
@@ -57,10 +57,10 @@ Pesquisadores precisam de um lugar seguro, organizado e auditável para armazena
     ---
     Logs inalteráveis de logins, uploads, downloads e tentativas de acesso negadas. Tudo gravado no banco de dados.
 
-- :material-api: **API RESTful Escalável**
+- :material-api: **API RESTful Modular**
   
     ---
-    Arquitetura robusta em Spring Boot 4.1 construída para escalar, integrando perfeitamente Frontend e serviços de nuvem.
+    Arquitetura modular em Spring Boot, integrada ao frontend e aos serviços de nuvem.
 
 - :material-google-cloud: **Infraestrutura Cloud-Native**
   
