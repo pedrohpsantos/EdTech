@@ -79,37 +79,43 @@ public class AuthController {
 <span class="fc" id="L79">        .body(new AuthResponseDto(UserResponseDto.from(user), null));</span>
   }
 
+  @PostMapping(&quot;/register/resend&quot;)
+  public ResponseEntity&lt;Void&gt; resendRegistrationCode(@RequestBody VerifyCodeDto request) {
+<span class="nc" id="L84">    userService.resendVerificationCode(request.email());</span>
+<span class="nc" id="L85">    return ResponseEntity.noContent().build();</span>
+  }
+
   /** Documentação. */
   @PostMapping(&quot;/login&quot;)
   public ResponseEntity&lt;?&gt; login(
       @Valid @RequestBody LoginRequestDto request, HttpServletRequest httpRequest) {
-<span class="fc" id="L86">    Bucket bucket = rateLimitingService.resolveBucket(httpRequest.getRemoteAddr());</span>
-<span class="fc bfc" id="L87" title="All 2 branches covered.">    if (!bucket.tryConsume(1)) {</span>
-<span class="fc" id="L88">      throw new RateLimitExceededException(</span>
+<span class="fc" id="L92">    Bucket bucket = rateLimitingService.resolveBucket(httpRequest.getRemoteAddr());</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">    if (!bucket.tryConsume(1)) {</span>
+<span class="fc" id="L94">      throw new RateLimitExceededException(</span>
           &quot;Limite de tentativas excedido. Tente novamente mais tarde.&quot;);
     }
 
-<span class="fc" id="L92">    User user = userService.authenticate(request.email(), request.password());</span>
+<span class="fc" id="L98">    User user = userService.authenticate(request.email(), request.password());</span>
 
-<span class="fc bfc" id="L94" title="All 2 branches covered.">    if (user.isMfaEnabled()) {</span>
-<span class="fc" id="L95">      return ResponseEntity.status(HttpStatus.ACCEPTED)</span>
-<span class="fc" id="L96">          .body(Map.of(&quot;mfaRequired&quot;, true, &quot;email&quot;, user.getEmail()));</span>
+<span class="fc bfc" id="L100" title="All 2 branches covered.">    if (user.isMfaEnabled()) {</span>
+<span class="fc" id="L101">      return ResponseEntity.status(HttpStatus.ACCEPTED)</span>
+<span class="fc" id="L102">          .body(Map.of(&quot;mfaRequired&quot;, true, &quot;email&quot;, user.getEmail()));</span>
     }
 
-<span class="fc" id="L99">    String token = jwtService.generateToken(user);</span>
+<span class="fc" id="L105">    String token = jwtService.generateToken(user);</span>
 
-<span class="fc" id="L101">    org.springframework.http.ResponseCookie cookie =</span>
-<span class="fc" id="L102">        org.springframework.http.ResponseCookie.from(&quot;jwt&quot;, token)</span>
-<span class="fc" id="L103">            .httpOnly(true)</span>
-<span class="fc" id="L104">            .secure(true)</span>
-<span class="fc" id="L105">            .path(&quot;/&quot;)</span>
-<span class="fc" id="L106">            .maxAge(24 * 60 * 60)</span>
-<span class="fc" id="L107">            .sameSite(&quot;Strict&quot;)</span>
-<span class="fc" id="L108">            .build();</span>
+<span class="fc" id="L107">    org.springframework.http.ResponseCookie cookie =</span>
+<span class="fc" id="L108">        org.springframework.http.ResponseCookie.from(&quot;jwt&quot;, token)</span>
+<span class="fc" id="L109">            .httpOnly(true)</span>
+<span class="fc" id="L110">            .secure(true)</span>
+<span class="fc" id="L111">            .path(&quot;/&quot;)</span>
+<span class="fc" id="L112">            .maxAge(24 * 60 * 60)</span>
+<span class="fc" id="L113">            .sameSite(&quot;Strict&quot;)</span>
+<span class="fc" id="L114">            .build();</span>
 
-<span class="fc" id="L110">    return ResponseEntity.ok()</span>
-<span class="fc" id="L111">        .header(org.springframework.http.HttpHeaders.SET_COOKIE, cookie.toString())</span>
-<span class="fc" id="L112">        .body(new AuthResponseDto(UserResponseDto.from(user), null));</span>
+<span class="fc" id="L116">    return ResponseEntity.ok()</span>
+<span class="fc" id="L117">        .header(org.springframework.http.HttpHeaders.SET_COOKIE, cookie.toString())</span>
+<span class="fc" id="L118">        .body(new AuthResponseDto(UserResponseDto.from(user), null));</span>
   }
 
   /** Javadoc. */
@@ -117,62 +123,62 @@ public class AuthController {
   public ResponseEntity&lt;?&gt; verify2FaLogin(
       @Valid @RequestBody com.edtech.dto.Verify2FaLoginDto request,
       HttpServletRequest httpRequest) {
-<span class="fc" id="L120">    Bucket bucket = rateLimitingService.resolveBucket(httpRequest.getRemoteAddr());</span>
-<span class="fc bfc" id="L121" title="All 2 branches covered.">    if (!bucket.tryConsume(1)) {</span>
-<span class="fc" id="L122">      throw new RateLimitExceededException(</span>
+<span class="fc" id="L126">    Bucket bucket = rateLimitingService.resolveBucket(httpRequest.getRemoteAddr());</span>
+<span class="fc bfc" id="L127" title="All 2 branches covered.">    if (!bucket.tryConsume(1)) {</span>
+<span class="fc" id="L128">      throw new RateLimitExceededException(</span>
           &quot;Limite de tentativas excedido. Tente novamente mais tarde.&quot;);
     }
 
-<span class="fc" id="L126">    User user = userService.authenticate(request.email(), request.password());</span>
-<span class="fc bfc" id="L127" title="All 2 branches covered.">    if (!user.isMfaEnabled()) {</span>
-<span class="fc" id="L128">      return ResponseEntity.badRequest().body(&quot;2FA is not enabled for this user.&quot;);</span>
+<span class="fc" id="L132">    User user = userService.authenticate(request.email(), request.password());</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">    if (!user.isMfaEnabled()) {</span>
+<span class="fc" id="L134">      return ResponseEntity.badRequest().body(&quot;2FA is not enabled for this user.&quot;);</span>
     }
 
-<span class="fc" id="L131">    boolean isValid = twoFactorAuthService.verifyCode(user.getMfaSecret(), request.code());</span>
-<span class="fc bfc" id="L132" title="All 2 branches covered.">    if (!isValid) {</span>
-<span class="fc" id="L133">      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(&quot;Invalid 2FA code.&quot;);</span>
+<span class="fc" id="L137">    boolean isValid = twoFactorAuthService.verifyCode(user.getMfaSecret(), request.code());</span>
+<span class="fc bfc" id="L138" title="All 2 branches covered.">    if (!isValid) {</span>
+<span class="fc" id="L139">      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(&quot;Invalid 2FA code.&quot;);</span>
     }
 
-<span class="fc" id="L136">    String token = jwtService.generateToken(user);</span>
+<span class="fc" id="L142">    String token = jwtService.generateToken(user);</span>
 
-<span class="fc" id="L138">    org.springframework.http.ResponseCookie cookie =</span>
-<span class="fc" id="L139">        org.springframework.http.ResponseCookie.from(&quot;jwt&quot;, token)</span>
-<span class="fc" id="L140">            .httpOnly(true)</span>
-<span class="fc" id="L141">            .secure(true)</span>
-<span class="fc" id="L142">            .path(&quot;/&quot;)</span>
-<span class="fc" id="L143">            .maxAge(24 * 60 * 60)</span>
-<span class="fc" id="L144">            .sameSite(&quot;Strict&quot;)</span>
-<span class="fc" id="L145">            .build();</span>
+<span class="fc" id="L144">    org.springframework.http.ResponseCookie cookie =</span>
+<span class="fc" id="L145">        org.springframework.http.ResponseCookie.from(&quot;jwt&quot;, token)</span>
+<span class="fc" id="L146">            .httpOnly(true)</span>
+<span class="fc" id="L147">            .secure(true)</span>
+<span class="fc" id="L148">            .path(&quot;/&quot;)</span>
+<span class="fc" id="L149">            .maxAge(24 * 60 * 60)</span>
+<span class="fc" id="L150">            .sameSite(&quot;Strict&quot;)</span>
+<span class="fc" id="L151">            .build();</span>
 
-<span class="fc" id="L147">    return ResponseEntity.ok()</span>
-<span class="fc" id="L148">        .header(org.springframework.http.HttpHeaders.SET_COOKIE, cookie.toString())</span>
-<span class="fc" id="L149">        .body(new AuthResponseDto(UserResponseDto.from(user), null));</span>
+<span class="fc" id="L153">    return ResponseEntity.ok()</span>
+<span class="fc" id="L154">        .header(org.springframework.http.HttpHeaders.SET_COOKIE, cookie.toString())</span>
+<span class="fc" id="L155">        .body(new AuthResponseDto(UserResponseDto.from(user), null));</span>
   }
 
   /** Javadoc. */
   @GetMapping(&quot;/2fa/setup&quot;)
   public ResponseEntity&lt;?&gt; setup2Fa(Authentication authentication) {
-<span class="fc" id="L155">    User user = (User) authentication.getPrincipal();</span>
+<span class="fc" id="L161">    User user = (User) authentication.getPrincipal();</span>
 
-<span class="fc bfc" id="L157" title="All 2 branches covered.">    if (user.isMfaEnabled()) {</span>
-<span class="fc" id="L158">      return ResponseEntity.badRequest().body(&quot;2FA is already enabled.&quot;);</span>
+<span class="fc bfc" id="L163" title="All 2 branches covered.">    if (user.isMfaEnabled()) {</span>
+<span class="fc" id="L164">      return ResponseEntity.badRequest().body(&quot;2FA is already enabled.&quot;);</span>
     }
 
-<span class="fc" id="L161">    String secret = user.getMfaSecret();</span>
-<span class="pc bpc" id="L162" title="3 of 4 branches missed.">    if (secret == null || secret.isEmpty()) {</span>
-<span class="fc" id="L163">      secret = twoFactorAuthService.generateSecret();</span>
-<span class="fc" id="L164">      user.setMfaSecret(secret);</span>
-<span class="fc" id="L165">      userService.saveUserWithoutHash(</span>
+<span class="fc" id="L167">    String secret = user.getMfaSecret();</span>
+<span class="pc bpc" id="L168" title="3 of 4 branches missed.">    if (secret == null || secret.isEmpty()) {</span>
+<span class="fc" id="L169">      secret = twoFactorAuthService.generateSecret();</span>
+<span class="fc" id="L170">      user.setMfaSecret(secret);</span>
+<span class="fc" id="L171">      userService.saveUserWithoutHash(</span>
           user); // Wait, we need a method to save the user without rehashing
     }
 
     try {
-<span class="fc" id="L170">      String qrCodeUri = twoFactorAuthService.getQrCodeImageUri(secret, user.getEmail());</span>
-<span class="fc" id="L171">      return ResponseEntity.ok(Map.of(&quot;secret&quot;, secret, &quot;qrCodeUri&quot;, qrCodeUri));</span>
-<span class="fc" id="L172">    } catch (Exception e) {</span>
-<span class="fc" id="L173">      e.printStackTrace();</span>
-<span class="fc" id="L174">      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)</span>
-<span class="fc" id="L175">          .body(&quot;Failed to generate QR Code&quot;);</span>
+<span class="fc" id="L176">      String qrCodeUri = twoFactorAuthService.getQrCodeImageUri(secret, user.getEmail());</span>
+<span class="fc" id="L177">      return ResponseEntity.ok(Map.of(&quot;secret&quot;, secret, &quot;qrCodeUri&quot;, qrCodeUri));</span>
+<span class="fc" id="L178">    } catch (Exception e) {</span>
+<span class="fc" id="L179">      e.printStackTrace();</span>
+<span class="fc" id="L180">      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)</span>
+<span class="fc" id="L181">          .body(&quot;Failed to generate QR Code&quot;);</span>
     }
   }
 
@@ -180,78 +186,78 @@ public class AuthController {
   @PostMapping(&quot;/2fa/enable&quot;)
   public ResponseEntity&lt;?&gt; enable2Fa(
       @RequestBody VerifyCodeDto request, Authentication authentication) {
-<span class="fc" id="L183">    User user = (User) authentication.getPrincipal();</span>
+<span class="fc" id="L189">    User user = (User) authentication.getPrincipal();</span>
 
-<span class="fc bfc" id="L185" title="All 2 branches covered.">    if (user.isMfaEnabled()) {</span>
-<span class="fc" id="L186">      return ResponseEntity.badRequest().body(&quot;2FA is already enabled.&quot;);</span>
+<span class="fc bfc" id="L191" title="All 2 branches covered.">    if (user.isMfaEnabled()) {</span>
+<span class="fc" id="L192">      return ResponseEntity.badRequest().body(&quot;2FA is already enabled.&quot;);</span>
     }
 
-<span class="fc" id="L189">    boolean isValid = twoFactorAuthService.verifyCode(user.getMfaSecret(), request.code());</span>
-<span class="fc bfc" id="L190" title="All 2 branches covered.">    if (!isValid) {</span>
-<span class="fc" id="L191">      return ResponseEntity.badRequest().body(&quot;Invalid 2FA code.&quot;);</span>
+<span class="fc" id="L195">    boolean isValid = twoFactorAuthService.verifyCode(user.getMfaSecret(), request.code());</span>
+<span class="fc bfc" id="L196" title="All 2 branches covered.">    if (!isValid) {</span>
+<span class="fc" id="L197">      return ResponseEntity.badRequest().body(&quot;Invalid 2FA code.&quot;);</span>
     }
 
-<span class="fc" id="L194">    user.setMfaEnabled(true);</span>
-<span class="fc" id="L195">    userService.saveUserWithoutHash(user);</span>
-<span class="fc" id="L196">    return ResponseEntity.ok().build();</span>
+<span class="fc" id="L200">    user.setMfaEnabled(true);</span>
+<span class="fc" id="L201">    userService.saveUserWithoutHash(user);</span>
+<span class="fc" id="L202">    return ResponseEntity.ok().build();</span>
   }
 
   /** Documentação. */
   @PostMapping(&quot;/recovery/request&quot;)
   public ResponseEntity&lt;?&gt; requestRecovery(
       @RequestBody RecoveryRequestDto request, HttpServletRequest httpRequest) {
-<span class="fc" id="L203">    Bucket bucket = rateLimitingService.resolveBucket(httpRequest.getRemoteAddr());</span>
-<span class="fc bfc" id="L204" title="All 2 branches covered.">    if (!bucket.tryConsume(1)) {</span>
-<span class="fc" id="L205">      throw new RateLimitExceededException(</span>
+<span class="fc" id="L209">    Bucket bucket = rateLimitingService.resolveBucket(httpRequest.getRemoteAddr());</span>
+<span class="fc bfc" id="L210" title="All 2 branches covered.">    if (!bucket.tryConsume(1)) {</span>
+<span class="fc" id="L211">      throw new RateLimitExceededException(</span>
           &quot;Limite de tentativas excedido. Tente novamente mais tarde.&quot;);
     }
 
-<span class="fc" id="L209">    recoveryService.requestRecovery(request.email());</span>
-<span class="fc" id="L210">    return ResponseEntity.ok().build();</span>
+<span class="fc" id="L215">    recoveryService.requestRecovery(request.email());</span>
+<span class="fc" id="L216">    return ResponseEntity.ok().build();</span>
   }
 
   /** Documentação. */
   @PostMapping(&quot;/recovery/verify&quot;)
   public ResponseEntity&lt;?&gt; verifyCode(@RequestBody VerifyCodeDto request) {
-<span class="fc" id="L216">    boolean valid = recoveryService.verifyCode(request.email(), request.code());</span>
-<span class="fc bfc" id="L217" title="All 2 branches covered.">    if (valid) {</span>
-<span class="fc" id="L218">      return ResponseEntity.ok().build();</span>
+<span class="fc" id="L222">    boolean valid = recoveryService.verifyCode(request.email(), request.code());</span>
+<span class="fc bfc" id="L223" title="All 2 branches covered.">    if (valid) {</span>
+<span class="fc" id="L224">      return ResponseEntity.ok().build();</span>
     }
-<span class="fc" id="L220">    return ResponseEntity.badRequest().body(&quot;Código inválido ou expirado.&quot;);</span>
+<span class="fc" id="L226">    return ResponseEntity.badRequest().body(&quot;Código inválido ou expirado.&quot;);</span>
   }
 
   /** Documentação. */
   @PostMapping(&quot;/recovery/reset&quot;)
   public ResponseEntity&lt;?&gt; resetPassword(@RequestBody ResetPasswordDto request) {
-<span class="fc" id="L226">    boolean success =</span>
-<span class="fc" id="L227">        recoveryService.resetPassword(request.email(), request.code(), request.newPassword());</span>
-<span class="fc bfc" id="L228" title="All 2 branches covered.">    if (success) {</span>
-<span class="fc" id="L229">      return ResponseEntity.ok().build();</span>
+<span class="fc" id="L232">    boolean success =</span>
+<span class="fc" id="L233">        recoveryService.resetPassword(request.email(), request.code(), request.newPassword());</span>
+<span class="fc bfc" id="L234" title="All 2 branches covered.">    if (success) {</span>
+<span class="fc" id="L235">      return ResponseEntity.ok().build();</span>
     }
-<span class="fc" id="L231">    return ResponseEntity.badRequest().body(&quot;Erro ao redefinir a senha.&quot;);</span>
+<span class="fc" id="L237">    return ResponseEntity.badRequest().body(&quot;Erro ao redefinir a senha.&quot;);</span>
   }
 
   /** Documentação. */
   @PostMapping(&quot;/logout&quot;)
   public ResponseEntity&lt;Void&gt; logout() {
-<span class="fc" id="L237">    org.springframework.http.ResponseCookie cookie =</span>
-<span class="fc" id="L238">        org.springframework.http.ResponseCookie.from(&quot;jwt&quot;, &quot;&quot;)</span>
-<span class="fc" id="L239">            .httpOnly(true)</span>
-<span class="fc" id="L240">            .secure(true)</span>
-<span class="fc" id="L241">            .path(&quot;/&quot;)</span>
-<span class="fc" id="L242">            .maxAge(0)</span>
-<span class="fc" id="L243">            .sameSite(&quot;Strict&quot;)</span>
-<span class="fc" id="L244">            .build();</span>
-<span class="fc" id="L245">    return ResponseEntity.ok()</span>
-<span class="fc" id="L246">        .header(org.springframework.http.HttpHeaders.SET_COOKIE, cookie.toString())</span>
-<span class="fc" id="L247">        .build();</span>
+<span class="fc" id="L243">    org.springframework.http.ResponseCookie cookie =</span>
+<span class="fc" id="L244">        org.springframework.http.ResponseCookie.from(&quot;jwt&quot;, &quot;&quot;)</span>
+<span class="fc" id="L245">            .httpOnly(true)</span>
+<span class="fc" id="L246">            .secure(true)</span>
+<span class="fc" id="L247">            .path(&quot;/&quot;)</span>
+<span class="fc" id="L248">            .maxAge(0)</span>
+<span class="fc" id="L249">            .sameSite(&quot;Strict&quot;)</span>
+<span class="fc" id="L250">            .build();</span>
+<span class="fc" id="L251">    return ResponseEntity.ok()</span>
+<span class="fc" id="L252">        .header(org.springframework.http.HttpHeaders.SET_COOKIE, cookie.toString())</span>
+<span class="fc" id="L253">        .build();</span>
   }
 
   /** Documentação. */
   @GetMapping(&quot;/me&quot;)
   public ResponseEntity&lt;UserResponseDto&gt; me(Authentication authentication) {
-<span class="fc" id="L253">    User user = (User) authentication.getPrincipal();</span>
-<span class="fc" id="L254">    return ResponseEntity.ok(UserResponseDto.from(user));</span>
+<span class="fc" id="L259">    User user = (User) authentication.getPrincipal();</span>
+<span class="fc" id="L260">    return ResponseEntity.ok(UserResponseDto.from(user));</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

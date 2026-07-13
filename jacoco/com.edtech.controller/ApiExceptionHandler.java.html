@@ -2,6 +2,7 @@
 
 import com.edtech.dto.ErrorResponse;
 import com.edtech.service.DuplicateEmailException;
+import com.edtech.service.AccountNotVerifiedException;
 import com.edtech.service.InvalidCredentialsException;
 import com.edtech.service.InvalidInstitutionalEmailException;
 import jakarta.validation.ConstraintViolationException;
@@ -13,39 +14,45 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /** Documentação para ApiExceptionHandler. */
 @RestControllerAdvice
-<span class="fc" id="L16">public class ApiExceptionHandler {</span>
+<span class="fc" id="L17">public class ApiExceptionHandler {</span>
 
   @ExceptionHandler(DuplicateEmailException.class)
   public ResponseEntity&lt;ErrorResponse&gt; handleDuplicateEmail(DuplicateEmailException exception) {
-<span class="fc" id="L20">    return ResponseEntity.status(HttpStatus.CONFLICT)</span>
-<span class="fc" id="L21">        .body(new ErrorResponse(&quot;email_already_registered&quot;, exception.getMessage()));</span>
+<span class="fc" id="L21">    return ResponseEntity.status(HttpStatus.CONFLICT)</span>
+<span class="fc" id="L22">        .body(new ErrorResponse(&quot;email_already_registered&quot;, exception.getMessage()));</span>
   }
 
   @ExceptionHandler(InvalidInstitutionalEmailException.class)
   public ResponseEntity&lt;ErrorResponse&gt; handleInvalidInstitutionalEmail(
       InvalidInstitutionalEmailException exception) {
-<span class="fc" id="L27">    return ResponseEntity.badRequest()</span>
-<span class="fc" id="L28">        .body(new ErrorResponse(&quot;invalid_institutional_email&quot;, exception.getMessage()));</span>
+<span class="fc" id="L28">    return ResponseEntity.badRequest()</span>
+<span class="fc" id="L29">        .body(new ErrorResponse(&quot;invalid_institutional_email&quot;, exception.getMessage()));</span>
   }
 
   @ExceptionHandler(InvalidCredentialsException.class)
   public ResponseEntity&lt;ErrorResponse&gt; handleInvalidCredentials() {
-<span class="fc" id="L33">    return ResponseEntity.status(HttpStatus.UNAUTHORIZED)</span>
-<span class="fc" id="L34">        .body(new ErrorResponse(&quot;invalid_credentials&quot;, &quot;Credenciais inválidas.&quot;));</span>
+<span class="fc" id="L34">    return ResponseEntity.status(HttpStatus.UNAUTHORIZED)</span>
+<span class="fc" id="L35">        .body(new ErrorResponse(&quot;invalid_credentials&quot;, &quot;Credenciais inválidas.&quot;));</span>
+  }
+
+  @ExceptionHandler(AccountNotVerifiedException.class)
+  public ResponseEntity&lt;ErrorResponse&gt; handleAccountNotVerified(AccountNotVerifiedException exception) {
+<span class="nc" id="L40">    return ResponseEntity.status(HttpStatus.FORBIDDEN)</span>
+<span class="nc" id="L41">        .body(new ErrorResponse(&quot;account_not_verified&quot;, exception.getMessage()));</span>
   }
 
   @ExceptionHandler({MethodArgumentNotValidException.class, ConstraintViolationException.class})
   public ResponseEntity&lt;ErrorResponse&gt; handleValidationException(Exception exception) {
-<span class="fc" id="L39">    return ResponseEntity.badRequest()</span>
-<span class="fc" id="L40">        .body(new ErrorResponse(&quot;invalid_request&quot;, &quot;Verifique os dados enviados.&quot;));</span>
+<span class="fc" id="L46">    return ResponseEntity.badRequest()</span>
+<span class="fc" id="L47">        .body(new ErrorResponse(&quot;invalid_request&quot;, &quot;Verifique os dados enviados.&quot;));</span>
   }
 
   /** Javadoc. */
   @ExceptionHandler(org.springframework.dao.DataIntegrityViolationException.class)
   public ResponseEntity&lt;ErrorResponse&gt; handleDataIntegrityViolation(
       org.springframework.dao.DataIntegrityViolationException exception) {
-<span class="nc" id="L47">    return ResponseEntity.status(HttpStatus.CONFLICT)</span>
-<span class="nc" id="L48">        .body(</span>
+<span class="nc" id="L54">    return ResponseEntity.status(HttpStatus.CONFLICT)</span>
+<span class="nc" id="L55">        .body(</span>
             new ErrorResponse(
                 &quot;email_already_registered&quot;, &quot;Conflito de dados. Verifique unicidade.&quot;));
   }
