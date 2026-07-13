@@ -135,6 +135,9 @@ jobs:
         if: matrix.report-type == 'frontend'
         working-directory: frontend
         run: npm run test
+        env:
+          # Evita resumos Vitest repetidos durante as execuções mutadas do Stryker.
+          GITHUB_ACTIONS: 'false'
 
       - name: Cache Stryker History
         if: matrix.report-type == 'frontend'
@@ -150,6 +153,9 @@ jobs:
         if: matrix.report-type == 'frontend'
         working-directory: frontend
         run: npx stryker run
+        env:
+          # O relatório HTML do Stryker é a fonte de verdade para a documentação.
+          GITHUB_ACTIONS: 'false'
 
       - name: Restaurar Historico do Allure (Trend)
         if: matrix.report-type == 'frontend'
@@ -194,6 +200,7 @@ jobs:
         with:
           name: frontend-reports
           path: reports/
+          if-no-files-found: error
 
       # ==========================
       # FRONTEND — Lighthouse
