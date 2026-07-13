@@ -6,15 +6,18 @@ import { check, sleep } from 'k6';
 
 // Aqui ficam as configurações principais do teste.
 export const options = {
-  // Inicia o teste com um mínimo de 50 VUs
-  startVUs: 50,
-  
-  // Configuração de estágios de VUs (Virtual Users)
-  stages: [
-    { duration: '10s', target: 50 }, // Mantém no mínimo de 50 VUs
-    { duration: '20s', target: 100 }, // Sobe até o máximo de 100 VUs e mantém
-    { duration: '10s', target: 50 },  // Desce de volta para 50 VUs
-  ],
+  scenarios: {
+    production_load: {
+      executor: 'ramping-vus',
+      startVUs: 10,
+      stages: [
+        { duration: '10s', target: 50 },
+        { duration: '20s', target: 100 },
+        { duration: '10s', target: 50 },
+      ],
+      gracefulRampDown: '10s',
+    },
+  },
 
   // Define quais estatísticas queremos ver no resumo final.
   summaryTrendStats: ['avg', 'min', 'med', 'p(95)', 'p(99)', 'max'],
