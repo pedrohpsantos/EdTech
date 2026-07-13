@@ -57,10 +57,10 @@ describe('api.ts', () => {
 
   describe('verify2FaLogin', () => {
     it('handles success', async () => {
-      mockApi.post.mockResolvedValueOnce({ data: { token: 'token2fa', user: { id: 1 } } });
+      mockApi.post.mockResolvedValueOnce({ data: { user: { id: 1 } } });
       const result = await api.verify2FaLogin('test@test.com', 'pass', '123456');
       expect(result.sucesso).toBe(true);
-      expect(localStorage.getItem('token')).toBe('token2fa');
+      expect(result.dados.id).toBe(1);
     });
     
     it('handles error', async () => {
@@ -115,10 +115,10 @@ describe('api.ts', () => {
 
   describe('verifyRegistration', () => {
     it('handles success', async () => {
-      mockApi.post.mockResolvedValueOnce({ data: { token: 'token-reg', user: { id: 1 } } });
+      mockApi.post.mockResolvedValueOnce({ data: { user: { id: 1 } } });
       const result = await api.verifyRegistration('test@test.com', '123456');
       expect(result.sucesso).toBe(true);
-      expect(localStorage.getItem('token')).toBe('token-reg');
+      expect(result.dados.id).toBe(1);
     });
 
     it('handles error', async () => {
@@ -134,7 +134,6 @@ describe('api.ts', () => {
       mockApi.post.mockResolvedValueOnce({});
       const result = await api.logout();
       expect(result.sucesso).toBe(true);
-      expect(localStorage.getItem('token')).toBeNull();
     });
 
     it('handles error', async () => {
@@ -142,7 +141,6 @@ describe('api.ts', () => {
       mockApi.post.mockRejectedValueOnce(new Error());
       const result = await api.logout();
       expect(result.sucesso).toBe(false);
-      expect(localStorage.getItem('token')).toBeNull();
     });
   });
 
@@ -350,7 +348,7 @@ describe('api.ts', () => {
     it('handles error', async () => {
       mockApi.get.mockRejectedValueOnce(new Error());
       const result = await api.getAuditLogs();
-      expect(result).toEqual([]);
+      expect(result).toEqual({ content: [], totalPages: 1 });
     });
   });
 
@@ -402,12 +400,11 @@ describe('api.ts', () => {
   });
 
   describe('Interceptors', () => {
-    it('request interceptor adds token, request ID and calls showLoader', () => {
+    it('request interceptor adds a request ID and calls showLoader', () => {
       localStorage.setItem('token', 'my-token');
       const config = { headers: {} as Record<string, string> };
       const newConfig = requestInterceptor(config);
       
-      expect(newConfig.headers['Authorization']).toBe('Bearer my-token');
       expect(newConfig.headers['X-Request-ID']).toBeDefined();
     });
 

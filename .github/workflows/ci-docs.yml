@@ -134,7 +134,7 @@ jobs:
       - name: Executar Testes Unitarios (Vitest)
         if: matrix.report-type == 'frontend'
         working-directory: frontend
-        run: npm run test || true
+        run: npm run test
 
       - name: Cache Stryker History
         if: matrix.report-type == 'frontend'
@@ -149,7 +149,7 @@ jobs:
       - name: Executar Testes de Mutação (Stryker)
         if: matrix.report-type == 'frontend'
         working-directory: frontend
-        run: npx stryker run || true
+        run: npx stryker run
 
       - name: Restaurar Historico do Allure (Trend)
         if: matrix.report-type == 'frontend'
@@ -181,9 +181,9 @@ jobs:
         if: matrix.report-type == 'frontend'
         run: |
           mkdir -p reports/vitest reports/allure reports/stryker
-          if [ -d "frontend/html" ]; then cp -r frontend/html/* reports/vitest/ || true; fi
-          if [ -d "frontend/allure-report" ]; then cp -r frontend/allure-report/* reports/allure/ || true; fi
-          if [ -d "frontend/reports/mutation/html" ]; then cp -r frontend/reports/mutation/html/* reports/stryker/ || true; fi
+          cp -r frontend/html/. reports/vitest/
+          cp -r frontend/allure-report/. reports/allure/
+          cp -r frontend/reports/mutation/html/. reports/stryker/
           test -f reports/vitest/index.html
           test -f reports/allure/index.html
           test -f reports/stryker/index.html

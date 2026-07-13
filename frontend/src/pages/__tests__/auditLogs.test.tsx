@@ -81,7 +81,7 @@ describe('AuditLogs Page', () => {
     });
     
     expect(screen.getAllByText('UPLOAD_DOCUMENT').length).toBeGreaterThan(0);
-    expect(apiServices.getAuditLogs).toHaveBeenCalledWith('', 'Todas as Ações');
+    expect(apiServices.getAuditLogs).toHaveBeenCalledWith('', '', '', '', 0, 20);
   });
 
   it('toggles row expansion', async () => {
@@ -108,14 +108,14 @@ describe('AuditLogs Page', () => {
     fireEvent.keyDown(searchInput, { key: 'Enter', code: 'Enter' });
 
     await waitFor(() => {
-      expect(apiServices.getAuditLogs).toHaveBeenCalledWith('USR', 'Todas as Ações');
+      expect(apiServices.getAuditLogs).toHaveBeenCalledWith('USR', '', '', '', 0, 20);
     });
 
     const selectFilter = screen.getByDisplayValue('Todas as Ações');
     fireEvent.change(selectFilter, { target: { value: 'LOGIN_FAILED' } });
 
     await waitFor(() => {
-      expect(apiServices.getAuditLogs).toHaveBeenCalledWith('USR', 'LOGIN_FAILED');
+      expect(apiServices.getAuditLogs).toHaveBeenCalledWith('USR', 'LOGIN_FAILED', '', '', 0, 20);
     });
   });
 
@@ -126,7 +126,7 @@ describe('AuditLogs Page', () => {
     const exportBtn = screen.getByText(/Exportar CSV/i);
     fireEvent.click(exportBtn);
 
-    expect(apiServices.exportAuditLogsCSV).toHaveBeenCalledWith('', 'Todas as Ações');
+    expect(apiServices.exportAuditLogsCSV).toHaveBeenCalledWith('', '', '', '');
   });
   
   it('handles refresh button click', async () => {

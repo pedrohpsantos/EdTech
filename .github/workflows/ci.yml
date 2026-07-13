@@ -404,7 +404,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [backend-approved, infra-approved]
     if: github.ref == 'refs/heads/develop'
-    concurrency: staging-deployment
+    concurrency: staging-deployment-backend
     permissions:
       contents: 'read'
       id-token: 'write'
@@ -443,7 +443,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [frontend-approved, infra-approved]
     if: github.ref == 'refs/heads/develop'
-    concurrency: staging-deployment
+    concurrency: staging-deployment-frontend
     permissions:
       contents: 'read'
       id-token: 'write'
@@ -476,7 +476,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [backend-approved, infra-approved]
     if: github.ref == 'refs/heads/main'
-    concurrency: production-deployment
+    concurrency: production-deployment-backend
     permissions:
       contents: 'read'
       id-token: 'write'
@@ -518,7 +518,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [frontend-approved, infra-approved]
     if: github.ref == 'refs/heads/main'
-    concurrency: production-deployment
+    concurrency: production-deployment-frontend
     permissions:
       contents: 'read'
       id-token: 'write'
