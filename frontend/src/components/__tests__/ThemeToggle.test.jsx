@@ -14,16 +14,14 @@ describe('ThemeToggle', () => {
     render(<ThemeToggle />);
     const button = screen.getByRole('button', { name: /Alternar Tema/i });
     expect(button).toBeInTheDocument();
-    // It should render the moon icon for light mode
-    expect(button.querySelector('.bi-moon-stars-fill')).toBeInTheDocument();
+    expect(screen.getByTestId('theme-icon-moon')).toBeInTheDocument();
   });
 
   it('renders correctly in dark theme', () => {
     useThemeHook.default.mockReturnValue({ tema: 'dark', toggleTheme: vi.fn() });
     render(<ThemeToggle />);
-    const button = screen.getByRole('button', { name: /Alternar Tema/i });
-    // It should render the sun icon for dark mode
-    expect(button.querySelector('.bi-sun-fill')).toBeInTheDocument();
+    screen.getByRole('button', { name: /Alternar Tema/i });
+    expect(screen.getByTestId('theme-icon-sun')).toBeInTheDocument();
   });
 
   it('calls toggleTheme when clicked', () => {

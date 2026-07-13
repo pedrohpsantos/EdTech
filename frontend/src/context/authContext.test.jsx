@@ -43,6 +43,20 @@ const TestComponent = () => {
 describe('AuthContext', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    window.history.pushState({}, '', '/dashboard');
+  });
+
+  it('does not validate a session on public authentication routes', async () => {
+    window.history.pushState({}, '', '/login');
+
+    render(
+      <AuthProvider>
+        <TestComponent />
+      </AuthProvider>,
+    );
+
+    await waitFor(() => expect(screen.getByTestId('auth-status')).toHaveTextContent('Deslogado'));
+    expect(getMe).not.toHaveBeenCalled();
   });
 
   it('deve inicializar como Deslogado se getMe retornar erro', async () => {
