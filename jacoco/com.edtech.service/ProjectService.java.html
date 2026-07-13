@@ -11,9 +11,7 @@ import com.edtech.model.User;
 import com.edtech.repository.ProjectMemberRepository;
 import com.edtech.repository.ProjectRepository;
 import com.edtech.repository.UserRepository;
-import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -33,74 +31,76 @@ public class ProjectService {
       ProjectRepository projectRepository,
       ProjectMemberRepository projectMemberRepository,
       UserRepository userRepository,
-<span class="fc" id="L36">      AuditLogService auditLogService) {</span>
-<span class="fc" id="L37">    this.projectRepository = projectRepository;</span>
-<span class="fc" id="L38">    this.projectMemberRepository = projectMemberRepository;</span>
-<span class="fc" id="L39">    this.userRepository = userRepository;</span>
-<span class="fc" id="L40">    this.auditLogService = auditLogService;</span>
-<span class="fc" id="L41">  }</span>
+<span class="fc" id="L34">      AuditLogService auditLogService) {</span>
+<span class="fc" id="L35">    this.projectRepository = projectRepository;</span>
+<span class="fc" id="L36">    this.projectMemberRepository = projectMemberRepository;</span>
+<span class="fc" id="L37">    this.userRepository = userRepository;</span>
+<span class="fc" id="L38">    this.auditLogService = auditLogService;</span>
+<span class="fc" id="L39">  }</span>
 
   /** Documentação. */
   @Transactional
   @CacheEvict(value = &quot;projects&quot;, key = &quot;#advisorId&quot;)
   public ProjectResponseDto createProject(ProjectRequestDto request, UUID advisorId) {
-<span class="fc" id="L47">    User advisor =</span>
+<span class="fc" id="L45">    User advisor =</span>
         userRepository
-<span class="fc" id="L49">            .findById(advisorId)</span>
-<span class="fc" id="L50">            .orElseThrow(() -&gt; new RuntimeException(&quot;User not found&quot;));</span>
+<span class="fc" id="L47">            .findById(advisorId)</span>
+<span class="fc" id="L48">            .orElseThrow(() -&gt; new RuntimeException(&quot;User not found&quot;));</span>
 
-<span class="fc" id="L52">    Project project = new Project();</span>
-<span class="fc" id="L53">    project.setTitle(request.getTitle());</span>
-<span class="fc" id="L54">    project.setDescription(request.getDescription());</span>
-<span class="fc" id="L55">    project.setAdvisor(advisor);</span>
+<span class="fc" id="L50">    Project project = new Project();</span>
+<span class="fc" id="L51">    project.setTitle(request.getTitle());</span>
+<span class="fc" id="L52">    project.setDescription(request.getDescription());</span>
+<span class="fc" id="L53">    project.setAdvisor(advisor);</span>
 
-<span class="fc" id="L57">    project = projectRepository.save(project);</span>
+<span class="fc" id="L55">    project = projectRepository.save(project);</span>
 
-<span class="fc" id="L59">    ProjectMember member = new ProjectMember();</span>
-<span class="fc" id="L60">    member.setProject(project);</span>
-<span class="fc" id="L61">    member.setUser(advisor);</span>
-<span class="fc" id="L62">    member.setRole(ProjectRole.ADVISOR);</span>
-<span class="fc" id="L63">    projectMemberRepository.save(member);</span>
+<span class="fc" id="L57">    ProjectMember member = new ProjectMember();</span>
+<span class="fc" id="L58">    member.setProject(project);</span>
+<span class="fc" id="L59">    member.setUser(advisor);</span>
+<span class="fc" id="L60">    member.setRole(ProjectRole.ADVISOR);</span>
+<span class="fc" id="L61">    projectMemberRepository.save(member);</span>
 
-<span class="fc" id="L65">    return mapToDto(project);</span>
+<span class="fc" id="L63">    return mapToDto(project);</span>
   }
 
   /** Documentação para o método listProjectsByUser. */
-  @Cacheable(value = &quot;projects&quot;, key = &quot;#userId&quot;)
-  public List&lt;ProjectResponseDto&gt; listProjectsByUser(UUID userId) {
-<span class="fc" id="L71">    return projectRepository.findProjectsByUserId(userId).stream()</span>
-<span class="fc" id="L72">        .map(this::mapToDto)</span>
-<span class="fc" id="L73">        .collect(Collectors.toList());</span>
+  @Cacheable(
+      value = &quot;projects&quot;,
+      key = &quot;#userId + '-' + #pageable.pageNumber + '-' + #pageable.pageSize&quot;)
+  public org.springframework.data.domain.Page&lt;ProjectResponseDto&gt; listProjectsByUser(
+      UUID userId, org.springframework.data.domain.Pageable pageable) {
+<span class="fc" id="L72">    return projectRepository.findProjectsByUserId(userId, pageable).map(this::mapToDto);</span>
   }
 
   /** Documentação. */
   @Transactional
   @CacheEvict(value = &quot;projects&quot;, allEntries = true)
   public void addMember(UUID projectId, ProjectMemberRequestDto dto, User authenticatedUser) {
-<span class="fc" id="L80">    Project project =</span>
+<span class="fc" id="L79">    Project project =</span>
         projectRepository
-<span class="fc" id="L82">            .findById(projectId)</span>
-<span class="fc" id="L83">            .orElseThrow(() -&gt; new RuntimeException(&quot;Project not found&quot;));</span>
+<span class="fc" id="L81">            .findById(projectId)</span>
+<span class="fc" id="L82">            .orElseThrow(() -&gt; new RuntimeException(&quot;Project not found&quot;));</span>
 
     UUID targetUserId =
-<span class="fc bfc" id="L86" title="All 4 branches covered.">        (dto != null &amp;&amp; dto.getUserId() != null) ? dto.getUserId() : authenticatedUser.getId();</span>
+<span class="fc bfc" id="L85" title="All 4 branches covered.">        (dto != null &amp;&amp; dto.getUserId() != null) ? dto.getUserId() : authenticatedUser.getId();</span>
 
     // Se o usuário que está tentando associar alguém for diferente do alvo, ele deve ser ADVISOR do
     // projeto.
-<span class="fc bfc" id="L90" title="All 2 branches covered.">    if (!targetUserId.equals(authenticatedUser.getId())) {</span>
-<span class="fc" id="L91">      ProjectMember advisorMember =</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">    if (!targetUserId.equals(authenticatedUser.getId())) {</span>
+<span class="fc" id="L90">      ProjectMember advisorMember =</span>
           projectMemberRepository
-<span class="fc" id="L93">              .findByProjectIdAndUserId(projectId, authenticatedUser.getId())</span>
-<span class="fc" id="L94">              .orElseThrow(</span>
-<span class="fc" id="L95">                  () -&gt; new RuntimeException(&quot;User is not part of the project to add members&quot;));</span>
+<span class="fc" id="L92">              .findByProjectIdAndUserId(projectId, authenticatedUser.getId())</span>
+<span class="fc" id="L93">              .orElseThrow(</span>
+<span class="fc" id="L94">                  () -&gt; new RuntimeException(&quot;User is not part of the project to add members&quot;));</span>
 
-<span class="pc bpc" id="L97" title="1 of 2 branches missed.">      if (advisorMember.getRole() != ProjectRole.ADVISOR) {</span>
-<span class="fc" id="L98">        throw new RuntimeException(&quot;Only ADVISORS can add other members&quot;);</span>
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">      if (advisorMember.getRole() != ProjectRole.ADVISOR) {</span>
+<span class="fc" id="L97">        throw new RuntimeException(&quot;Only ADVISORS can add other members&quot;);</span>
       }
     }
 
-<span class="fc bfc" id="L102" title="All 2 branches covered.">    if (projectMemberRepository.findByProjectIdAndUserId(projectId, targetUserId).isPresent()) {</span>
-<span class="fc" id="L103">      throw new RuntimeException(&quot;User is already a member of this project&quot;);</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">    if (projectMemberRepository.findByProjectIdAndUserId(projectId, targetUserId).isPresent()) {</span>
+<span class="fc" id="L102">      throw new com.edtech.exception.UserAlreadyMemberException(</span>
+          &quot;User is already a member of this project&quot;);
     }
 
 <span class="fc" id="L106">    User newUser =</span>

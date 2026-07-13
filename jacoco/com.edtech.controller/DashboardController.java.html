@@ -39,17 +39,15 @@ public class DashboardController {
     int complianceScore =
 <span class="pc bpc" id="L40" title="1 of 2 branches missed.">        totalDocs == 0 ? 100 : (int) Math.round((approvedDocs * 100.0) / totalDocs);</span>
     int researchProgress =
-<span class="pc bpc" id="L42" title="1 of 2 branches missed.">        totalDocs == 0</span>
-<span class="nc" id="L43">            ? 0</span>
-<span class="fc" id="L44">            : (int) Math.round(((approvedDocs + publishedDocs) * 100.0) / totalDocs);</span>
+<span class="pc bpc" id="L42" title="1 of 2 branches missed.">        totalDocs == 0 ? 0 : (int) Math.round(((approvedDocs + publishedDocs) * 100.0) / totalDocs);</span>
 
-<span class="fc" id="L46">    Map&lt;String, Object&gt; stats = new HashMap&lt;&gt;();</span>
-<span class="fc" id="L47">    stats.put(&quot;activeDocuments&quot;, totalDocs);</span>
-<span class="fc" id="L48">    stats.put(&quot;pendingReview&quot;, pendingReviewDocs);</span>
-<span class="fc" id="L49">    stats.put(&quot;complianceScore&quot;, complianceScore);</span>
-<span class="fc" id="L50">    stats.put(&quot;researchProgress&quot;, Math.min(researchProgress, 100));</span>
+<span class="fc" id="L44">    Map&lt;String, Object&gt; stats = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L45">    stats.put(&quot;activeDocuments&quot;, totalDocs);</span>
+<span class="fc" id="L46">    stats.put(&quot;pendingReview&quot;, pendingReviewDocs);</span>
+<span class="fc" id="L47">    stats.put(&quot;complianceScore&quot;, complianceScore);</span>
+<span class="fc" id="L48">    stats.put(&quot;researchProgress&quot;, Math.min(researchProgress, 100));</span>
 
-<span class="fc" id="L52">    return ResponseEntity.ok(stats);</span>
+<span class="fc" id="L50">    return ResponseEntity.ok(stats);</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

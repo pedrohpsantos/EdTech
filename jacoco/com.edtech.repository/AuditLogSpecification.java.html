@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AuditLogSpecification.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">edtech-api</a> &gt; <a href="index.source.html" class="el_package">com.edtech.repository</a> &gt; <span class="el_source">AuditLogSpecification.java</span></div><h1>AuditLogSpecification.java</h1><pre class="source lang-java linenums">package com.edtech.repository;
+
+import com.edtech.model.AuditLog;
+import jakarta.persistence.criteria.Predicate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import org.springframework.data.jpa.domain.Specification;
+
+/** Documentação para AuditLogSpecification. */
+<span class="nc" id="L11">public class AuditLogSpecification {</span>
+
+  /** Documentação. */
+  public static Specification&lt;AuditLog&gt; getFilter(
+      String search, String action, LocalDateTime startDate, LocalDateTime endDate) {
+<span class="fc" id="L16">    return (root, query, criteriaBuilder) -&gt; {</span>
+<span class="nc" id="L17">      List&lt;Predicate&gt; predicates = new ArrayList&lt;&gt;();</span>
+
+<span class="nc bnc" id="L19" title="All 4 branches missed.">      if (search != null &amp;&amp; !search.isEmpty()) {</span>
+<span class="nc" id="L20">        String likePattern = &quot;%&quot; + search.toLowerCase() + &quot;%&quot;;</span>
+<span class="nc" id="L21">        Predicate p1 =</span>
+<span class="nc" id="L22">            criteriaBuilder.like(criteriaBuilder.lower(root.get(&quot;details&quot;)), likePattern);</span>
+<span class="nc" id="L23">        Predicate p2 =</span>
+<span class="nc" id="L24">            criteriaBuilder.like(criteriaBuilder.lower(root.get(&quot;ipAddress&quot;)), likePattern);</span>
+        // Note: we can't easily join on User to filter by user name in this simple spec if it's not
+        // mapped,
+        // but AuditLog has userId. We will ignore userName search in DB for simplicity,
+        // or just search in details/IP/action.
+<span class="nc" id="L29">        predicates.add(criteriaBuilder.or(p1, p2));</span>
+      }
+
+<span class="nc bnc" id="L32" title="All 6 branches missed.">      if (action != null &amp;&amp; !action.isEmpty() &amp;&amp; !action.equals(&quot;Todas as Ações&quot;)) {</span>
+        // action is an Enum
+        try {
+<span class="nc" id="L35">          com.edtech.model.AuditAction enumAction = com.edtech.model.AuditAction.valueOf(action);</span>
+<span class="nc" id="L36">          predicates.add(criteriaBuilder.equal(root.get(&quot;action&quot;), enumAction));</span>
+<span class="nc" id="L37">        } catch (IllegalArgumentException ignored) {</span>
+          // ignored
+<span class="nc" id="L39">        }</span>
+      }
+
+<span class="nc bnc" id="L42" title="All 2 branches missed.">      if (startDate != null) {</span>
+<span class="nc" id="L43">        predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get(&quot;createdAt&quot;), startDate));</span>
+      }
+
+<span class="nc bnc" id="L46" title="All 2 branches missed.">      if (endDate != null) {</span>
+<span class="nc" id="L47">        predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get(&quot;createdAt&quot;), endDate));</span>
+      }
+
+<span class="nc" id="L50">      return criteriaBuilder.and(predicates.toArray(new Predicate[0]));</span>
+    };
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

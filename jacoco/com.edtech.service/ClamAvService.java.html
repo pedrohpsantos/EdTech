@@ -7,9 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import xyz.capybara.clamav.ClamavClient;
 import xyz.capybara.clamav.commands.scan.result.ScanResult;
 
-/**
- * Service for malware scanning using ClamAV.
- */
+/** Service for malware scanning using ClamAV. */
 @Service
 public class ClamAvService {
   private final ClamavClient clamavClient;
@@ -21,10 +19,9 @@ public class ClamAvService {
    * @param port ClamAV port
    */
   public ClamAvService(
-      @Value(&quot;${clamav.host:localhost}&quot;) String host,
-<span class="fc" id="L25">      @Value(&quot;${clamav.port:3310}&quot;) int port) {</span>
-<span class="fc" id="L26">    this.clamavClient = new ClamavClient(host, port);</span>
-<span class="fc" id="L27">  }</span>
+<span class="fc" id="L22">      @Value(&quot;${clamav.host:localhost}&quot;) String host, @Value(&quot;${clamav.port:3310}&quot;) int port) {</span>
+<span class="fc" id="L23">    this.clamavClient = new ClamavClient(host, port);</span>
+<span class="fc" id="L24">  }</span>
 
   /**
    * Scans a file for malware.
@@ -34,12 +31,12 @@ public class ClamAvService {
    */
   public boolean isFileSafe(MultipartFile file) {
     try {
-<span class="nc" id="L37">      ScanResult result = clamavClient.scan(file.getInputStream());</span>
-<span class="nc" id="L38">      return result instanceof ScanResult.OK;</span>
-<span class="nc" id="L39">    } catch (IOException e) {</span>
-<span class="nc" id="L40">      throw new RuntimeException(&quot;Failed to extract InputStream from the file to scan.&quot;);</span>
-<span class="nc" id="L41">    } catch (Exception e) {</span>
-<span class="nc" id="L42">      throw new RuntimeException(&quot;Failed at the communication with antivirus service.&quot;);</span>
+<span class="nc" id="L34">      ScanResult result = clamavClient.scan(file.getInputStream());</span>
+<span class="nc" id="L35">      return result instanceof ScanResult.OK;</span>
+<span class="nc" id="L36">    } catch (IOException e) {</span>
+<span class="nc" id="L37">      throw new RuntimeException(&quot;Failed to extract InputStream from the file to scan.&quot;);</span>
+<span class="nc" id="L38">    } catch (Exception e) {</span>
+<span class="nc" id="L39">      throw new RuntimeException(&quot;Failed at the communication with antivirus service.&quot;);</span>
     }
   }
 }

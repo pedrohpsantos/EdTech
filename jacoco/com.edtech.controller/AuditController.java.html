@@ -4,10 +4,18 @@ import com.edtech.dto.AuditLogDto;
 import com.edtech.model.AuditLog;
 import com.edtech.model.User;
 import com.edtech.repository.AuditLogRepository;
+import com.edtech.repository.AuditLogSpecification;
 import com.edtech.repository.UserRepository;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,10 +37,10 @@ public class AuditController {
    * @param auditLogRepository repo
    * @param userRepository repo
    */
-<span class="fc" id="L32">  public AuditController(AuditLogRepository auditLogRepository, UserRepository userRepository) {</span>
-<span class="fc" id="L33">    this.auditLogRepository = auditLogRepository;</span>
-<span class="fc" id="L34">    this.userRepository = userRepository;</span>
-<span class="fc" id="L35">  }</span>
+<span class="fc" id="L40">  public AuditController(AuditLogRepository auditLogRepository, UserRepository userRepository) {</span>
+<span class="fc" id="L41">    this.auditLogRepository = auditLogRepository;</span>
+<span class="fc" id="L42">    this.userRepository = userRepository;</span>
+<span class="fc" id="L43">  }</span>
 
   /**
    * Busca logs de auditoria com filtro.
@@ -43,73 +51,71 @@ public class AuditController {
    */
   @GetMapping
   @PreAuthorize(&quot;hasRole('AUDITOR')&quot;)
-  public ResponseEntity&lt;List&lt;AuditLogDto&gt;&gt; getAuditLogs(
+  public ResponseEntity&lt;Page&lt;AuditLogDto&gt;&gt; getAuditLogs(
       @RequestParam(required = false) String search,
-      @RequestParam(required = false) String action) {
+      @RequestParam(required = false) String action,
+      @RequestParam(required = false) String startDate,
+      @RequestParam(required = false) String endDate,
+      @PageableDefault(sort = &quot;createdAt&quot;, direction = Sort.Direction.DESC) Pageable pageable) {
 
-<span class="fc" id="L50">    List&lt;AuditLog&gt; logs = auditLogRepository.findAllByOrderByCreatedAtDesc();</span>
-<span class="fc" id="L51">    DateTimeFormatter formatter = DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd HH:mm:ss.SSS&quot;);</span>
+<span class="fc" id="L61">    LocalDateTime start = null;</span>
+<span class="fc" id="L62">    LocalDateTime end = null;</span>
+    try {
+<span class="pc bpc" id="L64" title="3 of 4 branches missed.">      if (startDate != null &amp;&amp; !startDate.isEmpty()) {</span>
+<span class="nc" id="L65">        start = LocalDateTime.parse(startDate);</span>
+      }
+<span class="pc bpc" id="L67" title="3 of 4 branches missed.">      if (endDate != null &amp;&amp; !endDate.isEmpty()) {</span>
+<span class="nc" id="L68">        end = LocalDateTime.parse(endDate);</span>
+      }
+<span class="nc" id="L70">    } catch (DateTimeParseException ignored) {</span>
+      // ignored
+<span class="fc" id="L72">    }</span>
 
-<span class="fc" id="L53">    List&lt;AuditLogDto&gt; dtos =</span>
-<span class="fc" id="L54">        logs.stream()</span>
-<span class="fc" id="L55">            .map(</span>
+<span class="fc" id="L74">    Page&lt;AuditLog&gt; logsPage =</span>
+<span class="fc" id="L75">        auditLogRepository.findAll(</span>
+<span class="fc" id="L76">            AuditLogSpecification.getFilter(search, action, start, end), pageable);</span>
+<span class="fc" id="L77">    DateTimeFormatter formatter = DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd HH:mm:ss.SSS&quot;);</span>
+
+<span class="fc" id="L79">    List&lt;AuditLogDto&gt; dtos =</span>
+<span class="fc" id="L80">        logsPage.getContent().stream()</span>
+<span class="fc" id="L81">            .map(</span>
                 log -&gt; {
-<span class="fc" id="L57">                  AuditLogDto dto = new AuditLogDto();</span>
-<span class="fc" id="L58">                  dto.setId(log.getId().toString());</span>
-<span class="fc" id="L59">                  dto.setTimestamp(log.getCreatedAt().format(formatter));</span>
-<span class="fc" id="L60">                  dto.setAction(log.getAction().name());</span>
+<span class="fc" id="L83">                  AuditLogDto dto = new AuditLogDto();</span>
+<span class="fc" id="L84">                  dto.setId(log.getId().toString());</span>
+<span class="fc" id="L85">                  dto.setTimestamp(log.getCreatedAt().format(formatter));</span>
+<span class="fc" id="L86">                  dto.setAction(log.getAction().name());</span>
 
-<span class="fc" id="L62">                  User user = userRepository.findById(log.getUserId()).orElse(null);</span>
-<span class="fc bfc" id="L63" title="All 2 branches covered.">                  dto.setUserName(user != null ? user.getName() : &quot;Unknown&quot;);</span>
+<span class="fc" id="L88">                  User user = userRepository.findById(log.getUserId()).orElse(null);</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">                  dto.setUserName(user != null ? user.getName() : &quot;Unknown&quot;);</span>
 
-<span class="fc" id="L65">                  dto.setIp(log.getIpAddress());</span>
-<span class="fc" id="L66">                  dto.setDetails(log.getDetails());</span>
+<span class="fc" id="L91">                  dto.setIp(log.getIpAddress());</span>
+<span class="fc" id="L92">                  dto.setDetails(log.getDetails());</span>
 
-                  // Determine Action Class and Severity based on Action
-<span class="fc bfc" id="L69" title="All 4 branches covered.">                  switch (log.getAction()) {</span>
+<span class="fc bfc" id="L94" title="All 4 branches covered.">                  switch (log.getAction()) {</span>
                     case LOGIN_SUCCESS:
                     case DOCUMENT_APPROVED:
-<span class="fc" id="L72">                      dto.setActionClass(&quot;green&quot;);</span>
-<span class="fc" id="L73">                      dto.setSeverity(&quot;INFO&quot;);</span>
-<span class="fc" id="L74">                      break;</span>
+<span class="fc" id="L97">                      dto.setActionClass(&quot;green&quot;);</span>
+<span class="fc" id="L98">                      dto.setSeverity(&quot;INFO&quot;);</span>
+<span class="fc" id="L99">                      break;</span>
                     case LOGIN_FAILED:
                     case DOCUMENT_REJECTED:
                     case MEMBER_JOINED:
-<span class="fc" id="L78">                      dto.setActionClass(&quot;orange&quot;);</span>
-<span class="fc" id="L79">                      dto.setSeverity(&quot;WARNING&quot;);</span>
-<span class="fc" id="L80">                      break;</span>
+<span class="fc" id="L103">                      dto.setActionClass(&quot;orange&quot;);</span>
+<span class="fc" id="L104">                      dto.setSeverity(&quot;WARNING&quot;);</span>
+<span class="fc" id="L105">                      break;</span>
                     case DELETE_DOCUMENT:
-<span class="fc" id="L82">                      dto.setActionClass(&quot;red&quot;);</span>
-<span class="fc" id="L83">                      dto.setSeverity(&quot;CRITICAL&quot;);</span>
-<span class="fc" id="L84">                      break;</span>
+<span class="fc" id="L107">                      dto.setActionClass(&quot;red&quot;);</span>
+<span class="fc" id="L108">                      dto.setSeverity(&quot;CRITICAL&quot;);</span>
+<span class="fc" id="L109">                      break;</span>
                     default:
-<span class="fc" id="L86">                      dto.setActionClass(&quot;blue&quot;);</span>
-<span class="fc" id="L87">                      dto.setSeverity(&quot;INFO&quot;);</span>
+<span class="fc" id="L111">                      dto.setActionClass(&quot;blue&quot;);</span>
+<span class="fc" id="L112">                      dto.setSeverity(&quot;INFO&quot;);</span>
                   }
-<span class="fc" id="L89">                  return dto;</span>
+<span class="fc" id="L114">                  return dto;</span>
                 })
-<span class="fc" id="L91">            .collect(Collectors.toList());</span>
+<span class="fc" id="L116">            .collect(Collectors.toList());</span>
 
-<span class="pc bpc" id="L93" title="1 of 4 branches missed.">    if (search != null &amp;&amp; !search.isEmpty()) {</span>
-<span class="fc" id="L94">      String s = search.toLowerCase();</span>
-<span class="fc" id="L95">      dtos =</span>
-<span class="fc" id="L96">          dtos.stream()</span>
-<span class="fc" id="L97">              .filter(</span>
-                  dto -&gt;
-<span class="pc bpc" id="L99" title="1 of 2 branches missed.">                      dto.getAction().toLowerCase().contains(s)</span>
-<span class="pc bpc" id="L100" title="1 of 2 branches missed.">                          || (dto.getDetails() != null</span>
-<span class="fc bfc" id="L101" title="All 2 branches covered.">                              &amp;&amp; dto.getDetails().toLowerCase().contains(s))</span>
-<span class="pc bpc" id="L102" title="1 of 2 branches missed.">                          || dto.getUserName().toLowerCase().contains(s)</span>
-<span class="pc bpc" id="L103" title="1 of 2 branches missed.">                          || dto.getIp().contains(s))</span>
-<span class="fc" id="L104">              .collect(Collectors.toList());</span>
-    }
-
-<span class="pc bpc" id="L107" title="2 of 6 branches missed.">    if (action != null &amp;&amp; !action.isEmpty() &amp;&amp; !action.equals(&quot;Todas as Ações&quot;)) {</span>
-<span class="fc" id="L108">      dtos =</span>
-<span class="fc" id="L109">          dtos.stream().filter(dto -&gt; dto.getAction().equals(action)).collect(Collectors.toList());</span>
-    }
-
-<span class="fc" id="L112">    return ResponseEntity.ok(dtos);</span>
+<span class="fc" id="L118">    return ResponseEntity.ok(new PageImpl&lt;&gt;(dtos, pageable, logsPage.getTotalElements()));</span>
   }
 
   /**
@@ -123,49 +129,58 @@ public class AuditController {
   @PreAuthorize(&quot;hasRole('AUDITOR')&quot;)
   public ResponseEntity&lt;String&gt; exportAuditLogs(
       @RequestParam(required = false) String search,
-      @RequestParam(required = false) String action) {
+      @RequestParam(required = false) String action,
+      @RequestParam(required = false) String startDate,
+      @RequestParam(required = false) String endDate) {
 
-<span class="fc" id="L128">    ResponseEntity&lt;List&lt;AuditLogDto&gt;&gt; response = getAuditLogs(search, action);</span>
-<span class="fc" id="L129">    List&lt;AuditLogDto&gt; dtos = response.getBody();</span>
+<span class="fc" id="L136">    ResponseEntity&lt;Page&lt;AuditLogDto&gt;&gt; response =</span>
+<span class="fc" id="L137">        getAuditLogs(</span>
+            search,
+            action,
+            startDate,
+            endDate,
+<span class="fc" id="L142">            org.springframework.data.domain.PageRequest.of(</span>
+<span class="fc" id="L143">                0, 10000, Sort.by(Sort.Direction.DESC, &quot;createdAt&quot;)));</span>
+<span class="fc" id="L144">    List&lt;AuditLogDto&gt; dtos = response.getBody().getContent();</span>
 
-<span class="fc" id="L131">    StringBuilder csv = new StringBuilder();</span>
-<span class="fc" id="L132">    csv.append(&quot;ID,Timestamp,Action,User,IP,Details,Severity\n&quot;);</span>
+<span class="fc" id="L146">    StringBuilder csv = new StringBuilder();</span>
+<span class="fc" id="L147">    csv.append(&quot;ID,Timestamp,Action,User,IP,Details,Severity\n&quot;);</span>
 
-<span class="pc bpc" id="L134" title="1 of 2 branches missed.">    if (dtos != null) {</span>
-<span class="fc bfc" id="L135" title="All 2 branches covered.">      for (AuditLogDto dto : dtos) {</span>
-<span class="fc" id="L136">        csv.append(escapeCsv(dto.getId()))</span>
-<span class="fc" id="L137">            .append(&quot;,&quot;)</span>
-<span class="fc" id="L138">            .append(escapeCsv(dto.getTimestamp()))</span>
-<span class="fc" id="L139">            .append(&quot;,&quot;)</span>
-<span class="fc" id="L140">            .append(escapeCsv(dto.getAction()))</span>
-<span class="fc" id="L141">            .append(&quot;,&quot;)</span>
-<span class="fc" id="L142">            .append(escapeCsv(dto.getUserName()))</span>
-<span class="fc" id="L143">            .append(&quot;,&quot;)</span>
-<span class="fc" id="L144">            .append(escapeCsv(dto.getIp()))</span>
-<span class="fc" id="L145">            .append(&quot;,&quot;)</span>
-<span class="fc" id="L146">            .append(escapeCsv(dto.getDetails()))</span>
-<span class="fc" id="L147">            .append(&quot;,&quot;)</span>
-<span class="fc" id="L148">            .append(escapeCsv(dto.getSeverity()))</span>
-<span class="fc" id="L149">            .append(&quot;\n&quot;);</span>
-<span class="fc" id="L150">      }</span>
+<span class="pc bpc" id="L149" title="1 of 2 branches missed.">    if (dtos != null) {</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">      for (AuditLogDto dto : dtos) {</span>
+<span class="fc" id="L151">        csv.append(escapeCsv(dto.getId()))</span>
+<span class="fc" id="L152">            .append(&quot;,&quot;)</span>
+<span class="fc" id="L153">            .append(escapeCsv(dto.getTimestamp()))</span>
+<span class="fc" id="L154">            .append(&quot;,&quot;)</span>
+<span class="fc" id="L155">            .append(escapeCsv(dto.getAction()))</span>
+<span class="fc" id="L156">            .append(&quot;,&quot;)</span>
+<span class="fc" id="L157">            .append(escapeCsv(dto.getUserName()))</span>
+<span class="fc" id="L158">            .append(&quot;,&quot;)</span>
+<span class="fc" id="L159">            .append(escapeCsv(dto.getIp()))</span>
+<span class="fc" id="L160">            .append(&quot;,&quot;)</span>
+<span class="fc" id="L161">            .append(escapeCsv(dto.getDetails()))</span>
+<span class="fc" id="L162">            .append(&quot;,&quot;)</span>
+<span class="fc" id="L163">            .append(escapeCsv(dto.getSeverity()))</span>
+<span class="fc" id="L164">            .append(&quot;\n&quot;);</span>
+<span class="fc" id="L165">      }</span>
     }
 
-<span class="fc" id="L153">    org.springframework.http.HttpHeaders headers = new org.springframework.http.HttpHeaders();</span>
-<span class="fc" id="L154">    headers.add(&quot;Content-Disposition&quot;, &quot;attachment; filename=\&quot;audit_logs.csv\&quot;&quot;);</span>
-<span class="fc" id="L155">    headers.add(&quot;Content-Type&quot;, &quot;text/csv; charset=UTF-8&quot;);</span>
+<span class="fc" id="L168">    org.springframework.http.HttpHeaders headers = new org.springframework.http.HttpHeaders();</span>
+<span class="fc" id="L169">    headers.add(&quot;Content-Disposition&quot;, &quot;attachment; filename=\&quot;audit_logs.csv\&quot;&quot;);</span>
+<span class="fc" id="L170">    headers.add(&quot;Content-Type&quot;, &quot;text/csv; charset=UTF-8&quot;);</span>
 
-<span class="fc" id="L157">    return ResponseEntity.ok().headers(headers).body(csv.toString());</span>
+<span class="fc" id="L172">    return ResponseEntity.ok().headers(headers).body(csv.toString());</span>
   }
 
   private String escapeCsv(String value) {
-<span class="pc bpc" id="L161" title="1 of 2 branches missed.">    if (value == null) {</span>
-<span class="nc" id="L162">      return &quot;&quot;;</span>
+<span class="pc bpc" id="L176" title="1 of 2 branches missed.">    if (value == null) {</span>
+<span class="nc" id="L177">      return &quot;&quot;;</span>
     }
-<span class="fc" id="L164">    String escaped = value.replace(&quot;\&quot;&quot;, &quot;\&quot;\&quot;&quot;);</span>
-<span class="fc bfc" id="L165" title="All 6 branches covered.">    if (escaped.contains(&quot;,&quot;) || escaped.contains(&quot;\&quot;&quot;) || escaped.contains(&quot;\n&quot;)) {</span>
-<span class="fc" id="L166">      return &quot;\&quot;&quot; + escaped + &quot;\&quot;&quot;;</span>
+<span class="fc" id="L179">    String escaped = value.replace(&quot;\&quot;&quot;, &quot;\&quot;\&quot;&quot;);</span>
+<span class="fc bfc" id="L180" title="All 6 branches covered.">    if (escaped.contains(&quot;,&quot;) || escaped.contains(&quot;\&quot;&quot;) || escaped.contains(&quot;\n&quot;)) {</span>
+<span class="fc" id="L181">      return &quot;\&quot;&quot; + escaped + &quot;\&quot;&quot;;</span>
     }
-<span class="fc" id="L168">    return escaped;</span>
+<span class="fc" id="L183">    return escaped;</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

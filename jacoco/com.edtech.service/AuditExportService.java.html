@@ -5,6 +5,17 @@ import com.edtech.model.Document;
 import com.edtech.repository.AuditLogRepository;
 import com.edtech.repository.DocumentRepository;
 import com.edtech.repository.ProjectMemberRepository;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.Font;
+import com.lowagie.text.FontFactory;
+import com.lowagie.text.PageSize;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.Phrase;
+import com.lowagie.text.pdf.PdfPCell;
+import com.lowagie.text.pdf.PdfPTable;
+import com.lowagie.text.pdf.PdfWriter;
+import java.io.ByteArrayOutputStream;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
@@ -15,6 +26,7 @@ import org.springframework.stereotype.Service;
 public class AuditExportService {
 
   private static final String CSV_FORMAT = &quot;csv&quot;;
+  private static final String PDF_FORMAT = &quot;pdf&quot;;
   private static final String DOCUMENT_RESOURCE_TYPE = &quot;Document&quot;;
 
   private final AuditLogRepository auditLogRepository;
@@ -27,12 +39,12 @@ public class AuditExportService {
       AuditLogRepository auditLogRepository,
       DocumentRepository documentRepository,
       ProjectMemberRepository projectMemberRepository,
-<span class="fc" id="L30">      AuditTrailCsvExporter csvExporter) {</span>
-<span class="fc" id="L31">    this.auditLogRepository = auditLogRepository;</span>
-<span class="fc" id="L32">    this.documentRepository = documentRepository;</span>
-<span class="fc" id="L33">    this.projectMemberRepository = projectMemberRepository;</span>
-<span class="fc" id="L34">    this.csvExporter = csvExporter;</span>
-<span class="fc" id="L35">  }</span>
+<span class="fc" id="L42">      AuditTrailCsvExporter csvExporter) {</span>
+<span class="fc" id="L43">    this.auditLogRepository = auditLogRepository;</span>
+<span class="fc" id="L44">    this.documentRepository = documentRepository;</span>
+<span class="fc" id="L45">    this.projectMemberRepository = projectMemberRepository;</span>
+<span class="fc" id="L46">    this.csvExporter = csvExporter;</span>
+<span class="fc" id="L47">  }</span>
 
   /**
    * Exporta os logs de auditoria relacionados a um documento.
@@ -43,37 +55,95 @@ public class AuditExportService {
    * @return conteudo do arquivo exportado em bytes.
    */
   public byte[] exportDocumentAuditTrail(UUID documentId, UUID userId, String format) {
-<span class="fc" id="L46">    String normalizedFormat = normalizeFormat(format);</span>
-<span class="fc bfc" id="L47" title="All 2 branches covered.">    if (!CSV_FORMAT.equals(normalizedFormat)) {</span>
-<span class="fc" id="L48">      throw new IllegalArgumentException(&quot;Formato invalido. Use: csv&quot;);</span>
+<span class="fc" id="L58">    String normalizedFormat = normalizeFormat(format);</span>
+<span class="pc bpc" id="L59" title="1 of 4 branches missed.">    if (!CSV_FORMAT.equals(normalizedFormat) &amp;&amp; !PDF_FORMAT.equals(normalizedFormat)) {</span>
+<span class="fc" id="L60">      throw new IllegalArgumentException(&quot;Formato invalido. Use: csv ou pdf&quot;);</span>
     }
 
-<span class="fc" id="L51">    Document document =</span>
+<span class="fc" id="L63">    Document document =</span>
         documentRepository
-<span class="fc" id="L53">            .findById(documentId)</span>
-<span class="fc" id="L54">            .orElseThrow(() -&gt; new RuntimeException(&quot;Document not found&quot;));</span>
+<span class="fc" id="L65">            .findById(documentId)</span>
+<span class="fc" id="L66">            .orElseThrow(() -&gt; new RuntimeException(&quot;Document not found&quot;));</span>
 
-<span class="fc" id="L56">    projectMemberRepository</span>
-<span class="fc" id="L57">        .findByProjectIdAndUserId(document.getProject().getId(), userId)</span>
-<span class="fc" id="L58">        .orElseThrow(</span>
-<span class="fc" id="L59">            () -&gt; new RuntimeException(&quot;Access denied: You are not a member of this project&quot;));</span>
+<span class="fc" id="L68">    projectMemberRepository</span>
+<span class="fc" id="L69">        .findByProjectIdAndUserId(document.getProject().getId(), userId)</span>
+<span class="fc" id="L70">        .orElseThrow(</span>
+<span class="fc" id="L71">            () -&gt; new RuntimeException(&quot;Access denied: You are not a member of this project&quot;));</span>
 
-<span class="fc" id="L61">    List&lt;AuditLog&gt; logs =</span>
-<span class="fc" id="L62">        auditLogRepository.findByResourceTypeAndResourceIdOrderByCreatedAtAsc(</span>
+<span class="fc" id="L73">    List&lt;AuditLog&gt; logs =</span>
+<span class="fc" id="L74">        auditLogRepository.findByResourceTypeAndResourceIdOrderByCreatedAtAsc(</span>
             DOCUMENT_RESOURCE_TYPE, documentId);
 
-<span class="fc" id="L65">    return csvExporter.export(logs);</span>
+<span class="pc bpc" id="L77" title="1 of 2 branches missed.">    if (PDF_FORMAT.equals(normalizedFormat)) {</span>
+<span class="nc" id="L78">      return exportPdf(logs);</span>
+    }
+
+<span class="fc" id="L81">    return csvExporter.export(logs);</span>
+  }
+
+  private byte[] exportPdf(List&lt;AuditLog&gt; logs) {
+<span class="nc" id="L85">    com.lowagie.text.Document pdfDoc = new com.lowagie.text.Document(PageSize.A4.rotate());</span>
+<span class="nc" id="L86">    ByteArrayOutputStream out = new ByteArrayOutputStream();</span>
+
+    try {
+<span class="nc" id="L89">      PdfWriter.getInstance(pdfDoc, out);</span>
+<span class="nc" id="L90">      pdfDoc.open();</span>
+
+<span class="nc" id="L92">      Font fontTitle = FontFactory.getFont(FontFactory.HELVETICA_BOLD);</span>
+<span class="nc" id="L93">      fontTitle.setSize(18);</span>
+<span class="nc" id="L94">      Paragraph title = new Paragraph(&quot;Trilha de Auditoria do Documento&quot;, fontTitle);</span>
+<span class="nc" id="L95">      title.setAlignment(Paragraph.ALIGN_CENTER);</span>
+<span class="nc" id="L96">      pdfDoc.add(title);</span>
+<span class="nc" id="L97">      pdfDoc.add(new Paragraph(&quot; &quot;));</span>
+
+<span class="nc" id="L99">      PdfPTable table = new PdfPTable(6);</span>
+<span class="nc" id="L100">      table.setWidthPercentage(100f);</span>
+<span class="nc" id="L101">      table.setWidths(new float[] {1.5f, 2.5f, 2.0f, 2.0f, 1.5f, 4.0f});</span>
+
+<span class="nc" id="L103">      Font fontHeader = FontFactory.getFont(FontFactory.HELVETICA_BOLD);</span>
+<span class="nc" id="L104">      fontHeader.setSize(10);</span>
+<span class="nc" id="L105">      String[] headers = {&quot;ID&quot;, &quot;Timestamp&quot;, &quot;Ação&quot;, &quot;Usuário ID&quot;, &quot;IP&quot;, &quot;Detalhes&quot;};</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">      for (String header : headers) {</span>
+<span class="nc" id="L107">        PdfPCell cell = new PdfPCell();</span>
+<span class="nc" id="L108">        cell.setPhrase(new Phrase(header, fontHeader));</span>
+<span class="nc" id="L109">        table.addCell(cell);</span>
+      }
+
+<span class="nc" id="L112">      Font fontData = FontFactory.getFont(FontFactory.HELVETICA);</span>
+<span class="nc" id="L113">      fontData.setSize(8);</span>
+<span class="nc" id="L114">      DateTimeFormatter formatter = DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd HH:mm:ss&quot;);</span>
+
+<span class="nc bnc" id="L116" title="All 2 branches missed.">      for (AuditLog log : logs) {</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">        table.addCell(new Phrase(log.getId() != null ? log.getId().toString() : &quot;&quot;, fontData));</span>
+<span class="nc" id="L118">        table.addCell(</span>
+            new Phrase(
+<span class="nc bnc" id="L120" title="All 2 branches missed.">                log.getCreatedAt() != null ? log.getCreatedAt().format(formatter) : &quot;&quot;, fontData));</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">        table.addCell(new Phrase(log.getAction() != null ? log.getAction().name() : &quot;&quot;, fontData));</span>
+<span class="nc" id="L122">        table.addCell(</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">            new Phrase(log.getUserId() != null ? log.getUserId().toString() : &quot;&quot;, fontData));</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">        table.addCell(new Phrase(log.getIpAddress() != null ? log.getIpAddress() : &quot;&quot;, fontData));</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">        table.addCell(new Phrase(log.getDetails() != null ? log.getDetails() : &quot;&quot;, fontData));</span>
+<span class="nc" id="L126">      }</span>
+
+<span class="nc" id="L128">      pdfDoc.add(table);</span>
+<span class="nc" id="L129">      pdfDoc.close();</span>
+
+<span class="nc" id="L131">    } catch (DocumentException e) {</span>
+<span class="nc" id="L132">      throw new RuntimeException(&quot;Erro ao gerar PDF&quot;, e);</span>
+<span class="nc" id="L133">    }</span>
+
+<span class="nc" id="L135">    return out.toByteArray();</span>
   }
 
   public String buildFilename(UUID documentId, String format) {
-<span class="fc" id="L69">    return &quot;audit-trail-&quot; + documentId + &quot;.&quot; + normalizeFormat(format);</span>
+<span class="fc" id="L139">    return &quot;audit-trail-&quot; + documentId + &quot;.&quot; + normalizeFormat(format);</span>
   }
 
   private String normalizeFormat(String format) {
-<span class="fc bfc" id="L73" title="All 4 branches covered.">    if (format == null || format.isBlank()) {</span>
-<span class="fc" id="L74">      return CSV_FORMAT;</span>
+<span class="fc bfc" id="L143" title="All 4 branches covered.">    if (format == null || format.isBlank()) {</span>
+<span class="fc" id="L144">      return CSV_FORMAT;</span>
     }
-<span class="fc" id="L76">    return format.toLowerCase(Locale.ROOT);</span>
+<span class="fc" id="L146">    return format.toLowerCase(Locale.ROOT);</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

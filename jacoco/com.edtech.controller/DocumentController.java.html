@@ -81,18 +81,23 @@ public class DocumentController {
 <span class="fc" id="L81">    byte[] file = auditExportService.exportDocumentAuditTrail(id, user.getId(), format);</span>
 <span class="fc" id="L82">    String filename = auditExportService.buildFilename(id, format);</span>
 
-<span class="fc" id="L84">    return ResponseEntity.ok()</span>
-<span class="fc" id="L85">        .header(HttpHeaders.CONTENT_DISPOSITION, &quot;attachment; filename=\&quot;&quot; + filename + &quot;\&quot;&quot;)</span>
-<span class="fc" id="L86">        .contentType(MediaType.parseMediaType(&quot;text/csv&quot;))</span>
-<span class="fc" id="L87">        .body(file);</span>
+    MediaType mediaType =
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">        &quot;pdf&quot;.equalsIgnoreCase(format)</span>
+<span class="nc" id="L86">            ? MediaType.APPLICATION_PDF</span>
+<span class="fc" id="L87">            : MediaType.parseMediaType(&quot;text/csv&quot;);</span>
+
+<span class="fc" id="L89">    return ResponseEntity.ok()</span>
+<span class="fc" id="L90">        .header(HttpHeaders.CONTENT_DISPOSITION, &quot;attachment; filename=\&quot;&quot; + filename + &quot;\&quot;&quot;)</span>
+<span class="fc" id="L91">        .contentType(mediaType)</span>
+<span class="fc" id="L92">        .body(file);</span>
   }
 
   /** Documentacao. */
   @DeleteMapping(&quot;/{id}&quot;)
   public ResponseEntity&lt;Void&gt; deleteDocument(@PathVariable UUID id, Authentication authentication) {
-<span class="fc" id="L93">    User user = (User) authentication.getPrincipal();</span>
-<span class="fc" id="L94">    documentService.deleteDocument(id, user.getId());</span>
-<span class="fc" id="L95">    return ResponseEntity.noContent().build();</span>
+<span class="fc" id="L98">    User user = (User) authentication.getPrincipal();</span>
+<span class="fc" id="L99">    documentService.deleteDocument(id, user.getId());</span>
+<span class="fc" id="L100">    return ResponseEntity.noContent().build();</span>
   }
 
   /** Documentacao. */
@@ -101,24 +106,24 @@ public class DocumentController {
       @PathVariable UUID id,
       @RequestBody com.edtech.dto.DocumentStatusUpdateDto dto,
       Authentication authentication) {
-<span class="fc" id="L104">    User user = (User) authentication.getPrincipal();</span>
-<span class="fc" id="L105">    DocumentResponseDto response =</span>
-<span class="fc" id="L106">        documentService.reviewDocument(id, user.getId(), dto.getStatus(), dto.getFeedback());</span>
-<span class="fc" id="L107">    return ResponseEntity.ok(response);</span>
+<span class="fc" id="L109">    User user = (User) authentication.getPrincipal();</span>
+<span class="fc" id="L110">    DocumentResponseDto response =</span>
+<span class="fc" id="L111">        documentService.reviewDocument(id, user.getId(), dto.getStatus(), dto.getFeedback());</span>
+<span class="fc" id="L112">    return ResponseEntity.ok(response);</span>
   }
 
   @PatchMapping(&quot;/{id}/star&quot;)
   public ResponseEntity&lt;DocumentResponseDto&gt; toggleStar(
       @PathVariable UUID id, Authentication authentication) {
-<span class="fc" id="L113">    User user = (User) authentication.getPrincipal();</span>
-<span class="fc" id="L114">    return ResponseEntity.ok(documentService.toggleStar(id, user.getId()));</span>
+<span class="fc" id="L118">    User user = (User) authentication.getPrincipal();</span>
+<span class="fc" id="L119">    return ResponseEntity.ok(documentService.toggleStar(id, user.getId()));</span>
   }
 
   @GetMapping(&quot;/{id}/comments&quot;)
   public ResponseEntity&lt;java.util.List&lt;com.edtech.dto.CommentResponseDto&gt;&gt; getComments(
       @PathVariable UUID id, Authentication authentication) {
-<span class="fc" id="L120">    User user = (User) authentication.getPrincipal();</span>
-<span class="fc" id="L121">    return ResponseEntity.ok(documentService.getComments(id, user.getId()));</span>
+<span class="fc" id="L125">    User user = (User) authentication.getPrincipal();</span>
+<span class="fc" id="L126">    return ResponseEntity.ok(documentService.getComments(id, user.getId()));</span>
   }
 
   /** Javadoc. */
@@ -127,9 +132,9 @@ public class DocumentController {
       @PathVariable UUID id,
       @jakarta.validation.Valid @RequestBody com.edtech.dto.CommentRequestDto dto,
       Authentication authentication) {
-<span class="fc" id="L130">    User user = (User) authentication.getPrincipal();</span>
-<span class="fc" id="L131">    return ResponseEntity.status(HttpStatus.CREATED)</span>
-<span class="fc" id="L132">        .body(documentService.addComment(id, user.getId(), dto.getContent()));</span>
+<span class="fc" id="L135">    User user = (User) authentication.getPrincipal();</span>
+<span class="fc" id="L136">    return ResponseEntity.status(HttpStatus.CREATED)</span>
+<span class="fc" id="L137">        .body(documentService.addComment(id, user.getId(), dto.getContent()));</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

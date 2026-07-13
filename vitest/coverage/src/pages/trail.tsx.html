@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">57.14% </span>
+                <span class="strong">76.19% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>16/28</span>
+                <span class='fraction'>16/21</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">66.66% </span>
+                <span class="strong">80% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>4/6</span>
+                <span class='fraction'>4/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">59.25% </span>
+                <span class="strong">80% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>16/27</span>
+                <span class='fraction'>16/20</span>
             </div>
         
             
@@ -460,11 +460,8 @@
 <a name='L395'></a><a href='#L395'>395</a>
 <a name='L396'></a><a href='#L396'>396</a>
 <a name='L397'></a><a href='#L397'>397</a>
-<a name='L398'></a><a href='#L398'>398</a>
-<a name='L399'></a><a href='#L399'>399</a>
-<a name='L400'></a><a href='#L400'>400</a>
-<a name='L401'></a><a href='#L401'>401</a>
-<a name='L402'></a><a href='#L402'>402</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L398'></a><a href='#L398'>398</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -528,14 +525,9 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">6x</span>
@@ -868,6 +860,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useState } from 'react';
 import DashboardLayout from '../components/layout/DashboardLayout';
 import { useAuth } from '../context/authContext';
+import { exportDocumentAuditTrail } from '../services/api';
 import '../assets/trail.css';
 &nbsp;
 const ResearchTrail: React.FC = () =&gt; {
@@ -925,18 +918,13 @@ const ResearchTrail: React.FC = () =&gt; {
 &nbsp;
   const documents = user?.role === 'RESEARCHER' ? researcherDocuments : advisorDocuments;
 &nbsp;
-  const <span class="fstat-no" title="function not covered" >handleExportTrail = () =&gt; {</span>
-    const docToExport = <span class="cstat-no" title="statement not covered" >documents.<span class="fstat-no" title="function not covered" >find(d</span> =&gt; <span class="cstat-no" title="statement not covered" >d.id === selectedDocId)</span>;</span>
-    const content = <span class="cstat-no" title="statement not covered" >`Relatório de Trilha de Pesquisa\nDocumento: ${docToExport?.title}\nStatus: ${docToExport?.status}\n\nEventos:\n- Documento aprovado\n- Verificação LGPD aprovada\n- Nova versão criada\n`;</span>
-    const blob = <span class="cstat-no" title="statement not covered" >new Blob([content], { type: 'application/pdf' });</span>
-    const url = <span class="cstat-no" title="statement not covered" >URL.createObjectURL(blob);</span>
-    const a = <span class="cstat-no" title="statement not covered" >document.createElement('a');</span>
-<span class="cstat-no" title="statement not covered" >    a.href = url;</span>
-<span class="cstat-no" title="statement not covered" >    a.download = `trilha_${docToExport?.title || 'pesquisa'}.pdf`;</span>
-<span class="cstat-no" title="statement not covered" >    document.body.appendChild(a);</span>
-<span class="cstat-no" title="statement not covered" >    a.click();</span>
-<span class="cstat-no" title="statement not covered" >    document.body.removeChild(a);</span>
-<span class="cstat-no" title="statement not covered" >    URL.revokeObjectURL(url);</span>
+  const handleExportTrail = <span class="fstat-no" title="function not covered" >async () =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    if (!selectedDocId) <span class="cstat-no" title="statement not covered" >return;</span></span>
+<span class="cstat-no" title="statement not covered" >    try {</span>
+<span class="cstat-no" title="statement not covered" >      await exportDocumentAuditTrail(selectedDocId, 'pdf');</span>
+    } catch(e) {
+<span class="cstat-no" title="statement not covered" >      console.error('Failed to export', e);</span>
+    }
   };
 &nbsp;
   const getStatusBadgeClass = (status: string) =&gt; {
@@ -1273,7 +1261,7 @@ export default ResearchTrail;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-07-12T21:51:10.403Z
+                at 2026-07-13T02:37:46.299Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
