@@ -310,7 +310,7 @@ const Dashboard: React.FC = () => {
               </span>
             </div>
           </div>
-          <button className="btn-alert text-nowrap flex-shrink-0 mt-3 mt-md-0 w-100 w-md-auto" style={{ background: 'white', color: '#dc2626', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', border: 'none', padding: '8px 20px', borderRadius: '8px', fontWeight: 600, cursor: 'pointer' }} onClick={() => navigate('/compliance-center')}>
+          <button className="btn-alert text-nowrap flex-shrink-0 mt-3 mt-md-0" style={{ background: 'white', color: '#dc2626', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', border: 'none', padding: '8px 20px', borderRadius: '8px', fontWeight: 600, cursor: 'pointer' }} onClick={() => navigate('/compliance-center')}>
             <i className="bi bi-arrow-right-short" style={{ fontSize: '18px', marginRight: '4px' }}></i> Investigar
           </button>
         </div>
@@ -326,13 +326,13 @@ const Dashboard: React.FC = () => {
                 {user?.role === 'RESEARCHER'
                   ? 'Envie seu primeiro documento para iniciar a trilha de pesquisa e as métricas do painel.'
                   : user?.role === 'ADVISOR'
-                    ? 'Associe-se a um projeto para acompanhar submissões e orientar pesquisadores.'
+                    ? 'Acompanhe as submissões da sua equipe e conduza as próximas revisões.'
                     : 'Consulte os logs de auditoria para acompanhar eventos e indicadores de conformidade.'}
               </span>
             </div>
           </div>
-          <button className="btn-alert text-nowrap flex-shrink-0 mt-3 mt-md-0 w-100 w-md-auto" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', border: 'none', padding: '8px 20px', borderRadius: '8px', fontWeight: 600, cursor: 'pointer', background: 'var(--ed-purple-main)', color: 'white' }} onClick={() => navigate(user?.role === 'RESEARCHER' ? '/documentos' : user?.role === 'ADVISOR' ? '/projects' : '/audit-logs')}>
-            Começar <i className="bi bi-arrow-right-short" style={{ fontSize: '18px', marginLeft: '4px' }}></i>
+          <button className="btn-alert governance-primary-action" onClick={() => navigate(user?.role === 'RESEARCHER' ? '/upload' : user?.role === 'ADVISOR' ? '/submissions' : '/audit-logs')}>
+            {user?.role === 'RESEARCHER' ? 'Enviar documento' : user?.role === 'ADVISOR' ? 'Abrir fila de revisão' : 'Ver auditoria'} <i className="bi bi-arrow-right-short" style={{ fontSize: '18px', marginLeft: '4px' }}></i>
           </button>
         </div>
       )}
@@ -345,7 +345,7 @@ const Dashboard: React.FC = () => {
             <div className="dashboard-card h-100 mb-0">
               <div className="card-header-flex">
                 <h3 className="card-title">Minhas Submissões Recentes</h3>
-                <span className="card-action-link" style={{ color: 'var(--ed-purple-light)', cursor: 'pointer', fontSize: '13px', fontWeight: 500 }}>Ver histórico</span>
+                <button className="card-action-link" onClick={() => navigate('/documentos')}>Ver histórico</button>
               </div>
               <div className="doc-list">
                 {recentDocs.length > 0 ? recentDocs.map((doc: any, i) => (
@@ -408,7 +408,7 @@ const Dashboard: React.FC = () => {
             <div className="dashboard-card h-100 mb-0">
               <div className="card-header-flex">
                 <h3 className="card-title">Revisões Pendentes</h3>
-                <span className="card-action-link" style={{ color: 'var(--ed-purple-light)', cursor: 'pointer', fontSize: '13px', fontWeight: 500 }}>Ver todas</span>
+                <button className="card-action-link" onClick={() => navigate('/submissions')}>Ver todas</button>
               </div>
               <div className="doc-list">
                 {recentDocs.length > 0 ? recentDocs.map((doc: any, i) => (

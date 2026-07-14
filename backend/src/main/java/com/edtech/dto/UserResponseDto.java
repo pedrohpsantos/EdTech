@@ -13,7 +13,8 @@ public record UserResponseDto(
     boolean active,
     Instant createdAt,
     boolean mfaEnabled,
-    UUID institutionId) {
+    UUID institutionId,
+    String avatarUrl) {
 
   /** Documentação para o método from. */
   public static UserResponseDto from(User user) {
@@ -25,6 +26,7 @@ public record UserResponseDto(
         user.isActive(),
         user.getCreatedAt(),
         user.isMfaEnabled(),
-        user.getInstitutionId());
+        user.getInstitutionId(),
+        user.getAvatarUrl());
   }
 }

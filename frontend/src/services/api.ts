@@ -171,6 +171,15 @@ export const getMe = async (): Promise<ApiResponse<User>> => {
   }
 };
 
+export const updateProfile = async (name: string, avatarUrl?: string | null): Promise<ApiResponse<User>> => {
+  try {
+    const response = await api.patch('/api/auth/me', { name, avatarUrl: avatarUrl || null });
+    return { sucesso: true, dados: response.data };
+  } catch (error) {
+    return handleApiError(error, 'Não foi possível atualizar o perfil.');
+  }
+};
+
 export const getProjects = async (page = 0, size = 20): Promise<ApiResponse<any>> => {
   try {
     const resposta = await api.get('/api/projects', { params: { page, size } });

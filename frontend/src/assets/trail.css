@@ -411,10 +411,23 @@
   color: var(--ed-status-danger);
 }
 
+.version-compare-backdrop { position: fixed; inset: 0; z-index: 1100; padding: 16px; display: grid; place-items: center; background: rgba(18,10,43,.55); }
+.version-compare-dialog { width: min(100%, 680px); border: 1px solid var(--border); border-radius: 16px; padding: 24px; background: var(--bg); box-shadow: 0 24px 64px rgba(0,0,0,.28); }
+.version-compare-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 20px; }
+.version-compare-header h3, .version-compare-header p { margin: 0; color: var(--ed-text-dark); }
+.version-compare-header p { margin-top: 4px; color: var(--ed-text-muted); font-size: 13px; }
+.version-compare-header button { border: 0; background: transparent; color: var(--ed-text-muted); font-size: 28px; cursor: pointer; }
+.version-compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.version-compare-grid section { padding: 16px; border-radius: 10px; border: 1px solid var(--border); background: rgba(126,76,203,.05); color: var(--ed-text-dark); }
+.version-compare-grid p, .version-compare-summary { margin: 8px 0 0; color: var(--ed-text-muted); font-size: 14px; }
+.version-compare-summary i { color: var(--ed-status-success); }
+
 /* -------------------------------------------------------------
  * RESPONSIVE / MOBILE OPTIMIZATIONS (360px a 768px)
  * ------------------------------------------------------------- */
 @media (max-width: 767.98px) {
+  .version-compare-dialog { padding: 18px; }
+  .version-compare-grid { grid-template-columns: 1fr; }
   .trail-content-grid {
     grid-template-columns: 1fr;
     gap: 16px;

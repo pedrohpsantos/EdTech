@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import DashboardLayout from '../components/layout/DashboardLayout';
 import { useAuth } from '../context/authContext';
-import { exportDocumentAuditTrail } from '../services/api';
 import '../assets/trail.css';
 
 const ResearchTrail: React.FC = () => {
   const { user } = useAuth();
   // For demo purposes, we'll use local state to switch between "list mode" and "detail mode"
   const [selectedDocId, setSelectedDocId] = useState<string>('1');
+  const [isComparingVersions, setIsComparingVersions] = useState(false);
 
   const advisorDocuments = [
     {
@@ -58,14 +58,27 @@ const ResearchTrail: React.FC = () => {
   ];
 
   const documents = user?.role === 'RESEARCHER' ? researcherDocuments : advisorDocuments;
+  const selectedDocument = documents.find((document) => document.id === selectedDocId) || documents[0];
 
-  const handleExportTrail = async () => {
-    if (!selectedDocId) return;
-    try {
-      await exportDocumentAuditTrail(selectedDocId, 'pdf');
-    } catch(e) {
-      console.error('Failed to export', e);
-    }
+  const handleExportTrail = () => {
+    const report = [
+      'EDTECH — TRILHA DE PESQUISA',
+      `Documento: ${selectedDocument.title}`,
+      `Projeto: ${selectedDocument.project}`,
+      `Status: ${selectedDocument.status}`,
+      '',
+      'v4 — Documento aprovado — Hoje, 14:32',
+      'v4 — Verificação LGPD aprovada — Hoje, 14:10',
+      'v4 — Nova versão criada — Hoje, 11:48',
+      'v3 — Comentário do orientador — Ontem, 16:20',
+      'v1 — Documento criado — 10 Jun, 09:00',
+    ].join('\n');
+    const url = URL.createObjectURL(new Blob([report], { type: 'text/plain;charset=utf-8' }));
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `trilha_${selectedDocument.title.replace(/[^a-z0-9]+/gi, '_').toLowerCase()}.txt`;
+    link.click();
+    URL.revokeObjectURL(url);
   };
 
   const getStatusBadgeClass = (status: string) => {
@@ -142,7 +155,7 @@ const ResearchTrail: React.FC = () => {
       </div>
 
       {/* Details Section for Document 1 (Mocked as per screenshot) */}
-      {selectedDocId === '1' && (
+      {selectedDocument && (
         <div className="trail-details-section">
           <div className="trail-details-banner">
             <div className="trail-doc-info">
@@ -151,10 +164,10 @@ const ResearchTrail: React.FC = () => {
               </div>
               <div>
                 <span className="trail-doc-name" style={{ fontSize: '16px' }}>
-                  {user?.role === 'RESEARCHER' ? 'Referencial_Teorico_Final.pdf' : 'Metodologia_Qualitativa_v3.pdf'}
+                  {selectedDocument.title}
                 </span>
                 <span className="trail-doc-project">
-                  {user?.role === 'RESEARCHER' ? 'Seu projeto - Análise LGPD - 7 eventos · 4 versões' : 'Dra. Renata Silva - Análise LGPD - 7 eventos · 4 versões'}
+                  {selectedDocument.project} · 7 eventos · 4 versões
                 </span>
               </div>
             </div>
@@ -360,7 +373,7 @@ const ResearchTrail: React.FC = () => {
                     </span>
                   </div>
                 </div>
-                <button className="btn-compare-versions">
+                <button className="btn-compare-versions" onClick={() => setIsComparingVersions(true)}>
                   <i className="bi bi-arrow-down-up"></i> Comparar versões
                 </button>
               </div>
@@ -387,6 +400,16 @@ const ResearchTrail: React.FC = () => {
                 </table>
               </div>
             </div>
+          </div>
+        </div>
+      )}
+
+      {isComparingVersions && (
+        <div className="version-compare-backdrop" role="dialog" aria-modal="true" aria-label="Comparar versões">
+          <div className="version-compare-dialog">
+            <div className="version-compare-header"><div><h3>Comparar versões</h3><p>{selectedDocument.title}</p></div><button aria-label="Fechar" onClick={() => setIsComparingVersions(false)}>×</button></div>
+            <div className="version-compare-grid"><section><strong>v3 · 10 Jun</strong><p>Metodologia, referências e escopo inicial.</p></section><section><strong>v4 · Hoje</strong><p>Inclui revisão LGPD, evidências e aprovação do orientador.</p></section></div>
+            <p className="version-compare-summary"><i className="bi bi-check-circle"></i> 3 alterações de conteúdo e 1 validação de conformidade registradas.</p>
           </div>
         </div>
       )}

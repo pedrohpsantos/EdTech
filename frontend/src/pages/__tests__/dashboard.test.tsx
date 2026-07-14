@@ -159,9 +159,9 @@ describe('Dashboard Page', () => {
 
     // Check alert
     expect(screen.getByText('PRÓXIMO PASSO')).toBeInTheDocument();
-    const detailsBtn = screen.getByText('Começar');
+    const detailsBtn = screen.getByText('Abrir fila de revisão');
     fireEvent.click(detailsBtn);
-    expect(mockNavigate).toHaveBeenCalledWith('/projects');
+    expect(mockNavigate).toHaveBeenCalledWith('/submissions');
 
     // Check recent docs
     expect(screen.getByText('Revisões Pendentes')).toBeInTheDocument();

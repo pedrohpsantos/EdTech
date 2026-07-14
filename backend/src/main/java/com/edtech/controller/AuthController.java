@@ -6,6 +6,7 @@ import com.edtech.dto.RecoveryRequestDto;
 import com.edtech.dto.RegisterRequestDto;
 import com.edtech.dto.ResetPasswordDto;
 import com.edtech.dto.UserResponseDto;
+import com.edtech.dto.UpdateProfileRequestDto;
 import com.edtech.dto.VerifyCodeDto;
 import com.edtech.exception.RateLimitExceededException;
 import com.edtech.model.User;
@@ -22,6 +23,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -258,5 +260,15 @@ public class AuthController {
   public ResponseEntity<UserResponseDto> me(Authentication authentication) {
     User user = (User) authentication.getPrincipal();
     return ResponseEntity.ok(UserResponseDto.from(user));
+  }
+
+  /** Atualiza os dados de apresentação da conta autenticada. */
+  @PatchMapping("/me")
+  public ResponseEntity<UserResponseDto> updateProfile(
+      @Valid @RequestBody UpdateProfileRequestDto request, Authentication authentication) {
+    User user = (User) authentication.getPrincipal();
+    user.setName(request.name().trim());
+    user.setAvatarUrl(request.avatarUrl());
+    return ResponseEntity.ok(UserResponseDto.from(userService.saveUserWithoutHash(user)));
   }
 }
