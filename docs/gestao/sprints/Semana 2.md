@@ -100,7 +100,7 @@ Executar o Lean Inception completo, levantar e especificar todos os requisitos d
     Cada requisito funcional é vinculado a uma funcionalidade do Lean Inception e a uma persona, permitindo rastreabilidade de ponta a ponta.
 
 !!! note "Decisão: JWT em cookies ao invés de localStorage"
-    Por segurança, os tokens são transmitidos exclusivamente via cookies `HttpOnly` + `Secure` + `SameSite=Strict`, protegendo contra XSS e CSRF.
+    Por segurança, os tokens são transmitidos exclusivamente via cookies `HttpOnly` + `Secure` + `SameSite=None`; o acesso com credenciais é limitado pela origem configurada em CORS. O token continua inacessível ao JavaScript, protegendo contra XSS.
 
 ---
 

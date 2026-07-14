@@ -34,7 +34,7 @@ npm ci
 npm run dev
 ```
 
-A aplicação abre em `http://localhost:5173`. O cliente Axios usa `withCredentials`; para desenvolvimento completo, inicie também o backend e mantenha a origem em `CORS_ALLOWED_ORIGINS`. Em produção, as chamadas usam `/api` pelo Firebase Hosting, preservando o cookie `SameSite=Strict` no domínio da aplicação.
+A aplicação abre em `http://localhost:5173`. O cliente Axios usa `withCredentials`; para desenvolvimento completo, inicie também o backend e mantenha a origem em `CORS_ALLOWED_ORIGINS`. Em produção, as chamadas seguem para o Cloud Run configurado em `VITE_API_URL`; o cookie `Secure` usa `SameSite=None` para acompanhar a origem distinta, com CORS limitado à origem do frontend.
 
 ## Validação
 

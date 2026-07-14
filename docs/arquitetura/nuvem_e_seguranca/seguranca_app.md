@@ -14,7 +14,8 @@ A aplicação não armazena sessão em banco ou memória do servidor (`STATELESS
 ### Confinamento do Token
 
 O backend entrega o JWT no cookie `jwt`, com `HttpOnly`, `Secure` e
-`SameSite=Strict`; o cliente Axios usa `withCredentials`. Assim, o token de
+`SameSite=None`; o cliente Axios usa `withCredentials`. A API permite credenciais
+somente para a origem configurada em CORS. Assim, o token de
 sessão não fica em `localStorage` nem pode ser lido por JavaScript. O filtro de
 autenticação mantém compatibilidade com `Authorization: Bearer` para clientes
 não navegadores, mas a SPA não depende desse cabeçalho.

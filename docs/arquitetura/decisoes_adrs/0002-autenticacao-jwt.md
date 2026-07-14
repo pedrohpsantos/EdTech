@@ -1,36 +1,38 @@
 ---
-title: 'ADR 0002: Autenticação baseada em JWT com Cookies HttpOnly via Firebase Rewrites'
+title: 'ADR 0002: Autenticação baseada em JWT com Cookies HttpOnly'
 ---
 
-# :material-text-box-check: ADR 0002: Autenticação baseada em JWT com Cookies HttpOnly via Firebase Rewrites
+# :material-text-box-check: ADR 0002: Autenticação baseada em JWT com Cookies HttpOnly
 
 ## Status
 
-Aceito (Substitui decisão anterior de LocalStorage / Bearer Token)
+Aceito — revisado em 14/07/2026 (substitui decisão anterior de LocalStorage / Bearer Token)
 
 ## Contexto
 
 A plataforma EdTech lida com dados acadêmicos sensíveis (artigos não publicados, patentes e datasets sigilosos). Precisamos garantir que as sessões dos pesquisadores e orientadores sejam seguras contra ataques de Cross-Site Scripting (XSS).
-Originalmente (versão 1.3), devido à hospedagem do frontend (Firebase em `.web.app`) e do backend (Cloud Run em `.run.app`) em domínios diferentes, os navegadores modernos bloqueavam os cookies `HttpOnly` considerando-os "Third-Party Cookies". Para resolver provisoriamente, utilizamos o LocalStorage e `Bearer Token`.
-Entretanto, essa abordagem expôs o token a ataques XSS e falhou em auditorias de segurança. Para resolver o bloqueio sem comprometer a segurança, utilizamos os Rewrites do Firebase Hosting.
+Originalmente (versão 1.3), devido à hospedagem do frontend (Firebase) e do backend (Cloud Run) em domínios diferentes, utilizamos provisoriamente `localStorage` e `Bearer Token`. Essa abordagem expôs o token a ataques XSS e falhou em auditorias de segurança.
+
+Uma tentativa posterior de encaminhar `/api/**` por Firebase Hosting Rewrites não preservou o cookie de sessão até o Cloud Run. O fluxo autenticado deve, portanto, chamar a API do Cloud Run diretamente.
 
 ## Decisão
 
-Optamos por utilizar **JWT (JSON Web Token)** armazenado exclusivamente em **Cookies HttpOnly, Secure e SameSite=Strict**. 
-Para permitir que o navegador trate os cookies como First-Party (Primeira Parte), configuramos o `firebase.json` do frontend para atuar como um proxy reverso (`rewrites`). Todas as requisições para `/api/**` são roteadas internamente pelo Firebase para o serviço do Cloud Run correspondente. Dessa forma, tanto o frontend quanto a API compartilham a mesma origem (origin).
+Optamos por utilizar **JWT (JSON Web Token)** armazenado exclusivamente em **cookies `HttpOnly`, `Secure` e `SameSite=None`**. A SPA chama a URL pública do Cloud Run definida por `VITE_API_URL`, sempre com `withCredentials`.
+
+Como a sessão cruza origens, a API aceita credenciais somente para as origens explicitamente configuradas em `CORS_ALLOWED_ORIGINS`. O token não é exposto ao JavaScript e não é armazenado em `localStorage`.
 
 ## Consequências
 
 ### Positivas
 
 - **Segurança contra XSS:** Tokens JWT não são acessíveis via JavaScript (graças à flag `HttpOnly`), mitigando significativamente o impacto de ataques XSS.
-- **First-Party Cookies:** O proxy resolve as restrições de navegadores modernos (Safari, Chrome) sobre Cookies de Terceiros, mantendo a interoperabilidade.
-- **Transparência:** O gerenciamento de credenciais na API do frontend torna-se automático através do `axios.defaults.withCredentials = true`.
+- **Interoperabilidade entre origens:** `SameSite=None; Secure` permite a sessão entre Firebase Hosting e Cloud Run em navegadores modernos.
+- **Transparência:** O gerenciamento de credenciais é automático com `axios.defaults.withCredentials = true`.
 
 ### Negativas / Riscos
 
-- **Acoplamento de Infraestrutura:** Dependemos do Firebase Hosting para fazer o roteamento reverso para o Cloud Run. Mudar de provedor de frontend exigiria uma reconfiguração do proxy (ex: Nginx, Cloudflare).
-- **Proteção CSRF:** Retorna a necessidade de nos preocuparmos com ataques CSRF, exigindo verificações rígidas de origem ou tokens CSRF se o atributo `SameSite=Strict` não for suportado por navegadores muito antigos.
+- **Política de origem:** O ambiente precisa manter `CORS_ALLOWED_ORIGINS` estritamente limitado às origens confiáveis.
+- **Proteção CSRF:** `SameSite=None` não é uma defesa CSRF. Mudanças em rotas mutáveis devem manter verificação de origem e, quando aplicável, proteção anti-CSRF.
 
 ---
 
@@ -43,4 +45,5 @@ Para permitir que o navegador trate os cookies como First-Party (Primeira Parte)
 | `1.2` | 04/07/2026 | Revisão e formatação | Pedro Henrique P. Santos |
 | `1.3` | 06/07/2026 | Migração de Cookies para Bearer Token no LocalStorage devido ao bloqueio Third-Party Cookies | Pedro Henrique P. Santos |
 | `1.4` | 13/07/2026 | Retorno para Cookies HttpOnly mitigando bloqueio através de Firebase Rewrites | Pedro Henrique P. Santos |
+| `1.5` | 14/07/2026 | Chamada direta ao Cloud Run com `SameSite=None`; removida a dependência de Rewrites para sessão | Pedro Henrique P. Santos |
 

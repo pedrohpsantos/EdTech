@@ -24,7 +24,7 @@ O **EdTech** centraliza a submissão, revisão, armazenamento e auditoria de doc
 ## Capacidades
 
 - Cadastro com verificação por e-mail, recuperação de senha e autenticação em dois fatores opcional.
-- Sessão JWT em cookie `HttpOnly`, `Secure` e `SameSite=Strict`; a SPA usa `withCredentials`.
+- Sessão JWT em cookie `HttpOnly`, `Secure` e `SameSite=None`; a SPA usa `withCredentials` e a API restringe CORS à origem autorizada.
 - Projetos, membros de laboratório e permissões por perfil.
 - Upload de PDF, CSV e JSON para o Google Cloud Storage, revisão, comentários, favoritos e links de download autorizados.
 - Auditoria filtrável e exportável, painel de métricas e indicadores de conformidade.

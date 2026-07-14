@@ -12,7 +12,7 @@ O modelo de ameaças do EdTech utiliza a metodologia STRIDE desenvolvida pela Mi
 
 **Controles Mitigatórios:**
 
-- **Autenticação JWT em cookie HttpOnly:** As sessões são validadas por JWT assinado, enviado no cookie `jwt` com `HttpOnly`, `Secure` e `SameSite=Strict`.
+- **Autenticação JWT em cookie HttpOnly:** As sessões são validadas por JWT assinado, enviado no cookie `jwt` com `HttpOnly`, `Secure` e `SameSite=None`; CORS restringe o uso com credenciais à origem autorizada.
 - **Defesa de origem e CSRF:** O frontend usa `withCredentials`; CORS aceita apenas origens configuradas e as rotas mutáveis permanecem protegidas pela configuração de segurança da API. O token não fica disponível ao JavaScript em `localStorage`.
 - **Força Bruta e Credential Stuffing:** Implementação de limite de taxa (*Rate Limiting*) agressivo via **Bucket4j**. Endpoints sensíveis como `/api/auth/login` admitem no máximo 5 requisições por minuto por endereço IP.
 

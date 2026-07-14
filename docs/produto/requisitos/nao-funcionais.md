@@ -15,7 +15,7 @@ Restrições de qualidade, desempenho, segurança e operação que o EdTech deve
 | ID | Requisito | Métrica | Verificação |
 | :---: | :--- | :--- | :--- |
 | RNF01 | Senhas devem ser armazenadas com hash BCrypt (custo ≥ 12) | Custo do encoder | Inspeção de código |
-| RNF02 | Tokens JWT devem ser transmitidos exclusivamente via cookies `HttpOnly` + `Secure` + `SameSite=Strict` | Flags do cookie | Teste de integração |
+| RNF02 | Tokens JWT devem ser transmitidos exclusivamente via cookies `HttpOnly` + `Secure` + `SameSite=None`, com CORS restrito à origem autorizada | Flags do cookie e CORS | Teste de integração |
 | RNF03 | Tokens JWT devem expirar em no máximo 1 hora | `Max-Age` do cookie | Teste automatizado |
 | RNF04 | O sistema não deve expor informações sobre e-mails cadastrados em respostas de erro | Mensagem genérica | Teste de penetração |
 | RNF05 | Todas as comunicações devem ocorrer via HTTPS | Certificado SSL | Cloud Run default |
