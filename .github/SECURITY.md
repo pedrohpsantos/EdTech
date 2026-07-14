@@ -23,7 +23,7 @@ Para reportar uma vulnerabilidade de forma responsável:
 
 2. **Submeta via GitHub Security Advisories:** Utilize a funcionalidade de [reporte privado de vulnerabilidades](https://docs.github.com/en/code-security/security-advisories/guidance-on-reporting-and-writing-information-about-vulnerabilities/privately-reporting-a-security-vulnerability) diretamente neste repositório.
 
-3. **Contato por e-mail:** Caso não encontre a opção no GitHub, envie o reporte para `security@edtech.invalid`.
+3. **Canal alternativo:** Se o reporte privado não estiver habilitado, contate um mantenedor por canal privado previamente acordado. Não publique detalhes exploráveis em issue, PR ou discussão.
 
 ---
 

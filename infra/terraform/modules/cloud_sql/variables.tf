@@ -17,3 +17,8 @@ variable "tier" {
   description = "O tamanho da máquina (ex: db-f1-micro)"
   type        = string
 }
+
+variable "vpc_network_id" {
+  description = "ID da VPC para o Private IP do Cloud SQL"
+  type        = string
+}

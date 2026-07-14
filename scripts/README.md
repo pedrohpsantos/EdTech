@@ -2,6 +2,8 @@
 
 Scripts de suporte administrativo e de desenvolvimento. Eles não participam do fluxo da aplicação em tempo de execução.
 
+> Ferramentas pequenas, operações conscientes e resultados auditáveis.
+
 ## `backup_status.py`
 
 Consulta o bucket `edtech-backups-<projeto>` e falha quando o backup mais recente tem mais de 25 horas. É um comando somente leitura.

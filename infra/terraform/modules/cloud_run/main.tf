@@ -71,10 +71,16 @@ resource "google_cloud_run_v2_service" "api" {
   client_version = "568.0.0"
   name           = var.service_name
   location       = var.location
+  # The SPA is served from Firebase Hosting and reaches this public API over HTTPS.
+  # Database isolation is provided by Private IP and VPC egress, not by blocking API ingress.
   ingress        = "INGRESS_TRAFFIC_ALL"
 
 
   template {
+    vpc_access {
+      connector = var.vpc_connector_id
+      egress    = "PRIVATE_RANGES_ONLY"
+    }
     containers {
       name  = "edtech-backend-1"
       image = var.image_url
@@ -224,6 +230,10 @@ resource "google_cloud_run_v2_job" "flyway_migration" {
 
   template {
     template {
+      vpc_access {
+        connector = var.vpc_connector_id
+        egress    = "PRIVATE_RANGES_ONLY"
+      }
       containers {
         image = var.image_url
 

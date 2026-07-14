@@ -4,6 +4,8 @@
 ![Spring Boot](https://img.shields.io/badge/Spring_Boot-6DB33F?logo=springboot&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?logo=postgresql&logoColor=white)
 
+> A camada que preserva contexto, autoria e confiança em cada documento acadêmico.
+
 API REST em Java 21 e Spring Boot. Concentra as regras de negócio, autenticação, autorização, auditoria, armazenamento de arquivos e integração com Cloud SQL/GCS.
 
 ## Autenticação e segurança

@@ -9,11 +9,8 @@ resource "google_sql_database_instance" "instance" {
 
     # Mantém a compatibilidade com a configuração atual (IP Público)
     ip_configuration {
-      ipv4_enabled = true
-      authorized_networks {
-        name  = "Desenvolvimento"
-        value = "0.0.0.0/0"
-      }
+      ipv4_enabled = false
+      private_network = var.vpc_network_id
     }
   }
 

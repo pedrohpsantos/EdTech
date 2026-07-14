@@ -42,5 +42,5 @@ Para permitir que o navegador trate os cookies como First-Party (Primeira Parte)
 | `1.1` | 13/06/2026 | Revisão técnica | Pedro Henrique P. Santos |
 | `1.2` | 04/07/2026 | Revisão e formatação | Pedro Henrique P. Santos |
 | `1.3` | 06/07/2026 | Migração de Cookies para Bearer Token no LocalStorage devido ao bloqueio Third-Party Cookies | Pedro Henrique P. Santos |
-| `1.4` | 13/07/2026 | Retorno para Cookies HttpOnly mitigando bloqueio através de Firebase Rewrites | Antigravity |
+| `1.4` | 13/07/2026 | Retorno para Cookies HttpOnly mitigando bloqueio através de Firebase Rewrites | Pedro Henrique P. Santos |
 

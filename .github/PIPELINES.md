@@ -65,7 +65,7 @@ Essa separação evita que k6 e o contrato de API aguardem o frontend, enquanto 
 
 ## Segurança de credenciais
 
-O workflow usa segredos GitHub para autenticação GCP enquanto a migração para Workload Identity Federation não é concluída. Não imprima, versiona ou replique valores de segredo. Jobs que adotarem WIF precisam de `id-token: write` e devem limitar a identidade ao repositório autorizado.
+O workflow usa Workload Identity Federation (OIDC) para autenticação GCP, sem chave JSON estática de deploy. Não imprima, versione ou replique valores de segredo; os jobs autenticados precisam de `id-token: write` e a identidade deve permanecer limitada ao repositório autorizado.
 
 ## Contribuição
 
