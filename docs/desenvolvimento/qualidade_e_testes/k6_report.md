@@ -18,8 +18,15 @@ Estes testes validam a conformidade com os requisitos **RNF07** e **RNF09**, for
 
 ---
 
+## Cenário e limites
+
+O cenário mantém a mesma janela curta de carga para não pressionar produção além do necessário. Ele simula usuários em rampa e mede, na mesma execução, `health`, login inválido, cadastro e recuperação de senha. As chamadas que podem receber limitação legítima (`429`) ou indisponibilidade transitória durante cold start (`503` no health) são tratadas como comportamento esperado, não como falso erro.
+
+Além do p95 global, o relatório segmenta p95 por endpoint: saúde até 500 ms, login até 750 ms e cadastro/recuperação até 900 ms. A taxa técnica de falhas HTTP deve permanecer abaixo de 1%. Assim, uma degradação localizada aparece no relatório sem aumentar duração, VUs ou volume de dados criados.
+
 ## Histórico de Versões
 
 | Versão | Data | Descrição | Autor |
 |--------|------|-----------|-------|
 | `1.0` | 11/07/2026 | Criação da página de relatório interativo K6 | Pedro Henrique P. Santos |
+| `1.1` | 14/07/2026 | Métricas por endpoint e limiares de confiabilidade | Pedro Henrique P. Santos |

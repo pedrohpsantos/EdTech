@@ -2,13 +2,15 @@ import styles from './networkBackground.module.css';
 
 const NetworkBackground = ({ isHyperdrive }) => {
   return (
-    <div className={styles.container}>
+    <div className={styles.container} aria-hidden="true">
       <svg
         className={styles.svgMesh}
         style={{ animationDuration: isHyperdrive ? '2s' : '40s' }}
         viewBox="0 0 1000 1000"
         preserveAspectRatio="xMidYMid slice"
         xmlns="http://www.w3.org/2000/svg"
+        focusable="false"
+        aria-hidden="true"
       >
         <g stroke="rgba(255, 255, 255, 0.15)" strokeWidth="1">
           {/* Perimeter connections */}

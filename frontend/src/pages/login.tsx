@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/authContext';
-import { motion } from 'framer-motion';
 import AuthLayout from '../components/AuthLayout';
 import styles from './auth.module.css';
 
@@ -57,15 +56,6 @@ function Login() {
   };
 
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 15 },
-    visible: { opacity: 1, y: 0 },
-  };
-
-  const shakeVariants = {
-    shake: { x: [-10, 10, -10, 10, -5, 5, 0], transition: { duration: 0.4 } },
-  };
-
   return (
     <AuthLayout title="Bem-vindo de volta" subtitle="Entre com suas credenciais institucionais">
       <form
@@ -77,36 +67,33 @@ function Login() {
         }}
       >
         {erro && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            className={styles.errorAlert}
-          >
+          <div className={styles.errorAlert} role="alert">
             <span style={{ marginRight: '8px' }}>⚠️</span>
             {erro}
-          </motion.div>
+          </div>
         )}
 
-        <motion.div variants={itemVariants} className={styles.inputGroup}>
+        <div className={styles.inputGroup}>
           <div className={styles.labelRow}>
-            <label className={styles.inputLabel}>E-mail Institucional</label>
+            <label className={styles.inputLabel} htmlFor="login-email">E-mail Institucional</label>
           </div>
           <div className={styles.inputWrapper}>
             <input
               className={styles.inputField}
+              id="login-email"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="seu.nome@universidade.br"
-              aria-label="email"
+              aria-label="E-mail institucional"
               required
             />
           </div>
-        </motion.div>
+        </div>
 
-        <motion.div variants={itemVariants} className={styles.inputGroup}>
+        <div className={styles.inputGroup}>
           <div className={styles.labelRow}>
-            <label className={styles.inputLabel}>Senha</label>
+            <label className={styles.inputLabel} htmlFor="login-password">Senha</label>
             <Link to="/recover-password" className={styles.forgotLink}>
               Recuperar senha
             </Link>
@@ -114,18 +101,20 @@ function Login() {
           <div className={styles.inputWrapper}>
             <input
               className={styles.inputField}
+              id="login-password"
               type={showPassword ? 'text' : 'password'}
               value={senha}
               onChange={(e) => setSenha(e.target.value)}
               placeholder="••••••••"
-              aria-label="senha"
+              aria-label="Senha"
               required
             />
             <button
               type="button"
               className={styles.passwordToggle}
               onClick={() => setShowPassword(!showPassword)}
-              aria-label="Mostrar senha"
+              aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
+              aria-pressed={showPassword}
             >
               {showPassword ? (
                 <svg
@@ -158,48 +147,43 @@ function Login() {
               )}
             </button>
           </div>
-        </motion.div>
+        </div>
 
         {step === '2fa' && (
-          <motion.div variants={itemVariants} className={styles.inputGroup} style={{ marginTop: '1rem' }}>
+          <div className={styles.inputGroup} style={{ marginTop: '1rem' }}>
             <div className={styles.labelRow}>
-              <label className={styles.inputLabel}>Código 2FA (Authenticator)</label>
+              <label className={styles.inputLabel} htmlFor="login-totp">Código 2FA (Authenticator)</label>
             </div>
             <div className={styles.inputWrapper}>
               <input
                 className={styles.inputField}
+                id="login-totp"
                 type="text"
                 value={totpCode}
                 onChange={(e) => setTotpCode(e.target.value.replace(/\D/g, ''))}
                 placeholder="000000"
                 maxLength={6}
+                aria-label="Código de autenticação em dois fatores"
                 required
               />
             </div>
-          </motion.div>
+          </div>
         )}
 
-        <motion.button
-          variants={Object.assign({}, itemVariants, shakeVariants)}
-          animate={isShaking ? 'shake' : 'visible'}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          className={styles.submitBtn}
+        <button
+          className={`${styles.submitBtn} ${isShaking ? styles.shake : ''}`}
           type="submit"
         >
           {step === 'credentials' ? 'Continuar' : 'Verificar e Entrar'} <span>→</span>
-        </motion.button>
+        </button>
       </form>
 
-      <motion.p
-        variants={itemVariants}
-        style={{ textAlign: 'center', margin: '1rem 0 0 0', fontSize: '0.875rem' }}
-      >
+      <p style={{ textAlign: 'center', margin: '1rem 0 0 0', fontSize: '0.875rem' }}>
         Não tem conta?{' '}
         <Link to="/register" className={styles.forgotLink}>
           Cadastre-se
         </Link>
-      </motion.p>
+      </p>
     </AuthLayout>
   );
 }

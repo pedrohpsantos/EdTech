@@ -284,8 +284,10 @@
                     </targetTests>
                     <threads>8</threads>
                     <withHistory>true</withHistory>
-                    <mutationThreshold>40</mutationThreshold>
-                    <coverageThreshold>40</coverageThreshold>
+                    <!-- Baselines aligned with the current report: strict enough to catch regressions,
+                         without expanding the mutation target or CI execution window. -->
+                    <mutationThreshold>70</mutationThreshold>
+                    <coverageThreshold>80</coverageThreshold>
                     <jvmArgs>
                         <value>-Xmx1024m</value>
                         <value>-XX:+EnableDynamicAgentLoading</value>

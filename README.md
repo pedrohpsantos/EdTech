@@ -68,6 +68,10 @@ Para encerrar: `docker compose --env-file infra/dev/.env -f infra/dev/docker-com
 
 Os relatórios são disponibilizados como artefatos da execução. Veja o fluxo completo em [.github/PIPELINES.md](.github/PIPELINES.md).
 
+### Evidência que orienta decisões
+
+O projeto não usa uma única métrica como selo de qualidade. JaCoCo mostra alcance do backend; PIT e Stryker testam a força das asserções; Playwright/Allure percorrem jornadas essenciais; k6 observa a API sob carga; Lighthouse acompanha a experiência da primeira visita. Os relatórios publicados transformam cada entrega em uma conversa objetiva sobre comportamento, segurança e desempenho.
+
 ## Contribuição
 
 1. Crie uma branch a partir de `develop`.

@@ -20,6 +20,9 @@ export default defineConfig({
       output: {
         manualChunks(id) {
           if (id.includes('node_modules/@tanstack/react-query')) return 'query'
+          // Animações só são necessárias após a intenção de cadastro/recuperação.
+          // Mantê-las fora do chunk da rota pública reduz o trabalho de LCP do login.
+          if (id.includes('node_modules/framer-motion')) return 'motion'
           if (
             id.includes('node_modules/react/') ||
             id.includes('node_modules/react-dom/') ||

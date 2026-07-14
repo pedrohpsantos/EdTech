@@ -18,8 +18,20 @@ Esta página publica o relatório HTML do **Google Lighthouse**, executado autom
 
 *(O relatório acima é gerado automaticamente pela ferramenta Google Lighthouse CLI durante o pipeline de Deploy em Produção.)*
 
+## Como interpretar os diagnósticos
+
+O relatório é uma fotografia de uma execução em produção. Nem todo item informativo é um defeito: um TTFB curto confirma que a origem respondeu prontamente, enquanto avisos de *unused JavaScript* indicam oportunidade de reduzir bytes na primeira tela.
+
+- A rota pública de login mantém bibliotecas de animação fora do seu chunk inicial; elas só são carregadas nas jornadas que as utilizam.
+- A animação de entrada não bloqueia a pintura do título principal, que é o elemento de LCP dessa tela.
+- SVGs decorativos são ocultados da árvore de acessibilidade; controles de senha têm nome, estado e foco visível.
+- CSP, HSTS, proteção contra frame e cache também são validados pelo [Contrato de Segurança da API](api_security_contract.md).
+
+Os limites do CI continuam em `80` para Performance, Acessibilidade, Boas Práticas e SEO. Use o detalhe por recurso para orientar otimizações; não aumente um limite apenas para mascarar uma regressão.
+
 ## Histórico de Versões
 
 | Versão | Data | Descrição | Autor |
 |--------|------|-----------|-------|
 | `1.0` | 11/07/2026 | Adição do relatório de performance de produção Lighthouse | Pedro Henrique P. Santos |
+| `1.1` | 14/07/2026 | Critérios de leitura e otimizações da rota pública de login | Pedro Henrique P. Santos |

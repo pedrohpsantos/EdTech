@@ -1,5 +1,4 @@
 import { ReactNode } from 'react';
-import { motion } from 'framer-motion';
 import ThemeToggle from './themeToggle';
 import NetworkBackground from './NetworkBackground';
 import useEasterEggs from '../hooks/useEasterEggs';
@@ -16,36 +15,21 @@ export default function AuthLayout({
 }) {
   const { konamiActivated, hyperdriveActivated, handleLogoClick } = useEasterEggs();
 
-  const formVariants = {
-    hidden: { opacity: 0, x: 20 },
-    visible: { opacity: 1, x: 0, transition: { staggerChildren: 0.05, delayChildren: 0.1 } },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 15 },
-    visible: { opacity: 1, y: 0 },
-  };
-
   return (
-    <motion.div
+    <div
       className={styles.loginWrapper}
-      animate={{
-        rotate: konamiActivated ? 360 : 0,
-        filter: konamiActivated
-          ? 'hue-rotate(180deg) saturate(200%)'
-          : 'hue-rotate(0deg) saturate(100%)',
-      }}
-      transition={{ duration: 1, ease: 'easeInOut' }}
+      data-konami-active={konamiActivated || undefined}
     >
       {/* Left Panel - Branding */}
       <div className={styles.leftPanel}>
         <NetworkBackground isHyperdrive={hyperdriveActivated} />
 
         <div className={styles.leftContent}>
-          <div
+          <button
+            type="button"
             className={styles.logo}
-            style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
             onClick={handleLogoClick}
+            aria-label="Ativar interação visual EdTech"
           >
             <svg width="28" height="28" viewBox="0 0 100 100" style={{ marginRight: '8px' }}>
               <line
@@ -92,7 +76,7 @@ export default function AuthLayout({
               <circle cx="80" cy="75" r="8" fill="#FFFFFF" />
             </svg>
             EdTech
-          </div>
+          </button>
         </div>
 
         <div className={styles.leftContent}>
@@ -131,11 +115,8 @@ export default function AuthLayout({
       </div>
 
       {/* Right Panel - Form */}
-      <motion.div
+      <main
         className={styles.rightPanel}
-        variants={formVariants}
-        initial={false}
-        animate="visible"
         style={{ position: 'relative' }}
       >
         <div style={{ position: 'absolute', top: '24px', right: '24px' }}>
@@ -143,23 +124,20 @@ export default function AuthLayout({
         </div>
 
         <div className={styles.formContainer}>
-          <motion.div
-            variants={itemVariants}
-            style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center' }}
-          >
+          <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center' }}>
             <span className={styles.acessoLabel}>Acesso à Plataforma</span>
-          </motion.div>
+          </div>
 
-          <motion.h2 variants={itemVariants} className={styles.welcomeTitle}>
+          <h2 className={styles.welcomeTitle}>
             {title}
-          </motion.h2>
-          <motion.p variants={itemVariants} className={styles.welcomeSub}>
+          </h2>
+          <p className={styles.welcomeSub}>
             {subtitle}
-          </motion.p>
+          </p>
 
           {children}
         </div>
-      </motion.div>
-    </motion.div>
+      </main>
+    </div>
   );
 }

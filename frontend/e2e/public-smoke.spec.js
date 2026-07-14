@@ -18,6 +18,23 @@ test.describe('Public and Navigation Smoke', () => {
     await expect(page.getByRole('button', { name: /continuar/i })).toBeVisible();
   });
 
+  test('login controls expose names and password visibility state to keyboard users', async ({ page }) => {
+    allure.story('Accessible login controls');
+
+    await page.goto('/login');
+
+    const email = page.getByRole('textbox', { name: /e-mail institucional/i });
+    const password = page.getByLabel(/senha/i).first();
+    const visibilityToggle = page.getByRole('button', { name: /mostrar senha/i });
+
+    await expect(email).toBeVisible();
+    await expect(password).toHaveAttribute('type', 'password');
+    await visibilityToggle.focus();
+    await page.keyboard.press('Enter');
+    await expect(password).toHaveAttribute('type', 'text');
+    await expect(page.getByRole('button', { name: /ocultar senha/i })).toHaveAttribute('aria-pressed', 'true');
+  });
+
   test('root route renders the login experience', async ({ page }) => {
     allure.story('Root route');
 
@@ -83,6 +100,16 @@ test.describe('Public and Navigation Smoke', () => {
     await page.goto('/rota-inexistente');
 
     await expect(page.getByRole('heading', { name: /404/i })).toBeVisible();
+  });
+
+  test('public pages retain a main landmark and reachable recovery path', async ({ page }) => {
+    allure.story('Semantic navigation');
+
+    await page.goto('/login');
+    await expect(page.getByRole('main')).toBeVisible();
+    await page.getByRole('link', { name: /recuperar senha/i }).press('Enter');
+    await page.waitForURL(/\/recover-password/);
+    await expect(page.getByRole('main')).toBeVisible();
   });
 });
 
