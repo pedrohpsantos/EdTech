@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EmailService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">edtech-api</a> &gt; <a href="index.source.html" class="el_package">com.edtech.service</a> &gt; <span class="el_source">EmailService.java</span></div><h1>EmailService.java</h1><pre class="source lang-java linenums">package com.edtech.service;
 
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,25 +16,27 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-/** Documentação para EmailService. */
+/** Sends account emails through the Resend HTTPS API in production and SMTP locally. */
 @Service
-<span class="fc" id="L15">public class EmailService {</span>
+<span class="fc" id="L21">public class EmailService {</span>
 
-<span class="fc" id="L17">  private static final Logger logger = LoggerFactory.getLogger(EmailService.class);</span>
+<span class="fc" id="L23">  private static final Logger logger = LoggerFactory.getLogger(EmailService.class);</span>
+<span class="fc" id="L24">  private static final URI RESEND_EMAILS_URI = URI.create(&quot;https://api.resend.com/emails&quot;);</span>
 
   @Autowired private JavaMailSender mailSender;
 
   @Value(&quot;${SMTP_FROM:noreply@edtechacademic.com.br}&quot;)
   private String fromAddress;
 
-  /** Documentação. */
+  @Value(&quot;${SMTP_PASSWORD:}&quot;)
+  private String resendApiKey;
+
+  /** Sends the password recovery code. */
   @Async
   public void sendRecoveryEmail(String toEmail, String otpCode) {
-<span class="fc" id="L27">    SimpleMailMessage message = new SimpleMailMessage();</span>
-<span class="fc" id="L28">    message.setFrom(resolveFromAddress());</span>
-<span class="fc" id="L29">    message.setTo(toEmail);</span>
-<span class="fc" id="L30">    message.setSubject(&quot;Código de Recuperação de Senha - EdTech&quot;);</span>
-<span class="fc" id="L31">    message.setText(</span>
+<span class="fc" id="L37">    sendEmail(</span>
+        toEmail,
+        &quot;Código de Recuperação de Senha - EdTech&quot;,
         &quot;Olá,\n\n&quot;
             + &quot;Você solicitou a recuperação da sua senha na EdTech.\n&quot;
             + &quot;Seu código de segurança (OTP) de 6 dígitos é: &quot;
@@ -37,25 +45,14 @@ import org.springframework.stereotype.Service;
             + &quot;Este código é válido por 15 minutos.\n&quot;
             + &quot;Se você não solicitou isso, ignore este e-mail.\n\n&quot;
             + &quot;Equipe EdTech&quot;);
+<span class="fc" id="L48">  }</span>
 
-    try {
-<span class="fc" id="L42">      mailSender.send(message);</span>
-<span class="fc" id="L43">      logger.info(&quot;Recovery email dispatched to {}.&quot;, toEmail);</span>
-<span class="nc" id="L44">    } catch (MailException ex) {</span>
-<span class="nc" id="L45">      logger.warn(</span>
-          &quot;Não foi possível enviar e-mail real via SMTP &quot;
-              + &quot;(verifique credenciais). Usando apenas simulação no console.&quot;);
-<span class="fc" id="L48">    }</span>
-<span class="fc" id="L49">  }</span>
-
-  /** Javadoc. */
+  /** Sends the registration verification code. */
   @Async
   public void sendVerificationEmail(String toEmail, String otpCode) {
-<span class="fc" id="L54">    SimpleMailMessage message = new SimpleMailMessage();</span>
-<span class="fc" id="L55">    message.setFrom(resolveFromAddress());</span>
-<span class="fc" id="L56">    message.setTo(toEmail);</span>
-<span class="fc" id="L57">    message.setSubject(&quot;Código de Verificação de Conta - EdTech&quot;);</span>
-<span class="fc" id="L58">    message.setText(</span>
+<span class="fc" id="L53">    sendEmail(</span>
+        toEmail,
+        &quot;Código de Verificação de Conta - EdTech&quot;,
         &quot;Olá,\n\n&quot;
             + &quot;Bem-vindo à EdTech!\n&quot;
             + &quot;Seu código de verificação (OTP) de 6 dígitos é: &quot;
@@ -64,21 +61,75 @@ import org.springframework.stereotype.Service;
             + &quot;Este código é válido por 15 minutos.\n&quot;
             + &quot;Se você não solicitou isso, ignore este e-mail.\n\n&quot;
             + &quot;Equipe EdTech&quot;);
+<span class="fc" id="L64">  }</span>
 
+  private void sendEmail(String toEmail, String subject, String text) {
+<span class="pc bpc" id="L67" title="1 of 4 branches missed.">    if (resendApiKey != null &amp;&amp; resendApiKey.startsWith(&quot;re_&quot;)) {</span>
+<span class="nc" id="L68">      sendWithResendApi(toEmail, subject, text);</span>
+<span class="nc" id="L69">      return;</span>
+    }
+
+<span class="fc" id="L72">    SimpleMailMessage message = new SimpleMailMessage();</span>
+<span class="fc" id="L73">    message.setFrom(resolveFromAddress());</span>
+<span class="fc" id="L74">    message.setTo(toEmail);</span>
+<span class="fc" id="L75">    message.setSubject(subject);</span>
+<span class="fc" id="L76">    message.setText(text);</span>
     try {
-<span class="nc" id="L69">      mailSender.send(message);</span>
-<span class="nc" id="L70">      logger.info(&quot;Verification email dispatched to {}.&quot;, toEmail);</span>
-<span class="fc" id="L71">    } catch (MailException ex) {</span>
-<span class="fc" id="L72">      logger.warn(</span>
-          &quot;Não foi possível enviar e-mail real via SMTP &quot;
-              + &quot;(verifique credenciais). Usando apenas simulação no console.&quot;);
-<span class="nc" id="L75">    }</span>
-<span class="fc" id="L76">  }</span>
+<span class="fc" id="L78">      mailSender.send(message);</span>
+<span class="fc" id="L79">      logger.info(&quot;Email dispatched through SMTP to {}.&quot;, toEmail);</span>
+<span class="fc" id="L80">    } catch (MailException ex) {</span>
+<span class="fc" id="L81">      logger.warn(&quot;SMTP email delivery failed for {}.&quot;, toEmail, ex);</span>
+<span class="fc" id="L82">    }</span>
+<span class="fc" id="L83">  }</span>
+
+  private void sendWithResendApi(String toEmail, String subject, String text) {
+<span class="nc" id="L86">    String payload =</span>
+        &quot;{\&quot;from\&quot;:\&quot;&quot;
+<span class="nc" id="L88">            + escapeJson(resolveFromAddress())</span>
+            + &quot;\&quot;,\&quot;to\&quot;:[\&quot;&quot;
+<span class="nc" id="L90">            + escapeJson(toEmail)</span>
+            + &quot;\&quot;],\&quot;subject\&quot;:\&quot;&quot;
+<span class="nc" id="L92">            + escapeJson(subject)</span>
+            + &quot;\&quot;,\&quot;text\&quot;:\&quot;&quot;
+<span class="nc" id="L94">            + escapeJson(text)</span>
+            + &quot;\&quot;}&quot;;
+<span class="nc" id="L96">    HttpRequest request =</span>
+<span class="nc" id="L97">        HttpRequest.newBuilder(RESEND_EMAILS_URI)</span>
+<span class="nc" id="L98">            .header(&quot;Authorization&quot;, &quot;Bearer &quot; + resendApiKey)</span>
+<span class="nc" id="L99">            .header(&quot;Content-Type&quot;, &quot;application/json&quot;)</span>
+<span class="nc" id="L100">            .POST(HttpRequest.BodyPublishers.ofString(payload, StandardCharsets.UTF_8))</span>
+<span class="nc" id="L101">            .build();</span>
+    try {
+      HttpResponse&lt;String&gt; response =
+<span class="nc" id="L104">          HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());</span>
+<span class="nc bnc" id="L105" title="All 4 branches missed.">      if (response.statusCode() &gt;= 200 &amp;&amp; response.statusCode() &lt; 300) {</span>
+<span class="nc" id="L106">        logger.info(&quot;Email dispatched through Resend API to {}.&quot;, toEmail);</span>
+      } else {
+<span class="nc" id="L108">        logger.warn(</span>
+            &quot;Resend API rejected email for {} with HTTP status {}.&quot;,
+            toEmail,
+<span class="nc" id="L111">            response.statusCode());</span>
+      }
+<span class="nc" id="L113">    } catch (IOException ex) {</span>
+<span class="nc" id="L114">      logger.warn(&quot;Resend API delivery failed for {}.&quot;, toEmail, ex);</span>
+<span class="nc" id="L115">    } catch (InterruptedException ex) {</span>
+<span class="nc" id="L116">      Thread.currentThread().interrupt();</span>
+<span class="nc" id="L117">      logger.warn(&quot;Resend API delivery interrupted for {}.&quot;, toEmail, ex);</span>
+<span class="nc" id="L118">    }</span>
+<span class="nc" id="L119">  }</span>
+
+  private String escapeJson(String value) {
+<span class="nc" id="L122">    return value</span>
+<span class="nc" id="L123">        .replace(&quot;\\&quot;, &quot;\\\\&quot;)</span>
+<span class="nc" id="L124">        .replace(&quot;\&quot;&quot;, &quot;\\\&quot;&quot;)</span>
+<span class="nc" id="L125">        .replace(&quot;\n&quot;, &quot;\\n&quot;)</span>
+<span class="nc" id="L126">        .replace(&quot;\r&quot;, &quot;\\r&quot;);</span>
+  }
 
   private String resolveFromAddress() {
-<span class="pc bpc" id="L79" title="1 of 4 branches missed.">    return fromAddress == null || fromAddress.isBlank()</span>
-<span class="fc" id="L80">        ? &quot;noreply@edtechacademic.com.br&quot;</span>
-<span class="fc" id="L81">        : fromAddress;</span>
+<span class="pc bpc" id="L130" title="1 of 4 branches missed.">    return fromAddress == null || fromAddress.isBlank()</span>
+<span class="fc" id="L131">        ? &quot;noreply@edtechacademic.com.br&quot;</span>
+<span class="fc" id="L132">        : fromAddress;</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
