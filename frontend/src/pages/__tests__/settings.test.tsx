@@ -14,6 +14,7 @@ vi.mock('../../services/api', () => ({
   enable2Fa: vi.fn(),
   joinLaboratory: vi.fn(),
   updateProfile: vi.fn(),
+  getLaboratoryTokens: vi.fn(),
 }));
 
 vi.mock('../../components/layout/DashboardLayout', () => ({
@@ -144,6 +145,22 @@ describe('Settings Page', () => {
     expect(screen.getByText('U')).toBeInTheDocument();
     expect(screen.getByText('Usuário')).toBeInTheDocument();
     expect(screen.getByText('usuario@edtech.com')).toBeInTheDocument();
+  });
+
+  it('shows association codes to an advisor', async () => {
+    (authContext.useAuth as any).mockReturnValue({
+      user: { name: 'Orientador Demo', email: 'orientador@unb.br', role: 'ADVISOR', mfaEnabled: false },
+    });
+    (apiServices.getLaboratoryTokens as any).mockResolvedValue({
+      sucesso: true,
+      dados: { researcher_token: '123456', auditor_token: '654321' },
+    });
+
+    render(<Settings />);
+
+    expect(screen.getByText(/C.digos de Acesso do Laborat.rio/i)).toBeInTheDocument();
+    expect(await screen.findByText('123456')).toBeInTheDocument();
+    expect(screen.getByText('654321')).toBeInTheDocument();
   });
 
   it('handles 2FA enable error fallback message', async () => {

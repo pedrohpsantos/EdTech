@@ -13,6 +13,7 @@ import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 
 class LaboratoryControllerTest {
@@ -43,7 +44,7 @@ class LaboratoryControllerTest {
     when(tokenService.generateToken(advisorId, UserRole.RESEARCHER)).thenReturn("123456");
     when(tokenService.generateToken(advisorId, UserRole.AUDITOR)).thenReturn("654321");
 
-    ResponseEntity<?> response = controller.getLaboratoryToken(userDetails);
+    ResponseEntity<?> response = controller.getLaboratoryToken(authenticationFor(userDetails));
     assertEquals(200, response.getStatusCode().value());
     Map<?, ?> body = (Map<?, ?>) response.getBody();
     assertEquals("123456", body.get("researcher_token"));
@@ -60,7 +61,7 @@ class LaboratoryControllerTest {
 
     when(userRepository.findByEmailIgnoreCase("student@unb.br")).thenReturn(Optional.of(student));
 
-    ResponseEntity<?> response = controller.getLaboratoryToken(userDetails);
+    ResponseEntity<?> response = controller.getLaboratoryToken(authenticationFor(userDetails));
     assertEquals(403, response.getStatusCode().value());
   }
 
@@ -78,7 +79,7 @@ class LaboratoryControllerTest {
     when(tokenService.findAdvisorByToken(eq("123456"), any())).thenReturn(Optional.of(advisor));
     when(userRepository.findByEmailIgnoreCase("student@unb.br")).thenReturn(Optional.of(student));
 
-    ResponseEntity<?> response = controller.joinLaboratory(userDetails, Map.of("token", "123456"));
+    ResponseEntity<?> response = controller.joinLaboratory(authenticationFor(userDetails), Map.of("token", "123456"));
     assertEquals(200, response.getStatusCode().value());
     verify(userRepository).save(student);
     assertEquals(advisor.getInstitutionId(), student.getInstitutionId());
@@ -87,7 +88,7 @@ class LaboratoryControllerTest {
   @Test
   void joinLaboratory_NoToken() {
     UserDetails userDetails = mock(UserDetails.class);
-    ResponseEntity<?> response = controller.joinLaboratory(userDetails, Map.of());
+    ResponseEntity<?> response = controller.joinLaboratory(authenticationFor(userDetails), Map.of());
     assertEquals(400, response.getStatusCode().value());
   }
 
@@ -100,7 +101,7 @@ class LaboratoryControllerTest {
     when(userRepository.findByEmailIgnoreCase("student@unb.br")).thenReturn(Optional.of(student));
     when(tokenService.findAdvisorByToken("123456", UserRole.RESEARCHER))
         .thenReturn(Optional.empty());
-    ResponseEntity<?> response = controller.joinLaboratory(userDetails, Map.of("token", "123456"));
+    ResponseEntity<?> response = controller.joinLaboratory(authenticationFor(userDetails), Map.of("token", "123456"));
     assertEquals(400, response.getStatusCode().value());
   }
 
@@ -112,7 +113,13 @@ class LaboratoryControllerTest {
         new User("Dr. Advisor", "advisor@unb.br", "hash", UserRole.ADVISOR, UUID.randomUUID());
     when(userRepository.findByEmailIgnoreCase("student@unb.br")).thenReturn(Optional.empty());
 
-    ResponseEntity<?> response = controller.joinLaboratory(userDetails, Map.of("token", "123456"));
+    ResponseEntity<?> response = controller.joinLaboratory(authenticationFor(userDetails), Map.of("token", "123456"));
     assertEquals(401, response.getStatusCode().value());
+  }
+
+  private Authentication authenticationFor(UserDetails userDetails) {
+    Authentication authentication = mock(Authentication.class);
+    when(authentication.getPrincipal()).thenReturn(userDetails);
+    return authentication;
   }
 }

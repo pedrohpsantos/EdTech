@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import DashboardLayout from '../components/layout/DashboardLayout';
 import '../assets/settings.css';
 import { useAuth } from '../context/authContext';
-import { setup2Fa, enable2Fa, joinLaboratory, updateProfile } from '../services/api';
+import { setup2Fa, enable2Fa, getLaboratoryTokens, joinLaboratory, updateProfile } from '../services/api';
 
 const Settings: React.FC = () => {
   const { user, checkAuth } = useAuth();
@@ -18,22 +18,31 @@ const Settings: React.FC = () => {
   const [isJoining, setIsJoining] = useState(false);
   const [joinMessage, setJoinMessage] = useState('');
   const [labTokens, setLabTokens] = useState<{researcher: string, auditor: string} | null>(null);
+  const [isLoadingLabTokens, setIsLoadingLabTokens] = useState(false);
+  const [labTokensError, setLabTokensError] = useState('');
   const [isEditingProfile, setIsEditingProfile] = useState(false);
   const [profileName, setProfileName] = useState(user?.name || '');
   const [avatarPreview, setAvatarPreview] = useState<string | null>(user?.avatarUrl || null);
   const [profileMessage, setProfileMessage] = useState('');
 
+  const loadLaboratoryTokens = async () => {
+    setIsLoadingLabTokens(true);
+    setLabTokensError('');
+    const response = await getLaboratoryTokens();
+    if (response.sucesso && response.dados) {
+      setLabTokens({ researcher: response.dados.researcher_token, auditor: response.dados.auditor_token });
+    } else {
+      setLabTokens(null);
+      setLabTokensError(response.mensagem || 'Não foi possível carregar os códigos de associação.');
+    }
+    setIsLoadingLabTokens(false);
+  };
+
   React.useEffect(() => {
     if (user?.role === 'ADVISOR') {
-      import('../services/api').then(({ getLaboratoryTokens }) => {
-        getLaboratoryTokens().then((res) => {
-          if (res.sucesso) {
-            setLabTokens({ researcher: res.dados.researcher_token, auditor: res.dados.auditor_token });
-          }
-        });
-      });
+      void loadLaboratoryTokens();
     }
-  }, [user]);
+  }, [user?.role]);
 
   const userName = user?.name || 'Usuário';
   const userEmail = user?.email || 'usuario@edtech.com';
@@ -314,13 +323,20 @@ const Settings: React.FC = () => {
         )}
 
         {/* Painel do Orientador (Apenas para Orientadores) */}
-        {user?.role === 'ADVISOR' && labTokens && (
+        {user?.role === 'ADVISOR' && (
           <div className="settings-card">
             <h3 className="settings-section-title">Códigos de Acesso do Laboratório</h3>
             <p style={{ color: 'var(--ed-text-muted)', fontSize: '13px', marginBottom: '16px' }}>
               Compartilhe os códigos abaixo com sua equipe. Por motivos de segurança, os códigos para pesquisadores e auditores são diferentes.
             </p>
-            <div style={{ display: 'flex', gap: '16px', flexDirection: 'column' }}>
+            {isLoadingLabTokens && <p className="settings-item-desc">Gerando códigos de associação...</p>}
+            {labTokensError && (
+              <div className="settings-code-status" role="alert">
+                <span>{labTokensError}</span>
+                <button className="btn-outline" onClick={() => void loadLaboratoryTokens()}>Tentar novamente</button>
+              </div>
+            )}
+            {labTokens && <div style={{ display: 'flex', gap: '16px', flexDirection: 'column' }}>
               <div className="settings-access-code">
                 <div style={{ fontSize: '12px', fontWeight: 600, color: 'var(--ed-text-muted)', textTransform: 'uppercase' }}>Token para Pesquisadores</div>
                 <div style={{ fontSize: '20px', fontWeight: 'bold', letterSpacing: '2px', color: 'var(--ed-purple-main)', marginTop: '4px' }}>{labTokens.researcher}</div>
@@ -329,7 +345,7 @@ const Settings: React.FC = () => {
                 <div style={{ fontSize: '12px', fontWeight: 600, color: 'var(--ed-text-muted)', textTransform: 'uppercase' }}>Token para Auditores</div>
                 <div style={{ fontSize: '20px', fontWeight: 'bold', letterSpacing: '2px', color: 'var(--ed-purple-main)', marginTop: '4px' }}>{labTokens.auditor}</div>
               </div>
-            </div>
+            </div>}
           </div>
         )}
 

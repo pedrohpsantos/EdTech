@@ -6,6 +6,39 @@ import '../assets/auditor.css';
 const ComplianceCenter: React.FC = () => {
   const [stats, setStats] = useState<any>(null);
 
+  const exportReport = () => {
+    if (!stats) return;
+    const lines = [
+      'EDTECH ACADEMIC - RELATORIO DE CONFORMIDADE',
+      `Gerado em: ${new Date().toLocaleString('pt-BR')}`,
+      `Compliance score: ${stats.score}%`,
+      `Politicas conformes: ${stats.compliantPolicies}/${stats.totalPolicies}`,
+      `Itens pendentes: ${stats.pendingItems}`,
+      `Eventos auditados: ${stats.totalEvents}`,
+      ...stats.policies.map((policy: any) => `${policy.name}: ${policy.percentage}% - ${policy.status}`),
+    ];
+    const escapePdf = (value: string) => value.replace(/[\\()]/g, '\\$&').replace(/[^\x20-\x7E]/g, '');
+    const stream = `BT /F1 13 Tf 48 790 Td ${lines.map((line: string, index: number) => `${index ? '0 -24 Td ' : ''}(${escapePdf(line)}) Tj`).join(' ')} ET`;
+    const objects = [
+      '<< /Type /Catalog /Pages 2 0 R >>',
+      '<< /Type /Pages /Kids [3 0 R] /Count 1 >>',
+      '<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 5 0 R >> >> /Contents 4 0 R >>',
+      `<< /Length ${stream.length} >>\nstream\n${stream}\nendstream`,
+      '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>',
+    ];
+    let pdf = '%PDF-1.4\n';
+    const offsets = [0];
+    objects.forEach((object, index) => { offsets.push(pdf.length); pdf += `${index + 1} 0 obj\n${object}\nendobj\n`; });
+    const xrefOffset = pdf.length;
+    pdf += `xref\n0 ${objects.length + 1}\n0000000000 65535 f \n${offsets.slice(1).map((offset) => `${String(offset).padStart(10, '0')} 00000 n \n`).join('')}trailer\n<< /Size ${objects.length + 1} /Root 1 0 R >>\nstartxref\n${xrefOffset}\n%%EOF`;
+    const url = URL.createObjectURL(new Blob([pdf], { type: 'application/pdf' }));
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'relatorio_conformidade_edtech.pdf';
+    link.click();
+    URL.revokeObjectURL(url);
+  };
+
   useEffect(() => {
     const fetchStats = async () => {
       const data = await getComplianceStats();
@@ -23,11 +56,8 @@ const ComplianceCenter: React.FC = () => {
       breadcrumbs={['EdTech', 'Centro de Conformidade']}
       customTopbarElement={
         <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-          <button className="audit-btn audit-btn-outline">
+          <button className="audit-btn audit-btn-outline" onClick={exportReport}>
             <i className="bi bi-download"></i> Relatório de conformidade
-          </button>
-          <button className="audit-btn audit-btn-outline" style={{ padding: '8px 12px' }}>
-            <i className="bi bi-moon"></i>
           </button>
           <button className="audit-btn audit-btn-outline" style={{ padding: '8px 12px' }}>
             <i className="bi bi-bell"></i>
