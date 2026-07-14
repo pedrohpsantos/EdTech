@@ -255,6 +255,13 @@ resource "google_cloud_run_v2_job" "flyway_migration" {
           value = "true"
         }
 
+        # O banco de staging já possui uma migração de seed com versão alta.
+        # Permite aplicar migrações corretivas adicionadas depois sem ignorar validação.
+        env {
+          name  = "SPRING_FLYWAY_OUT_OF_ORDER"
+          value = "true"
+        }
+
         env {
           name = "JWT_SECRET"
           value_source {
