@@ -64,8 +64,9 @@ public class EmailService {
   }
 
   private void sendEmail(String toEmail, String subject, String text) {
-    if (resendApiKey != null && resendApiKey.startsWith("re_")) {
-      sendWithResendApi(toEmail, subject, text);
+    String apiKey = resendApiKey == null ? "" : resendApiKey.trim();
+    if (apiKey.startsWith("re_")) {
+      sendWithResendApi(apiKey, toEmail, subject, text);
       return;
     }
 
@@ -82,7 +83,7 @@ public class EmailService {
     }
   }
 
-  private void sendWithResendApi(String toEmail, String subject, String text) {
+  private void sendWithResendApi(String apiKey, String toEmail, String subject, String text) {
     String payload =
         "{\"from\":\""
             + escapeJson(resolveFromAddress())
@@ -95,7 +96,7 @@ public class EmailService {
             + "\"}";
     HttpRequest request =
         HttpRequest.newBuilder(RESEND_EMAILS_URI)
-            .header("Authorization", "Bearer " + resendApiKey)
+            .header("Authorization", "Bearer " + apiKey)
             .header("Content-Type", "application/json")
             .POST(HttpRequest.BodyPublishers.ofString(payload, StandardCharsets.UTF_8))
             .build();
