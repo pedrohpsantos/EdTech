@@ -1,5 +1,9 @@
 # Postman — EdTech
 
+![Postman](https://img.shields.io/badge/Postman-FF6C37?logo=postman&logoColor=white)
+![REST API](https://img.shields.io/badge/REST_API-009688?logo=openapiinitiative&logoColor=white)
+![JWT Cookie](https://img.shields.io/badge/JWT_Cookie-000000?logo=jsonwebtokens&logoColor=white)
+
 > Uma coleção de exploração manual alinhada ao contrato HTTP real da plataforma.
 
 ## Visão geral
