@@ -1,13 +1,17 @@
-# ☁️ EdTech Infraestrutura
+# Infraestrutura — EdTech
 
 ![Docker](https://img.shields.io/badge/Docker-24.0-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 ![Google Cloud](https://img.shields.io/badge/GCP-Cloud_Run-4285F4?style=for-the-badge&logo=googlecloud&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-18-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
 ![Terraform](https://img.shields.io/badge/Terraform-IaC-7B42BC?style=for-the-badge&logo=terraform&logoColor=white)
 
+> Ambientes reproduzíveis, infraestrutura declarativa e operações com menor privilégio.
+
+## Visão geral
+
 Este diretório (`/infra`) contém a configuração de infraestrutura do EdTech como código (IaC): orquestração de containers para desenvolvimento local e definições de deploy para o ambiente de produção no GCP.
 
-## Conteúdo do Diretório
+## Estrutura
 
 | Arquivo / Pasta | Descrição |
 | :--- | :--- |
@@ -46,7 +50,7 @@ gcloud auth application-default login
 
 ---
 
-## Ambiente Local (Docker Compose)
+## Comece aqui
 
 ```bash
 # 1. Copie e configure as variáveis de ambiente
@@ -71,7 +75,7 @@ docker compose down -v
 
 ---
 
-## Infraestrutura como Código (Terraform)
+## Operação em nuvem
 
 A pasta `infra/terraform` contém a definição parametrizada da infraestrutura de produção. Utilize `terraform.tfvars` local a partir do template:
 
@@ -98,7 +102,7 @@ O estado remoto deve ficar em um bucket GCS controlado pela equipe de plataforma
 
 ---
 
-## Backup do Banco de Dados
+## Backup e validação
 
 O backup automático é provisionado pelo script `setup_backup.sh`. Executar uma única vez com um usuário que tenha permissão `roles/owner` ou `roles/iam.securityAdmin`:
 
@@ -108,3 +112,9 @@ bash infra/terraform/setup_backup.sh
 ```
 
 Detalhes da política de backup estão documentados no [ADR-0013](../docs/arquitetura/decisoes_adrs/0013-backup-automatico.md).
+
+## Referências
+
+- [Backend](../backend/README.md)
+- [Pipelines](../.github/PIPELINES.md)
+- [Portal técnico](../docs/README.md)

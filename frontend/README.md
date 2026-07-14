@@ -1,10 +1,12 @@
-# Frontend — SPA EdTech
+# Frontend — EdTech
 
 ![React](https://img.shields.io/badge/React-61DAFB?logo=react&logoColor=black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
 ![Vite](https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=white)
 
 > Onde o rigor da plataforma encontra jornadas humanas, acessíveis e claras.
+
+## Visão geral
 
 SPA React 19, TypeScript e Vite. Oferece jornadas específicas para Pesquisador, Orientador e Auditor, com design responsivo, acessibilidade e comunicação autenticada com a API.
 
@@ -19,7 +21,7 @@ SPA React 19, TypeScript e Vite. Oferece jornadas específicas para Pesquisador,
 | `src/hooks` | Hooks reutilizáveis |
 | `src/assets` | Ícones, imagens e recursos estáticos |
 
-## Desenvolvimento
+## Comece aqui
 
 Pré-requisito: Node.js 24.
 
@@ -32,9 +34,9 @@ npm ci
 npm run dev
 ```
 
-A aplicação abre em `http://localhost:5173`. O cliente Axios usa `withCredentials`; para desenvolvimento completo, inicie também o backend e mantenha a origem em `CORS_ALLOWED_ORIGINS`.
+A aplicação abre em `http://localhost:5173`. O cliente Axios usa `withCredentials`; para desenvolvimento completo, inicie também o backend e mantenha a origem em `CORS_ALLOWED_ORIGINS`. Em produção, as chamadas usam `/api` pelo Firebase Hosting, preservando o cookie `SameSite=Strict` no domínio da aplicação.
 
-## Comandos
+## Validação
 
 ```bash
 npm run build          # build de produção
@@ -59,3 +61,9 @@ A rota de login é uma experiência pública e enxuta: rotas privadas, Bootstrap
 - Preserve o mesmo padrão de navegação lateral e ações nos três perfis.
 - Use os serviços em `src/services` para comunicação com a API; não duplique chamadas HTTP nas páginas.
 - Não armazene tokens no navegador: a sessão é mantida por cookie `HttpOnly` emitido pela API.
+
+## Referências
+
+- [Backend](../backend/README.md)
+- [Testes](../tests/README.md)
+- [Pipelines](../.github/PIPELINES.md)

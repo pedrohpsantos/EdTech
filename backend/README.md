@@ -1,10 +1,12 @@
-# Backend — API EdTech
+# Backend — EdTech
 
 ![Java](https://img.shields.io/badge/Java-007396?logo=openjdk&logoColor=white)
 ![Spring Boot](https://img.shields.io/badge/Spring_Boot-6DB33F?logo=springboot&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?logo=postgresql&logoColor=white)
 
 > A camada que preserva contexto, autoria e confiança em cada documento acadêmico.
+
+## Visão geral
 
 API REST em Java 21 e Spring Boot. Concentra as regras de negócio, autenticação, autorização, auditoria, armazenamento de arquivos e integração com Cloud SQL/GCS.
 
@@ -30,7 +32,7 @@ API REST em Java 21 e Spring Boot. Concentra as regras de negócio, autenticaç�
 
 Em desenvolvimento, a especificação pode ser explorada em [Swagger UI](http://localhost:8080/swagger-ui.html). Em produção, a interface OpenAPI fica desabilitada.
 
-## Desenvolvimento local
+## Comece aqui
 
 Pré-requisitos: JDK 21. Para banco, variáveis e serviços auxiliares, prefira o [Docker Compose](../infra/README.md).
 
@@ -46,7 +48,7 @@ cd backend
 
 Para executar sem Docker, copie `.env.example`, configure PostgreSQL e SMTP de desenvolvimento e exporte as variáveis antes de iniciar a aplicação.
 
-## Validações
+## Validação
 
 ```bash
 # testes e cobertura JaCoCo
@@ -63,6 +65,12 @@ Os relatórios locais ficam em `target/site/jacoco/` e `target/pit-reports/`. A 
 
 JaCoCo mantém o piso estrutural do bundle; PIT aplica pisos de cobertura e mutação aos serviços críticos. Os dois indicadores andam juntos: cobertura sem testes que detectam mutações não é confiança suficiente.
 
-## Produção
+## Operação em produção
 
 O deploy é realizado pela pipeline GitHub Actions: a imagem é publicada no Artifact Registry, o Job Flyway é executado e o Terraform atualiza o Cloud Run. Não execute migrações diretamente na inicialização da API de produção.
+
+## Referências
+
+- [Frontend](../frontend/README.md)
+- [Infraestrutura](../infra/README.md)
+- [Pipelines](../.github/PIPELINES.md)

@@ -1,8 +1,10 @@
-# Documentação EdTech
-
-Portal técnico mantido como código, publicado em [pedrohpsantos.github.io/EdTech](https://pedrohpsantos.github.io/EdTech/).
+# Documentação — EdTech
 
 > Aqui, decisões viram conhecimento compartilhado e verificável.
+
+## Visão geral
+
+Portal técnico mantido como código, publicado em [pedrohpsantos.github.io/EdTech](https://pedrohpsantos.github.io/EdTech/).
 
 ## Estrutura
 
@@ -14,7 +16,7 @@ Portal técnico mantido como código, publicado em [pedrohpsantos.github.io/EdTe
 | `gestao/` | Planejamento e acompanhamento do projeto |
 | `assets/` | Recursos visuais do portal |
 
-## Executar localmente
+## Comece aqui
 
 Pré-requisitos: Python 3.11+ e [uv](https://docs.astral.sh/uv/).
 
@@ -31,7 +33,7 @@ uv run mkdocs build --strict
 
 Como alternativa, instale as dependências descritas em `pyproject.toml` com `pip` e execute `mkdocs serve`.
 
-## Convenções
+## Validação e convenções
 
 - Atualize a documentação junto com mudanças de comportamento, rotas, infraestrutura ou pipeline.
 - Tecnologias aparecem como texto no portal; badges ficam reservados ao README raiz.
@@ -39,3 +41,9 @@ Como alternativa, instale as dependências descritas em `pyproject.toml` com `pi
 - Evite segredos, URLs efêmeras de execução e instruções não reproduzíveis.
 
 A publicação é feita por `.github/workflows/ci-docs.yml` após mudanças integradas à `main`.
+
+## Referências
+
+- [README raiz](../README.md)
+- [Pipelines](../.github/PIPELINES.md)
+- [Infraestrutura](../infra/README.md)
