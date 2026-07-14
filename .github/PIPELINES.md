@@ -1,5 +1,11 @@
 # Pipelines — EdTech
 
+![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?logo=githubactions&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)
+![Terraform](https://img.shields.io/badge/Terraform-7B42BC?logo=terraform&logoColor=white)
+![Google Cloud](https://img.shields.io/badge/Google_Cloud-4285F4?logo=googlecloud&logoColor=white)
+![Firebase](https://img.shields.io/badge/Firebase-DD2C00?logo=firebase&logoColor=white)
+
 > Entregas previsíveis: validar, publicar, observar e só então promover.
 
 ## Visão geral
