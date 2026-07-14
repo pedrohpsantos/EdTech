@@ -51,10 +51,22 @@ resource "google_vpc_access_connector" "connector" {
   max_instances = 10
 }
 
+# These networking resources already protect the live Cloud SQL instance. Importing
+# them makes Terraform the source of truth instead of attempting a duplicate create.
+import {
+  to = google_vpc_access_connector.connector
+  id = "projects/${var.project_id}/locations/${var.region}/connectors/cloud-run-vpc-connector"
+}
+
 resource "google_service_networking_connection" "private_vpc_connection" {
   network                 = "projects/edtech-storage-501117/global/networks/default"
   service                 = "servicenetworking.googleapis.com"
   reserved_peering_ranges = ["google-managed-services-range"]
+}
+
+import {
+  to = google_service_networking_connection.private_vpc_connection
+  id = "projects/${var.project_id}/global/networks/default:servicenetworking.googleapis.com"
 }
 
 data "google_compute_network" "default" {

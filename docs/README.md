@@ -2,6 +2,8 @@
 
 Portal técnico mantido como código, publicado em [pedrohpsantos.github.io/EdTech](https://pedrohpsantos.github.io/EdTech/).
 
+> Aqui, decisões viram conhecimento compartilhado e verificável.
+
 ## Estrutura
 
 | Diretório | Conteúdo |

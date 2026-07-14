@@ -4,6 +4,8 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
 ![Vite](https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=white)
 
+> Onde o rigor da plataforma encontra jornadas humanas, acessíveis e claras.
+
 SPA React 19, TypeScript e Vite. Oferece jornadas específicas para Pesquisador, Orientador e Auditor, com design responsivo, acessibilidade e comunicação autenticada com a API.
 
 ## Estrutura

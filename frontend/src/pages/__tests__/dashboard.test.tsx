@@ -93,6 +93,7 @@ describe('Dashboard Page', () => {
     await waitFor(() => {
       expect(getDashboardStats).toHaveBeenCalled();
       expect(getDocuments).toHaveBeenCalled();
+      expect(screen.getByText('10')).toBeInTheDocument();
     });
 
     expect(screen.getByText('Bom dia, Researcher')).toBeInTheDocument();
@@ -101,9 +102,6 @@ describe('Dashboard Page', () => {
     const trailBtn = screen.getByText('Ver Trilha de Pesquisa');
     fireEvent.click(trailBtn);
     expect(mockNavigate).toHaveBeenCalledWith('/trail');
-
-    // Check stats
-    expect(screen.getByText('10')).toBeInTheDocument(); // active documents
 
     // Check alert
     expect(screen.getByText('AÇÃO REQUERIDA')).toBeInTheDocument();

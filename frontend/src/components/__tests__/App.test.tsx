@@ -26,7 +26,8 @@ vi.mock('../../components/GlobalLoader', () => ({
 }));
 vi.mock('../../context/authContext', () => ({
   default: ({ children }: any) => <>{children}</>,
-  useAuth: () => ({ user: { role: 'RESEARCHER' }, isAuthenticated: true, isLoading: false }),
+  // Public-route coverage must not start authenticated-only UI imports (Bootstrap).
+  useAuth: () => ({ user: null, isAuthenticated: false, isLoading: false }),
 }));
 
 const renderApp = (path = '/') => {

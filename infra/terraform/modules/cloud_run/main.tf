@@ -71,7 +71,9 @@ resource "google_cloud_run_v2_service" "api" {
   client_version = "568.0.0"
   name           = var.service_name
   location       = var.location
-  ingress        = "INGRESS_TRAFFIC_INTERNAL_ONLY"
+  # The SPA is served from Firebase Hosting and reaches this public API over HTTPS.
+  # Database isolation is provided by Private IP and VPC egress, not by blocking API ingress.
+  ingress        = "INGRESS_TRAFFIC_ALL"
 
 
   template {

@@ -13,11 +13,11 @@ Este diretório (`/infra`) contém a configuração de infraestrutura do EdTech 
 | :--- | :--- |
 | `dev/docker-compose.yml` | Orquestra os serviços de Backend, Frontend e PostgreSQL para o ambiente local |
 | `dev/.env.example` | Template das variáveis de ambiente necessárias (nunca commitar o `.env` real) |
-| `dev/database/schema.sql` | Schema SQL de referência do banco de dados |
+| `database/schema.sql` | Schema SQL de referência do banco de dados |
 | `prod/docker-compose.prod.yml`| Configuração docker para teste ou deploy do ambiente produtivo |
 | `prod/cloudbuild.yaml` | Pipeline de build e deploy para o Google Cloud Build |
-| `prod/setup_backup.sh` | Script de provisionamento do backup automático diário no GCS via Cloud Scheduler |
-| `prod/terraform/` | Módulos Terraform parametrizados para Cloud Run, Cloud SQL e Cloud Storage |
+| `terraform/setup_backup.sh` | Script de provisionamento do backup automático diário no GCS via Cloud Scheduler |
+| `terraform/` | Módulos Terraform parametrizados para Cloud Run, Cloud SQL e Cloud Storage |
 
 ---
 
@@ -25,9 +25,9 @@ Este diretório (`/infra`) contém a configuração de infraestrutura do EdTech 
 
 Em produção, nossa infraestrutura segue os princípios de *Zero Trust* e menor privilégio:
 
-* **Isolamento de Rede:** O serviço no **Cloud Run** está configurado com `INGRESS_TRAFFIC_INTERNAL_ONLY` e o banco de dados **Cloud SQL** (PostgreSQL 18) não possui IP público, sendo acessível apenas via rede privada.
+* **Isolamento de Rede:** O banco **Cloud SQL** (PostgreSQL 18) não possui IP público e é acessível pelo Cloud Run através de VPC e Private IP. A API mantém ingress HTTPS público para atender o frontend hospedado externamente.
 * **Secret Management:** Credenciais sensíveis (banco de dados, chaves JWT, SMTP) são gerenciadas pelo **Secret Manager** e injetadas em tempo de execução. Não existem arquivos de configuração com segredos versionados.
-* **CI/CD com OIDC:** O pipeline no `cloudbuild.yaml` utiliza **Workload Identity Federation (OIDC)**. Não utilizamos chaves de serviço JSON estáticas para autenticação do deploy, eliminando riscos de vazamento de credenciais.
+* **CI/CD com OIDC:** Os workflows em `.github/workflows/ci.yml` usam **Workload Identity Federation (OIDC)**; o deploy não depende de chaves de serviço JSON estáticas.
 
 ### Acesso ao Banco de Dados (Cloud SQL)
 
@@ -103,7 +103,7 @@ O estado remoto deve ficar em um bucket GCS controlado pela equipe de plataforma
 O backup automático é provisionado pelo script `setup_backup.sh`. Executar uma única vez com um usuário que tenha permissão `roles/owner` ou `roles/iam.securityAdmin`:
 
 ```bash
-bash infra/prod/setup_backup.sh
+bash infra/terraform/setup_backup.sh
 
 ```
 

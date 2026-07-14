@@ -2,6 +2,8 @@
   <img src="docs/assets/imgs/banner-github.png" alt="EdTech Banner" width="100%">
 </div>
 
+> Um repositório para transformar rigor acadêmico em software verificável — com decisões, evidências e responsabilidade.
+
 # EdTech — Governança Acadêmica e Repositório Científico
 
 [![Documentação](https://github.com/pedrohpsantos/EdTech/actions/workflows/ci-docs.yml/badge.svg)](https://github.com/pedrohpsantos/EdTech/actions/workflows/ci-docs.yml)
@@ -73,4 +75,4 @@ Os relatórios são disponibilizados como artefatos da execução. Veja o fluxo 
 3. Abra um PR para `develop` usando Conventional Commits.
 4. Promova para `main` somente após a CI de `develop` passar.
 
-Consulte [Contributing](.github/CONTRIBUTING.md), [Security](.github/SECURITY.md), [Code of Conduct](.github/CODE_OF_CONDUCT.md) e a [licença MIT](LICENSE).
+Consulte as [pipelines](.github/PIPELINES.md), o [guia de contribuição](.github/CONTRIBUTING.md), o [código de conduta](.github/CODE_OF_CONDUCT.md), a [política de segurança](.github/SECURITY.md), o [changelog](CHANGELOG.md) e a [licença MIT](LICENSE).

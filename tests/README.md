@@ -2,6 +2,8 @@
 
 Este diretório contém verificações que exercitam a aplicação fora dos módulos de código. Testes unitários, cobertura e mutação do backend/frontend permanecem nos próprios módulos e são executados pela CI.
 
+> Cada verificação aqui existe para tornar confiança uma evidência, não uma impressão.
+
 ## Suítes
 
 | Caminho | Ferramenta | Escopo | Relatório |
