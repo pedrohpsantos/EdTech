@@ -1,0 +1,51 @@
+{
+  "suite": "EdTech API Security Contract",
+  "endpoint": "https://edtech-backend-shv6qbpf4q-rj.a.run.app/actuator/health",
+  "executedAt": "2026-07-14T02:00:24.302Z",
+  "durationMs": 969,
+  "passed": true,
+  "checks": [
+    {
+      "name": "HTTP Strict Transport Security",
+      "passed": true,
+      "expected": "max-age=31536000",
+      "actual": "max-age=31536000 ; includeSubDomains"
+    },
+    {
+      "name": "HSTS includes subdomains",
+      "passed": true,
+      "expected": "includesubdomains",
+      "actual": "max-age=31536000 ; includeSubDomains"
+    },
+    {
+      "name": "MIME sniffing protection",
+      "passed": true,
+      "expected": "nosniff",
+      "actual": "nosniff"
+    },
+    {
+      "name": "Clickjacking protection",
+      "passed": true,
+      "expected": "deny",
+      "actual": "DENY"
+    },
+    {
+      "name": "Content Security Policy frame boundary",
+      "passed": true,
+      "expected": "frame-ancestors 'none'",
+      "actual": "default-src 'self'; frame-ancestors 'none';"
+    },
+    {
+      "name": "Sensitive response cache protection",
+      "passed": true,
+      "expected": "no-store",
+      "actual": "no-cache, no-store, max-age=0, must-revalidate"
+    },
+    {
+      "name": "Request tracing correlation",
+      "passed": true,
+      "expected": "ci-api-contract-1783994424302",
+      "actual": "ci-api-contract-1783994424302"
+    }
+  ]
+}

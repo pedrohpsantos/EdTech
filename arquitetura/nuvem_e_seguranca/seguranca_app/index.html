@@ -2721,7 +2721,7 @@
   <span class="md-ellipsis">
     
   
-    ADR 0005: Framework Backend (Spring Boot + Java 17)
+    ADR 0005: Framework Backend (Spring Boot + Java 21)
   
 
     
@@ -4168,15 +4168,23 @@
 
 
 <h1 id="appsec-e-seguranca"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 1 3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5zm0 6c1.4 0 2.8 1.1 2.8 2.5V11c.6 0 1.2.6 1.2 1.3v3.5c0 .6-.6 1.2-1.3 1.2H9.2c-.6 0-1.2-.6-1.2-1.3v-3.5c0-.6.6-1.2 1.2-1.2V9.5C9.2 8.1 10.6 7 12 7m0 1.2c-.8 0-1.5.5-1.5 1.3V11h3V9.5c0-.8-.7-1.3-1.5-1.3"></path></svg></span> AppSec e Segurança<a class="headerlink" href="#appsec-e-seguranca" title="Permanent link">¶</a></h1>
-<p>A proteção do EdTech gira em torno de duas engrenagens centrais: Autenticação Restrita (<abbr title="JSON Web Token">JWT</abbr> via Bearer Token) e Log de Auditoria irrefutável.</p>
+<p>A proteção do EdTech combina sessão <abbr title="JSON Web Token">JWT</abbr> em cookie seguro, autorização por papel,
+validação de uploads e uma trilha de auditoria imutável.</p>
 <h2 id="1-seguranca-de-sessao-jwt">1. Segurança de Sessão (<abbr title="JSON Web Token">JWT</abbr>)<a class="headerlink" href="#1-seguranca-de-sessao-jwt" title="Permanent link">¶</a></h2>
 <p>A aplicação não armazena sessão em banco ou memória do servidor (<code>STATELESS</code>).</p>
 <h3 id="confinamento-do-token">Confinamento do Token<a class="headerlink" href="#confinamento-do-token" title="Permanent link">¶</a></h3>
-<p>Para manter a compatibilidade entre diferentes domínios da infraestrutura (<abbr title="Camada de interface visual do usuário">Frontend</abbr> no Firebase e <abbr title="Camada de servidor e banco de dados da aplicação">Backend</abbr> no <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run), adotamos o uso de tokens enviados via cabeçalho <code>Authorization: Bearer &lt;token&gt;</code>. O <abbr title="Camada de interface visual do usuário">Frontend</abbr> armazena o token no <code>LocalStorage</code>.</p>
-<p>Para mitigar a vulnerabilidade de <abbr title="Cross-Site Scripting">XSS</abbr> (Cross-Site Scripting) inerente a armazenamentos acessíveis por JavaScript, aplicamos as seguintes defesas complementares:
+<p>O backend entrega o <abbr title="JSON Web Token">JWT</abbr> no cookie <code>jwt</code>, com <code>HttpOnly</code>, <code>Secure</code> e
+<code>SameSite=Strict</code>; o cliente Axios usa <code>withCredentials</code>. Assim, o token de
+sessão não fica em <code>localStorage</code> nem pode ser lido por JavaScript. O filtro de
+autenticação mantém compatibilidade com <code>Authorization: Bearer</code> para clientes
+não navegadores, mas a <abbr title="Single Page Application — Aplicação de Página Única">SPA</abbr> não depende desse cabeçalho.</p>
+<p>As defesas complementares são:
 - <strong>Sanitização de Inputs e Outputs:</strong> Utilização de frameworks (React) que realizam escape automático de dados antes da renderização.
-- <strong>Isolamento de Domínio (<abbr title="Cross-Origin Resource Sharing — Compartilhamento de Recursos de Origem Cruzada">CORS</abbr>):</strong> Política restrita de <abbr title="Cross-Origin Resource Sharing — Compartilhamento de Recursos de Origem Cruzada">CORS</abbr> para impedir que scripts de origens desconhecidas interajam com a <abbr title="Application Programming Interface — Interface de Programação de Aplicação">API</abbr>, bloqueando exfiltração de dados caso um script malicioso consiga ser injetado.
-- <strong>Fim do Risco de <abbr title="Cross-Site Request Forgery">CSRF</abbr>:</strong> Por não utilizar o mecanismo padrão de Cookies do navegador, a vulnerabilidade de <abbr title="Cross-Site Request Forgery">CSRF</abbr> (Cross-Site Request Forgery) é organicamente neutralizada (browsers não anexam localStorage automaticamente nas requisições).</p>
+- <strong>Isolamento de Domínio (<abbr title="Cross-Origin Resource Sharing — Compartilhamento de Recursos de Origem Cruzada">CORS</abbr>):</strong> Política restrita à origem configurada e
+  requisições com credenciais explicitamente permitidas.
+- <strong><abbr title="Cross-Site Request Forgery">CSRF</abbr>:</strong> A <abbr title="Application Programming Interface — Interface de Programação de Aplicação">API</abbr> é stateless e ignora o filtro <abbr title="Cross-Site Request Forgery">CSRF</abbr>; por isso, alterações de
+  origem, cookies e rotas mutáveis devem ser revisadas junto com a configuração
+  de <abbr title="Cross-Origin Resource Sharing — Compartilhamento de Recursos de Origem Cruzada">CORS</abbr> e os testes de contrato de segurança.</p>
 <h2 id="2-controle-de-acesso-baseado-em-papeis-rbac">2. Controle de Acesso Baseado em Papéis (<abbr title="Role-Based Access Control — Controle de Acesso Baseado em Papéis">RBAC</abbr>)<a class="headerlink" href="#2-controle-de-acesso-baseado-em-papeis-rbac" title="Permanent link">¶</a></h2>
 <p>O sistema barra usuários em rotas específicas baseado em seu perfil institucional:</p>
 <table>
@@ -4218,8 +4226,8 @@
     S-&gt;&gt;S: Valida Hash no Banco
     S-&gt;&gt;J: Solicita Geração de Token
     J--&gt;&gt;S: Retorna Token Assinado
-    S--&gt;&gt;L: Retorna Token no Corpo (JSON)
-    L-&gt;&gt;L: Salva Token no LocalStorage
+    S--&gt;&gt;L: Envia cookie jwt HttpOnly e Secure
+    L-&gt;&gt;L: Mantém sessão com withCredentials
     L--&gt;&gt;U: Redireciona para Dashboard</code></pre>
 <h3 id="modelo-de-ameacas">Modelo de Ameaças<a class="headerlink" href="#modelo-de-ameacas" title="Permanent link">¶</a></h3>
 <pre class="mermaid"><code>%%{init: {"theme": "base", "flowchart": {"nodeSpacing": 60, "rankSpacing": 80, "curve": "basis"}}}%%
@@ -4245,7 +4253,7 @@ flowchart LR
 
     subgraph Controles["Controles"]
         WAF["WAF"]
-        JWT["JWT (Bearer)"]
+    JWT["JWT em cookie HttpOnly"]
         VAL["Validação de Input"]
         LOG["Logs Imutáveis"]
     end
@@ -4451,7 +4459,7 @@ flowchart LR
     <span class="md-icon" title="Última atualização">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="6 de julho de 2026 14:17:20 UTC">6 de julho de 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="14 de julho de 2026 01:53:54 UTC">14 de julho de 2026</span>
   </span>
 
     
@@ -4462,11 +4470,12 @@ flowchart LR
   <span class="md-source-file__fact">
     <span class="md-icon" title="Contribuidores">
       
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 4a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4"></path></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 5.5A3.5 3.5 0 0 1 15.5 9a3.5 3.5 0 0 1-3.5 3.5A3.5 3.5 0 0 1 8.5 9 3.5 3.5 0 0 1 12 5.5M5 8c.56 0 1.08.15 1.53.42-.15 1.43.27 2.85 1.13 3.96C7.16 13.34 6.16 14 5 14a3 3 0 0 1-3-3 3 3 0 0 1 3-3m14 0a3 3 0 0 1 3 3 3 3 0 0 1-3 3c-1.16 0-2.16-.66-2.66-1.62a5.54 5.54 0 0 0 1.13-3.96c.45-.27.97-.42 1.53-.42M5.5 18.25c0-2.07 2.91-3.75 6.5-3.75s6.5 1.68 6.5 3.75V20h-13zM0 20v-1.5c0-1.39 1.89-2.56 4.45-2.9-.59.68-.95 1.62-.95 2.65V20zm24 0h-3.5v-1.75c0-1.03-.36-1.97-.95-2.65 2.56.34 4.45 1.51 4.45 2.9z"></path></svg>
       
     </span>
     <nav>
       
+        <a href="mailto:232038442@aluno.unb.br">Pedro Henrique</a>, 
         <a href="mailto:phps2014.phps@gmail.com">pedrohpsantos</a>
     </nav>
   </span>

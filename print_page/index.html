@@ -2453,7 +2453,7 @@
   <span class="md-ellipsis">
     
   
-    ADR 0005: Framework Backend (Spring Boot + Java 17)
+    ADR 0005: Framework Backend (Spring Boot + Java 21)
   
 
     
@@ -4377,7 +4377,7 @@
   <a href="#arquitetura-decisoes_adrs-0005-spring-boot" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4.6.5 ADR 0005: Framework Backend (Spring Boot + Java 17)
+        4.6.5 ADR 0005: Framework Backend (Spring Boot + Java 21)
       
     </span>
   </a>
@@ -8031,10 +8031,10 @@ Qualquer rota protegida passa pelo <code>JwtAuthenticationFilter</code> antes de
 <p>Existem fluxos independentes:</p>
 <ol>
 <li>
-<p><strong>Unified <abbr title="Continuous Integration / Continuous Delivery — Integração Contínua / Entrega Contínua">CI/CD</abbr> (<code>ci.yml</code>)</strong>: Compila o código Java, roda todos os testes unitários (<code>mvn verify</code>), roda lint/build/test no <abbr title="Camada de interface visual do usuário">Frontend</abbr>, e faz o deploy de ambos para Produção caso a branch seja a <code>main</code>.</p>
+<p><strong>Unified <abbr title="Continuous Integration / Continuous Delivery — Integração Contínua / Entrega Contínua">CI/CD</abbr> (<code>ci.yml</code>)</strong>: Compila e valida backend, frontend e Terraform. <code>develop</code> publica staging; <code>main</code> publica produção. O rollout do backend atualiza o Job Flyway, executa as migrações e somente então atualiza a revisão do <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run.</p>
 </li>
 <li>
-<p><strong>Docs CI (<code>ci-docs.yml</code>)</strong>: Publica automaticamente esta documentação (MkDocs) para o GitHub Pages. Disparada em alterações na <code>main</code> dentro da pasta <code>docs/</code> ou em modificações no backend que afetem relatórios de cobertura.</p>
+<p><strong>Docs CI (<code>ci-docs.yml</code>)</strong>: Publica automaticamente o portal MkDocs e seus relatórios <abbr title="HyperText Markup Language — Linguagem de Marcação de Hipertexto">HTML</abbr> no GitHub Pages. Além de mudanças em documentação e código, reage ao contrato de segurança da <abbr title="Application Programming Interface — Interface de Programação de Aplicação">API</abbr> para manter o relatório publicado atualizado.</p>
 </li>
 </ol>
 <h2 id="desenvolvimento-devops-ci_cd-regras-de-protecao">Regras de Proteção<a class="headerlink" href="#desenvolvimento-devops-ci_cd-regras-de-protecao" title="Permanent link">¶</a></h2>
@@ -8052,7 +8052,7 @@ Qualquer rota protegida passa pelo <code>JwtAuthenticationFilter</code> antes de
 <h3 id="desenvolvimento-devops-ci_cd-frontend"><abbr title="Camada de interface visual do usuário">Frontend</abbr><a class="headerlink" href="#desenvolvimento-devops-ci_cd-frontend" title="Permanent link">¶</a></h3>
 <ul>
 <li><strong>Provedor</strong>: Firebase Hosting</li>
-<li><strong>Gatilho</strong>: Job de deploy no GitHub Actions após sucesso nos testes, autenticado por secrets do repositório.</li>
+<li><strong>Gatilho</strong>: Job de deploy no GitHub Actions após sucesso nos testes, autenticado via Workload Identity Federation (OIDC).</li>
 </ul>
 <h3 id="desenvolvimento-devops-ci_cd-backend"><abbr title="Camada de servidor e banco de dados da aplicação">Backend</abbr><a class="headerlink" href="#desenvolvimento-devops-ci_cd-backend" title="Permanent link">¶</a></h3>
 <ul>
@@ -8099,6 +8099,12 @@ Qualquer rota protegida passa pelo <code>JwtAuthenticationFilter</code> antes de
 <td style="text-align: center;"><code>1.3</code></td>
 <td style="text-align: center;">09/07/2026</td>
 <td style="text-align: left;">Atualização do deploy para infraestrutura parametrizada com Terraform</td>
+<td style="text-align: left;">Pedro Henrique P. Santos</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>1.4</code></td>
+<td style="text-align: center;">13/07/2026</td>
+<td style="text-align: left;">Atualizados ambientes, OIDC, Job Flyway e publicação de relatórios</td>
 <td style="text-align: left;">Pedro Henrique P. Santos</td>
 </tr>
 </tbody>
@@ -8607,10 +8613,14 @@ function injectPitestStyles() {
             remove_material_navigation();remove_mkdocs_theme_navigation();generate_toc();
         })
         </script>
-        </head><body><h1 id="contrato-de-seguranca-da-api">Contrato de Segurança da <abbr title="Application Programming Interface — Interface de Programação de Aplicação">API</abbr><a class="headerlink" href="#desenvolvimento-qualidade_e_testes-api_security_contract-contrato-de-seguranca-da-api" title="Permanent link">¶</a></h1>
-<h2 id="desenvolvimento-qualidade_e_testes-api_security_contract-objetivo">Objetivo<a class="headerlink" href="#desenvolvimento-qualidade_e_testes-api_security_contract-objetivo" title="Permanent link">¶</a></h2>
-<p>O contrato de segurança é uma verificação externa, somente de leitura, executada contra a <abbr title="Application Programming Interface — Interface de Programação de Aplicação">API</abbr> publicada. Ele complementa o teste de carga com k6: enquanto o k6 mede estabilidade e latência sob tráfego, esta suíte confirma que controles de segurança continuam presentes após o deploy.</p>
-<p>Não substitui testes unitários do backend, <abbr title="End-to-End — Testes de Ponta a Ponta">E2E</abbr> do frontend, Lighthouse ou k6 e não repete seus cenários. A execução consulta apenas <code>GET /actuator/health</code>; ela não cria contas, não autentica usuários e não modifica dados.</p>
+        </head><body><h1 id="contrato-de-seguranca-da-api"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m10 17-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9m-6-8L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5z"></path></svg></span> Contrato de Segurança da <abbr title="Application Programming Interface — Interface de Programação de Aplicação">API</abbr><a class="headerlink" href="#desenvolvimento-qualidade_e_testes-api_security_contract-contrato-de-seguranca-da-api" title="Permanent link">¶</a></h1>
+<p>Este contrato é uma verificação externa e somente de leitura contra a <abbr title="Application Programming Interface — Interface de Programação de Aplicação">API</abbr>
+publicada. Ele complementa o k6: enquanto o teste de carga mede estabilidade
+e latência, esta suíte confirma que os controles <abbr title="HyperText Transfer Protocol — Protocolo de Transferência de Hipertexto">HTTP</abbr> de segurança continuam
+ativos após o deploy.</p>
+<p>O contrato consulta somente <code>GET /actuator/health</code>; não cria contas, não
+autentica usuários e não altera dados. Ele não substitui testes unitários,
+<abbr title="End-to-End — Testes de Ponta a Ponta">E2E</abbr>, Lighthouse ou k6.</p>
 <h2 id="desenvolvimento-qualidade_e_testes-api_security_contract-controles-verificados">Controles verificados<a class="headerlink" href="#desenvolvimento-qualidade_e_testes-api_security_contract-controles-verificados" title="Permanent link">¶</a></h2>
 <table>
 <thead>
@@ -8622,7 +8632,7 @@ function injectPitestStyles() {
 <tbody>
 <tr>
 <td>Transporte seguro</td>
-<td><code>Strict-Transport-Security</code> com duração de um ano e subdomínios</td>
+<td><code>Strict-Transport-Security</code> por um ano e subdomínios</td>
 </tr>
 <tr>
 <td>Proteção contra MIME sniffing</td>
@@ -8642,19 +8652,58 @@ function injectPitestStyles() {
 </tr>
 </tbody>
 </table>
-<h2 id="desenvolvimento-qualidade_e_testes-api_security_contract-pipeline-e-relatorio"><abbr title="Esteira de automação (Sequência de passos)">Pipeline</abbr> e relatório<a class="headerlink" href="#desenvolvimento-qualidade_e_testes-api_security_contract-pipeline-e-relatorio" title="Permanent link">¶</a></h2>
-<p>Na <code>main</code>, o job <strong>Prod (<abbr title="Application Programming Interface — Interface de Programação de Aplicação">API</abbr> Security Contract)</strong> depende somente do deploy do backend. Portanto, inicia em paralelo ao <strong>Prod (Performance)</strong> (k6) e não espera pelo deploy do frontend, <abbr title="End-to-End — Testes de Ponta a Ponta">E2E</abbr> ou Lighthouse.</p>
-<p>Ao fim da execução, a pipeline publica o artefato <code>api-security-contract-report</code>, contendo:</p>
+<h2 id="desenvolvimento-qualidade_e_testes-api_security_contract-relatorio-publicado">Relatório publicado<a class="headerlink" href="#desenvolvimento-qualidade_e_testes-api_security_contract-relatorio-publicado" title="Permanent link">¶</a></h2>
+<p>O quadro abaixo mostra a execução mais recente contra produção. É uma fotografia
+atual; os artefatos de cada release preservam a evidência histórica.</p>
+<div style="display: flex; justify-content: flex-end; margin-bottom: 15px;">
+<p><a class="md-button" href="https://pedrohpsantos.github.io/EdTech/api-security/index.html" target="_blank">Abrir relatório em tela cheia <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"></path></svg></span></a></p>
+</div>
+<iframe src="https://pedrohpsantos.github.io/EdTech/api-security/index.html" width="100%" height="800px" style="border:none; border-radius:8px; box-shadow:0 4px 6px rgba(0,0,0,0.1); background-color:#fff;">
+  Seu navegador não suporta iframes. <a href="https://pedrohpsantos.github.io/EdTech/api-security/index.html" target="_blank">Abra o relatório de contrato de segurança</a>.
+</iframe>
+
+<h2 id="desenvolvimento-qualidade_e_testes-api_security_contract-pipeline-e-artefatos"><abbr title="Esteira de automação (Sequência de passos)">Pipeline</abbr> e artefatos<a class="headerlink" href="#desenvolvimento-qualidade_e_testes-api_security_contract-pipeline-e-artefatos" title="Permanent link">¶</a></h2>
+<p>Na <code>main</code>, o job <strong>Prod (<abbr title="Application Programming Interface — Interface de Programação de Aplicação">API</abbr> Security Contract)</strong> depende somente do deploy do
+backend e roda em paralelo ao k6. O workflow de documentação executa o mesmo
+contrato para publicar o <abbr title="HyperText Markup Language — Linguagem de Marcação de Hipertexto">HTML</abbr> no GitHub Pages em <code>/api-security/</code>.</p>
+<p>Cada pipeline de deploy também publica o artefato
+<code>api-security-contract-report</code>, contendo:</p>
 <ul>
 <li><code>index.html</code>: relatório visual com o estado de cada controle;</li>
-<li><code>production-security-contract.json</code>: resultado estruturado para auditoria e automação.</li>
+<li><code>production-security-contract.json</code>: resultado estruturado para auditoria e
+  automação.</li>
 </ul>
 <h2 id="desenvolvimento-qualidade_e_testes-api_security_contract-execucao-local">Execução local<a class="headerlink" href="#desenvolvimento-qualidade_e_testes-api_security_contract-execucao-local" title="Permanent link">¶</a></h2>
 <p>Requer Node.js 20 ou superior e uma instância acessível da <abbr title="Application Programming Interface — Interface de Programação de Aplicação">API</abbr>:</p>
 <div class="highlight"><pre><span></span><code><span class="nv">API_URL</span><span class="o">=</span>https://edtech-backend-shv6qbpf4q-rj.a.run.app<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>node<span class="w"> </span>tests/api-contract/production-security-contract.mjs
 </code></pre></div>
-<p>Os arquivos são gerados em <code>tests/api-contract/reports/</code> e não são versionados.</p></body></html></section><section class="print-page" id="desenvolvimento-qualidade_e_testes-lighthouse_report" heading-number="3.5.7"><html><head>
+<p>Os arquivos são gerados em <code>tests/api-contract/reports/</code> e não são versionados.</p>
+<h2 id="desenvolvimento-qualidade_e_testes-api_security_contract-historico-de-versoes">Histórico de versões<a class="headerlink" href="#desenvolvimento-qualidade_e_testes-api_security_contract-historico-de-versoes" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Versão</th>
+<th>Data</th>
+<th>Descrição</th>
+<th>Autor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>1.1</code></td>
+<td>13/07/2026</td>
+<td>Publicação do relatório <abbr title="HyperText Markup Language — Linguagem de Marcação de Hipertexto">HTML</abbr> no GitHub Pages</td>
+<td>Pedro Henrique P. Santos</td>
+</tr>
+<tr>
+<td><code>1.0</code></td>
+<td>13/07/2026</td>
+<td>Criação do contrato de segurança da <abbr title="Application Programming Interface — Interface de Programação de Aplicação">API</abbr></td>
+<td>Pedro Henrique P. Santos</td>
+</tr>
+</tbody>
+</table></body></html></section><section class="print-page" id="desenvolvimento-qualidade_e_testes-lighthouse_report" heading-number="3.5.7"><html><head>
         <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function () {
             remove_material_navigation();remove_mkdocs_theme_navigation();generate_toc();
@@ -8873,7 +8922,10 @@ function injectPitestStyles() {
 <span class="p">}</span>
 </code></pre></div><p></p>
 <p><strong>Implementações Concretas:</strong>
-Temos o <code>GcsStorageServiceImpl</code> e o <code>LocalStorageServiceImpl</code>. O Spring Boot injeta a implementação correta com base no ambiente ativo (via propriedades e perfis <code>dev</code>/<code>prod</code>). O nosso contexto base (<code>DocumentService</code>) faz uso do serviço genericamente:
+Temos o <code>GcsStorageServiceImpl</code> e o <code>LocalStorageServiceImpl</code>. O Spring Boot
+injeta a implementação correta conforme a configuração de armazenamento; em
+produção, o provedor é <abbr title="Google Cloud Storage">GCS</abbr>. O contexto base (<code>DocumentService</code>) usa o contrato
+abstrato:
 </p><div class="highlight"><pre><span></span><code><span class="c1">// Trecho de DocumentService.java</span>
 <span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">StorageService</span><span class="w"> </span><span class="n">storageService</span><span class="p">;</span><span class="w"> </span><span class="c1">// Injetado automaticamente</span>
 
@@ -9268,15 +9320,23 @@ flowchart TB
         })
         </script>
         </head><body><h1 id="appsec-e-seguranca"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 1 3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5zm0 6c1.4 0 2.8 1.1 2.8 2.5V11c.6 0 1.2.6 1.2 1.3v3.5c0 .6-.6 1.2-1.3 1.2H9.2c-.6 0-1.2-.6-1.2-1.3v-3.5c0-.6.6-1.2 1.2-1.2V9.5C9.2 8.1 10.6 7 12 7m0 1.2c-.8 0-1.5.5-1.5 1.3V11h3V9.5c0-.8-.7-1.3-1.5-1.3"></path></svg></span> AppSec e Segurança<a class="headerlink" href="#arquitetura-nuvem_e_seguranca-seguranca_app-appsec-e-seguranca" title="Permanent link">¶</a></h1>
-<p>A proteção do EdTech gira em torno de duas engrenagens centrais: Autenticação Restrita (<abbr title="JSON Web Token">JWT</abbr> via Bearer Token) e Log de Auditoria irrefutável.</p>
+<p>A proteção do EdTech combina sessão <abbr title="JSON Web Token">JWT</abbr> em cookie seguro, autorização por papel,
+validação de uploads e uma trilha de auditoria imutável.</p>
 <h2 id="arquitetura-nuvem_e_seguranca-seguranca_app-1-seguranca-de-sessao-jwt">1. Segurança de Sessão (<abbr title="JSON Web Token">JWT</abbr>)<a class="headerlink" href="#arquitetura-nuvem_e_seguranca-seguranca_app-1-seguranca-de-sessao-jwt" title="Permanent link">¶</a></h2>
 <p>A aplicação não armazena sessão em banco ou memória do servidor (<code>STATELESS</code>).</p>
 <h3 id="arquitetura-nuvem_e_seguranca-seguranca_app-confinamento-do-token">Confinamento do Token<a class="headerlink" href="#arquitetura-nuvem_e_seguranca-seguranca_app-confinamento-do-token" title="Permanent link">¶</a></h3>
-<p>Para manter a compatibilidade entre diferentes domínios da infraestrutura (<abbr title="Camada de interface visual do usuário">Frontend</abbr> no Firebase e <abbr title="Camada de servidor e banco de dados da aplicação">Backend</abbr> no <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run), adotamos o uso de tokens enviados via cabeçalho <code>Authorization: Bearer &lt;token&gt;</code>. O <abbr title="Camada de interface visual do usuário">Frontend</abbr> armazena o token no <code>LocalStorage</code>.</p>
-<p>Para mitigar a vulnerabilidade de <abbr title="Cross-Site Scripting">XSS</abbr> (Cross-Site Scripting) inerente a armazenamentos acessíveis por JavaScript, aplicamos as seguintes defesas complementares:
+<p>O backend entrega o <abbr title="JSON Web Token">JWT</abbr> no cookie <code>jwt</code>, com <code>HttpOnly</code>, <code>Secure</code> e
+<code>SameSite=Strict</code>; o cliente Axios usa <code>withCredentials</code>. Assim, o token de
+sessão não fica em <code>localStorage</code> nem pode ser lido por JavaScript. O filtro de
+autenticação mantém compatibilidade com <code>Authorization: Bearer</code> para clientes
+não navegadores, mas a <abbr title="Single Page Application — Aplicação de Página Única">SPA</abbr> não depende desse cabeçalho.</p>
+<p>As defesas complementares são:
 - <strong>Sanitização de Inputs e Outputs:</strong> Utilização de frameworks (React) que realizam escape automático de dados antes da renderização.
-- <strong>Isolamento de Domínio (<abbr title="Cross-Origin Resource Sharing — Compartilhamento de Recursos de Origem Cruzada">CORS</abbr>):</strong> Política restrita de <abbr title="Cross-Origin Resource Sharing — Compartilhamento de Recursos de Origem Cruzada">CORS</abbr> para impedir que scripts de origens desconhecidas interajam com a <abbr title="Application Programming Interface — Interface de Programação de Aplicação">API</abbr>, bloqueando exfiltração de dados caso um script malicioso consiga ser injetado.
-- <strong>Fim do Risco de <abbr title="Cross-Site Request Forgery">CSRF</abbr>:</strong> Por não utilizar o mecanismo padrão de Cookies do navegador, a vulnerabilidade de <abbr title="Cross-Site Request Forgery">CSRF</abbr> (Cross-Site Request Forgery) é organicamente neutralizada (browsers não anexam localStorage automaticamente nas requisições).</p>
+- <strong>Isolamento de Domínio (<abbr title="Cross-Origin Resource Sharing — Compartilhamento de Recursos de Origem Cruzada">CORS</abbr>):</strong> Política restrita à origem configurada e
+  requisições com credenciais explicitamente permitidas.
+- <strong><abbr title="Cross-Site Request Forgery">CSRF</abbr>:</strong> A <abbr title="Application Programming Interface — Interface de Programação de Aplicação">API</abbr> é stateless e ignora o filtro <abbr title="Cross-Site Request Forgery">CSRF</abbr>; por isso, alterações de
+  origem, cookies e rotas mutáveis devem ser revisadas junto com a configuração
+  de <abbr title="Cross-Origin Resource Sharing — Compartilhamento de Recursos de Origem Cruzada">CORS</abbr> e os testes de contrato de segurança.</p>
 <h2 id="arquitetura-nuvem_e_seguranca-seguranca_app-2-controle-de-acesso-baseado-em-papeis-rbac">2. Controle de Acesso Baseado em Papéis (<abbr title="Role-Based Access Control — Controle de Acesso Baseado em Papéis">RBAC</abbr>)<a class="headerlink" href="#arquitetura-nuvem_e_seguranca-seguranca_app-2-controle-de-acesso-baseado-em-papeis-rbac" title="Permanent link">¶</a></h2>
 <p>O sistema barra usuários em rotas específicas baseado em seu perfil institucional:</p>
 <table>
@@ -9318,8 +9378,8 @@ flowchart TB
     S-&gt;&gt;S: Valida Hash no Banco
     S-&gt;&gt;J: Solicita Geração de Token
     J--&gt;&gt;S: Retorna Token Assinado
-    S--&gt;&gt;L: Retorna Token no Corpo (JSON)
-    L-&gt;&gt;L: Salva Token no LocalStorage
+    S--&gt;&gt;L: Envia cookie jwt HttpOnly e Secure
+    L-&gt;&gt;L: Mantém sessão com withCredentials
     L--&gt;&gt;U: Redireciona para Dashboard</code></pre>
 <h3 id="arquitetura-nuvem_e_seguranca-seguranca_app-modelo-de-ameacas">Modelo de Ameaças<a class="headerlink" href="#arquitetura-nuvem_e_seguranca-seguranca_app-modelo-de-ameacas" title="Permanent link">¶</a></h3>
 <pre class="mermaid"><code>%%{init: {"theme": "base", "flowchart": {"nodeSpacing": 60, "rankSpacing": 80, "curve": "basis"}}}%%
@@ -9345,7 +9405,7 @@ flowchart LR
 
     subgraph Controles["Controles"]
         WAF["WAF"]
-        JWT["JWT (Bearer)"]
+    JWT["JWT em cookie HttpOnly"]
         VAL["Validação de Input"]
         LOG["Logs Imutáveis"]
     end
@@ -9542,8 +9602,8 @@ flowchart LR
 <p><strong>Ameaça:</strong> Um atacante se passa por um usuário legítimo (Pesquisador, Orientador ou Auditor) para acessar o sistema.</p>
 <p><strong>Controles Mitigatórios:</strong></p>
 <ul>
-<li><strong>Autenticação <abbr title="JSON Web Token">JWT</abbr> Bearer:</strong> As sessões são validadas através de <abbr title="JSON Web Token">JWT</abbr> (<abbr title="JavaScript Object Notation">JSON</abbr> Web Token) assinados digitalmente.</li>
-<li><strong>Isolamento de Origem:</strong> Tokens ficam restritos ao <code>LocalStorage</code> e não são enviados via Cookies nativos, mitigando roubo via <abbr title="Cross-Site Request Forgery">CSRF</abbr> de forma natural.</li>
+<li><strong>Autenticação <abbr title="JSON Web Token">JWT</abbr> em cookie HttpOnly:</strong> As sessões são validadas por <abbr title="JSON Web Token">JWT</abbr> assinado, enviado no cookie <code>jwt</code> com <code>HttpOnly</code>, <code>Secure</code> e <code>SameSite=Strict</code>.</li>
+<li><strong>Defesa de origem e <abbr title="Cross-Site Request Forgery">CSRF</abbr>:</strong> O frontend usa <code>withCredentials</code>; <abbr title="Cross-Origin Resource Sharing — Compartilhamento de Recursos de Origem Cruzada">CORS</abbr> aceita apenas origens configuradas e as rotas mutáveis permanecem protegidas pela configuração de segurança da <abbr title="Application Programming Interface — Interface de Programação de Aplicação">API</abbr>. O token não fica disponível ao JavaScript em <code>localStorage</code>.</li>
 <li><strong>Força Bruta e Credential Stuffing:</strong> Implementação de limite de taxa (<em>Rate Limiting</em>) agressivo via <strong>Bucket4j</strong>. Endpoints sensíveis como <code>/api/auth/login</code> admitem no máximo 5 requisições por minuto por endereço <abbr title="Internet Protocol — Protocolo de Internet">IP</abbr>.</li>
 </ul>
 <h2 id="arquitetura-nuvem_e_seguranca-threat_model-2-tampering-violacao-de-dados">2. Tampering (Violação de Dados)<a class="headerlink" href="#arquitetura-nuvem_e_seguranca-threat_model-2-tampering-violacao-de-dados" title="Permanent link">¶</a></h2>
@@ -10119,13 +10179,13 @@ Além disso, o sistema conta com um módulo de Auditoria que exige um histórico
             remove_material_navigation();remove_mkdocs_theme_navigation();generate_toc();
         })
         </script>
-        </head><body><h1 id="adr-0005-framework-backend-spring-boot-java-17"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17 21-2.75-3 1.16-1.16L17 18.43l3.59-3.59 1.16 1.41M12.8 21H5a2 2 0 0 1-2-2V5c0-1.11.89-2 2-2h14a2 2 0 0 1 2 2v7.8c-.88-.51-1.91-.8-3-.8l-1 .08V11H7v2h7.69A5.98 5.98 0 0 0 12 18c0 1.09.29 2.12.8 3m-.8-6H7v2h5m5-10H7v2h10"></path></svg></span> <abbr title="Architecture Decision Record — Registro de Decisão Arquitetural">ADR</abbr> 0005: <abbr title="Estrutura de código base para desenvolvimento">Framework</abbr> <abbr title="Camada de servidor e banco de dados da aplicação">Backend</abbr> (Spring Boot + Java 17)<a class="headerlink" href="#arquitetura-decisoes_adrs-0005-spring-boot-adr-0005-framework-backend-spring-boot-java-17" title="Permanent link">¶</a></h1>
+        </head><body><h1 id="adr-0005-framework-backend-spring-boot-java-21"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17 21-2.75-3 1.16-1.16L17 18.43l3.59-3.59 1.16 1.41M12.8 21H5a2 2 0 0 1-2-2V5c0-1.11.89-2 2-2h14a2 2 0 0 1 2 2v7.8c-.88-.51-1.91-.8-3-.8l-1 .08V11H7v2h7.69A5.98 5.98 0 0 0 12 18c0 1.09.29 2.12.8 3m-.8-6H7v2h5m5-10H7v2h10"></path></svg></span> <abbr title="Architecture Decision Record — Registro de Decisão Arquitetural">ADR</abbr> 0005: <abbr title="Estrutura de código base para desenvolvimento">Framework</abbr> <abbr title="Camada de servidor e banco de dados da aplicação">Backend</abbr> (Spring Boot + Java 21)<a class="headerlink" href="#arquitetura-decisoes_adrs-0005-spring-boot-adr-0005-framework-backend-spring-boot-java-21" title="Permanent link">¶</a></h1>
 <h2 id="arquitetura-decisoes_adrs-0005-spring-boot-status">Status<a class="headerlink" href="#arquitetura-decisoes_adrs-0005-spring-boot-status" title="Permanent link">¶</a></h2>
 <p>Aceito</p>
 <h2 id="arquitetura-decisoes_adrs-0005-spring-boot-contexto">Contexto<a class="headerlink" href="#arquitetura-decisoes_adrs-0005-spring-boot-contexto" title="Permanent link">¶</a></h2>
 <p>A plataforma necessita de uma fundação sólida, segura (para gerenciamento de papéis de Pesquisador, Orientador e Auditor) e sustentável a longo prazo, sendo desenvolvida por equipes que costumam rotacionar em ambiente universitário. Além disso, a aplicação lida intensivamente com autenticação e transações financeiras/acadêmicas.</p>
 <h2 id="arquitetura-decisoes_adrs-0005-spring-boot-decisao">Decisão<a class="headerlink" href="#arquitetura-decisoes_adrs-0005-spring-boot-decisao" title="Permanent link">¶</a></h2>
-<p>Optamos por utilizar <strong>Java 17</strong> com <strong>Spring Boot 3</strong>.</p>
+<p>Optamos por utilizar <strong>Java 21</strong> com <strong>Spring Boot 3</strong>.</p>
 <h2 id="arquitetura-decisoes_adrs-0005-spring-boot-consequencias">Consequências<a class="headerlink" href="#arquitetura-decisoes_adrs-0005-spring-boot-consequencias" title="Permanent link">¶</a></h2>
 <h3 id="arquitetura-decisoes_adrs-0005-spring-boot-positivas">Positivas<a class="headerlink" href="#arquitetura-decisoes_adrs-0005-spring-boot-positivas" title="Permanent link">¶</a></h3>
 <ul>
@@ -10269,10 +10329,7 @@ Além disso, o sistema conta com um módulo de Auditoria que exige um histórico
 <p><strong>Controle de Versão:</strong> Todos os scripts <abbr title="Structured Query Language — Linguagem de Consulta Estruturada">SQL</abbr> ficam armazenados no próprio repositório (ex: <code>V1__init.sql</code>), garantindo que o esquema acompanhe exatamente a versão do código-fonte.</p>
 </li>
 <li>
-<p><strong>Automação:</strong> O Flyway se integra nativamente ao Spring Boot (<abbr title="Architecture Decision Record — Registro de Decisão Arquitetural">ADR</abbr> 0005), executando as migrações automaticamente no momento em que a aplicação "sobe", sem necessidade de intervenção humana (Zero-downtime migrations se bem planejadas).</p>
-<ul>
-<li><strong>Nota Arquitetural (<abbr title="Implantação (Colocar o sistema no ar)">Deploy</abbr> <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run):</strong> Para evitar "drift" entre as versões de entidades do Hibernate e o banco na <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run — o que causa falhas fatais (<code>SchemaManagementException</code>) no ambiente serverless —, as migrações não são aplicadas por Jobs paralelos, mas sim de forma <em>embutida</em> no ciclo de vida do Spring Boot ativando a variável <code>SPRING_FLYWAY_ENABLED=true</code> durante o <em>Terraform apply</em>.</li>
-</ul>
+<p><strong>Automação controlada:</strong> O Flyway se integra ao Spring Boot, mas em produção a <abbr title="Application Programming Interface — Interface de Programação de Aplicação">API</abbr> inicia com <code>SPRING_FLYWAY_ENABLED=false</code>. A pipeline atualiza e executa um <strong><abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run Job</strong> de migração antes de liberar a nova revisão da <abbr title="Application Programming Interface — Interface de Programação de Aplicação">API</abbr>, evitando concorrência durante o autoscaling.</p>
 </li>
 <li>
 <p><strong>Rastreabilidade:</strong> Cria uma tabela de histórico automática no PostgreSQL, permitindo saber exatamente quando cada migração foi aplicada.</p>
@@ -10321,6 +10378,12 @@ Além disso, o sistema conta com um módulo de Auditoria que exige um histórico
 <td style="text-align: center;"><code>1.3</code></td>
 <td style="text-align: center;">11/07/2026</td>
 <td style="text-align: left;">Adicionada nota sobre a inicialização embutida com o <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run</td>
+<td style="text-align: left;">Pedro Henrique P. Santos</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>1.4</code></td>
+<td style="text-align: center;">13/07/2026</td>
+<td style="text-align: left;">Corrigido o fluxo: migrações executadas por <abbr title="Nuvem (Infraestrutura remota)">Cloud</abbr> Run Job antes do rollout</td>
 <td style="text-align: left;">Pedro Henrique P. Santos</td>
 </tr>
 </tbody>
@@ -10625,7 +10688,7 @@ Hospedar arquivos estáticos em instâncias de contêiner ou máquinas virtuais 
 <li>O dump comprimido é salvo em um <strong>bucket <abbr title="Google Cloud Storage">GCS</abbr> dedicado</strong> (<code>edtech-backups-&lt;PROJECT_ID&gt;</code>), separado do bucket de arquivos de usuário.</li>
 <li>Uma <strong>lifecycle policy</strong> no bucket deleta automaticamente backups com mais de 30 dias.</li>
 </ul>
-<p>Todo o provisionamento é realizado pelo script <code>infra/setup_backup.sh</code>, executado uma única vez por um usuário com as permissões IAM adequadas.</p>
+<p>Todo o provisionamento é realizado pelo script <code>infra/terraform/setup_backup.sh</code>, executado uma única vez por um usuário com as permissões IAM adequadas.</p>
 <h2 id="arquitetura-decisoes_adrs-0013-backup-automatico-consequencias">Consequências<a class="headerlink" href="#arquitetura-decisoes_adrs-0013-backup-automatico-consequencias" title="Permanent link">¶</a></h2>
 <h3 id="arquitetura-decisoes_adrs-0013-backup-automatico-positivas">Positivas<a class="headerlink" href="#arquitetura-decisoes_adrs-0013-backup-automatico-positivas" title="Permanent link">¶</a></h3>
 <ul>
@@ -11087,7 +11150,7 @@ Refs: #numero-da-issue
 <tr>
 <td style="text-align: left;"><strong>S8:</strong> Platform Engineering, Segurança Adicional e IaC</td>
 <td style="text-align: center;">04/07</td>
-<td style="text-align: center;"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 2.03v2.02c4.39.54 7.5 4.53 6.96 8.92-.46 3.64-3.32 6.53-6.96 6.96v2c5.5-.55 9.5-5.43 8.95-10.93-.45-4.75-4.22-8.5-8.95-8.97m-2 .03c-1.95.19-3.81.94-5.33 2.2L7.1 5.74c1.12-.9 2.47-1.48 3.9-1.68zM4.26 5.67A9.9 9.9 0 0 0 2.05 11h2c.19-1.42.75-2.77 1.64-3.9zM2.06 13c.2 1.96.97 3.81 2.21 5.33l1.42-1.43A8 8 0 0 1 4.06 13zm5.04 5.37-1.43 1.37A10 10 0 0 0 11 22v-2a8 8 0 0 1-3.9-1.63M12.5 7v5.25l4.5 2.67-.75 1.23L11 13V7z"></path></svg></span> Em andamento</td>
+<td style="text-align: center;"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2m-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8z"></path></svg></span> Concluída</td>
 </tr>
 </tbody>
 </table>
