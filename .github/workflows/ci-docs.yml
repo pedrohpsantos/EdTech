@@ -11,6 +11,7 @@ on:
       - '.github/workflows/ci-docs.yml'
       - 'backend/**'
       - 'frontend/**'
+      - 'tests/api-contract/**'
   workflow_dispatch:
 
 permissions:
@@ -31,7 +32,7 @@ jobs:
         # frontend       = Vitest + Allure smoke test report
         # performance    = K6 load test report
         # lighthouse     = Auditoria UX/SEO/Performance
-        report-type: [backend-jacoco, backend-pitest, frontend, performance, lighthouse]
+        report-type: [backend-jacoco, backend-pitest, frontend, performance, api-security-contract, lighthouse]
     steps:
       - name: Checkout do codigo
         uses: actions/checkout@v7
@@ -289,6 +290,31 @@ jobs:
           name: performance-reports
           path: reports/
 
+      # ==========================
+      # API SECURITY CONTRACT
+      # ==========================
+      - name: Run API security contract
+        if: matrix.report-type == 'api-security-contract'
+        env:
+          API_URL: 'https://edtech-backend-shv6qbpf4q-rj.a.run.app'
+        run: node tests/api-contract/production-security-contract.mjs
+
+      - name: Prepare API security contract report
+        if: matrix.report-type == 'api-security-contract'
+        run: |
+          test -f tests/api-contract/reports/index.html
+          test -f tests/api-contract/reports/production-security-contract.json
+          mkdir -p reports/api-security
+          cp -r tests/api-contract/reports/. reports/api-security/
+
+      - name: Upload API security contract report
+        if: matrix.report-type == 'api-security-contract'
+        uses: actions/upload-artifact@v7
+        with:
+          name: api-security-contract-reports
+          path: reports/
+          if-no-files-found: error
+
   deploy-mkdocs:
     runs-on: ubuntu-latest
     needs: [generate-reports]
@@ -352,6 +378,12 @@ jobs:
         continue-on-error: true
         with:
           name: performance-reports
+          path: docs/
+
+      - name: Download API security contract report
+        uses: actions/download-artifact@v7
+        with:
+          name: api-security-contract-reports
           path: docs/
 
       - name: Verificar links quebrados (Strict Build)

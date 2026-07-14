@@ -1,8 +1,8 @@
 ---
-title: 'ADR 0005: Framework Backend (Spring Boot + Java 17)'
+title: 'ADR 0005: Framework Backend (Spring Boot + Java 21)'
 ---
 
-# :material-text-box-check: ADR 0005: Framework Backend (Spring Boot + Java 17)
+# :material-text-box-check: ADR 0005: Framework Backend (Spring Boot + Java 21)
 
 ## Status
 
@@ -14,7 +14,7 @@ A plataforma necessita de uma fundação sólida, segura (para gerenciamento de 
 
 ## Decisão
 
-Optamos por utilizar **Java 17** com **Spring Boot 3**.
+Optamos por utilizar **Java 21** com **Spring Boot 3**.
 
 ## Consequências
 

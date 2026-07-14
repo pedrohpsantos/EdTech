@@ -4,19 +4,28 @@ title: 'AppSec e Segurança'
 
 # :material-shield-lock: AppSec e Segurança
 
-A proteção do EdTech gira em torno de duas engrenagens centrais: Autenticação Restrita (JWT via Bearer Token) e Log de Auditoria irrefutável.
+A proteção do EdTech combina sessão JWT em cookie seguro, autorização por papel,
+validação de uploads e uma trilha de auditoria imutável.
 
 ## 1. Segurança de Sessão (JWT)
 
 A aplicação não armazena sessão em banco ou memória do servidor (`STATELESS`).
 
 ### Confinamento do Token
-Para manter a compatibilidade entre diferentes domínios da infraestrutura (Frontend no Firebase e Backend no Cloud Run), adotamos o uso de tokens enviados via cabeçalho `Authorization: Bearer <token>`. O Frontend armazena o token no `LocalStorage`.
 
-Para mitigar a vulnerabilidade de XSS (Cross-Site Scripting) inerente a armazenamentos acessíveis por JavaScript, aplicamos as seguintes defesas complementares:
+O backend entrega o JWT no cookie `jwt`, com `HttpOnly`, `Secure` e
+`SameSite=Strict`; o cliente Axios usa `withCredentials`. Assim, o token de
+sessão não fica em `localStorage` nem pode ser lido por JavaScript. O filtro de
+autenticação mantém compatibilidade com `Authorization: Bearer` para clientes
+não navegadores, mas a SPA não depende desse cabeçalho.
+
+As defesas complementares são:
 - **Sanitização de Inputs e Outputs:** Utilização de frameworks (React) que realizam escape automático de dados antes da renderização.
-- **Isolamento de Domínio (CORS):** Política restrita de CORS para impedir que scripts de origens desconhecidas interajam com a API, bloqueando exfiltração de dados caso um script malicioso consiga ser injetado.
-- **Fim do Risco de CSRF:** Por não utilizar o mecanismo padrão de Cookies do navegador, a vulnerabilidade de CSRF (Cross-Site Request Forgery) é organicamente neutralizada (browsers não anexam localStorage automaticamente nas requisições).
+- **Isolamento de Domínio (CORS):** Política restrita à origem configurada e
+  requisições com credenciais explicitamente permitidas.
+- **CSRF:** A API é stateless e ignora o filtro CSRF; por isso, alterações de
+  origem, cookies e rotas mutáveis devem ser revisadas junto com a configuração
+  de CORS e os testes de contrato de segurança.
 
 ## 2. Controle de Acesso Baseado em Papéis (RBAC)
 
@@ -44,8 +53,8 @@ sequenceDiagram
     S->>S: Valida Hash no Banco
     S->>J: Solicita Geração de Token
     J-->>S: Retorna Token Assinado
-    S-->>L: Retorna Token no Corpo (JSON)
-    L->>L: Salva Token no LocalStorage
+    S-->>L: Envia cookie jwt HttpOnly e Secure
+    L->>L: Mantém sessão com withCredentials
     L-->>U: Redireciona para Dashboard
 ```
 
@@ -75,7 +84,7 @@ flowchart LR
 
     subgraph Controles["Controles"]
         WAF["WAF"]
-        JWT["JWT (Bearer)"]
+    JWT["JWT em cookie HttpOnly"]
         VAL["Validação de Input"]
         LOG["Logs Imutáveis"]
     end

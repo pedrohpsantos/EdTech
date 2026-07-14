@@ -133,7 +133,7 @@ Todos os commits devem seguir rigorosamente a especificação do **Conventional 
 | **S5:** Painel Concluído & Auditoria Integrada | 13/06 | :material-check-circle:{ .green } Concluído |
 | **S6:** Bateria de Testes e2e & Integrações ML | 20/06 | :material-check-circle:{ .green } Concluído |
 | **S7:** Homologação Final e Deploy de Produção | 27/06 | :material-check-circle:{ .green } Concluído |
-| **S8:** Platform Engineering, Segurança Adicional e IaC | 04/07 | :material-progress-clock: Em andamento |
+| **S8:** Platform Engineering, Segurança Adicional e IaC | 04/07 | :material-check-circle: Concluída |
 
 
 ---
