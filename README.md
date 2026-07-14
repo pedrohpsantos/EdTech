@@ -14,6 +14,8 @@
 ![Spring Boot](https://img.shields.io/badge/Spring_Boot-6DB33F?logo=springboot&logoColor=white)
 ![Google Cloud](https://img.shields.io/badge/Google_Cloud-4285F4?logo=googlecloud&logoColor=white)
 
+## Visão geral
+
 O **EdTech** centraliza a submissão, revisão, armazenamento e auditoria de documentos e datasets acadêmicos. A plataforma atende Pesquisadores, Orientadores e Auditores com rastreabilidade, autorização por perfil e trilha de auditoria.
 
 > **Documentação oficial:** [pedrohpsantos.github.io/EdTech](https://pedrohpsantos.github.io/EdTech/)
@@ -39,7 +41,7 @@ O **EdTech** centraliza a submissão, revisão, armazenamento e auditoria de doc
 | Scripts | Verificação de backup e carga de contas demo locais. | [scripts/README.md](scripts/README.md) |
 | Postman | Coleção manual da API. | [.postman/README.md](.postman/README.md) |
 
-## Início rápido local
+## Comece aqui
 
 Pré-requisitos: Docker Desktop com Docker Compose.
 
@@ -59,7 +61,7 @@ docker compose --env-file infra/dev/.env -f infra/dev/docker-compose.yml up --bu
 
 Para encerrar: `docker compose --env-file infra/dev/.env -f infra/dev/docker-compose.yml down`.
 
-## Qualidade e entrega
+## Validação e entrega
 
 `main` publica produção e `develop` publica staging. A CI valida backend, frontend e infraestrutura em paralelo; após o deploy, executa testes de produção conforme suas dependências:
 
@@ -72,7 +74,7 @@ Os relatórios são disponibilizados como artefatos da execução. Veja o fluxo 
 
 O projeto não usa uma única métrica como selo de qualidade. JaCoCo mostra alcance do backend; PIT e Stryker testam a força das asserções; Playwright/Allure percorrem jornadas essenciais; k6 observa a API sob carga; Lighthouse acompanha a experiência da primeira visita. Os relatórios publicados transformam cada entrega em uma conversa objetiva sobre comportamento, segurança e desempenho.
 
-## Contribuição
+## Referências e contribuição
 
 1. Crie uma branch a partir de `develop`.
 2. Execute as validações do módulo alterado.

@@ -1,8 +1,10 @@
-# Testes externos e qualidade
-
-Este diretório contém verificações que exercitam a aplicação fora dos módulos de código. Testes unitários, cobertura e mutação do backend/frontend permanecem nos próprios módulos e são executados pela CI.
+# Testes e qualidade — EdTech
 
 > Cada verificação aqui existe para tornar confiança uma evidência, não uma impressão.
+
+## Visão geral
+
+Este diretório contém verificações que exercitam a aplicação fora dos módulos de código. Testes unitários, cobertura e mutação do backend/frontend permanecem nos próprios módulos e são executados pela CI.
 
 ## Leitura rápida dos sinais
 
@@ -20,7 +22,7 @@ Este diretório contém verificações que exercitam a aplicação fora dos mód
 | `api-contract/` | Node.js | Contrato read-only de segurança HTTP da API | JSON e HTML |
 | `lighthouse/` | Lighthouse CI | Performance web, acessibilidade, boas práticas e SEO | relatório Lighthouse |
 
-## E2E local
+## Comece aqui
 
 Pré-requisitos: Node.js 24, frontend e backend acessíveis localmente.
 
@@ -55,8 +57,14 @@ k6 run load-test.js
 
 O Lighthouse usa `tests/lighthouse/lighthouserc.json` e é executado pela pipeline contra a URL publicada.
 
-## Diretrizes
+## Validação e diretrizes
 
 - Evite cenários que dependam de massa de dados real de produção.
 - Cada suíte deve ter escopo próprio; não duplique uma jornada E2E como teste de carga ou contrato.
 - Gere relatórios determinísticos e publique-os como artefatos quando a suíte rodar na CI.
+
+## Referências
+
+- [Frontend](../frontend/README.md)
+- [Backend](../backend/README.md)
+- [Pipelines](../.github/PIPELINES.md)

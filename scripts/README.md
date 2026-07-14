@@ -1,8 +1,14 @@
-# Scripts operacionais
+# Scripts operacionais — EdTech
+
+> Ferramentas pequenas, operações conscientes e resultados auditáveis.
+
+## Visão geral
 
 Scripts de suporte administrativo e de desenvolvimento. Eles não participam do fluxo da aplicação em tempo de execução.
 
-> Ferramentas pequenas, operações conscientes e resultados auditáveis.
+## Comece aqui
+
+Use Python 3.11+ e `uv`; execute cada comando a partir da raiz do repositório e somente no ambiente indicado.
 
 ## `backup_status.py`
 
@@ -31,8 +37,14 @@ python scripts/populate_demo.py
 
 Antes, ajuste os parâmetros de conexão do próprio script para o banco local em uso. Para uma carga mais completa, prefira o seeder da aplicação quando disponível.
 
-## Diretrizes
+## Validação e segurança
 
 - Não grave segredos, tokens ou dados pessoais em saídas/arquivos de relatório.
 - Scripts operacionais de produção devem ser idempotentes, documentados e executados com a menor permissão possível.
 - Não adicione acessos de escrita a dados publicados sem aprovação explícita e trilha de auditoria.
+
+## Referências
+
+- [Infraestrutura](../infra/README.md)
+- [Documentação](../docs/README.md)
+- [Pipelines](../.github/PIPELINES.md)

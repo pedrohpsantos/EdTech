@@ -1,8 +1,12 @@
-# Pipelines do EdTech
+# Pipelines — EdTech
+
+> Entregas previsíveis: validar, publicar, observar e só então promover.
+
+## Visão geral
 
 Este diretório contém políticas, templates e automações GitHub Actions. Os workflows estão em `.github/workflows/`.
 
-## Workflows
+## Estrutura
 
 | Workflow | Gatilho | Responsabilidade |
 | --- | --- | --- |
@@ -10,7 +14,7 @@ Este diretório contém políticas, templates e automações GitHub Actions. Os 
 | `ci-docs.yml` | mudanças relevantes na `main` | build/publicação do portal MkDocs e relatórios |
 | CodeQL | conforme configuração em `workflows/` | análise de segurança estática |
 
-## Fluxo de `ci.yml`
+## Comece aqui
 
 ```mermaid
 flowchart LR
@@ -57,7 +61,7 @@ Backend e frontend são independentes e fazem deploy em paralelo. Cada matriz de
 
 Essa separação evita que k6 e o contrato de API aguardem o frontend, enquanto E2E e Lighthouse só começam quando a aplicação completa está disponível.
 
-## Concorrência e relatórios
+## Validação, concorrência e relatórios
 
 - Execuções concorrentes da mesma branch são canceladas em favor do commit mais recente.
 - Deploys têm grupos de concorrência próprios por domínio/ambiente para evitar disputa do state Terraform e releases sobrepostas.
@@ -67,6 +71,6 @@ Essa separação evita que k6 e o contrato de API aguardem o frontend, enquanto 
 
 O workflow usa Workload Identity Federation (OIDC) para autenticação GCP, sem chave JSON estática de deploy. Não imprima, versione ou replique valores de segredo; os jobs autenticados precisam de `id-token: write` e a identidade deve permanecer limitada ao repositório autorizado.
 
-## Contribuição
+## Referências e contribuição
 
 Mudanças em workflows exigem validação YAML e revisão cuidadosa de dependências, condições de branch, permissões e caminhos de artefato. Consulte também [CONTRIBUTING.md](CONTRIBUTING.md) e [SECURITY.md](SECURITY.md).
