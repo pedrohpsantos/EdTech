@@ -15,7 +15,7 @@ Este diretório (`/infra`) contém a configuração de infraestrutura do EdTech 
 | `dev/.env.example` | Template das variáveis de ambiente necessárias (nunca commitar o `.env` real) |
 | `database/schema.sql` | Schema SQL de referência do banco de dados |
 | `prod/docker-compose.prod.yml`| Configuração docker para teste ou deploy do ambiente produtivo |
-| `prod/cloudbuild.yaml` | Pipeline de build e deploy para o Google Cloud Build |
+| `prod/cloudbuild.yaml` | Configuração legada do Cloud Build; o deploy atual é feito por GitHub Actions |
 | `terraform/setup_backup.sh` | Script de provisionamento do backup automático diário no GCS via Cloud Scheduler |
 | `terraform/` | Módulos Terraform parametrizados para Cloud Run, Cloud SQL e Cloud Storage |
 
@@ -107,4 +107,4 @@ bash infra/terraform/setup_backup.sh
 
 ```
 
-Detalhes da política de backup estão documentados no [ADR-0013](https://www.google.com/search?q=../docs/arquitetura/decisoes_adrs/0013-backup-automatico.md).
+Detalhes da política de backup estão documentados no [ADR-0013](../docs/arquitetura/decisoes_adrs/0013-backup-automatico.md).

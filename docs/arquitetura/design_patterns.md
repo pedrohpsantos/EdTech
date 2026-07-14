@@ -24,7 +24,10 @@ public interface StorageService {
 ```
 
 **Implementações Concretas:**
-Temos o `GcsStorageServiceImpl` e o `LocalStorageServiceImpl`. O Spring Boot injeta a implementação correta com base no ambiente ativo (via propriedades e perfis `dev`/`prod`). O nosso contexto base (`DocumentService`) faz uso do serviço genericamente:
+Temos o `GcsStorageServiceImpl` e o `LocalStorageServiceImpl`. O Spring Boot
+injeta a implementação correta conforme a configuração de armazenamento; em
+produção, o provedor é GCS. O contexto base (`DocumentService`) usa o contrato
+abstrato:
 ```java
 // Trecho de DocumentService.java
 private final StorageService storageService; // Injetado automaticamente

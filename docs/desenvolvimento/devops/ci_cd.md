@@ -13,9 +13,9 @@ Toda abertura de um `Pull Request` ou envio para a branch `develop` engatilha no
 Existem fluxos independentes:
 
 
-1. **Unified CI/CD (`ci.yml`)**: Compila o código Java, roda todos os testes unitários (`mvn verify`), roda lint/build/test no Frontend, e faz o deploy de ambos para Produção caso a branch seja a `main`.
+1. **Unified CI/CD (`ci.yml`)**: Compila e valida backend, frontend e Terraform. `develop` publica staging; `main` publica produção. O rollout do backend atualiza o Job Flyway, executa as migrações e somente então atualiza a revisão do Cloud Run.
 
-2. **Docs CI (`ci-docs.yml`)**: Publica automaticamente esta documentação (MkDocs) para o GitHub Pages. Disparada em alterações na `main` dentro da pasta `docs/` ou em modificações no backend que afetem relatórios de cobertura.
+2. **Docs CI (`ci-docs.yml`)**: Publica automaticamente o portal MkDocs e seus relatórios HTML no GitHub Pages. Além de mudanças em documentação e código, reage ao contrato de segurança da API para manter o relatório publicado atualizado.
 
 ## Regras de Proteção
 
@@ -31,7 +31,7 @@ De acordo com o ADR 0003, o deploy das partes ativas do sistema ocorre de forma 
 
 ### Frontend
 - **Provedor**: Firebase Hosting
-- **Gatilho**: Job de deploy no GitHub Actions após sucesso nos testes, autenticado por secrets do repositório.
+- **Gatilho**: Job de deploy no GitHub Actions após sucesso nos testes, autenticado via Workload Identity Federation (OIDC).
 
 ### Backend
 - **Provedor**: Google Cloud Run
@@ -52,5 +52,6 @@ De acordo com o ADR 0003, o deploy das partes ativas do sistema ocorre de forma 
 | `1.1` | 13/06/2026 | Revisão técnica e reestruturação da documentação | Pedro Henrique P. Santos |
 | `1.2` | 04/07/2026 | Revisão profunda, correção de metadados e melhorias visuais | Pedro Henrique P. Santos |
 | `1.3` | 09/07/2026 | Atualização do deploy para infraestrutura parametrizada com Terraform | Pedro Henrique P. Santos |
+| `1.4` | 13/07/2026 | Atualizados ambientes, OIDC, Job Flyway e publicação de relatórios | Pedro Henrique P. Santos |
 
 

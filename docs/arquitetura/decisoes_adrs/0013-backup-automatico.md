@@ -21,7 +21,7 @@ Adotamos a estratégia de **Cloud SQL Export + Cloud Scheduler**, inteiramente n
 - O dump comprimido é salvo em um **bucket GCS dedicado** (`edtech-backups-<PROJECT_ID>`), separado do bucket de arquivos de usuário.
 - Uma **lifecycle policy** no bucket deleta automaticamente backups com mais de 30 dias.
 
-Todo o provisionamento é realizado pelo script `infra/setup_backup.sh`, executado uma única vez por um usuário com as permissões IAM adequadas.
+Todo o provisionamento é realizado pelo script `infra/terraform/setup_backup.sh`, executado uma única vez por um usuário com as permissões IAM adequadas.
 
 ## Consequências
 
