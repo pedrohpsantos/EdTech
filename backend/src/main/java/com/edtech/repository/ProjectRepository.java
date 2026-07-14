@@ -15,7 +15,9 @@ public interface ProjectRepository extends JpaRepository<Project, UUID> {
   org.springframework.data.domain.Page<Project> findProjectsByUserId(
       @Param("userId") UUID userId, org.springframework.data.domain.Pageable pageable);
 
-  @Query("SELECT p FROM Project p WHERE p.advisor.institutionId = :institutionId")
+  @Query(
+      "SELECT p FROM Project p WHERE p.advisor.institutionId = :institutionId")
   org.springframework.data.domain.Page<Project> findProjectsByInstitutionId(
-      @Param("institutionId") UUID institutionId, org.springframework.data.domain.Pageable pageable);
+      @Param("institutionId") UUID institutionId,
+      org.springframework.data.domain.Pageable pageable);
 }
