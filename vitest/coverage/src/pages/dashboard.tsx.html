@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">95% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>38/38</span>
+                <span class='fraction'>38/40</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">92.1% </span>
+                <span class="strong">92.5% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>70/76</span>
+                <span class='fraction'>74/80</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">90% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>18/18</span>
+                <span class='fraction'>18/20</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">94.73% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>36/36</span>
+                <span class='fraction'>36/38</span>
             </div>
         
             
@@ -1041,7 +1041,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1104,7 +1104,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1637,7 +1637,7 @@ const Dashboard: React.FC = () =&gt; {
               &lt;/span&gt;
             &lt;/div&gt;
           &lt;/div&gt;
-          &lt;button className="btn-alert text-nowrap flex-shrink-0 mt-3 mt-md-0 w-100 w-md-auto" style={{ background: 'white', color: '#dc2626', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', border: 'none', padding: '8px 20px', borderRadius: '8px', fontWeight: 600, cursor: 'pointer' }} onClick={() =&gt; navigate('/compliance-center')}&gt;
+          &lt;button className="btn-alert text-nowrap flex-shrink-0 mt-3 mt-md-0" style={{ background: 'white', color: '#dc2626', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', border: 'none', padding: '8px 20px', borderRadius: '8px', fontWeight: 600, cursor: 'pointer' }} onClick={() =&gt; navigate('/compliance-center')}&gt;
             &lt;i className="bi bi-arrow-right-short" style={{ fontSize: '18px', marginRight: '4px' }}&gt;&lt;/i&gt; Investigar
           &lt;/button&gt;
         &lt;/div&gt;
@@ -1653,13 +1653,13 @@ const Dashboard: React.FC = () =&gt; {
                 {user?.role === 'RESEARCHER'
                   ? 'Envie seu primeiro documento para iniciar a trilha de pesquisa e as métricas do painel.'
                   : user?.role === 'ADVISOR'
-                    ? 'Associe-se a um projeto para acompanhar submissões e orientar pesquisadores.'
+                    ? 'Acompanhe as submissões da sua equipe e conduza as próximas revisões.'
                     : 'Consulte os logs de auditoria para acompanhar eventos e indicadores de conformidade.'}
               &lt;/span&gt;
             &lt;/div&gt;
           &lt;/div&gt;
-          &lt;button className="btn-alert text-nowrap flex-shrink-0 mt-3 mt-md-0 w-100 w-md-auto" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', border: 'none', padding: '8px 20px', borderRadius: '8px', fontWeight: 600, cursor: 'pointer', background: 'var(--ed-purple-main)', color: 'white' }} onClick={() =&gt; navigate(user?.role === 'RESEARCHER' ? <span class="branch-0 cbranch-no" title="branch not covered" >'/documentos' : u</span>ser?.role === 'ADVISOR' ? '/projects' : <span class="branch-1 cbranch-no" title="branch not covered" >'/audit-logs')</span>}&gt;
-            Começar &lt;i className="bi bi-arrow-right-short" style={{ fontSize: '18px', marginLeft: '4px' }}&gt;&lt;/i&gt;
+          &lt;button className="btn-alert governance-primary-action" onClick={() =&gt; navigate(user?.role === 'RESEARCHER' ? <span class="branch-0 cbranch-no" title="branch not covered" >'/upload' : u</span>ser?.role === 'ADVISOR' ? '/submissions' : <span class="branch-1 cbranch-no" title="branch not covered" >'/audit-logs')</span>}&gt;
+            {user?.role === 'RESEARCHER' ? 'Enviar documento' : user?.role === 'ADVISOR' ? 'Abrir fila de revisão' : 'Ver auditoria'} &lt;i className="bi bi-arrow-right-short" style={{ fontSize: '18px', marginLeft: '4px' }}&gt;&lt;/i&gt;
           &lt;/button&gt;
         &lt;/div&gt;
       )}
@@ -1672,7 +1672,7 @@ const Dashboard: React.FC = () =&gt; {
             &lt;div className="dashboard-card h-100 mb-0"&gt;
               &lt;div className="card-header-flex"&gt;
                 &lt;h3 className="card-title"&gt;Minhas Submissões Recentes&lt;/h3&gt;
-                &lt;span className="card-action-link" style={{ color: 'var(--ed-purple-light)', cursor: 'pointer', fontSize: '13px', fontWeight: 500 }}&gt;Ver histórico&lt;/span&gt;
+                &lt;button className="card-action-link" <span class="fstat-no" title="function not covered" >onClick={() =&gt; <span class="cstat-no" title="statement not covered" >n</span>avigate('/documentos')}&gt;V</span>er histórico&lt;/button&gt;
               &lt;/div&gt;
               &lt;div className="doc-list"&gt;
                 {recentDocs.length &gt; 0 ? recentDocs.map((doc: any, i) =&gt; (
@@ -1735,7 +1735,7 @@ const Dashboard: React.FC = () =&gt; {
             &lt;div className="dashboard-card h-100 mb-0"&gt;
               &lt;div className="card-header-flex"&gt;
                 &lt;h3 className="card-title"&gt;Revisões Pendentes&lt;/h3&gt;
-                &lt;span className="card-action-link" style={{ color: 'var(--ed-purple-light)', cursor: 'pointer', fontSize: '13px', fontWeight: 500 }}&gt;Ver todas&lt;/span&gt;
+                &lt;button className="card-action-link" <span class="fstat-no" title="function not covered" >onClick={() =&gt; <span class="cstat-no" title="statement not covered" >n</span>avigate('/submissions')}&gt;V</span>er todas&lt;/button&gt;
               &lt;/div&gt;
               &lt;div className="doc-list"&gt;
                 {recentDocs.length &gt; 0 ? recentDocs.map((doc: any, i) =&gt; (
@@ -1963,7 +1963,7 @@ export default Dashboard;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-07-14T03:46:52.334Z
+                at 2026-07-14T05:06:58.407Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

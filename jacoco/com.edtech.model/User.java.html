@@ -66,116 +66,131 @@ public class User {
   @Column(name = &quot;mfa_secret&quot;, length = 32)
   private String mfaSecret;
 
-<span class="fc" id="L69">  protected User() {}</span>
+  @Column(name = &quot;avatar_url&quot;, columnDefinition = &quot;TEXT&quot;)
+  private String avatarUrl;
+
+<span class="fc" id="L72">  protected User() {}</span>
 
   /** Documentação para o método User. */
-<span class="fc" id="L72">  public User(String name, String email, String passwordHash, UserRole role, UUID institutionId) {</span>
-<span class="fc" id="L73">    this.name = name;</span>
-<span class="fc" id="L74">    this.email = email;</span>
-<span class="fc" id="L75">    this.passwordHash = passwordHash;</span>
-<span class="fc" id="L76">    this.role = role;</span>
-<span class="fc" id="L77">    this.institutionId = institutionId;</span>
-<span class="fc" id="L78">  }</span>
+<span class="fc" id="L75">  public User(String name, String email, String passwordHash, UserRole role, UUID institutionId) {</span>
+<span class="fc" id="L76">    this.name = name;</span>
+<span class="fc" id="L77">    this.email = email;</span>
+<span class="fc" id="L78">    this.passwordHash = passwordHash;</span>
+<span class="fc" id="L79">    this.role = role;</span>
+<span class="fc" id="L80">    this.institutionId = institutionId;</span>
+<span class="fc" id="L81">  }</span>
 
   @PrePersist
   void prePersist() {
-<span class="fc" id="L82">    Instant now = Instant.now();</span>
-<span class="fc" id="L83">    createdAt = now;</span>
-<span class="fc" id="L84">    updatedAt = now;</span>
-<span class="fc" id="L85">  }</span>
+<span class="fc" id="L85">    Instant now = Instant.now();</span>
+<span class="fc" id="L86">    createdAt = now;</span>
+<span class="fc" id="L87">    updatedAt = now;</span>
+<span class="fc" id="L88">  }</span>
 
   @PreUpdate
   void preUpdate() {
-<span class="fc" id="L89">    updatedAt = Instant.now();</span>
-<span class="fc" id="L90">  }</span>
+<span class="fc" id="L92">    updatedAt = Instant.now();</span>
+<span class="fc" id="L93">  }</span>
 
   /** Documentação para o método getId. */
   public UUID getId() {
-<span class="fc" id="L94">    return id;</span>
+<span class="fc" id="L97">    return id;</span>
   }
 
   /** Documentação para o método getInstitutionId. */
   public UUID getInstitutionId() {
-<span class="fc" id="L99">    return institutionId;</span>
+<span class="fc" id="L102">    return institutionId;</span>
   }
 
   /** Documentação para o método setInstitutionId. */
   public void setInstitutionId(UUID institutionId) {
-<span class="fc" id="L104">    this.institutionId = institutionId;</span>
-<span class="fc" id="L105">  }</span>
+<span class="fc" id="L107">    this.institutionId = institutionId;</span>
+<span class="fc" id="L108">  }</span>
 
   /** Documentação para o método getName. */
   public String getName() {
-<span class="fc" id="L109">    return name;</span>
+<span class="fc" id="L112">    return name;</span>
   }
+
+  public void setName(String name) {
+<span class="nc" id="L116">    this.name = name;</span>
+<span class="nc" id="L117">  }</span>
 
   /** Documentação para o método getEmail. */
   public String getEmail() {
-<span class="fc" id="L114">    return email;</span>
+<span class="fc" id="L121">    return email;</span>
   }
 
   /** Documentação para o método getPasswordHash. */
   public String getPasswordHash() {
-<span class="fc" id="L119">    return passwordHash;</span>
+<span class="fc" id="L126">    return passwordHash;</span>
   }
 
   /** Documentação para o método setPasswordHash. */
   public void setPasswordHash(String passwordHash) {
-<span class="fc" id="L124">    this.passwordHash = passwordHash;</span>
-<span class="fc" id="L125">  }</span>
+<span class="fc" id="L131">    this.passwordHash = passwordHash;</span>
+<span class="fc" id="L132">  }</span>
 
   /** Documentação para o método getRole. */
   public UserRole getRole() {
-<span class="fc" id="L129">    return role;</span>
+<span class="fc" id="L136">    return role;</span>
   }
 
   /** Documentação para o método setRole. */
   public void setRole(UserRole role) {
-<span class="fc" id="L134">    this.role = role;</span>
-<span class="fc" id="L135">  }</span>
+<span class="fc" id="L141">    this.role = role;</span>
+<span class="fc" id="L142">  }</span>
 
   /** Documentação para o método isActive. */
   public boolean isActive() {
-<span class="fc" id="L139">    return active;</span>
+<span class="fc" id="L146">    return active;</span>
   }
 
   /** Documentação para o método setActive. */
   public void setActive(boolean active) {
-<span class="fc" id="L144">    this.active = active;</span>
-<span class="fc" id="L145">  }</span>
+<span class="fc" id="L151">    this.active = active;</span>
+<span class="fc" id="L152">  }</span>
 
   /** Documentação para o método getCreatedAt. */
   public Instant getCreatedAt() {
-<span class="fc" id="L149">    return createdAt;</span>
+<span class="fc" id="L156">    return createdAt;</span>
   }
 
   /** Documentação para o método getUpdatedAt. */
   public Instant getUpdatedAt() {
-<span class="nc" id="L154">    return updatedAt;</span>
+<span class="nc" id="L161">    return updatedAt;</span>
   }
 
   public boolean isDeleted() {
-<span class="nc" id="L158">    return deleted;</span>
+<span class="nc" id="L165">    return deleted;</span>
   }
 
   public void setDeleted(boolean deleted) {
-<span class="nc" id="L162">    this.deleted = deleted;</span>
-<span class="nc" id="L163">  }</span>
+<span class="nc" id="L169">    this.deleted = deleted;</span>
+<span class="nc" id="L170">  }</span>
 
   public boolean isMfaEnabled() {
-<span class="fc" id="L166">    return mfaEnabled;</span>
+<span class="fc" id="L173">    return mfaEnabled;</span>
   }
 
   public void setMfaEnabled(boolean mfaEnabled) {
-<span class="fc" id="L170">    this.mfaEnabled = mfaEnabled;</span>
-<span class="fc" id="L171">  }</span>
+<span class="fc" id="L177">    this.mfaEnabled = mfaEnabled;</span>
+<span class="fc" id="L178">  }</span>
 
   public String getMfaSecret() {
-<span class="fc" id="L174">    return mfaSecret;</span>
+<span class="fc" id="L181">    return mfaSecret;</span>
   }
 
   public void setMfaSecret(String mfaSecret) {
-<span class="fc" id="L178">    this.mfaSecret = mfaSecret;</span>
-<span class="fc" id="L179">  }</span>
+<span class="fc" id="L185">    this.mfaSecret = mfaSecret;</span>
+<span class="fc" id="L186">  }</span>
+
+  public String getAvatarUrl() {
+<span class="fc" id="L189">    return avatarUrl;</span>
+  }
+
+  public void setAvatarUrl(String avatarUrl) {
+<span class="nc" id="L193">    this.avatarUrl = avatarUrl;</span>
+<span class="nc" id="L194">  }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

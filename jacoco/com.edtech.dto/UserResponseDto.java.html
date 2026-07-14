@@ -13,19 +13,21 @@ import java.util.UUID;
     boolean active,
     Instant createdAt,
     boolean mfaEnabled,
-    UUID institutionId) {
+    UUID institutionId,
+    String avatarUrl) {
 
   /** Documentação para o método from. */
   public static UserResponseDto from(User user) {
-<span class="fc" id="L20">    return new UserResponseDto(</span>
-<span class="fc" id="L21">        user.getId(),</span>
-<span class="fc" id="L22">        user.getName(),</span>
-<span class="fc" id="L23">        user.getEmail(),</span>
-<span class="fc" id="L24">        user.getRole().name(),</span>
-<span class="fc" id="L25">        user.isActive(),</span>
-<span class="fc" id="L26">        user.getCreatedAt(),</span>
-<span class="fc" id="L27">        user.isMfaEnabled(),</span>
-<span class="fc" id="L28">        user.getInstitutionId());</span>
+<span class="fc" id="L21">    return new UserResponseDto(</span>
+<span class="fc" id="L22">        user.getId(),</span>
+<span class="fc" id="L23">        user.getName(),</span>
+<span class="fc" id="L24">        user.getEmail(),</span>
+<span class="fc" id="L25">        user.getRole().name(),</span>
+<span class="fc" id="L26">        user.isActive(),</span>
+<span class="fc" id="L27">        user.getCreatedAt(),</span>
+<span class="fc" id="L28">        user.isMfaEnabled(),</span>
+<span class="fc" id="L29">        user.getInstitutionId(),</span>
+<span class="fc" id="L30">        user.getAvatarUrl());</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

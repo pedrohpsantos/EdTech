@@ -10,56 +10,65 @@ import java.util.UUID;
   private String description;
   private UUID advisorId;
   private ZonedDateTime createdAt;
+  private boolean member;
 
   // Getters and Setters
   /** Documentação para o método getId. */
   public UUID getId() {
-<span class="fc" id="L17">    return id;</span>
+<span class="fc" id="L18">    return id;</span>
   }
 
   /** Documentação para o método setId. */
   public void setId(UUID id) {
-<span class="fc" id="L22">    this.id = id;</span>
-<span class="fc" id="L23">  }</span>
+<span class="fc" id="L23">    this.id = id;</span>
+<span class="fc" id="L24">  }</span>
 
   /** Documentação para o método getTitle. */
   public String getTitle() {
-<span class="fc" id="L27">    return title;</span>
+<span class="fc" id="L28">    return title;</span>
   }
 
   /** Documentação para o método setTitle. */
   public void setTitle(String title) {
-<span class="fc" id="L32">    this.title = title;</span>
-<span class="fc" id="L33">  }</span>
+<span class="fc" id="L33">    this.title = title;</span>
+<span class="fc" id="L34">  }</span>
 
   /** Documentação para o método getDescription. */
   public String getDescription() {
-<span class="fc" id="L37">    return description;</span>
+<span class="fc" id="L38">    return description;</span>
   }
 
   /** Documentação para o método setDescription. */
   public void setDescription(String description) {
-<span class="fc" id="L42">    this.description = description;</span>
-<span class="fc" id="L43">  }</span>
+<span class="fc" id="L43">    this.description = description;</span>
+<span class="fc" id="L44">  }</span>
 
   /** Documentação para o método getAdvisorId. */
   public UUID getAdvisorId() {
-<span class="fc" id="L47">    return advisorId;</span>
+<span class="fc" id="L48">    return advisorId;</span>
   }
 
   /** Documentação para o método setAdvisorId. */
   public void setAdvisorId(UUID advisorId) {
-<span class="fc" id="L52">    this.advisorId = advisorId;</span>
-<span class="fc" id="L53">  }</span>
+<span class="fc" id="L53">    this.advisorId = advisorId;</span>
+<span class="fc" id="L54">  }</span>
 
   /** Documentação para o método getCreatedAt. */
   public ZonedDateTime getCreatedAt() {
-<span class="fc" id="L57">    return createdAt;</span>
+<span class="fc" id="L58">    return createdAt;</span>
   }
 
   /** Documentação para o método setCreatedAt. */
   public void setCreatedAt(ZonedDateTime createdAt) {
-<span class="fc" id="L62">    this.createdAt = createdAt;</span>
-<span class="fc" id="L63">  }</span>
+<span class="fc" id="L63">    this.createdAt = createdAt;</span>
+<span class="fc" id="L64">  }</span>
+
+  public boolean isMember() {
+<span class="fc" id="L67">    return member;</span>
+  }
+
+  public void setMember(boolean member) {
+<span class="fc" id="L71">    this.member = member;</span>
+<span class="fc" id="L72">  }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
