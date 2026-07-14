@@ -14,7 +14,7 @@ edtech-api,com.edtech.service,LocalStorageServiceImpl,15,7,0,0,5,2,3,2,3,2
 edtech-api,com.edtech.service,ProjectService,37,262,5,17,7,62,6,18,2,11
 edtech-api,com.edtech.service,DuplicateEmailException,0,4,0,0,0,2,0,1,0,1
 edtech-api,com.edtech.service,RecoveryService,0,153,1,15,0,39,1,12,0,5
-edtech-api,com.edtech.service,EmailService,93,77,6,6,30,22,6,8,2,6
+edtech-api,com.edtech.service,EmailService,93,82,6,6,30,23,6,8,2,6
 edtech-api,com.edtech.service,TwoFactorAuthService,42,28,0,0,13,7,3,1,3,1
 edtech-api,com.edtech.service,AccountNotVerifiedException,0,4,0,0,0,2,0,1,0,1
 edtech-api,com.edtech.service,ClamAvService,21,10,0,0,6,3,1,1,1,1
