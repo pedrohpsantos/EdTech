@@ -2,7 +2,7 @@
 import http from 'k6/http';
 
 // Importamos a função check.
-import { check, sleep } from 'k6';
+import { check, sleep, group } from 'k6';
 
 // Aqui ficam as configurações principais do teste.
 export const options = {
@@ -26,6 +26,13 @@ export const options = {
   thresholds: {
     // 95% das requisições devem responder em menos de 500ms.
     http_req_duration: ['p(95)<500'],
+
+    // Acompanham separadamente endpoints com perfis de custo diferentes.
+    'http_req_duration{endpoint:health}': ['p(95)<500'],
+    'http_req_duration{endpoint:login}': ['p(95)<750'],
+    'http_req_duration{endpoint:register}': ['p(95)<900'],
+    'http_req_duration{endpoint:recovery}': ['p(95)<900'],
+    http_req_failed: ['rate<0.01'],
 
     // Menos de 5% das validações (checks) podem falhar (para tolerar cold starts no serverless).
     checks: ['rate>0.95'],
@@ -56,13 +63,16 @@ export default function () {
   };
 
   // 1. Endpoint de Health Check (Actuator) - Simula monitoramento
-  const healthResponse = http.get(`${baseUrl}/actuator/health`, {
-    timeout: '120s',
-    responseCallback: http.expectedStatuses(200, 429, 503),
-  });
-  check(healthResponse, {
-    'health check respondeu (200, 429 ou 503)': (res) =>
-      res.status === 200 || res.status === 429 || res.status === 503,
+  group('health', () => {
+    const healthResponse = http.get(`${baseUrl}/actuator/health`, {
+      tags: { endpoint: 'health' },
+      timeout: '120s',
+      responseCallback: http.expectedStatuses(200, 429, 503),
+    });
+    check(healthResponse, {
+      'health check respondeu (200, 429 ou 503)': (res) =>
+        res.status === 200 || res.status === 429 || res.status === 503,
+    });
   });
 
   // 2. Endpoint de Login - Simula carga pesada de autenticação e bcrypt
@@ -70,7 +80,7 @@ export default function () {
     email: 'loadtest@example.com',
     password: 'wrongpassword'
   });
-  const loginResponse = http.post(`${baseUrl}/api/auth/login`, loginPayload, params);
+  const loginResponse = http.post(`${baseUrl}/api/auth/login`, loginPayload, { ...params, tags: { endpoint: 'login' } });
   
   // Validamos se a rota respondeu com status esperado
   // 401 pois a senha está errada, ou 429 se o Rate Limiter bloquear (comportamento correto)
@@ -85,7 +95,7 @@ export default function () {
     password: 'Password123!',
     role: 'RESEARCHER'
   });
-  const registerResponse = http.post(`${baseUrl}/api/auth/register`, registerPayload, params);
+  const registerResponse = http.post(`${baseUrl}/api/auth/register`, registerPayload, { ...params, tags: { endpoint: 'register' } });
   check(registerResponse, {
     'registro processado (2xx, 400 ou 429)': (res) => res.status >= 200 && res.status < 500,
   });
@@ -94,7 +104,7 @@ export default function () {
   const recoveryPayload = JSON.stringify({
     email: 'loadtest@example.com'
   });
-  const recoveryResponse = http.post(`${baseUrl}/api/auth/recovery/request`, recoveryPayload, params);
+  const recoveryResponse = http.post(`${baseUrl}/api/auth/recovery/request`, recoveryPayload, { ...params, tags: { endpoint: 'recovery' } });
   check(recoveryResponse, {
     'recuperação processada (2xx, 404 ou 429)': (res) => res.status >= 200 && res.status < 500,
   });

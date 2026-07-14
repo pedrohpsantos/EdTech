@@ -61,6 +61,8 @@ Para executar sem Docker, copie `.env.example`, configure PostgreSQL e SMTP de d
 
 Os relatórios locais ficam em `target/site/jacoco/` e `target/pit-reports/`. A CI também executa OWASP Dependency-Check.
 
+JaCoCo mantém o piso estrutural do bundle; PIT aplica pisos de cobertura e mutação aos serviços críticos. Os dois indicadores andam juntos: cobertura sem testes que detectam mutações não é confiança suficiente.
+
 ## Produção
 
 O deploy é realizado pela pipeline GitHub Actions: a imagem é publicada no Artifact Registry, o Job Flyway é executado e o Terraform atualiza o Cloud Run. Não execute migrações diretamente na inicialização da API de produção.

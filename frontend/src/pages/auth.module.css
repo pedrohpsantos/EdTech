@@ -48,6 +48,23 @@
   letter-spacing: -1px;
 }
 
+button.logo {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: inherit;
+}
+
+button.logo:focus-visible,
+.passwordToggle:focus-visible,
+.submitBtn:focus-visible {
+  outline: 3px solid rgba(139, 92, 246, 0.55);
+  outline-offset: 3px;
+}
+
 .badge {
   display: inline-flex;
   align-items: center;
@@ -278,6 +295,36 @@
 .submitBtn:hover {
   transform: translateY(-2px);
   box-shadow: 0 10px 15px -3px rgba(124, 58, 237, 0.3);
+}
+
+.shake {
+  animation: shake 0.4s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-8px); }
+  50% { transform: translateX(8px); }
+  75% { transform: translateX(-4px); }
+}
+
+.loginWrapper[data-konami-active] {
+  animation: konamiCelebration 1s ease-in-out;
+  filter: hue-rotate(180deg) saturate(200%);
+}
+
+@keyframes konamiCelebration {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 .divider {

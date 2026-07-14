@@ -49,6 +49,10 @@ npx stryker run        # testes de mutação
 
 Os testes E2E Playwright de produção ficam em `../tests/e2e`; veja [tests/README.md](../tests/README.md).
 
+## A primeira tela importa
+
+A rota de login é uma experiência pública e enxuta: rotas privadas, Bootstrap e recursos de animação não são carregados antes da autenticação ou de uma jornada que realmente os use. Os controles preservam nomes acessíveis, estado anunciável e foco visível. O Lighthouse e o smoke Playwright verificam esse contrato a cada publicação.
+
 ## Convenções de interface
 
 - Mantenha componentes reutilizáveis e acessíveis: rótulos, foco visível, estados de carregamento e mensagens de erro.

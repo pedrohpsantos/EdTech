@@ -4,6 +4,13 @@ Este diretório contém verificações que exercitam a aplicação fora dos mód
 
 > Cada verificação aqui existe para tornar confiança uma evidência, não uma impressão.
 
+## Leitura rápida dos sinais
+
+- **Allure/Playwright:** confirma jornadas, proteção de rotas, controles acessíveis e integração da SPA sem transformar o smoke em uma suíte longa de regressão.
+- **JaCoCo:** acompanha quais ramos e instruções do backend foram exercitados; a meta é impedir regressão, não perseguir 100% de código trivial.
+- **PIT e Stryker:** perguntam se os testes percebem mudanças no comportamento. São o complemento de cobertura, não uma substituição.
+- **k6 e Lighthouse:** medem o sistema publicado. O primeiro separa latência por endpoint; o segundo orienta bytes, LCP, acessibilidade e SEO da primeira tela.
+
 ## Suítes
 
 | Caminho | Ferramenta | Escopo | Relatório |
