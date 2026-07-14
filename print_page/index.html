@@ -1779,6 +1779,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../desenvolvimento/qualidade_e_testes/api_security_contract/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contrato de Segurança da API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../desenvolvimento/qualidade_e_testes/lighthouse_report/" class="md-nav__link">
         
   
@@ -4113,10 +4141,21 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#desenvolvimento-qualidade_e_testes-api_security_contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.5.6 Contrato de Segurança da API
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#desenvolvimento-qualidade_e_testes-lighthouse_report" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.5.6 Relatório de Produção (Lighthouse UX & SEO)
+        3.5.7 Relatório de Produção (Lighthouse UX & SEO)
       
     </span>
   </a>
@@ -8562,7 +8601,60 @@ function injectPitestStyles() {
 <td>Pedro Henrique P. Santos</td>
 </tr>
 </tbody>
-</table></body></html></section><section class="print-page" id="desenvolvimento-qualidade_e_testes-lighthouse_report" heading-number="3.5.6"><html><head>
+</table></body></html></section><section class="print-page" id="desenvolvimento-qualidade_e_testes-api_security_contract" heading-number="3.5.6"><html><head>
+        <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            remove_material_navigation();remove_mkdocs_theme_navigation();generate_toc();
+        })
+        </script>
+        </head><body><h1 id="contrato-de-seguranca-da-api">Contrato de Segurança da <abbr title="Application Programming Interface — Interface de Programação de Aplicação">API</abbr><a class="headerlink" href="#desenvolvimento-qualidade_e_testes-api_security_contract-contrato-de-seguranca-da-api" title="Permanent link">¶</a></h1>
+<h2 id="desenvolvimento-qualidade_e_testes-api_security_contract-objetivo">Objetivo<a class="headerlink" href="#desenvolvimento-qualidade_e_testes-api_security_contract-objetivo" title="Permanent link">¶</a></h2>
+<p>O contrato de segurança é uma verificação externa, somente de leitura, executada contra a <abbr title="Application Programming Interface — Interface de Programação de Aplicação">API</abbr> publicada. Ele complementa o teste de carga com k6: enquanto o k6 mede estabilidade e latência sob tráfego, esta suíte confirma que controles de segurança continuam presentes após o deploy.</p>
+<p>Não substitui testes unitários do backend, <abbr title="End-to-End — Testes de Ponta a Ponta">E2E</abbr> do frontend, Lighthouse ou k6 e não repete seus cenários. A execução consulta apenas <code>GET /actuator/health</code>; ela não cria contas, não autentica usuários e não modifica dados.</p>
+<h2 id="desenvolvimento-qualidade_e_testes-api_security_contract-controles-verificados">Controles verificados<a class="headerlink" href="#desenvolvimento-qualidade_e_testes-api_security_contract-controles-verificados" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Controle</th>
+<th>Evidência no contrato</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Transporte seguro</td>
+<td><code>Strict-Transport-Security</code> com duração de um ano e subdomínios</td>
+</tr>
+<tr>
+<td>Proteção contra MIME sniffing</td>
+<td><code>X-Content-Type-Options: nosniff</code></td>
+</tr>
+<tr>
+<td>Proteção contra clickjacking</td>
+<td><code>X-Frame-Options: DENY</code> e <code>frame-ancestors 'none'</code> na CSP</td>
+</tr>
+<tr>
+<td>Proteção de cache</td>
+<td><code>Cache-Control</code> com <code>no-store</code></td>
+</tr>
+<tr>
+<td>Rastreabilidade</td>
+<td><code>X-Request-ID</code> devolvido pela <abbr title="Application Programming Interface — Interface de Programação de Aplicação">API</abbr> para correlacionar requisições e logs</td>
+</tr>
+</tbody>
+</table>
+<h2 id="desenvolvimento-qualidade_e_testes-api_security_contract-pipeline-e-relatorio"><abbr title="Esteira de automação (Sequência de passos)">Pipeline</abbr> e relatório<a class="headerlink" href="#desenvolvimento-qualidade_e_testes-api_security_contract-pipeline-e-relatorio" title="Permanent link">¶</a></h2>
+<p>Na <code>main</code>, o job <strong>Prod (<abbr title="Application Programming Interface — Interface de Programação de Aplicação">API</abbr> Security Contract)</strong> depende somente do deploy do backend. Portanto, inicia em paralelo ao <strong>Prod (Performance)</strong> (k6) e não espera pelo deploy do frontend, <abbr title="End-to-End — Testes de Ponta a Ponta">E2E</abbr> ou Lighthouse.</p>
+<p>Ao fim da execução, a pipeline publica o artefato <code>api-security-contract-report</code>, contendo:</p>
+<ul>
+<li><code>index.html</code>: relatório visual com o estado de cada controle;</li>
+<li><code>production-security-contract.json</code>: resultado estruturado para auditoria e automação.</li>
+</ul>
+<h2 id="desenvolvimento-qualidade_e_testes-api_security_contract-execucao-local">Execução local<a class="headerlink" href="#desenvolvimento-qualidade_e_testes-api_security_contract-execucao-local" title="Permanent link">¶</a></h2>
+<p>Requer Node.js 20 ou superior e uma instância acessível da <abbr title="Application Programming Interface — Interface de Programação de Aplicação">API</abbr>:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">API_URL</span><span class="o">=</span>https://edtech-backend-shv6qbpf4q-rj.a.run.app<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>node<span class="w"> </span>tests/api-contract/production-security-contract.mjs
+</code></pre></div>
+<p>Os arquivos são gerados em <code>tests/api-contract/reports/</code> e não são versionados.</p></body></html></section><section class="print-page" id="desenvolvimento-qualidade_e_testes-lighthouse_report" heading-number="3.5.7"><html><head>
         <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function () {
             remove_material_navigation();remove_mkdocs_theme_navigation();generate_toc();
@@ -9884,7 +9976,7 @@ Para permitir que o navegador trate os cookies como First-Party (Primeira Parte)
 <td style="text-align: center;"><code>1.4</code></td>
 <td style="text-align: center;">13/07/2026</td>
 <td style="text-align: left;">Retorno para Cookies HttpOnly mitigando bloqueio através de Firebase Rewrites</td>
-<td style="text-align: left;">Antigravity</td>
+<td style="text-align: left;">Pedro Henrique P. Santos</td>
 </tr>
 </tbody>
 </table></body></html></section><section class="print-page" id="arquitetura-decisoes_adrs-0003-cloud-run" heading-number="4.6.3"><html><head>
@@ -14811,7 +14903,9 @@ Copie toda a estrutura abaixo para o novo arquivo, preencha os dados e adicione 
 
 .print-site-enumerate-headings #desenvolvimento-qualidade_e_testes-k6_report > h1:before { content: '3.5.5 ' }
 
-.print-site-enumerate-headings #desenvolvimento-qualidade_e_testes-lighthouse_report > h1:before { content: '3.5.6 ' }
+.print-site-enumerate-headings #desenvolvimento-qualidade_e_testes-api_security_contract > h1:before { content: '3.5.6 ' }
+
+.print-site-enumerate-headings #desenvolvimento-qualidade_e_testes-lighthouse_report > h1:before { content: '3.5.7 ' }
 
 .print-site-enumerate-headings #section-4 > h1:before { content: '4 ' }
 .print-site-enumerate-headings #arquitetura-design_tecnico > h1:before { content: '4.1 ' }
