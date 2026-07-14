@@ -61,22 +61,35 @@ const ResearchTrail: React.FC = () => {
   const selectedDocument = documents.find((document) => document.id === selectedDocId) || documents[0];
 
   const handleExportTrail = () => {
-    const report = [
-      'EDTECH — TRILHA DE PESQUISA',
+    const lines = [
+      'EDTECH - TRILHA DE PESQUISA',
       `Documento: ${selectedDocument.title}`,
       `Projeto: ${selectedDocument.project}`,
       `Status: ${selectedDocument.status}`,
-      '',
-      'v4 — Documento aprovado — Hoje, 14:32',
-      'v4 — Verificação LGPD aprovada — Hoje, 14:10',
-      'v4 — Nova versão criada — Hoje, 11:48',
-      'v3 — Comentário do orientador — Ontem, 16:20',
-      'v1 — Documento criado — 10 Jun, 09:00',
-    ].join('\n');
-    const url = URL.createObjectURL(new Blob([report], { type: 'text/plain;charset=utf-8' }));
+      'v4 - Documento aprovado - Hoje, 14:32',
+      'v4 - Verificacao LGPD aprovada - Hoje, 14:10',
+      'v4 - Nova versao criada - Hoje, 11:48',
+      'v3 - Comentario do orientador - Ontem, 16:20',
+      'v1 - Documento criado - 10 Jun, 09:00',
+    ];
+    const escapePdf = (value: string) => value.replace(/[\\()]/g, '\\$&');
+    const stream = `BT /F1 15 Tf 52 790 Td ${lines.map((line, index) => `${index ? '0 -26 Td ' : ''}(${escapePdf(line)}) Tj`).join(' ')} ET`;
+    const objects = [
+      '<< /Type /Catalog /Pages 2 0 R >>',
+      '<< /Type /Pages /Kids [3 0 R] /Count 1 >>',
+      '<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 5 0 R >> >> /Contents 4 0 R >>',
+      `<< /Length ${stream.length} >>\nstream\n${stream}\nendstream`,
+      '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>',
+    ];
+    let pdf = '%PDF-1.4\n';
+    const offsets = [0];
+    objects.forEach((object, index) => { offsets.push(pdf.length); pdf += `${index + 1} 0 obj\n${object}\nendobj\n`; });
+    const xrefOffset = pdf.length;
+    pdf += `xref\n0 ${objects.length + 1}\n0000000000 65535 f \n${offsets.slice(1).map((offset) => `${String(offset).padStart(10, '0')} 00000 n \n`).join('')}trailer\n<< /Size ${objects.length + 1} /Root 1 0 R >>\nstartxref\n${xrefOffset}\n%%EOF`;
+    const url = URL.createObjectURL(new Blob([pdf], { type: 'application/pdf' }));
     const link = document.createElement('a');
     link.href = url;
-    link.download = `trilha_${selectedDocument.title.replace(/[^a-z0-9]+/gi, '_').toLowerCase()}.txt`;
+    link.download = `trilha_${selectedDocument.title.replace(/[^a-z0-9]+/gi, '_').toLowerCase()}.pdf`;
     link.click();
     URL.revokeObjectURL(url);
   };
