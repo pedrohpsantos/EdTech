@@ -1,8 +1,8 @@
 {
   "suite": "EdTech API Security Contract",
   "endpoint": "https://edtech-backend-shv6qbpf4q-rj.a.run.app/actuator/health",
-  "executedAt": "2026-07-14T02:49:41.607Z",
-  "durationMs": 478,
+  "executedAt": "2026-07-14T03:17:32.629Z",
+  "durationMs": 691,
   "passed": true,
   "checks": [
     {
@@ -44,8 +44,8 @@
     {
       "name": "Request tracing correlation",
       "passed": true,
-      "expected": "ci-api-contract-1783997381606",
-      "actual": "ci-api-contract-1783997381606"
+      "expected": "ci-api-contract-1783999052629",
+      "actual": "ci-api-contract-1783999052629"
     }
   ]
 }
