@@ -71,7 +71,7 @@ public class AuthController {
             .secure(true)
             .path("/")
             .maxAge(24 * 60 * 60)
-            .sameSite("Strict")
+            .sameSite("None")
             .build();
 
     return ResponseEntity.ok()
@@ -110,7 +110,7 @@ public class AuthController {
             .secure(true)
             .path("/")
             .maxAge(24 * 60 * 60)
-            .sameSite("Strict")
+            .sameSite("None")
             .build();
 
     return ResponseEntity.ok()
@@ -147,7 +147,7 @@ public class AuthController {
             .secure(true)
             .path("/")
             .maxAge(24 * 60 * 60)
-            .sameSite("Strict")
+            .sameSite("None")
             .build();
 
     return ResponseEntity.ok()
@@ -246,7 +246,7 @@ public class AuthController {
             .secure(true)
             .path("/")
             .maxAge(0)
-            .sameSite("Strict")
+            .sameSite("None")
             .build();
     return ResponseEntity.ok()
         .header(org.springframework.http.HttpHeaders.SET_COOKIE, cookie.toString())
