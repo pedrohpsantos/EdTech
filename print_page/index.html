@@ -8589,6 +8589,9 @@ function injectPitestStyles() {
 </iframe>
 
 <hr>
+<h2 id="desenvolvimento-qualidade_e_testes-k6_report-cenario-e-limites">Cenário e limites<a class="headerlink" href="#desenvolvimento-qualidade_e_testes-k6_report-cenario-e-limites" title="Permanent link">¶</a></h2>
+<p>O cenário mantém a mesma janela curta de carga para não pressionar produção além do necessário. Ele simula usuários em rampa e mede, na mesma execução, <code>health</code>, login inválido, cadastro e recuperação de senha. As chamadas que podem receber limitação legítima (<code>429</code>) ou indisponibilidade transitória durante cold start (<code>503</code> no health) são tratadas como comportamento esperado, não como falso erro.</p>
+<p>Além do p95 global, o relatório segmenta p95 por endpoint: saúde até 500 ms, login até 750 ms e cadastro/recuperação até 900 ms. A taxa técnica de falhas <abbr title="HyperText Transfer Protocol — Protocolo de Transferência de Hipertexto">HTTP</abbr> deve permanecer abaixo de 1%. Assim, uma degradação localizada aparece no relatório sem aumentar duração, VUs ou volume de dados criados.</p>
 <h2 id="desenvolvimento-qualidade_e_testes-k6_report-historico-de-versoes">Histórico de Versões<a class="headerlink" href="#desenvolvimento-qualidade_e_testes-k6_report-historico-de-versoes" title="Permanent link">¶</a></h2>
 <table>
 <thead>
@@ -8604,6 +8607,12 @@ function injectPitestStyles() {
 <td><code>1.0</code></td>
 <td>11/07/2026</td>
 <td>Criação da página de relatório interativo K6</td>
+<td>Pedro Henrique P. Santos</td>
+</tr>
+<tr>
+<td><code>1.1</code></td>
+<td>14/07/2026</td>
+<td>Métricas por endpoint e limiares de confiabilidade</td>
 <td>Pedro Henrique P. Santos</td>
 </tr>
 </tbody>
@@ -8722,6 +8731,15 @@ contrato para publicar o <abbr title="HyperText Markup Language — Linguagem de
 </iframe>
 
 <p><em>(O relatório acima é gerado automaticamente pela ferramenta Google Lighthouse CLI durante o pipeline de <abbr title="Implantação (Colocar o sistema no ar)">Deploy</abbr> em Produção.)</em></p>
+<h2 id="desenvolvimento-qualidade_e_testes-lighthouse_report-como-interpretar-os-diagnosticos">Como interpretar os diagnósticos<a class="headerlink" href="#desenvolvimento-qualidade_e_testes-lighthouse_report-como-interpretar-os-diagnosticos" title="Permanent link">¶</a></h2>
+<p>O relatório é uma fotografia de uma execução em produção. Nem todo item informativo é um defeito: um TTFB curto confirma que a origem respondeu prontamente, enquanto avisos de <em>unused JavaScript</em> indicam oportunidade de reduzir bytes na primeira tela.</p>
+<ul>
+<li>A rota pública de login mantém bibliotecas de animação fora do seu chunk inicial; elas só são carregadas nas jornadas que as utilizam.</li>
+<li>A animação de entrada não bloqueia a pintura do título principal, que é o elemento de LCP dessa tela.</li>
+<li>SVGs decorativos são ocultados da árvore de acessibilidade; controles de senha têm nome, estado e foco visível.</li>
+<li>CSP, HSTS, proteção contra frame e cache também são validados pelo <a href="#desenvolvimento-qualidade_e_testes-api_security_contract">Contrato de Segurança da <abbr title="Application Programming Interface — Interface de Programação de Aplicação">API</abbr></a>.</li>
+</ul>
+<p>Os limites do CI continuam em <code>80</code> para Performance, Acessibilidade, Boas Práticas e <abbr title="Search Engine Optimization — Otimização para Motores de Busca">SEO</abbr>. Use o detalhe por recurso para orientar otimizações; não aumente um limite apenas para mascarar uma regressão.</p>
 <h2 id="desenvolvimento-qualidade_e_testes-lighthouse_report-historico-de-versoes">Histórico de Versões<a class="headerlink" href="#desenvolvimento-qualidade_e_testes-lighthouse_report-historico-de-versoes" title="Permanent link">¶</a></h2>
 <table>
 <thead>
@@ -8737,6 +8755,12 @@ contrato para publicar o <abbr title="HyperText Markup Language — Linguagem de
 <td><code>1.0</code></td>
 <td>11/07/2026</td>
 <td>Adição do relatório de performance de produção Lighthouse</td>
+<td>Pedro Henrique P. Santos</td>
+</tr>
+<tr>
+<td><code>1.1</code></td>
+<td>14/07/2026</td>
+<td>Critérios de leitura e otimizações da rota pública de login</td>
 <td>Pedro Henrique P. Santos</td>
 </tr>
 </tbody>

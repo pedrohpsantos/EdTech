@@ -60,8 +60,8 @@ public class DataSeeder implements CommandLineRunner {
   @Override
   @Transactional
   public void run(String... args) throws Exception {
-<span class="pc bpc" id="L63" title="1 of 2 branches missed.">    if (userRepository.count() &gt; 0) {</span>
-<span class="nc" id="L64">      return; // Database already seeded</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">    if (userRepository.count() &gt; 0) {</span>
+<span class="fc" id="L64">      return; // Database already seeded</span>
     }
 
 <span class="fc" id="L67">    UUID defaultInstitution = UUID.fromString(&quot;00000000-0000-0000-0000-000000000001&quot;);</span>
