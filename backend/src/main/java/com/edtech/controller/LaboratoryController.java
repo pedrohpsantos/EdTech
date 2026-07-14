@@ -7,7 +7,7 @@ import com.edtech.service.LaboratoryTokenService;
 import java.util.Map;
 import java.util.Optional;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,8 +31,8 @@ public class LaboratoryController {
 
   /** Javadoc. */
   @GetMapping("/token")
-  public ResponseEntity<?> getLaboratoryToken(@AuthenticationPrincipal UserDetails userDetails) {
-    Optional<User> userOpt = userRepository.findByEmailIgnoreCase(userDetails.getUsername());
+  public ResponseEntity<?> getLaboratoryToken(Authentication authentication) {
+    Optional<User> userOpt = getCurrentUser(authentication);
     if (userOpt.isEmpty() || userOpt.get().getRole() != UserRole.ADVISOR) {
       return ResponseEntity.status(403)
           .body(Map.of("error", "Apenas orientadores podem gerar tokens do laboratorio"));
@@ -52,13 +52,13 @@ public class LaboratoryController {
   /** Javadoc. */
   @PostMapping("/join")
   public ResponseEntity<?> joinLaboratory(
-      @AuthenticationPrincipal UserDetails userDetails, @RequestBody Map<String, String> request) {
+      Authentication authentication, @RequestBody Map<String, String> request) {
     String token = request.get("token");
     if (token == null || token.isEmpty()) {
       return ResponseEntity.badRequest().body(Map.of("error", "O campo token e obrigatorio"));
     }
 
-    Optional<User> currentUserOpt = userRepository.findByEmailIgnoreCase(userDetails.getUsername());
+    Optional<User> currentUserOpt = getCurrentUser(authentication);
     if (currentUserOpt.isEmpty()) {
       return ResponseEntity.status(401).build();
     }
@@ -81,5 +81,19 @@ public class LaboratoryController {
             "message", "Vinculado ao laboratorio com sucesso",
             "advisor_name", advisor.getName(),
             "institution_id", advisor.getInstitutionId()));
+  }
+
+  private Optional<User> getCurrentUser(Authentication authentication) {
+    if (authentication == null) {
+      return Optional.empty();
+    }
+    Object principal = authentication.getPrincipal();
+    if (principal instanceof User user) {
+      return Optional.of(user);
+    }
+    if (principal instanceof UserDetails userDetails) {
+      return userRepository.findByEmailIgnoreCase(userDetails.getUsername());
+    }
+    return Optional.empty();
   }
 }
