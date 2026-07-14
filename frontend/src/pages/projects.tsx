@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import DashboardLayout from '../components/layout/DashboardLayout';
 import { getProjects, joinProject } from '../services/api';
 import { Project } from '../types';
+import { useAuth } from '../context/authContext';
 
 export default function Projects() {
+  const { user } = useAuth();
+  const navigate = useNavigate();
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(0);
@@ -39,19 +43,22 @@ export default function Projects() {
       showToast('Associado ao projeto com sucesso!');
       loadProjects();
     } else {
-      showToast('Erro: ' + resp.mensagem);
+      const alreadyJoined = /already a member|j[aá] associado/i.test(resp.mensagem || '');
+      showToast(alreadyJoined ? 'Você já está associado a este projeto.' : 'Erro: ' + resp.mensagem);
     }
   };
+
+  const canJoinProjects = user?.role === 'RESEARCHER' || user?.role === 'AUDITOR';
 
   return (
     <DashboardLayout
       title="Projetos"
-      subtitle="Descubra e associe-se a projetos de pesquisa ativos"
+      subtitle={canJoinProjects ? 'Descubra e associe-se a projetos de pesquisa ativos' : 'Acompanhe os projetos sob sua orientação'}
       breadcrumbs={['EdTech', 'Projetos']}
     >
       <div className="dashboard-card p-4">
         <h3 style={{ color: 'var(--ed-text-dark)', marginBottom: '1.5rem', fontSize: '1.25rem', fontWeight: 600 }}>
-          Projetos Disponíveis
+          {canJoinProjects ? 'Projetos disponíveis' : 'Projetos orientados'}
         </h3>
         {loading ? (
           <div style={{ padding: '2rem', textAlign: 'center', color: 'var(--ed-text-muted)' }}>Carregando projetos...</div>
@@ -76,7 +83,7 @@ export default function Projects() {
                       <i className="bi bi-briefcase"></i>
                     </div>
                     <div>
-                      <h4 style={{ margin: 0, fontSize: '1rem', fontWeight: 600, color: 'var(--ed-text-dark)' }}>{project.name}</h4>
+                      <h4 style={{ margin: 0, fontSize: '1rem', fontWeight: 600, color: 'var(--ed-text-dark)' }}>{project.title || project.name}</h4>
                       <span style={{ fontSize: '12px', color: 'var(--ed-text-muted)' }}>Criado em {project.createdAt ? new Date(project.createdAt).toLocaleDateString() : 'N/A'}</span>
                     </div>
                   </div>
@@ -86,7 +93,8 @@ export default function Projects() {
                 </p>
                 <div style={{ marginTop: 'auto', paddingTop: '1rem', borderTop: '1px solid var(--border)' }}>
                   <button 
-                    onClick={() => handleJoin(project.id)}
+                    disabled={canJoinProjects && project.member}
+                    onClick={() => canJoinProjects ? handleJoin(project.id) : navigate('/submissions')}
                     style={{
                       width: '100%',
                       background: 'var(--ed-purple-main)',
@@ -95,7 +103,8 @@ export default function Projects() {
                       padding: '0.75rem',
                       borderRadius: '8px',
                       fontWeight: 500,
-                      cursor: 'pointer',
+                      cursor: canJoinProjects && project.member ? 'default' : 'pointer',
+                      opacity: canJoinProjects && project.member ? .72 : 1,
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
@@ -105,8 +114,8 @@ export default function Projects() {
                     onMouseOver={(e) => e.currentTarget.style.background = 'var(--ed-purple-dark)'}
                     onMouseOut={(e) => e.currentTarget.style.background = 'var(--ed-purple-main)'}
                   >
-                    <i className="bi bi-person-plus"></i>
-                    Associar-se
+                    <i className={canJoinProjects ? (project.member ? 'bi bi-check-circle' : 'bi bi-person-plus') : 'bi bi-clipboard-check'}></i>
+                    {canJoinProjects ? (project.member ? 'Já associado' : 'Associar-se') : 'Ver submissões'}
                   </button>
                 </div>
               </div>

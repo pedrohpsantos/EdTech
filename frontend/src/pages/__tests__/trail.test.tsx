@@ -57,7 +57,7 @@ describe('ResearchTrail Page', () => {
     
     fireEvent.click(screen.getByText('Resultados_Parciais_Q2.pdf'));
     
-    expect(screen.queryByText('Timeline de decisões')).not.toBeInTheDocument();
+    expect(screen.getByText('Timeline de decisões')).toBeInTheDocument();
     
     const doc1Elements = screen.getAllByText('Metodologia_Qualitativa_v3.pdf');
     fireEvent.click(doc1Elements[0]); // Click the item in list

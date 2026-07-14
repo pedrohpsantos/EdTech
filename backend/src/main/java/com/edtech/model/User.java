@@ -66,6 +66,9 @@ public class User {
   @Column(name = "mfa_secret", length = 32)
   private String mfaSecret;
 
+  @Column(name = "avatar_url", columnDefinition = "TEXT")
+  private String avatarUrl;
+
   protected User() {}
 
   /** Documentação para o método User. */
@@ -107,6 +110,10 @@ public class User {
   /** Documentação para o método getName. */
   public String getName() {
     return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
   }
 
   /** Documentação para o método getEmail. */
@@ -176,5 +183,13 @@ public class User {
 
   public void setMfaSecret(String mfaSecret) {
     this.mfaSecret = mfaSecret;
+  }
+
+  public String getAvatarUrl() {
+    return avatarUrl;
+  }
+
+  public void setAvatarUrl(String avatarUrl) {
+    this.avatarUrl = avatarUrl;
   }
 }

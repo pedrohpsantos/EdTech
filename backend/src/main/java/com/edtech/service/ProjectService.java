@@ -69,7 +69,20 @@ public class ProjectService {
       key = "#userId + '-' + #pageable.pageNumber + '-' + #pageable.pageSize")
   public org.springframework.data.domain.Page<ProjectResponseDto> listProjectsByUser(
       UUID userId, org.springframework.data.domain.Pageable pageable) {
-    return projectRepository.findProjectsByUserId(userId, pageable).map(this::mapToDto);
+    User user = userRepository.findById(userId).orElse(null);
+    if (user == null) {
+      return projectRepository
+          .findProjectsByUserId(userId, pageable)
+          .map(project -> mapToDto(project, userId));
+    }
+    if (user.getRole() == com.edtech.model.UserRole.ADVISOR) {
+      return projectRepository
+          .findProjectsByUserId(userId, pageable)
+          .map(project -> mapToDto(project, userId));
+    }
+    return projectRepository
+        .findProjectsByInstitutionId(user.getInstitutionId(), pageable)
+        .map(project -> mapToDto(project, userId));
   }
 
   /** Documentação. */
@@ -124,12 +137,21 @@ public class ProjectService {
   }
 
   private ProjectResponseDto mapToDto(Project project) {
+    return mapToDto(project, null);
+  }
+
+  private ProjectResponseDto mapToDto(Project project, UUID currentUserId) {
     ProjectResponseDto dto = new ProjectResponseDto();
     dto.setId(project.getId());
     dto.setTitle(project.getTitle());
     dto.setDescription(project.getDescription());
     dto.setAdvisorId(project.getAdvisor().getId());
     dto.setCreatedAt(project.getCreatedAt());
+    dto.setMember(
+        currentUserId != null
+            && projectMemberRepository
+                .findByProjectIdAndUserId(project.getId(), currentUserId)
+                .isPresent());
     return dto;
   }
 }

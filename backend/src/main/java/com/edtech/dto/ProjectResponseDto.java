@@ -10,6 +10,7 @@ public class ProjectResponseDto {
   private String description;
   private UUID advisorId;
   private ZonedDateTime createdAt;
+  private boolean member;
 
   // Getters and Setters
   /** Documentação para o método getId. */
@@ -60,5 +61,13 @@ public class ProjectResponseDto {
   /** Documentação para o método setCreatedAt. */
   public void setCreatedAt(ZonedDateTime createdAt) {
     this.createdAt = createdAt;
+  }
+
+  public boolean isMember() {
+    return member;
+  }
+
+  public void setMember(boolean member) {
+    this.member = member;
   }
 }

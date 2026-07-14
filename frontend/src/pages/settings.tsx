@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import DashboardLayout from '../components/layout/DashboardLayout';
 import '../assets/settings.css';
 import { useAuth } from '../context/authContext';
-import { setup2Fa, enable2Fa, joinLaboratory } from '../services/api';
+import { setup2Fa, enable2Fa, joinLaboratory, updateProfile } from '../services/api';
 
 const Settings: React.FC = () => {
-  const { user } = useAuth();
+  const { user, checkAuth } = useAuth();
   const [reviewEmails, setReviewEmails] = useState(true);
   const [strictLgpd, setStrictLgpd] = useState(true);
   
@@ -18,6 +18,10 @@ const Settings: React.FC = () => {
   const [isJoining, setIsJoining] = useState(false);
   const [joinMessage, setJoinMessage] = useState('');
   const [labTokens, setLabTokens] = useState<{researcher: string, auditor: string} | null>(null);
+  const [isEditingProfile, setIsEditingProfile] = useState(false);
+  const [profileName, setProfileName] = useState(user?.name || '');
+  const [avatarPreview, setAvatarPreview] = useState<string | null>(user?.avatarUrl || null);
+  const [profileMessage, setProfileMessage] = useState('');
 
   React.useEffect(() => {
     if (user?.role === 'ADVISOR') {
@@ -80,6 +84,32 @@ const Settings: React.FC = () => {
     setIsJoining(false);
   };
 
+  const handleAvatarChange = (file?: File) => {
+    if (!file) return;
+    if (!file.type.startsWith('image/')) {
+      setProfileMessage('Escolha uma imagem PNG, JPEG, WebP ou GIF.');
+      return;
+    }
+    if (file.size > 1_500_000) {
+      setProfileMessage('A imagem deve ter no máximo 1,5 MB.');
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = () => setAvatarPreview(String(reader.result));
+    reader.readAsDataURL(file);
+  };
+
+  const handleSaveProfile = async () => {
+    const response = await updateProfile(profileName.trim(), avatarPreview);
+    if (response.sucesso) {
+      setProfileMessage('Perfil atualizado com sucesso.');
+      setIsEditingProfile(false);
+      await checkAuth?.();
+    } else {
+      setProfileMessage(response.mensagem || 'Não foi possível atualizar o perfil.');
+    }
+  };
+
   return (
     <DashboardLayout
       title="Configurações"
@@ -91,17 +121,34 @@ const Settings: React.FC = () => {
         <div className="settings-card">
           <h3 className="settings-section-title">Perfil</h3>
           <div className="settings-profile-row">
-            <div className="settings-avatar">{userInitials}</div>
+            <div className="settings-avatar">{user?.avatarUrl ? <img src={user.avatarUrl} alt="Foto do perfil" /> : userInitials}</div>
             <div className="settings-profile-info">
               <span className="profile-name">{userName}</span>
               <span className="profile-email">{userEmail}</span>
             </div>
             <div className="settings-profile-actions">
               <span className="settings-badge-role">{roleLabel[user?.role || ''] || 'Conta'}</span>
-              <button className="btn-outline" onClick={() => alert('A edição de perfil estará disponível na próxima versão. Em breve você poderá alterar seu nome e avatar.')}>Editar perfil</button>
+              <button className="btn-outline" onClick={() => { setProfileName(userName); setAvatarPreview(user?.avatarUrl || null); setProfileMessage(''); setIsEditingProfile(true); }}>Editar perfil</button>
             </div>
           </div>
         </div>
+
+        {isEditingProfile && (
+          <div className="profile-editor" role="dialog" aria-modal="true" aria-label="Editar perfil">
+            <div className="profile-editor-card">
+              <div className="profile-editor-header"><h3>Editar perfil</h3><button className="profile-close" aria-label="Fechar" onClick={() => setIsEditingProfile(false)}>×</button></div>
+              <label htmlFor="profile-name">Nome exibido</label>
+              <input id="profile-name" className="ed-input" value={profileName} maxLength={120} onChange={(e) => setProfileName(e.target.value)} />
+              <label htmlFor="profile-avatar">Foto do perfil</label>
+              <div className="profile-avatar-picker">
+                <div className="settings-avatar">{avatarPreview ? <img src={avatarPreview} alt="Prévia da foto" /> : userInitials}</div>
+                <input id="profile-avatar" type="file" accept="image/png,image/jpeg,image/webp,image/gif" onChange={(e) => handleAvatarChange(e.target.files?.[0])} />
+              </div>
+              {profileMessage && <p className="profile-message">{profileMessage}</p>}
+              <div className="profile-editor-actions"><button className="btn-outline" onClick={() => setIsEditingProfile(false)}>Cancelar</button><button className="btn-primary" disabled={!profileName.trim()} onClick={handleSaveProfile}>Salvar alterações</button></div>
+            </div>
+          </div>
+        )}
 
         {/* Notificações */}
         <div className="settings-card">
@@ -172,6 +219,7 @@ const Settings: React.FC = () => {
             </div>
           </div>
 
+          {setupError && !qrCodeUri && <p className="settings-error">{setupError}</p>}
           {qrCodeUri && !is2FaEnabled && (
             <div className="settings-item no-border" style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
               <div style={{ marginTop: '1rem', padding: '1rem', border: '1px solid #ddd', borderRadius: '8px', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>

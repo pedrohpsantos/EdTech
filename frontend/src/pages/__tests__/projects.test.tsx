@@ -9,6 +9,9 @@ vi.mock('../../services/api', () => ({
   joinProject: vi.fn(),
 }));
 
+vi.mock('../../context/authContext', () => ({ useAuth: vi.fn(() => ({ user: { role: 'RESEARCHER' } })) }));
+vi.mock('react-router-dom', () => ({ useNavigate: () => vi.fn() }));
+
 vi.mock('../../components/layout/DashboardLayout', () => ({
   default: ({ children, title }: any) => (
     <div data-testid="dashboard-layout">

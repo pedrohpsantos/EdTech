@@ -12,6 +12,8 @@ vi.mock('../../context/authContext', () => ({
 vi.mock('../../services/api', () => ({
   setup2Fa: vi.fn(),
   enable2Fa: vi.fn(),
+  joinLaboratory: vi.fn(),
+  updateProfile: vi.fn(),
 }));
 
 vi.mock('../../components/layout/DashboardLayout', () => ({

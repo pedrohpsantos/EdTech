@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import DashboardLayout from '../components/layout/DashboardLayout';
 import { useAuth } from '../context/authContext';
-import { exportDocumentAuditTrail } from '../services/api';
 import '../assets/trail.css';
 
 const ResearchTrail: React.FC = () => {
   const { user } = useAuth();
   // For demo purposes, we'll use local state to switch between "list mode" and "detail mode"
   const [selectedDocId, setSelectedDocId] = useState<string>('1');
+  const [isComparingVersions, setIsComparingVersions] = useState(false);
 
   const advisorDocuments = [
     {
@@ -58,14 +58,40 @@ const ResearchTrail: React.FC = () => {
   ];
 
   const documents = user?.role === 'RESEARCHER' ? researcherDocuments : advisorDocuments;
+  const selectedDocument = documents.find((document) => document.id === selectedDocId) || documents[0];
 
-  const handleExportTrail = async () => {
-    if (!selectedDocId) return;
-    try {
-      await exportDocumentAuditTrail(selectedDocId, 'pdf');
-    } catch(e) {
-      console.error('Failed to export', e);
-    }
+  const handleExportTrail = () => {
+    const lines = [
+      'EDTECH - TRILHA DE PESQUISA',
+      `Documento: ${selectedDocument.title}`,
+      `Projeto: ${selectedDocument.project}`,
+      `Status: ${selectedDocument.status}`,
+      'v4 - Documento aprovado - Hoje, 14:32',
+      'v4 - Verificacao LGPD aprovada - Hoje, 14:10',
+      'v4 - Nova versao criada - Hoje, 11:48',
+      'v3 - Comentario do orientador - Ontem, 16:20',
+      'v1 - Documento criado - 10 Jun, 09:00',
+    ];
+    const escapePdf = (value: string) => value.replace(/[\\()]/g, '\\$&');
+    const stream = `BT /F1 15 Tf 52 790 Td ${lines.map((line, index) => `${index ? '0 -26 Td ' : ''}(${escapePdf(line)}) Tj`).join(' ')} ET`;
+    const objects = [
+      '<< /Type /Catalog /Pages 2 0 R >>',
+      '<< /Type /Pages /Kids [3 0 R] /Count 1 >>',
+      '<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 5 0 R >> >> /Contents 4 0 R >>',
+      `<< /Length ${stream.length} >>\nstream\n${stream}\nendstream`,
+      '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>',
+    ];
+    let pdf = '%PDF-1.4\n';
+    const offsets = [0];
+    objects.forEach((object, index) => { offsets.push(pdf.length); pdf += `${index + 1} 0 obj\n${object}\nendobj\n`; });
+    const xrefOffset = pdf.length;
+    pdf += `xref\n0 ${objects.length + 1}\n0000000000 65535 f \n${offsets.slice(1).map((offset) => `${String(offset).padStart(10, '0')} 00000 n \n`).join('')}trailer\n<< /Size ${objects.length + 1} /Root 1 0 R >>\nstartxref\n${xrefOffset}\n%%EOF`;
+    const url = URL.createObjectURL(new Blob([pdf], { type: 'application/pdf' }));
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `trilha_${selectedDocument.title.replace(/[^a-z0-9]+/gi, '_').toLowerCase()}.pdf`;
+    link.click();
+    URL.revokeObjectURL(url);
   };
 
   const getStatusBadgeClass = (status: string) => {
@@ -142,7 +168,7 @@ const ResearchTrail: React.FC = () => {
       </div>
 
       {/* Details Section for Document 1 (Mocked as per screenshot) */}
-      {selectedDocId === '1' && (
+      {selectedDocument && (
         <div className="trail-details-section">
           <div className="trail-details-banner">
             <div className="trail-doc-info">
@@ -151,10 +177,10 @@ const ResearchTrail: React.FC = () => {
               </div>
               <div>
                 <span className="trail-doc-name" style={{ fontSize: '16px' }}>
-                  {user?.role === 'RESEARCHER' ? 'Referencial_Teorico_Final.pdf' : 'Metodologia_Qualitativa_v3.pdf'}
+                  {selectedDocument.title}
                 </span>
                 <span className="trail-doc-project">
-                  {user?.role === 'RESEARCHER' ? 'Seu projeto - Análise LGPD - 7 eventos · 4 versões' : 'Dra. Renata Silva - Análise LGPD - 7 eventos · 4 versões'}
+                  {selectedDocument.project} · 7 eventos · 4 versões
                 </span>
               </div>
             </div>
@@ -360,7 +386,7 @@ const ResearchTrail: React.FC = () => {
                     </span>
                   </div>
                 </div>
-                <button className="btn-compare-versions">
+                <button className="btn-compare-versions" onClick={() => setIsComparingVersions(true)}>
                   <i className="bi bi-arrow-down-up"></i> Comparar versões
                 </button>
               </div>
@@ -387,6 +413,16 @@ const ResearchTrail: React.FC = () => {
                 </table>
               </div>
             </div>
+          </div>
+        </div>
+      )}
+
+      {isComparingVersions && (
+        <div className="version-compare-backdrop" role="dialog" aria-modal="true" aria-label="Comparar versões">
+          <div className="version-compare-dialog">
+            <div className="version-compare-header"><div><h3>Comparar versões</h3><p>{selectedDocument.title}</p></div><button aria-label="Fechar" onClick={() => setIsComparingVersions(false)}>×</button></div>
+            <div className="version-compare-grid"><section><strong>v3 · 10 Jun</strong><p>Metodologia, referências e escopo inicial.</p></section><section><strong>v4 · Hoje</strong><p>Inclui revisão LGPD, evidências e aprovação do orientador.</p></section></div>
+            <p className="version-compare-summary"><i className="bi bi-check-circle"></i> 3 alterações de conteúdo e 1 validação de conformidade registradas.</p>
           </div>
         </div>
       )}

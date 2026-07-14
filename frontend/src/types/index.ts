@@ -5,13 +5,16 @@ export interface User {
   role: 'RESEARCHER' | 'ADVISOR' | 'AUDITOR' | 'ADMIN';
   mfaEnabled?: boolean;
   institutionId?: string;
+  avatarUrl?: string | null;
 }
 
 export interface Project {
   id: string;
-  name: string;
+  name?: string;
+  title?: string;
   description: string;
   createdAt?: string;
+  member?: boolean;
 }
 
 export interface Document {
