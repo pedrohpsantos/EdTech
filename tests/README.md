@@ -1,5 +1,10 @@
 # Testes e qualidade — EdTech
 
+![Playwright](https://img.shields.io/badge/Playwright-2EAD33?logo=playwright&logoColor=white)
+![k6](https://img.shields.io/badge/k6-7D64FF?logo=k6&logoColor=white)
+![Lighthouse](https://img.shields.io/badge/Lighthouse-F44B21?logo=lighthouse&logoColor=white)
+![Allure](https://img.shields.io/badge/Allure-FF4B4B?logo=allure&logoColor=white)
+
 > Cada verificação aqui existe para tornar confiança uma evidência, não uma impressão.
 
 ## Visão geral

@@ -1,5 +1,9 @@
 # Scripts operacionais — EdTech
 
+![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white)
+![Google Cloud](https://img.shields.io/badge/Google_Cloud-4285F4?logo=googlecloud&logoColor=white)
+![uv](https://img.shields.io/badge/uv-DE5FE9?logo=uv&logoColor=white)
+
 > Ferramentas pequenas, operações conscientes e resultados auditáveis.
 
 ## Visão geral

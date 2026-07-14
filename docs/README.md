@@ -1,5 +1,9 @@
 # Documentação — EdTech
 
+![MkDocs](https://img.shields.io/badge/MkDocs-526CFE?logo=materialformkdocs&logoColor=white)
+![GitHub Pages](https://img.shields.io/badge/GitHub_Pages-222222?logo=githubpages&logoColor=white)
+![Mermaid](https://img.shields.io/badge/Mermaid-FF3670?logo=mermaid&logoColor=white)
+
 > Aqui, decisões viram conhecimento compartilhado e verificável.
 
 ## Visão geral

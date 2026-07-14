@@ -3,6 +3,7 @@
 ![Java](https://img.shields.io/badge/Java-007396?logo=openjdk&logoColor=white)
 ![Spring Boot](https://img.shields.io/badge/Spring_Boot-6DB33F?logo=springboot&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?logo=postgresql&logoColor=white)
+![JUnit](https://img.shields.io/badge/JUnit-25A162?logo=junit5&logoColor=white)
 
 > A camada que preserva contexto, autoria e confiança em cada documento acadêmico.
 
@@ -12,7 +13,7 @@ API REST em Java 21 e Spring Boot. Concentra as regras de negócio, autenticaç�
 
 ## Autenticação e segurança
 
-- A sessão é um JWT entregue no cookie `jwt`, com `HttpOnly`, `Secure` e `SameSite=Strict`.
+- A sessão é um JWT entregue no cookie `jwt`, com `HttpOnly`, `Secure` e `SameSite=None`; a API aceita credenciais apenas da origem CORS configurada.
 - O cliente deve enviar credenciais de cookie (`withCredentials` no frontend). Não há token JWT no `localStorage`.
 - As rotas de autenticação e recuperação têm rate limiting; respostas `429` devem ser tratadas pelo cliente.
 - A API fornece `X-Request-ID`, HSTS, CSP, `X-Frame-Options: DENY` e `X-Content-Type-Options: nosniff`.
