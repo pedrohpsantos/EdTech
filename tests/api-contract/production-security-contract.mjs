@@ -7,6 +7,9 @@ const reportJsonPath = resolve(reportDirectory, 'production-security-contract.js
 const reportHtmlPath = resolve(reportDirectory, 'index.html');
 const requestId = `ci-api-contract-${Date.now()}`;
 const startedAt = new Date();
+const maxAttempts = Number(process.env.API_CONTRACT_MAX_ATTEMPTS || 4);
+const timeoutMs = Number(process.env.API_CONTRACT_TIMEOUT_MS || 30_000);
+const retryDelayMs = Number(process.env.API_CONTRACT_RETRY_DELAY_MS || 8_000);
 
 const escapeHtml = (value) => String(value)
   .replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;')
@@ -14,6 +17,25 @@ const escapeHtml = (value) => String(value)
 
 const hasValue = (headers, name, expected) =>
   (headers.get(name) || '').toLowerCase().includes(expected.toLowerCase());
+
+const sleep = (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds));
+
+const fetchHealthWithRetry = async () => {
+  let lastError;
+  for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+    try {
+      const response = await fetch(`${apiUrl}/actuator/health`, {
+        headers: { 'X-Request-ID': requestId }, signal: AbortSignal.timeout(timeoutMs),
+      });
+      return { response, attempts: attempt };
+    } catch (error) {
+      lastError = error;
+      console.warn(`Health check attempt ${attempt}/${maxAttempts} failed: ${error.message}`);
+      if (attempt < maxAttempts) await sleep(retryDelayMs * attempt);
+    }
+  }
+  throw new Error(`API did not respond after ${maxAttempts} attempts: ${lastError?.message || 'unknown error'}`);
+};
 
 const renderReport = (report) => {
   const rows = report.checks.map((check) => `<tr><td>${escapeHtml(check.name)}</td><td><span class="${check.passed ? 'passed' : 'failed'}">${check.passed ? 'Passed' : 'Failed'}</span></td><td>${escapeHtml(check.expected)}</td><td>${escapeHtml(check.actual)}</td></tr>`).join('');
@@ -24,9 +46,9 @@ const run = async () => {
   const checks = [];
   let response;
   try {
-    response = await fetch(`${apiUrl}/actuator/health`, {
-      headers: { 'X-Request-ID': requestId }, signal: AbortSignal.timeout(30_000),
-    });
+    const result = await fetchHealthWithRetry();
+    response = result.response;
+    console.log(`API health endpoint responded on attempt ${result.attempts}/${maxAttempts}.`);
   } catch (error) {
     checks.push({ name: 'API reachability for security contract inspection', passed: false, expected: 'A response from the published API', actual: error.message });
   }
