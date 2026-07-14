@@ -7,7 +7,6 @@ import com.edtech.dto.RegisterRequestDto;
 import com.edtech.dto.ResetPasswordDto;
 import com.edtech.dto.UpdateProfileRequestDto;
 import com.edtech.dto.UserResponseDto;
-import com.edtech.dto.UpdateProfileRequestDto;
 import com.edtech.dto.VerifyCodeDto;
 import com.edtech.exception.RateLimitExceededException;
 import com.edtech.model.User;
