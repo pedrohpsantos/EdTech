@@ -71,7 +71,7 @@ public class AuthController {
 <span class="fc" id="L71">            .secure(true)</span>
 <span class="fc" id="L72">            .path(&quot;/&quot;)</span>
 <span class="fc" id="L73">            .maxAge(24 * 60 * 60)</span>
-<span class="fc" id="L74">            .sameSite(&quot;Strict&quot;)</span>
+<span class="fc" id="L74">            .sameSite(&quot;None&quot;)</span>
 <span class="fc" id="L75">            .build();</span>
 
 <span class="fc" id="L77">    return ResponseEntity.ok()</span>
@@ -110,7 +110,7 @@ public class AuthController {
 <span class="fc" id="L110">            .secure(true)</span>
 <span class="fc" id="L111">            .path(&quot;/&quot;)</span>
 <span class="fc" id="L112">            .maxAge(24 * 60 * 60)</span>
-<span class="fc" id="L113">            .sameSite(&quot;Strict&quot;)</span>
+<span class="fc" id="L113">            .sameSite(&quot;None&quot;)</span>
 <span class="fc" id="L114">            .build();</span>
 
 <span class="fc" id="L116">    return ResponseEntity.ok()</span>
@@ -147,7 +147,7 @@ public class AuthController {
 <span class="fc" id="L147">            .secure(true)</span>
 <span class="fc" id="L148">            .path(&quot;/&quot;)</span>
 <span class="fc" id="L149">            .maxAge(24 * 60 * 60)</span>
-<span class="fc" id="L150">            .sameSite(&quot;Strict&quot;)</span>
+<span class="fc" id="L150">            .sameSite(&quot;None&quot;)</span>
 <span class="fc" id="L151">            .build();</span>
 
 <span class="fc" id="L153">    return ResponseEntity.ok()</span>
@@ -246,7 +246,7 @@ public class AuthController {
 <span class="fc" id="L246">            .secure(true)</span>
 <span class="fc" id="L247">            .path(&quot;/&quot;)</span>
 <span class="fc" id="L248">            .maxAge(0)</span>
-<span class="fc" id="L249">            .sameSite(&quot;Strict&quot;)</span>
+<span class="fc" id="L249">            .sameSite(&quot;None&quot;)</span>
 <span class="fc" id="L250">            .build();</span>
 <span class="fc" id="L251">    return ResponseEntity.ok()</span>
 <span class="fc" id="L252">        .header(org.springframework.http.HttpHeaders.SET_COOKIE, cookie.toString())</span>

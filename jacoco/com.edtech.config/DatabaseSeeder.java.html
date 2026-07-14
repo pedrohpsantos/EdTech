@@ -140,7 +140,7 @@ public class DatabaseSeeder implements CommandLineRunner {
 
   private void ensureMember(
       com.edtech.model.Project project, User user, com.edtech.model.ProjectRole role) {
-<span class="fc bfc" id="L143" title="All 2 branches covered.">    if (projectMemberRepository.findByProjectIdAndUserId(project.getId(), user.getId()).isEmpty()) {</span>
+<span class="pc bpc" id="L143" title="1 of 2 branches missed.">    if (projectMemberRepository.findByProjectIdAndUserId(project.getId(), user.getId()).isEmpty()) {</span>
 <span class="fc" id="L144">      addMember(project, user, role);</span>
     }
 <span class="fc" id="L146">  }</span>
