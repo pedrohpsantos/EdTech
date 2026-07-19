@@ -22,6 +22,7 @@
         <jacocoArgLine></jacocoArgLine>
         <protobuf.version>4.35.1</protobuf.version>
         <protobuf-java.version>4.35.1</protobuf-java.version>
+        <tomcat.version>11.0.24</tomcat.version>
     </properties>
 
     <dependencies>
