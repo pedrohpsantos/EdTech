@@ -35,8 +35,8 @@ edtech-api,com.edtech.dto,AuthResponseDto,0,9,0,0,0,1,0,1,0,1
 edtech-api,com.edtech.dto,VerifyCodeDto,0,9,0,0,0,1,0,1,0,1
 edtech-api,com.edtech.dto,DocumentResponseDto,0,94,0,0,0,40,0,27,0,27
 edtech-api,com.edtech.dto,ErrorResponse,0,9,0,0,0,1,0,1,0,1
-edtech-api,com.edtech.dto,DocumentStatusUpdateDto,11,15,0,0,5,6,3,3,3,3
 edtech-api,com.edtech.dto,ProjectRequestDto,0,17,0,0,0,7,0,5,0,5
+edtech-api,com.edtech.dto,DocumentStatusUpdateDto,11,15,0,0,5,6,3,3,3,3
 edtech-api,com.edtech.dto,UpdateDocumentStatusRequest,9,0,0,0,1,0,1,0,1,0
 edtech-api,com.edtech.dto,Verify2FaLoginDto,0,12,0,0,0,1,0,1,0,1
 edtech-api,com.edtech.dto,AuditLogDto,0,59,0,0,0,25,0,17,0,17
