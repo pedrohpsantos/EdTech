@@ -1,13 +1,13 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
-edtech-api,com.edtech.service,AuditTrailCsvExporter,9,195,4,26,2,29,4,15,0,4
 edtech-api,com.edtech.service,InvalidCredentialsException,0,4,0,0,0,2,0,1,0,1
+edtech-api,com.edtech.service,AuditTrailCsvExporter,9,195,4,26,2,29,4,15,0,4
 edtech-api,com.edtech.service,DocumentService,70,798,6,38,6,200,15,39,9,23
 edtech-api,com.edtech.service,UserService,62,280,9,25,13,62,10,20,2,11
 edtech-api,com.edtech.service,InvalidInstitutionalEmailException,0,4,0,0,0,2,0,1,0,1
 edtech-api,com.edtech.service,GcsStorageServiceImpl,0,65,0,0,0,17,0,5,0,5
 edtech-api,com.edtech.service,LaboratoryTokenService,8,118,1,3,3,18,1,4,0,3
 edtech-api,com.edtech.service,AuditLogService,14,83,1,7,3,21,2,8,1,5
-edtech-api,com.edtech.service,AuditExportService,265,93,18,8,40,24,11,9,1,6
+edtech-api,com.edtech.service,AuditExportService,272,93,18,8,40,24,11,9,1,6
 edtech-api,com.edtech.service,JwtService,13,86,1,3,3,22,2,7,1,6
 edtech-api,com.edtech.service,NotificationService,0,43,0,4,0,15,0,6,0,4
 edtech-api,com.edtech.service,LocalStorageServiceImpl,15,7,0,0,5,2,3,2,3,2
@@ -27,8 +27,8 @@ edtech-api,com.edtech.dto,AddProjectMemberDto,17,0,0,0,7,0,5,0,5,0
 edtech-api,com.edtech.dto,UserResponseDto,0,53,0,0,0,11,0,2,0,2
 edtech-api,com.edtech.dto,ResetPasswordDto,0,12,0,0,0,1,0,1,0,1
 edtech-api,com.edtech.dto,ProjectResponseDto,0,45,0,0,0,19,0,13,0,13
-edtech-api,com.edtech.dto,RegisterRequestDto,0,15,0,0,0,1,0,1,0,1
 edtech-api,com.edtech.dto,ComplianceStatsDto,0,52,0,0,0,22,0,15,0,15
+edtech-api,com.edtech.dto,RegisterRequestDto,0,15,0,0,0,1,0,1,0,1
 edtech-api,com.edtech.dto,CommentResponseDto,0,38,0,0,0,16,0,11,0,11
 edtech-api,com.edtech.dto,LoginRequestDto,0,9,0,0,0,1,0,1,0,1
 edtech-api,com.edtech.dto,AuthResponseDto,0,9,0,0,0,1,0,1,0,1
@@ -53,7 +53,7 @@ edtech-api,com.edtech.config,WebSocketConfig,0,48,0,0,0,7,0,3,0,3
 edtech-api,com.edtech.config,GcsConfig,22,10,2,2,7,2,2,2,0,2
 edtech-api,com.edtech.config,JwtAuthenticationFilter,2,181,6,26,0,40,6,17,0,7
 edtech-api,com.edtech.config,DataInitializer,0,253,1,1,0,64,1,3,0,3
-edtech-api,com.edtech.config,DataSeeder,431,28,1,1,105,10,3,2,2,2
+edtech-api,com.edtech.config,DataSeeder,1,458,0,2,1,114,0,5,0,4
 edtech-api,com.edtech,EdTechApplication,5,3,0,0,2,1,1,1,1,1
 edtech-api,com.edtech.repository,AuditLogSpecification,94,6,14,0,19,1,9,1,2,1
 edtech-api,com.edtech.controller,AuditController,15,270,8,18,4,72,6,13,0,5
