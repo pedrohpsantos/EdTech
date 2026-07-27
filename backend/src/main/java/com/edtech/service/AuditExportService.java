@@ -5,15 +5,15 @@ import com.edtech.model.Document;
 import com.edtech.repository.AuditLogRepository;
 import com.edtech.repository.DocumentRepository;
 import com.edtech.repository.ProjectMemberRepository;
-import com.lowagie.text.DocumentException;
-import com.lowagie.text.Font;
-import com.lowagie.text.FontFactory;
-import com.lowagie.text.PageSize;
-import com.lowagie.text.Paragraph;
-import com.lowagie.text.Phrase;
-import com.lowagie.text.pdf.PdfPCell;
-import com.lowagie.text.pdf.PdfPTable;
-import com.lowagie.text.pdf.PdfWriter;
+import org.openpdf.text.DocumentException;
+import org.openpdf.text.Font;
+import org.openpdf.text.FontFactory;
+import org.openpdf.text.PageSize;
+import org.openpdf.text.Paragraph;
+import org.openpdf.text.Phrase;
+import org.openpdf.text.pdf.PdfPCell;
+import org.openpdf.text.pdf.PdfPTable;
+import org.openpdf.text.pdf.PdfWriter;
 import java.io.ByteArrayOutputStream;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -82,7 +82,7 @@ public class AuditExportService {
   }
 
   private byte[] exportPdf(List<AuditLog> logs) {
-    com.lowagie.text.Document pdfDoc = new com.lowagie.text.Document(PageSize.A4.rotate());
+    org.openpdf.text.Document pdfDoc = new org.openpdf.text.Document(PageSize.A4.rotate());
     ByteArrayOutputStream out = new ByteArrayOutputStream();
 
     try {
