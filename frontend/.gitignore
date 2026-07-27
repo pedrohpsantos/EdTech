@@ -18,6 +18,7 @@ test-results/
 coverage/
 reports/
 html/
+.stryker-tmp/
 
 # Editor directories and files
 .vscode/*

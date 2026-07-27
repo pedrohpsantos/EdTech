@@ -5,6 +5,11 @@ import com.edtech.model.Document;
 import com.edtech.repository.AuditLogRepository;
 import com.edtech.repository.DocumentRepository;
 import com.edtech.repository.ProjectMemberRepository;
+import java.io.ByteArrayOutputStream;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Locale;
+import java.util.UUID;
 import org.openpdf.text.DocumentException;
 import org.openpdf.text.Font;
 import org.openpdf.text.FontFactory;
@@ -14,11 +19,6 @@ import org.openpdf.text.Phrase;
 import org.openpdf.text.pdf.PdfPCell;
 import org.openpdf.text.pdf.PdfPTable;
 import org.openpdf.text.pdf.PdfWriter;
-import java.io.ByteArrayOutputStream;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.Locale;
-import java.util.UUID;
 import org.springframework.stereotype.Service;
 
 /** Service responsavel por exportar trilhas de auditoria de documentos. */

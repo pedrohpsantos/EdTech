@@ -284,7 +284,6 @@
                         <param>com.edtech.*Test</param>
                     </targetTests>
                     <threads>8</threads>
-                    <withHistory>true</withHistory>
                     <!-- Baselines aligned with the current report: strict enough to catch regressions,
                          without expanding the mutation target or CI execution window. -->
                     <mutationThreshold>70</mutationThreshold>

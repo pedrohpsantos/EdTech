@@ -101,7 +101,7 @@ jobs:
         working-directory: backend
         run: |
           chmod +x mvnw
-          ./mvnw clean test-compile org.pitest:pitest-maven:mutationCoverage -B -Dpitest.threads=8 -DwithHistory=true
+          ./mvnw clean test-compile org.pitest:pitest-maven:mutationCoverage -B -Dpitest.threads=8
 
       - name: Preparar Artefatos PiTest
         if: matrix.report-type == 'backend-pitest'

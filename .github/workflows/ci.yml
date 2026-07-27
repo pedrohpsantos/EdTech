@@ -146,7 +146,7 @@ jobs:
         if: matrix.task == 'pitest'
         run: |
           chmod +x mvnw
-          ./mvnw clean test-compile org.pitest:pitest-maven:mutationCoverage -B -Dpitest.threads=8 -DwithHistory=true
+          ./mvnw clean test-compile org.pitest:pitest-maven:mutationCoverage -B -Dpitest.threads=8
 
       # --- SECURITY ---
       - name: Cache NVD Vulnerability Database
