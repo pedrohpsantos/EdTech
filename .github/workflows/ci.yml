@@ -134,7 +134,7 @@ jobs:
       # --- PITEST ---
       - name: Cache PiTest History
         if: matrix.task == 'pitest'
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: backend/target/pitHistory.txt
           key: pitest-history-${{ github.ref }}-${{ github.sha }}
@@ -283,7 +283,7 @@ jobs:
       # --- MUTATION TESTS (STRYKER) ---
       - name: Cache Stryker History
         if: matrix.task == 'mutation'
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: frontend/reports/mutation/stryker-incremental.json
           key: stryker-history-${{ github.ref }}-${{ github.sha }}

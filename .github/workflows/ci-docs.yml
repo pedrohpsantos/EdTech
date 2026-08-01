@@ -88,7 +88,7 @@ jobs:
 
       - name: Cache PiTest History
         if: matrix.report-type == 'backend-pitest'
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: backend/target/pitHistory.txt
           key: pitest-history-${{ github.ref }}-${{ github.sha }}
@@ -162,7 +162,7 @@ jobs:
 
       - name: Cache Stryker History
         if: matrix.report-type == 'frontend'
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: frontend/reports/mutation/stryker-incremental.json
           key: stryker-history-${{ github.ref }}-${{ github.sha }}
