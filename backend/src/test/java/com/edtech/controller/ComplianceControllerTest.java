@@ -1,4 +1,4 @@
-﻿package com.edtech.controller;
+package com.edtech.controller;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;

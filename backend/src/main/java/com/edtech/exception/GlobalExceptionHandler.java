@@ -1,4 +1,4 @@
-﻿package com.edtech.exception;
+package com.edtech.exception;
 
 import java.util.HashMap;
 import java.util.Map;

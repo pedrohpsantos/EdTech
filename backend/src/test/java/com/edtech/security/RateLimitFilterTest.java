@@ -1,4 +1,4 @@
-﻿package com.edtech.security;
+package com.edtech.security;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;

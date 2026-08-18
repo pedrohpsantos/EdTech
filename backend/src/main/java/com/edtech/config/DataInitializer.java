@@ -1,4 +1,4 @@
-﻿package com.edtech.config;
+package com.edtech.config;
 
 /*
  * DataInitializer foi removido e consolidado em {@link DatabaseSeeder}.
