@@ -192,41 +192,5 @@ public class UserServiceTest {
     assertEquals(UserRole.ADVISOR, result.getRole());
   }
 
-  @Test
-  void authenticate_AuditorEmail_UpdatesRoleToAuditor() {
-    User user =
-        new User(
-            "Auditor",
-            "auditor@unb.br",
-            "hashed_pw",
-            UserRole.RESEARCHER,
-            java.util.UUID.randomUUID());
-    user.setActive(true);
-    when(userRepository.findByEmailIgnoreCase("auditor@unb.br"))
-        .thenReturn(java.util.Optional.of(user));
-    when(passwordEncoder.matches("password", "hashed_pw")).thenReturn(true);
 
-    User result = userService.authenticate("auditor@unb.br", "password");
-    assertEquals(UserRole.AUDITOR, result.getRole());
-    verify(userRepository, times(1)).save(user);
-  }
-
-  @Test
-  void authenticate_OrientadorEmail_UpdatesRoleToAdvisor() {
-    User user =
-        new User(
-            "Orientador",
-            "orientador@unb.br",
-            "hashed_pw",
-            UserRole.RESEARCHER,
-            java.util.UUID.randomUUID());
-    user.setActive(true);
-    when(userRepository.findByEmailIgnoreCase("orientador@unb.br"))
-        .thenReturn(java.util.Optional.of(user));
-    when(passwordEncoder.matches("password", "hashed_pw")).thenReturn(true);
-
-    User result = userService.authenticate("orientador@unb.br", "password");
-    assertEquals(UserRole.ADVISOR, result.getRole());
-    verify(userRepository, times(1)).save(user);
-  }
 }

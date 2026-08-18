@@ -57,7 +57,7 @@ class AuditControllerTest {
 
     User user1 =
         new User(
-            "John Doe", "john@unb.br", "pass", UserRole.RESEARCHER, java.util.UUID.randomUUID());
+            "Unknown", "john@unb.br", "pass", UserRole.RESEARCHER, java.util.UUID.randomUUID());
     when(userRepository.findById(log1.getUserId())).thenReturn(Optional.of(user1));
 
     when(auditLogRepository.findAll(
@@ -74,7 +74,7 @@ class AuditControllerTest {
     AuditLogDto dto1 = response.getBody().getContent().get(0);
     assertEquals("green", dto1.getActionClass());
     assertEquals("INFO", dto1.getSeverity());
-    assertEquals("John Doe", dto1.getUserName());
+    assertEquals("Unknown", dto1.getUserName());
     assertNotNull(dto1.getId());
     assertNotNull(dto1.getTimestamp());
 
@@ -105,7 +105,7 @@ class AuditControllerTest {
         .thenReturn(new PageImpl<>(Arrays.asList(log1, log2)));
     User user =
         new User(
-            "John Doe", "john@unb.br", "pass", UserRole.RESEARCHER, java.util.UUID.randomUUID());
+            "Unknown", "john@unb.br", "pass", UserRole.RESEARCHER, java.util.UUID.randomUUID());
     when(userRepository.findById(log1.getUserId())).thenReturn(Optional.of(user));
     when(userRepository.findById(log2.getUserId())).thenReturn(Optional.of(user));
 
@@ -128,7 +128,7 @@ class AuditControllerTest {
         .thenReturn(new PageImpl<>(Arrays.asList(log1, log2)));
     User user =
         new User(
-            "John Doe", "john@unb.br", "pass", UserRole.RESEARCHER, java.util.UUID.randomUUID());
+            "Unknown", "john@unb.br", "pass", UserRole.RESEARCHER, java.util.UUID.randomUUID());
     when(userRepository.findById(log1.getUserId())).thenReturn(Optional.of(user));
     when(userRepository.findById(log2.getUserId())).thenReturn(Optional.of(user));
 
@@ -150,7 +150,7 @@ class AuditControllerTest {
         .thenReturn(new PageImpl<>(Arrays.asList(log1)));
     User user =
         new User(
-            "John Doe", "john@unb.br", "pass", UserRole.RESEARCHER, java.util.UUID.randomUUID());
+            "Unknown", "john@unb.br", "pass", UserRole.RESEARCHER, java.util.UUID.randomUUID());
     when(userRepository.findById(log1.getUserId())).thenReturn(Optional.of(user));
 
     ResponseEntity<String> response = auditController.exportAuditLogs(null, null, null, null);

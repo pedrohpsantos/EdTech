@@ -10,14 +10,14 @@ import org.springframework.core.annotation.Order;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-/** DocumentaÃ§Ã£o para GlobalExceptionHandler. */
+/** Documentação para GlobalExceptionHandler. */
 @ControllerAdvice
 @Order(org.springframework.core.Ordered.LOWEST_PRECEDENCE)
 public class GlobalExceptionHandler {
 
   private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
-  /** DocumentaÃ§Ã£o. */
+  /** Documentação. */
   @ExceptionHandler(IllegalArgumentException.class)
   public ResponseEntity<Map<String, String>> handleIllegalArgumentException(
       IllegalArgumentException ex) {
@@ -26,7 +26,7 @@ public class GlobalExceptionHandler {
     return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
   }
 
-  /** DocumentaÃ§Ã£o. */
+  /** Documentação. */
   @ExceptionHandler(UserAlreadyMemberException.class)
   public ResponseEntity<Map<String, String>> handleUserAlreadyMemberException(
       UserAlreadyMemberException ex) {
@@ -44,7 +44,7 @@ public class GlobalExceptionHandler {
     return new ResponseEntity<>(response, HttpStatus.TOO_MANY_REQUESTS);
   }
 
-  /** DocumentaÃ§Ã£o. */
+  /** Documentação. */
   @ExceptionHandler(RuntimeException.class)
   public ResponseEntity<Map<String, String>> handleRuntimeException(RuntimeException ex) {
     log.error("Unhandled runtime exception", ex);
@@ -53,7 +53,7 @@ public class GlobalExceptionHandler {
     return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
   }
 
-  /** DocumentaÃ§Ã£o. */
+  /** Documentação. */
   @ExceptionHandler(Exception.class)
   public ResponseEntity<Map<String, String>> handleGenericException(Exception ex) {
     log.error("Unhandled exception", ex);

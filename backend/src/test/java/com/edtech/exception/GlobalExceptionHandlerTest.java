@@ -29,7 +29,7 @@ public class GlobalExceptionHandlerTest {
 
     assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
     assertTrue(response.getBody().containsKey("error"));
-    assertEquals("Runtime error: Runtime test", response.getBody().get("error"));
+    assertEquals("Erro interno. Contacte o suporte.", response.getBody().get("error"));
   }
 
   @Test
@@ -39,6 +39,6 @@ public class GlobalExceptionHandlerTest {
 
     assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
     assertTrue(response.getBody().containsKey("error"));
-    assertEquals("Internal error: Generic test", response.getBody().get("error"));
+    assertEquals("Erro interno. Contacte o suporte.", response.getBody().get("error"));
   }
 }

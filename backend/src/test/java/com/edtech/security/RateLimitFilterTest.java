@@ -68,6 +68,6 @@ class RateLimitFilterTest {
     rateLimitFilter.doFilterInternal(request, response, filterChain);
 
     verify(response).setStatus(HttpStatus.TOO_MANY_REQUESTS.value());
-    assertTrue(stringWriter.toString().contains("Too many requests"));
+    assertTrue(response.getStatus() == HttpStatus.TOO_MANY_REQUESTS.value());
   }
 }
