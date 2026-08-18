@@ -3,6 +3,7 @@ package com.edtech.security;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
+import io.github.bucket4j.Bucket;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -47,7 +48,9 @@ class RateLimitFilterTest {
   void doFilterInternal_AllowedForAuthRoutes() throws ServletException, IOException {
     when(request.getRequestURI()).thenReturn("/api/auth/login");
     when(request.getRemoteAddr()).thenReturn("127.0.0.1");
-    when(rateLimitingService.allowRequest("127.0.0.1")).thenReturn(true);
+    Bucket mockBucket = mock(Bucket.class);
+    when(mockBucket.tryConsume(1)).thenReturn(true);
+    when(rateLimitingService.resolveBucket("127.0.0.1")).thenReturn(mockBucket);
 
     rateLimitFilter.doFilterInternal(request, response, filterChain);
 
@@ -58,7 +61,9 @@ class RateLimitFilterTest {
   void doFilterInternal_BlockedAfterLimit() throws ServletException, IOException {
     when(request.getRequestURI()).thenReturn("/api/auth/login");
     when(request.getRemoteAddr()).thenReturn("127.0.0.2");
-    when(rateLimitingService.allowRequest("127.0.0.2")).thenReturn(false);
+    Bucket mockBucket = mock(Bucket.class);
+    when(mockBucket.tryConsume(1)).thenReturn(false);
+    when(rateLimitingService.resolveBucket("127.0.0.2")).thenReturn(mockBucket);
 
     rateLimitFilter.doFilterInternal(request, response, filterChain);
 
