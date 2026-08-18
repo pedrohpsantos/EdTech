@@ -1,23 +1,23 @@
-package com.edtech.exception;
+﻿package com.edtech.exception;
 
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-/** Documentação para GlobalExceptionHandler. */
+/** DocumentaÃ§Ã£o para GlobalExceptionHandler. */
 @ControllerAdvice
 @Order(org.springframework.core.Ordered.LOWEST_PRECEDENCE)
 public class GlobalExceptionHandler {
 
   private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
-  /** Documentação. */
+  /** DocumentaÃ§Ã£o. */
   @ExceptionHandler(IllegalArgumentException.class)
   public ResponseEntity<Map<String, String>> handleIllegalArgumentException(
       IllegalArgumentException ex) {
@@ -26,7 +26,7 @@ public class GlobalExceptionHandler {
     return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
   }
 
-  /** Documentação. */
+  /** DocumentaÃ§Ã£o. */
   @ExceptionHandler(UserAlreadyMemberException.class)
   public ResponseEntity<Map<String, String>> handleUserAlreadyMemberException(
       UserAlreadyMemberException ex) {
@@ -35,7 +35,7 @@ public class GlobalExceptionHandler {
     return new ResponseEntity<>(response, HttpStatus.CONFLICT);
   }
 
-  /** Trata requisições bloqueadas por excesso de tentativas (HTTP 429). */
+  /** Trata requisiÃ§Ãµes bloqueadas por excesso de tentativas (HTTP 429). */
   @ExceptionHandler(RateLimitExceededException.class)
   public ResponseEntity<Map<String, String>> handleRateLimitExceededException(
       RateLimitExceededException ex) {
@@ -44,7 +44,7 @@ public class GlobalExceptionHandler {
     return new ResponseEntity<>(response, HttpStatus.TOO_MANY_REQUESTS);
   }
 
-  /** Documentação. */
+  /** DocumentaÃ§Ã£o. */
   @ExceptionHandler(RuntimeException.class)
   public ResponseEntity<Map<String, String>> handleRuntimeException(RuntimeException ex) {
     log.error("Unhandled runtime exception", ex);
@@ -53,7 +53,7 @@ public class GlobalExceptionHandler {
     return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
   }
 
-  /** Documentação. */
+  /** DocumentaÃ§Ã£o. */
   @ExceptionHandler(Exception.class)
   public ResponseEntity<Map<String, String>> handleGenericException(Exception ex) {
     log.error("Unhandled exception", ex);
@@ -62,3 +62,4 @@ public class GlobalExceptionHandler {
     return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
   }
 }
+

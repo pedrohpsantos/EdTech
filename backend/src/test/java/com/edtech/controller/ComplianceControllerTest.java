@@ -1,4 +1,4 @@
-package com.edtech.controller;
+﻿package com.edtech.controller;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -9,25 +9,37 @@ import static org.mockito.Mockito.when;
 import com.edtech.dto.ComplianceStatsDto;
 import com.edtech.model.Document;
 import com.edtech.model.DocumentStatus;
+import com.edtech.model.User;
 import com.edtech.repository.AuditLogRepository;
 import com.edtech.repository.DocumentRepository;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 
 class ComplianceControllerTest {
 
   private DocumentRepository documentRepository;
   private AuditLogRepository auditLogRepository;
   private ComplianceController complianceController;
+  private Authentication authentication;
+  private UUID instId;
 
   @BeforeEach
   void setUp() {
     documentRepository = mock(DocumentRepository.class);
     auditLogRepository = mock(AuditLogRepository.class);
     complianceController = new ComplianceController(documentRepository, auditLogRepository);
+    
+    instId = UUID.randomUUID();
+    User mockUser = mock(User.class);
+    when(mockUser.getInstitutionId()).thenReturn(instId);
+    
+    authentication = mock(Authentication.class);
+    when(authentication.getPrincipal()).thenReturn(mockUser);
   }
 
   @Test
@@ -35,7 +47,7 @@ class ComplianceControllerTest {
     when(documentRepository.findAll()).thenReturn(Collections.emptyList());
     when(auditLogRepository.count()).thenReturn(10L);
 
-    ResponseEntity<ComplianceStatsDto> response = complianceController.getComplianceStats();
+    ResponseEntity<ComplianceStatsDto> response = complianceController.getComplianceStats(authentication);
 
     ComplianceStatsDto body = response.getBody();
     assertNotNull(body);
@@ -84,13 +96,15 @@ class ComplianceControllerTest {
   void getComplianceStats_WithDocuments() {
     Document doc1 = new Document();
     doc1.setStatus(DocumentStatus.APPROVED);
+    doc1.setInstitutionId(instId);
     Document doc2 = new Document();
     doc2.setStatus(DocumentStatus.PENDING_REVIEW);
+    doc2.setInstitutionId(instId);
 
     when(documentRepository.findAll()).thenReturn(Arrays.asList(doc1, doc2));
     when(auditLogRepository.count()).thenReturn(5L);
 
-    ResponseEntity<ComplianceStatsDto> response = complianceController.getComplianceStats();
+    ResponseEntity<ComplianceStatsDto> response = complianceController.getComplianceStats(authentication);
 
     ComplianceStatsDto body = response.getBody();
     assertNotNull(body);
@@ -136,15 +150,18 @@ class ComplianceControllerTest {
   void getComplianceStats_WithMostlyApprovedDocuments_ReturnsPartialPolicy() {
     Document approved1 = new Document();
     approved1.setStatus(DocumentStatus.APPROVED);
+    approved1.setInstitutionId(instId);
     Document approved2 = new Document();
     approved2.setStatus(DocumentStatus.APPROVED);
+    approved2.setInstitutionId(instId);
     Document pending = new Document();
     pending.setStatus(DocumentStatus.PENDING_REVIEW);
+    pending.setInstitutionId(instId);
 
     when(documentRepository.findAll()).thenReturn(Arrays.asList(approved1, approved2, pending));
     when(auditLogRepository.count()).thenReturn(7L);
 
-    ResponseEntity<ComplianceStatsDto> response = complianceController.getComplianceStats();
+    ResponseEntity<ComplianceStatsDto> response = complianceController.getComplianceStats(authentication);
 
     ComplianceStatsDto body = response.getBody();
     assertNotNull(body);
@@ -170,13 +187,15 @@ class ComplianceControllerTest {
   void getComplianceStats_WithAllDocumentsApproved_ReturnsCompliantPolicy() {
     Document approved1 = new Document();
     approved1.setStatus(DocumentStatus.APPROVED);
+    approved1.setInstitutionId(instId);
     Document approved2 = new Document();
     approved2.setStatus(DocumentStatus.APPROVED);
+    approved2.setInstitutionId(instId);
 
     when(documentRepository.findAll()).thenReturn(Arrays.asList(approved1, approved2));
     when(auditLogRepository.count()).thenReturn(2L);
 
-    ResponseEntity<ComplianceStatsDto> response = complianceController.getComplianceStats();
+    ResponseEntity<ComplianceStatsDto> response = complianceController.getComplianceStats(authentication);
 
     ComplianceStatsDto body = response.getBody();
     assertNotNull(body);

@@ -12,6 +12,7 @@ import com.edtech.model.User;
 import com.edtech.model.UserRole;
 import com.edtech.repository.UserRepository;
 import java.util.Optional;
+import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

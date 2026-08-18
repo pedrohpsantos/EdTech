@@ -1,4 +1,4 @@
-package com.edtech.service;
+﻿package com.edtech.service;
 
 import com.edtech.model.AuditAction;
 import com.edtech.model.AuditLog;
@@ -133,3 +133,4 @@ public class AuditLogService {
     return log(action, userId, DOCUMENT_RESOURCE_TYPE, documentId, null, details);
   }
 }
+

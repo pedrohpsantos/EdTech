@@ -1,4 +1,4 @@
-package com.edtech.security;
+﻿package com.edtech.security;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 class RateLimitFilterTest {
 
   private RateLimitFilter rateLimitFilter;
+  private RateLimitingService rateLimitingService;
   private HttpServletRequest request;
   private HttpServletResponse response;
   private FilterChain filterChain;
@@ -24,7 +25,8 @@ class RateLimitFilterTest {
 
   @BeforeEach
   void setUp() throws IOException {
-    rateLimitFilter = new RateLimitFilter();
+    rateLimitingService = mock(RateLimitingService.class);
+    rateLimitFilter = new RateLimitFilter(rateLimitingService);
     request = mock(HttpServletRequest.class);
     response = mock(HttpServletResponse.class);
     filterChain = mock(FilterChain.class);
@@ -45,6 +47,7 @@ class RateLimitFilterTest {
   void doFilterInternal_AllowedForAuthRoutes() throws ServletException, IOException {
     when(request.getRequestURI()).thenReturn("/api/auth/login");
     when(request.getRemoteAddr()).thenReturn("127.0.0.1");
+    when(rateLimitingService.allowRequest("127.0.0.1")).thenReturn(true);
 
     rateLimitFilter.doFilterInternal(request, response, filterChain);
 
@@ -55,12 +58,7 @@ class RateLimitFilterTest {
   void doFilterInternal_BlockedAfterLimit() throws ServletException, IOException {
     when(request.getRequestURI()).thenReturn("/api/auth/login");
     when(request.getRemoteAddr()).thenReturn("127.0.0.2");
-
-    for (int i = 0; i < 5; i++) {
-      rateLimitFilter.doFilterInternal(request, response, filterChain);
-    }
-
-    verify(filterChain, times(5)).doFilter(request, response);
+    when(rateLimitingService.allowRequest("127.0.0.2")).thenReturn(false);
 
     rateLimitFilter.doFilterInternal(request, response, filterChain);
 

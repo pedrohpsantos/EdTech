@@ -42,6 +42,9 @@ public class ComplianceController {
   @GetMapping
   @PreAuthorize("hasRole('AUDITOR')")
   public ResponseEntity<ComplianceStatsDto> getComplianceStats(Authentication authentication) {
+    if (authentication == null || authentication.getPrincipal() == null) {
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    }
     com.edtech.model.User currentUser = (com.edtech.model.User) authentication.getPrincipal();
     java.util.UUID institutionId = currentUser.getInstitutionId();
 
