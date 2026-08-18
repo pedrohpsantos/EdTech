@@ -346,42 +346,42 @@ jobs:
         run: uv sync
 
       - name: Download JaCoCo Reports
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         continue-on-error: true
         with:
           name: backend-jacoco-reports
           path: docs/
 
       - name: Download PiTest Reports
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         continue-on-error: true
         with:
           name: backend-pitest-reports
           path: docs/
 
       - name: Download Frontend Reports
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         continue-on-error: true
         with:
           name: frontend-reports
           path: docs/
           
       - name: Download Lighthouse Reports
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         continue-on-error: true
         with:
           name: lighthouse-reports
           path: docs/lighthouse/
 
       - name: Download Performance Reports
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         continue-on-error: true
         with:
           name: performance-reports
           path: docs/
 
       - name: Download API security contract report
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           name: api-security-contract-reports
           path: docs/
