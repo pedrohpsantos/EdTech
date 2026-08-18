@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -40,8 +41,13 @@ public class ComplianceController {
    */
   @GetMapping
   @PreAuthorize("hasRole('AUDITOR')")
-  public ResponseEntity<ComplianceStatsDto> getComplianceStats() {
-    List<Document> allDocs = documentRepository.findAll();
+  public ResponseEntity<ComplianceStatsDto> getComplianceStats(Authentication authentication) {
+    com.edtech.model.User currentUser = (com.edtech.model.User) authentication.getPrincipal();
+    java.util.UUID institutionId = currentUser.getInstitutionId();
+
+    List<Document> allDocs = documentRepository.findAll().stream()
+        .filter(d -> institutionId.equals(d.getInstitutionId()))
+        .collect(java.util.stream.Collectors.toList());
     long totalDocs = allDocs.size();
     long approvedDocs =
         allDocs.stream().filter(d -> d.getStatus() == DocumentStatus.APPROVED).count();
