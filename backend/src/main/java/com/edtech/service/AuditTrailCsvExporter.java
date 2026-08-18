@@ -63,6 +63,14 @@ public class AuditTrailCsvExporter {
 
   private String escape(String value) {
     String safeValue = value != null ? value : "";
+    // Prevent CSV formula injection (CWE-1236)
+    if (!safeValue.isEmpty()) {
+      char first = safeValue.charAt(0);
+      if (first == '=' || first == '+' || first == '-' || first == '@'
+          || first == '\t' || first == '\r') {
+        safeValue = "'" + safeValue;
+      }
+    }
     if (safeValue.contains("\"")
         || safeValue.contains(",")
         || safeValue.contains("\n")
