@@ -33,11 +33,8 @@ public class UserServiceSecurityTest {
 
   @BeforeEach
   void setUp() {
-    mockUser = new User();
-    mockUser.setEmail("auditor.malicious@unb.br");
-    mockUser.setPasswordHash("hashed_password");
-    mockUser.setRole(UserRole.RESEARCHER); // Default role
-    mockUser.setActive(true);
+      mockUser = new User("Auditor Malicious", "auditor.malicious@unb.br", "hashed_password", UserRole.RESEARCHER, UUID.randomUUID());
+      mockUser.setActive(true);
   }
 
   @Test
