@@ -15,6 +15,7 @@ class WebSocketConfigTest {
   @Test
   void testConfigureMessageBroker() {
     WebSocketConfig config = new WebSocketConfig();
+    org.springframework.test.util.ReflectionTestUtils.setField(config, "allowedOrigins", "*");
     MessageBrokerRegistry registry = mock(MessageBrokerRegistry.class);
 
     when(registry.enableSimpleBroker(anyString(), anyString())).thenReturn(null);
@@ -31,6 +32,7 @@ class WebSocketConfigTest {
   @Test
   void testRegisterStompEndpoints() {
     WebSocketConfig config = new WebSocketConfig();
+    org.springframework.test.util.ReflectionTestUtils.setField(config, "allowedOrigins", "*");
     StompEndpointRegistry registry = mock(StompEndpointRegistry.class);
     StompWebSocketEndpointRegistration registration =
         mock(StompWebSocketEndpointRegistration.class);
