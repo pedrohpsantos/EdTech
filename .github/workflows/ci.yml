@@ -194,7 +194,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - name: Set up Node 24
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: '24'
           cache: 'npm'
@@ -516,7 +516,7 @@ jobs:
           workload_identity_provider: projects/128660331605/locations/global/workloadIdentityPools/pool-1d-edt3ch/providers/github-actions-provider
           service_account: edtech-backend@edtech-storage-501117.iam.gserviceaccount.com
       - name: Set up Node 24
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: '24'
       - name: Download Frontend Artifact
@@ -547,7 +547,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - name: Set up Node 24
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: '24'
       - name: Install dependencies
@@ -643,7 +643,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - name: Set up Node 24
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: '24'
       - name: Run API Security Contract
@@ -679,7 +679,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - name: Setup Node.js for Lighthouse
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: '24'
       - name: Run Lighthouse Audit
