@@ -54,20 +54,6 @@ public class UserService {
       throw new InvalidCredentialsException("Credenciais inválidas.");
     }
 
-    boolean roleChanged = false;
-    if (normalizedEmail.contains("auditor") && user.getRole() != UserRole.AUDITOR) {
-      user.setRole(UserRole.AUDITOR);
-      roleChanged = true;
-    } else if ((normalizedEmail.contains("orientador") || normalizedEmail.contains("advisor"))
-        && user.getRole() != UserRole.ADVISOR) {
-      user.setRole(UserRole.ADVISOR);
-      roleChanged = true;
-    }
-
-    if (roleChanged) {
-      userRepository.save(user);
-    }
-
     return user;
   }
 

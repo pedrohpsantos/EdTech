@@ -5,11 +5,17 @@ import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.core.annotation.Order;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 /** Documentação para GlobalExceptionHandler. */
 @ControllerAdvice
+@Order(org.springframework.core.Ordered.LOWEST_PRECEDENCE)
 public class GlobalExceptionHandler {
+
+  private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
   /** Documentação. */
   @ExceptionHandler(IllegalArgumentException.class)
@@ -41,18 +47,18 @@ public class GlobalExceptionHandler {
   /** Documentação. */
   @ExceptionHandler(RuntimeException.class)
   public ResponseEntity<Map<String, String>> handleRuntimeException(RuntimeException ex) {
-    ex.printStackTrace();
+    log.error("Unhandled runtime exception", ex);
     Map<String, String> response = new HashMap<>();
-    response.put("error", "Runtime error: " + ex.getMessage());
+    response.put("error", "Erro interno. Contacte o suporte.");
     return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
   }
 
   /** Documentação. */
   @ExceptionHandler(Exception.class)
   public ResponseEntity<Map<String, String>> handleGenericException(Exception ex) {
-    ex.printStackTrace();
+    log.error("Unhandled exception", ex);
     Map<String, String> response = new HashMap<>();
-    response.put("error", "Internal error: " + ex.getMessage());
+    response.put("error", "Erro interno. Contacte o suporte.");
     return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
   }
 }

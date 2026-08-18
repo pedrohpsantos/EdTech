@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -76,6 +77,12 @@ public class AuditController {
             AuditLogSpecification.getFilter(search, action, start, end), pageable);
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
 
+    java.util.Set<UUID> userIds = logsPage.getContent().stream()
+        .map(AuditLog::getUserId)
+        .collect(java.util.stream.Collectors.toSet());
+    java.util.Map<UUID, User> userMap = userRepository.findAllById(userIds).stream()
+        .collect(java.util.stream.Collectors.toMap(User::getId, u -> u));
+
     List<AuditLogDto> dtos =
         logsPage.getContent().stream()
             .map(
@@ -85,7 +92,7 @@ public class AuditController {
                   dto.setTimestamp(log.getCreatedAt().format(formatter));
                   dto.setAction(log.getAction().name());
 
-                  User user = userRepository.findById(log.getUserId()).orElse(null);
+                  User user = userMap.get(log.getUserId());
                   dto.setUserName(user != null ? user.getName() : "Unknown");
 
                   dto.setIp(log.getIpAddress());

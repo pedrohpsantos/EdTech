@@ -63,11 +63,23 @@ public class AuditLogService {
       UUID resourceId,
       String ip,
       String details) {
+    UUID institutionId = resolveInstitutionId();
+    return log(action, userId, resourceType, resourceId, ip, details, institutionId);
+  }
+
+  public AuditLog log(
+      AuditAction action,
+      UUID userId,
+      String resourceType,
+      UUID resourceId,
+      String ip,
+      String details,
+      UUID institutionId) {
     try {
       String clientIp = ip != null ? ip : getClientIp();
       AuditLog auditLog =
           new AuditLog(
-              java.util.UUID.fromString("00000000-0000-0000-0000-000000000001"),
+              institutionId,
               userId,
               action,
               resourceType,
@@ -79,6 +91,20 @@ public class AuditLogService {
       log.error("Erro em salvar o log da auditoria: {}", e.getMessage(), e);
       return null;
     }
+  }
+
+  private UUID resolveInstitutionId() {
+    try {
+      org.springframework.security.core.Authentication auth =
+          org.springframework.security.core.context.SecurityContextHolder.getContext()
+              .getAuthentication();
+      if (auth != null && auth.getPrincipal() instanceof com.edtech.model.User user) {
+        return user.getInstitutionId();
+      }
+    } catch (Exception e) {
+      log.debug("Could not resolve institutionId from security context", e);
+    }
+    return java.util.UUID.fromString("00000000-0000-0000-0000-000000000001");
   }
 
   /**
