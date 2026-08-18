@@ -31,7 +31,7 @@ public class RateLimitFilter extends OncePerRequestFilter {
     String path = request.getRequestURI();
 
     if (path.startsWith("/api/auth/")) {
-      String clientIp = request.getRemoteAddr();
+      String clientIp = request.getRemoteAddr() != null ? request.getRemoteAddr() : "unknown";
       io.github.bucket4j.Bucket bucket = rateLimitingService.resolveBucket(clientIp);
 
       if (bucket.tryConsume(1)) {
