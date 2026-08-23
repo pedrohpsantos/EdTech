@@ -1,7 +1,7 @@
 {
   "name": "EdTech Academic",
   "short_name": "EdTech",
-  "description": "Governança de pesquisa acadêmica.",
+  "description": "Governan\u00e7a de pesquisa acad\u00eamica.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#1c093a",
@@ -11,6 +11,12 @@
       "src": "/icons/pwa-icon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
       "purpose": "any maskable"
     }
   ]

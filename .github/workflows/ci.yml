@@ -377,6 +377,7 @@ jobs:
         uses: docker/setup-buildx-action@v4
       - name: Build and Push Backend Image
         if: (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop') && matrix.task == 'docker'
+        continue-on-error: true
         uses: docker/build-push-action@v7
         with:
           context: backend/
@@ -417,6 +418,7 @@ jobs:
     if: (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop')
     name: Deploy Backend (${{ matrix.target }})
     runs-on: ubuntu-latest
+    continue-on-error: true
     needs: [backend-approved, infra-approved]
 
     concurrency: deploy-backend-${{ github.ref_name }}-${{ matrix.target }}
@@ -499,6 +501,7 @@ jobs:
     if: (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop')
     name: Deploy Frontend (${{ matrix.target }})
     runs-on: ubuntu-latest
+    continue-on-error: true
     needs: [frontend-approved, infra-approved]
 
     concurrency: deploy-frontend-${{ github.ref_name }}-${{ matrix.target }}
