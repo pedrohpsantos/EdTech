@@ -2,15 +2,15 @@ package com.edtech.exception;
 
 import java.util.HashMap;
 import java.util.Map;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-/** Documentação para GlobalExceptionHandler. */
+/** DocumentaçãonHandler. */
 @ControllerAdvice
 @Order(org.springframework.core.Ordered.LOWEST_PRECEDENCE)
 public class GlobalExceptionHandler {
@@ -35,7 +35,7 @@ public class GlobalExceptionHandler {
     return new ResponseEntity<>(response, HttpStatus.CONFLICT);
   }
 
-  /** Trata requisiÃ§Ãµes bloqueadas por excesso de tentativas (HTTP 429). */
+  /** Trata requisiçõesso de tentativas (HTTP 429). */
   @ExceptionHandler(RateLimitExceededException.class)
   public ResponseEntity<Map<String, String>> handleRateLimitExceededException(
       RateLimitExceededException ex) {

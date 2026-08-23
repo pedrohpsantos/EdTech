@@ -67,6 +67,7 @@ public class AuditLogService {
     return log(action, userId, resourceType, resourceId, ip, details, institutionId);
   }
 
+  /** Javadoc. */
   public AuditLog log(
       AuditAction action,
       UUID userId,
