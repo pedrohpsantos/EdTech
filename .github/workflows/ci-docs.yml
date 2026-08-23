@@ -24,6 +24,20 @@ concurrency:
 jobs:
   generate-reports:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:15-alpine
+        env:
+          POSTGRES_USER: edtech_user
+          POSTGRES_PASSWORD: edtech_password
+          POSTGRES_DB: edtech_db_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     strategy:
       fail-fast: false
       matrix:
@@ -252,6 +266,13 @@ jobs:
           name: lighthouse-reports
           path: tests/lighthouse/index.html
 
+      - name: Setup Java
+        if: matrix.report-type == 'api-security-contract' || matrix.report-type == 'performance'
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
       # ==========================
       # PERFORMANCE
       # ==========================
@@ -268,12 +289,28 @@ jobs:
           sudo apt-get update
           sudo apt-get install k6
 
+      - name: Start Local Backend (Performance)
+        if: matrix.report-type == 'performance'
+        run: |
+          cd backend
+          ./mvnw spring-boot:start
+        env:
+          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/edtech_db_test
+          SPRING_DATASOURCE_USERNAME: edtech_user
+          SPRING_DATASOURCE_PASSWORD: edtech_password
+
       - name: Executar Testes de Carga (K6)
         if: matrix.report-type == 'performance'
         working-directory: tests/performance
         env:
-          API_URL: 'https://edtech-backend-shv6qbpf4q-rj.a.run.app'
+          API_URL: 'http://localhost:8080'
         run: k6 run load-test.js || true
+
+      - name: Stop Local Backend (Performance)
+        if: always() && matrix.report-type == 'performance'
+        run: |
+          cd backend
+          ./mvnw spring-boot:stop || true
 
       - name: Preparar Artefato K6
         if: matrix.report-type == 'performance'
@@ -293,11 +330,27 @@ jobs:
       # ==========================
       # API SECURITY CONTRACT
       # ==========================
+      - name: Start Local Backend
+        if: matrix.report-type == 'api-security-contract'
+        run: |
+          cd backend
+          ./mvnw spring-boot:start
+        env:
+          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/edtech_db_test
+          SPRING_DATASOURCE_USERNAME: edtech_user
+          SPRING_DATASOURCE_PASSWORD: edtech_password
+
       - name: Run API security contract
         if: matrix.report-type == 'api-security-contract'
         env:
-          API_URL: 'https://edtech-backend-shv6qbpf4q-rj.a.run.app'
+          API_URL: 'http://localhost:8080'
         run: node tests/api-contract/production-security-contract.mjs
+
+      - name: Stop Local Backend
+        if: always() && matrix.report-type == 'api-security-contract'
+        run: |
+          cd backend
+          ./mvnw spring-boot:stop || true
 
       - name: Prepare API security contract report
         if: matrix.report-type == 'api-security-contract'
