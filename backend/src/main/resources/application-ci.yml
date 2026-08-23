@@ -6,3 +6,5 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+jwt:
+  secret: dummy_ci_secret_key_which_must_be_long_enough_for_hmac_sha256_at_least_32_bytes_long
