@@ -43,10 +43,14 @@ public class ComplianceController {
   @GetMapping
   @PreAuthorize("hasRole('AUDITOR')")
   public ResponseEntity<ComplianceStatsDto> getComplianceStats(Authentication authentication) {
-    if (authentication == null || authentication.getPrincipal() == null) {
+    if (authentication == null) {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
-    com.edtech.model.User currentUser = (com.edtech.model.User) authentication.getPrincipal();
+    Object principal = authentication.getPrincipal();
+    if (!(principal instanceof com.edtech.model.User)) {
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    }
+    com.edtech.model.User currentUser = (com.edtech.model.User) principal;
     java.util.UUID institutionId = currentUser.getInstitutionId();
 
     List<Document> allDocs = documentRepository.findAll().stream()
