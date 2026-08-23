@@ -27,7 +27,8 @@ public class SecurityHeadersFilter extends OncePerRequestFilter {
 
     String requestId = request.getHeader("X-Request-ID");
     if (requestId != null) {
-      response.setHeader("X-Request-ID", requestId);
+      String sanitized = requestId.replaceAll("[\r\n]", "");
+      response.setHeader("X-Request-ID", sanitized);
     }
 
     filterChain.doFilter(request, response);
