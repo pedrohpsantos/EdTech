@@ -63,22 +63,49 @@ public class AuditLogService {
       UUID resourceId,
       String ip,
       String details) {
+<span class="fc" id="L66">    UUID institutionId = resolveInstitutionId();</span>
+<span class="fc" id="L67">    return log(action, userId, resourceType, resourceId, ip, details, institutionId);</span>
+  }
+
+  /** Javadoc. */
+  public AuditLog log(
+      AuditAction action,
+      UUID userId,
+      String resourceType,
+      UUID resourceId,
+      String ip,
+      String details,
+      UUID institutionId) {
     try {
-<span class="fc bfc" id="L67" title="All 2 branches covered.">      String clientIp = ip != null ? ip : getClientIp();</span>
-<span class="fc" id="L68">      AuditLog auditLog =</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">      String clientIp = ip != null ? ip : getClientIp();</span>
+<span class="fc" id="L81">      AuditLog auditLog =</span>
           new AuditLog(
-<span class="fc" id="L70">              java.util.UUID.fromString(&quot;00000000-0000-0000-0000-000000000001&quot;),</span>
+              institutionId,
               userId,
               action,
               resourceType,
               resourceId,
               clientIp,
               details);
-<span class="fc" id="L77">      return auditLogRepository.save(auditLog);</span>
-<span class="fc" id="L78">    } catch (Exception e) {</span>
-<span class="fc" id="L79">      log.error(&quot;Erro em salvar o log da auditoria: {}&quot;, e.getMessage(), e);</span>
-<span class="fc" id="L80">      return null;</span>
+<span class="fc" id="L90">      return auditLogRepository.save(auditLog);</span>
+<span class="fc" id="L91">    } catch (Exception e) {</span>
+<span class="fc" id="L92">      log.error(&quot;Erro em salvar o log da auditoria: {}&quot;, e.getMessage(), e);</span>
+<span class="fc" id="L93">      return null;</span>
     }
+  }
+
+  private UUID resolveInstitutionId() {
+    try {
+      org.springframework.security.core.Authentication auth =
+<span class="fc" id="L100">          org.springframework.security.core.context.SecurityContextHolder.getContext()</span>
+<span class="fc" id="L101">              .getAuthentication();</span>
+<span class="pc bpc" id="L102" title="3 of 4 branches missed.">      if (auth != null &amp;&amp; auth.getPrincipal() instanceof com.edtech.model.User user) {</span>
+<span class="nc" id="L103">        return user.getInstitutionId();</span>
+      }
+<span class="nc" id="L105">    } catch (Exception e) {</span>
+<span class="nc" id="L106">      log.debug(&quot;Could not resolve institutionId from security context&quot;, e);</span>
+<span class="fc" id="L107">    }</span>
+<span class="fc" id="L108">    return java.util.UUID.fromString(&quot;00000000-0000-0000-0000-000000000001&quot;);</span>
   }
 
   /**
@@ -90,7 +117,7 @@ public class AuditLogService {
    * @return Log de auditoria salvo.
    */
   public AuditLog logAction(UUID userId, AuditAction action, String details) {
-<span class="fc" id="L93">    return log(action, userId, null, null, null, details);</span>
+<span class="fc" id="L120">    return log(action, userId, null, null, null, details);</span>
   }
 
   /**
@@ -104,7 +131,8 @@ public class AuditLogService {
    */
   public AuditLog logDocumentAction(
       UUID userId, AuditAction action, UUID documentId, String details) {
-<span class="nc" id="L107">    return log(action, userId, DOCUMENT_RESOURCE_TYPE, documentId, null, details);</span>
+<span class="nc" id="L134">    return log(action, userId, DOCUMENT_RESOURCE_TYPE, documentId, null, details);</span>
   }
 }
+
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

@@ -2,58 +2,65 @@
 
 import java.util.HashMap;
 import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-/** Documentação para GlobalExceptionHandler. */
+/** DocumentaçãonHandler. */
 @ControllerAdvice
-<span class="fc" id="L12">public class GlobalExceptionHandler {</span>
+@Order(org.springframework.core.Ordered.LOWEST_PRECEDENCE)
+<span class="fc" id="L16">public class GlobalExceptionHandler {</span>
+
+<span class="fc" id="L18">  private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);</span>
 
   /** Documentação. */
   @ExceptionHandler(IllegalArgumentException.class)
   public ResponseEntity&lt;Map&lt;String, String&gt;&gt; handleIllegalArgumentException(
       IllegalArgumentException ex) {
-<span class="fc" id="L18">    Map&lt;String, String&gt; response = new HashMap&lt;&gt;();</span>
-<span class="fc" id="L19">    response.put(&quot;error&quot;, ex.getMessage());</span>
-<span class="fc" id="L20">    return new ResponseEntity&lt;&gt;(response, HttpStatus.BAD_REQUEST);</span>
+<span class="fc" id="L24">    Map&lt;String, String&gt; response = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L25">    response.put(&quot;error&quot;, ex.getMessage());</span>
+<span class="fc" id="L26">    return new ResponseEntity&lt;&gt;(response, HttpStatus.BAD_REQUEST);</span>
   }
 
   /** Documentação. */
   @ExceptionHandler(UserAlreadyMemberException.class)
   public ResponseEntity&lt;Map&lt;String, String&gt;&gt; handleUserAlreadyMemberException(
       UserAlreadyMemberException ex) {
-<span class="nc" id="L27">    Map&lt;String, String&gt; response = new HashMap&lt;&gt;();</span>
-<span class="nc" id="L28">    response.put(&quot;error&quot;, ex.getMessage());</span>
-<span class="nc" id="L29">    return new ResponseEntity&lt;&gt;(response, HttpStatus.CONFLICT);</span>
+<span class="nc" id="L33">    Map&lt;String, String&gt; response = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L34">    response.put(&quot;error&quot;, ex.getMessage());</span>
+<span class="nc" id="L35">    return new ResponseEntity&lt;&gt;(response, HttpStatus.CONFLICT);</span>
   }
 
-  /** Trata requisições bloqueadas por excesso de tentativas (HTTP 429). */
+  /** Trata requisiçõesso de tentativas (HTTP 429). */
   @ExceptionHandler(RateLimitExceededException.class)
   public ResponseEntity&lt;Map&lt;String, String&gt;&gt; handleRateLimitExceededException(
       RateLimitExceededException ex) {
-<span class="fc" id="L36">    Map&lt;String, String&gt; response = new HashMap&lt;&gt;();</span>
-<span class="fc" id="L37">    response.put(&quot;error&quot;, ex.getMessage());</span>
-<span class="fc" id="L38">    return new ResponseEntity&lt;&gt;(response, HttpStatus.TOO_MANY_REQUESTS);</span>
+<span class="fc" id="L42">    Map&lt;String, String&gt; response = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L43">    response.put(&quot;error&quot;, ex.getMessage());</span>
+<span class="fc" id="L44">    return new ResponseEntity&lt;&gt;(response, HttpStatus.TOO_MANY_REQUESTS);</span>
   }
 
   /** Documentação. */
   @ExceptionHandler(RuntimeException.class)
   public ResponseEntity&lt;Map&lt;String, String&gt;&gt; handleRuntimeException(RuntimeException ex) {
-<span class="fc" id="L44">    ex.printStackTrace();</span>
-<span class="fc" id="L45">    Map&lt;String, String&gt; response = new HashMap&lt;&gt;();</span>
-<span class="fc" id="L46">    response.put(&quot;error&quot;, &quot;Runtime error: &quot; + ex.getMessage());</span>
-<span class="fc" id="L47">    return new ResponseEntity&lt;&gt;(response, HttpStatus.INTERNAL_SERVER_ERROR);</span>
+<span class="fc" id="L50">    log.error(&quot;Unhandled runtime exception&quot;, ex);</span>
+<span class="fc" id="L51">    Map&lt;String, String&gt; response = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L52">    response.put(&quot;error&quot;, &quot;Erro interno. Contacte o suporte.&quot;);</span>
+<span class="fc" id="L53">    return new ResponseEntity&lt;&gt;(response, HttpStatus.INTERNAL_SERVER_ERROR);</span>
   }
 
   /** Documentação. */
   @ExceptionHandler(Exception.class)
   public ResponseEntity&lt;Map&lt;String, String&gt;&gt; handleGenericException(Exception ex) {
-<span class="fc" id="L53">    ex.printStackTrace();</span>
-<span class="fc" id="L54">    Map&lt;String, String&gt; response = new HashMap&lt;&gt;();</span>
-<span class="fc" id="L55">    response.put(&quot;error&quot;, &quot;Internal error: &quot; + ex.getMessage());</span>
-<span class="fc" id="L56">    return new ResponseEntity&lt;&gt;(response, HttpStatus.INTERNAL_SERVER_ERROR);</span>
+<span class="fc" id="L59">    log.error(&quot;Unhandled exception&quot;, ex);</span>
+<span class="fc" id="L60">    Map&lt;String, String&gt; response = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L61">    response.put(&quot;error&quot;, &quot;Erro interno. Contacte o suporte.&quot;);</span>
+<span class="fc" id="L62">    return new ResponseEntity&lt;&gt;(response, HttpStatus.INTERNAL_SERVER_ERROR);</span>
   }
 }
+
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

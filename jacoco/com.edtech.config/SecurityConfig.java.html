@@ -71,8 +71,8 @@ public class SecurityConfig {
 <span class="fc" id="L71">                    .permitAll()</span>
 <span class="fc" id="L72">                    .requestMatchers(&quot;/ws-edtech/**&quot;)</span>
 <span class="fc" id="L73">                    .permitAll()</span>
-<span class="fc" id="L74">                    .requestMatchers(&quot;/actuator/**&quot;)</span>
-<span class="fc" id="L75">                    .permitAll()</span>
+<span class="fc" id="L74">                    .requestMatchers(&quot;/actuator/health&quot;, &quot;/actuator/health/**&quot;).permitAll()</span>
+<span class="fc" id="L75">                    .requestMatchers(&quot;/actuator/**&quot;).hasRole(&quot;AUDITOR&quot;)</span>
 <span class="fc" id="L76">                    .requestMatchers(&quot;/v3/api-docs/**&quot;, &quot;/swagger-ui/**&quot;, &quot;/swagger-ui.html&quot;)</span>
 <span class="fc" id="L77">                    .permitAll()</span>
 <span class="fc" id="L78">                    .requestMatchers(&quot;/api/**&quot;)</span>

@@ -1,58 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RateLimitFilter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">edtech-api</a> &gt; <a href="index.source.html" class="el_package">com.edtech.security</a> &gt; <span class="el_source">RateLimitFilter.java</span></div><h1>RateLimitFilter.java</h1><pre class="source lang-java linenums">package com.edtech.security;
 
-import io.github.bucket4j.Bandwidth;
-import io.github.bucket4j.Bucket;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.time.Duration;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-/** Documentação para RateLimitFilter. */
+/** Rate limit filter para rotas de autenticação. */
 @Component
-<span class="fc" id="L19">public class RateLimitFilter extends OncePerRequestFilter {</span>
+public class RateLimitFilter extends OncePerRequestFilter {
 
-<span class="fc" id="L21">  private final Map&lt;String, Bucket&gt; cache = new ConcurrentHashMap&lt;&gt;();</span>
+  private final RateLimitingService rateLimitingService;
+<span class="fc" id="L20">  private final ObjectMapper objectMapper = new ObjectMapper();</span>
 
-  private Bucket createNewBucket() {
-    // Limit: 5 requests per minute
-    Bandwidth limit =
-<span class="fc" id="L26">        Bandwidth.builder().capacity(5).refillIntervally(5, Duration.ofMinutes(1)).build();</span>
-<span class="fc" id="L27">    return Bucket.builder().addLimit(limit).build();</span>
-  }
-
-  private Bucket resolveBucket(String clientIp) {
-<span class="fc" id="L31">    return cache.computeIfAbsent(clientIp, k -&gt; createNewBucket());</span>
-  }
+<span class="fc" id="L22">  public RateLimitFilter(RateLimitingService rateLimitingService) {</span>
+<span class="fc" id="L23">    this.rateLimitingService = rateLimitingService;</span>
+<span class="fc" id="L24">  }</span>
 
   @Override
   protected void doFilterInternal(
       HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
       throws ServletException, IOException {
 
-<span class="fc" id="L39">    String path = request.getRequestURI();</span>
+<span class="fc" id="L31">    String path = request.getRequestURI();</span>
 
-    // Aplica o rate limit apenas para rotas de autenticacao e recuperacao
-<span class="fc bfc" id="L42" title="All 2 branches covered.">    if (path.startsWith(&quot;/api/auth/&quot;)) {</span>
-<span class="fc" id="L43">      String clientIp = request.getRemoteAddr();</span>
-<span class="fc" id="L44">      Bucket bucket = resolveBucket(clientIp);</span>
+<span class="fc bfc" id="L33" title="All 2 branches covered.">    if (path.startsWith(&quot;/api/auth/&quot;)) {</span>
+<span class="pc bpc" id="L34" title="1 of 2 branches missed.">      String clientIp = request.getRemoteAddr() != null ? request.getRemoteAddr() : &quot;unknown&quot;;</span>
+<span class="fc" id="L35">      io.github.bucket4j.Bucket bucket = rateLimitingService.resolveBucket(clientIp);</span>
 
-<span class="fc bfc" id="L46" title="All 2 branches covered.">      if (bucket.tryConsume(1)) {</span>
-<span class="fc" id="L47">        filterChain.doFilter(request, response);</span>
+<span class="fc bfc" id="L37" title="All 2 branches covered.">      if (bucket.tryConsume(1)) {</span>
+<span class="fc" id="L38">        filterChain.doFilter(request, response);</span>
       } else {
-<span class="fc" id="L49">        response.setStatus(HttpStatus.TOO_MANY_REQUESTS.value());</span>
-<span class="fc" id="L50">        response.getWriter().write(&quot;Too many requests. Please try again later.&quot;);</span>
-<span class="fc" id="L51">        return;</span>
+<span class="fc" id="L40">        response.setStatus(HttpStatus.TOO_MANY_REQUESTS.value());</span>
+<span class="fc" id="L41">        response.setContentType(MediaType.APPLICATION_JSON_VALUE);</span>
+<span class="fc" id="L42">        objectMapper.writeValue(</span>
+<span class="fc" id="L43">            response.getWriter(),</span>
+<span class="fc" id="L44">            Map.of(&quot;error&quot;, &quot;Limite de tentativas excedido. Tente novamente mais tarde.&quot;));</span>
       }
-<span class="fc" id="L53">    } else {</span>
-<span class="fc" id="L54">      filterChain.doFilter(request, response);</span>
+<span class="fc" id="L46">    } else {</span>
+<span class="fc" id="L47">      filterChain.doFilter(request, response);</span>
     }
-<span class="fc" id="L56">  }</span>
+<span class="fc" id="L49">  }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

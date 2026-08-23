@@ -63,13 +63,21 @@ import org.springframework.stereotype.Component;
 
   private String escape(String value) {
 <span class="pc bpc" id="L65" title="1 of 2 branches missed.">    String safeValue = value != null ? value : &quot;&quot;;</span>
-<span class="fc bfc" id="L66" title="All 2 branches covered.">    if (safeValue.contains(&quot;\&quot;&quot;)</span>
-<span class="pc bpc" id="L67" title="1 of 2 branches missed.">        || safeValue.contains(&quot;,&quot;)</span>
-<span class="pc bpc" id="L68" title="1 of 2 branches missed.">        || safeValue.contains(&quot;\n&quot;)</span>
-<span class="fc bfc" id="L69" title="All 2 branches covered.">        || safeValue.contains(&quot;\r&quot;)) {</span>
-<span class="fc" id="L70">      return &quot;\&quot;&quot; + safeValue.replace(&quot;\&quot;&quot;, &quot;\&quot;\&quot;&quot;) + &quot;\&quot;&quot;;</span>
+    // Prevent CSV formula injection (CWE-1236)
+<span class="fc bfc" id="L67" title="All 2 branches covered.">    if (!safeValue.isEmpty()) {</span>
+<span class="fc" id="L68">      char first = safeValue.charAt(0);</span>
+<span class="pc bpc" id="L69" title="6 of 12 branches missed.">      if (first == '=' || first == '+' || first == '-' || first == '@'</span>
+          || first == '\t' || first == '\r') {
+<span class="nc" id="L71">        safeValue = &quot;'&quot; + safeValue;</span>
+      }
     }
-<span class="fc" id="L72">    return safeValue;</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">    if (safeValue.contains(&quot;\&quot;&quot;)</span>
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">        || safeValue.contains(&quot;,&quot;)</span>
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">        || safeValue.contains(&quot;\n&quot;)</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">        || safeValue.contains(&quot;\r&quot;)) {</span>
+<span class="fc" id="L78">      return &quot;\&quot;&quot; + safeValue.replace(&quot;\&quot;&quot;, &quot;\&quot;\&quot;&quot;) + &quot;\&quot;&quot;;</span>
+    }
+<span class="fc" id="L80">    return safeValue;</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

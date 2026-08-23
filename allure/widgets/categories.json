@@ -1,1 +1,1 @@
-{"total":1,"items":[{"uid":"2055b93a09a4ac49f6c250f340eb53d2","name":"Smoke tests aprovados","statistic":{"failed":0,"broken":0,"skipped":0,"passed":26,"unknown":0,"total":26}}]}
+{"total":2,"items":[{"uid":"691b7172e8c78c4a11db82101b1e210d","name":"Problemas de infraestrutura","statistic":{"failed":1,"broken":0,"skipped":0,"passed":0,"unknown":0,"total":1}},{"uid":"2055b93a09a4ac49f6c250f340eb53d2","name":"Smoke tests aprovados","statistic":{"failed":0,"broken":0,"skipped":0,"passed":25,"unknown":0,"total":25}}]}

@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RateLimitingService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">edtech-api</a> &gt; <a href="index.source.html" class="el_package">com.edtech.security</a> &gt; <span class="el_source">RateLimitingService.java</span></div><h1>RateLimitingService.java</h1><pre class="source lang-java linenums">package com.edtech.security;
 
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
 import io.github.bucket4j.Bandwidth;
 import io.github.bucket4j.Bucket;
 import java.time.Duration;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import org.springframework.stereotype.Service;
 
 /** Serviço de rate limiting baseado no algoritmo Token Bucket (Bucket4j). */
 @Service
 <span class="fc" id="L12">public class RateLimitingService {</span>
 
-<span class="fc" id="L14">  private final Map&lt;String, Bucket&gt; cache = new ConcurrentHashMap&lt;&gt;();</span>
+<span class="fc" id="L14">  private final Cache&lt;String, Bucket&gt; cache =</span>
+<span class="fc" id="L15">      Caffeine.newBuilder().maximumSize(10_000).expireAfterWrite(Duration.ofMinutes(5)).build();</span>
 
-  /** Retorna o bucket associado ao IP fornecido, criando um novo se necessário. */
+  /** Retorna o bucket associado à chave fornecida, criando um novo se necessário. */
   public Bucket resolveBucket(String key) {
-<span class="fc" id="L18">    return cache.computeIfAbsent(key, this::newBucket);</span>
+<span class="fc" id="L19">    return cache.get(key, this::newBucket);</span>
   }
 
   private Bucket newBucket(String key) {
-    // 5 requisições por minuto por IP
     Bandwidth limit =
 <span class="fc" id="L24">        Bandwidth.builder().capacity(5).refillIntervally(5, Duration.ofMinutes(1)).build();</span>
 <span class="fc" id="L25">    return Bucket.builder().addLimit(limit).build();</span>

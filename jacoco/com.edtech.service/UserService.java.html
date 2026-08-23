@@ -54,112 +54,98 @@ public class UserService {
 <span class="fc" id="L54">      throw new InvalidCredentialsException(&quot;Credenciais inválidas.&quot;);</span>
     }
 
-<span class="fc" id="L57">    boolean roleChanged = false;</span>
-<span class="pc bpc" id="L58" title="1 of 4 branches missed.">    if (normalizedEmail.contains(&quot;auditor&quot;) &amp;&amp; user.getRole() != UserRole.AUDITOR) {</span>
-<span class="fc" id="L59">      user.setRole(UserRole.AUDITOR);</span>
-<span class="fc" id="L60">      roleChanged = true;</span>
-<span class="pc bpc" id="L61" title="1 of 4 branches missed.">    } else if ((normalizedEmail.contains(&quot;orientador&quot;) || normalizedEmail.contains(&quot;advisor&quot;))</span>
-<span class="pc bpc" id="L62" title="1 of 2 branches missed.">        &amp;&amp; user.getRole() != UserRole.ADVISOR) {</span>
-<span class="fc" id="L63">      user.setRole(UserRole.ADVISOR);</span>
-<span class="fc" id="L64">      roleChanged = true;</span>
-    }
-
-<span class="fc bfc" id="L67" title="All 2 branches covered.">    if (roleChanged) {</span>
-<span class="fc" id="L68">      userRepository.save(user);</span>
-    }
-
-<span class="fc" id="L71">    return user;</span>
+<span class="fc" id="L57">    return user;</span>
   }
 
   /** Documentação. */
   @Transactional
   public User register(RegisterRequestDto request) {
-<span class="fc" id="L77">    String normalizedEmail = request.email().trim().toLowerCase(Locale.ROOT);</span>
+<span class="fc" id="L63">    String normalizedEmail = request.email().trim().toLowerCase(Locale.ROOT);</span>
 
-<span class="fc bfc" id="L79" title="All 2 branches covered.">    if (!hasAllowedInstitutionalDomain(normalizedEmail)) {</span>
-<span class="fc" id="L80">      throw new InvalidInstitutionalEmailException(</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">    if (!hasAllowedInstitutionalDomain(normalizedEmail)) {</span>
+<span class="fc" id="L66">      throw new InvalidInstitutionalEmailException(</span>
           &quot;O e-mail deve pertencer a um domínio institucional permitido.&quot;);
     }
 
-<span class="fc bfc" id="L84" title="All 2 branches covered.">    if (userRepository.existsByEmailIgnoreCase(normalizedEmail)) {</span>
-<span class="fc" id="L85">      throw new DuplicateEmailException(&quot;E-mail ja cadastrado.&quot;);</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">    if (userRepository.existsByEmailIgnoreCase(normalizedEmail)) {</span>
+<span class="fc" id="L71">      throw new DuplicateEmailException(&quot;E-mail ja cadastrado.&quot;);</span>
     }
 
-<span class="fc" id="L88">    UserRole initialRole = request.role();</span>
+<span class="fc" id="L74">    UserRole initialRole = request.role();</span>
 
-<span class="fc" id="L90">    User user =</span>
+<span class="fc" id="L76">    User user =</span>
         new User(
-<span class="fc" id="L92">            request.name().trim(),</span>
+<span class="fc" id="L78">            request.name().trim(),</span>
             normalizedEmail,
-<span class="fc" id="L94">            passwordEncoder.encode(request.password()),</span>
+<span class="fc" id="L80">            passwordEncoder.encode(request.password()),</span>
             initialRole,
-<span class="fc" id="L96">            java.util.UUID.fromString(&quot;00000000-0000-0000-0000-000000000001&quot;));</span>
+<span class="fc" id="L82">            java.util.UUID.fromString(&quot;00000000-0000-0000-0000-000000000001&quot;));</span>
 
-<span class="fc" id="L98">    user.setActive(false);</span>
-<span class="fc" id="L99">    userRepository.save(user);</span>
+<span class="fc" id="L84">    user.setActive(false);</span>
+<span class="fc" id="L85">    userRepository.save(user);</span>
 
-<span class="fc" id="L101">    verificationTokenRepository.deleteByEmail(normalizedEmail);</span>
-<span class="fc" id="L102">    String code = String.format(&quot;%06d&quot;, SECURE_RANDOM.nextInt(999999));</span>
-<span class="fc" id="L103">    com.edtech.model.VerificationToken token =</span>
+<span class="fc" id="L87">    verificationTokenRepository.deleteByEmail(normalizedEmail);</span>
+<span class="fc" id="L88">    String code = String.format(&quot;%06d&quot;, SECURE_RANDOM.nextInt(999999));</span>
+<span class="fc" id="L89">    com.edtech.model.VerificationToken token =</span>
         new com.edtech.model.VerificationToken(
-<span class="fc" id="L105">            code, normalizedEmail, java.time.LocalDateTime.now().plusMinutes(15));</span>
-<span class="fc" id="L106">    verificationTokenRepository.save(token);</span>
+<span class="fc" id="L91">            code, normalizedEmail, java.time.LocalDateTime.now().plusMinutes(15));</span>
+<span class="fc" id="L92">    verificationTokenRepository.save(token);</span>
 
-<span class="fc" id="L108">    emailService.sendVerificationEmail(normalizedEmail, code);</span>
+<span class="fc" id="L94">    emailService.sendVerificationEmail(normalizedEmail, code);</span>
 
-<span class="fc" id="L110">    return user;</span>
+<span class="fc" id="L96">    return user;</span>
   }
 
   /** Checks whether an email belongs to one of the configured institutional domains. */
   private boolean hasAllowedInstitutionalDomain(String email) {
-<span class="fc" id="L115">    return Arrays.stream(allowedInstitutionalDomains.split(&quot;,&quot;))</span>
-<span class="fc" id="L116">        .map(domain -&gt; domain.trim().toLowerCase(Locale.ROOT))</span>
-<span class="pc bpc" id="L117" title="1 of 2 branches missed.">        .filter(domain -&gt; !domain.isBlank())</span>
-<span class="fc bfc" id="L118" title="All 4 branches covered.">        .anyMatch(domain -&gt; email.endsWith(&quot;@&quot; + domain) || email.endsWith(&quot;.&quot; + domain));</span>
+<span class="fc" id="L101">    return Arrays.stream(allowedInstitutionalDomains.split(&quot;,&quot;))</span>
+<span class="fc" id="L102">        .map(domain -&gt; domain.trim().toLowerCase(Locale.ROOT))</span>
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">        .filter(domain -&gt; !domain.isBlank())</span>
+<span class="fc bfc" id="L104" title="All 4 branches covered.">        .anyMatch(domain -&gt; email.endsWith(&quot;@&quot; + domain) || email.endsWith(&quot;.&quot; + domain));</span>
   }
 
   /** Documentação. */
   @Transactional
   public User verifyRegistration(String email, String code) {
-<span class="fc" id="L124">    String normalizedEmail = email.trim().toLowerCase(Locale.ROOT);</span>
-<span class="fc" id="L125">    Optional&lt;com.edtech.model.VerificationToken&gt; tokenOpt =</span>
-<span class="fc" id="L126">        verificationTokenRepository.findByEmailAndToken(normalizedEmail, code);</span>
+<span class="fc" id="L110">    String normalizedEmail = email.trim().toLowerCase(Locale.ROOT);</span>
+<span class="fc" id="L111">    Optional&lt;com.edtech.model.VerificationToken&gt; tokenOpt =</span>
+<span class="fc" id="L112">        verificationTokenRepository.findByEmailAndToken(normalizedEmail, code);</span>
 
-<span class="pc bpc" id="L128" title="2 of 4 branches missed.">    if (tokenOpt.isPresent() &amp;&amp; !tokenOpt.get().isExpired()) {</span>
-<span class="fc" id="L129">      Optional&lt;User&gt; userOpt = userRepository.findByEmailIgnoreCase(normalizedEmail);</span>
-<span class="pc bpc" id="L130" title="1 of 2 branches missed.">      if (userOpt.isPresent()) {</span>
-<span class="fc" id="L131">        User user = userOpt.get();</span>
-<span class="fc" id="L132">        user.setActive(true);</span>
-<span class="fc" id="L133">        userRepository.save(user);</span>
-<span class="fc" id="L134">        verificationTokenRepository.deleteByEmail(normalizedEmail);</span>
-<span class="fc" id="L135">        return user;</span>
+<span class="pc bpc" id="L114" title="2 of 4 branches missed.">    if (tokenOpt.isPresent() &amp;&amp; !tokenOpt.get().isExpired()) {</span>
+<span class="fc" id="L115">      Optional&lt;User&gt; userOpt = userRepository.findByEmailIgnoreCase(normalizedEmail);</span>
+<span class="pc bpc" id="L116" title="1 of 2 branches missed.">      if (userOpt.isPresent()) {</span>
+<span class="fc" id="L117">        User user = userOpt.get();</span>
+<span class="fc" id="L118">        user.setActive(true);</span>
+<span class="fc" id="L119">        userRepository.save(user);</span>
+<span class="fc" id="L120">        verificationTokenRepository.deleteByEmail(normalizedEmail);</span>
+<span class="fc" id="L121">        return user;</span>
       }
     }
-<span class="nc" id="L138">    throw new InvalidCredentialsException(&quot;Código inválido ou expirado.&quot;);</span>
+<span class="nc" id="L124">    throw new InvalidCredentialsException(&quot;Código inválido ou expirado.&quot;);</span>
   }
 
   /** Generates and sends a fresh verification code for an inactive account. */
   @Transactional
   public void resendVerificationCode(String email) {
-<span class="nc" id="L144">    String normalizedEmail = email.trim().toLowerCase(Locale.ROOT);</span>
-<span class="nc" id="L145">    User user =</span>
+<span class="nc" id="L130">    String normalizedEmail = email.trim().toLowerCase(Locale.ROOT);</span>
+<span class="nc" id="L131">    User user =</span>
         userRepository
-<span class="nc" id="L147">            .findByEmailIgnoreCase(normalizedEmail)</span>
-<span class="nc" id="L148">            .orElseThrow(() -&gt; new InvalidCredentialsException(&quot;Credenciais inválidas.&quot;));</span>
-<span class="nc bnc" id="L149" title="All 2 branches missed.">    if (user.isActive()) {</span>
-<span class="nc" id="L150">      return;</span>
+<span class="nc" id="L133">            .findByEmailIgnoreCase(normalizedEmail)</span>
+<span class="nc" id="L134">            .orElseThrow(() -&gt; new InvalidCredentialsException(&quot;Credenciais inválidas.&quot;));</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">    if (user.isActive()) {</span>
+<span class="nc" id="L136">      return;</span>
     }
-<span class="nc" id="L152">    verificationTokenRepository.deleteByEmail(normalizedEmail);</span>
-<span class="nc" id="L153">    String code = String.format(&quot;%06d&quot;, SECURE_RANDOM.nextInt(999999));</span>
-<span class="nc" id="L154">    verificationTokenRepository.save(</span>
+<span class="nc" id="L138">    verificationTokenRepository.deleteByEmail(normalizedEmail);</span>
+<span class="nc" id="L139">    String code = String.format(&quot;%06d&quot;, SECURE_RANDOM.nextInt(999999));</span>
+<span class="nc" id="L140">    verificationTokenRepository.save(</span>
         new com.edtech.model.VerificationToken(
-<span class="nc" id="L156">            code, normalizedEmail, java.time.LocalDateTime.now().plusMinutes(15)));</span>
-<span class="nc" id="L157">    emailService.sendVerificationEmail(normalizedEmail, code);</span>
-<span class="nc" id="L158">  }</span>
+<span class="nc" id="L142">            code, normalizedEmail, java.time.LocalDateTime.now().plusMinutes(15)));</span>
+<span class="nc" id="L143">    emailService.sendVerificationEmail(normalizedEmail, code);</span>
+<span class="nc" id="L144">  }</span>
 
   @Transactional
   public User saveUserWithoutHash(User user) {
-<span class="fc" id="L162">    return userRepository.save(user);</span>
+<span class="fc" id="L148">    return userRepository.save(user);</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
