@@ -293,7 +293,7 @@ jobs:
         if: matrix.report-type == 'performance'
         run: |
           cd backend
-          ./mvnw spring-boot:start -Dspring-boot.run.jvmArguments="-Dspring.datasource.url=jdbc:postgresql://localhost:5432/edtech_db_test -Dspring.datasource.username=edtech_user -Dspring.datasource.password=edtech_password" 
+          ./mvnw clean test-compile spring-boot:start -B -Dspring-boot.run.jvmArguments="-Dspring.datasource.url=jdbc:postgresql://localhost:5432/edtech_db_test -Dspring.datasource.username=edtech_user -Dspring.datasource.password=edtech_password" 
         env:
           SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/edtech_db_test
           SPRING_DATASOURCE_USERNAME: edtech_user
@@ -334,7 +334,7 @@ jobs:
         if: matrix.report-type == 'api-security-contract'
         run: |
           cd backend
-          ./mvnw spring-boot:start -Dspring-boot.run.jvmArguments="-Dspring.datasource.url=jdbc:postgresql://localhost:5432/edtech_db_test -Dspring.datasource.username=edtech_user -Dspring.datasource.password=edtech_password" 
+          ./mvnw clean test-compile spring-boot:start -B -Dspring-boot.run.jvmArguments="-Dspring.datasource.url=jdbc:postgresql://localhost:5432/edtech_db_test -Dspring.datasource.username=edtech_user -Dspring.datasource.password=edtech_password" 
         env:
           SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/edtech_db_test
           SPRING_DATASOURCE_USERNAME: edtech_user
