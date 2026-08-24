@@ -17,14 +17,11 @@ import org.springframework.mail.javamail.JavaMailSender;
 @ExtendWith(MockitoExtension.class)
 class EmailServiceTest {
 
-  @Mock
-  private JavaMailSender mailSender;
+  @Mock private JavaMailSender mailSender;
 
-  @Captor
-  private ArgumentCaptor<SimpleMailMessage> messageCaptor;
+  @Captor private ArgumentCaptor<SimpleMailMessage> messageCaptor;
 
-  @InjectMocks
-  private EmailService emailService;
+  @InjectMocks private EmailService emailService;
 
   @Test
   void testSendRecoveryEmail() {

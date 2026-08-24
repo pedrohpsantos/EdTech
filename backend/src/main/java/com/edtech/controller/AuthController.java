@@ -67,23 +67,26 @@ public class AuthController {
     User user = userService.verifyRegistration(request.email(), request.code());
     String token = jwtService.generateToken(user);
 
-    org.springframework.http.ResponseCookie cookie = org.springframework.http.ResponseCookie.from("jwt", token)
-        .httpOnly(true)
-        .secure(true)
-        .path("/")
-        .maxAge(24 * 60 * 60)
-        .sameSite("None")
-        .build();
+    org.springframework.http.ResponseCookie cookie =
+        org.springframework.http.ResponseCookie.from("jwt", token)
+            .httpOnly(true)
+            .secure(true)
+            .path("/")
+            .maxAge(24 * 60 * 60)
+            .sameSite("None")
+            .build();
 
     return ResponseEntity.ok()
         .header(org.springframework.http.HttpHeaders.SET_COOKIE, cookie.toString())
         .body(new AuthResponseDto(UserResponseDto.from(user), null));
   }
 
+  /** Documentacao. */
   @PostMapping("/register/resend")
   public ResponseEntity<Void> resendRegistrationCode(@Valid @RequestBody VerifyCodeDto request) {
-    if (request.email() == null || !request.email().matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
-        throw new IllegalArgumentException("Invalid email format");
+    if (request.email() == null
+        || !request.email().matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
+      throw new IllegalArgumentException("Invalid email format");
     }
     userService.resendVerificationCode(request.email());
     return ResponseEntity.noContent().build();
@@ -108,13 +111,14 @@ public class AuthController {
 
     String token = jwtService.generateToken(user);
 
-    org.springframework.http.ResponseCookie cookie = org.springframework.http.ResponseCookie.from("jwt", token)
-        .httpOnly(true)
-        .secure(true)
-        .path("/")
-        .maxAge(24 * 60 * 60)
-        .sameSite("None")
-        .build();
+    org.springframework.http.ResponseCookie cookie =
+        org.springframework.http.ResponseCookie.from("jwt", token)
+            .httpOnly(true)
+            .secure(true)
+            .path("/")
+            .maxAge(24 * 60 * 60)
+            .sameSite("None")
+            .build();
 
     return ResponseEntity.ok()
         .header(org.springframework.http.HttpHeaders.SET_COOKIE, cookie.toString())
@@ -144,13 +148,14 @@ public class AuthController {
 
     String token = jwtService.generateToken(user);
 
-    org.springframework.http.ResponseCookie cookie = org.springframework.http.ResponseCookie.from("jwt", token)
-        .httpOnly(true)
-        .secure(true)
-        .path("/")
-        .maxAge(24 * 60 * 60)
-        .sameSite("None")
-        .build();
+    org.springframework.http.ResponseCookie cookie =
+        org.springframework.http.ResponseCookie.from("jwt", token)
+            .httpOnly(true)
+            .secure(true)
+            .path("/")
+            .maxAge(24 * 60 * 60)
+            .sameSite("None")
+            .build();
 
     return ResponseEntity.ok()
         .header(org.springframework.http.HttpHeaders.SET_COOKIE, cookie.toString())
@@ -214,8 +219,9 @@ public class AuthController {
           "Limite de tentativas excedido. Tente novamente mais tarde.");
     }
 
-    if (request.email() == null || !request.email().matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
-        throw new IllegalArgumentException("Invalid email format");
+    if (request.email() == null
+        || !request.email().matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
+      throw new IllegalArgumentException("Invalid email format");
     }
     recoveryService.requestRecovery(request.email());
     return ResponseEntity.ok().build();
@@ -234,7 +240,8 @@ public class AuthController {
   /** Documentação. */
   @PostMapping("/recovery/reset")
   public ResponseEntity<?> resetPassword(@Valid @RequestBody ResetPasswordDto request) {
-    boolean success = recoveryService.resetPassword(request.email(), request.code(), request.newPassword());
+    boolean success =
+        recoveryService.resetPassword(request.email(), request.code(), request.newPassword());
     if (success) {
       return ResponseEntity.ok().build();
     }
@@ -244,13 +251,14 @@ public class AuthController {
   /** Documentação. */
   @PostMapping("/logout")
   public ResponseEntity<Void> logout() {
-    org.springframework.http.ResponseCookie cookie = org.springframework.http.ResponseCookie.from("jwt", "")
-        .httpOnly(true)
-        .secure(true)
-        .path("/")
-        .maxAge(0)
-        .sameSite("None")
-        .build();
+    org.springframework.http.ResponseCookie cookie =
+        org.springframework.http.ResponseCookie.from("jwt", "")
+            .httpOnly(true)
+            .secure(true)
+            .path("/")
+            .maxAge(0)
+            .sameSite("None")
+            .build();
     return ResponseEntity.ok()
         .header(org.springframework.http.HttpHeaders.SET_COOKIE, cookie.toString())
         .build();

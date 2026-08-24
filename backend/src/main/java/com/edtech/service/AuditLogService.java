@@ -29,7 +29,8 @@ public class AuditLogService {
 
   private String getClientIp() {
     try {
-      ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+      ServletRequestAttributes attributes =
+          (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
       if (attributes != null) {
         HttpServletRequest request = attributes.getRequest();
         String forwardedFor = request.getHeader("X-Forwarded-For");
@@ -47,12 +48,12 @@ public class AuditLogService {
   /**
    * Registra uma acao de auditoria detalhada.
    *
-   * @param action       Acao realizada.
-   * @param userId       ID do usuario.
+   * @param action Acao realizada.
+   * @param userId ID do usuario.
    * @param resourceType Tipo do recurso.
-   * @param resourceId   ID do recurso.
-   * @param ip           IP do cliente.
-   * @param details      Detalhes adicionais.
+   * @param resourceId ID do recurso.
+   * @param ip IP do cliente.
+   * @param details Detalhes adicionais.
    * @return Log de auditoria salvo.
    */
   public AuditLog log(
@@ -77,14 +78,8 @@ public class AuditLogService {
       UUID institutionId) {
     try {
       String clientIp = ip != null ? ip : getClientIp();
-      AuditLog auditLog = new AuditLog(
-          institutionId,
-          userId,
-          action,
-          resourceType,
-          resourceId,
-          clientIp,
-          details);
+      AuditLog auditLog =
+          new AuditLog(institutionId, userId, action, resourceType, resourceId, clientIp, details);
       return auditLogRepository.save(auditLog);
     } catch (Exception e) {
       log.error("Erro em salvar o log da auditoria: {}", e.getMessage(), e);
@@ -94,9 +89,9 @@ public class AuditLogService {
 
   private UUID resolveInstitutionId() {
     try {
-      org.springframework.security.core.Authentication auth = org.springframework.security.core.context.SecurityContextHolder
-          .getContext()
-          .getAuthentication();
+      org.springframework.security.core.Authentication auth =
+          org.springframework.security.core.context.SecurityContextHolder.getContext()
+              .getAuthentication();
       if (auth != null && auth.getPrincipal() instanceof com.edtech.model.User user) {
         return user.getInstitutionId();
       }
@@ -107,11 +102,10 @@ public class AuditLogService {
   }
 
   /**
-   * Registra uma acao de auditoria simples, sem vinculo direto com um recurso
-   * especifico.
+   * Registra uma acao de auditoria simples, sem vinculo direto com um recurso especifico.
    *
-   * @param userId  ID do usuario.
-   * @param action  Acao realizada.
+   * @param userId ID do usuario.
+   * @param action Acao realizada.
    * @param details Detalhes adicionais.
    * @return Log de auditoria salvo.
    */
@@ -122,10 +116,10 @@ public class AuditLogService {
   /**
    * Registra uma acao de auditoria relacionada a um documento especifico.
    *
-   * @param userId     ID do usuario que executou a acao.
-   * @param action     Acao realizada.
+   * @param userId ID do usuario que executou a acao.
+   * @param action Acao realizada.
    * @param documentId ID do documento afetado.
-   * @param details    Detalhes adicionais da acao.
+   * @param details Detalhes adicionais da acao.
    * @return Log de auditoria salvo.
    */
   public AuditLog logDocumentAction(

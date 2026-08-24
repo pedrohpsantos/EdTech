@@ -13,14 +13,15 @@ public class NotificationService {
   private final SimpMessagingTemplate messagingTemplate;
 
   public NotificationService(
-      @org.springframework.beans.factory.annotation.Autowired(required = false) SimpMessagingTemplate messagingTemplate) {
+      @org.springframework.beans.factory.annotation.Autowired(required = false)
+          SimpMessagingTemplate messagingTemplate) {
     this.messagingTemplate = messagingTemplate;
   }
 
   /**
    * Envia uma notificação em tempo real (WebSocket) para um usuário específico.
    *
-   * @param userId  O ID do usuário (como String)
+   * @param userId O ID do usuário (como String)
    * @param payload O conteúdo da mensagem
    */
   public void sendToUser(String userId, Object payload) {
@@ -35,7 +36,7 @@ public class NotificationService {
   /**
    * Envia uma notificação para um tópico geral.
    *
-   * @param topic   O tópico de destino (ex: /topic/global)
+   * @param topic O tópico de destino (ex: /topic/global)
    * @param payload O conteúdo da mensagem
    */
   public void sendToTopic(String topic, Object payload) {

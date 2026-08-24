@@ -38,19 +38,17 @@ public class TwoFactorAuthService {
     return secretGenerator.generate();
   }
 
-  /**
-   * Generates a QR Code Image (Data URI encoded in Base64) for the given user
-   * email and secret.
-   */
+  /** Generates a QR Code Image (Data URI encoded in Base64) for the given user email and secret. */
   public String getQrCodeImageUri(String secret, String email) throws QrGenerationException {
-    QrData data = new QrData.Builder()
-        .label(email)
-        .secret(secret)
-        .issuer("EdTech")
-        .algorithm(HashingAlgorithm.SHA1)
-        .digits(6)
-        .period(30)
-        .build();
+    QrData data =
+        new QrData.Builder()
+            .label(email)
+            .secret(secret)
+            .issuer("EdTech")
+            .algorithm(HashingAlgorithm.SHA1)
+            .digits(6)
+            .period(30)
+            .build();
 
     byte[] imageData = qrGenerator.generate(data);
     String mimeType = qrGenerator.getImageMimeType();

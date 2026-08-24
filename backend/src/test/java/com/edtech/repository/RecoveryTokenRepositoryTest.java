@@ -16,13 +16,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class RecoveryTokenRepositoryTest {
 
-  @Autowired
-  private RecoveryTokenRepository repository;
+  @Autowired private RecoveryTokenRepository repository;
 
   @Test
   void testSaveAndFindByEmailAnDtoken() {
     // Arrange
-    RecoveryToken token = new RecoveryToken("123456", "teste@unb.br", LocalDateTime.now().plusMinutes(15));
+    RecoveryToken token =
+        new RecoveryToken("123456", "teste@unb.br", LocalDateTime.now().plusMinutes(15));
     repository.save(token);
 
     // Act
@@ -37,7 +37,8 @@ public class RecoveryTokenRepositoryTest {
   @Test
   void testDeleteByEmail() {
     // Arrange
-    RecoveryToken token = new RecoveryToken("123456", "teste@unb.br", LocalDateTime.now().plusMinutes(15));
+    RecoveryToken token =
+        new RecoveryToken("123456", "teste@unb.br", LocalDateTime.now().plusMinutes(15));
     repository.save(token);
     assertTrue(repository.findByEmailAndToken("teste@unb.br", "123456").isPresent());
 

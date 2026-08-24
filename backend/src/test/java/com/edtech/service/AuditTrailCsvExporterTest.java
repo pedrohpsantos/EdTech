@@ -17,14 +17,15 @@ class AuditTrailCsvExporterTest {
   void exportEscapesCsvSpecialCharacters() {
     UUID userId = UUID.randomUUID();
     UUID resourceId = UUID.randomUUID();
-    AuditLog log = new AuditLog(
-        UUID.randomUUID(),
-        userId,
-        AuditAction.DOWNLOAD,
-        "Document",
-        resourceId,
-        "127.0.0.1",
-        "linha, \"dois\"\nquebra");
+    AuditLog log =
+        new AuditLog(
+            UUID.randomUUID(),
+            userId,
+            AuditAction.DOWNLOAD,
+            "Document",
+            resourceId,
+            "127.0.0.1",
+            "linha, \"dois\"\nquebra");
 
     String csv = new String(exporter.export(List.of(log)), StandardCharsets.UTF_8);
 

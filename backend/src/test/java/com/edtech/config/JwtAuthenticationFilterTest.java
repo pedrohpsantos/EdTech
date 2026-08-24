@@ -37,35 +37,40 @@ class JwtAuthenticationFilterTest {
 
   @Test
   void shouldNotFilterReturnsTrueForLogin() {
-    MockHttpServletRequest request = new MockHttpServletRequest(HttpMethod.POST.name(), "/api/auth/login");
+    MockHttpServletRequest request =
+        new MockHttpServletRequest(HttpMethod.POST.name(), "/api/auth/login");
     request.setServletPath("/api/auth/login");
     assertThat(filter.shouldNotFilter(request)).isTrue();
   }
 
   @Test
   void shouldNotFilterReturnsTrueForRegister() {
-    MockHttpServletRequest request = new MockHttpServletRequest(HttpMethod.POST.name(), "/api/auth/register");
+    MockHttpServletRequest request =
+        new MockHttpServletRequest(HttpMethod.POST.name(), "/api/auth/register");
     request.setServletPath("/api/auth/register");
     assertThat(filter.shouldNotFilter(request)).isTrue();
   }
 
   @Test
   void shouldNotFilterReturnsTrueForRecovery() {
-    MockHttpServletRequest request = new MockHttpServletRequest(HttpMethod.GET.name(), "/api/auth/recovery/request");
+    MockHttpServletRequest request =
+        new MockHttpServletRequest(HttpMethod.GET.name(), "/api/auth/recovery/request");
     request.setServletPath("/api/auth/recovery/request");
     assertThat(filter.shouldNotFilter(request)).isTrue();
   }
 
   @Test
   void shouldNotFilterReturnsTrueForOptions() {
-    MockHttpServletRequest request = new MockHttpServletRequest(HttpMethod.OPTIONS.name(), "/api/some-endpoint");
+    MockHttpServletRequest request =
+        new MockHttpServletRequest(HttpMethod.OPTIONS.name(), "/api/some-endpoint");
     request.setServletPath("/api/some-endpoint");
     assertThat(filter.shouldNotFilter(request)).isTrue();
   }
 
   @Test
   void shouldNotFilterReturnsFalseForOtherPaths() {
-    MockHttpServletRequest request = new MockHttpServletRequest(HttpMethod.GET.name(), "/api/documents");
+    MockHttpServletRequest request =
+        new MockHttpServletRequest(HttpMethod.GET.name(), "/api/documents");
     request.setServletPath("/api/documents");
     assertThat(filter.shouldNotFilter(request)).isFalse();
   }
@@ -89,7 +94,8 @@ class JwtAuthenticationFilterTest {
     MockHttpServletResponse response = new MockHttpServletResponse();
     FilterChain filterChain = mock(FilterChain.class);
 
-    User user = new User("Test", "test@unb.br", "hash", UserRole.RESEARCHER, java.util.UUID.randomUUID());
+    User user =
+        new User("Test", "test@unb.br", "hash", UserRole.RESEARCHER, java.util.UUID.randomUUID());
     user.setActive(true);
 
     when(jwtService.extractSubject("valid.token")).thenReturn("test@unb.br");
@@ -126,7 +132,8 @@ class JwtAuthenticationFilterTest {
     MockHttpServletResponse response = new MockHttpServletResponse();
     FilterChain filterChain = mock(FilterChain.class);
 
-    User user = new User("Test", "test@unb.br", "hash", UserRole.RESEARCHER, java.util.UUID.randomUUID());
+    User user =
+        new User("Test", "test@unb.br", "hash", UserRole.RESEARCHER, java.util.UUID.randomUUID());
     user.setActive(false);
 
     when(jwtService.extractSubject("valid.token")).thenReturn("test@unb.br");

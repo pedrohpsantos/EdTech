@@ -23,41 +23,41 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 
 @ExtendWith(MockitoExtension.class)
 public class ProjectControllerTest {
 
   private MockMvc mockMvc;
 
-  @Mock
-  private ProjectService projectService;
+  @Mock private ProjectService projectService;
 
-  @InjectMocks
-  private ProjectController projectController;
+  @InjectMocks private ProjectController projectController;
 
   private User mockUser;
 
   @BeforeEach
   void setUp() {
-    mockMvc = MockMvcBuilders.standaloneSetup(projectController)
-        .setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver())
-        .build();
-    mockUser = new User(
-        "Test",
-        "test@unb.br",
-        "hash",
-        com.edtech.model.UserRole.RESEARCHER,
-        java.util.UUID.randomUUID());
+    mockMvc =
+        MockMvcBuilders.standaloneSetup(projectController)
+            .setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver())
+            .build();
+    mockUser =
+        new User(
+            "Test",
+            "test@unb.br",
+            "hash",
+            com.edtech.model.UserRole.RESEARCHER,
+            java.util.UUID.randomUUID());
     org.springframework.test.util.ReflectionTestUtils.setField(mockUser, "id", UUID.randomUUID());
 
-    UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(mockUser, null,
-        Collections.emptyList());
+    UsernamePasswordAuthenticationToken auth =
+        new UsernamePasswordAuthenticationToken(mockUser, null, Collections.emptyList());
     SecurityContextHolder.getContext().setAuthentication(auth);
   }
 
@@ -95,11 +95,14 @@ public class ProjectControllerTest {
     when(projectService.listProjectsByUser(eq(mockUser.getId()), any()))
         .thenReturn(new PageImpl<>(Collections.singletonList(response)));
 
-    org.springframework.http.ResponseEntity<org.springframework.data.domain.Page<ProjectResponseDto>> result = projectController
-        .listProjects(
-            SecurityContextHolder.getContext().getAuthentication(), PageRequest.of(0, 20));
+    org.springframework.http.ResponseEntity<
+            org.springframework.data.domain.Page<ProjectResponseDto>>
+        result =
+            projectController.listProjects(
+                SecurityContextHolder.getContext().getAuthentication(), PageRequest.of(0, 20));
 
     org.junit.jupiter.api.Assertions.assertEquals(200, result.getStatusCode().value());
-    org.junit.jupiter.api.Assertions.assertEquals("P1", result.getBody().getContent().get(0).getTitle());
+    org.junit.jupiter.api.Assertions.assertEquals(
+        "P1", result.getBody().getContent().get(0).getTitle());
   }
 }

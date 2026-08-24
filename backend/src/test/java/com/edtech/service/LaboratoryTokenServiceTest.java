@@ -36,15 +36,17 @@ class LaboratoryTokenServiceTest {
   void testGenerateToken_Deterministic() throws Exception {
     UUID advisorId = UUID.fromString("00000000-0000-0000-0000-000000000000");
     long currentWeek = System.currentTimeMillis() / (7L * 24 * 60 * 60 * 1000);
-    String rawData = advisorId.toString() + ":" + currentWeek + ":" + secret + ":" + UserRole.RESEARCHER.name();
+    String rawData =
+        advisorId.toString() + ":" + currentWeek + ":" + secret + ":" + UserRole.RESEARCHER.name();
 
     java.security.MessageDigest digest = java.security.MessageDigest.getInstance("SHA-256");
     byte[] hash = digest.digest(rawData.getBytes(java.nio.charset.StandardCharsets.UTF_8));
     int offset = hash[hash.length - 1] & 0xf;
-    int binary = ((hash[offset] & 0x7f) << 24)
-        | ((hash[offset + 1] & 0xff) << 16)
-        | ((hash[offset + 2] & 0xff) << 8)
-        | (hash[offset + 3] & 0xff);
+    int binary =
+        ((hash[offset] & 0x7f) << 24)
+            | ((hash[offset + 1] & 0xff) << 16)
+            | ((hash[offset + 2] & 0xff) << 8)
+            | (hash[offset + 3] & 0xff);
     int otp = binary % 1000000;
     String expectedToken = String.format("%06d", otp);
 

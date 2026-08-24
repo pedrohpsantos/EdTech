@@ -35,8 +35,9 @@ class AuditExportServiceTest {
     documentRepository = mock(DocumentRepository.class);
     projectMemberRepository = mock(ProjectMemberRepository.class);
     csvExporter = mock(AuditTrailCsvExporter.class);
-    auditExportService = new AuditExportService(
-        auditLogRepository, documentRepository, projectMemberRepository, csvExporter);
+    auditExportService =
+        new AuditExportService(
+            auditLogRepository, documentRepository, projectMemberRepository, csvExporter);
   }
 
   @Test
@@ -46,22 +47,23 @@ class AuditExportServiceTest {
     UUID userId = UUID.randomUUID();
     Document document = documentWithProject(projectId);
     ProjectMember member = new ProjectMember();
-    List<AuditLog> logs = List.of(
-        new AuditLog(
-            UUID.randomUUID(),
-            UUID.randomUUID(),
-            com.edtech.model.AuditAction.LOGIN_SUCCESS,
-            "test",
-            null,
-            "192.168.0.1",
-            "Login ok"));
+    List<AuditLog> logs =
+        List.of(
+            new AuditLog(
+                UUID.randomUUID(),
+                UUID.randomUUID(),
+                com.edtech.model.AuditAction.LOGIN_SUCCESS,
+                "test",
+                null,
+                "192.168.0.1",
+                "Login ok"));
     byte[] csv = "action,resource".getBytes();
 
     when(documentRepository.findById(documentId)).thenReturn(Optional.of(document));
     when(projectMemberRepository.findByProjectIdAndUserId(projectId, userId))
         .thenReturn(Optional.of(member));
     when(auditLogRepository.findByResourceTypeAndResourceIdOrderByCreatedAtAsc(
-        "Document", documentId))
+            "Document", documentId))
         .thenReturn(logs);
     when(csvExporter.export(logs)).thenReturn(csv);
 
@@ -78,13 +80,13 @@ class AuditExportServiceTest {
     UUID userId = UUID.randomUUID();
     Document document = documentWithProject(projectId);
     List<AuditLog> logs = List.of();
-    byte[] csv = new byte[] { 1, 2, 3 };
+    byte[] csv = new byte[] {1, 2, 3};
 
     when(documentRepository.findById(documentId)).thenReturn(Optional.of(document));
     when(projectMemberRepository.findByProjectIdAndUserId(projectId, userId))
         .thenReturn(Optional.of(new ProjectMember()));
     when(auditLogRepository.findByResourceTypeAndResourceIdOrderByCreatedAtAsc(
-        "Document", documentId))
+            "Document", documentId))
         .thenReturn(logs);
     when(csvExporter.export(logs)).thenReturn(csv);
 
@@ -108,9 +110,10 @@ class AuditExportServiceTest {
     UUID documentId = UUID.randomUUID();
     UUID userId = UUID.randomUUID();
 
-    IllegalArgumentException exception = assertThrows(
-        IllegalArgumentException.class,
-        () -> auditExportService.exportDocumentAuditTrail(documentId, userId, "xlsx"));
+    IllegalArgumentException exception =
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> auditExportService.exportDocumentAuditTrail(documentId, userId, "xlsx"));
 
     assertEquals("Formato invalido. Use: csv ou pdf", exception.getMessage());
     verifyNoInteractions(
@@ -124,9 +127,10 @@ class AuditExportServiceTest {
 
     when(documentRepository.findById(documentId)).thenReturn(Optional.empty());
 
-    RuntimeException exception = assertThrows(
-        RuntimeException.class,
-        () -> auditExportService.exportDocumentAuditTrail(documentId, userId, "csv"));
+    RuntimeException exception =
+        assertThrows(
+            RuntimeException.class,
+            () -> auditExportService.exportDocumentAuditTrail(documentId, userId, "csv"));
 
     assertEquals("Document not found", exception.getMessage());
     verifyNoInteractions(projectMemberRepository, auditLogRepository, csvExporter);
@@ -143,9 +147,10 @@ class AuditExportServiceTest {
     when(projectMemberRepository.findByProjectIdAndUserId(projectId, userId))
         .thenReturn(Optional.empty());
 
-    RuntimeException exception = assertThrows(
-        RuntimeException.class,
-        () -> auditExportService.exportDocumentAuditTrail(documentId, userId, "csv"));
+    RuntimeException exception =
+        assertThrows(
+            RuntimeException.class,
+            () -> auditExportService.exportDocumentAuditTrail(documentId, userId, "csv"));
 
     assertEquals("Access denied: You are not a member of this project", exception.getMessage());
     verifyNoInteractions(auditLogRepository, csvExporter);

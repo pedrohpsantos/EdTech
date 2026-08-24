@@ -12,11 +12,9 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 @ExtendWith(MockitoExtension.class)
 class NotificationServiceTest {
 
-  @Mock
-  private SimpMessagingTemplate messagingTemplate;
+  @Mock private SimpMessagingTemplate messagingTemplate;
 
-  @InjectMocks
-  private NotificationService notificationService;
+  @InjectMocks private NotificationService notificationService;
 
   @Test
   void sendToUser_WhenTemplateIsNotNull_ShouldSend() {

@@ -33,10 +33,10 @@ public class DocumentService {
   private static final String MIME_PDF = "application/pdf";
   private static final String MIME_CSV = "text/csv";
   private static final String MIME_JSON = "application/json";
-  private static final Map<String, String> ALLOWED_MIME_BY_EXTENSION = Map.of(".pdf", MIME_PDF, ".csv", MIME_CSV,
-      ".json", MIME_JSON);
-  private static final Set<String> CSV_COMPATIBLE_DETECTED_TYPES = Set.of(MIME_CSV, "text/plain", "application/csv",
-      "application/vnd.ms-excel");
+  private static final Map<String, String> ALLOWED_MIME_BY_EXTENSION =
+      Map.of(".pdf", MIME_PDF, ".csv", MIME_CSV, ".json", MIME_JSON);
+  private static final Set<String> CSV_COMPATIBLE_DETECTED_TYPES =
+      Set.of(MIME_CSV, "text/plain", "application/csv", "application/vnd.ms-excel");
   private static final Set<String> JSON_COMPATIBLE_DETECTED_TYPES = Set.of(MIME_JSON, "text/plain");
 
   private final DocumentRepository documentRepository;
@@ -77,12 +77,14 @@ public class DocumentService {
   @Transactional
   public DocumentResponseDto uploadDocument(
       MultipartFile file, String title, UUID projectId, UUID authorId) {
-    User author = userRepository
-        .findById(authorId)
-        .orElseThrow(() -> new RuntimeException("Author not found"));
-    Project project = projectRepository
-        .findById(projectId)
-        .orElseThrow(() -> new RuntimeException("Project not found"));
+    User author =
+        userRepository
+            .findById(authorId)
+            .orElseThrow(() -> new RuntimeException("Author not found"));
+    Project project =
+        projectRepository
+            .findById(projectId)
+            .orElseThrow(() -> new RuntimeException("Project not found"));
 
     projectMemberRepository
         .findByProjectIdAndUserId(projectId, authorId)
@@ -137,9 +139,10 @@ public class DocumentService {
 
   /** Documentacao para o metodo getPresignedUrl. */
   public String getPresignedUrl(UUID documentId, UUID userId) {
-    Document document = documentRepository
-        .findById(documentId)
-        .orElseThrow(() -> new RuntimeException("Document not found"));
+    Document document =
+        documentRepository
+            .findById(documentId)
+            .orElseThrow(() -> new RuntimeException("Document not found"));
 
     projectMemberRepository
         .findByProjectIdAndUserId(document.getProject().getId(), userId)
@@ -172,9 +175,10 @@ public class DocumentService {
   /** Documentacao. */
   @Transactional
   public void deleteDocument(UUID documentId, UUID userId) {
-    Document document = documentRepository
-        .findById(documentId)
-        .orElseThrow(() -> new RuntimeException("Document not found"));
+    Document document =
+        documentRepository
+            .findById(documentId)
+            .orElseThrow(() -> new RuntimeException("Document not found"));
 
     if (!document.getAuthor().getId().equals(userId)) {
       throw new RuntimeException("Only the author can delete this document");
@@ -282,9 +286,10 @@ public class DocumentService {
   @Transactional(readOnly = true)
   public java.util.List<com.edtech.dto.CommentResponseDto> getComments(
       UUID documentId, UUID userId) {
-    Document document = documentRepository
-        .findById(documentId)
-        .orElseThrow(() -> new RuntimeException("Document not found"));
+    Document document =
+        documentRepository
+            .findById(documentId)
+            .orElseThrow(() -> new RuntimeException("Document not found"));
     projectMemberRepository
         .findByProjectIdAndUserId(document.getProject().getId(), userId)
         .orElseThrow(() -> new RuntimeException("Access denied"));
@@ -307,10 +312,12 @@ public class DocumentService {
   @Transactional
   public com.edtech.dto.CommentResponseDto addComment(
       UUID documentId, UUID userId, String content) {
-    Document document = documentRepository
-        .findById(documentId)
-        .orElseThrow(() -> new RuntimeException("Document not found"));
-    User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+    Document document =
+        documentRepository
+            .findById(documentId)
+            .orElseThrow(() -> new RuntimeException("Document not found"));
+    User user =
+        userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
     projectMemberRepository
         .findByProjectIdAndUserId(document.getProject().getId(), userId)
         .orElseThrow(() -> new RuntimeException("Access denied"));
@@ -347,13 +354,15 @@ public class DocumentService {
       throw new IllegalArgumentException(
           "Status invalido. Apenas APPROVED ou REJECTED sao permitidos na revisao.");
     }
-    Document document = documentRepository
-        .findById(documentId)
-        .orElseThrow(() -> new RuntimeException("Document not found"));
-    ProjectMember member = projectMemberRepository
-        .findByProjectIdAndUserId(document.getProject().getId(), reviewerId)
-        .orElseThrow(
-            () -> new RuntimeException("Acess denied: You are not a member of this project"));
+    Document document =
+        documentRepository
+            .findById(documentId)
+            .orElseThrow(() -> new RuntimeException("Document not found"));
+    ProjectMember member =
+        projectMemberRepository
+            .findByProjectIdAndUserId(document.getProject().getId(), reviewerId)
+            .orElseThrow(
+                () -> new RuntimeException("Acess denied: You are not a member of this project"));
     if (member.getRole() != ProjectRole.ADVISOR) {
       throw new RuntimeException("Acess denied: Only an ADVISOR can review documents");
     }
@@ -363,13 +372,15 @@ public class DocumentService {
     document.setStatus(newStatus);
     document.setFeedback(feedback);
     Document savedDocument = documentRepository.save(document);
-    AuditAction action = (newStatus == DocumentStatus.APPROVED)
-        ? AuditAction.DOCUMENT_APPROVED
-        : AuditAction.DOCUMENT_REJECTED;
-    String details = "Status alterado para "
-        + newStatus
-        + ".Feedback: "
-        + (feedback != null && !feedback.trim().isEmpty() ? feedback : "Sem feedback");
+    AuditAction action =
+        (newStatus == DocumentStatus.APPROVED)
+            ? AuditAction.DOCUMENT_APPROVED
+            : AuditAction.DOCUMENT_REJECTED;
+    String details =
+        "Status alterado para "
+            + newStatus
+            + ".Feedback: "
+            + (feedback != null && !feedback.trim().isEmpty() ? feedback : "Sem feedback");
     auditLogService.logDocumentAction(reviewerId, action, documentId, details);
 
     DocumentResponseDto responseDto = mapToDto(savedDocument);
@@ -383,9 +394,10 @@ public class DocumentService {
   /** Javadoc. */
   @Transactional
   public DocumentResponseDto toggleStar(UUID documentId, UUID userId) {
-    Document document = documentRepository
-        .findById(documentId)
-        .orElseThrow(() -> new RuntimeException("Document not found"));
+    Document document =
+        documentRepository
+            .findById(documentId)
+            .orElseThrow(() -> new RuntimeException("Document not found"));
 
     projectMemberRepository
         .findByProjectIdAndUserId(document.getProject().getId(), userId)

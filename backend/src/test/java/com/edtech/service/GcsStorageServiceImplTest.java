@@ -27,14 +27,16 @@ class GcsStorageServiceImplTest {
   void setUp() throws Exception {
     storage = mock(Storage.class);
     service = new GcsStorageServiceImpl(storage);
-    java.lang.reflect.Field bucketNameField = GcsStorageServiceImpl.class.getDeclaredField("bucketName");
+    java.lang.reflect.Field bucketNameField =
+        GcsStorageServiceImpl.class.getDeclaredField("bucketName");
     bucketNameField.setAccessible(true);
     bucketNameField.set(service, "test-bucket");
   }
 
   @Test
   void testUploadFile() throws Exception {
-    MockMultipartFile file = new MockMultipartFile("file", "hello.txt", "text/plain", "Hello World".getBytes());
+    MockMultipartFile file =
+        new MockMultipartFile("file", "hello.txt", "text/plain", "Hello World".getBytes());
     service.uploadFile(file, "hello.txt", "text/plain");
 
     verify(storage).create(any(BlobInfo.class), eq("Hello World".getBytes()));
@@ -44,7 +46,7 @@ class GcsStorageServiceImplTest {
   void testGetPresignedUrl() throws Exception {
     URL mockUrl = URI.create("http://localhost/test").toURL();
     when(storage.signUrl(
-        any(BlobInfo.class), eq(15L), eq(TimeUnit.MINUTES), any(Storage.SignUrlOption.class)))
+            any(BlobInfo.class), eq(15L), eq(TimeUnit.MINUTES), any(Storage.SignUrlOption.class)))
         .thenReturn(mockUrl);
 
     String url = service.getPresignedUrl("hello.txt");

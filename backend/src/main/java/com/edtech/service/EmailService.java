@@ -16,18 +16,14 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-/**
- * Sends account emails through the Resend HTTPS API in production and SMTP
- * locally.
- */
+/** Sends account emails through the Resend HTTPS API in production and SMTP locally. */
 @Service
 public class EmailService {
 
   private static final Logger logger = LoggerFactory.getLogger(EmailService.class);
   private static final URI RESEND_EMAILS_URI = URI.create("https://api.resend.com/emails");
 
-  @Autowired
-  private JavaMailSender mailSender;
+  @Autowired private JavaMailSender mailSender;
 
   @Value("${SMTP_FROM:noreply@edtechacademic.com.br}")
   private String fromAddress;
@@ -88,22 +84,25 @@ public class EmailService {
   }
 
   private void sendWithResendApi(String apiKey, String toEmail, String subject, String text) {
-    String payload = "{\"from\":\""
-        + escapeJson(resolveFromAddress())
-        + "\",\"to\":[\""
-        + escapeJson(toEmail)
-        + "\"],\"subject\":\""
-        + escapeJson(subject)
-        + "\",\"text\":\""
-        + escapeJson(text)
-        + "\"}";
-    HttpRequest request = HttpRequest.newBuilder(RESEND_EMAILS_URI)
-        .header("Authorization", "Bearer " + apiKey)
-        .header("Content-Type", "application/json")
-        .POST(HttpRequest.BodyPublishers.ofString(payload, StandardCharsets.UTF_8))
-        .build();
+    String payload =
+        "{\"from\":\""
+            + escapeJson(resolveFromAddress())
+            + "\",\"to\":[\""
+            + escapeJson(toEmail)
+            + "\"],\"subject\":\""
+            + escapeJson(subject)
+            + "\",\"text\":\""
+            + escapeJson(text)
+            + "\"}";
+    HttpRequest request =
+        HttpRequest.newBuilder(RESEND_EMAILS_URI)
+            .header("Authorization", "Bearer " + apiKey)
+            .header("Content-Type", "application/json")
+            .POST(HttpRequest.BodyPublishers.ofString(payload, StandardCharsets.UTF_8))
+            .build();
     try {
-      HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+      HttpResponse<String> response =
+          HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
       if (response.statusCode() >= 200 && response.statusCode() < 300) {
         logger.info("Email dispatched through Resend API to {}.", toEmail);
       } else {

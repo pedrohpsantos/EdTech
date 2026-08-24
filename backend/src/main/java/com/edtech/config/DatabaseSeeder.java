@@ -52,18 +52,20 @@ public class DatabaseSeeder implements CommandLineRunner {
     String defaultPasswordHash = passwordEncoder.encode(demoKey);
 
     // 1. Criar usuários
-    User pesquisador = seedUser(
-        "Pesquisador Demo",
-        "pesquisador.demo@unb.br",
-        defaultPasswordHash,
-        UserRole.RESEARCHER,
-        demoInstitutionId);
-    User orientador = seedUser(
-        "Orientador Demo",
-        "orientador.demo@unb.br",
-        defaultPasswordHash,
-        UserRole.ADVISOR,
-        demoInstitutionId);
+    User pesquisador =
+        seedUser(
+            "Pesquisador Demo",
+            "pesquisador.demo@unb.br",
+            defaultPasswordHash,
+            UserRole.RESEARCHER,
+            demoInstitutionId);
+    User orientador =
+        seedUser(
+            "Orientador Demo",
+            "orientador.demo@unb.br",
+            defaultPasswordHash,
+            UserRole.ADVISOR,
+            demoInstitutionId);
     seedUser(
         "Auditor Demo",
         "auditor.demo@unb.br",

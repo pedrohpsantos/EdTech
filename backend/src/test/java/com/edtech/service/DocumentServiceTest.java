@@ -36,27 +36,17 @@ import org.springframework.web.multipart.MultipartFile;
 @ExtendWith(MockitoExtension.class)
 public class DocumentServiceTest {
 
-  @Mock
-  private DocumentRepository documentRepository;
-  @Mock
-  private ProjectRepository projectRepository;
-  @Mock
-  private UserRepository userRepository;
-  @Mock
-  private ProjectMemberRepository projectMemberRepository;
-  @Mock
-  private com.edtech.repository.DocumentCommentRepository documentCommentRepository;
-  @Mock
-  private AuditLogService auditLogService;
-  @Mock
-  private StorageService storageService;
-  @Mock
-  private NotificationService notificationService;
-  @Mock
-  private ClamAvService clamAvService;
+  @Mock private DocumentRepository documentRepository;
+  @Mock private ProjectRepository projectRepository;
+  @Mock private UserRepository userRepository;
+  @Mock private ProjectMemberRepository projectMemberRepository;
+  @Mock private com.edtech.repository.DocumentCommentRepository documentCommentRepository;
+  @Mock private AuditLogService auditLogService;
+  @Mock private StorageService storageService;
+  @Mock private NotificationService notificationService;
+  @Mock private ClamAvService clamAvService;
 
-  @InjectMocks
-  private DocumentService documentService;
+  @InjectMocks private DocumentService documentService;
 
   private User author;
   private Project project;
@@ -72,12 +62,13 @@ public class DocumentServiceTest {
     projectId = UUID.randomUUID();
     documentId = UUID.randomUUID();
 
-    author = new User(
-        "test",
-        "test@unb.br",
-        "hash",
-        com.edtech.model.UserRole.RESEARCHER,
-        java.util.UUID.randomUUID());
+    author =
+        new User(
+            "test",
+            "test@unb.br",
+            "hash",
+            com.edtech.model.UserRole.RESEARCHER,
+            java.util.UUID.randomUUID());
     org.springframework.test.util.ReflectionTestUtils.setField(author, "id", authorId);
 
     org.mockito.Mockito.lenient()
@@ -113,7 +104,8 @@ public class DocumentServiceTest {
   @Test
   void testUploadDocument_Success() throws Exception {
     byte[] pdfContent = "%PDF-1.4\n%EOF".getBytes();
-    MockMultipartFile file = new MockMultipartFile("file", "test.pdf", "application/pdf", pdfContent);
+    MockMultipartFile file =
+        new MockMultipartFile("file", "test.pdf", "application/pdf", pdfContent);
 
     when(userRepository.findById(authorId)).thenReturn(Optional.of(author));
     when(projectRepository.findById(projectId)).thenReturn(Optional.of(project));
@@ -130,7 +122,8 @@ public class DocumentServiceTest {
               return saved;
             });
 
-    DocumentResponseDto response = documentService.uploadDocument(file, "Test Doc", projectId, authorId);
+    DocumentResponseDto response =
+        documentService.uploadDocument(file, "Test Doc", projectId, authorId);
 
     assertNotNull(response);
     assertEquals("Test Doc", response.getTitle());
@@ -167,7 +160,8 @@ public class DocumentServiceTest {
               return saved;
             });
 
-    DocumentResponseDto response = documentService.uploadDocument(file, "Dataset CSV", projectId, authorId);
+    DocumentResponseDto response =
+        documentService.uploadDocument(file, "Dataset CSV", projectId, authorId);
 
     assertNotNull(response);
     verify(storageService, times(1)).uploadFile(any(), anyString(), eq("text/csv"));
@@ -179,7 +173,8 @@ public class DocumentServiceTest {
   @Test
   void testUploadDocument_JsonSuccess() throws Exception {
     byte[] jsonContent = "{\"samples\":[1,2,3]}".getBytes();
-    MockMultipartFile file = new MockMultipartFile("file", "dataset.json", "application/json", jsonContent);
+    MockMultipartFile file =
+        new MockMultipartFile("file", "dataset.json", "application/json", jsonContent);
 
     when(userRepository.findById(authorId)).thenReturn(Optional.of(author));
     when(projectRepository.findById(projectId)).thenReturn(Optional.of(project));
@@ -196,7 +191,8 @@ public class DocumentServiceTest {
               return saved;
             });
 
-    DocumentResponseDto response = documentService.uploadDocument(file, "Dataset JSON", projectId, authorId);
+    DocumentResponseDto response =
+        documentService.uploadDocument(file, "Dataset JSON", projectId, authorId);
 
     assertNotNull(response);
     verify(storageService, times(1)).uploadFile(any(), anyString(), eq("application/json"));
@@ -207,38 +203,44 @@ public class DocumentServiceTest {
 
   @Test
   void testUploadDocument_AuthorNotFound_ThrowsException() {
-    MockMultipartFile file = new MockMultipartFile("file", "test.pdf", "application/pdf", new byte[0]);
+    MockMultipartFile file =
+        new MockMultipartFile("file", "test.pdf", "application/pdf", new byte[0]);
     when(userRepository.findById(authorId)).thenReturn(Optional.empty());
 
-    RuntimeException exception = assertThrows(
-        RuntimeException.class,
-        () -> documentService.uploadDocument(file, "Test Doc", projectId, authorId));
+    RuntimeException exception =
+        assertThrows(
+            RuntimeException.class,
+            () -> documentService.uploadDocument(file, "Test Doc", projectId, authorId));
     assertEquals("Author not found", exception.getMessage());
   }
 
   @Test
   void testUploadDocument_ProjectNotFound_ThrowsException() {
-    MockMultipartFile file = new MockMultipartFile("file", "test.pdf", "application/pdf", new byte[0]);
+    MockMultipartFile file =
+        new MockMultipartFile("file", "test.pdf", "application/pdf", new byte[0]);
     when(userRepository.findById(authorId)).thenReturn(Optional.of(author));
     when(projectRepository.findById(projectId)).thenReturn(Optional.empty());
 
-    RuntimeException exception = assertThrows(
-        RuntimeException.class,
-        () -> documentService.uploadDocument(file, "Test Doc", projectId, authorId));
+    RuntimeException exception =
+        assertThrows(
+            RuntimeException.class,
+            () -> documentService.uploadDocument(file, "Test Doc", projectId, authorId));
     assertEquals("Project not found", exception.getMessage());
   }
 
   @Test
   void testUploadDocument_NotMember_ThrowsException() {
-    MockMultipartFile file = new MockMultipartFile("file", "test.pdf", "application/pdf", new byte[0]);
+    MockMultipartFile file =
+        new MockMultipartFile("file", "test.pdf", "application/pdf", new byte[0]);
     when(userRepository.findById(authorId)).thenReturn(Optional.of(author));
     when(projectRepository.findById(projectId)).thenReturn(Optional.of(project));
     when(projectMemberRepository.findByProjectIdAndUserId(projectId, authorId))
         .thenReturn(Optional.empty());
 
-    RuntimeException exception = assertThrows(
-        RuntimeException.class,
-        () -> documentService.uploadDocument(file, "Test Doc", projectId, authorId));
+    RuntimeException exception =
+        assertThrows(
+            RuntimeException.class,
+            () -> documentService.uploadDocument(file, "Test Doc", projectId, authorId));
     assertEquals("Author is not a member of the project", exception.getMessage());
   }
 
@@ -252,16 +254,18 @@ public class DocumentServiceTest {
     when(projectMemberRepository.findByProjectIdAndUserId(projectId, authorId))
         .thenReturn(Optional.of(projectMember));
 
-    IllegalArgumentException exception = assertThrows(
-        IllegalArgumentException.class,
-        () -> documentService.uploadDocument(file, "Test Doc", projectId, authorId));
+    IllegalArgumentException exception =
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> documentService.uploadDocument(file, "Test Doc", projectId, authorId));
 
     assertTrue(exception.getMessage().contains("Tipo de arquivo nao permitido"));
   }
 
   @Test
   void testUploadDocument_NullFilename_ThrowsException() {
-    org.springframework.web.multipart.MultipartFile file = mock(org.springframework.web.multipart.MultipartFile.class);
+    org.springframework.web.multipart.MultipartFile file =
+        mock(org.springframework.web.multipart.MultipartFile.class);
     when(file.getOriginalFilename()).thenReturn(null);
 
     when(userRepository.findById(authorId)).thenReturn(Optional.of(author));
@@ -269,9 +273,10 @@ public class DocumentServiceTest {
     when(projectMemberRepository.findByProjectIdAndUserId(projectId, authorId))
         .thenReturn(Optional.of(projectMember));
 
-    IllegalArgumentException exception = assertThrows(
-        IllegalArgumentException.class,
-        () -> documentService.uploadDocument(file, "Test Doc", projectId, authorId));
+    IllegalArgumentException exception =
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> documentService.uploadDocument(file, "Test Doc", projectId, authorId));
     assertEquals("Filename cannot be null", exception.getMessage());
   }
 
@@ -292,8 +297,9 @@ public class DocumentServiceTest {
   void testDeleteDocument_NotFound_ThrowsException() {
     when(documentRepository.findById(documentId)).thenReturn(Optional.empty());
 
-    RuntimeException exception = assertThrows(
-        RuntimeException.class, () -> documentService.deleteDocument(documentId, authorId));
+    RuntimeException exception =
+        assertThrows(
+            RuntimeException.class, () -> documentService.deleteDocument(documentId, authorId));
     assertEquals("Document not found", exception.getMessage());
   }
 
@@ -302,8 +308,9 @@ public class DocumentServiceTest {
     UUID otherUserId = UUID.randomUUID();
     when(documentRepository.findById(documentId)).thenReturn(Optional.of(document));
 
-    RuntimeException exception = assertThrows(
-        RuntimeException.class, () -> documentService.deleteDocument(documentId, otherUserId));
+    RuntimeException exception =
+        assertThrows(
+            RuntimeException.class, () -> documentService.deleteDocument(documentId, otherUserId));
     assertEquals("Only the author can delete this document", exception.getMessage());
   }
 
@@ -312,8 +319,9 @@ public class DocumentServiceTest {
     document.setStatus(DocumentStatus.APPROVED);
     when(documentRepository.findById(documentId)).thenReturn(Optional.of(document));
 
-    RuntimeException exception = assertThrows(
-        RuntimeException.class, () -> documentService.deleteDocument(documentId, authorId));
+    RuntimeException exception =
+        assertThrows(
+            RuntimeException.class, () -> documentService.deleteDocument(documentId, authorId));
     assertEquals("APPROVED documents cannot be deleted", exception.getMessage());
   }
 
@@ -322,8 +330,9 @@ public class DocumentServiceTest {
     when(documentRepository.findById(documentId)).thenReturn(Optional.of(document));
     doThrow(new RuntimeException("GCS error")).when(storageService).deleteFile(anyString());
 
-    RuntimeException exception = assertThrows(
-        RuntimeException.class, () -> documentService.deleteDocument(documentId, authorId));
+    RuntimeException exception =
+        assertThrows(
+            RuntimeException.class, () -> documentService.deleteDocument(documentId, authorId));
     assertTrue(exception.getMessage().contains("Erro ao excluir arquivo fisico: GCS error"));
   }
 
@@ -348,8 +357,9 @@ public class DocumentServiceTest {
               return saved;
             });
 
-    DocumentResponseDto response = documentService.reviewDocument(
-        documentId, advisorId, DocumentStatus.APPROVED, "Great work");
+    DocumentResponseDto response =
+        documentService.reviewDocument(
+            documentId, advisorId, DocumentStatus.APPROVED, "Great work");
 
     assertNotNull(response);
     assertEquals(DocumentStatus.APPROVED, response.getStatus());
@@ -362,10 +372,12 @@ public class DocumentServiceTest {
   @Test
   void testReviewDocument_InvalidStatus_ThrowsException() {
     UUID advisorId = UUID.randomUUID();
-    IllegalArgumentException exception = assertThrows(
-        IllegalArgumentException.class,
-        () -> documentService.reviewDocument(
-            documentId, advisorId, DocumentStatus.DRAFT, "Great work"));
+    IllegalArgumentException exception =
+        assertThrows(
+            IllegalArgumentException.class,
+            () ->
+                documentService.reviewDocument(
+                    documentId, advisorId, DocumentStatus.DRAFT, "Great work"));
     assertTrue(exception.getMessage().contains("Status invalido"));
   }
 
@@ -378,10 +390,12 @@ public class DocumentServiceTest {
     when(projectMemberRepository.findByProjectIdAndUserId(projectId, advisorId))
         .thenReturn(Optional.empty());
 
-    RuntimeException exception = assertThrows(
-        RuntimeException.class,
-        () -> documentService.reviewDocument(
-            documentId, advisorId, DocumentStatus.APPROVED, "Great work"));
+    RuntimeException exception =
+        assertThrows(
+            RuntimeException.class,
+            () ->
+                documentService.reviewDocument(
+                    documentId, advisorId, DocumentStatus.APPROVED, "Great work"));
     assertEquals("Acess denied: You are not a member of this project", exception.getMessage());
   }
 
@@ -396,10 +410,12 @@ public class DocumentServiceTest {
     when(projectMemberRepository.findByProjectIdAndUserId(projectId, advisorId))
         .thenReturn(Optional.of(researcher));
 
-    RuntimeException exception = assertThrows(
-        RuntimeException.class,
-        () -> documentService.reviewDocument(
-            documentId, advisorId, DocumentStatus.APPROVED, "Great work"));
+    RuntimeException exception =
+        assertThrows(
+            RuntimeException.class,
+            () ->
+                documentService.reviewDocument(
+                    documentId, advisorId, DocumentStatus.APPROVED, "Great work"));
     assertEquals("Acess denied: Only an ADVISOR can review documents", exception.getMessage());
   }
 
@@ -414,10 +430,12 @@ public class DocumentServiceTest {
     when(projectMemberRepository.findByProjectIdAndUserId(projectId, advisorId))
         .thenReturn(Optional.of(advisor));
 
-    RuntimeException exception = assertThrows(
-        RuntimeException.class,
-        () -> documentService.reviewDocument(
-            documentId, advisorId, DocumentStatus.APPROVED, "Great work"));
+    RuntimeException exception =
+        assertThrows(
+            RuntimeException.class,
+            () ->
+                documentService.reviewDocument(
+                    documentId, advisorId, DocumentStatus.APPROVED, "Great work"));
     assertEquals("Document is not pending review", exception.getMessage());
   }
 
@@ -442,8 +460,9 @@ public class DocumentServiceTest {
     when(projectMemberRepository.findByProjectIdAndUserId(projectId, authorId))
         .thenReturn(Optional.empty());
 
-    RuntimeException exception = assertThrows(
-        RuntimeException.class, () -> documentService.getPresignedUrl(documentId, authorId));
+    RuntimeException exception =
+        assertThrows(
+            RuntimeException.class, () -> documentService.getPresignedUrl(documentId, authorId));
     assertEquals("Access denied: You are not a member of this project", exception.getMessage());
   }
 
@@ -454,8 +473,9 @@ public class DocumentServiceTest {
         .thenReturn(Optional.of(projectMember));
     when(storageService.getPresignedUrl(anyString())).thenThrow(new RuntimeException("GCS error"));
 
-    RuntimeException exception = assertThrows(
-        RuntimeException.class, () -> documentService.getPresignedUrl(documentId, authorId));
+    RuntimeException exception =
+        assertThrows(
+            RuntimeException.class, () -> documentService.getPresignedUrl(documentId, authorId));
     assertEquals("Failed to generate presigned URL", exception.getMessage());
   }
 
@@ -463,11 +483,12 @@ public class DocumentServiceTest {
   void testListDocumentsByUser_Success() {
     Page<Document> page = new PageImpl<>(Collections.singletonList(document));
     when(documentRepository.findDocumentsByUserIdAndFilters(
-        eq(authorId), eq(projectId), anyString(), any(), any()))
+            eq(authorId), eq(projectId), anyString(), any(), any()))
         .thenReturn(page);
 
-    Page<DocumentResponseDto> response = documentService.listDocumentsByUser(
-        authorId, projectId, "title", null, PageRequest.of(0, 10));
+    Page<DocumentResponseDto> response =
+        documentService.listDocumentsByUser(
+            authorId, projectId, "title", null, PageRequest.of(0, 10));
 
     assertNotNull(response);
     assertEquals(1, response.getContent().size());
@@ -494,7 +515,8 @@ public class DocumentServiceTest {
               return saved;
             });
 
-    DocumentResponseDto response = documentService.reviewDocument(documentId, advisorId, DocumentStatus.REJECTED, null);
+    DocumentResponseDto response =
+        documentService.reviewDocument(documentId, advisorId, DocumentStatus.REJECTED, null);
 
     assertNotNull(response);
     assertEquals(DocumentStatus.REJECTED, response.getStatus());
@@ -525,8 +547,8 @@ public class DocumentServiceTest {
               return saved;
             });
 
-    DocumentResponseDto response = documentService.reviewDocument(documentId, advisorId, DocumentStatus.REJECTED,
-        "   ");
+    DocumentResponseDto response =
+        documentService.reviewDocument(documentId, advisorId, DocumentStatus.REJECTED, "   ");
 
     assertNotNull(response);
     assertEquals(DocumentStatus.REJECTED, response.getStatus());
@@ -538,7 +560,8 @@ public class DocumentServiceTest {
 
   @Test
   void testUploadDocument_TikaIOException_ThrowsException() throws Exception {
-    org.springframework.web.multipart.MultipartFile file = mock(org.springframework.web.multipart.MultipartFile.class);
+    org.springframework.web.multipart.MultipartFile file =
+        mock(org.springframework.web.multipart.MultipartFile.class);
     when(file.getOriginalFilename()).thenReturn("test.pdf");
     when(file.getContentType()).thenReturn("application/pdf");
     when(file.getInputStream()).thenThrow(new IOException("Stream error"));
@@ -548,9 +571,10 @@ public class DocumentServiceTest {
     when(projectMemberRepository.findByProjectIdAndUserId(projectId, authorId))
         .thenReturn(Optional.of(projectMember));
 
-    RuntimeException exception = assertThrows(
-        RuntimeException.class,
-        () -> documentService.uploadDocument(file, "Test Doc", projectId, authorId));
+    RuntimeException exception =
+        assertThrows(
+            RuntimeException.class,
+            () -> documentService.uploadDocument(file, "Test Doc", projectId, authorId));
     assertEquals("Falha ao analisar o conteudo do arquivo", exception.getMessage());
   }
 
@@ -568,7 +592,8 @@ public class DocumentServiceTest {
     when(documentCommentRepository.findByDocumentIdOrderByCreatedAtAsc(documentId))
         .thenReturn(Collections.singletonList(comment));
 
-    java.util.List<com.edtech.dto.CommentResponseDto> comments = documentService.getComments(documentId, authorId);
+    java.util.List<com.edtech.dto.CommentResponseDto> comments =
+        documentService.getComments(documentId, authorId);
 
     assertNotNull(comments);
     assertEquals(1, comments.size());
@@ -603,7 +628,8 @@ public class DocumentServiceTest {
               return saved;
             });
 
-    com.edtech.dto.CommentResponseDto response = documentService.addComment(documentId, authorId, "New Comment");
+    com.edtech.dto.CommentResponseDto response =
+        documentService.addComment(documentId, authorId, "New Comment");
 
     assertNotNull(response);
     assertEquals("New Comment", response.getContent());
@@ -645,7 +671,8 @@ public class DocumentServiceTest {
   @Test
   void testUploadDocument_RejectsMalware() {
     byte[] content = "%PDF-1.4\n%EOF".getBytes();
-    MockMultipartFile file = new MockMultipartFile("file", "infected_file.pdf", "application/pdf", content);
+    MockMultipartFile file =
+        new MockMultipartFile("file", "infected_file.pdf", "application/pdf", content);
 
     when(userRepository.findById(authorId)).thenReturn(Optional.of(author));
     when(projectRepository.findById(projectId)).thenReturn(Optional.of(project));
@@ -654,11 +681,12 @@ public class DocumentServiceTest {
 
     when(clamAvService.isFileSafe(any(MultipartFile.class))).thenReturn(false);
 
-    IllegalArgumentException exception = assertThrows(
-        IllegalArgumentException.class,
-        () -> {
-          documentService.uploadDocument(file, "Infected File", projectId, authorId);
-        });
+    IllegalArgumentException exception =
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> {
+              documentService.uploadDocument(file, "Infected File", projectId, authorId);
+            });
 
     assertEquals(
         "Upload rejeitado: Assinatura de vírus detectada no arquivo.", exception.getMessage());

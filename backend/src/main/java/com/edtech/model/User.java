@@ -69,8 +69,7 @@ public class User {
   @Column(name = "avatar_url", columnDefinition = "TEXT")
   private String avatarUrl;
 
-  protected User() {
-  }
+  protected User() {}
 
   /** Documentação para o método User. */
   public User(String name, String email, String passwordHash, UserRole role, UUID institutionId) {

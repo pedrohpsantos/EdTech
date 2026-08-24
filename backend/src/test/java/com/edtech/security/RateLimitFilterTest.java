@@ -1,6 +1,5 @@
 package com.edtech.security;
 
-
 import static org.mockito.Mockito.*;
 
 import io.github.bucket4j.Bucket;
@@ -68,6 +67,5 @@ class RateLimitFilterTest {
     rateLimitFilter.doFilterInternal(request, response, filterChain);
 
     verify(response).setStatus(HttpStatus.TOO_MANY_REQUESTS.value());
-
   }
 }

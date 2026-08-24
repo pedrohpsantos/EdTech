@@ -6,6 +6,5 @@ import org.springframework.boot.test.context.SpringBootTest;
 class EdtechApplicationTests {
 
   // @Test
-  void contextLoads() {
-  }
+  void contextLoads() {}
 }

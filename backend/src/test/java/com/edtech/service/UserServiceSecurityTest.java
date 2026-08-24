@@ -3,10 +3,10 @@ package com.edtech.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.any;
 
 import com.edtech.model.User;
 import com.edtech.model.UserRole;
@@ -24,24 +24,28 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @ExtendWith(MockitoExtension.class)
 public class UserServiceSecurityTest {
 
-  private static final String MOCK_VAL = java.util.UUID.randomUUID().toString(); // NOSONAR: test-only value
-  private static final String MOCK_HASH_VAL = java.util.UUID.randomUUID().toString(); // NOSONAR: test-only value
+  private static final String MOCK_VAL =
+      java.util.UUID.randomUUID().toString(); // NOSONAR: test-only value
+  private static final String MOCK_HASH_VAL =
+      java.util.UUID.randomUUID().toString(); // NOSONAR: test-only value
 
-  @Mock
-  private UserRepository userRepository;
+  @Mock private UserRepository userRepository;
 
-  @Mock
-  private PasswordEncoder passwordEncoder;
+  @Mock private PasswordEncoder passwordEncoder;
 
-  @InjectMocks
-  private UserService userService;
+  @InjectMocks private UserService userService;
 
   private User mockUser;
 
   @BeforeEach
   void setUp() {
-    mockUser = new User("Auditor Malicious", "auditor.malicious@unb.br", MOCK_HASH_VAL, UserRole.RESEARCHER,
-        UUID.randomUUID());
+    mockUser =
+        new User(
+            "Auditor Malicious",
+            "auditor.malicious@unb.br",
+            MOCK_HASH_VAL,
+            UserRole.RESEARCHER,
+            UUID.randomUUID());
     mockUser.setActive(true);
   }
 

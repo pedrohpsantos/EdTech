@@ -27,8 +27,7 @@ public class RecoveryToken {
   private LocalDateTime expiryDate;
 
   /** Documentação para o método RecoveryToken. */
-  public RecoveryToken() {
-  }
+  public RecoveryToken() {}
 
   /** Documentação para o método RecoveryToken. */
   public RecoveryToken(String token, String email, LocalDateTime expiryDate) {

@@ -23,30 +23,28 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @ExtendWith(MockitoExtension.class)
 public class RecoveryServiceTest {
 
-  private static final String MOCK_NEW_VAL = java.util.UUID.randomUUID().toString(); // NOSONAR: test-only value
-  private static final String MOCK_HASH_VAL = java.util.UUID.randomUUID().toString(); // NOSONAR: test-only value
+  private static final String MOCK_NEW_VAL =
+      java.util.UUID.randomUUID().toString(); // NOSONAR: test-only value
+  private static final String MOCK_HASH_VAL =
+      java.util.UUID.randomUUID().toString(); // NOSONAR: test-only value
 
-  @Mock
-  private UserRepository userRepository;
+  @Mock private UserRepository userRepository;
 
-  @Mock
-  private RecoveryTokenRepository recoveryTokenRepository;
+  @Mock private RecoveryTokenRepository recoveryTokenRepository;
 
-  @Mock
-  private EmailService emailService;
+  @Mock private EmailService emailService;
 
-  @Mock
-  private PasswordEncoder passwordEncoder;
+  @Mock private PasswordEncoder passwordEncoder;
 
-  @InjectMocks
-  private RecoveryService recoveryService;
+  @InjectMocks private RecoveryService recoveryService;
 
   private User mockUser;
   private final String EMAIL = "teste@unb.br";
 
   @BeforeEach
   void setUp() {
-    mockUser = new User("Teste", EMAIL, "hash_antigo", UserRole.RESEARCHER, java.util.UUID.randomUUID());
+    mockUser =
+        new User("Teste", EMAIL, "hash_antigo", UserRole.RESEARCHER, java.util.UUID.randomUUID());
   }
 
   @Test

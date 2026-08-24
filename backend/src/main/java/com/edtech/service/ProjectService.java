@@ -42,9 +42,10 @@ public class ProjectService {
   @Transactional
   @CacheEvict(value = "projects", key = "#advisorId")
   public ProjectResponseDto createProject(ProjectRequestDto request, UUID advisorId) {
-    User advisor = userRepository
-        .findById(advisorId)
-        .orElseThrow(() -> new RuntimeException("User not found"));
+    User advisor =
+        userRepository
+            .findById(advisorId)
+            .orElseThrow(() -> new RuntimeException("User not found"));
 
     Project project = new Project();
     project.setTitle(request.getTitle());
@@ -63,7 +64,9 @@ public class ProjectService {
   }
 
   /** Documentação para o método listProjectsByUser. */
-  @Cacheable(value = "projects", key = "#userId + '-' + #pageable.pageNumber + '-' + #pageable.pageSize")
+  @Cacheable(
+      value = "projects",
+      key = "#userId + '-' + #pageable.pageNumber + '-' + #pageable.pageSize")
   public org.springframework.data.domain.Page<ProjectResponseDto> listProjectsByUser(
       UUID userId, org.springframework.data.domain.Pageable pageable) {
     User user = userRepository.findById(userId).orElse(null);
@@ -86,20 +89,23 @@ public class ProjectService {
   @Transactional
   @CacheEvict(value = "projects", allEntries = true)
   public void addMember(UUID projectId, ProjectMemberRequestDto dto, User authenticatedUser) {
-    Project project = projectRepository
-        .findById(projectId)
-        .orElseThrow(() -> new RuntimeException("Project not found"));
+    Project project =
+        projectRepository
+            .findById(projectId)
+            .orElseThrow(() -> new RuntimeException("Project not found"));
 
-    UUID targetUserId = (dto != null && dto.getUserId() != null) ? dto.getUserId() : authenticatedUser.getId();
+    UUID targetUserId =
+        (dto != null && dto.getUserId() != null) ? dto.getUserId() : authenticatedUser.getId();
 
     // Se o usuário que está tentando associar alguém for diferente do alvo, ele
     // deve ser ADVISOR do
     // projeto.
     if (!targetUserId.equals(authenticatedUser.getId())) {
-      ProjectMember advisorMember = projectMemberRepository
-          .findByProjectIdAndUserId(projectId, authenticatedUser.getId())
-          .orElseThrow(
-              () -> new RuntimeException("User is not part of the project to add members"));
+      ProjectMember advisorMember =
+          projectMemberRepository
+              .findByProjectIdAndUserId(projectId, authenticatedUser.getId())
+              .orElseThrow(
+                  () -> new RuntimeException("User is not part of the project to add members"));
 
       if (advisorMember.getRole() != ProjectRole.ADVISOR) {
         throw new RuntimeException("Only ADVISORS can add other members");
@@ -111,11 +117,13 @@ public class ProjectService {
           "User is already a member of this project");
     }
 
-    User newUser = userRepository
-        .findById(targetUserId)
-        .orElseThrow(() -> new RuntimeException("User not found"));
+    User newUser =
+        userRepository
+            .findById(targetUserId)
+            .orElseThrow(() -> new RuntimeException("User not found"));
 
-    String roleStr = (dto != null && dto.getRole() != null) ? dto.getRole().toUpperCase() : "RESEARCHER";
+    String roleStr =
+        (dto != null && dto.getRole() != null) ? dto.getRole().toUpperCase() : "RESEARCHER";
 
     ProjectMember newMember = new ProjectMember();
     newMember.setProject(project);
