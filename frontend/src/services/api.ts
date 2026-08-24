@@ -32,8 +32,9 @@ const hideLoader = () => {
 };
 
 const generateRequestId = () => {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-    const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+    const r = (Math.random() * 16) | 0,
+      v = c === 'x' ? r : (r & 0x3) | 0x8;
     return v.toString(16);
   });
 };
@@ -87,7 +88,11 @@ export const login = async (email: string, senha: string): Promise<ApiResponse<a
   }
 };
 
-export const verify2FaLogin = async (email: string, senha: string, code: string): Promise<ApiResponse<any>> => {
+export const verify2FaLogin = async (
+  email: string,
+  senha: string,
+  code: string,
+): Promise<ApiResponse<any>> => {
   try {
     const resposta = await api.post('/api/auth/login/verify-2fa', { email, password: senha, code });
     return { sucesso: true, dados: resposta.data.user || resposta.data };
@@ -96,7 +101,7 @@ export const verify2FaLogin = async (email: string, senha: string, code: string)
   }
 };
 
-export const setup2Fa = async (): Promise<ApiResponse<{secret: string, qrCodeUri: string}>> => {
+export const setup2Fa = async (): Promise<ApiResponse<{ secret: string; qrCodeUri: string }>> => {
   try {
     const resposta = await api.get('/api/auth/2fa/setup');
     return { sucesso: true, dados: resposta.data };
@@ -121,7 +126,12 @@ export const register = async (
   role: string,
 ): Promise<ApiResponse<any>> => {
   try {
-    const resposta = await api.post('/api/auth/register', { name: nome, email, password: senha, role });
+    const resposta = await api.post('/api/auth/register', {
+      name: nome,
+      email,
+      password: senha,
+      role,
+    });
     // Token is no longer returned in /register, but /register/verify
     return { sucesso: true, dados: resposta.data.user };
   } catch (error) {
@@ -171,7 +181,10 @@ export const getMe = async (): Promise<ApiResponse<User>> => {
   }
 };
 
-export const updateProfile = async (name: string, avatarUrl?: string | null): Promise<ApiResponse<User>> => {
+export const updateProfile = async (
+  name: string,
+  avatarUrl?: string | null,
+): Promise<ApiResponse<User>> => {
   try {
     const response = await api.patch('/api/auth/me', { name, avatarUrl: avatarUrl || null });
     return { sucesso: true, dados: response.data };
@@ -198,7 +211,9 @@ export const joinProject = async (projectId: string): Promise<ApiResponse<any>> 
   }
 };
 
-export const getLaboratoryTokens = async (): Promise<ApiResponse<{researcher_token: string; auditor_token: string; expires_in: string}>> => {
+export const getLaboratoryTokens = async (): Promise<
+  ApiResponse<{ researcher_token: string; auditor_token: string; expires_in: string }>
+> => {
   try {
     const resposta = await api.get('/api/v1/laboratory/token');
     return { sucesso: true, dados: resposta.data };
@@ -276,7 +291,10 @@ export const getComments = async (documentId: string): Promise<ApiResponse<any>>
   }
 };
 
-export const addComment = async (documentId: string, content: string): Promise<ApiResponse<any>> => {
+export const addComment = async (
+  documentId: string,
+  content: string,
+): Promise<ApiResponse<any>> => {
   try {
     const resposta = await api.post(`/api/documents/${documentId}/comments`, { content });
     return { sucesso: true, dados: resposta.data };
@@ -384,15 +402,14 @@ export const exportAuditLogsCSV = async (
       params,
       responseType: 'blob',
     });
-    
+
     const blob = new Blob([response.data], { type: 'text/csv' });
+    if (blob.type !== 'text/csv') throw new Error('Invalid type');
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
     a.download = 'audit_logs.csv';
-    document.body.appendChild(a);
     a.click();
-    document.body.removeChild(a);
     window.URL.revokeObjectURL(url);
   } catch (error) {
     console.error('Erro ao exportar logs de auditoria:', error);
@@ -408,18 +425,17 @@ export const exportDocumentAuditTrail = async (
       params: { format },
       responseType: 'blob',
     });
-    
+
     const mimeType = format === 'pdf' ? 'application/pdf' : 'text/csv';
     const extension = format;
-    
+
     const blob = new Blob([response.data], { type: mimeType });
+    if (blob.type !== 'application/pdf' && blob.type !== 'text/csv') throw new Error('Invalid type');
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
     a.download = `audit_trail_${documentId}.${extension}`;
-    document.body.appendChild(a);
     a.click();
-    document.body.removeChild(a);
     window.URL.revokeObjectURL(url);
   } catch (error) {
     console.error(`Erro ao exportar trilha de auditoria do documento ${documentId}:`, error);

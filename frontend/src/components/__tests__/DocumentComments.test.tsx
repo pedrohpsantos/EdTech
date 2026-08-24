@@ -20,7 +20,7 @@ describe('DocumentComments', () => {
   it('renders loading state initially', () => {
     (hooks.useComments as any).mockReturnValue({ data: [], isLoading: true });
     (hooks.useAddComment as any).mockReturnValue({ mutateAsync: vi.fn(), isPending: false });
-    
+
     render(<DocumentComments documentId="doc1" />);
     expect(screen.getByText('Carregando...')).toBeInTheDocument();
   });
@@ -28,21 +28,31 @@ describe('DocumentComments', () => {
   it('renders empty state when no comments', () => {
     (hooks.useComments as any).mockReturnValue({ data: [], isLoading: false });
     (hooks.useAddComment as any).mockReturnValue({ mutateAsync: vi.fn(), isPending: false });
-    
+
     render(<DocumentComments documentId="doc1" />);
     expect(screen.getByText('Nenhum comentário ainda. Inicie a conversa!')).toBeInTheDocument();
   });
 
   it('renders comments', () => {
     const comments = [
-      { id: '1', authorName: 'User One', createdAt: '2023-01-01T10:00:00Z', content: 'First comment' },
-      { id: '2', authorName: 'User Two', createdAt: '2023-01-01T11:00:00Z', content: 'Second comment' }
+      {
+        id: '1',
+        authorName: 'User One',
+        createdAt: '2023-01-01T10:00:00Z',
+        content: 'First comment',
+      },
+      {
+        id: '2',
+        authorName: 'User Two',
+        createdAt: '2023-01-01T11:00:00Z',
+        content: 'Second comment',
+      },
     ];
     (hooks.useComments as any).mockReturnValue({ data: comments, isLoading: false });
     (hooks.useAddComment as any).mockReturnValue({ mutateAsync: vi.fn(), isPending: false });
-    
+
     render(<DocumentComments documentId="doc1" />);
-    
+
     expect(screen.getByText('User One')).toBeInTheDocument();
     expect(screen.getByText('First comment')).toBeInTheDocument();
     expect(screen.getByText('User Two')).toBeInTheDocument();
@@ -53,31 +63,31 @@ describe('DocumentComments', () => {
     const mutateAsync = vi.fn().mockResolvedValue({});
     (hooks.useComments as any).mockReturnValue({ data: [], isLoading: false });
     (hooks.useAddComment as any).mockReturnValue({ mutateAsync, isPending: false });
-    
+
     render(<DocumentComments documentId="doc1" />);
-    
+
     const input = screen.getByPlaceholderText('Adicionar comentário...');
     const button = screen.getByRole('button');
-    
+
     fireEvent.change(input, { target: { value: 'New comment' } });
     expect(input).toHaveValue('New comment');
     expect(button).not.toBeDisabled();
-    
+
     fireEvent.submit(screen.getByRole('button').closest('form') as HTMLFormElement);
-    
+
     await waitFor(() => {
       expect(mutateAsync).toHaveBeenCalledWith('New comment');
     });
-    
+
     expect(input).toHaveValue('');
   });
 
   it('prevents submission when input is empty or pending', () => {
     (hooks.useComments as any).mockReturnValue({ data: [], isLoading: false });
     (hooks.useAddComment as any).mockReturnValue({ mutateAsync: vi.fn(), isPending: true });
-    
+
     render(<DocumentComments documentId="doc1" />);
-    
+
     const button = screen.getByRole('button');
     expect(button).toBeDisabled();
   });
@@ -85,20 +95,20 @@ describe('DocumentComments', () => {
   it('handles submission error gracefully', async () => {
     const mutateAsync = vi.fn().mockRejectedValue(new Error('Submit error'));
     const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {});
-    
+
     (hooks.useComments as any).mockReturnValue({ data: [], isLoading: false });
     (hooks.useAddComment as any).mockReturnValue({ mutateAsync, isPending: false });
-    
+
     render(<DocumentComments documentId="doc1" />);
-    
+
     const input = screen.getByPlaceholderText('Adicionar comentário...');
     fireEvent.change(input, { target: { value: 'New comment' } });
     fireEvent.submit(screen.getByRole('button').closest('form') as HTMLFormElement);
-    
+
     await waitFor(() => {
       expect(consoleError).toHaveBeenCalledWith('Failed to post comment', expect.any(Error));
     });
-    
+
     consoleError.mockRestore();
   });
 });

@@ -6,6 +6,7 @@ O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.
 ## [1.0.0] - 2026-07-06
 
 ### Adicionado
+
 - **MVP Inicial do EdTech**: Plataforma completa para gerenciamento e auditoria de publicações acadêmicas.
 - **Backend (API)**: Autenticação baseada em JWT (Bearer Token), CRUD de documentos, integração com Google Cloud Storage para uploads.
 - **Frontend (SPA)**: Interface React responsiva para pesquisadores, orientadores e auditores.
@@ -18,9 +19,11 @@ O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.
 - **Associação Pesquisador-Laboratório:** Liberação das operações transacionais e da interface no Frontend para navegação e associação a projetos ativados na plataforma.
 
 ### Changed
+
 - Refatoração massiva da base documental técnica (MkDocs e READMEs globais) padronizando terminologia estritamente corporativa e abolindo "personas" (tons informais).
 - Atualização completa de referências nas ADRs para aderir ao novo modelo IaC.
 
 ### Removed
+
 - **Legado de Armazenamento:** Extinção de operações e suportes a salvamento de artefatos localmente (arquivos em disco), convertidos compulsoriamente para Storage Cloud.
 - **Histórico Antigo (Pré-MVP):** Reset geral do Changelog local para inaugurar adequadamente o estágio 1.0.0 do projeto.

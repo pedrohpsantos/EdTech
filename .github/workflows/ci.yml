@@ -53,10 +53,10 @@ jobs:
       - name: Set up JDK 21
         uses: actions/setup-java@v5.6.0
         with:
-          java-version: '21'
-          distribution: 'temurin'
+          java-version: "21"
+          distribution: "temurin"
           cache: maven
-          cache-dependency-path: 'backend/pom.xml'
+          cache-dependency-path: "backend/pom.xml"
 
       # --- LINT ---
       - name: Run Checkstyle
@@ -87,6 +87,10 @@ jobs:
       - name: Run Tests & Coverage
         if: matrix.task == 'unit'
         id: backend-tests
+        env:
+          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/edtech_db_test
+          SPRING_DATASOURCE_USERNAME: edtech_user
+          SPRING_DATASOURCE_PASSWORD: edtech_password
         run: |
           chmod +x mvnw
           ./mvnw clean test jacoco:report -B -T 1C \
@@ -141,9 +145,13 @@ jobs:
           restore-keys: |
             pitest-history-${{ github.ref }}-
             pitest-history-
-      
+
       - name: Run Mutation Tests (PiTest)
         if: matrix.task == 'pitest'
+        env:
+          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/edtech_db_test
+          SPRING_DATASOURCE_USERNAME: edtech_user
+          SPRING_DATASOURCE_PASSWORD: edtech_password
         run: |
           chmod +x mvnw
           ./mvnw clean test-compile org.pitest:pitest-maven:mutationCoverage -B -Dpitest.threads=8
@@ -187,7 +195,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        task: [lint, typecheck, security, build, unit, a11y, components, mutation]
+        task:
+          [lint, typecheck, security, build, unit, a11y, components, mutation]
     defaults:
       run:
         working-directory: frontend
@@ -196,9 +205,9 @@ jobs:
       - name: Set up Node 24
         uses: actions/setup-node@v7
         with:
-          node-version: '24'
-          cache: 'npm'
-          cache-dependency-path: 'frontend/package-lock.json'
+          node-version: "24"
+          cache: "npm"
+          cache-dependency-path: "frontend/package-lock.json"
       - name: Install dependencies
         run: npm ci
 
@@ -232,7 +241,7 @@ jobs:
         id: unit-tests
         run: npm run test
         env:
-          GITHUB_ACTIONS: 'false'
+          GITHUB_ACTIONS: "false"
       - name: Frontend Unit Test Summary
         if: always() && matrix.task == 'unit'
         run: |
@@ -250,7 +259,7 @@ jobs:
         id: a11y-tests
         run: npm run test:a11y
         env:
-          GITHUB_ACTIONS: 'false'
+          GITHUB_ACTIONS: "false"
       - name: Frontend A11y Test Summary
         if: always() && matrix.task == 'a11y'
         run: |
@@ -268,7 +277,7 @@ jobs:
         id: component-tests
         run: npm run test:components
         env:
-          GITHUB_ACTIONS: 'false'
+          GITHUB_ACTIONS: "false"
       - name: Frontend Component Test Summary
         if: always() && matrix.task == 'components'
         run: |
@@ -296,7 +305,7 @@ jobs:
         id: mutation-tests
         run: npx stryker run
         env:
-          GITHUB_ACTIONS: 'false'
+          GITHUB_ACTIONS: "false"
       - name: Frontend Mutation Test Summary
         if: always() && matrix.task == 'mutation'
         run: |
@@ -322,15 +331,15 @@ jobs:
     name: Infra
     runs-on: ubuntu-latest
     permissions:
-      contents: 'read'
-      id-token: 'write'
+      contents: "read"
+      id-token: "write"
     strategy:
       fail-fast: false
       matrix:
         task: [validate, docker]
     steps:
       - uses: actions/checkout@v7
-      
+
       # --- VALIDATE ---
       - name: Setup Terraform
         if: matrix.task == 'validate'
@@ -353,8 +362,8 @@ jobs:
         if: matrix.task == 'docker'
         uses: actions/setup-java@v5.6.0
         with:
-          java-version: '21'
-          distribution: 'temurin'
+          java-version: "21"
+          distribution: "temurin"
           cache: maven
       - name: Compile Backend for Docker
         if: matrix.task == 'docker'
@@ -416,15 +425,15 @@ jobs:
   # ==========================================
   deploy-backend:
     if: (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop')
-    name: Deploy Backend (${{ matrix.target }})
+    name: Deploy Backend
     runs-on: ubuntu-latest
     continue-on-error: true
     needs: [backend-approved, infra-approved]
 
     concurrency: deploy-backend-${{ github.ref_name }}-${{ matrix.target }}
     permissions:
-      contents: 'read'
-      id-token: 'write'
+      contents: "read"
+      id-token: "write"
     strategy:
       fail-fast: false
       matrix: >-
@@ -499,15 +508,15 @@ jobs:
 
   deploy-frontend:
     if: (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop')
-    name: Deploy Frontend (${{ matrix.target }})
+    name: Deploy Frontend
     runs-on: ubuntu-latest
     continue-on-error: true
     needs: [frontend-approved, infra-approved]
 
     concurrency: deploy-frontend-${{ github.ref_name }}-${{ matrix.target }}
     permissions:
-      contents: 'read'
-      id-token: 'write'
+      contents: "read"
+      id-token: "write"
     strategy:
       fail-fast: false
       matrix: >-
@@ -523,7 +532,7 @@ jobs:
       - name: Set up Node 24
         uses: actions/setup-node@v7
         with:
-          node-version: '24'
+          node-version: "24"
       - name: Download Frontend Artifact
         uses: actions/download-artifact@v8
         with:
@@ -555,7 +564,7 @@ jobs:
       - name: Set up Node 24
         uses: actions/setup-node@v7
         with:
-          node-version: '24'
+          node-version: "24"
       - name: Install dependencies
         working-directory: frontend
         run: npm ci
@@ -578,7 +587,7 @@ jobs:
         working-directory: frontend
         run: npx playwright test
         env:
-          BASE_URL: 'https://edtechacademic.com.br'
+          BASE_URL: "https://edtechacademic.com.br"
       - name: Production E2E Summary
         if: always()
         run: |
@@ -615,7 +624,7 @@ jobs:
         id: k6-load-test
         working-directory: tests/performance
         env:
-          API_URL: 'https://edtech-backend-shv6qbpf4q-rj.a.run.app'
+          API_URL: "https://edtech-backend-shv6qbpf4q-rj.a.run.app"
         run: k6 run load-test.js
       - name: Production Load Test Summary
         if: always()
@@ -653,11 +662,11 @@ jobs:
       - name: Set up Node 24
         uses: actions/setup-node@v7
         with:
-          node-version: '24'
+          node-version: "24"
       - name: Run API Security Contract
         id: api-security-contract
         env:
-          API_URL: 'https://edtech-backend-shv6qbpf4q-rj.a.run.app'
+          API_URL: "https://edtech-backend-shv6qbpf4q-rj.a.run.app"
         run: node tests/api-contract/production-security-contract.mjs
       - name: API Security Contract Summary
         if: always()
@@ -690,7 +699,7 @@ jobs:
       - name: Setup Node.js for Lighthouse
         uses: actions/setup-node@v7
         with:
-          node-version: '24'
+          node-version: "24"
       - name: Run Lighthouse Audit
         run: |
           npm install -g @lhci/cli@0.13.0

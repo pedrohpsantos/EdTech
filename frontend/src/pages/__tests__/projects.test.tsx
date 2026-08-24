@@ -9,7 +9,9 @@ vi.mock('../../services/api', () => ({
   joinProject: vi.fn(),
 }));
 
-vi.mock('../../context/authContext', () => ({ useAuth: vi.fn(() => ({ user: { role: 'RESEARCHER' } })) }));
+vi.mock('../../context/authContext', () => ({
+  useAuth: vi.fn(() => ({ user: { role: 'RESEARCHER' } })),
+}));
 vi.mock('react-router-dom', () => ({ useNavigate: () => vi.fn() }));
 
 vi.mock('../../components/layout/DashboardLayout', () => ({
@@ -37,11 +39,11 @@ describe('Projects Page', () => {
       resolvePromise = resolve;
     });
     (getProjects as any).mockReturnValue(promise);
-    
+
     render(<Projects />);
-    
+
     expect(screen.getByText('Carregando projetos...')).toBeInTheDocument();
-    
+
     // Resolve the promise to clean up
     await act(async () => {
       resolvePromise({ sucesso: true, dados: [] });
@@ -50,9 +52,9 @@ describe('Projects Page', () => {
 
   it('renders no projects message when empty', async () => {
     (getProjects as any).mockResolvedValue({ sucesso: true, dados: [] });
-    
+
     render(<Projects />);
-    
+
     await waitFor(() => {
       expect(screen.getByText('Nenhum projeto encontrado.')).toBeInTheDocument();
     });
@@ -60,9 +62,9 @@ describe('Projects Page', () => {
 
   it('renders fallback to empty array if dados is undefined', async () => {
     (getProjects as any).mockResolvedValue({ sucesso: true });
-    
+
     render(<Projects />);
-    
+
     await waitFor(() => {
       expect(screen.getByText('Nenhum projeto encontrado.')).toBeInTheDocument();
     });
@@ -70,9 +72,9 @@ describe('Projects Page', () => {
 
   it('renders fallback to empty array if sucesso is false', async () => {
     (getProjects as any).mockResolvedValue({ sucesso: false });
-    
+
     render(<Projects />);
-    
+
     await waitFor(() => {
       expect(screen.getByText('Nenhum projeto encontrado.')).toBeInTheDocument();
     });
@@ -81,13 +83,13 @@ describe('Projects Page', () => {
   it('renders projects and handles join success', async () => {
     const mockProjects = [
       { id: '1', name: 'Project 1', description: 'Desc 1', createdAt: '2023-01-01T00:00:00Z' },
-      { id: '2', name: 'Project 2', description: 'Desc 2', createdAt: null }
+      { id: '2', name: 'Project 2', description: 'Desc 2', createdAt: null },
     ];
     (getProjects as any).mockResolvedValue({ sucesso: true, dados: mockProjects });
     (joinProject as any).mockResolvedValue({ sucesso: true });
 
     render(<Projects />);
-    
+
     await waitFor(() => {
       expect(screen.getByText('Project 1')).toBeInTheDocument();
     });
@@ -110,26 +112,26 @@ describe('Projects Page', () => {
       expect(screen.getByText('Associado ao projeto com sucesso!')).toBeInTheDocument();
     });
 
-    // We can skip waiting for 3s to hide the toast to make the test fast, 
+    // We can skip waiting for 3s to hide the toast to make the test fast,
     // or just assume the unmount takes care of it.
   });
 
   it('handles join failure', async () => {
     const mockProjects = [
-      { id: '1', name: 'Project 1', description: 'Desc 1', createdAt: '2023-01-01T00:00:00Z' }
+      { id: '1', name: 'Project 1', description: 'Desc 1', createdAt: '2023-01-01T00:00:00Z' },
     ];
     (getProjects as any).mockResolvedValue({ sucesso: true, dados: mockProjects });
-    
+
     (joinProject as any).mockResolvedValue({ sucesso: false, mensagem: 'Error joining' });
 
     render(<Projects />);
-    
+
     await waitFor(() => {
       expect(screen.getByText('Project 1')).toBeInTheDocument();
     });
 
     const joinButtons = screen.getAllByText('Associar-se');
-    
+
     await act(async () => {
       fireEvent.click(joinButtons[0]);
     });
@@ -139,4 +141,3 @@ describe('Projects Page', () => {
     });
   });
 });
-

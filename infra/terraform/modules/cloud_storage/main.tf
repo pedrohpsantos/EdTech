@@ -4,4 +4,16 @@ resource "google_storage_bucket" "bucket" {
   force_destroy = false
 
   uniform_bucket_level_access = true
+
+  versioning {
+    enabled = true
+  }
+
+  logging {
+    log_bucket = var.log_bucket
+  }
+
+  encryption {
+    default_kms_key_name = var.kms_key_name
+  }
 }

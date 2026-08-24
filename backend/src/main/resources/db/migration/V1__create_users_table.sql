@@ -1,16 +1,12 @@
-CREATE TYPE user_role AS ENUM (
-    'RESEARCHER',
-    'ADVISOR',
-    'AUDITOR'
-);
-
-CREATE TABLE IF NOT EXISTS users (
-    id UUID PRIMARY KEY,
-    name VARCHAR(120) NOT NULL,
-    email VARCHAR(180) NOT NULL UNIQUE,
-    password_hash VARCHAR(255) NOT NULL,
-    role user_role NOT NULL,
-    active BOOLEAN NOT NULL DEFAULT TRUE,
-    created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
-    updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW()
-);
+CREATE TYPE user_role AS ENUM ( 'RESEARCHER', 'ADVISOR', 'AUDITOR' );
+CREATE TABLE IF NOT EXISTS users
+    (
+        id            UUID PRIMARY KEY                            ,
+        name          VARCHAR(120) NOT NULL                       ,
+        email         VARCHAR(180) NOT NULL UNIQUE                ,
+        password_hash VARCHAR(255) NOT NULL                       ,
+        role user_role NOT NULL                                   ,
+        active     BOOLEAN NOT NULL DEFAULT TRUE                  ,
+        created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
+        updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW()
+    );

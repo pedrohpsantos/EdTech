@@ -229,23 +229,62 @@ code {
   background: var(--code-bg);
 }
 
-button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
   outline: 3px solid var(--accent-border);
   outline-offset: 3px;
 }
 
 @media (max-width: 320px) {
-  :root { font-size: 14px; }
-  #root { border-inline: 0; }
-  button, input, select, textarea { min-height: 40px; }
+  :root {
+    font-size: 14px;
+  }
+  #root {
+    border-inline: 0;
+  }
+  button,
+  input,
+  select,
+  textarea {
+    min-height: 40px;
+  }
 }
 
-@media (min-width: 768px) and (max-width: 1024px) { #root { max-width: 100%; } }
-@media (min-width: 1920px) { :root { font-size: 19px; } #root { max-width: 3200px; } }
-@media (min-width: 3840px) { :root { font-size: 24px; } #root { max-width: none; } button, input, select, textarea { min-height: 52px; } }
+@media (min-width: 768px) and (max-width: 1024px) {
+  #root {
+    max-width: 100%;
+  }
+}
+@media (min-width: 1920px) {
+  :root {
+    font-size: 19px;
+  }
+  #root {
+    max-width: 3200px;
+  }
+}
+@media (min-width: 3840px) {
+  :root {
+    font-size: 24px;
+  }
+  #root {
+    max-width: none;
+  }
+  button,
+  input,
+  select,
+  textarea {
+    min-height: 52px;
+  }
+}
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;

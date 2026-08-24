@@ -75,7 +75,7 @@ const Sidebar: React.FC = () => {
   return (
     <>
       {/* Botão Hambúrguer flutuante: Visível APENAS em telas menores (Mobile/Tablet) */}
-      <button 
+      <button
         className={`sidebar-mobile-toggle d-md-none ${isMobileOpen ? 'open' : ''}`}
         onClick={() => setIsMobileOpen(!isMobileOpen)}
         aria-label={isMobileOpen ? 'Fechar navegação' : 'Abrir navegação'}
@@ -85,19 +85,49 @@ const Sidebar: React.FC = () => {
       </button>
 
       {/* Backdrop (Fundo escurecido) para fechar o menu ao clicar fora dele no mobile */}
-      {isMobileOpen && (
-        <div className="sidebar-backdrop d-md-none" onClick={closeMobileSidebar} />
-      )}
+      {isMobileOpen && <div className="sidebar-backdrop d-md-none" onClick={closeMobileSidebar} />}
 
       {/* Aside com a classe condicional 'active-mobile' se o estado for true */}
       <aside className={`sidebar-container ${isMobileOpen ? 'active-mobile' : ''}`}>
         <div className="sidebar-header">
           <div className="logo-section" onClick={handleLogoClick} style={{ cursor: 'pointer' }}>
             <svg width="32" height="32" viewBox="0 0 100 100" style={{ marginRight: '8px' }}>
-              <line x1="20" y1="25" x2="80" y2="25" stroke="#FFFFFF" strokeWidth="10" strokeLinecap="round" />
-              <line x1="20" y1="50" x2="55" y2="50" stroke="#FFFFFF" strokeWidth="10" strokeLinecap="round" />
-              <line x1="20" y1="75" x2="80" y2="75" stroke="#FFFFFF" strokeWidth="10" strokeLinecap="round" />
-              <line x1="20" y1="25" x2="20" y2="75" stroke="#FFFFFF" strokeWidth="10" strokeLinecap="round" />
+              <line
+                x1="20"
+                y1="25"
+                x2="80"
+                y2="25"
+                stroke="#FFFFFF"
+                strokeWidth="10"
+                strokeLinecap="round"
+              />
+              <line
+                x1="20"
+                y1="50"
+                x2="55"
+                y2="50"
+                stroke="#FFFFFF"
+                strokeWidth="10"
+                strokeLinecap="round"
+              />
+              <line
+                x1="20"
+                y1="75"
+                x2="80"
+                y2="75"
+                stroke="#FFFFFF"
+                strokeWidth="10"
+                strokeLinecap="round"
+              />
+              <line
+                x1="20"
+                y1="25"
+                x2="20"
+                y2="75"
+                stroke="#FFFFFF"
+                strokeWidth="10"
+                strokeLinecap="round"
+              />
               <circle cx="20" cy="25" r="8" fill="#FFFFFF" />
               <circle cx="80" cy="25" r="8" fill="#FFFFFF" />
               <circle cx="20" cy="50" r="8" fill="#FFFFFF" />
@@ -117,7 +147,11 @@ const Sidebar: React.FC = () => {
           <div className="nav-section">
             <span className="nav-section-title">GERAL</span>
             <div className="nav-links">
-              {renderNavigationItem({ to: '/dashboard', icon: 'bi-grid-1x2', label: 'Visão geral' })}
+              {renderNavigationItem({
+                to: '/dashboard',
+                icon: 'bi-grid-1x2',
+                label: 'Visão geral',
+              })}
             </div>
           </div>
 

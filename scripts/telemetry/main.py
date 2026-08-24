@@ -14,21 +14,25 @@ from urllib.request import Request, urlopen
 # Configure basic logging for telemetry
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    handlers=[
-        logging.StreamHandler(sys.stdout)
-    ]
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    handlers=[logging.StreamHandler(sys.stdout)],
 )
 
 logger = logging.getLogger("telemetry")
 
+
 def fetch_documents(api_url: str, token: str) -> list[dict]:
     """Busca documentos paginados sem alterar qualquer dado remoto."""
+    target_url = f"{api_url.rstrip('/')}/api/documents?size=100"
+    if not (target_url.startswith("http://localhost") or target_url.startswith("https://api.edtech.unb.br")):
+        raise ValueError("Untrusted URL domain")
     request = Request(
-        f"{api_url.rstrip('/')}/api/documents?size=100",
+        target_url,
         headers={"Authorization": f"Bearer {token}", "Accept": "application/json"},
     )
-    with urlopen(request, timeout=15) as response:  # nosec B310: URL fornecida pelo operador
+    with urlopen(
+        request, timeout=15
+    ) as response:  # nosec B310: URL fornecida pelo operador
         payload = json.loads(response.read().decode("utf-8"))
     return payload.get("content", payload) if isinstance(payload, dict) else payload
 
@@ -37,7 +41,9 @@ def build_report(documents: list[dict]) -> dict:
     """Agrega metadados, evitando expor arquivos ou dados pessoais."""
     statuses = Counter(document.get("status", "UNKNOWN") for document in documents)
     file_types = Counter(document.get("fileType", "UNKNOWN") for document in documents)
-    projects = Counter(document.get("projectTitle", "Sem projeto") for document in documents)
+    projects = Counter(
+        document.get("projectTitle", "Sem projeto") for document in documents
+    )
     return {
         "generatedAt": datetime.now(UTC).isoformat(),
         "documentCount": len(documents),
@@ -48,12 +54,18 @@ def build_report(documents: list[dict]) -> dict:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Gera telemetria de documentos da API EdTech.")
-    parser.add_argument(
-        "--api-url", default=os.getenv("EDTECH_API_URL", "http://localhost:8080"), help="URL da API"
+    parser = argparse.ArgumentParser(
+        description="Gera telemetria de documentos da API EdTech."
     )
     parser.add_argument(
-        "--token", default=os.getenv("EDTECH_API_TOKEN"), help="JWT de uma conta autorizada"
+        "--api-url",
+        default=os.getenv("EDTECH_API_URL", "http://localhost:8080"),
+        help="URL da API",
+    )
+    parser.add_argument(
+        "--token",
+        default=os.getenv("EDTECH_API_TOKEN"),
+        help="JWT de uma conta autorizada",
     )
     parser.add_argument("--output", type=Path, help="Arquivo JSON para salvar o resumo")
     args = parser.parse_args()
@@ -78,6 +90,7 @@ def main() -> int:
     else:
         print(rendered)
     return 0
+
 
 if __name__ == "__main__":
     raise SystemExit(main())

@@ -18,11 +18,10 @@ public class AuditLogSpecification {
 
       if (search != null && !search.isEmpty()) {
         String likePattern = "%" + search.toLowerCase() + "%";
-        Predicate p1 =
-            criteriaBuilder.like(criteriaBuilder.lower(root.get("details")), likePattern);
-        Predicate p2 =
-            criteriaBuilder.like(criteriaBuilder.lower(root.get("ipAddress")), likePattern);
-        // Note: we can't easily join on User to filter by user name in this simple spec if it's not
+        Predicate p1 = criteriaBuilder.like(criteriaBuilder.lower(root.get("details")), likePattern);
+        Predicate p2 = criteriaBuilder.like(criteriaBuilder.lower(root.get("ipAddress")), likePattern);
+        // Note: we can't easily join on User to filter by user name in this simple spec
+        // if it's not
         // mapped,
         // but AuditLog has userId. We will ignore userName search in DB for simplicity,
         // or just search in details/IP/action.

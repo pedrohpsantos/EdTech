@@ -193,45 +193,38 @@
     "id": "d41d8cd98f00b204e9800998ecf8427e",
     "groups": [],
     "checks": [
-        {
-          "passes": 1543,
-          "fails": 0,
-          "name": "health check respondeu (200)",
-          "path": "::health check respondeu (200)",
-          "id": "42b150c3d57055b805bef3975e418a87"
-        },
-        {
-          "id": "f10181a617568efa3cc3242da1546201",
-          "passes": 1543,
-          "fails": 0,
-          "name": "login respondeu (banco acessado)",
-          "path": "::login respondeu (banco acessado)"
-        },
-        {
-          "id": "e1e399688112ec46c06951e9c9efb729",
-          "passes": 1539,
-          "fails": 4,
-          "name": "registro processado (2xx, 400 ou 429)",
-          "path": "::registro processado (2xx, 400 ou 429)"
-        },
-        {
-          "id": "ad3cd7ff95a664ccf2b503ea3868a402",
-          "passes": 1543,
-          "fails": 0,
-          "name": "recuperação processada (2xx, 404 ou 429)",
-          "path": "::recuperação processada (2xx, 404 ou 429)"
-        }
-      ]
+      {
+        "passes": 1543,
+        "fails": 0,
+        "name": "health check respondeu (200)",
+        "path": "::health check respondeu (200)",
+        "id": "42b150c3d57055b805bef3975e418a87"
+      },
+      {
+        "id": "f10181a617568efa3cc3242da1546201",
+        "passes": 1543,
+        "fails": 0,
+        "name": "login respondeu (banco acessado)",
+        "path": "::login respondeu (banco acessado)"
+      },
+      {
+        "id": "e1e399688112ec46c06951e9c9efb729",
+        "passes": 1539,
+        "fails": 4,
+        "name": "registro processado (2xx, 400 ou 429)",
+        "path": "::registro processado (2xx, 400 ou 429)"
+      },
+      {
+        "id": "ad3cd7ff95a664ccf2b503ea3868a402",
+        "passes": 1543,
+        "fails": 0,
+        "name": "recuperação processada (2xx, 404 ou 429)",
+        "path": "::recuperação processada (2xx, 404 ou 429)"
+      }
+    ]
   },
   "options": {
-    "summaryTrendStats": [
-      "avg",
-      "min",
-      "med",
-      "p(95)",
-      "p(99)",
-      "max"
-    ],
+    "summaryTrendStats": ["avg", "min", "med", "p(95)", "p(99)", "max"],
     "summaryTimeUnit": "",
     "noColor": false
   },

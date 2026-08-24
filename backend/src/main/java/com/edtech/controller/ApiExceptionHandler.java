@@ -42,7 +42,7 @@ public class ApiExceptionHandler {
         .body(new ErrorResponse("account_not_verified", exception.getMessage()));
   }
 
-  @ExceptionHandler({MethodArgumentNotValidException.class, ConstraintViolationException.class})
+  @ExceptionHandler({ MethodArgumentNotValidException.class, ConstraintViolationException.class })
   public ResponseEntity<ErrorResponse> handleValidationException(Exception exception) {
     return ResponseEntity.badRequest()
         .body(new ErrorResponse("invalid_request", "Verifique os dados enviados."));

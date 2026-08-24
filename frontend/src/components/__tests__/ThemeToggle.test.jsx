@@ -1,4 +1,3 @@
-
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import ThemeToggle from '../../components/themeToggle';
@@ -28,7 +27,7 @@ describe('ThemeToggle', () => {
     const toggleThemeMock = vi.fn();
     useThemeHook.default.mockReturnValue({ tema: 'light', toggleTheme: toggleThemeMock });
     render(<ThemeToggle />);
-    
+
     const button = screen.getByRole('button', { name: /Alternar Tema/i });
     fireEvent.click(button);
     expect(toggleThemeMock).toHaveBeenCalledTimes(1);

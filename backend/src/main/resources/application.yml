@@ -5,7 +5,6 @@ spring:
   application:
     name: edtech-api
   datasource:
-
     url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/edtech_db}
     username: ${SPRING_DATASOURCE_USERNAME:edtech_user}
     password: ${SPRING_DATASOURCE_PASSWORD:}
@@ -66,5 +65,3 @@ gcp:
   project-id: ${GCP_PROJECT_ID:}
   credentials-location: ${GCP_CREDENTIALS_LOCATION:}
   bucket: ${GCP_BUCKET_NAME:}
-
-

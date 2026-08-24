@@ -35,12 +35,11 @@ public class GcsStorageServiceImpl implements StorageService {
   @Override
   public String getPresignedUrl(String fileKey) throws Exception {
     BlobId blobId = BlobId.of(bucketName, fileKey);
-    URL signedUrl =
-        storage.signUrl(
-            blobInfoForPresigned(blobId),
-            15,
-            TimeUnit.MINUTES,
-            Storage.SignUrlOption.withV4Signature());
+    URL signedUrl = storage.signUrl(
+        blobInfoForPresigned(blobId),
+        15,
+        TimeUnit.MINUTES,
+        Storage.SignUrlOption.withV4Signature());
     return signedUrl.toString();
   }
 

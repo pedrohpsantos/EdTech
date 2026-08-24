@@ -21,14 +21,22 @@ import { useAuth } from '../../context/authContext';
 describe('PrivateRoute', () => {
   it('shows loader when isLoading is true', () => {
     (useAuth as any).mockReturnValue({ user: null, isAuthenticated: false, isLoading: true });
-    render(<PrivateRoute><div>Content</div></PrivateRoute>);
+    render(
+      <PrivateRoute>
+        <div>Content</div>
+      </PrivateRoute>,
+    );
     expect(screen.getByTestId('global-loader')).toBeInTheDocument();
     expect(screen.queryByText('Content')).not.toBeInTheDocument();
   });
 
   it('redirects to /login when not authenticated', () => {
     (useAuth as any).mockReturnValue({ user: null, isAuthenticated: false, isLoading: false });
-    render(<PrivateRoute><div>Content</div></PrivateRoute>);
+    render(
+      <PrivateRoute>
+        <div>Content</div>
+      </PrivateRoute>,
+    );
     const nav = screen.getByTestId('navigate');
     expect(nav).toHaveAttribute('data-to', '/login');
   });
@@ -39,7 +47,11 @@ describe('PrivateRoute', () => {
       isAuthenticated: true,
       isLoading: false,
     });
-    render(<PrivateRoute><div>Protected Content</div></PrivateRoute>);
+    render(
+      <PrivateRoute>
+        <div>Protected Content</div>
+      </PrivateRoute>,
+    );
     expect(screen.getByText('Protected Content')).toBeInTheDocument();
   });
 
@@ -49,7 +61,11 @@ describe('PrivateRoute', () => {
       isAuthenticated: true,
       isLoading: false,
     });
-    render(<PrivateRoute allowedRoles={['ADVISOR']}><div>Advisor Content</div></PrivateRoute>);
+    render(
+      <PrivateRoute allowedRoles={['ADVISOR']}>
+        <div>Advisor Content</div>
+      </PrivateRoute>,
+    );
     expect(screen.getByText('Advisor Content')).toBeInTheDocument();
   });
 
@@ -59,7 +75,11 @@ describe('PrivateRoute', () => {
       isAuthenticated: true,
       isLoading: false,
     });
-    render(<PrivateRoute allowedRoles={['AUDITOR']}><div>Secret</div></PrivateRoute>);
+    render(
+      <PrivateRoute allowedRoles={['AUDITOR']}>
+        <div>Secret</div>
+      </PrivateRoute>,
+    );
     const nav = screen.getByTestId('navigate');
     expect(nav).toHaveAttribute('data-to', '/dashboard');
     expect(screen.queryByText('Secret')).not.toBeInTheDocument();
@@ -71,7 +91,11 @@ describe('PrivateRoute', () => {
       isAuthenticated: true,
       isLoading: false,
     });
-    render(<PrivateRoute allowedRoles={[]}><div>Open Content</div></PrivateRoute>);
+    render(
+      <PrivateRoute allowedRoles={[]}>
+        <div>Open Content</div>
+      </PrivateRoute>,
+    );
     // allowedRoles is truthy but empty → RESEARCHER not in [] → redirect
     const nav = screen.getByTestId('navigate');
     expect(nav).toHaveAttribute('data-to', '/dashboard');

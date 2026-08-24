@@ -6,10 +6,10 @@ A segurança dos dados é um requisito central do EdTech. Por lidar com relatór
 
 Patches de segurança são fornecidos exclusivamente para as versões listadas abaixo:
 
-| Versão | Suportada |
-| :---: | :---: |
-| >= 1.0.x | ✅ Sim |
-| < 1.0.0 (pré-lançamento) | ❌ Não |
+|          Versão          | Suportada |
+| :----------------------: | :-------: |
+|         >= 1.0.x         |  ✅ Sim   |
+| < 1.0.0 (pré-lançamento) |  ❌ Não   |
 
 ---
 
@@ -29,12 +29,12 @@ Para reportar uma vulnerabilidade de forma responsável:
 
 ## Processo de Resposta
 
-| Etapa | Prazo |
-| :--- | :--- |
-| Confirmação de recebimento | até 48 horas |
-| Avaliação de gravidade (CVSS) | até 5 dias úteis |
-| Desenvolvimento e deploy do patch | variável conforme severidade |
-| Divulgação pública coordenada | após a correção estar disponível |
+| Etapa                             | Prazo                            |
+| :-------------------------------- | :------------------------------- |
+| Confirmação de recebimento        | até 48 horas                     |
+| Avaliação de gravidade (CVSS)     | até 5 dias úteis                 |
+| Desenvolvimento e deploy do patch | variável conforme severidade     |
+| Divulgação pública coordenada     | após a correção estar disponível |
 
 Vulnerabilidades válidas e inéditas serão reconhecidas publicamente no aviso de segurança, com crédito ao reportante caso desejado.
 

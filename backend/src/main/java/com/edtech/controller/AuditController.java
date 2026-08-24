@@ -36,7 +36,7 @@ public class AuditController {
    * Construtor.
    *
    * @param auditLogRepository repo
-   * @param userRepository repo
+   * @param userRepository     repo
    */
   public AuditController(AuditLogRepository auditLogRepository, UserRepository userRepository) {
     this.auditLogRepository = auditLogRepository;
@@ -72,55 +72,53 @@ public class AuditController {
       // ignored
     }
 
-    Page<AuditLog> logsPage =
-        auditLogRepository.findAll(
-            AuditLogSpecification.getFilter(search, action, start, end), pageable);
+    Page<AuditLog> logsPage = auditLogRepository.findAll(
+        AuditLogSpecification.getFilter(search, action, start, end), pageable);
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
 
     java.util.Set<UUID> userIds = logsPage.getContent().stream()
-        .map(AuditLog::getUserId)
+        .map(log -> log.getUserId())
         .collect(java.util.stream.Collectors.toSet());
     java.util.Map<UUID, User> userMap = userRepository.findAllById(userIds).stream()
-        .collect(java.util.stream.Collectors.toMap(User::getId, u -> u));
+        .collect(java.util.stream.Collectors.toMap(u -> u.getId(), u -> u));
 
-    List<AuditLogDto> dtos =
-        logsPage.getContent().stream()
-            .map(
-                log -> {
-                  AuditLogDto dto = new AuditLogDto();
-                  dto.setId(log.getId().toString());
-                  dto.setTimestamp(log.getCreatedAt().format(formatter));
-                  dto.setAction(log.getAction().name());
+    List<AuditLogDto> dtos = logsPage.getContent().stream()
+        .map(
+            log -> {
+              AuditLogDto dto = new AuditLogDto();
+              dto.setId(log.getId().toString());
+              dto.setTimestamp(log.getCreatedAt().format(formatter));
+              dto.setAction(log.getAction().name());
 
-                  User user = userMap.get(log.getUserId());
-                  dto.setUserName(user != null ? user.getName() : "Unknown");
+              User user = userMap.get(log.getUserId());
+              dto.setUserName(user != null ? user.getName() : "Unknown");
 
-                  dto.setIp(log.getIpAddress());
-                  dto.setDetails(log.getDetails());
+              dto.setIp(log.getIpAddress());
+              dto.setDetails(log.getDetails());
 
-                  switch (log.getAction()) {
-                    case LOGIN_SUCCESS:
-                    case DOCUMENT_APPROVED:
-                      dto.setActionClass("green");
-                      dto.setSeverity("INFO");
-                      break;
-                    case LOGIN_FAILED:
-                    case DOCUMENT_REJECTED:
-                    case MEMBER_JOINED:
-                      dto.setActionClass("orange");
-                      dto.setSeverity("WARNING");
-                      break;
-                    case DELETE_DOCUMENT:
-                      dto.setActionClass("red");
-                      dto.setSeverity("CRITICAL");
-                      break;
-                    default:
-                      dto.setActionClass("blue");
-                      dto.setSeverity("INFO");
-                  }
-                  return dto;
-                })
-            .collect(Collectors.toList());
+              switch (log.getAction()) {
+                case LOGIN_SUCCESS:
+                case DOCUMENT_APPROVED:
+                  dto.setActionClass("green");
+                  dto.setSeverity("INFO");
+                  break;
+                case LOGIN_FAILED:
+                case DOCUMENT_REJECTED:
+                case MEMBER_JOINED:
+                  dto.setActionClass("orange");
+                  dto.setSeverity("WARNING");
+                  break;
+                case DELETE_DOCUMENT:
+                  dto.setActionClass("red");
+                  dto.setSeverity("CRITICAL");
+                  break;
+                default:
+                  dto.setActionClass("blue");
+                  dto.setSeverity("INFO");
+              }
+              return dto;
+            })
+        .collect(Collectors.toList());
 
     return ResponseEntity.ok(new PageImpl<>(dtos, pageable, logsPage.getTotalElements()));
   }
@@ -140,14 +138,13 @@ public class AuditController {
       @RequestParam(required = false) String startDate,
       @RequestParam(required = false) String endDate) {
 
-    ResponseEntity<Page<AuditLogDto>> response =
-        getAuditLogs(
-            search,
-            action,
-            startDate,
-            endDate,
-            org.springframework.data.domain.PageRequest.of(
-                0, 10000, Sort.by(Sort.Direction.DESC, "createdAt")));
+    ResponseEntity<Page<AuditLogDto>> response = getAuditLogs(
+        search,
+        action,
+        startDate,
+        endDate,
+        org.springframework.data.domain.PageRequest.of(
+            0, 10000, Sort.by(Sort.Direction.DESC, "createdAt")));
     List<AuditLogDto> dtos = response.getBody().getContent();
 
     StringBuilder csv = new StringBuilder();
@@ -176,7 +173,11 @@ public class AuditController {
     headers.add("Content-Disposition", "attachment; filename=\"audit_logs.csv\"");
     headers.add("Content-Type", "text/csv; charset=UTF-8");
 
-    return ResponseEntity.ok().headers(headers).body(csv.toString());
+    return ResponseEntity.ok()
+        .headers(headers)
+        .header("X-Content-Type-Options", "nosniff")
+        .header("Content-Security-Policy", "default-src 'none'")
+        .body(csv.toString().replaceAll("[<>\"'%;()&]", "_"));
   }
 
   private String escapeCsv(String value) {

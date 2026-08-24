@@ -6,14 +6,14 @@ const mockApi = vi.hoisted(() => ({
   patch: vi.fn(),
   interceptors: {
     request: { use: vi.fn() },
-    response: { use: vi.fn() }
-  }
+    response: { use: vi.fn() },
+  },
 }));
 
 vi.mock('axios', () => ({
   default: {
-    create: vi.fn(() => mockApi)
-  }
+    create: vi.fn(() => mockApi),
+  },
 }));
 
 import * as api from '../api';
@@ -41,7 +41,10 @@ describe('api.ts', () => {
     });
 
     it('handles successful login with MFA required', async () => {
-      mockApi.post.mockResolvedValueOnce({ status: 202, data: { mfaRequired: true, email: 'test@test.com' } });
+      mockApi.post.mockResolvedValueOnce({
+        status: 202,
+        data: { mfaRequired: true, email: 'test@test.com' },
+      });
       const result = await api.login('test@test.com', 'pass');
       expect(result.sucesso).toBe(true);
       expect(result.dados.mfaRequired).toBe(true);
@@ -62,7 +65,7 @@ describe('api.ts', () => {
       expect(result.sucesso).toBe(true);
       expect(result.dados.id).toBe(1);
     });
-    
+
     it('handles error', async () => {
       mockApi.post.mockRejectedValueOnce({ response: { data: { message: 'Invalid code' } } });
       const result = await api.verify2FaLogin('test@test.com', 'pass', '123456');
@@ -285,7 +288,9 @@ describe('api.ts', () => {
       const onProgress = vi.fn();
       const result = await api.uploadDocument(file, 'Title', '1', onProgress);
       expect(result.sucesso).toBe(true);
-      expect(mockApi.post).toHaveBeenCalledWith('/api/documents', expect.any(FormData), { onUploadProgress: onProgress });
+      expect(mockApi.post).toHaveBeenCalledWith('/api/documents', expect.any(FormData), {
+        onUploadProgress: onProgress,
+      });
     });
 
     it('handles error', async () => {
@@ -358,17 +363,17 @@ describe('api.ts', () => {
       const createElementMock = vi.spyOn(document, 'createElement');
       const mockAnchor = { href: '', download: '', click: vi.fn() };
       createElementMock.mockReturnValue(mockAnchor as any);
-      
+
       const appendChildMock = vi.spyOn(document.body, 'appendChild').mockImplementation(vi.fn());
       const removeChildMock = vi.spyOn(document.body, 'removeChild').mockImplementation(vi.fn());
-      
+
       globalThis.URL.createObjectURL = vi.fn().mockReturnValue('blob:url') as any;
       globalThis.URL.revokeObjectURL = vi.fn() as any;
-      
+
       await api.exportAuditLogsCSV('search', 'action');
-      
+
       expect(mockAnchor.click).toHaveBeenCalled();
-      
+
       createElementMock.mockRestore();
       appendChildMock.mockRestore();
       removeChildMock.mockRestore();
@@ -404,23 +409,23 @@ describe('api.ts', () => {
       localStorage.setItem('token', 'my-token');
       const config = { headers: {} as Record<string, string> };
       const newConfig = requestInterceptor(config);
-      
+
       expect(newConfig.headers['X-Request-ID']).toBeDefined();
     });
 
     it('request interceptor triggers loader after timeout', () => {
-      for(let i=0; i<5; i++) responseInterceptorResolve({ status: 200 }); // reset activeRequests
+      for (let i = 0; i < 5; i++) responseInterceptorResolve({ status: 200 }); // reset activeRequests
       vi.useFakeTimers();
       const config = { headers: {} as Record<string, string> };
-      
+
       const dispatchEventSpy = vi.spyOn(window, 'dispatchEvent');
-      
+
       requestInterceptor(config);
-      
+
       vi.advanceTimersByTime(501);
-      
+
       expect(dispatchEventSpy).toHaveBeenCalled();
-      
+
       vi.useRealTimers();
     });
 
@@ -431,31 +436,31 @@ describe('api.ts', () => {
 
     it('response interceptor rejects with 401 redirects to login', async () => {
       const error = { response: { status: 401 }, config: { url: '/api/documents' } };
-      
+
       const originalLocation = window.location;
       Object.defineProperty(window, 'location', {
         value: { href: '' },
-        writable: true
+        writable: true,
       });
-      
+
       await expect(responseInterceptorReject(error)).rejects.toBe(error);
       expect(window.location.href).toBe('/login?session_expired=true');
-      
+
       Object.defineProperty(window, 'location', { value: originalLocation, writable: true });
     });
 
     it('response interceptor rejects with 401 on login route does NOT redirect', async () => {
       const error = { response: { status: 401 }, config: { url: '/api/auth/login' } };
-      
+
       const originalLocation = window.location;
       Object.defineProperty(window, 'location', {
         value: { href: '' },
-        writable: true
+        writable: true,
       });
-      
+
       await expect(responseInterceptorReject(error)).rejects.toBe(error);
       expect(window.location.href).toBe('');
-      
+
       Object.defineProperty(window, 'location', { value: originalLocation, writable: true });
     });
   });

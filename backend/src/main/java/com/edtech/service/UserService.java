@@ -41,10 +41,9 @@ public class UserService {
   @Transactional(readOnly = true)
   public User authenticate(String email, String password) {
     String normalizedEmail = email.trim().toLowerCase(Locale.ROOT);
-    User user =
-        userRepository
-            .findByEmailIgnoreCase(normalizedEmail)
-            .orElseThrow(() -> new InvalidCredentialsException("Credenciais inválidas."));
+    User user = userRepository
+        .findByEmailIgnoreCase(normalizedEmail)
+        .orElseThrow(() -> new InvalidCredentialsException("Credenciais inválidas."));
 
     if (!user.isActive()) {
       throw new AccountNotVerifiedException();
@@ -73,22 +72,20 @@ public class UserService {
 
     UserRole initialRole = request.role();
 
-    User user =
-        new User(
-            request.name().trim(),
-            normalizedEmail,
-            passwordEncoder.encode(request.password()),
-            initialRole,
-            java.util.UUID.fromString("00000000-0000-0000-0000-000000000001"));
+    User user = new User(
+        request.name().trim(),
+        normalizedEmail,
+        passwordEncoder.encode(request.password()),
+        initialRole,
+        java.util.UUID.fromString("00000000-0000-0000-0000-000000000001"));
 
     user.setActive(false);
     userRepository.save(user);
 
     verificationTokenRepository.deleteByEmail(normalizedEmail);
     String code = String.format("%06d", SECURE_RANDOM.nextInt(999999));
-    com.edtech.model.VerificationToken token =
-        new com.edtech.model.VerificationToken(
-            code, normalizedEmail, java.time.LocalDateTime.now().plusMinutes(15));
+    com.edtech.model.VerificationToken token = new com.edtech.model.VerificationToken(
+        code, normalizedEmail, java.time.LocalDateTime.now().plusMinutes(15));
     verificationTokenRepository.save(token);
 
     emailService.sendVerificationEmail(normalizedEmail, code);
@@ -96,7 +93,10 @@ public class UserService {
     return user;
   }
 
-  /** Checks whether an email belongs to one of the configured institutional domains. */
+  /**
+   * Checks whether an email belongs to one of the configured institutional
+   * domains.
+   */
   private boolean hasAllowedInstitutionalDomain(String email) {
     return Arrays.stream(allowedInstitutionalDomains.split(","))
         .map(domain -> domain.trim().toLowerCase(Locale.ROOT))
@@ -108,8 +108,8 @@ public class UserService {
   @Transactional
   public User verifyRegistration(String email, String code) {
     String normalizedEmail = email.trim().toLowerCase(Locale.ROOT);
-    Optional<com.edtech.model.VerificationToken> tokenOpt =
-        verificationTokenRepository.findByEmailAndToken(normalizedEmail, code);
+    Optional<com.edtech.model.VerificationToken> tokenOpt = verificationTokenRepository
+        .findByEmailAndToken(normalizedEmail, code);
 
     if (tokenOpt.isPresent() && !tokenOpt.get().isExpired()) {
       Optional<User> userOpt = userRepository.findByEmailIgnoreCase(normalizedEmail);
@@ -128,10 +128,9 @@ public class UserService {
   @Transactional
   public void resendVerificationCode(String email) {
     String normalizedEmail = email.trim().toLowerCase(Locale.ROOT);
-    User user =
-        userRepository
-            .findByEmailIgnoreCase(normalizedEmail)
-            .orElseThrow(() -> new InvalidCredentialsException("Credenciais inválidas."));
+    User user = userRepository
+        .findByEmailIgnoreCase(normalizedEmail)
+        .orElseThrow(() -> new InvalidCredentialsException("Credenciais inválidas."));
     if (user.isActive()) {
       return;
     }

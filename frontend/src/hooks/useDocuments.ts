@@ -1,7 +1,20 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { getDocuments, uploadDocument, getDownloadUrl, toggleStar, getComments, addComment } from '../services/api';
+import {
+  getDocuments,
+  uploadDocument,
+  getDownloadUrl,
+  toggleStar,
+  getComments,
+  addComment,
+} from '../services/api';
 
-export const useDocuments = (projectId?: string, title?: string, status?: string, page = 0, size = 20) => {
+export const useDocuments = (
+  projectId?: string,
+  title?: string,
+  status?: string,
+  page = 0,
+  size = 20,
+) => {
   return useQuery({
     queryKey: ['documents', projectId, title, status, page, size],
     queryFn: async () => {
@@ -62,11 +75,11 @@ export const useToggleStar = () => {
     onMutate: async (documentId) => {
       await queryClient.cancelQueries({ queryKey: ['documents'] });
       const previousQueries = queryClient.getQueriesData({ queryKey: ['documents'] });
-      
+
       queryClient.setQueriesData({ queryKey: ['documents'] }, (oldData: any) => {
         if (!oldData) return oldData;
-        return oldData.map((doc: any) => 
-          doc.id === documentId ? { ...doc, starred: !doc.starred } : doc
+        return oldData.map((doc: any) =>
+          doc.id === documentId ? { ...doc, starred: !doc.starred } : doc,
         );
       });
       return { previousQueries };

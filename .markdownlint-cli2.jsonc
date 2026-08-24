@@ -1,9 +1,9 @@
 {
   "default": true,
-  "MD013": false, // Desabilita quebra de linha rígida (line-length) para não atrapalhar textos longos em PT-BR
+  "MD013": false,
   "MD024": {
-    "siblings_only": true // Permite cabeçalhos com nomes iguais se estiverem em escopos diferentes
+    "siblings_only": true
   },
-  "MD033": false, // Permite o uso de HTML inline para botões ou customizações do MkDocs
-  "MD041": true // Exige que a primeira linha do arquivo seja um cabeçalho H1 (Top level heading)
+  "MD033": false,
+  "MD041": true
 }

@@ -13,7 +13,10 @@
           "request": {
             "method": "POST",
             "header": [{ "key": "Content-Type", "value": "application/json" }],
-            "body": { "mode": "raw", "raw": "{\n  \"email\": \"pesquisador.demo@unb.br\",\n  \"password\": \"Demo@1234\"\n}" },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"pesquisador.demo@unb.br\",\n  \"password\": \"Demo@1234\"\n}"
+            },
             "url": "{{baseUrl}}/api/auth/login"
           }
         },
@@ -26,7 +29,10 @@
           "request": {
             "method": "POST",
             "header": [{ "key": "Content-Type", "value": "application/json" }],
-            "body": { "mode": "raw", "raw": "{\n  \"email\": \"pesquisador.demo@unb.br\"\n}" },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"pesquisador.demo@unb.br\"\n}"
+            },
             "url": "{{baseUrl}}/api/auth/recovery/request"
           }
         },
@@ -41,11 +47,17 @@
       "item": [
         {
           "name": "Listar projetos",
-          "request": { "method": "GET", "url": "{{baseUrl}}/api/projects?page=0&size=20" }
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/projects?page=0&size=20"
+          }
         },
         {
           "name": "Listar documentos",
-          "request": { "method": "GET", "url": "{{baseUrl}}/api/documents?page=0&size=20" }
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/documents?page=0&size=20"
+          }
         },
         {
           "name": "Enviar documento",
@@ -55,7 +67,11 @@
               "mode": "formdata",
               "formdata": [
                 { "key": "file", "type": "file", "src": [] },
-                { "key": "title", "type": "text", "value": "Documento de teste" },
+                {
+                  "key": "title",
+                  "type": "text",
+                  "value": "Documento de teste"
+                },
                 { "key": "projectId", "type": "text", "value": "{{projectId}}" }
               ]
             },
@@ -69,22 +85,34 @@
       "item": [
         {
           "name": "Listar auditoria (Auditor)",
-          "request": { "method": "GET", "url": "{{baseUrl}}/api/audit-logs?page=0&size=20" }
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/audit-logs?page=0&size=20"
+          }
         },
         {
           "name": "Exportar auditoria CSV (Auditor)",
-          "request": { "method": "GET", "url": "{{baseUrl}}/api/audit-logs/export" }
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/audit-logs/export"
+          }
         },
         {
           "name": "Gerar tokens de laboratório (Orientador)",
-          "request": { "method": "GET", "url": "{{baseUrl}}/api/v1/laboratory/token" }
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/laboratory/token"
+          }
         },
         {
           "name": "Vincular ao laboratório",
           "request": {
             "method": "POST",
             "header": [{ "key": "Content-Type", "value": "application/json" }],
-            "body": { "mode": "raw", "raw": "{\n  \"token\": \"{{laboratoryToken}}\"\n}" },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"token\": \"{{laboratoryToken}}\"\n}"
+            },
             "url": "{{baseUrl}}/api/v1/laboratory/join"
           }
         }

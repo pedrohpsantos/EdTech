@@ -10,19 +10,19 @@
   {
     "name": "Problemas de infraestrutura",
     "matchedStatuses": ["broken", "failed"],
-    "messageRegex": ".*timeout.*" 
+    "messageRegex": ".*timeout.*"
   },
   {
     "name": "Testes desatualizados",
     "matchedStatuses": ["broken"],
-    "traceRegex": ".*FileNotFoundException.*" 
+    "traceRegex": ".*FileNotFoundException.*"
   },
   {
     "name": "Defeitos do produto",
-    "matchedStatuses": ["failed"] 
+    "matchedStatuses": ["failed"]
   },
   {
     "name": "Defeitos dos testes",
-    "matchedStatuses": ["broken"] 
+    "matchedStatuses": ["broken"]
   }
 ]

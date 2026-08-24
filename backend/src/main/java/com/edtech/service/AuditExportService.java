@@ -50,8 +50,8 @@ public class AuditExportService {
    * Exporta os logs de auditoria relacionados a um documento.
    *
    * @param documentId identificador do documento.
-   * @param userId identificador do usuario que solicitou a exportacao.
-   * @param format formato solicitado para exportacao.
+   * @param userId     identificador do usuario que solicitou a exportacao.
+   * @param format     formato solicitado para exportacao.
    * @return conteudo do arquivo exportado em bytes.
    */
   public byte[] exportDocumentAuditTrail(UUID documentId, UUID userId, String format) {
@@ -60,19 +60,17 @@ public class AuditExportService {
       throw new IllegalArgumentException("Formato invalido. Use: csv ou pdf");
     }
 
-    Document document =
-        documentRepository
-            .findById(documentId)
-            .orElseThrow(() -> new RuntimeException("Document not found"));
+    Document document = documentRepository
+        .findById(documentId)
+        .orElseThrow(() -> new RuntimeException("Document not found"));
 
     projectMemberRepository
         .findByProjectIdAndUserId(document.getProject().getId(), userId)
         .orElseThrow(
             () -> new RuntimeException("Access denied: You are not a member of this project"));
 
-    List<AuditLog> logs =
-        auditLogRepository.findByResourceTypeAndResourceIdOrderByCreatedAtAsc(
-            DOCUMENT_RESOURCE_TYPE, documentId);
+    List<AuditLog> logs = auditLogRepository.findByResourceTypeAndResourceIdOrderByCreatedAtAsc(
+        DOCUMENT_RESOURCE_TYPE, documentId);
 
     if (PDF_FORMAT.equals(normalizedFormat)) {
       return exportPdf(logs);
@@ -98,11 +96,11 @@ public class AuditExportService {
 
       PdfPTable table = new PdfPTable(6);
       table.setWidthPercentage(100f);
-      table.setWidths(new float[] {1.5f, 2.5f, 2.0f, 2.0f, 1.5f, 4.0f});
+      table.setWidths(new float[] { 1.5f, 2.5f, 2.0f, 2.0f, 1.5f, 4.0f });
 
       Font fontHeader = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
       fontHeader.setSize(10);
-      String[] headers = {"ID", "Timestamp", "Ação", "Usuário ID", "IP", "Detalhes"};
+      String[] headers = { "ID", "Timestamp", "Ação", "Usuário ID", "IP", "Detalhes" };
       for (String header : headers) {
         PdfPCell cell = new PdfPCell();
         cell.setPhrase(new Phrase(header, fontHeader));

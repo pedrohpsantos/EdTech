@@ -24,10 +24,10 @@ const ResearchTrail: React.FC = () => {
       status: 'Em revisão',
       type: 'pdf',
     },
-    { 
-      id: '3', 
-      title: 'analise_estatistica_q2.json', 
-      project: 'A. Costa - Sistemas de IA', 
+    {
+      id: '3',
+      title: 'analise_estatistica_q2.json',
+      project: 'A. Costa - Sistemas de IA',
       status: 'Submetido',
       type: 'csv', // using csv style for json
     },
@@ -58,7 +58,8 @@ const ResearchTrail: React.FC = () => {
   ];
 
   const documents = user?.role === 'RESEARCHER' ? researcherDocuments : advisorDocuments;
-  const selectedDocument = documents.find((document) => document.id === selectedDocId) || documents[0];
+  const selectedDocument =
+    documents.find((document) => document.id === selectedDocId) || documents[0];
 
   const handleExportTrail = () => {
     const lines = [
@@ -83,9 +84,17 @@ const ResearchTrail: React.FC = () => {
     ];
     let pdf = '%PDF-1.4\n';
     const offsets = [0];
-    objects.forEach((object, index) => { offsets.push(pdf.length); pdf += `${index + 1} 0 obj\n${object}\nendobj\n`; });
+    objects.forEach((object, index) => {
+      offsets.push(pdf.length);
+      pdf += `${index + 1} 0 obj\n${object}\nendobj\n`;
+    });
     const xrefOffset = pdf.length;
-    pdf += `xref\n0 ${objects.length + 1}\n0000000000 65535 f \n${offsets.slice(1).map((offset) => `${String(offset).padStart(10, '0')} 00000 n \n`).join('')}trailer\n<< /Size ${objects.length + 1} /Root 1 0 R >>\nstartxref\n${xrefOffset}\n%%EOF`;
+    pdf += `xref\n0 ${objects.length + 1}\n0000000000 65535 f \n${offsets
+      .slice(1)
+      .map((offset) => `${String(offset).padStart(10, '0')} 00000 n \n`)
+      .join(
+        '',
+      )}trailer\n<< /Size ${objects.length + 1} /Root 1 0 R >>\nstartxref\n${xrefOffset}\n%%EOF`;
     const url = URL.createObjectURL(new Blob([pdf], { type: 'application/pdf' }));
     const link = document.createElement('a');
     link.href = url;
@@ -386,7 +395,10 @@ const ResearchTrail: React.FC = () => {
                     </span>
                   </div>
                 </div>
-                <button className="btn-compare-versions" onClick={() => setIsComparingVersions(true)}>
+                <button
+                  className="btn-compare-versions"
+                  onClick={() => setIsComparingVersions(true)}
+                >
                   <i className="bi bi-arrow-down-up"></i> Comparar versões
                 </button>
               </div>
@@ -418,11 +430,36 @@ const ResearchTrail: React.FC = () => {
       )}
 
       {isComparingVersions && (
-        <div className="version-compare-backdrop" role="dialog" aria-modal="true" aria-label="Comparar versões">
+        <div
+          className="version-compare-backdrop"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Comparar versões"
+        >
           <div className="version-compare-dialog">
-            <div className="version-compare-header"><div><h3>Comparar versões</h3><p>{selectedDocument.title}</p></div><button aria-label="Fechar" onClick={() => setIsComparingVersions(false)}>×</button></div>
-            <div className="version-compare-grid"><section><strong>v3 · 10 Jun</strong><p>Metodologia, referências e escopo inicial.</p></section><section><strong>v4 · Hoje</strong><p>Inclui revisão LGPD, evidências e aprovação do orientador.</p></section></div>
-            <p className="version-compare-summary"><i className="bi bi-check-circle"></i> 3 alterações de conteúdo e 1 validação de conformidade registradas.</p>
+            <div className="version-compare-header">
+              <div>
+                <h3>Comparar versões</h3>
+                <p>{selectedDocument.title}</p>
+              </div>
+              <button aria-label="Fechar" onClick={() => setIsComparingVersions(false)}>
+                ×
+              </button>
+            </div>
+            <div className="version-compare-grid">
+              <section>
+                <strong>v3 · 10 Jun</strong>
+                <p>Metodologia, referências e escopo inicial.</p>
+              </section>
+              <section>
+                <strong>v4 · Hoje</strong>
+                <p>Inclui revisão LGPD, evidências e aprovação do orientador.</p>
+              </section>
+            </div>
+            <p className="version-compare-summary">
+              <i className="bi bi-check-circle"></i> 3 alterações de conteúdo e 1 validação de
+              conformidade registradas.
+            </p>
           </div>
         </div>
       )}

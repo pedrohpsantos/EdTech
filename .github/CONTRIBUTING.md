@@ -4,10 +4,10 @@ O projeto EdTech adota normas rigorosas de padronização, automação e qualida
 
 ## Fluxo de Trabalho (Git Flow)
 
-1. **Rastreamento:** Procure na aba de *Issues* por itens com *tags* correspondentes (`good first issue`, `bug`, etc). Caso proponha algo novo, crie uma Issue descritiva primeiramente.
-2. **Branching:** A partir de um *fork* ou da branch `develop` (se você for mantenedor interno), crie uma nova branch com prefixo descritivo, por exemplo: `feat/nome-da-funcionalidade` ou `fix/nome-da-correcao`.
-3. **Desenvolvimento:** Submeta alterações seguindo estritamente os padrões de codificação do ecossistema correspondente, garantindo que o código passe pelos requisitos mínimos de *linting* e baterias de testes (e.g. `mvn verify` e `npm test`).
-4. **Submissão (Pull Request):** Abra o Pull Request apontando para a branch `develop`. Preencha de forma metódica o formulário do PR (Pull Request Template), garantindo que os *Checks* de CI do GitHub Actions finalizem com sucesso.
+1. **Rastreamento:** Procure na aba de _Issues_ por itens com _tags_ correspondentes (`good first issue`, `bug`, etc). Caso proponha algo novo, crie uma Issue descritiva primeiramente.
+2. **Branching:** A partir de um _fork_ ou da branch `develop` (se você for mantenedor interno), crie uma nova branch com prefixo descritivo, por exemplo: `feat/nome-da-funcionalidade` ou `fix/nome-da-correcao`.
+3. **Desenvolvimento:** Submeta alterações seguindo estritamente os padrões de codificação do ecossistema correspondente, garantindo que o código passe pelos requisitos mínimos de _linting_ e baterias de testes (e.g. `mvn verify` e `npm test`).
+4. **Submissão (Pull Request):** Abra o Pull Request apontando para a branch `develop`. Preencha de forma metódica o formulário do PR (Pull Request Template), garantindo que os _Checks_ de CI do GitHub Actions finalizem com sucesso.
 
 ---
 
@@ -44,4 +44,4 @@ A integridade do histórico do Git e a automação de releases dependem da ades�
 
 ## Suporte
 
-Em caso de impasses técnicos profundos — especialmente de infraestrutura local via Docker —, registre o erro via Issue contendo obrigatoriamente os *stacktraces* do terminal ou evidências contextuais. Problemas documentados corretamente garantem resolução sistêmica acelerada.
+Em caso de impasses técnicos profundos — especialmente de infraestrutura local via Docker —, registre o erro via Issue contendo obrigatoriamente os _stacktraces_ do terminal ou evidências contextuais. Problemas documentados corretamente garantem resolução sistêmica acelerada.

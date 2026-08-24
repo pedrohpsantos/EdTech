@@ -38,10 +38,8 @@ public class LaboratoryController {
           .body(Map.of("error", "Apenas orientadores podem gerar tokens do laboratorio"));
     }
 
-    String researcherToken =
-        laboratoryTokenService.generateToken(userOpt.get().getId(), UserRole.RESEARCHER);
-    String auditorToken =
-        laboratoryTokenService.generateToken(userOpt.get().getId(), UserRole.AUDITOR);
+    String researcherToken = laboratoryTokenService.generateToken(userOpt.get().getId(), UserRole.RESEARCHER);
+    String auditorToken = laboratoryTokenService.generateToken(userOpt.get().getId(), UserRole.AUDITOR);
     return ResponseEntity.ok(
         Map.of(
             "researcher_token", researcherToken,
@@ -64,8 +62,7 @@ public class LaboratoryController {
     }
     User currentUser = currentUserOpt.get();
 
-    Optional<User> advisorOpt =
-        laboratoryTokenService.findAdvisorByToken(token, currentUser.getRole());
+    Optional<User> advisorOpt = laboratoryTokenService.findAdvisorByToken(token, currentUser.getRole());
     if (advisorOpt.isEmpty()) {
       return ResponseEntity.status(400)
           .body(Map.of("error", "Token invalido ou expirado para o seu cargo"));

@@ -21,7 +21,8 @@ import org.mockito.quality.Strictness;
 
 @ExtendWith(MockitoExtension.class)
 public class JwtServiceTest {
-  @Mock private User mockUser;
+  @Mock
+  private User mockUser;
 
   private JwtService jwtService;
   private final String MOCK_SECRET = "chave-secreta-muito-longa-para-validar-o-jwt-123";
@@ -78,13 +79,12 @@ public class JwtServiceTest {
   private UUID extractUserIdFromToken(String token) {
     SecretKey key = Keys.hmacShaKeyFor(MOCK_SECRET.getBytes(StandardCharsets.UTF_8));
 
-    String uidStr =
-        Jwts.parser()
-            .verifyWith(key)
-            .build()
-            .parseSignedClaims(token)
-            .getPayload()
-            .get("uid", String.class);
+    String uidStr = Jwts.parser()
+        .verifyWith(key)
+        .build()
+        .parseSignedClaims(token)
+        .getPayload()
+        .get("uid", String.class);
     return UUID.fromString(uidStr);
   }
 

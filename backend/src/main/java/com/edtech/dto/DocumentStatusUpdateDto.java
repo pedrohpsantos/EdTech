@@ -12,7 +12,8 @@ public class DocumentStatusUpdateDto {
   private String feedback;
 
   /** Documentação para o método DocumentStatusUpdateDto. */
-  public DocumentStatusUpdateDto() {}
+  public DocumentStatusUpdateDto() {
+  }
 
   /** Documentação para o método DocumentStatusUpdateDto. */
   public DocumentStatusUpdateDto(DocumentStatus status, String feedback) {

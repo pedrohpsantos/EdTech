@@ -62,7 +62,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
       if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
         userRepository
             .findByEmailIgnoreCase(email)
-            .filter(User::isActive)
+            .filter(user -> user.isActive())
             .filter(user -> jwtService.isValid(token.get(), user))
             .ifPresent(user -> authenticateUser(request, user));
       }

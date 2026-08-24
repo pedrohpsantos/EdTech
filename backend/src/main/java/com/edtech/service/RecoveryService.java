@@ -46,14 +46,14 @@ public class RecoveryService {
       return;
     }
 
-    // Sempre retorna sucesso rapidamente por seguranca (evitar email enumeration), mas soh envia se
+    // Sempre retorna sucesso rapidamente por seguranca (evitar email enumeration),
+    // mas soh envia se
     // existir
     if (userOpt.isPresent()) {
       recoveryTokenRepository.deleteByEmail(normalizedEmail); // Limpa tokens antigos
 
       String code = String.format("%06d", SECURE_RANDOM.nextInt(999999));
-      RecoveryToken token =
-          new RecoveryToken(code, normalizedEmail, LocalDateTime.now().plusMinutes(15));
+      RecoveryToken token = new RecoveryToken(code, normalizedEmail, LocalDateTime.now().plusMinutes(15));
       recoveryTokenRepository.save(token);
 
       emailService.sendRecoveryEmail(normalizedEmail, code);
@@ -64,8 +64,7 @@ public class RecoveryService {
   @Transactional(readOnly = true)
   public boolean verifyCode(String email, String code) {
     String normalizedEmail = email.trim().toLowerCase(Locale.ROOT);
-    Optional<RecoveryToken> tokenOpt =
-        recoveryTokenRepository.findByEmailAndToken(normalizedEmail, code);
+    Optional<RecoveryToken> tokenOpt = recoveryTokenRepository.findByEmailAndToken(normalizedEmail, code);
 
     if (tokenOpt.isPresent() && !tokenOpt.get().isExpired()) {
       return true;
@@ -83,8 +82,7 @@ public class RecoveryService {
       return false;
     }
 
-    Optional<RecoveryToken> tokenOpt =
-        recoveryTokenRepository.findByEmailAndToken(normalizedEmail, code);
+    Optional<RecoveryToken> tokenOpt = recoveryTokenRepository.findByEmailAndToken(normalizedEmail, code);
 
     if (tokenOpt.isPresent() && !tokenOpt.get().isExpired()) {
       Optional<User> userOpt = userRepository.findByEmailIgnoreCase(normalizedEmail);

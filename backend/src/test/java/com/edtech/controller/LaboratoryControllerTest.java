@@ -34,8 +34,7 @@ class LaboratoryControllerTest {
     UserDetails userDetails = mock(UserDetails.class);
     when(userDetails.getUsername()).thenReturn("advisor@unb.br");
 
-    User advisor =
-        new User("Dr. Advisor", "advisor@unb.br", "hash", UserRole.ADVISOR, UUID.randomUUID());
+    User advisor = new User("Dr. Advisor", "advisor@unb.br", "hash", UserRole.ADVISOR, UUID.randomUUID());
     UUID advisorId = UUID.randomUUID();
     org.springframework.test.util.ReflectionTestUtils.setField(advisor, "id", advisorId);
     advisor.setRole(UserRole.ADVISOR);
@@ -56,8 +55,7 @@ class LaboratoryControllerTest {
     UserDetails userDetails = mock(UserDetails.class);
     when(userDetails.getUsername()).thenReturn("student@unb.br");
 
-    User student =
-        new User("Student", "student@unb.br", "hash", UserRole.RESEARCHER, UUID.randomUUID());
+    User student = new User("Student", "student@unb.br", "hash", UserRole.RESEARCHER, UUID.randomUUID());
 
     when(userRepository.findByEmailIgnoreCase("student@unb.br")).thenReturn(Optional.of(student));
 
@@ -70,11 +68,9 @@ class LaboratoryControllerTest {
     UserDetails userDetails = mock(UserDetails.class);
     when(userDetails.getUsername()).thenReturn("student@unb.br");
 
-    User student =
-        new User("Student", "student@unb.br", "hash", UserRole.RESEARCHER, UUID.randomUUID());
+    User student = new User("Student", "student@unb.br", "hash", UserRole.RESEARCHER, UUID.randomUUID());
 
-    User advisor =
-        new User("Dr. Advisor", "advisor@unb.br", "hash", UserRole.ADVISOR, UUID.randomUUID());
+    User advisor = new User("Dr. Advisor", "advisor@unb.br", "hash", UserRole.ADVISOR, UUID.randomUUID());
 
     when(tokenService.findAdvisorByToken(eq("123456"), any())).thenReturn(Optional.of(advisor));
     when(userRepository.findByEmailIgnoreCase("student@unb.br")).thenReturn(Optional.of(student));
@@ -96,8 +92,7 @@ class LaboratoryControllerTest {
   void joinLaboratory_InvalidToken() {
     UserDetails userDetails = mock(UserDetails.class);
     when(userDetails.getUsername()).thenReturn("student@unb.br");
-    User student =
-        new User("Student", "student@unb.br", "hash", UserRole.RESEARCHER, UUID.randomUUID());
+    User student = new User("Student", "student@unb.br", "hash", UserRole.RESEARCHER, UUID.randomUUID());
     when(userRepository.findByEmailIgnoreCase("student@unb.br")).thenReturn(Optional.of(student));
     when(tokenService.findAdvisorByToken("123456", UserRole.RESEARCHER))
         .thenReturn(Optional.empty());
@@ -109,8 +104,6 @@ class LaboratoryControllerTest {
   void joinLaboratory_UserNotFound() {
     UserDetails userDetails = mock(UserDetails.class);
     when(userDetails.getUsername()).thenReturn("student@unb.br");
-    User advisor =
-        new User("Dr. Advisor", "advisor@unb.br", "hash", UserRole.ADVISOR, UUID.randomUUID());
     when(userRepository.findByEmailIgnoreCase("student@unb.br")).thenReturn(Optional.empty());
 
     ResponseEntity<?> response = controller.joinLaboratory(authenticationFor(userDetails), Map.of("token", "123456"));

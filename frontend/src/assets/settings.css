@@ -59,7 +59,7 @@
   display: grid;
   place-items: center;
   padding: 16px;
-  background: rgba(18, 10, 43, .55);
+  background: rgba(18, 10, 43, 0.55);
 }
 
 .profile-editor-card {
@@ -68,18 +68,47 @@
   border-radius: 16px;
   background: var(--bg);
   border: 1px solid var(--border);
-  box-shadow: 0 24px 64px rgba(0, 0, 0, .28);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.28);
   display: grid;
   gap: 10px;
 }
 
-.profile-editor-header, .profile-editor-actions, .profile-avatar-picker { display: flex; align-items: center; gap: 12px; }
-.profile-editor-header { justify-content: space-between; }
-.profile-editor-header h3 { margin: 0; color: var(--ed-text-dark); }
-.profile-editor-actions { justify-content: flex-end; margin-top: 8px; }
-.profile-close { background: transparent; border: 0; color: var(--ed-text-muted); font-size: 28px; line-height: 1; cursor: pointer; }
-.profile-avatar-picker input { max-width: 100%; color: var(--ed-text-muted); }
-.profile-message, .settings-error { margin: 4px 0 0; color: var(--ed-status-danger); font-size: 13px; }
+.profile-editor-header,
+.profile-editor-actions,
+.profile-avatar-picker {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.profile-editor-header {
+  justify-content: space-between;
+}
+.profile-editor-header h3 {
+  margin: 0;
+  color: var(--ed-text-dark);
+}
+.profile-editor-actions {
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+.profile-close {
+  background: transparent;
+  border: 0;
+  color: var(--ed-text-muted);
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+}
+.profile-avatar-picker input {
+  max-width: 100%;
+  color: var(--ed-text-muted);
+}
+.profile-message,
+.settings-error {
+  margin: 4px 0 0;
+  color: var(--ed-status-danger);
+  font-size: 13px;
+}
 
 .settings-profile-info {
   display: flex;
@@ -273,9 +302,9 @@ input:checked + .ed-slider:before {
   .settings-container {
     gap: 16px;
   }
-  
+
   .settings-card {
-    padding: 16px; 
+    padding: 16px;
   }
 
   .settings-profile-row {
@@ -289,9 +318,9 @@ input:checked + .ed-slider:before {
     min-width: 0;
   }
 
-  .profile-email, 
+  .profile-email,
   .profile-name {
-    word-break: break-all; 
+    word-break: break-all;
   }
 
   .settings-profile-actions {
@@ -315,31 +344,38 @@ input:checked + .ed-slider:before {
   .settings-item-content {
     grid-column: 2;
     grid-row: 1;
-    min-width: 0; 
+    min-width: 0;
   }
 
   .settings-item-action {
     grid-column: 2;
     grid-row: 2;
-    justify-content: flex-end; 
+    justify-content: flex-end;
     margin-top: 4px;
   }
 
-  .profile-editor-card { padding: 20px; }
-  .profile-editor-actions { flex-direction: column-reverse; align-items: stretch; }
-  .profile-editor-actions button { width: 100%; }
+  .profile-editor-card {
+    padding: 20px;
+  }
+  .profile-editor-actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+  .profile-editor-actions button {
+    width: 100%;
+  }
 
   .notifications-dropdown {
     position: fixed !important;
-    top: 70px !important; 
-    
+    top: 70px !important;
+
     left: 50% !important;
     transform: translateX(-50%) !important;
-    
+
     width: calc(100vw - 32px) !important;
-    max-width: 340px !important; 
-    
-    right: auto !important; 
+    max-width: 340px !important;
+
+    right: auto !important;
   }
 
   .notification-text p,
@@ -350,25 +386,96 @@ input:checked + .ed-slider:before {
 }
 
 @media (max-width: 320px) {
-  .settings-container { gap: 10px; }
-  .settings-card { padding: 12px; border-radius: 10px; }
-  .settings-avatar { width: 48px; height: 48px; font-size: 18px; }
-  .settings-profile-actions, .settings-code-form { flex-direction: column; align-items: stretch; margin-left: 0; }
-  .settings-profile-actions .btn-outline, .settings-code-form .btn-primary { width: 100%; }
-  .settings-item { grid-template-columns: 32px 1fr; gap: 10px; }
-  .settings-item-icon { width: 32px; height: 32px; font-size: 14px; }
+  .settings-container {
+    gap: 10px;
+  }
+  .settings-card {
+    padding: 12px;
+    border-radius: 10px;
+  }
+  .settings-avatar {
+    width: 48px;
+    height: 48px;
+    font-size: 18px;
+  }
+  .settings-profile-actions,
+  .settings-code-form {
+    flex-direction: column;
+    align-items: stretch;
+    margin-left: 0;
+  }
+  .settings-profile-actions .btn-outline,
+  .settings-code-form .btn-primary {
+    width: 100%;
+  }
+  .settings-item {
+    grid-template-columns: 32px 1fr;
+    gap: 10px;
+  }
+  .settings-item-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+  }
 }
 
-@media (min-width: 1024px) { .settings-container { max-width: 960px; } .settings-access-code { min-width: 320px; } }
-@media (min-width: 1920px) { .settings-container { max-width: 1200px; } .settings-card { padding: 32px; } }
+@media (min-width: 1024px) {
+  .settings-container {
+    max-width: 960px;
+  }
+  .settings-access-code {
+    min-width: 320px;
+  }
+}
+@media (min-width: 1920px) {
+  .settings-container {
+    max-width: 1200px;
+  }
+  .settings-card {
+    padding: 32px;
+  }
+}
 
-.settings-code-form { display: flex; gap: .5rem; width: 100%; max-width: 400px; margin-left: 56px; }
-.settings-access-code { background: var(--bg); padding: 16px; border-radius: 8px; border: 1px solid var(--border); }
-.settings-code-status { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px; border: 1px solid #f0b5b5; border-radius: 8px; color: #a61b1b; font-size: 14px; }
+.settings-code-form {
+  display: flex;
+  gap: 0.5rem;
+  width: 100%;
+  max-width: 400px;
+  margin-left: 56px;
+}
+.settings-access-code {
+  background: var(--bg);
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+.settings-code-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid #f0b5b5;
+  border-radius: 8px;
+  color: #a61b1b;
+  font-size: 14px;
+}
 
 @media (max-width: 768px) {
-  .settings-code-form { margin-left: 0; max-width: none; flex-wrap: wrap; }
-  .settings-code-status { align-items: flex-start; flex-direction: column; }
-  .settings-code-form .ed-input { flex: 1 1 180px; min-height: 44px; }
-  .settings-code-form .btn-primary { min-height: 44px; }
+  .settings-code-form {
+    margin-left: 0;
+    max-width: none;
+    flex-wrap: wrap;
+  }
+  .settings-code-status {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .settings-code-form .ed-input {
+    flex: 1 1 180px;
+    min-height: 44px;
+  }
+  .settings-code-form .btn-primary {
+    min-height: 44px;
+  }
 }

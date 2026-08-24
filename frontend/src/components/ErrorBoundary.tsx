@@ -10,7 +10,7 @@ interface State {
 
 class ErrorBoundary extends Component<Props, State> {
   public state: State = {
-    hasError: false
+    hasError: false,
   };
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -25,13 +25,19 @@ class ErrorBoundary extends Component<Props, State> {
   public render() {
     if (this.state.hasError) {
       return (
-        <div style={{ padding: '2rem', textAlign: 'center', fontFamily: 'sans-serif', marginTop: '10%' }}>
+        <div
+          style={{
+            padding: '2rem',
+            textAlign: 'center',
+            fontFamily: 'sans-serif',
+            marginTop: '10%',
+          }}
+        >
           <h2>Oops! Algo deu errado.</h2>
-          <p className="text-muted">Nossa equipe já foi notificada. Por favor, recarregue a página.</p>
-          <button 
-            className="btn btn-primary mt-3"
-            onClick={() => window.location.reload()}
-          >
+          <p className="text-muted">
+            Nossa equipe já foi notificada. Por favor, recarregue a página.
+          </p>
+          <button className="btn btn-primary mt-3" onClick={() => window.location.reload()}>
             Recarregar
           </button>
         </div>

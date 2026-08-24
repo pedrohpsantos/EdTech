@@ -1,4 +1,3 @@
-
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import AuthLayout from '../../components/AuthLayout';
@@ -23,16 +22,16 @@ describe('AuthLayout', () => {
     render(
       <AuthLayout title="Test Title" subtitle="Test Subtitle">
         <div data-testid="child-content">Child Content</div>
-      </AuthLayout>
+      </AuthLayout>,
     );
 
     // Verify static branding content
     expect(screen.getByText(/Governança de/i)).toBeInTheDocument();
-    
+
     // Verify props content
     expect(screen.getByText('Test Title')).toBeInTheDocument();
     expect(screen.getByText('Test Subtitle')).toBeInTheDocument();
-    
+
     // Verify children
     expect(screen.getByTestId('child-content')).toBeInTheDocument();
 

@@ -2,7 +2,12 @@ import React from 'react';
 import { render, screen, waitFor, fireEvent, act } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import Documentos from '../documentos';
-import { useDocuments, useUploadDocument, useDownloadUrl, useToggleStar } from '../../hooks/useDocuments';
+import {
+  useDocuments,
+  useUploadDocument,
+  useDownloadUrl,
+  useToggleStar,
+} from '../../hooks/useDocuments';
 
 vi.mock('../../hooks/useProjects', () => ({ useProjects: vi.fn() }));
 import { useProjects } from '../../hooks/useProjects';
@@ -26,7 +31,11 @@ vi.mock('../../components/DocumentComments', () => ({
 }));
 
 vi.mock('../../components/DatasetPreview', () => ({
-  default: ({ url, type }: any) => <div data-testid="dataset-preview">{url} - {type}</div>,
+  default: ({ url, type }: any) => (
+    <div data-testid="dataset-preview">
+      {url} - {type}
+    </div>
+  ),
 }));
 
 describe('Documentos Page', () => {
@@ -64,20 +73,56 @@ describe('Documentos Page', () => {
 
   it('renders documents with different types and statuses', () => {
     const mockData = [
-      { id: '1', title: 'Doc 1', project: 'P1', type: 'PDF', size: '1MB', modified: '2023-01-01', status: 'Em Revisão', starred: true },
-      { id: '2', title: 'Doc 2', project: 'P2', type: 'CSV', size: '2MB', modified: '2023-01-02', status: 'Aprovado', starred: false },
-      { id: '3', title: 'Doc 3', project: 'P3', type: 'JSON', size: '3MB', modified: '2023-01-03', status: 'Submetido', starred: false },
-      { id: '4', title: 'Doc 4', project: 'P4', type: 'DOCX', size: '4MB', modified: '2023-01-04', status: 'Rascunho', starred: false },
+      {
+        id: '1',
+        title: 'Doc 1',
+        project: 'P1',
+        type: 'PDF',
+        size: '1MB',
+        modified: '2023-01-01',
+        status: 'Em Revisão',
+        starred: true,
+      },
+      {
+        id: '2',
+        title: 'Doc 2',
+        project: 'P2',
+        type: 'CSV',
+        size: '2MB',
+        modified: '2023-01-02',
+        status: 'Aprovado',
+        starred: false,
+      },
+      {
+        id: '3',
+        title: 'Doc 3',
+        project: 'P3',
+        type: 'JSON',
+        size: '3MB',
+        modified: '2023-01-03',
+        status: 'Submetido',
+        starred: false,
+      },
+      {
+        id: '4',
+        title: 'Doc 4',
+        project: 'P4',
+        type: 'DOCX',
+        size: '4MB',
+        modified: '2023-01-04',
+        status: 'Rascunho',
+        starred: false,
+      },
     ];
     (useDocuments as any).mockReturnValue({ data: mockData, isLoading: false });
-    
+
     render(<Documentos />);
-    
+
     expect(screen.getByText('Doc 1')).toBeInTheDocument();
     expect(screen.getByText('Doc 2')).toBeInTheDocument();
     expect(screen.getByText('Doc 3')).toBeInTheDocument();
     expect(screen.getByText('Doc 4')).toBeInTheDocument();
-    
+
     // Check if badges rendered correct status
     expect(screen.getAllByText('Em Revisão')[1]).toBeInTheDocument(); // 0 is the select option
     expect(screen.getAllByText('Aprovado')[1]).toBeInTheDocument();
@@ -87,7 +132,7 @@ describe('Documentos Page', () => {
 
   it('handles filtering inputs', () => {
     render(<Documentos />);
-    
+
     const searchInput = screen.getByPlaceholderText('Buscar documento...');
     fireEvent.change(searchInput, { target: { value: 'Doc Test' } });
     expect(searchInput).toHaveValue('Doc Test');
@@ -102,16 +147,16 @@ describe('Documentos Page', () => {
     const mockData = [{ id: '1', title: 'Doc 1', status: 'Aprovado' }];
     (useDocuments as any).mockReturnValue({ data: mockData, isLoading: false });
     render(<Documentos />);
-    
+
     const optionsBtn = screen.getByTitle('Opções');
     fireEvent.click(optionsBtn);
-    
+
     expect(screen.getByText('Carregando opções para: Doc 1')).toBeInTheDocument();
-    
+
     await act(async () => {
       vi.advanceTimersByTime(3100);
     });
-    
+
     expect(screen.queryByText('Carregando opções para: Doc 1')).not.toBeInTheDocument();
     vi.useRealTimers();
   });
@@ -120,21 +165,23 @@ describe('Documentos Page', () => {
     const mockData = [{ id: '1', title: 'Doc 1', status: 'Aprovado' }];
     (useDocuments as any).mockReturnValue({ data: mockData, isLoading: false });
     render(<Documentos />);
-    
+
     // const starBtn = screen.getByRole('button', { name: '' }); // The button has no text, need to find it by class or structure
     // Since we only have icon buttons, let's find it by some unique trait or just get the first one.
-    const toggleStarBtn = document.querySelector('.bi-star')?.closest('button') as HTMLButtonElement;
-    
+    const toggleStarBtn = document
+      .querySelector('.bi-star')
+      ?.closest('button') as HTMLButtonElement;
+
     mockToggleStar.mockResolvedValueOnce({});
     fireEvent.click(toggleStarBtn);
-    
+
     await waitFor(() => {
       expect(screen.getByText('Favorito atualizado!')).toBeInTheDocument();
     });
 
     mockToggleStar.mockRejectedValueOnce(new Error('error'));
     fireEvent.click(toggleStarBtn);
-    
+
     await waitFor(() => {
       expect(screen.getByText('Erro ao atualizar favorito.')).toBeInTheDocument();
     });
@@ -144,16 +191,20 @@ describe('Documentos Page', () => {
     const mockData = [{ id: '1', title: 'Doc 1', status: 'Aprovado' }];
     (useDocuments as any).mockReturnValue({ data: mockData, isLoading: false });
     render(<Documentos />);
-    
+
     const downloadBtn = screen.getByTitle('Download');
-    
+
     mockGetUrl.mockResolvedValueOnce('http://example.com/file.pdf');
     fireEvent.click(downloadBtn);
-    
+
     expect(screen.getByText('Iniciando download seguro...')).toBeInTheDocument();
-    
+
     await waitFor(() => {
-      expect(window.open).toHaveBeenCalledWith('http://example.com/file.pdf', '_blank', 'noopener,noreferrer');
+      expect(window.open).toHaveBeenCalledWith(
+        'http://example.com/file.pdf',
+        '_blank',
+        'noopener,noreferrer',
+      );
       expect(screen.getByText('Download finalizado com sucesso!')).toBeInTheDocument();
     });
 
@@ -161,7 +212,9 @@ describe('Documentos Page', () => {
     fireEvent.click(downloadBtn);
 
     await waitFor(() => {
-      expect(screen.getByText('Aviso: Falha ao baixar documento. Download failed')).toBeInTheDocument();
+      expect(
+        screen.getByText('Aviso: Falha ao baixar documento. Download failed'),
+      ).toBeInTheDocument();
     });
   });
 
@@ -169,17 +222,19 @@ describe('Documentos Page', () => {
     const mockData = [{ id: '1', title: 'Doc 1', type: 'PDF', status: 'Aprovado' }];
     (useDocuments as any).mockReturnValue({ data: mockData, isLoading: false });
     render(<Documentos />);
-    
+
     const viewBtn = screen.getByTitle('Visualizar');
-    
+
     mockGetUrl.mockResolvedValueOnce('http://example.com/file.pdf');
     fireEvent.click(viewBtn);
-    
+
     await waitFor(() => {
-      expect(screen.getByText('Seu navegador não suporta a visualização nativa de PDFs.')).toBeInTheDocument();
+      expect(
+        screen.getByText('Seu navegador não suporta a visualização nativa de PDFs.'),
+      ).toBeInTheDocument();
     });
 
-    const closeBtn = screen.getAllByRole('button').find(b => b.innerHTML.includes('bi-x-lg'));
+    const closeBtn = screen.getAllByRole('button').find((b) => b.innerHTML.includes('bi-x-lg'));
     if (closeBtn) {
       fireEvent.click(closeBtn);
     }
@@ -189,19 +244,19 @@ describe('Documentos Page', () => {
     const mockData = [{ id: '1', title: 'Doc 1', type: 'CSV', status: 'Aprovado' }];
     (useDocuments as any).mockReturnValue({ data: mockData, isLoading: false });
     render(<Documentos />);
-    
+
     const viewBtn = screen.getByTitle('Visualizar');
-    
+
     mockGetUrl.mockResolvedValueOnce('http://example.com/file.csv');
     fireEvent.click(viewBtn);
-    
+
     await waitFor(() => {
       expect(screen.getByTestId('dataset-preview')).toBeInTheDocument();
       expect(screen.getByText('http://example.com/file.csv - CSV')).toBeInTheDocument();
     });
-    
+
     // click modal overlay to close
-    const overlays = screen.getAllByRole('generic').filter(x => x.className === 'modal-overlay');
+    const overlays = screen.getAllByRole('generic').filter((x) => x.className === 'modal-overlay');
     fireEvent.click(overlays[0]);
   });
 
@@ -209,12 +264,12 @@ describe('Documentos Page', () => {
     const mockData = [{ id: '1', title: 'Doc 1', type: 'PDF', status: 'Aprovado' }];
     (useDocuments as any).mockReturnValue({ data: mockData, isLoading: false });
     render(<Documentos />);
-    
+
     const viewBtn = screen.getByTitle('Visualizar');
-    
+
     mockGetUrl.mockRejectedValueOnce(new Error('fail'));
     fireEvent.click(viewBtn);
-    
+
     await waitFor(() => {
       expect(screen.getByText('Erro ao carregar preview do documento')).toBeInTheDocument();
     });
@@ -222,35 +277,37 @@ describe('Documentos Page', () => {
 
   it('handles upload modal interactions', () => {
     render(<Documentos />);
-    
+
     const newUploadBtn = screen.getByText('Novo Upload (PDF / CSV / JSON)');
     fireEvent.click(newUploadBtn);
-    
+
     expect(screen.getByText('Novo Upload')).toBeInTheDocument();
-    
+
     const uploadArea = screen.getByText('Arraste e solte ou clique para selecionar').parentElement!;
-    
+
     fireEvent.dragOver(uploadArea);
     expect(uploadArea).toHaveClass('dragging');
-    
+
     fireEvent.dragLeave(uploadArea);
     expect(uploadArea).not.toHaveClass('dragging');
-    
+
     const file = new File(['dummy content'], 'test.pdf', { type: 'application/pdf' });
     fireEvent.drop(uploadArea, {
       dataTransfer: { files: [file] },
     });
-    
+
     expect(screen.getByText('test.pdf')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Enviar Arquivo' })).toBeDisabled();
-    
+
     // Test file input change
     const fileInput = document.getElementById('modalFileInput') as HTMLInputElement;
     const file2 = new File(['dummy'], 'test2.csv', { type: 'text/csv' });
     fireEvent.change(fileInput, { target: { files: [file2] } });
     expect(screen.getByText('test2.csv')).toBeInTheDocument();
 
-    fireEvent.change(screen.getByLabelText('Título do documento'), { target: { value: 'Documento de teste' } });
+    fireEvent.change(screen.getByLabelText('Título do documento'), {
+      target: { value: 'Documento de teste' },
+    });
     fireEvent.change(screen.getByLabelText('Projeto'), { target: { value: 'project-1' } });
     expect(screen.getByRole('button', { name: 'Enviar Arquivo' })).not.toBeDisabled();
 
@@ -263,11 +320,11 @@ describe('Documentos Page', () => {
     render(<Documentos />);
     fireEvent.click(screen.getByText('Novo Upload (PDF / CSV / JSON)'));
     const uploadArea = screen.getByText('Arraste e solte ou clique para selecionar').parentElement!;
-    
+
     fireEvent.drop(uploadArea, {
       dataTransfer: { files: [] },
     });
-    
+
     expect(screen.getByText('Arraste e solte ou clique para selecionar')).toBeInTheDocument();
   });
 
@@ -275,10 +332,9 @@ describe('Documentos Page', () => {
     render(<Documentos />);
     fireEvent.click(screen.getByText('Novo Upload (PDF / CSV / JSON)'));
     const fileInput = document.getElementById('modalFileInput') as HTMLInputElement;
-    
+
     fireEvent.change(fileInput, { target: { files: [] } });
-    
+
     expect(screen.getByText('Arraste e solte ou clique para selecionar')).toBeInTheDocument();
   });
 });
-

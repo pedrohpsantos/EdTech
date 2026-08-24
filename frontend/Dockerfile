@@ -1,5 +1,6 @@
 # Estágio de Build
-FROM node:24-alpine AS build
+FROM node:24-alpine3.21 AS build
+RUN apk update && apk upgrade --no-cache
 
 # Diretório de trabalho
 WORKDIR /app
@@ -32,15 +33,15 @@ RUN echo 'server { \
     listen       8080; \
     server_name  localhost; \
     location / { \
-        root   /usr/share/nginx/html; \
-        index  index.html index.htm; \
-        try_files $uri $uri/ /index.html; \
+    root   /usr/share/nginx/html; \
+    index  index.html index.htm; \
+    try_files $uri $uri/ /index.html; \
     } \
     error_page   500 502 503 504  /50x.html; \
     location = /50x.html { \
-        root   /usr/share/nginx/html; \
+    root   /usr/share/nginx/html; \
     } \
-}' > /etc/nginx/conf.d/default.conf
+    }' > /etc/nginx/conf.d/default.conf
 
 # Expor porta 8080 do Nginx
 EXPOSE 8080

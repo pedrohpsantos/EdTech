@@ -1,1 +1,202 @@
-{"uuid":"b38d437c-4496-4d89-bae5-f298379f9aa7","name":"Acesso à tela de Recuperação de Senha funciona corretamente","historyId":"afa7eef919efafdf02b64d7b4b3a7461:5bd835b0d6b1d4ada3b9f0db936e82c8","status":"passed","statusDetails":{},"stage":"finished","steps":[{"status":"passed","statusDetails":{},"stage":"finished","steps":[{"status":"passed","statusDetails":{},"stage":"finished","steps":[{"status":"passed","statusDetails":{},"stage":"finished","steps":[],"attachments":[],"parameters":[],"name":"Launch browser","start":1783367614148,"uuid":"40a33777-65bc-4142-be1f-6c4619430f48","stop":1783367614248}],"attachments":[],"parameters":[],"name":"Fixture \"browser\"","start":1783367614147,"uuid":"be6807fc-02fe-4442-8e10-7e11fe45568b","stop":1783367614248},{"status":"passed","statusDetails":{},"stage":"finished","steps":[{"status":"passed","statusDetails":{},"stage":"finished","steps":[],"attachments":[],"parameters":[],"name":"Create context","start":1783367614253,"uuid":"7f7c8cc8-2fb1-448e-96f8-8a87fb436672","stop":1783367614259}],"attachments":[],"parameters":[],"name":"Fixture \"context\"","start":1783367614251,"uuid":"19b2aa23-9437-4957-94d1-aa7c65466105","stop":1783367614260},{"status":"passed","statusDetails":{},"stage":"finished","steps":[{"status":"passed","statusDetails":{},"stage":"finished","steps":[],"attachments":[],"parameters":[],"name":"Create page","start":1783367614262,"uuid":"e6e2653e-2948-4a68-a10a-30ba1c078b00","stop":1783367614345}],"attachments":[],"parameters":[],"name":"Fixture \"page\"","start":1783367614261,"uuid":"8f38d131-2aac-4133-9b04-a78422dffe61","stop":1783367614345}],"attachments":[],"parameters":[],"name":"Before Hooks","start":1783367614140,"uuid":"77d64c51-662c-462f-8cfa-7424fe1fcefc","stop":1783367614346},{"status":"passed","statusDetails":{},"stage":"finished","steps":[],"attachments":[],"parameters":[],"start":1783367614347,"name":"Navigate to \"/login\"","uuid":"171492c8-ecf8-489a-90b3-5bbeb019663e","stop":1783367616848},{"status":"passed","statusDetails":{},"stage":"finished","steps":[],"attachments":[],"parameters":[],"start":1783367616853,"name":"Query count getByRole('link', { name: /Esqueci|Recuperar/i })","uuid":"d17417b0-4364-4cfc-942b-8fdfc4d6e1d2","stop":1783367616908},{"status":"passed","statusDetails":{},"stage":"finished","steps":[{"status":"passed","statusDetails":{},"stage":"finished","steps":[],"attachments":[],"parameters":[],"name":"Fixture \"page\"","start":1783367616909,"uuid":"a8b18338-4b20-4814-9356-dd9ca03dda09","stop":1783367616909},{"status":"passed","statusDetails":{},"stage":"finished","steps":[{"status":"passed","statusDetails":{},"stage":"finished","steps":[],"attachments":[],"parameters":[],"name":"Close context","start":1783367616915,"uuid":"26613376-f005-4773-8818-d534c9080d3e","stop":1783367616924}],"attachments":[],"parameters":[],"name":"Fixture \"context\"","start":1783367616909,"uuid":"24a92ed8-0816-46e8-b89f-10828b4a910e","stop":1783367616924}],"attachments":[],"parameters":[],"name":"After Hooks","start":1783367616908,"uuid":"bc5b0d89-cf9f-4b5c-adb4-0cd97980cb7d","stop":1783367616934}],"attachments":[],"parameters":[{"name":"Project","value":"chromium"}],"labels":[{"name":"language","value":"javascript"},{"name":"framework","value":"playwright"},{"name":"package","value":"edtech-tests.production-smoke.spec.ts"},{"name":"_fallbackTestCaseId","value":"8726196264d9e75649b9d0f798fd6820"},{"name":"titlePath","value":" > chromium > production-smoke.spec.ts > Production Smoke Test"},{"name":"host","value":"DESKTOP-GKD8AHB"},{"name":"thread","value":"pid-7508-worker-3"},{"name":"parentSuite","value":"chromium"},{"name":"suite","value":"production-smoke.spec.ts"},{"name":"subSuite","value":"Production Smoke Test"}],"links":[],"start":1783367614143,"testCaseId":"afa7eef919efafdf02b64d7b4b3a7461","fullName":"production-smoke.spec.ts:77:3","titlePath":["edtech-tests","production-smoke.spec.ts","Production Smoke Test"],"stop":1783367616816}
+{
+  "uuid": "b38d437c-4496-4d89-bae5-f298379f9aa7",
+  "name": "Acesso à tela de Recuperação de Senha funciona corretamente",
+  "historyId": "afa7eef919efafdf02b64d7b4b3a7461:5bd835b0d6b1d4ada3b9f0db936e82c8",
+  "status": "passed",
+  "statusDetails": {},
+  "stage": "finished",
+  "steps": [
+    {
+      "status": "passed",
+      "statusDetails": {},
+      "stage": "finished",
+      "steps": [
+        {
+          "status": "passed",
+          "statusDetails": {},
+          "stage": "finished",
+          "steps": [
+            {
+              "status": "passed",
+              "statusDetails": {},
+              "stage": "finished",
+              "steps": [],
+              "attachments": [],
+              "parameters": [],
+              "name": "Launch browser",
+              "start": 1783367614148,
+              "uuid": "40a33777-65bc-4142-be1f-6c4619430f48",
+              "stop": 1783367614248
+            }
+          ],
+          "attachments": [],
+          "parameters": [],
+          "name": "Fixture \"browser\"",
+          "start": 1783367614147,
+          "uuid": "be6807fc-02fe-4442-8e10-7e11fe45568b",
+          "stop": 1783367614248
+        },
+        {
+          "status": "passed",
+          "statusDetails": {},
+          "stage": "finished",
+          "steps": [
+            {
+              "status": "passed",
+              "statusDetails": {},
+              "stage": "finished",
+              "steps": [],
+              "attachments": [],
+              "parameters": [],
+              "name": "Create context",
+              "start": 1783367614253,
+              "uuid": "7f7c8cc8-2fb1-448e-96f8-8a87fb436672",
+              "stop": 1783367614259
+            }
+          ],
+          "attachments": [],
+          "parameters": [],
+          "name": "Fixture \"context\"",
+          "start": 1783367614251,
+          "uuid": "19b2aa23-9437-4957-94d1-aa7c65466105",
+          "stop": 1783367614260
+        },
+        {
+          "status": "passed",
+          "statusDetails": {},
+          "stage": "finished",
+          "steps": [
+            {
+              "status": "passed",
+              "statusDetails": {},
+              "stage": "finished",
+              "steps": [],
+              "attachments": [],
+              "parameters": [],
+              "name": "Create page",
+              "start": 1783367614262,
+              "uuid": "e6e2653e-2948-4a68-a10a-30ba1c078b00",
+              "stop": 1783367614345
+            }
+          ],
+          "attachments": [],
+          "parameters": [],
+          "name": "Fixture \"page\"",
+          "start": 1783367614261,
+          "uuid": "8f38d131-2aac-4133-9b04-a78422dffe61",
+          "stop": 1783367614345
+        }
+      ],
+      "attachments": [],
+      "parameters": [],
+      "name": "Before Hooks",
+      "start": 1783367614140,
+      "uuid": "77d64c51-662c-462f-8cfa-7424fe1fcefc",
+      "stop": 1783367614346
+    },
+    {
+      "status": "passed",
+      "statusDetails": {},
+      "stage": "finished",
+      "steps": [],
+      "attachments": [],
+      "parameters": [],
+      "start": 1783367614347,
+      "name": "Navigate to \"/login\"",
+      "uuid": "171492c8-ecf8-489a-90b3-5bbeb019663e",
+      "stop": 1783367616848
+    },
+    {
+      "status": "passed",
+      "statusDetails": {},
+      "stage": "finished",
+      "steps": [],
+      "attachments": [],
+      "parameters": [],
+      "start": 1783367616853,
+      "name": "Query count getByRole('link', { name: /Esqueci|Recuperar/i })",
+      "uuid": "d17417b0-4364-4cfc-942b-8fdfc4d6e1d2",
+      "stop": 1783367616908
+    },
+    {
+      "status": "passed",
+      "statusDetails": {},
+      "stage": "finished",
+      "steps": [
+        {
+          "status": "passed",
+          "statusDetails": {},
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "name": "Fixture \"page\"",
+          "start": 1783367616909,
+          "uuid": "a8b18338-4b20-4814-9356-dd9ca03dda09",
+          "stop": 1783367616909
+        },
+        {
+          "status": "passed",
+          "statusDetails": {},
+          "stage": "finished",
+          "steps": [
+            {
+              "status": "passed",
+              "statusDetails": {},
+              "stage": "finished",
+              "steps": [],
+              "attachments": [],
+              "parameters": [],
+              "name": "Close context",
+              "start": 1783367616915,
+              "uuid": "26613376-f005-4773-8818-d534c9080d3e",
+              "stop": 1783367616924
+            }
+          ],
+          "attachments": [],
+          "parameters": [],
+          "name": "Fixture \"context\"",
+          "start": 1783367616909,
+          "uuid": "24a92ed8-0816-46e8-b89f-10828b4a910e",
+          "stop": 1783367616924
+        }
+      ],
+      "attachments": [],
+      "parameters": [],
+      "name": "After Hooks",
+      "start": 1783367616908,
+      "uuid": "bc5b0d89-cf9f-4b5c-adb4-0cd97980cb7d",
+      "stop": 1783367616934
+    }
+  ],
+  "attachments": [],
+  "parameters": [{ "name": "Project", "value": "chromium" }],
+  "labels": [
+    { "name": "language", "value": "javascript" },
+    { "name": "framework", "value": "playwright" },
+    { "name": "package", "value": "edtech-tests.production-smoke.spec.ts" },
+    {
+      "name": "_fallbackTestCaseId",
+      "value": "8726196264d9e75649b9d0f798fd6820"
+    },
+    {
+      "name": "titlePath",
+      "value": " > chromium > production-smoke.spec.ts > Production Smoke Test"
+    },
+    { "name": "host", "value": "DESKTOP-GKD8AHB" },
+    { "name": "thread", "value": "pid-7508-worker-3" },
+    { "name": "parentSuite", "value": "chromium" },
+    { "name": "suite", "value": "production-smoke.spec.ts" },
+    { "name": "subSuite", "value": "Production Smoke Test" }
+  ],
+  "links": [],
+  "start": 1783367614143,
+  "testCaseId": "afa7eef919efafdf02b64d7b4b3a7461",
+  "fullName": "production-smoke.spec.ts:77:3",
+  "titlePath": [
+    "edtech-tests",
+    "production-smoke.spec.ts",
+    "Production Smoke Test"
+  ],
+  "stop": 1783367616816
+}

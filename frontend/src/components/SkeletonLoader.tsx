@@ -8,12 +8,12 @@ interface SkeletonLoaderProps {
   style?: React.CSSProperties;
 }
 
-const SkeletonLoader: React.FC<SkeletonLoaderProps> = ({ 
-  width = '100%', 
-  height = '20px', 
+const SkeletonLoader: React.FC<SkeletonLoaderProps> = ({
+  width = '100%',
+  height = '20px',
   borderRadius = '4px',
   className = '',
-  style
+  style,
 }) => {
   return (
     <>
@@ -28,13 +28,13 @@ const SkeletonLoader: React.FC<SkeletonLoaderProps> = ({
           animation: skeleton-pulse 1.5s ease-in-out infinite;
         }
       `}</style>
-      <div 
+      <div
         className={`skeleton-loader-animated ${className}`}
         style={{
           width,
           height,
           borderRadius,
-          ...style
+          ...style,
         }}
       />
     </>

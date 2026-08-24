@@ -29,17 +29,12 @@ public class DashboardController {
     User user = (User) authentication.getPrincipal();
 
     long totalDocs = documentRepository.countDocumentsByUserId(user.getId());
-    long pendingReviewDocs =
-        documentRepository.countDocumentsByUserIdAndStatus(
-            user.getId(), DocumentStatus.PENDING_REVIEW);
-    long approvedDocs =
-        documentRepository.countDocumentsByUserIdAndStatus(user.getId(), DocumentStatus.APPROVED);
-    long publishedDocs =
-        documentRepository.countDocumentsByUserIdAndStatus(user.getId(), DocumentStatus.PUBLISHED);
-    int complianceScore =
-        totalDocs == 0 ? 100 : (int) Math.round((approvedDocs * 100.0) / totalDocs);
-    int researchProgress =
-        totalDocs == 0 ? 0 : (int) Math.round(((approvedDocs + publishedDocs) * 100.0) / totalDocs);
+    long pendingReviewDocs = documentRepository.countDocumentsByUserIdAndStatus(
+        user.getId(), DocumentStatus.PENDING_REVIEW);
+    long approvedDocs = documentRepository.countDocumentsByUserIdAndStatus(user.getId(), DocumentStatus.APPROVED);
+    long publishedDocs = documentRepository.countDocumentsByUserIdAndStatus(user.getId(), DocumentStatus.PUBLISHED);
+    int complianceScore = totalDocs == 0 ? 100 : (int) Math.round((approvedDocs * 100.0) / totalDocs);
+    int researchProgress = totalDocs == 0 ? 0 : (int) Math.round(((approvedDocs + publishedDocs) * 100.0) / totalDocs);
 
     Map<String, Object> stats = new HashMap<>();
     stats.put("activeDocuments", totalDocs);

@@ -48,8 +48,8 @@ class ApiExceptionHandlerTest {
 
   @Test
   void handleValidationException_ReturnsBadRequest() {
-    ResponseEntity<ErrorResponse> response =
-        exceptionHandler.handleValidationException(new Exception("validation error"));
+    ResponseEntity<ErrorResponse> response = exceptionHandler
+        .handleValidationException(new Exception("validation error"));
 
     assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     assertNotNull(response.getBody());

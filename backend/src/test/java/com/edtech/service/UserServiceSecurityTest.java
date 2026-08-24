@@ -24,34 +24,41 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @ExtendWith(MockitoExtension.class)
 public class UserServiceSecurityTest {
 
-  @Mock private UserRepository userRepository;
+  private static final String MOCK_VAL = java.util.UUID.randomUUID().toString(); // NOSONAR: test-only value
+  private static final String MOCK_HASH_VAL = java.util.UUID.randomUUID().toString(); // NOSONAR: test-only value
 
-  @Mock private PasswordEncoder passwordEncoder;
+  @Mock
+  private UserRepository userRepository;
 
-  @InjectMocks private UserService userService;
+  @Mock
+  private PasswordEncoder passwordEncoder;
+
+  @InjectMocks
+  private UserService userService;
 
   private User mockUser;
 
   @BeforeEach
   void setUp() {
-      mockUser = new User("Auditor Malicious", "auditor.malicious@unb.br", "hashed_password", UserRole.RESEARCHER, UUID.randomUUID());
-      mockUser.setActive(true);
+    mockUser = new User("Auditor Malicious", "auditor.malicious@unb.br", MOCK_HASH_VAL, UserRole.RESEARCHER,
+        UUID.randomUUID());
+    mockUser.setActive(true);
   }
 
   @Test
   void testAuthenticate_PrivilegeEscalation_Fixed() {
     // Arrange
     when(userRepository.findByEmailIgnoreCase(anyString())).thenReturn(Optional.of(mockUser));
-    when(passwordEncoder.matches("senha123", "hashed_password")).thenReturn(true);
+    when(passwordEncoder.matches(MOCK_VAL, MOCK_HASH_VAL)).thenReturn(true);
 
     // Act
-    User authenticatedUser = userService.authenticate("auditor.malicious@unb.br", "senha123");
+    User authenticatedUser = userService.authenticate("auditor.malicious@unb.br", MOCK_VAL);
 
     // Assert
     // The user's role MUST remain RESEARCHER, proving the escalation bug is fixed.
     assertEquals(UserRole.RESEARCHER, authenticatedUser.getRole());
     assertNotEquals(UserRole.AUDITOR, authenticatedUser.getRole());
-    
+
     // Ensure that userRepository.save() was never called during authentication
     verify(userRepository, never()).save(any(User.class));
   }

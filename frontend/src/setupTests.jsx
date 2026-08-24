@@ -12,7 +12,7 @@ HTMLCanvasElement.prototype.getContext = () => {
     clearRect: () => {},
     getImageData: (x, y, w, h) => ({ data: Array.from({ length: w * h * 4 }) }),
     putImageData: () => {},
-    createImageData: () => ([]),
+    createImageData: () => [],
     setTransform: () => {},
     drawImage: () => {},
     save: () => {},
@@ -47,7 +47,7 @@ Object.defineProperty(window, 'matchMedia', {
     addEventListener: () => {},
     removeEventListener: () => {},
     dispatchEvent: () => {},
-}),
+  }),
 });
 
 // Mock do framer-motion para evitar erros e atrasos de animação no JSDOM (Acelera os testes)

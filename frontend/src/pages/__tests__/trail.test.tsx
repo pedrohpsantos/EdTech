@@ -26,12 +26,12 @@ describe('ResearchTrail Page', () => {
     (authContext.useAuth as any).mockReturnValue({
       user: { role: 'ADVISOR' },
     });
-    
+
     render(<ResearchTrail />);
-    
+
     expect(screen.getByText('Documentos dos orientandos')).toBeInTheDocument();
     expect(screen.getAllByText('Metodologia_Qualitativa_v3.pdf').length).toBeGreaterThan(0);
-    
+
     expect(screen.getByText('Timeline de decisões')).toBeInTheDocument();
   });
 
@@ -39,9 +39,9 @@ describe('ResearchTrail Page', () => {
     (authContext.useAuth as any).mockReturnValue({
       user: { role: 'RESEARCHER' },
     });
-    
+
     render(<ResearchTrail />);
-    
+
     expect(screen.getByText('Meus Documentos')).toBeInTheDocument();
     expect(screen.getAllByText('Referencial_Teorico_Final.pdf').length).toBeGreaterThan(0);
   });
@@ -50,36 +50,36 @@ describe('ResearchTrail Page', () => {
     (authContext.useAuth as any).mockReturnValue({
       user: { role: 'ADVISOR' },
     });
-    
+
     render(<ResearchTrail />);
-    
+
     expect(screen.getByText('Timeline de decisões')).toBeInTheDocument();
-    
+
     fireEvent.click(screen.getByText('Resultados_Parciais_Q2.pdf'));
-    
+
     expect(screen.getByText('Timeline de decisões')).toBeInTheDocument();
-    
+
     const doc1Elements = screen.getAllByText('Metodologia_Qualitativa_v3.pdf');
     fireEvent.click(doc1Elements[0]); // Click the item in list
     expect(screen.getByText('Timeline de decisões')).toBeInTheDocument();
   });
-  
+
   it('displays different statuses and their classes', () => {
-      (authContext.useAuth as any).mockReturnValue({
-          user: { role: 'ADVISOR' },
-      });
-      render(<ResearchTrail />);
-      
-      const approved = screen.getAllByText('Aprovado');
-      expect(approved.length).toBeGreaterThan(0);
-      
-      const review = screen.getByText('Em revisão');
-      expect(review).toBeInTheDocument();
-      
-      const submitted = screen.getByText('Submetido');
-      expect(submitted).toBeInTheDocument();
-      
-      const draft = screen.getByText('Rascunho');
-      expect(draft).toBeInTheDocument();
+    (authContext.useAuth as any).mockReturnValue({
+      user: { role: 'ADVISOR' },
+    });
+    render(<ResearchTrail />);
+
+    const approved = screen.getAllByText('Aprovado');
+    expect(approved.length).toBeGreaterThan(0);
+
+    const review = screen.getByText('Em revisão');
+    expect(review).toBeInTheDocument();
+
+    const submitted = screen.getByText('Submetido');
+    expect(submitted).toBeInTheDocument();
+
+    const draft = screen.getByText('Rascunho');
+    expect(draft).toBeInTheDocument();
   });
 });

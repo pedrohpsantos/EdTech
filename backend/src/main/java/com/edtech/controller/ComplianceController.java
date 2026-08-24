@@ -57,14 +57,11 @@ public class ComplianceController {
         .filter(d -> institutionId.equals(d.getInstitutionId()))
         .collect(java.util.stream.Collectors.toList());
     long totalDocs = allDocs.size();
-    long approvedDocs =
-        allDocs.stream().filter(d -> d.getStatus() == DocumentStatus.APPROVED).count();
-    long pendingDocs =
-        allDocs.stream().filter(d -> d.getStatus() == DocumentStatus.PENDING_REVIEW).count();
+    long approvedDocs = allDocs.stream().filter(d -> d.getStatus() == DocumentStatus.APPROVED).count();
+    long pendingDocs = allDocs.stream().filter(d -> d.getStatus() == DocumentStatus.PENDING_REVIEW).count();
     long totalEvents = auditLogRepository.count();
 
-    int approvalPercentage =
-        totalDocs == 0 ? 100 : (int) Math.round(((double) approvedDocs / totalDocs) * 100);
+    int approvalPercentage = totalDocs == 0 ? 100 : (int) Math.round(((double) approvedDocs / totalDocs) * 100);
 
     ComplianceStatsDto stats = new ComplianceStatsDto();
     stats.setScore(approvalPercentage);

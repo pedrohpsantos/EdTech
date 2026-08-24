@@ -68,7 +68,14 @@ public class DocumentController {
   public ResponseEntity<String> downloadDocument(
       @PathVariable UUID id, Authentication authentication) {
     User user = (User) authentication.getPrincipal();
-    return ResponseEntity.ok(documentService.getPresignedUrl(id, user.getId()));
+    String url = documentService.getPresignedUrl(id, user.getId());
+    if (url != null && !url.startsWith("https://storage.googleapis.com/")) {
+        throw new SecurityException("Untrusted URL source");
+    }
+    return ResponseEntity.ok()
+        .header("X-Content-Type-Options", "nosniff")
+        .header("Content-Type", "application/json")
+        .body(url);
   }
 
   /** Exporta a trilha de auditoria de um documento em arquivo CSV. */
@@ -81,10 +88,9 @@ public class DocumentController {
     byte[] file = auditExportService.exportDocumentAuditTrail(id, user.getId(), format);
     String filename = auditExportService.buildFilename(id, format);
 
-    MediaType mediaType =
-        "pdf".equalsIgnoreCase(format)
-            ? MediaType.APPLICATION_PDF
-            : MediaType.parseMediaType("text/csv");
+    MediaType mediaType = "pdf".equalsIgnoreCase(format)
+        ? MediaType.APPLICATION_PDF
+        : MediaType.parseMediaType("text/csv");
 
     return ResponseEntity.ok()
         .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + filename + "\"")
@@ -107,8 +113,7 @@ public class DocumentController {
       @RequestBody com.edtech.dto.DocumentStatusUpdateDto dto,
       Authentication authentication) {
     User user = (User) authentication.getPrincipal();
-    DocumentResponseDto response =
-        documentService.reviewDocument(id, user.getId(), dto.getStatus(), dto.getFeedback());
+    DocumentResponseDto response = documentService.reviewDocument(id, user.getId(), dto.getStatus(), dto.getFeedback());
     return ResponseEntity.ok(response);
   }
 

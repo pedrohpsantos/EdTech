@@ -25,27 +25,27 @@ describe('useProjects hook', () => {
   it('should successfully fetch projects', async () => {
     const mockProjects = [{ id: '1', name: 'Proj', description: 'desc' }];
     vi.mocked(api.getProjects).mockResolvedValueOnce({ sucesso: true, dados: mockProjects });
-    
+
     const { result } = renderHook(() => useProjects(), { wrapper: createWrapper() });
-    
+
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
     expect(result.current.data).toEqual(mockProjects);
   });
 
   it('should handle undefined dados by returning empty array', async () => {
     vi.mocked(api.getProjects).mockResolvedValueOnce({ sucesso: true });
-    
+
     const { result } = renderHook(() => useProjects(), { wrapper: createWrapper() });
-    
+
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
     expect(result.current.data).toEqual([]);
   });
 
   it('should throw error when fetching fails', async () => {
     vi.mocked(api.getProjects).mockResolvedValueOnce({ sucesso: false, mensagem: 'Error fetch' });
-    
+
     const { result } = renderHook(() => useProjects(), { wrapper: createWrapper() });
-    
+
     await waitFor(() => expect(result.current.isError).toBe(true));
     expect(result.current.error?.message).toBe('Error fetch');
   });

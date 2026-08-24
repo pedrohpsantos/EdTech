@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>4.1.0</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <version>4.1.1</version>
+        <relativePath /> <!-- lookup parent from repository -->
     </parent>
 
     <groupId>com.edtech</groupId>
@@ -28,10 +28,10 @@
     <dependencies>
 
 
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <version>4.1.1</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -48,6 +48,7 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
+            <version>2.21.5</version>
         </dependency>
 
         <dependency>
@@ -120,6 +121,7 @@
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
+            <version>13.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.flywaydb</groupId>
@@ -167,14 +169,15 @@
         <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus</artifactId>
+            <version>1.17.1</version>
         </dependency>
-        
+
         <!-- WebSockets -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-websocket</artifactId>
         </dependency>
-        
+
         <!-- TOTP 2FA -->
         <dependency>
             <groupId>dev.samstevens.totp</groupId>
@@ -277,11 +280,6 @@
                         <artifactId>pitest-junit5-plugin</artifactId>
                         <version>1.2.3</version>
                     </dependency>
-                    <dependency>
-                        <groupId>com.arcmutate</groupId>
-                        <artifactId>pitest-spring-boot-plugin</artifactId>
-                        <version>1.1.1</version>
-                    </dependency>
                 </dependencies>
                 <configuration>
                     <targetClasses>
@@ -292,7 +290,8 @@
                         <param>com.edtech.*Test</param>
                     </targetTests>
                     <threads>8</threads>
-                    <!-- Baselines aligned with the current report: strict enough to catch regressions,
+                    <!-- Baselines aligned with the current report: strict enough to catch
+                    regressions,
                          without expanding the mutation target or CI execution window. -->
                     <mutationThreshold>70</mutationThreshold>
                     <coverageThreshold>80</coverageThreshold>

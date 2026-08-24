@@ -61,7 +61,7 @@ describe('Upload Page', () => {
 
   it('handles form field changes', () => {
     render(<Upload />);
-    
+
     const titleInput = screen.getByPlaceholderText('Ex: Metodologia Qualitativa v3');
     fireEvent.change(titleInput, { target: { value: 'My Title' } });
     expect(titleInput).toHaveValue('My Title');
@@ -82,26 +82,28 @@ describe('Upload Page', () => {
   it('handles invalid file drop', () => {
     render(<Upload />);
     const dropArea = screen.getByText('Arraste e solte seu arquivo aqui').parentElement!;
-    
+
     const invalidFile = new File(['dummy content'], 'test.txt', { type: 'text/plain' });
     fireEvent.drop(dropArea, { dataTransfer: { files: [invalidFile] } });
-    
-    expect(screen.getByText('Formato inválido. Envie apenas arquivos PDF, CSV ou JSON.')).toBeInTheDocument();
+
+    expect(
+      screen.getByText('Formato inválido. Envie apenas arquivos PDF, CSV ou JSON.'),
+    ).toBeInTheDocument();
     expect(screen.getByText('Arraste e solte seu arquivo aqui')).toBeInTheDocument(); // still showing default text
   });
 
   it('handles valid file drop', () => {
     render(<Upload />);
     const dropArea = screen.getByText('Arraste e solte seu arquivo aqui').parentElement!;
-    
+
     fireEvent.dragOver(dropArea);
     expect(dropArea).toHaveStyle({ opacity: '0.7' });
 
     fireEvent.dragLeave(dropArea);
-    
+
     const validFile = new File(['dummy content'], 'test.pdf', { type: 'application/pdf' });
     fireEvent.drop(dropArea, { dataTransfer: { files: [validFile] } });
-    
+
     expect(screen.getByText('test.pdf')).toBeInTheDocument();
     expect(screen.queryByText('Formato inválido.')).not.toBeInTheDocument();
   });
@@ -109,16 +111,16 @@ describe('Upload Page', () => {
   it('handles file input change', () => {
     render(<Upload />);
     const fileInput = document.getElementById('advancedFileInput') as HTMLInputElement;
-    
+
     const validFile = new File(['{}'], 'data.json', { type: 'application/json' });
     fireEvent.change(fileInput, { target: { files: [validFile] } });
-    
+
     expect(screen.getByText('data.json')).toBeInTheDocument();
   });
 
   it('shows error when required fields are missing on submit', () => {
     render(<Upload />);
-    
+
     const submitBtn = screen.getByRole('button', { name: 'Confirmar Envio' });
     // Since button is disabled when no file, we must force it or add a file first
     // Oh wait, the button is disabled if `!uploadFile`.
@@ -126,17 +128,21 @@ describe('Upload Page', () => {
     const fileInput = document.getElementById('advancedFileInput') as HTMLInputElement;
     const validFile = new File(['{}'], 'data.json', { type: 'application/json' });
     fireEvent.change(fileInput, { target: { files: [validFile] } });
-    
+
     expect(submitBtn).not.toBeDisabled();
-    
+
     fireEvent.click(submitBtn);
-    
-    expect(screen.getByText('Por favor, preencha todos os campos obrigatórios (Título, Projeto e Arquivo).')).toBeInTheDocument();
+
+    expect(
+      screen.getByText(
+        'Por favor, preencha todos os campos obrigatórios (Título, Projeto e Arquivo).',
+      ),
+    ).toBeInTheDocument();
   });
 
   it('shows error if file is allowed initially but somehow changes to invalid before submit', async () => {
     render(<Upload />);
-    
+
     const titleInput = screen.getByPlaceholderText('Ex: Metodologia Qualitativa v3');
     fireEvent.change(titleInput, { target: { value: 'My Title' } });
     const projectSelect = screen.getAllByRole('combobox')[0];
@@ -145,7 +151,7 @@ describe('Upload Page', () => {
     const fileInput = document.getElementById('advancedFileInput') as HTMLInputElement;
     const validFile = new File(['{}'], 'data.json', { type: 'application/json' });
     fireEvent.change(fileInput, { target: { files: [validFile] } });
-    
+
     // Hack file object to be invalid right before submit to hit the branch
     Object.defineProperty(validFile, 'name', { value: 'data.txt' });
     Object.defineProperty(validFile, 'type', { value: 'text/plain' });
@@ -153,13 +159,15 @@ describe('Upload Page', () => {
     const submitBtn = screen.getByRole('button', { name: 'Confirmar Envio' });
     fireEvent.click(submitBtn);
 
-    expect(await screen.findByText('Formato inválido. Envie apenas arquivos PDF, CSV ou JSON.')).toBeInTheDocument();
+    expect(
+      await screen.findByText('Formato inválido. Envie apenas arquivos PDF, CSV ou JSON.'),
+    ).toBeInTheDocument();
   });
 
   it('handles successful upload and redirects', async () => {
     vi.useFakeTimers();
     render(<Upload />);
-    
+
     const titleInput = screen.getByPlaceholderText('Ex: Metodologia Qualitativa v3');
     fireEvent.change(titleInput, { target: { value: 'My Title' } });
     const projectSelect = screen.getAllByRole('combobox')[0];
@@ -187,7 +195,7 @@ describe('Upload Page', () => {
 
   it('handles upload failure', async () => {
     render(<Upload />);
-    
+
     const titleInput = screen.getByPlaceholderText('Ex: Metodologia Qualitativa v3');
     fireEvent.change(titleInput, { target: { value: 'My Title' } });
     const projectSelect = screen.getAllByRole('combobox')[0];

@@ -25,11 +25,11 @@ describe('DatasetPreview', () => {
     const csvContent = 'id,name\n1,Alice\n2,Bob\n';
     mockFetch.mockResolvedValue({
       ok: true,
-      text: () => Promise.resolve(csvContent)
+      text: () => Promise.resolve(csvContent),
     });
 
     render(<DatasetPreview url="http://test.com/data.csv" type="CSV" />);
-    
+
     await waitFor(() => {
       expect(screen.queryByText('Carregando dados do dataset...')).not.toBeInTheDocument();
     });
@@ -44,10 +44,10 @@ describe('DatasetPreview', () => {
   it('handles empty CSV', async () => {
     mockFetch.mockResolvedValue({
       ok: true,
-      text: () => Promise.resolve('\n   \n')
+      text: () => Promise.resolve('\n   \n'),
     });
     render(<DatasetPreview url="http://test.com/data.csv" type="CSV" />);
-    
+
     await waitFor(() => {
       expect(screen.getByText('Dataset CSV vazio.')).toBeInTheDocument();
     });
@@ -57,11 +57,11 @@ describe('DatasetPreview', () => {
     const jsonContent = JSON.stringify({ message: 'hello' });
     mockFetch.mockResolvedValue({
       ok: true,
-      text: () => Promise.resolve(jsonContent)
+      text: () => Promise.resolve(jsonContent),
     });
 
     render(<DatasetPreview url="http://test.com/data.json" type="JSON" />);
-    
+
     await waitFor(() => {
       expect(screen.queryByText('Carregando dados do dataset...')).not.toBeInTheDocument();
     });
@@ -72,11 +72,11 @@ describe('DatasetPreview', () => {
   it('renders JSON fallback on invalid JSON', async () => {
     mockFetch.mockResolvedValue({
       ok: true,
-      text: () => Promise.resolve('invalid json')
+      text: () => Promise.resolve('invalid json'),
     });
 
     render(<DatasetPreview url="http://test.com/data.json" type="JSON" />);
-    
+
     await waitFor(() => {
       expect(screen.getByText('Aviso: O arquivo não é um JSON válido.')).toBeInTheDocument();
     });
@@ -86,11 +86,11 @@ describe('DatasetPreview', () => {
   it('renders fallback for unknown type', async () => {
     mockFetch.mockResolvedValue({
       ok: true,
-      text: () => Promise.resolve('Some text content')
+      text: () => Promise.resolve('Some text content'),
     });
 
     render(<DatasetPreview url="http://test.com/data.txt" type="TXT" />);
-    
+
     await waitFor(() => {
       expect(screen.getByText('Some text content')).toBeInTheDocument();
     });
@@ -99,11 +99,11 @@ describe('DatasetPreview', () => {
   it('handles fetch errors', async () => {
     mockFetch.mockResolvedValue({
       ok: false,
-      status: 404
+      status: 404,
     });
 
     render(<DatasetPreview url="http://test.com/data.csv" type="CSV" />);
-    
+
     await waitFor(() => {
       expect(screen.getByText('Falha no download (Status: 404)')).toBeInTheDocument();
     });
@@ -113,7 +113,7 @@ describe('DatasetPreview', () => {
     mockFetch.mockRejectedValue(new Error('Network error'));
 
     render(<DatasetPreview url="http://test.com/data.csv" type="CSV" />);
-    
+
     await waitFor(() => {
       expect(screen.getByText('Network error')).toBeInTheDocument();
     });
@@ -123,7 +123,7 @@ describe('DatasetPreview', () => {
     mockFetch.mockRejectedValue({});
 
     render(<DatasetPreview url="http://test.com/data.csv" type="CSV" />);
-    
+
     await waitFor(() => {
       expect(screen.getByText('Erro ao processar o dataset.')).toBeInTheDocument();
     });
@@ -132,13 +132,13 @@ describe('DatasetPreview', () => {
   it('does not update state if unmounted', async () => {
     mockFetch.mockResolvedValue({
       ok: true,
-      text: () => Promise.resolve('data')
+      text: () => Promise.resolve('data'),
     });
 
     const { unmount } = render(<DatasetPreview url="http://test.com/data.csv" type="CSV" />);
     unmount();
     // Wait to ensure no act warnings or errors occur
-    await new Promise(resolve => setTimeout(resolve, 50));
+    await new Promise((resolve) => setTimeout(resolve, 50));
     expect(mockFetch).toHaveBeenCalled();
   });
 

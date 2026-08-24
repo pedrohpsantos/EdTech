@@ -7,7 +7,7 @@ test.describe('Dashboard', () => {
     await allure.feature('Statistics');
     await allure.story('View Stats');
     await allure.tags('dashboard', 'smoke');
-    
+
     expect(true).toBeTruthy();
   });
 
@@ -15,7 +15,7 @@ test.describe('Dashboard', () => {
     await allure.epic('Dashboard');
     await allure.feature('Navigation');
     await allure.story('Go to Projects');
-    
+
     expect(true).toBeTruthy();
   });
 });

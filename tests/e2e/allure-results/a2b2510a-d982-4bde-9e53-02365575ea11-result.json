@@ -1,1 +1,115 @@
-{"uuid":"a2b2510a-d982-4bde-9e53-02365575ea11","name":"Servidor devolve cookie XSRF-TOKEN na raiz da API","historyId":"ba367d14cc006e49bbb5e4ee2825ec2c:5bd835b0d6b1d4ada3b9f0db936e82c8","status":"passed","statusDetails":{},"stage":"finished","steps":[{"status":"passed","statusDetails":{},"stage":"finished","steps":[{"status":"passed","statusDetails":{},"stage":"finished","steps":[{"status":"passed","statusDetails":{},"stage":"finished","steps":[],"attachments":[],"parameters":[],"name":"Create request context","start":1783367613722,"uuid":"1cdf0930-2419-4b19-bd14-d6c1fe4862aa","stop":1783367613725}],"attachments":[],"parameters":[],"name":"Fixture \"request\"","start":1783367613720,"uuid":"b41a7e77-f048-4456-94fa-3edb83f345bd","stop":1783367613726}],"attachments":[],"parameters":[],"name":"Before Hooks","start":1783367613710,"uuid":"7a263bae-b528-4a7e-b9d1-44861db58268","stop":1783367613726},{"status":"passed","statusDetails":{},"stage":"finished","steps":[],"attachments":[],"parameters":[],"start":1783367613728,"name":"{method} \"/\"","uuid":"b35a06ed-7e3a-45fe-ad2c-0920ec04dcaa","stop":1783367614120},{"status":"passed","statusDetails":{},"stage":"finished","steps":[{"status":"passed","statusDetails":{},"stage":"finished","steps":[],"attachments":[],"parameters":[],"name":"Fixture \"request\"","start":1783367614122,"uuid":"7d363d4f-0b76-40da-9467-f92637ecd024","stop":1783367614125}],"attachments":[],"parameters":[],"name":"After Hooks","start":1783367614121,"uuid":"d35960dd-aca6-4b63-8783-5e1053b3d723","stop":1783367614132}],"attachments":[],"parameters":[{"name":"Project","value":"chromium"}],"labels":[{"name":"language","value":"javascript"},{"name":"framework","value":"playwright"},{"name":"package","value":"edtech-tests.production-smoke.spec.ts"},{"name":"_fallbackTestCaseId","value":"77c308060e4747b23453c7b13c5287cf"},{"name":"titlePath","value":" > chromium > production-smoke.spec.ts > Production Smoke Test"},{"name":"host","value":"DESKTOP-GKD8AHB"},{"name":"thread","value":"pid-7508-worker-3"},{"name":"parentSuite","value":"chromium"},{"name":"suite","value":"production-smoke.spec.ts"},{"name":"subSuite","value":"Production Smoke Test"}],"links":[],"start":1783367613694,"testCaseId":"ba367d14cc006e49bbb5e4ee2825ec2c","fullName":"production-smoke.spec.ts:36:3","titlePath":["edtech-tests","production-smoke.spec.ts","Production Smoke Test"],"stop":1783367614100}
+{
+  "uuid": "a2b2510a-d982-4bde-9e53-02365575ea11",
+  "name": "Servidor devolve cookie XSRF-TOKEN na raiz da API",
+  "historyId": "ba367d14cc006e49bbb5e4ee2825ec2c:5bd835b0d6b1d4ada3b9f0db936e82c8",
+  "status": "passed",
+  "statusDetails": {},
+  "stage": "finished",
+  "steps": [
+    {
+      "status": "passed",
+      "statusDetails": {},
+      "stage": "finished",
+      "steps": [
+        {
+          "status": "passed",
+          "statusDetails": {},
+          "stage": "finished",
+          "steps": [
+            {
+              "status": "passed",
+              "statusDetails": {},
+              "stage": "finished",
+              "steps": [],
+              "attachments": [],
+              "parameters": [],
+              "name": "Create request context",
+              "start": 1783367613722,
+              "uuid": "1cdf0930-2419-4b19-bd14-d6c1fe4862aa",
+              "stop": 1783367613725
+            }
+          ],
+          "attachments": [],
+          "parameters": [],
+          "name": "Fixture \"request\"",
+          "start": 1783367613720,
+          "uuid": "b41a7e77-f048-4456-94fa-3edb83f345bd",
+          "stop": 1783367613726
+        }
+      ],
+      "attachments": [],
+      "parameters": [],
+      "name": "Before Hooks",
+      "start": 1783367613710,
+      "uuid": "7a263bae-b528-4a7e-b9d1-44861db58268",
+      "stop": 1783367613726
+    },
+    {
+      "status": "passed",
+      "statusDetails": {},
+      "stage": "finished",
+      "steps": [],
+      "attachments": [],
+      "parameters": [],
+      "start": 1783367613728,
+      "name": "{method} \"/\"",
+      "uuid": "b35a06ed-7e3a-45fe-ad2c-0920ec04dcaa",
+      "stop": 1783367614120
+    },
+    {
+      "status": "passed",
+      "statusDetails": {},
+      "stage": "finished",
+      "steps": [
+        {
+          "status": "passed",
+          "statusDetails": {},
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "name": "Fixture \"request\"",
+          "start": 1783367614122,
+          "uuid": "7d363d4f-0b76-40da-9467-f92637ecd024",
+          "stop": 1783367614125
+        }
+      ],
+      "attachments": [],
+      "parameters": [],
+      "name": "After Hooks",
+      "start": 1783367614121,
+      "uuid": "d35960dd-aca6-4b63-8783-5e1053b3d723",
+      "stop": 1783367614132
+    }
+  ],
+  "attachments": [],
+  "parameters": [{ "name": "Project", "value": "chromium" }],
+  "labels": [
+    { "name": "language", "value": "javascript" },
+    { "name": "framework", "value": "playwright" },
+    { "name": "package", "value": "edtech-tests.production-smoke.spec.ts" },
+    {
+      "name": "_fallbackTestCaseId",
+      "value": "77c308060e4747b23453c7b13c5287cf"
+    },
+    {
+      "name": "titlePath",
+      "value": " > chromium > production-smoke.spec.ts > Production Smoke Test"
+    },
+    { "name": "host", "value": "DESKTOP-GKD8AHB" },
+    { "name": "thread", "value": "pid-7508-worker-3" },
+    { "name": "parentSuite", "value": "chromium" },
+    { "name": "suite", "value": "production-smoke.spec.ts" },
+    { "name": "subSuite", "value": "Production Smoke Test" }
+  ],
+  "links": [],
+  "start": 1783367613694,
+  "testCaseId": "ba367d14cc006e49bbb5e4ee2825ec2c",
+  "fullName": "production-smoke.spec.ts:36:3",
+  "titlePath": [
+    "edtech-tests",
+    "production-smoke.spec.ts",
+    "Production Smoke Test"
+  ],
+  "stop": 1783367614100
+}

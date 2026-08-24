@@ -23,6 +23,9 @@ public class DatabaseSeeder implements CommandLineRunner {
 
   private static final Logger logger = LoggerFactory.getLogger(DatabaseSeeder.class);
 
+  @org.springframework.beans.factory.annotation.Value("${app.demo.password}")
+  private String demoKey;
+
   private final UserRepository userRepository;
   private final ProjectRepository projectRepository;
   private final ProjectMemberRepository projectMemberRepository;
@@ -46,23 +49,21 @@ public class DatabaseSeeder implements CommandLineRunner {
     logger.info("Executando DatabaseSeeder...");
 
     UUID demoInstitutionId = UUID.fromString("00000000-0000-0000-0000-000000000001");
-    String defaultPasswordHash = passwordEncoder.encode("Demo@1234");
+    String defaultPasswordHash = passwordEncoder.encode(demoKey);
 
     // 1. Criar usuários
-    User pesquisador =
-        seedUser(
-            "Pesquisador Demo",
-            "pesquisador.demo@unb.br",
-            defaultPasswordHash,
-            UserRole.RESEARCHER,
-            demoInstitutionId);
-    User orientador =
-        seedUser(
-            "Orientador Demo",
-            "orientador.demo@unb.br",
-            defaultPasswordHash,
-            UserRole.ADVISOR,
-            demoInstitutionId);
+    User pesquisador = seedUser(
+        "Pesquisador Demo",
+        "pesquisador.demo@unb.br",
+        defaultPasswordHash,
+        UserRole.RESEARCHER,
+        demoInstitutionId);
+    User orientador = seedUser(
+        "Orientador Demo",
+        "orientador.demo@unb.br",
+        defaultPasswordHash,
+        UserRole.ADVISOR,
+        demoInstitutionId);
     seedUser(
         "Auditor Demo",
         "auditor.demo@unb.br",

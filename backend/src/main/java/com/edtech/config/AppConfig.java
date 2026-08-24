@@ -6,7 +6,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
-/** Configuração geral da aplicação para beans que não dependem do contexto web. */
+/**
+ * Configuração geral da aplicação para beans que não dependem do contexto web.
+ */
 @Configuration
 public class AppConfig {
 

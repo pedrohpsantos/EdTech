@@ -7,7 +7,8 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 /**
- * Força o encerramento do Cloud Run Job de migração do banco de dados após a inicialização do
+ * Força o encerramento do Cloud Run Job de migração do banco de dados após a
+ * inicialização do
  * contexto (e execução do Flyway).
  */
 @Component

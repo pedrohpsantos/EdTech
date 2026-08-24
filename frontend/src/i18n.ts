@@ -6,22 +6,20 @@ import translationPT from './locales/pt/translation.json';
 
 const resources = {
   en: {
-    translation: translationEN
+    translation: translationEN,
   },
   pt: {
-    translation: translationPT
-  }
+    translation: translationPT,
+  },
 };
 
-i18n
-  .use(initReactI18next)
-  .init({
-    resources,
-    lng: 'pt', // default language
-    fallbackLng: 'en',
-    interpolation: {
-      escapeValue: false 
-    }
-  });
+i18n.use(initReactI18next).init({
+  resources,
+  lng: 'pt', // default language
+  fallbackLng: 'en',
+  interpolation: {
+    escapeValue: false,
+  },
+});
 
 export default i18n;

@@ -6,7 +6,7 @@ test.describe('Projects Management', () => {
     await allure.epic('Projects');
     await allure.feature('Listing');
     await allure.story('View All Projects');
-    
+
     expect(true).toBeTruthy();
   });
 
@@ -14,7 +14,7 @@ test.describe('Projects Management', () => {
     await allure.epic('Projects');
     await allure.feature('Creation');
     await allure.story('Valid Data');
-    
+
     expect(true).toBeTruthy();
   });
 
@@ -22,7 +22,7 @@ test.describe('Projects Management', () => {
     await allure.epic('Projects');
     await allure.feature('Details');
     await allure.story('View Project');
-    
+
     expect(true).toBeTruthy();
   });
 });

@@ -26,7 +26,8 @@ public class VerificationToken {
   @Column(nullable = false)
   private LocalDateTime expiresAt;
 
-  protected VerificationToken() {}
+  protected VerificationToken() {
+  }
 
   /** Javadoc. */
   public VerificationToken(String token, String email, LocalDateTime expiresAt) {

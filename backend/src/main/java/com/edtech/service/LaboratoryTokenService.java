@@ -29,19 +29,17 @@ public class LaboratoryTokenService {
   /** Javadoc. */
   public String generateToken(UUID advisorId, UserRole targetRole) {
     long currentWeek = System.currentTimeMillis() / (7L * 24 * 60 * 60 * 1000);
-    String rawData =
-        advisorId.toString() + ":" + currentWeek + ":" + serverSecret + ":" + targetRole.name();
+    String rawData = advisorId.toString() + ":" + currentWeek + ":" + serverSecret + ":" + targetRole.name();
     try {
       MessageDigest digest = MessageDigest.getInstance("SHA-256");
       byte[] hash = digest.digest(rawData.getBytes(StandardCharsets.UTF_8));
 
       // Extrai os 6 ultimos bytes para formar o TOTP
       int offset = hash[hash.length - 1] & 0xf;
-      int binary =
-          ((hash[offset] & 0x7f) << 24)
-              | ((hash[offset + 1] & 0xff) << 16)
-              | ((hash[offset + 2] & 0xff) << 8)
-              | (hash[offset + 3] & 0xff);
+      int binary = ((hash[offset] & 0x7f) << 24)
+          | ((hash[offset + 1] & 0xff) << 16)
+          | ((hash[offset + 2] & 0xff) << 8)
+          | (hash[offset + 3] & 0xff);
 
       int otp = binary % 1000000;
       return String.format("%06d", otp);

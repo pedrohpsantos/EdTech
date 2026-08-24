@@ -48,92 +48,92 @@ function ApplicationRoutes() {
         <GlobalLoader />
         <Suspense fallback={<GlobalLoader forceShow />}>
           <Routes>
-                <Route path="/" element={<Login />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/recover-password" element={<Recovery />} />
-                <Route path="/about" element={<About />} />
-                <Route
-                  path="/dashboard"
-                  element={
-                    <PrivateRoute>
-                      <Dashboard />
-                    </PrivateRoute>
-                  }
-                />
-                <Route
-                  path="/documentos"
-                  element={
-                    <PrivateRoute>
-                      <Documentos />
-                    </PrivateRoute>
-                  }
-                />
-                <Route
-                  path="/submissions"
-                  element={
-                    <PrivateRoute allowedRoles={['ADVISOR']}>
-                      <Submissions />
-                    </PrivateRoute>
-                  }
-                />
-                <Route
-                  path="/projects"
-                  element={
-                    <PrivateRoute>
-                      <Projects />
-                    </PrivateRoute>
-                  }
-                />
-                <Route
-                  path="/upload"
-                  element={
-                    <PrivateRoute>
-                      <Upload />
-                    </PrivateRoute>
-                  }
-                />
-                <Route
-                  path="/trail"
-                  element={
-                    <PrivateRoute>
-                      <Trail />
-                    </PrivateRoute>
-                  }
-                />
-                <Route
-                  path="/analytics"
-                  element={
-                    <PrivateRoute>
-                      <Analytics />
-                    </PrivateRoute>
-                  }
-                />
-                <Route
-                  path="/compliance-center"
-                  element={
-                    <PrivateRoute allowedRoles={['AUDITOR']}>
-                      <ComplianceCenter />
-                    </PrivateRoute>
-                  }
-                />
-                <Route
-                  path="/audit-logs"
-                  element={
-                    <PrivateRoute allowedRoles={['AUDITOR']}>
-                      <AuditLogs />
-                    </PrivateRoute>
-                  }
-                />
-                <Route
-                  path="/settings"
-                  element={
-                    <PrivateRoute>
-                      <Settings />
-                    </PrivateRoute>
-                  }
-                />
-                <Route path="*" element={<NotFound />} />
+            <Route path="/" element={<Login />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/recover-password" element={<Recovery />} />
+            <Route path="/about" element={<About />} />
+            <Route
+              path="/dashboard"
+              element={
+                <PrivateRoute>
+                  <Dashboard />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/documentos"
+              element={
+                <PrivateRoute>
+                  <Documentos />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/submissions"
+              element={
+                <PrivateRoute allowedRoles={['ADVISOR']}>
+                  <Submissions />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/projects"
+              element={
+                <PrivateRoute>
+                  <Projects />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/upload"
+              element={
+                <PrivateRoute>
+                  <Upload />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/trail"
+              element={
+                <PrivateRoute>
+                  <Trail />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/analytics"
+              element={
+                <PrivateRoute>
+                  <Analytics />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/compliance-center"
+              element={
+                <PrivateRoute allowedRoles={['AUDITOR']}>
+                  <ComplianceCenter />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/audit-logs"
+              element={
+                <PrivateRoute allowedRoles={['AUDITOR']}>
+                  <AuditLogs />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/settings"
+              element={
+                <PrivateRoute>
+                  <Settings />
+                </PrivateRoute>
+              }
+            />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
       </div>

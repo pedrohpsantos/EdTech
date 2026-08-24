@@ -2,13 +2,19 @@ import React, { useState } from 'react';
 import DashboardLayout from '../components/layout/DashboardLayout';
 import '../assets/settings.css';
 import { useAuth } from '../context/authContext';
-import { setup2Fa, enable2Fa, getLaboratoryTokens, joinLaboratory, updateProfile } from '../services/api';
+import {
+  setup2Fa,
+  enable2Fa,
+  getLaboratoryTokens,
+  joinLaboratory,
+  updateProfile,
+} from '../services/api';
 
 const Settings: React.FC = () => {
   const { user, checkAuth } = useAuth();
   const [reviewEmails, setReviewEmails] = useState(true);
   const [strictLgpd, setStrictLgpd] = useState(true);
-  
+
   const [qrCodeUri, setQrCodeUri] = useState<string | null>(null);
   const [totpCode, setTotpCode] = useState('');
   const [is2FaEnabled, setIs2FaEnabled] = useState(user?.mfaEnabled || false);
@@ -17,7 +23,7 @@ const Settings: React.FC = () => {
   const [advisorCode, setAdvisorCode] = useState('');
   const [isJoining, setIsJoining] = useState(false);
   const [joinMessage, setJoinMessage] = useState('');
-  const [labTokens, setLabTokens] = useState<{researcher: string, auditor: string} | null>(null);
+  const [labTokens, setLabTokens] = useState<{ researcher: string; auditor: string } | null>(null);
   const [isLoadingLabTokens, setIsLoadingLabTokens] = useState(false);
   const [labTokensError, setLabTokensError] = useState('');
   const [isEditingProfile, setIsEditingProfile] = useState(false);
@@ -30,7 +36,10 @@ const Settings: React.FC = () => {
     setLabTokensError('');
     const response = await getLaboratoryTokens();
     if (response.sucesso && response.dados) {
-      setLabTokens({ researcher: response.dados.researcher_token, auditor: response.dados.auditor_token });
+      setLabTokens({
+        researcher: response.dados.researcher_token,
+        auditor: response.dados.auditor_token,
+      });
     } else {
       setLabTokens(null);
       setLabTokensError(response.mensagem || 'Não foi possível carregar os códigos de associação.');
@@ -130,31 +139,81 @@ const Settings: React.FC = () => {
         <div className="settings-card">
           <h3 className="settings-section-title">Perfil</h3>
           <div className="settings-profile-row">
-            <div className="settings-avatar">{user?.avatarUrl ? <img src={user.avatarUrl} alt="Foto do perfil" /> : userInitials}</div>
+            <div className="settings-avatar">
+              {user?.avatarUrl ? <img src={user.avatarUrl} alt="Foto do perfil" /> : userInitials}
+            </div>
             <div className="settings-profile-info">
               <span className="profile-name">{userName}</span>
               <span className="profile-email">{userEmail}</span>
             </div>
             <div className="settings-profile-actions">
               <span className="settings-badge-role">{roleLabel[user?.role || ''] || 'Conta'}</span>
-              <button className="btn-outline" onClick={() => { setProfileName(userName); setAvatarPreview(user?.avatarUrl || null); setProfileMessage(''); setIsEditingProfile(true); }}>Editar perfil</button>
+              <button
+                className="btn-outline"
+                onClick={() => {
+                  setProfileName(userName);
+                  setAvatarPreview(user?.avatarUrl || null);
+                  setProfileMessage('');
+                  setIsEditingProfile(true);
+                }}
+              >
+                Editar perfil
+              </button>
             </div>
           </div>
         </div>
 
         {isEditingProfile && (
-          <div className="profile-editor" role="dialog" aria-modal="true" aria-label="Editar perfil">
+          <div
+            className="profile-editor"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Editar perfil"
+          >
             <div className="profile-editor-card">
-              <div className="profile-editor-header"><h3>Editar perfil</h3><button className="profile-close" aria-label="Fechar" onClick={() => setIsEditingProfile(false)}>×</button></div>
+              <div className="profile-editor-header">
+                <h3>Editar perfil</h3>
+                <button
+                  className="profile-close"
+                  aria-label="Fechar"
+                  onClick={() => setIsEditingProfile(false)}
+                >
+                  ×
+                </button>
+              </div>
               <label htmlFor="profile-name">Nome exibido</label>
-              <input id="profile-name" className="ed-input" value={profileName} maxLength={120} onChange={(e) => setProfileName(e.target.value)} />
+              <input
+                id="profile-name"
+                className="ed-input"
+                value={profileName}
+                maxLength={120}
+                onChange={(e) => setProfileName(e.target.value)}
+              />
               <label htmlFor="profile-avatar">Foto do perfil</label>
               <div className="profile-avatar-picker">
-                <div className="settings-avatar">{avatarPreview ? <img src={avatarPreview} alt="Prévia da foto" /> : userInitials}</div>
-                <input id="profile-avatar" type="file" accept="image/png,image/jpeg,image/webp,image/gif" onChange={(e) => handleAvatarChange(e.target.files?.[0])} />
+                <div className="settings-avatar">
+                  {avatarPreview ? <img src={avatarPreview} alt="Prévia da foto" /> : userInitials}
+                </div>
+                <input
+                  id="profile-avatar"
+                  type="file"
+                  accept="image/png,image/jpeg,image/webp,image/gif"
+                  onChange={(e) => handleAvatarChange(e.target.files?.[0])}
+                />
               </div>
               {profileMessage && <p className="profile-message">{profileMessage}</p>}
-              <div className="profile-editor-actions"><button className="btn-outline" onClick={() => setIsEditingProfile(false)}>Cancelar</button><button className="btn-primary" disabled={!profileName.trim()} onClick={handleSaveProfile}>Salvar alterações</button></div>
+              <div className="profile-editor-actions">
+                <button className="btn-outline" onClick={() => setIsEditingProfile(false)}>
+                  Cancelar
+                </button>
+                <button
+                  className="btn-primary"
+                  disabled={!profileName.trim()}
+                  onClick={handleSaveProfile}
+                >
+                  Salvar alterações
+                </button>
+              </div>
             </div>
           </div>
         )}
@@ -204,7 +263,7 @@ const Settings: React.FC = () => {
         {/* Segurança e 2FA */}
         <div className="settings-card">
           <h3 className="settings-section-title">Segurança</h3>
-          
+
           <div className="settings-item">
             <div className="settings-item-icon bg-purple-light">
               <i className="bi bi-shield-lock"></i>
@@ -212,16 +271,20 @@ const Settings: React.FC = () => {
             <div className="settings-item-content">
               <span className="settings-item-title">Autenticação de Dois Fatores (2FA)</span>
               <span className="settings-item-desc">
-                {is2FaEnabled 
-                  ? "Sua conta está protegida com 2FA." 
-                  : "Adicione uma camada extra de segurança com o Google Authenticator."}
+                {is2FaEnabled
+                  ? 'Sua conta está protegida com 2FA.'
+                  : 'Adicione uma camada extra de segurança com o Google Authenticator.'}
               </span>
             </div>
             <div className="settings-item-action">
               {is2FaEnabled ? (
                 <span className="settings-badge-active">Ativado</span>
               ) : (
-                <button className="btn-primary" onClick={handleSetup2Fa} disabled={qrCodeUri !== null}>
+                <button
+                  className="btn-primary"
+                  onClick={handleSetup2Fa}
+                  disabled={qrCodeUri !== null}
+                >
                   Configurar 2FA
                 </button>
               )}
@@ -230,13 +293,32 @@ const Settings: React.FC = () => {
 
           {setupError && !qrCodeUri && <p className="settings-error">{setupError}</p>}
           {qrCodeUri && !is2FaEnabled && (
-            <div className="settings-item no-border" style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
-              <div style={{ marginTop: '1rem', padding: '1rem', border: '1px solid #ddd', borderRadius: '8px', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <div
+              className="settings-item no-border"
+              style={{ flexDirection: 'column', alignItems: 'flex-start' }}
+            >
+              <div
+                style={{
+                  marginTop: '1rem',
+                  padding: '1rem',
+                  border: '1px solid #ddd',
+                  borderRadius: '8px',
+                  width: '100%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                }}
+              >
                 <p style={{ marginBottom: '1rem', fontWeight: 500 }}>
-                  1. Escaneie este QR Code no seu aplicativo Autenticador (Google Authenticator, Authy, etc.)
+                  1. Escaneie este QR Code no seu aplicativo Autenticador (Google Authenticator,
+                  Authy, etc.)
                 </p>
-                <img src={qrCodeUri} alt="QR Code 2FA" style={{ width: '200px', height: '200px', marginBottom: '1rem' }} />
-                
+                <img
+                  src={qrCodeUri}
+                  alt="QR Code 2FA"
+                  style={{ width: '200px', height: '200px', marginBottom: '1rem' }}
+                />
+
                 <p style={{ marginBottom: '1rem', fontWeight: 500 }}>
                   2. Insira o código de 6 dígitos gerado (ele muda a cada 30 segundos)
                 </p>
@@ -249,11 +331,19 @@ const Settings: React.FC = () => {
                     value={totpCode}
                     onChange={(e) => setTotpCode(e.target.value.replace(/\D/g, ''))}
                   />
-                  <button className="btn-primary" onClick={handleEnable2Fa} disabled={totpCode.length !== 6}>
+                  <button
+                    className="btn-primary"
+                    onClick={handleEnable2Fa}
+                    disabled={totpCode.length !== 6}
+                  >
                     Ativar
                   </button>
                 </div>
-                {setupError && <p style={{ color: '#d32f2f', marginTop: '0.5rem', fontSize: '0.875rem' }}>{setupError}</p>}
+                {setupError && (
+                  <p style={{ color: '#d32f2f', marginTop: '0.5rem', fontSize: '0.875rem' }}>
+                    {setupError}
+                  </p>
+                )}
               </div>
             </div>
           )}
@@ -263,16 +353,21 @@ const Settings: React.FC = () => {
         {(user?.role === 'RESEARCHER' || user?.role === 'AUDITOR') && (
           <div className="settings-card">
             <h3 className="settings-section-title">Laboratório e Vínculo Institucional</h3>
-            
-            {user?.institutionId && user.institutionId !== '00000000-0000-0000-0000-000000000001' ? (
+
+            {user?.institutionId &&
+            user.institutionId !== '00000000-0000-0000-0000-000000000001' ? (
               <div className="settings-item no-border">
                 <div className="settings-item-icon bg-purple-light">
-                  <i className="bi bi-check-circle-fill" style={{ color: 'var(--ed-status-success)' }}></i>
+                  <i
+                    className="bi bi-check-circle-fill"
+                    style={{ color: 'var(--ed-status-success)' }}
+                  ></i>
                 </div>
                 <div className="settings-item-content">
                   <span className="settings-item-title">Vínculo Ativo</span>
                   <span className="settings-item-desc">
-                    Você está vinculado permanentemente a um laboratório. Este vínculo permanece até que o orientador o remova ou a auditoria seja encerrada.
+                    Você está vinculado permanentemente a um laboratório. Este vínculo permanece até
+                    que o orientador o remova ou a auditoria seja encerrada.
                   </span>
                 </div>
               </div>
@@ -287,11 +382,12 @@ const Settings: React.FC = () => {
                     <span className="settings-item-desc">
                       {user?.role === 'RESEARCHER'
                         ? 'Use o código de pesquisador emitido pelo orientador.'
-                        : 'Use o código de auditor emitido pelo orientador.'} Os códigos expiram ao fim da semana.
+                        : 'Use o código de auditor emitido pelo orientador.'}{' '}
+                      Os códigos expiram ao fim da semana.
                     </span>
                   </div>
                 </div>
-                
+
                 <div className="settings-item no-border" style={{ paddingTop: 0 }}>
                   <div className="settings-code-form">
                     <input
@@ -303,9 +399,9 @@ const Settings: React.FC = () => {
                       inputMode="numeric"
                       onChange={(e) => setAdvisorCode(e.target.value.replace(/\D/g, ''))}
                     />
-                    <button 
-                      className="btn-primary" 
-                      onClick={handleJoinLaboratory} 
+                    <button
+                      className="btn-primary"
+                      onClick={handleJoinLaboratory}
                       disabled={!advisorCode.trim() || isJoining}
                     >
                       {isJoining ? 'Vinculando...' : 'Vincular'}
@@ -313,7 +409,16 @@ const Settings: React.FC = () => {
                   </div>
                 </div>
                 {joinMessage && (
-                  <div style={{ marginLeft: '56px', marginTop: '0.5rem', fontSize: '0.875rem', color: joinMessage.includes('sucesso') ? 'var(--ed-status-success)' : '#d32f2f' }}>
+                  <div
+                    style={{
+                      marginLeft: '56px',
+                      marginTop: '0.5rem',
+                      fontSize: '0.875rem',
+                      color: joinMessage.includes('sucesso')
+                        ? 'var(--ed-status-success)'
+                        : '#d32f2f',
+                    }}
+                  >
                     {joinMessage}
                   </div>
                 )}
@@ -327,25 +432,70 @@ const Settings: React.FC = () => {
           <div className="settings-card">
             <h3 className="settings-section-title">Códigos de Acesso do Laboratório</h3>
             <p style={{ color: 'var(--ed-text-muted)', fontSize: '13px', marginBottom: '16px' }}>
-              Compartilhe os códigos abaixo com sua equipe. Por motivos de segurança, os códigos para pesquisadores e auditores são diferentes.
+              Compartilhe os códigos abaixo com sua equipe. Por motivos de segurança, os códigos
+              para pesquisadores e auditores são diferentes.
             </p>
-            {isLoadingLabTokens && <p className="settings-item-desc">Gerando códigos de associação...</p>}
+            {isLoadingLabTokens && (
+              <p className="settings-item-desc">Gerando códigos de associação...</p>
+            )}
             {labTokensError && (
               <div className="settings-code-status" role="alert">
                 <span>{labTokensError}</span>
-                <button className="btn-outline" onClick={() => void loadLaboratoryTokens()}>Tentar novamente</button>
+                <button className="btn-outline" onClick={() => void loadLaboratoryTokens()}>
+                  Tentar novamente
+                </button>
               </div>
             )}
-            {labTokens && <div style={{ display: 'flex', gap: '16px', flexDirection: 'column' }}>
-              <div className="settings-access-code">
-                <div style={{ fontSize: '12px', fontWeight: 600, color: 'var(--ed-text-muted)', textTransform: 'uppercase' }}>Token para Pesquisadores</div>
-                <div style={{ fontSize: '20px', fontWeight: 'bold', letterSpacing: '2px', color: 'var(--ed-purple-main)', marginTop: '4px' }}>{labTokens.researcher}</div>
+            {labTokens && (
+              <div style={{ display: 'flex', gap: '16px', flexDirection: 'column' }}>
+                <div className="settings-access-code">
+                  <div
+                    style={{
+                      fontSize: '12px',
+                      fontWeight: 600,
+                      color: 'var(--ed-text-muted)',
+                      textTransform: 'uppercase',
+                    }}
+                  >
+                    Token para Pesquisadores
+                  </div>
+                  <div
+                    style={{
+                      fontSize: '20px',
+                      fontWeight: 'bold',
+                      letterSpacing: '2px',
+                      color: 'var(--ed-purple-main)',
+                      marginTop: '4px',
+                    }}
+                  >
+                    {labTokens.researcher}
+                  </div>
+                </div>
+                <div className="settings-access-code">
+                  <div
+                    style={{
+                      fontSize: '12px',
+                      fontWeight: 600,
+                      color: 'var(--ed-text-muted)',
+                      textTransform: 'uppercase',
+                    }}
+                  >
+                    Token para Auditores
+                  </div>
+                  <div
+                    style={{
+                      fontSize: '20px',
+                      fontWeight: 'bold',
+                      letterSpacing: '2px',
+                      color: 'var(--ed-purple-main)',
+                      marginTop: '4px',
+                    }}
+                  >
+                    {labTokens.auditor}
+                  </div>
+                </div>
               </div>
-              <div className="settings-access-code">
-                <div style={{ fontSize: '12px', fontWeight: 600, color: 'var(--ed-text-muted)', textTransform: 'uppercase' }}>Token para Auditores</div>
-                <div style={{ fontSize: '20px', fontWeight: 'bold', letterSpacing: '2px', color: 'var(--ed-purple-main)', marginTop: '4px' }}>{labTokens.auditor}</div>
-              </div>
-            </div>}
+            )}
           </div>
         )}
 

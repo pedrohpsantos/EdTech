@@ -1,1 +1,208 @@
-{"uuid":"0ca3db58-817e-45b4-9d8a-a0f40b80eedd","name":"Researcher can upload and Advisor can approve","historyId":"f560fa34affd9998327f623fa02ca0c5:5bd835b0d6b1d4ada3b9f0db936e82c8","status":"passed","statusDetails":{},"stage":"finished","steps":[{"status":"passed","statusDetails":{},"stage":"finished","steps":[{"status":"passed","statusDetails":{},"stage":"finished","steps":[{"status":"passed","statusDetails":{},"stage":"finished","steps":[],"attachments":[],"parameters":[],"name":"Launch browser","start":1783367613780,"uuid":"c5e77372-65d1-4303-963d-6c08a4f9bc72","stop":1783367613974}],"attachments":[],"parameters":[],"name":"Fixture \"browser\"","start":1783367613777,"uuid":"4ef0a00f-40e8-42da-8a80-bb9d912136e3","stop":1783367613974},{"status":"passed","statusDetails":{},"stage":"finished","steps":[{"status":"passed","statusDetails":{},"stage":"finished","steps":[],"attachments":[],"parameters":[],"name":"Create context","start":1783367613978,"uuid":"cbfbab97-5bc8-467e-9023-7bb364b58953","stop":1783367613986}],"attachments":[],"parameters":[],"name":"Fixture \"context\"","start":1783367613976,"uuid":"017a32f5-6aef-45da-8903-b1ee94df96d5","stop":1783367613988},{"status":"passed","statusDetails":{},"stage":"finished","steps":[{"status":"passed","statusDetails":{},"stage":"finished","steps":[],"attachments":[],"parameters":[],"name":"Create page","start":1783367613990,"uuid":"ad1bc2f5-72ed-4438-bace-19b9dd581ebd","stop":1783367614098}],"attachments":[],"parameters":[],"name":"Fixture \"page\"","start":1783367613988,"uuid":"4e1def65-e8e1-4079-bcfd-6710d9d6ed5e","stop":1783367614098}],"attachments":[],"parameters":[],"name":"Before Hooks","start":1783367613768,"uuid":"1d5f87cc-bfb6-444f-9a6c-b00a4b7cb906","stop":1783367614098},{"status":"passed","statusDetails":{},"stage":"finished","steps":[],"attachments":[],"parameters":[],"start":1783367614100,"name":"Navigate to \"/\"","uuid":"f0013303-00e0-42c7-8736-afde76522fd7","stop":1783367614327},{"status":"passed","statusDetails":{},"stage":"finished","steps":[],"attachments":[],"parameters":[],"start":1783367614332,"name":"Expect \"toHaveURL\"","uuid":"60fa5c38-25c5-4e78-bd20-60b3bd5fb45e","stop":1783367614391},{"status":"passed","statusDetails":{},"stage":"finished","steps":[{"status":"passed","statusDetails":{},"stage":"finished","steps":[],"attachments":[],"parameters":[],"name":"Fixture \"page\"","start":1783367614392,"uuid":"393a6e8f-e677-4e78-b1b8-b80a23ccd70a","stop":1783367614393},{"status":"passed","statusDetails":{},"stage":"finished","steps":[{"status":"passed","statusDetails":{},"stage":"finished","steps":[],"attachments":[],"parameters":[],"name":"Close context","start":1783367614396,"uuid":"bceca73a-2162-4198-90f7-bb89eea8fe56","stop":1783367614400}],"attachments":[],"parameters":[],"name":"Fixture \"context\"","start":1783367614393,"uuid":"1167c59b-af2a-4823-98f5-a65d854de2d1","stop":1783367614400}],"attachments":[],"parameters":[],"name":"After Hooks","start":1783367614392,"uuid":"27bbe84f-e04a-4822-a82e-f741dd676166","stop":1783367614409}],"attachments":[],"parameters":[{"name":"Project","value":"chromium"}],"labels":[{"name":"language","value":"javascript"},{"name":"framework","value":"playwright"},{"name":"package","value":"edtech-tests.core-flow.spec.js"},{"name":"_fallbackTestCaseId","value":"cafba9d80db94875c819ef6d4389f439"},{"name":"titlePath","value":" > chromium > core-flow.spec.js > Core Business Flow: Upload & Approve"},{"name":"epic","value":"Qualidade e E2E"},{"name":"feature","value":"Fluxo Principal do Pesquisador"},{"name":"story","value":"Caminho Feliz: Login, Upload e Visualização de Trilha"},{"name":"host","value":"DESKTOP-GKD8AHB"},{"name":"thread","value":"pid-7508-worker-0"},{"name":"parentSuite","value":"chromium"},{"name":"suite","value":"core-flow.spec.js"},{"name":"subSuite","value":"Core Business Flow: Upload & Approve"}],"links":[],"start":1783367613753,"testCaseId":"f560fa34affd9998327f623fa02ca0c5","fullName":"core-flow.spec.js:6:3","titlePath":["edtech-tests","core-flow.spec.js","Core Business Flow: Upload & Approve"],"stop":1783367614178}
+{
+  "uuid": "0ca3db58-817e-45b4-9d8a-a0f40b80eedd",
+  "name": "Researcher can upload and Advisor can approve",
+  "historyId": "f560fa34affd9998327f623fa02ca0c5:5bd835b0d6b1d4ada3b9f0db936e82c8",
+  "status": "passed",
+  "statusDetails": {},
+  "stage": "finished",
+  "steps": [
+    {
+      "status": "passed",
+      "statusDetails": {},
+      "stage": "finished",
+      "steps": [
+        {
+          "status": "passed",
+          "statusDetails": {},
+          "stage": "finished",
+          "steps": [
+            {
+              "status": "passed",
+              "statusDetails": {},
+              "stage": "finished",
+              "steps": [],
+              "attachments": [],
+              "parameters": [],
+              "name": "Launch browser",
+              "start": 1783367613780,
+              "uuid": "c5e77372-65d1-4303-963d-6c08a4f9bc72",
+              "stop": 1783367613974
+            }
+          ],
+          "attachments": [],
+          "parameters": [],
+          "name": "Fixture \"browser\"",
+          "start": 1783367613777,
+          "uuid": "4ef0a00f-40e8-42da-8a80-bb9d912136e3",
+          "stop": 1783367613974
+        },
+        {
+          "status": "passed",
+          "statusDetails": {},
+          "stage": "finished",
+          "steps": [
+            {
+              "status": "passed",
+              "statusDetails": {},
+              "stage": "finished",
+              "steps": [],
+              "attachments": [],
+              "parameters": [],
+              "name": "Create context",
+              "start": 1783367613978,
+              "uuid": "cbfbab97-5bc8-467e-9023-7bb364b58953",
+              "stop": 1783367613986
+            }
+          ],
+          "attachments": [],
+          "parameters": [],
+          "name": "Fixture \"context\"",
+          "start": 1783367613976,
+          "uuid": "017a32f5-6aef-45da-8903-b1ee94df96d5",
+          "stop": 1783367613988
+        },
+        {
+          "status": "passed",
+          "statusDetails": {},
+          "stage": "finished",
+          "steps": [
+            {
+              "status": "passed",
+              "statusDetails": {},
+              "stage": "finished",
+              "steps": [],
+              "attachments": [],
+              "parameters": [],
+              "name": "Create page",
+              "start": 1783367613990,
+              "uuid": "ad1bc2f5-72ed-4438-bace-19b9dd581ebd",
+              "stop": 1783367614098
+            }
+          ],
+          "attachments": [],
+          "parameters": [],
+          "name": "Fixture \"page\"",
+          "start": 1783367613988,
+          "uuid": "4e1def65-e8e1-4079-bcfd-6710d9d6ed5e",
+          "stop": 1783367614098
+        }
+      ],
+      "attachments": [],
+      "parameters": [],
+      "name": "Before Hooks",
+      "start": 1783367613768,
+      "uuid": "1d5f87cc-bfb6-444f-9a6c-b00a4b7cb906",
+      "stop": 1783367614098
+    },
+    {
+      "status": "passed",
+      "statusDetails": {},
+      "stage": "finished",
+      "steps": [],
+      "attachments": [],
+      "parameters": [],
+      "start": 1783367614100,
+      "name": "Navigate to \"/\"",
+      "uuid": "f0013303-00e0-42c7-8736-afde76522fd7",
+      "stop": 1783367614327
+    },
+    {
+      "status": "passed",
+      "statusDetails": {},
+      "stage": "finished",
+      "steps": [],
+      "attachments": [],
+      "parameters": [],
+      "start": 1783367614332,
+      "name": "Expect \"toHaveURL\"",
+      "uuid": "60fa5c38-25c5-4e78-bd20-60b3bd5fb45e",
+      "stop": 1783367614391
+    },
+    {
+      "status": "passed",
+      "statusDetails": {},
+      "stage": "finished",
+      "steps": [
+        {
+          "status": "passed",
+          "statusDetails": {},
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "name": "Fixture \"page\"",
+          "start": 1783367614392,
+          "uuid": "393a6e8f-e677-4e78-b1b8-b80a23ccd70a",
+          "stop": 1783367614393
+        },
+        {
+          "status": "passed",
+          "statusDetails": {},
+          "stage": "finished",
+          "steps": [
+            {
+              "status": "passed",
+              "statusDetails": {},
+              "stage": "finished",
+              "steps": [],
+              "attachments": [],
+              "parameters": [],
+              "name": "Close context",
+              "start": 1783367614396,
+              "uuid": "bceca73a-2162-4198-90f7-bb89eea8fe56",
+              "stop": 1783367614400
+            }
+          ],
+          "attachments": [],
+          "parameters": [],
+          "name": "Fixture \"context\"",
+          "start": 1783367614393,
+          "uuid": "1167c59b-af2a-4823-98f5-a65d854de2d1",
+          "stop": 1783367614400
+        }
+      ],
+      "attachments": [],
+      "parameters": [],
+      "name": "After Hooks",
+      "start": 1783367614392,
+      "uuid": "27bbe84f-e04a-4822-a82e-f741dd676166",
+      "stop": 1783367614409
+    }
+  ],
+  "attachments": [],
+  "parameters": [{ "name": "Project", "value": "chromium" }],
+  "labels": [
+    { "name": "language", "value": "javascript" },
+    { "name": "framework", "value": "playwright" },
+    { "name": "package", "value": "edtech-tests.core-flow.spec.js" },
+    {
+      "name": "_fallbackTestCaseId",
+      "value": "cafba9d80db94875c819ef6d4389f439"
+    },
+    {
+      "name": "titlePath",
+      "value": " > chromium > core-flow.spec.js > Core Business Flow: Upload & Approve"
+    },
+    { "name": "epic", "value": "Qualidade e E2E" },
+    { "name": "feature", "value": "Fluxo Principal do Pesquisador" },
+    {
+      "name": "story",
+      "value": "Caminho Feliz: Login, Upload e Visualização de Trilha"
+    },
+    { "name": "host", "value": "DESKTOP-GKD8AHB" },
+    { "name": "thread", "value": "pid-7508-worker-0" },
+    { "name": "parentSuite", "value": "chromium" },
+    { "name": "suite", "value": "core-flow.spec.js" },
+    { "name": "subSuite", "value": "Core Business Flow: Upload & Approve" }
+  ],
+  "links": [],
+  "start": 1783367613753,
+  "testCaseId": "f560fa34affd9998327f623fa02ca0c5",
+  "fullName": "core-flow.spec.js:6:3",
+  "titlePath": [
+    "edtech-tests",
+    "core-flow.spec.js",
+    "Core Business Flow: Upload & Approve"
+  ],
+  "stop": 1783367614178
+}

@@ -4,8 +4,6 @@
 
 No interesse de fomentar um ambiente aberto, inclusivo e acolhedor, nós como contribuidores e mantenedores nos comprometemos a fazer da participação em nosso projeto e em nossa comunidade uma experiência livre de assédio para todos, independentemente da idade, tamanho corporal, deficiência, etnia, características sexuais, identidade e expressão de gênero, nível de experiência, educação, status socioeconômico, nacionalidade, aparência pessoal, raça, religião, ou identidade e orientação sexual.
 
-
-
 ## Nossos Padrões
 
 Exemplos de comportamentos que contribuem para criar um ambiente positivo incluem:

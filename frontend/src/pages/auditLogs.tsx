@@ -28,16 +28,18 @@ const AuditLogs: React.FC = () => {
   const fetchLogs = async () => {
     let isoStart = '';
     let isoEnd = '';
-    
+
     try {
-        if (startDate) {
-            const parts = startDate.split('/');
-            if (parts.length === 3) isoStart = new Date(`${parts[2]}-${parts[1]}-${parts[0]}T00:00:00`).toISOString();
-        }
-        if (endDate) {
-            const parts = endDate.split('/');
-            if (parts.length === 3) isoEnd = new Date(`${parts[2]}-${parts[1]}-${parts[0]}T23:59:59`).toISOString();
-        }
+      if (startDate) {
+        const parts = startDate.split('/');
+        if (parts.length === 3)
+          isoStart = new Date(`${parts[2]}-${parts[1]}-${parts[0]}T00:00:00`).toISOString();
+      }
+      if (endDate) {
+        const parts = endDate.split('/');
+        if (parts.length === 3)
+          isoEnd = new Date(`${parts[2]}-${parts[1]}-${parts[0]}T23:59:59`).toISOString();
+      }
     } catch {
       // ignore parse error
     }
@@ -45,11 +47,11 @@ const AuditLogs: React.FC = () => {
     const action = actionFilter === 'Todas as Ações' ? '' : actionFilter;
     const data = await getAuditLogs(searchTerm, action, isoStart, isoEnd, page, 20);
     if (data && data.content) {
-        setLogs(data.content);
-        setTotalPages(data.totalPages || 1);
-        setTotalElements(data.totalElements || 0);
+      setLogs(data.content);
+      setTotalPages(data.totalPages || 1);
+      setTotalElements(data.totalElements || 0);
     } else if (Array.isArray(data)) {
-        setLogs(data);
+      setLogs(data);
     }
   };
 
@@ -65,14 +67,16 @@ const AuditLogs: React.FC = () => {
     let isoStart = '';
     let isoEnd = '';
     try {
-        if (startDate) {
-            const parts = startDate.split('/');
-            if (parts.length === 3) isoStart = new Date(`${parts[2]}-${parts[1]}-${parts[0]}T00:00:00`).toISOString();
-        }
-        if (endDate) {
-            const parts = endDate.split('/');
-            if (parts.length === 3) isoEnd = new Date(`${parts[2]}-${parts[1]}-${parts[0]}T23:59:59`).toISOString();
-        }
+      if (startDate) {
+        const parts = startDate.split('/');
+        if (parts.length === 3)
+          isoStart = new Date(`${parts[2]}-${parts[1]}-${parts[0]}T00:00:00`).toISOString();
+      }
+      if (endDate) {
+        const parts = endDate.split('/');
+        if (parts.length === 3)
+          isoEnd = new Date(`${parts[2]}-${parts[1]}-${parts[0]}T23:59:59`).toISOString();
+      }
     } catch {
       // ignore parse error
     }
@@ -87,10 +91,21 @@ const AuditLogs: React.FC = () => {
       breadcrumbs={['EdTech', 'Painel do Auditor', 'Logs de Auditoria']}
       customTopbarElement={
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <button className="audit-btn audit-btn-outline" style={{ padding: '8px 12px', border: 'none', background: 'transparent' }}>
+          <button
+            className="audit-btn audit-btn-outline"
+            style={{ padding: '8px 12px', border: 'none', background: 'transparent' }}
+          >
             <i className="bi bi-bell"></i>
           </button>
-          <div className="avatar" style={{ width: '32px', height: '32px', fontSize: '14px', background: 'var(--ed-success)' }}>
+          <div
+            className="avatar"
+            style={{
+              width: '32px',
+              height: '32px',
+              fontSize: '14px',
+              background: 'var(--ed-success)',
+            }}
+          >
             {user?.name?.substring(0, 2).toUpperCase() || 'AU'}
           </div>
         </div>
@@ -104,49 +119,70 @@ const AuditLogs: React.FC = () => {
           </div>
           <div className="audit-stat-value">{totalElements}</div>
         </div>
-        
+
         <div className="audit-stat-card">
           <div className="audit-stat-header">
             <span>Eventos Recentes</span>
             <div className="audit-stat-dot blue"></div>
           </div>
-          <div className="audit-stat-value">{logs.filter(l => new Date(l.timestamp).getTime() > Date.now() - 24 * 60 * 60 * 1000).length}</div>
+          <div className="audit-stat-value">
+            {
+              logs.filter((l) => new Date(l.timestamp).getTime() > Date.now() - 24 * 60 * 60 * 1000)
+                .length
+            }
+          </div>
         </div>
-        
+
         <div className="audit-stat-card">
           <div className="audit-stat-header">
             <span>Alertas</span>
             <div className="audit-stat-dot orange"></div>
           </div>
-          <div className="audit-stat-value">{logs.filter(l => l.severity === 'WARNING').length}</div>
+          <div className="audit-stat-value">
+            {logs.filter((l) => l.severity === 'WARNING').length}
+          </div>
         </div>
-        
+
         <div className="audit-stat-card">
           <div className="audit-stat-header">
             <span>Erros Críticos</span>
             <div className="audit-stat-dot red"></div>
           </div>
-          <div className="audit-stat-value">{logs.filter(l => l.severity === 'CRITICAL').length}</div>
+          <div className="audit-stat-value">
+            {logs.filter((l) => l.severity === 'CRITICAL').length}
+          </div>
         </div>
       </div>
 
       <div className="audit-filter-bar">
-        <div style={{ display: 'flex', alignItems: 'center', background: 'var(--ed-bg-card)', padding: '0 16px', borderRadius: '8px', border: '1px solid var(--ed-border)', flex: 1 }}>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            background: 'var(--ed-bg-card)',
+            padding: '0 16px',
+            borderRadius: '8px',
+            border: '1px solid var(--ed-border)',
+            flex: 1,
+          }}
+        >
           <i className="bi bi-funnel text-muted" style={{ marginRight: '8px' }}></i>
-          <span style={{ color: 'var(--ed-text-primary)', marginRight: '16px', fontWeight: 600 }}>Filtros</span>
-          <input 
-            type="text" 
-            className="audit-input" 
-            style={{ border: 'none', background: 'transparent', flex: 1, padding: '10px 0' }} 
-            placeholder="Evento, usuário, IP..." 
+          <span style={{ color: 'var(--ed-text-primary)', marginRight: '16px', fontWeight: 600 }}>
+            Filtros
+          </span>
+          <input
+            type="text"
+            className="audit-input"
+            style={{ border: 'none', background: 'transparent', flex: 1, padding: '10px 0' }}
+            placeholder="Evento, usuário, IP..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleRefresh()}
           />
         </div>
-        
-        <select 
-          className="audit-select" 
+
+        <select
+          className="audit-select"
           value={actionFilter}
           onChange={(e) => setActionFilter(e.target.value)}
         >
@@ -162,24 +198,24 @@ const AuditLogs: React.FC = () => {
           <option>PERMISSION_CHANGED</option>
           <option>PASSWORD_RESET</option>
         </select>
-        
-        <input 
-          type="text" 
-          className="audit-input" 
-          placeholder="Início (dd/mm/aaaa)" 
-          style={{ width: '150px' }} 
+
+        <input
+          type="text"
+          className="audit-input"
+          placeholder="Início (dd/mm/aaaa)"
+          style={{ width: '150px' }}
           value={startDate}
           onChange={(e) => setStartDate(e.target.value)}
         />
-        <input 
-          type="text" 
-          className="audit-input" 
-          placeholder="Fim (dd/mm/aaaa)" 
-          style={{ width: '150px' }} 
+        <input
+          type="text"
+          className="audit-input"
+          placeholder="Fim (dd/mm/aaaa)"
+          style={{ width: '150px' }}
           value={endDate}
           onChange={(e) => setEndDate(e.target.value)}
         />
-        
+
         <button className="audit-btn audit-btn-outline" onClick={handleRefresh}>
           <i className="bi bi-arrow-clockwise"></i> Atualizar
         </button>
@@ -207,8 +243,18 @@ const AuditLogs: React.FC = () => {
                   <td>
                     <span className={`audit-action-badge ${log.actionClass}`}>
                       {log.action === 'UPLOAD_DOCUMENT' && <i className="bi bi-upload"></i>}
-                      {log.action.includes('LOGIN') && <i className={log.action === 'LOGIN_SUCCESS' ? "bi bi-box-arrow-in-right" : "bi bi-exclamation-triangle"}></i>}
-                      {log.action === 'SUBMISSION_APPROVED' && <i className="bi bi-check-circle"></i>}
+                      {log.action.includes('LOGIN') && (
+                        <i
+                          className={
+                            log.action === 'LOGIN_SUCCESS'
+                              ? 'bi bi-box-arrow-in-right'
+                              : 'bi bi-exclamation-triangle'
+                          }
+                        ></i>
+                      )}
+                      {log.action === 'SUBMISSION_APPROVED' && (
+                        <i className="bi bi-check-circle"></i>
+                      )}
                       {log.action === 'DOCUMENT_VIEWED' && <i className="bi bi-eye"></i>}
                       {log.action === 'PERMISSION_CHANGED' && <i className="bi bi-person-lock"></i>}
                       {log.action === 'DOCUMENT_DELETED' && <i className="bi bi-trash"></i>}
@@ -224,7 +270,10 @@ const AuditLogs: React.FC = () => {
                 </tr>
                 {expandedRow === log.id && (
                   <tr className="audit-expanded-row">
-                    <td colSpan={5} style={{ padding: 0, borderBottom: '1px solid rgba(255, 255, 255, 0.05)' }}>
+                    <td
+                      colSpan={5}
+                      style={{ padding: 0, borderBottom: '1px solid rgba(255, 255, 255, 0.05)' }}
+                    >
                       <div className="audit-expanded-content">
                         <div className="audit-detail-group">
                           <span className="audit-detail-label">EVENT ID</span>
@@ -248,7 +297,12 @@ const AuditLogs: React.FC = () => {
                         </div>
                         <div className="audit-detail-group" style={{ gridColumn: 'span 3' }}>
                           <span className="audit-detail-label">DETALHES COMPLETOS</span>
-                          <span className="audit-detail-value">{log.details.replace('p...', 'pages:45').replace('ses...', 'session_id:9a8b7c').replace('ba...', 'backup')}</span>
+                          <span className="audit-detail-value">
+                            {log.details
+                              .replace('p...', 'pages:45')
+                              .replace('ses...', 'session_id:9a8b7c')
+                              .replace('ba...', 'backup')}
+                          </span>
                         </div>
                       </div>
                     </td>
@@ -259,28 +313,32 @@ const AuditLogs: React.FC = () => {
           </tbody>
         </table>
         <div className="audit-table-footer">
-          <span className="footer-stats">{totalElements} events · sorted by timestamp desc · retention: 90d</span>
-          
+          <span className="footer-stats">
+            {totalElements} events · sorted by timestamp desc · retention: 90d
+          </span>
+
           {totalPages > 1 && (
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <button 
-                className="audit-btn audit-btn-outline" 
-                onClick={() => setPage(p => Math.max(0, p - 1))}
+              <button
+                className="audit-btn audit-btn-outline"
+                onClick={() => setPage((p) => Math.max(0, p - 1))}
                 disabled={page === 0}
               >
                 Anterior
               </button>
-              <span style={{ color: 'var(--ed-text-muted)', fontSize: '13px' }}>Página {page + 1} de {totalPages}</span>
-              <button 
-                className="audit-btn audit-btn-outline" 
-                onClick={() => setPage(p => Math.min(totalPages - 1, p + 1))}
+              <span style={{ color: 'var(--ed-text-muted)', fontSize: '13px' }}>
+                Página {page + 1} de {totalPages}
+              </span>
+              <button
+                className="audit-btn audit-btn-outline"
+                onClick={() => setPage((p) => Math.min(totalPages - 1, p + 1))}
                 disabled={page >= totalPages - 1}
               >
                 Próxima
               </button>
             </div>
           )}
-          
+
           <span className="footer-brand">ResearchTrail AuditLog v2.1</span>
         </div>
       </div>

@@ -132,13 +132,19 @@ const Topbar: React.FC<TopbarProps> = ({ title, subtitle, breadcrumbs, customTop
                         <div className="notification-text">
                           <p>
                             {notif.type === 'DOCUMENT_REVIEWED' && (
-                              <span>Documento <b>{notif.document?.title}</b> foi revisado.</span>
+                              <span>
+                                Documento <b>{notif.document?.title}</b> foi revisado.
+                              </span>
                             )}
                             {notif.type === 'NEW_COMMENT' && (
-                              <span>Novo comentário de <b>{notif.comment?.authorName}</b>.</span>
+                              <span>
+                                Novo comentário de <b>{notif.comment?.authorName}</b>.
+                              </span>
                             )}
                             {notif.type === 'DOCUMENT_UPLOADED' && (
-                              <span>Documento <b>{notif.document?.title}</b> foi enviado.</span>
+                              <span>
+                                Documento <b>{notif.document?.title}</b> foi enviado.
+                              </span>
                             )}
                             {!notif.type && <span>Nova notificação recebida.</span>}
                           </p>

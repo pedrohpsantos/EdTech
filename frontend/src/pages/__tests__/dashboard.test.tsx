@@ -3,7 +3,13 @@ import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import Dashboard from '../dashboard';
 import { useAuth } from '../../context/authContext';
-import { getDashboardStats, getAuditLogs, getComplianceStats, getDocuments, getLaboratoryTokens } from '../../services/api';
+import {
+  getDashboardStats,
+  getAuditLogs,
+  getComplianceStats,
+  getDocuments,
+  getLaboratoryTokens,
+} from '../../services/api';
 import { useNavigate } from 'react-router-dom';
 
 vi.mock('react-router-dom', () => ({
@@ -38,7 +44,7 @@ describe('Dashboard Page', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     (useNavigate as any).mockReturnValue(mockNavigate);
-    
+
     // Default mocks
     (getDashboardStats as any).mockResolvedValue({
       activeDocuments: 10,
@@ -68,7 +74,7 @@ describe('Dashboard Page', () => {
   it('renders default user and UNKNOWN role properly', async () => {
     (useAuth as any).mockReturnValue({ user: null });
     render(<Dashboard />);
-    
+
     expect(screen.getByText('Bom dia, Usuário')).toBeInTheDocument();
     expect(screen.getByText('Ver Trilha de Pesquisa')).toBeInTheDocument(); // Default topbar
     expect(screen.getAllByText('0').length).toBeGreaterThan(0); // New accounts never receive invented metrics
@@ -76,20 +82,20 @@ describe('Dashboard Page', () => {
 
   it('renders correctly for RESEARCHER role', async () => {
     (useAuth as any).mockReturnValue({ user: { name: 'Researcher Joe', role: 'RESEARCHER' } });
-    
+
     const mockDocs = {
       sucesso: true,
       dados: {
         content: [
           { id: '1', title: 'doc1.pdf', createdAt: '2023-01-01', status: 'Aprovado' },
           { id: '2', title: 'doc2.csv', createdAt: '2023-01-02', status: 'Revisão' },
-        ]
-      }
+        ],
+      },
     };
     (getDocuments as any).mockResolvedValue(mockDocs);
 
     render(<Dashboard />);
-    
+
     await waitFor(() => {
       expect(getDashboardStats).toHaveBeenCalled();
       expect(getDocuments).toHaveBeenCalled();
@@ -97,7 +103,7 @@ describe('Dashboard Page', () => {
     });
 
     expect(screen.getByText('Bom dia, Researcher')).toBeInTheDocument();
-    
+
     // Check topbar
     const trailBtn = screen.getByText('Ver Trilha de Pesquisa');
     fireEvent.click(trailBtn);
@@ -125,9 +131,9 @@ describe('Dashboard Page', () => {
   it('handles empty documents for RESEARCHER', async () => {
     (useAuth as any).mockReturnValue({ user: { role: 'RESEARCHER' } });
     (getDocuments as any).mockResolvedValue({ sucesso: false }); // Test failure branch
-    
+
     render(<Dashboard />);
-    
+
     await waitFor(() => {
       expect(screen.getByText('Nenhum documento')).toBeInTheDocument();
     });
@@ -135,19 +141,25 @@ describe('Dashboard Page', () => {
 
   it('renders correctly for ADVISOR role', async () => {
     (useAuth as any).mockReturnValue({ user: { name: 'Advisor Smith', role: 'ADVISOR' } });
-    
+
     const mockDocs = {
       sucesso: true,
       dados: {
         content: [
-          { id: '1', title: 'doc1.pdf', createdAt: '2023-01-01', status: 'Pendente', author: { name: 'Student 1' } },
-        ]
-      }
+          {
+            id: '1',
+            title: 'doc1.pdf',
+            createdAt: '2023-01-01',
+            status: 'Pendente',
+            author: { name: 'Student 1' },
+          },
+        ],
+      },
     };
     (getDocuments as any).mockResolvedValue(mockDocs);
 
     render(<Dashboard />);
-    
+
     await waitFor(() => {
       expect(screen.getByText('Bom dia, Advisor')).toBeInTheDocument();
     });
@@ -166,7 +178,7 @@ describe('Dashboard Page', () => {
     // Check recent docs
     expect(screen.getByText('Revisões Pendentes')).toBeInTheDocument();
     expect(screen.getByText('doc1.pdf')).toBeInTheDocument();
-    
+
     const revisarBtns = screen.getAllByText('Revisar');
     fireEvent.click(revisarBtns[0]);
     expect(mockNavigate).toHaveBeenCalledWith('/submissions');
@@ -177,14 +189,14 @@ describe('Dashboard Page', () => {
 
   it('renders correctly for AUDITOR role', async () => {
     (useAuth as any).mockReturnValue({ user: { name: 'Auditor Jane', role: 'AUDITOR' } });
-    
+
     const mockLogs = [
       { id: '1', action: 'Data Download', details: 'Downloaded secure data', userName: 'User 1' },
     ];
     (getAuditLogs as any).mockResolvedValue(mockLogs);
 
     render(<Dashboard />);
-    
+
     await waitFor(() => {
       expect(getComplianceStats).toHaveBeenCalled();
       expect(getAuditLogs).toHaveBeenCalled();
@@ -209,7 +221,7 @@ describe('Dashboard Page', () => {
     // Check recent logs
     expect(screen.getByText('Atividades Críticas Recentes')).toBeInTheDocument();
     expect(screen.getByText('Data Download')).toBeInTheDocument();
-    
+
     const viewLogsLink = screen.getByText('Ver logs'); // The small link in the header
     fireEvent.click(viewLogsLink);
     expect(mockNavigate).toHaveBeenCalledWith('/audit-logs');
@@ -224,7 +236,7 @@ describe('Dashboard Page', () => {
     (getComplianceStats as any).mockResolvedValue(null); // test fallback
 
     render(<Dashboard />);
-    
+
     await waitFor(() => {
       expect(screen.getByText('Nenhum log crítico')).toBeInTheDocument();
       // Test fallback values for stats (0)
@@ -235,9 +247,9 @@ describe('Dashboard Page', () => {
   it('handles empty documents for ADVISOR', async () => {
     (useAuth as any).mockReturnValue({ user: { role: 'ADVISOR' } });
     (getDocuments as any).mockResolvedValue({ sucesso: true, dados: { content: [] } });
-    
+
     render(<Dashboard />);
-    
+
     await waitFor(() => {
       expect(screen.getByText('Nenhuma submissão pendente.')).toBeInTheDocument();
     });

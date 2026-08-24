@@ -8,7 +8,12 @@ interface AuthContextType {
   isAuthenticated: boolean;
   isLoading: boolean;
   handleLogin: (email: string, senha: string) => Promise<ApiResponse<any>>;
-  handleRegister: (nome: string, email: string, senha: string, role?: string) => Promise<ApiResponse<any>>;
+  handleRegister: (
+    nome: string,
+    email: string,
+    senha: string,
+    role?: string,
+  ) => Promise<ApiResponse<any>>;
   handleLogout: () => Promise<void>;
   checkAuth: () => Promise<void>;
 }
@@ -16,8 +21,20 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 const requiresSessionValidation = () =>
-  ['/dashboard', '/documentos', '/submissions', '/projects', '/upload', '/trail', '/analytics', '/compliance-center', '/audit-logs', '/settings']
-    .some((path) => window.location.pathname === path || window.location.pathname.startsWith(`${path}/`));
+  [
+    '/dashboard',
+    '/documentos',
+    '/submissions',
+    '/projects',
+    '/upload',
+    '/trail',
+    '/analytics',
+    '/compliance-center',
+    '/audit-logs',
+    '/settings',
+  ].some(
+    (path) => window.location.pathname === path || window.location.pathname.startsWith(`${path}/`),
+  );
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
@@ -64,7 +81,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     nome: string,
     email: string,
     senha: string,
-    role: string = 'RESEARCHER'
+    role: string = 'RESEARCHER',
   ): Promise<ApiResponse<any>> => {
     const resultado = await register(nome, email, senha, role);
     return resultado;

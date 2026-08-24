@@ -1,4 +1,3 @@
-
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { BrowserRouter } from 'react-router-dom';
@@ -24,9 +23,7 @@ const queryClient = new QueryClient();
 const Wrapper = ({ children }) => (
   <QueryClientProvider client={queryClient}>
     <BrowserRouter>
-      <AuthProvider>
-        {children}
-      </AuthProvider>
+      <AuthProvider>{children}</AuthProvider>
     </BrowserRouter>
   </QueryClientProvider>
 );
@@ -85,7 +82,7 @@ describe('Login Page', () => {
 
     fireEvent.change(emailInput, { target: { value: 'test@edu.br' } });
     fireEvent.change(passwordInput, { target: { value: 'password123' } });
-    
+
     fireEvent.click(submitButton);
 
     expect(mockHandleLogin).toHaveBeenCalledWith('test@edu.br', 'password123');

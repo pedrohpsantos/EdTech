@@ -92,7 +92,8 @@ public class AuditLog {
   }
 
   /** Documentação para o método AuditLog. */
-  protected AuditLog() {}
+  protected AuditLog() {
+  }
 
   /** Documentação. */
   public AuditLog(

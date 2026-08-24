@@ -12,6 +12,7 @@ module "storage_app" {
 
   bucket_name = var.storage_bucket_name
   location    = var.region
+  log_bucket  = "${var.storage_bucket_name}-logs"
 }
 
 module "database" {

@@ -23,11 +23,14 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 @ExtendWith(MockitoExtension.class)
 public class AuditLogServiceTest {
 
-  @Mock private AuditLogRepository auditLogRepository;
+  @Mock
+  private AuditLogRepository auditLogRepository;
 
-  @Captor private ArgumentCaptor<AuditLog> logCaptor;
+  @Captor
+  private ArgumentCaptor<AuditLog> logCaptor;
 
-  @InjectMocks private AuditLogService auditLogService;
+  @InjectMocks
+  private AuditLogService auditLogService;
 
   @BeforeEach
   void setUp() {
@@ -40,9 +43,8 @@ public class AuditLogServiceTest {
     UUID resourceId = UUID.randomUUID();
     when(auditLogRepository.save(any(AuditLog.class))).thenAnswer(i -> i.getArguments()[0]);
 
-    AuditLog result =
-        auditLogService.log(
-            AuditAction.LOGIN_SUCCESS, userId, "User", resourceId, "192.168.1.1", "Test log");
+    AuditLog result = auditLogService.log(
+        AuditAction.LOGIN_SUCCESS, userId, "User", resourceId, "192.168.1.1", "Test log");
 
     verify(auditLogRepository).save(logCaptor.capture());
     AuditLog captured = logCaptor.getValue();
@@ -114,8 +116,7 @@ public class AuditLogServiceTest {
     when(auditLogRepository.save(any(AuditLog.class)))
         .thenThrow(new RuntimeException("Database error"));
 
-    AuditLog result =
-        auditLogService.logAction(UUID.randomUUID(), AuditAction.LOGIN_FAILED, "Test error");
+    AuditLog result = auditLogService.logAction(UUID.randomUUID(), AuditAction.LOGIN_FAILED, "Test error");
 
     assertNull(result);
   }

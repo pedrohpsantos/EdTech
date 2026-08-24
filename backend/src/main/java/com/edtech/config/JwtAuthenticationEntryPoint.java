@@ -16,7 +16,8 @@ import org.springframework.stereotype.Component;
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
   /** Documentação para o método JwtAuthenticationEntryPoint. */
-  public JwtAuthenticationEntryPoint() {}
+  public JwtAuthenticationEntryPoint() {
+  }
 
   @Override
   public void commence(

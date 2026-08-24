@@ -21,7 +21,7 @@ describe('useTheme hook', () => {
   it('should fallback to matchMedia (dark) if no localStorage', () => {
     Object.defineProperty(window, 'matchMedia', {
       writable: true,
-      value: vi.fn().mockImplementation(query => ({
+      value: vi.fn().mockImplementation((query) => ({
         matches: query === '(prefers-color-scheme: dark)',
       })),
     });
@@ -45,7 +45,7 @@ describe('useTheme hook', () => {
   it('should toggle theme from light to dark', () => {
     window.localStorage.setItem('tema', 'light');
     const { result } = renderHook(() => useTheme());
-    
+
     act(() => {
       result.current.toggleTheme();
     });
@@ -58,7 +58,7 @@ describe('useTheme hook', () => {
   it('should toggle theme from dark to light', () => {
     window.localStorage.setItem('tema', 'dark');
     const { result } = renderHook(() => useTheme());
-    
+
     act(() => {
       result.current.toggleTheme();
     });

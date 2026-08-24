@@ -1,4 +1,3 @@
-
 import { render, screen, act } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import GlobalLoader from '../../components/GlobalLoader';
@@ -11,17 +10,17 @@ describe('GlobalLoader', () => {
 
   it('renders when showLoader event is dispatched', () => {
     render(<GlobalLoader />);
-    
+
     act(() => {
       window.dispatchEvent(new Event('showLoader'));
     });
-    
+
     expect(screen.getByText('Processando')).toBeInTheDocument();
   });
 
   it('hides when hideLoader event is dispatched', () => {
     render(<GlobalLoader />);
-    
+
     act(() => {
       window.dispatchEvent(new Event('showLoader'));
     });

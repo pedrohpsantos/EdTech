@@ -11,8 +11,6 @@ vi.mock('../../services/api', () => ({
   resetPassword: vi.fn(),
 }));
 
-
-
 describe('Recovery Component - Unit Tests', () => {
   beforeEach(() => {
     vi.clearAllMocks();
@@ -296,11 +294,15 @@ describe('Recovery Component - Unit Tests', () => {
       target: { value: 'teste@unb.br' },
     });
     fireEvent.click(screen.getByRole('button', { name: /Continuar/i }));
-    await waitFor(() => expect(screen.getByRole('heading', { name: 'Verificação de Código' })).toBeInTheDocument());
+    await waitFor(() =>
+      expect(screen.getByRole('heading', { name: 'Verificação de Código' })).toBeInTheDocument(),
+    );
 
     fireEvent.change(screen.getByPlaceholderText('123456'), { target: { value: '000000' } });
     fireEvent.click(screen.getByRole('button', { name: /Continuar/i }));
-    await waitFor(() => expect(screen.getByRole('heading', { name: 'Nova Senha' })).toBeInTheDocument());
+    await waitFor(() =>
+      expect(screen.getByRole('heading', { name: 'Nova Senha' })).toBeInTheDocument(),
+    );
 
     const passInputs = screen.getAllByPlaceholderText('••••••••');
     fireEvent.change(passInputs[0], { target: { value: 'novaSenha123' } });
@@ -328,11 +330,15 @@ describe('Recovery Component - Unit Tests', () => {
       target: { value: 'teste@unb.br' },
     });
     fireEvent.click(screen.getByRole('button', { name: /Continuar/i }));
-    await waitFor(() => expect(screen.getByRole('heading', { name: 'Verificação de Código' })).toBeInTheDocument());
+    await waitFor(() =>
+      expect(screen.getByRole('heading', { name: 'Verificação de Código' })).toBeInTheDocument(),
+    );
 
     fireEvent.change(screen.getByPlaceholderText('123456'), { target: { value: '000000' } });
     fireEvent.click(screen.getByRole('button', { name: /Continuar/i }));
-    await waitFor(() => expect(screen.getByRole('heading', { name: 'Nova Senha' })).toBeInTheDocument());
+    await waitFor(() =>
+      expect(screen.getByRole('heading', { name: 'Nova Senha' })).toBeInTheDocument(),
+    );
 
     const passInputs = screen.getAllByPlaceholderText('••••••••');
     fireEvent.change(passInputs[0], { target: { value: 'novaSenha123' } });
@@ -344,16 +350,16 @@ describe('Recovery Component - Unit Tests', () => {
       expect(screen.getByText(/Erro no servidor/i)).toBeInTheDocument();
     });
   });
-  
+
   test('Dispara onInvalid em campos requeridos (Step 1)', async () => {
     render(
       <MemoryRouter>
         <Recovery />
       </MemoryRouter>,
     );
-    
+
     const emailInput = screen.getByPlaceholderText('seu.nome@universidade.br');
-    
+
     // Attempting to submit without required valid email will trigger invalid
     fireEvent.invalid(emailInput);
   });

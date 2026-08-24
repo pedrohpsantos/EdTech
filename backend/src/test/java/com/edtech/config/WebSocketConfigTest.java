@@ -34,8 +34,7 @@ class WebSocketConfigTest {
     WebSocketConfig config = new WebSocketConfig();
     org.springframework.test.util.ReflectionTestUtils.setField(config, "allowedOrigins", "*");
     StompEndpointRegistry registry = mock(StompEndpointRegistry.class);
-    StompWebSocketEndpointRegistration registration =
-        mock(StompWebSocketEndpointRegistration.class);
+    StompWebSocketEndpointRegistration registration = mock(StompWebSocketEndpointRegistration.class);
 
     when(registry.addEndpoint("/ws-edtech")).thenReturn(registration);
     when(registration.setAllowedOriginPatterns("*")).thenReturn(registration);

@@ -16,10 +16,7 @@ export default function AuthLayout({
   const { konamiActivated, hyperdriveActivated, handleLogoClick } = useEasterEggs();
 
   return (
-    <div
-      className={styles.loginWrapper}
-      data-konami-active={konamiActivated || undefined}
-    >
+    <div className={styles.loginWrapper} data-konami-active={konamiActivated || undefined}>
       {/* Left Panel - Branding */}
       <div className={styles.leftPanel}>
         <NetworkBackground isHyperdrive={hyperdriveActivated} />
@@ -110,15 +107,10 @@ export default function AuthLayout({
             Rastreabilidade e compliance para todo o ciclo de vida dos seus documentos de pesquisa.
           </p>
         </div>
-
-
       </div>
 
       {/* Right Panel - Form */}
-      <main
-        className={styles.rightPanel}
-        style={{ position: 'relative' }}
-      >
+      <main className={styles.rightPanel} style={{ position: 'relative' }}>
         <div style={{ position: 'absolute', top: '24px', right: '24px' }}>
           <ThemeToggle />
         </div>
@@ -128,12 +120,8 @@ export default function AuthLayout({
             <span className={styles.acessoLabel}>Acesso à Plataforma</span>
           </div>
 
-          <h2 className={styles.welcomeTitle}>
-            {title}
-          </h2>
-          <p className={styles.welcomeSub}>
-            {subtitle}
-          </p>
+          <h2 className={styles.welcomeTitle}>{title}</h2>
+          <p className={styles.welcomeSub}>{subtitle}</p>
 
           {children}
         </div>

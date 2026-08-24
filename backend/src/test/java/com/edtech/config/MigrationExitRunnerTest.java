@@ -16,5 +16,6 @@ class MigrationExitRunnerTest {
     assertDoesNotThrow(() -> runner.run());
   }
 
-  // We do not test "none" because it calls System.exit(0), which kills the test runner JVM.
+  // We do not test "none" because it calls System.exit(0), which kills the test
+  // runner JVM.
 }

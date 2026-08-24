@@ -191,9 +191,15 @@
 }
 
 /* Colors for bars */
-.fillPurple { background: var(--ed-purple-main); }
-.fillPurpleLight { background: #A78BFA; } /* Lighter purple */
-.fillOrange { background: var(--ed-orange); }
+.fillPurple {
+  background: var(--ed-purple-main);
+}
+.fillPurpleLight {
+  background: #a78bfa;
+} /* Lighter purple */
+.fillOrange {
+  background: var(--ed-orange);
+}
 
 /* Warning Alert */
 .alertBox {
@@ -227,8 +233,8 @@
   }
 
   .kpiValue {
-    font-size: 28px; 
-    white-space: nowrap; 
+    font-size: 28px;
+    white-space: nowrap;
   }
 
   .chartsGrid {
@@ -250,20 +256,20 @@
   }
 
   .barRow {
-    gap: 8px; 
+    gap: 8px;
   }
 
   .notifications-dropdown {
     position: fixed !important;
-    top: 70px !important; 
-    
+    top: 70px !important;
+
     left: 50% !important;
     transform: translateX(-50%) !important;
-    
+
     width: calc(100vw - 32px) !important;
-    max-width: 340px !important; 
-    
-    right: auto !important; 
+    max-width: 340px !important;
+
+    right: auto !important;
   }
 
   .notification-text p,

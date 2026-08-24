@@ -43,21 +43,21 @@ describe('ComplianceCenter Page', () => {
           name: 'Policy 1',
           status: 'conforme',
           percentage: 100,
-          text: 'Fully compliant'
+          text: 'Fully compliant',
         },
         {
           name: 'Policy 2',
           status: 'parcial',
           percentage: 50,
-          text: 'Partially compliant'
+          text: 'Partially compliant',
         },
         {
           name: 'Policy 3',
           status: 'pendente',
           percentage: 0,
-          text: 'Not compliant'
-        }
-      ]
+          text: 'Not compliant',
+        },
+      ],
     };
 
     (getComplianceStats as any).mockResolvedValueOnce(mockStats);

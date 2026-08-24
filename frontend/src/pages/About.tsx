@@ -24,9 +24,9 @@ export default function About() {
 
       <h1>Sobre o Projeto EdTech</h1>
       <p style={{ fontSize: '18px', lineHeight: '1.6', marginBottom: '40px' }}>
-        O EdTech é uma plataforma moderna desenvolvida para simplificar o envio, análise
-        e aprovação de documentos acadêmicos entre orientadores e pesquisadores, promovendo um fluxo
-        de trabalho ágil e rastreável.
+        O EdTech é uma plataforma moderna desenvolvida para simplificar o envio, análise e aprovação
+        de documentos acadêmicos entre orientadores e pesquisadores, promovendo um fluxo de trabalho
+        ágil e rastreável.
       </p>
 
       <h2>Equipe AILAB Makers</h2>
@@ -70,14 +70,13 @@ export default function About() {
           </h3>
           <p style={{ margin: 0, fontSize: '14px' }}>Padawan - FullStack</p>
         </div>
-        
+
         <div style={{ padding: '16px', border: '1px solid var(--border)', borderRadius: '8px' }}>
           <h3 style={{ margin: '0 0 8px 0', color: 'var(--text-h)' }}>
             Luis G. Ferreira Nunes (LuisGFNunes)
           </h3>
           <p style={{ margin: 0, fontSize: '14px' }}>Padawan - FullStack</p>
         </div>
-
       </div>
     </div>
   );

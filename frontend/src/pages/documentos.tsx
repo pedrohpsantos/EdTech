@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DashboardLayout from '../components/layout/DashboardLayout';
-import { useDocuments, useUploadDocument, useDownloadUrl, useToggleStar } from '../hooks/useDocuments';
+import {
+  useDocuments,
+  useUploadDocument,
+  useDownloadUrl,
+  useToggleStar,
+} from '../hooks/useDocuments';
 import { useProjects } from '../hooks/useProjects';
 import { Document } from '../types';
 import DocumentComments from '../components/DocumentComments';
@@ -65,7 +70,7 @@ const Documentos: React.FC = () => {
     setPreviewDoc(doc);
     setIsPreviewLoading(true);
     setPreviewUrl('');
-    
+
     try {
       const url = await getUrl(doc.id);
       if (url) {
@@ -292,61 +297,80 @@ const Documentos: React.FC = () => {
                     Nenhum documento encontrado.
                   </td>
                 </tr>
-              ) : displayDocuments.map((doc: any) => (
-                <tr key={doc.id}>
-                  <td>
-                    <div className="d-flex align-items-center gap-3">
-                      <button 
-                        className="btn-icon-action" 
-                        onClick={() => handleToggleStar(doc.id)}
-                        style={{ color: doc.starred ? '#f59e0b' : '#cbd5e1', padding: 0 }}
-                      >
-                        <i className={`bi ${doc.starred ? 'bi-star-fill' : 'bi-star'}`}></i>
-                      </button>
-                      <div className={`doc-type-icon ${getTypeColor(doc.fileType || doc.type || 'PDF')}-bg`}>
-                        <i className={`bi bi-file-earmark-text ${getTypeColor(doc.fileType || doc.type || 'PDF')}-text`}></i>
+              ) : (
+                displayDocuments.map((doc: any) => (
+                  <tr key={doc.id}>
+                    <td>
+                      <div className="d-flex align-items-center gap-3">
+                        <button
+                          className="btn-icon-action"
+                          onClick={() => handleToggleStar(doc.id)}
+                          style={{ color: doc.starred ? '#f59e0b' : '#cbd5e1', padding: 0 }}
+                        >
+                          <i className={`bi ${doc.starred ? 'bi-star-fill' : 'bi-star'}`}></i>
+                        </button>
+                        <div
+                          className={`doc-type-icon ${getTypeColor(doc.fileType || doc.type || 'PDF')}-bg`}
+                        >
+                          <i
+                            className={`bi bi-file-earmark-text ${getTypeColor(doc.fileType || doc.type || 'PDF')}-text`}
+                          ></i>
+                        </div>
+                        <span className="doc-title-cell">{doc.title}</span>
                       </div>
-                      <span className="doc-title-cell">{doc.title}</span>
-                    </div>
-                  </td>
-                  <td className="text-muted">{doc.projectTitle || doc.project || 'Projeto'}</td>
-                  <td>
-                    <span className={`type-badge ${getTypeColor(doc.fileType || doc.type || 'PDF')}-text`}>{doc.fileType || doc.type || 'PDF'}</span>
-                  </td>
-                  <td className="text-muted">{doc.size}</td>
-                  <td className="text-muted">
-                    <i className="bi bi-clock me-1"></i> {doc.modified}
-                  </td>
-                  <td>
-                    <span className={`doc-status ${getStatusClass(doc.status)}`}>{({ PENDING_REVIEW: 'Em revisão', APPROVED: 'Aprovado', REJECTED: 'Rejeitado', DRAFT: 'Rascunho' } as Record<string, string>)[doc.status] || doc.status}</span>
-                  </td>
-                  <td>
-                    <div className="table-actions">
-                      <button
-                        className="btn-icon-action"
-                        title="Visualizar"
-                        onClick={() => handleView(doc as Document)}
+                    </td>
+                    <td className="text-muted">{doc.projectTitle || doc.project || 'Projeto'}</td>
+                    <td>
+                      <span
+                        className={`type-badge ${getTypeColor(doc.fileType || doc.type || 'PDF')}-text`}
                       >
-                        <i className="bi bi-eye"></i>
-                      </button>
-                      <button
-                        className="btn-icon-action"
-                        title="Download"
-                        onClick={() => handleDownload(doc.id)}
-                      >
-                        <i className="bi bi-download"></i>
-                      </button>
-                      <button
-                        className="btn-icon-action"
-                        title="Opções"
-                        onClick={() => handleOptions(doc.title)}
-                      >
-                        <i className="bi bi-three-dots"></i>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
+                        {doc.fileType || doc.type || 'PDF'}
+                      </span>
+                    </td>
+                    <td className="text-muted">{doc.size}</td>
+                    <td className="text-muted">
+                      <i className="bi bi-clock me-1"></i> {doc.modified}
+                    </td>
+                    <td>
+                      <span className={`doc-status ${getStatusClass(doc.status)}`}>
+                        {(
+                          {
+                            PENDING_REVIEW: 'Em revisão',
+                            APPROVED: 'Aprovado',
+                            REJECTED: 'Rejeitado',
+                            DRAFT: 'Rascunho',
+                          } as Record<string, string>
+                        )[doc.status] || doc.status}
+                      </span>
+                    </td>
+                    <td>
+                      <div className="table-actions">
+                        <button
+                          className="btn-icon-action"
+                          title="Visualizar"
+                          onClick={() => handleView(doc as Document)}
+                        >
+                          <i className="bi bi-eye"></i>
+                        </button>
+                        <button
+                          className="btn-icon-action"
+                          title="Download"
+                          onClick={() => handleDownload(doc.id)}
+                        >
+                          <i className="bi bi-download"></i>
+                        </button>
+                        <button
+                          className="btn-icon-action"
+                          title="Opções"
+                          onClick={() => handleOptions(doc.title)}
+                        >
+                          <i className="bi bi-three-dots"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>
@@ -367,7 +391,9 @@ const Documentos: React.FC = () => {
             </div>
 
             <div className="modal-body">
-              <label className="form-label" htmlFor="modalDocumentTitle">Título do documento</label>
+              <label className="form-label" htmlFor="modalDocumentTitle">
+                Título do documento
+              </label>
               <input
                 id="modalDocumentTitle"
                 className="form-control mb-3"
@@ -375,7 +401,9 @@ const Documentos: React.FC = () => {
                 onChange={(e) => setUploadTitle(e.target.value)}
                 placeholder="Ex.: Relatório de pesquisa"
               />
-              <label className="form-label" htmlFor="modalProject">Projeto</label>
+              <label className="form-label" htmlFor="modalProject">
+                Projeto
+              </label>
               <select
                 id="modalProject"
                 className="form-select mb-3"
@@ -384,7 +412,9 @@ const Documentos: React.FC = () => {
               >
                 <option value="">Selecione um projeto</option>
                 {projects.map((project: any) => (
-                  <option key={project.id} value={project.id}>{project.name || project.title}</option>
+                  <option key={project.id} value={project.id}>
+                    {project.name || project.title}
+                  </option>
                 ))}
               </select>
               <div
@@ -415,7 +445,11 @@ const Documentos: React.FC = () => {
               <button className="btn-modal-cancel" onClick={closeUploadModal}>
                 Cancelar
               </button>
-              <button className="btn-modal-submit" disabled={!uploadFile || !uploadTitle.trim() || !uploadProjectId} onClick={handleModalUpload}>
+              <button
+                className="btn-modal-submit"
+                disabled={!uploadFile || !uploadTitle.trim() || !uploadProjectId}
+                onClick={handleModalUpload}
+              >
                 Enviar Arquivo
               </button>
             </div>
@@ -426,7 +460,11 @@ const Documentos: React.FC = () => {
       {/* Document Preview Modal */}
       {previewDoc && (
         <div className="modal-overlay" onClick={closePreviewModal} style={{ zIndex: 1050 }}>
-          <div className="preview-modal-content" style={{ maxWidth: '1200px', width: '90%' }} onClick={(e) => e.stopPropagation()}>
+          <div
+            className="preview-modal-content"
+            style={{ maxWidth: '1200px', width: '90%' }}
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="preview-modal-header">
               <div className="d-flex align-items-center gap-3">
                 <span className={`type-badge ${getTypeColor(previewDoc.type)}-text`}>
@@ -451,27 +489,69 @@ const Documentos: React.FC = () => {
               </div>
             </div>
 
-            <div className="preview-modal-body" style={{ padding: '0', height: '75vh', display: 'flex', flexDirection: 'row', background: '#e2e8f0' }}>
-              
+            <div
+              className="preview-modal-body"
+              style={{
+                padding: '0',
+                height: '75vh',
+                display: 'flex',
+                flexDirection: 'row',
+                background: '#e2e8f0',
+              }}
+            >
               {/* PDF Viewer Area */}
               <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
                 {isPreviewLoading ? (
-                  <div style={{ padding: '2rem', textAlign: 'center', color: '#64748B', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
+                  <div
+                    style={{
+                      padding: '2rem',
+                      textAlign: 'center',
+                      color: '#64748B',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      height: '100%',
+                    }}
+                  >
                     Carregando visualização do documento...
                   </div>
                 ) : previewUrl ? (
-                  (previewDoc.type === 'CSV' || previewDoc.type === 'JSON') ? (
+                  previewDoc.type === 'CSV' || previewDoc.type === 'JSON' ? (
                     <DatasetPreview url={previewUrl} type={previewDoc.type} />
                   ) : (
-                    <object data={previewUrl} type="application/pdf" width="100%" height="100%" style={{ border: 'none', flex: 1 }}>
+                    <object
+                      data={previewUrl}
+                      type="application/pdf"
+                      width="100%"
+                      height="100%"
+                      style={{ border: 'none', flex: 1 }}
+                    >
                       <div style={{ padding: '2rem', textAlign: 'center' }}>
-                        Seu navegador não suporta a visualização nativa de PDFs. <br/><br/>
-                        <a href={previewUrl} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--ed-purple)' }}>Clique aqui para baixar</a>
+                        Seu navegador não suporta a visualização nativa de PDFs. <br />
+                        <br />
+                        <a
+                          href={previewUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          style={{ color: 'var(--ed-purple)' }}
+                        >
+                          Clique aqui para baixar
+                        </a>
                       </div>
                     </object>
                   )
                 ) : (
-                  <div style={{ padding: '2rem', textAlign: 'center', color: '#64748B', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
+                  <div
+                    style={{
+                      padding: '2rem',
+                      textAlign: 'center',
+                      color: '#64748B',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      height: '100%',
+                    }}
+                  >
                     Nenhum preview disponível.
                   </div>
                 )}
@@ -481,7 +561,6 @@ const Documentos: React.FC = () => {
               <div style={{ width: '350px', flexShrink: 0, height: '100%' }}>
                 <DocumentComments documentId={previewDoc.id} />
               </div>
-
             </div>
           </div>
         </div>

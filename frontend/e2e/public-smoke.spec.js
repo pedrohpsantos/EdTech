@@ -18,7 +18,9 @@ test.describe('Public and Navigation Smoke', () => {
     await expect(page.getByRole('button', { name: /continuar/i })).toBeVisible();
   });
 
-  test('login controls expose names and password visibility state to keyboard users', async ({ page }) => {
+  test('login controls expose names and password visibility state to keyboard users', async ({
+    page,
+  }) => {
     allure.story('Accessible login controls');
 
     await page.goto('/login');
@@ -32,7 +34,10 @@ test.describe('Public and Navigation Smoke', () => {
     await visibilityToggle.focus();
     await page.keyboard.press('Enter');
     await expect(password).toHaveAttribute('type', 'text');
-    await expect(page.getByRole('button', { name: /ocultar senha/i })).toHaveAttribute('aria-pressed', 'true');
+    await expect(page.getByRole('button', { name: /ocultar senha/i })).toHaveAttribute(
+      'aria-pressed',
+      'true',
+    );
   });
 
   test('root route renders the login experience', async ({ page }) => {

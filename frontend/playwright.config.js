@@ -17,17 +17,20 @@ export default defineConfig({
   reporter: [
     ['html'],
     ['list'],
-    ['allure-playwright', {
-      detail: true,
-      outputFolder: 'allure-results',
-      suiteTitle: false,
-      environmentInfo: {
-        OS: process.platform,
-        NodeJS: process.version,
-        CI: process.env.CI || 'false',
-        Browser: 'Chromium'
-      }
-    }]
+    [
+      'allure-playwright',
+      {
+        detail: true,
+        outputFolder: 'allure-results',
+        suiteTitle: false,
+        environmentInfo: {
+          OS: process.platform,
+          NodeJS: process.version,
+          CI: process.env.CI || 'false',
+          Browser: 'Chromium',
+        },
+      },
+    ],
   ],
   use: {
     baseURL: process.env.BASE_URL || 'http://localhost:5173',

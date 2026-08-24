@@ -11,7 +11,7 @@ describe('useEasterEggs hook', () => {
     originalReload = window.location.reload;
     Object.defineProperty(window, 'location', {
       writable: true,
-      value: { reload: vi.fn() }
+      value: { reload: vi.fn() },
     });
     consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
   });
@@ -20,7 +20,7 @@ describe('useEasterEggs hook', () => {
     vi.restoreAllMocks();
     Object.defineProperty(window, 'location', {
       writable: true,
-      value: { reload: originalReload }
+      value: { reload: originalReload },
     });
   });
 
@@ -34,11 +34,22 @@ describe('useEasterEggs hook', () => {
   describe('Konami Code', () => {
     it('should activate konami code and reset after 5s', () => {
       const { result } = renderHook(() => useEasterEggs());
-      
-      const konamiSequence = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
-      
+
+      const konamiSequence = [
+        'ArrowUp',
+        'ArrowUp',
+        'ArrowDown',
+        'ArrowDown',
+        'ArrowLeft',
+        'ArrowRight',
+        'ArrowLeft',
+        'ArrowRight',
+        'b',
+        'a',
+      ];
+
       act(() => {
-        konamiSequence.forEach(key => {
+        konamiSequence.forEach((key) => {
           window.dispatchEvent(new KeyboardEvent('keydown', { key }));
         });
       });
@@ -54,15 +65,15 @@ describe('useEasterEggs hook', () => {
 
     it('should handle partial or incorrect sequences', () => {
       const { result } = renderHook(() => useEasterEggs());
-      
+
       act(() => {
-        ['ArrowUp', 'ArrowUp', 'x'].forEach(key => {
+        ['ArrowUp', 'ArrowUp', 'x'].forEach((key) => {
           window.dispatchEvent(new KeyboardEvent('keydown', { key }));
         });
       });
 
       expect(result.current.konamiActivated).toBe(false);
-      
+
       act(() => {
         window.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown' }));
       });
@@ -99,7 +110,7 @@ describe('useEasterEggs hook', () => {
       });
 
       expect(window.location.reload).not.toHaveBeenCalled();
-      
+
       // Since it resets to 0, another single click + pause will trigger reload
       act(() => {
         result.current.handleLogoClick();
@@ -147,7 +158,7 @@ describe('useEasterEggs hook', () => {
       });
 
       expect(result.current.hyperdriveActivated).toBe(true);
-      
+
       // Fast forward the 10s from the initial hyperdrive activation
       act(() => {
         vi.advanceTimersByTime(10000);

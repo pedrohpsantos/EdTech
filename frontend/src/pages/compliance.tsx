@@ -15,9 +15,12 @@ const ComplianceCenter: React.FC = () => {
       `Politicas conformes: ${stats.compliantPolicies}/${stats.totalPolicies}`,
       `Itens pendentes: ${stats.pendingItems}`,
       `Eventos auditados: ${stats.totalEvents}`,
-      ...stats.policies.map((policy: any) => `${policy.name}: ${policy.percentage}% - ${policy.status}`),
+      ...stats.policies.map(
+        (policy: any) => `${policy.name}: ${policy.percentage}% - ${policy.status}`,
+      ),
     ];
-    const escapePdf = (value: string) => value.replace(/[\\()]/g, '\\$&').replace(/[^\x20-\x7E]/g, '');
+    const escapePdf = (value: string) =>
+      value.replace(/[\\()]/g, '\\$&').replace(/[^\x20-\x7E]/g, '');
     const stream = `BT /F1 13 Tf 48 790 Td ${lines.map((line: string, index: number) => `${index ? '0 -24 Td ' : ''}(${escapePdf(line)}) Tj`).join(' ')} ET`;
     const objects = [
       '<< /Type /Catalog /Pages 2 0 R >>',
@@ -28,9 +31,17 @@ const ComplianceCenter: React.FC = () => {
     ];
     let pdf = '%PDF-1.4\n';
     const offsets = [0];
-    objects.forEach((object, index) => { offsets.push(pdf.length); pdf += `${index + 1} 0 obj\n${object}\nendobj\n`; });
+    objects.forEach((object, index) => {
+      offsets.push(pdf.length);
+      pdf += `${index + 1} 0 obj\n${object}\nendobj\n`;
+    });
     const xrefOffset = pdf.length;
-    pdf += `xref\n0 ${objects.length + 1}\n0000000000 65535 f \n${offsets.slice(1).map((offset) => `${String(offset).padStart(10, '0')} 00000 n \n`).join('')}trailer\n<< /Size ${objects.length + 1} /Root 1 0 R >>\nstartxref\n${xrefOffset}\n%%EOF`;
+    pdf += `xref\n0 ${objects.length + 1}\n0000000000 65535 f \n${offsets
+      .slice(1)
+      .map((offset) => `${String(offset).padStart(10, '0')} 00000 n \n`)
+      .join(
+        '',
+      )}trailer\n<< /Size ${objects.length + 1} /Root 1 0 R >>\nstartxref\n${xrefOffset}\n%%EOF`;
     const url = URL.createObjectURL(new Blob([pdf], { type: 'application/pdf' }));
     const link = document.createElement('a');
     link.href = url;
@@ -72,10 +83,11 @@ const ComplianceCenter: React.FC = () => {
             <i className="bi bi-shield-check text-success"></i>
           </div>
           <div className="compliance-stat-value">
-            {stats.score}% <span className="compliance-stat-badge success">+{stats.scoreTrend} pts</span>
+            {stats.score}%{' '}
+            <span className="compliance-stat-badge success">+{stats.scoreTrend} pts</span>
           </div>
         </div>
-        
+
         <div className="compliance-stat-card">
           <div className="compliance-stat-header">
             <span>Políticas conformes</span>
@@ -85,7 +97,7 @@ const ComplianceCenter: React.FC = () => {
             {stats.compliantPolicies}/{stats.totalPolicies}
           </div>
         </div>
-        
+
         <div className="compliance-stat-card">
           <div className="compliance-stat-header">
             <span>Itens pendentes</span>
@@ -95,7 +107,7 @@ const ComplianceCenter: React.FC = () => {
             {stats.pendingItems} <span className="compliance-stat-badge warning">ação</span>
           </div>
         </div>
-        
+
         <div className="compliance-stat-card">
           <div className="compliance-stat-header">
             <span>Eventos auditados</span>
@@ -110,7 +122,7 @@ const ComplianceCenter: React.FC = () => {
       <div className="compliance-section-card">
         <h2 className="compliance-section-title">Status de conformidade</h2>
         <p className="compliance-section-subtitle">Cobertura por política regulatória</p>
-        
+
         <div className="policy-list">
           {stats.policies.map((policy: any, index: number) => (
             <div className="policy-item" key={index}>
@@ -120,8 +132,8 @@ const ComplianceCenter: React.FC = () => {
                   <span className={`policy-badge ${policy.status}`}>
                     {policy.status === 'conforme' && <i className="bi bi-check-circle"></i>}
                     {policy.status === 'parcial' && <i className="bi bi-exclamation-circle"></i>}
-                    {policy.status === 'pendente' && <i className="bi bi-x-circle"></i>}
-                    {' '}{policy.status.charAt(0).toUpperCase() + policy.status.slice(1)}
+                    {policy.status === 'pendente' && <i className="bi bi-x-circle"></i>}{' '}
+                    {policy.status.charAt(0).toUpperCase() + policy.status.slice(1)}
                   </span>
                 </div>
                 <div className="policy-stats">
@@ -130,7 +142,10 @@ const ComplianceCenter: React.FC = () => {
                 </div>
               </div>
               <div className="policy-progress-bar-bg">
-                <div className={`policy-progress-bar-fill ${policy.status}`} style={{ width: `${policy.percentage}%` }}></div>
+                <div
+                  className={`policy-progress-bar-fill ${policy.status}`}
+                  style={{ width: `${policy.percentage}%` }}
+                ></div>
               </div>
             </div>
           ))}

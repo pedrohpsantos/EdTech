@@ -13,9 +13,7 @@
   "paths": {
     "/api/projects": {
       "get": {
-        "tags": [
-          "project-controller"
-        ],
+        "tags": ["project-controller"],
         "operationId": "listProjects",
         "responses": {
           "200": {
@@ -34,9 +32,7 @@
         }
       },
       "post": {
-        "tags": [
-          "project-controller"
-        ],
+        "tags": ["project-controller"],
         "operationId": "createProject",
         "requestBody": {
           "content": {
@@ -64,9 +60,7 @@
     },
     "/api/projects/{projectId}/members": {
       "post": {
-        "tags": [
-          "project-controller"
-        ],
+        "tags": ["project-controller"],
         "operationId": "addMember",
         "parameters": [
           {
@@ -98,9 +92,7 @@
     },
     "/api/documents": {
       "get": {
-        "tags": [
-          "document-controller"
-        ],
+        "tags": ["document-controller"],
         "operationId": "listDocuments",
         "parameters": [
           {
@@ -159,9 +151,7 @@
         }
       },
       "post": {
-        "tags": [
-          "document-controller"
-        ],
+        "tags": ["document-controller"],
         "operationId": "uploadDocument",
         "parameters": [
           {
@@ -193,9 +183,7 @@
                     "format": "binary"
                   }
                 },
-                "required": [
-                  "file"
-                ]
+                "required": ["file"]
               }
             }
           }
@@ -216,9 +204,7 @@
     },
     "/api/auth/register": {
       "post": {
-        "tags": [
-          "auth-controller"
-        ],
+        "tags": ["auth-controller"],
         "operationId": "register",
         "requestBody": {
           "content": {
@@ -244,9 +230,7 @@
     },
     "/api/auth/logout": {
       "post": {
-        "tags": [
-          "auth-controller"
-        ],
+        "tags": ["auth-controller"],
         "operationId": "logout",
         "responses": {
           "200": {
@@ -257,9 +241,7 @@
     },
     "/api/auth/login": {
       "post": {
-        "tags": [
-          "auth-controller"
-        ],
+        "tags": ["auth-controller"],
         "operationId": "login",
         "requestBody": {
           "content": {
@@ -287,9 +269,7 @@
     },
     "/api/documents/{id}/download": {
       "get": {
-        "tags": [
-          "document-controller"
-        ],
+        "tags": ["document-controller"],
         "operationId": "downloadDocument",
         "parameters": [
           {
@@ -318,9 +298,7 @@
     },
     "/api/auth/me": {
       "get": {
-        "tags": [
-          "auth-controller"
-        ],
+        "tags": ["auth-controller"],
         "operationId": "me",
         "responses": {
           "200": {
@@ -338,9 +316,7 @@
     },
     "/api/documents/{id}": {
       "delete": {
-        "tags": [
-          "document-controller"
-        ],
+        "tags": ["document-controller"],
         "operationId": "deleteDocument",
         "parameters": [
           {
@@ -362,9 +338,7 @@
     },
     "/api/documents/{id}/audit/export": {
       "get": {
-        "tags": [
-          "document-controller"
-        ],
+        "tags": ["document-controller"],
         "operationId": "exportAuditTrail",
         "parameters": [
           {
@@ -383,9 +357,7 @@
             "schema": {
               "type": "string",
               "default": "csv",
-              "enum": [
-                "csv"
-              ]
+              "enum": ["csv"]
             }
           }
         ],
@@ -518,11 +490,7 @@
             "minLength": 8
           }
         },
-        "required": [
-          "email",
-          "name",
-          "password"
-        ]
+        "required": ["email", "name", "password"]
       },
       "LoginRequestDTO": {
         "type": "object",
@@ -538,10 +506,7 @@
             "minLength": 8
           }
         },
-        "required": [
-          "email",
-          "password"
-        ]
+        "required": ["email", "password"]
       },
       "UserResponseDTO": {
         "type": "object",

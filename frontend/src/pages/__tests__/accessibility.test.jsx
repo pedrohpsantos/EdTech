@@ -1,4 +1,3 @@
-
 import { render } from '@testing-library/react';
 import { axe } from 'vitest-axe';
 import { describe, it, expect } from 'vitest';
@@ -19,9 +18,7 @@ const AllTheProviders = ({ children }) => {
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-        <AuthProvider>
-          {children}
-        </AuthProvider>
+        <AuthProvider>{children}</AuthProvider>
       </BrowserRouter>
     </QueryClientProvider>
   );
@@ -32,7 +29,7 @@ describe('Accessibility Tests (A11y)', () => {
     const { container } = render(
       <AllTheProviders>
         <Login />
-      </AllTheProviders>
+      </AllTheProviders>,
     );
     const results = await axe(container);
     expect(results).toHaveNoViolations();
@@ -42,7 +39,7 @@ describe('Accessibility Tests (A11y)', () => {
     const { container } = render(
       <AllTheProviders>
         <Register />
-      </AllTheProviders>
+      </AllTheProviders>,
     );
     const results = await axe(container);
     expect(results).toHaveNoViolations();
@@ -52,7 +49,7 @@ describe('Accessibility Tests (A11y)', () => {
     const { container } = render(
       <AllTheProviders>
         <ThemeToggle />
-      </AllTheProviders>
+      </AllTheProviders>,
     );
     const results = await axe(container);
     expect(results).toHaveNoViolations();
@@ -62,7 +59,7 @@ describe('Accessibility Tests (A11y)', () => {
     const { container } = render(
       <AllTheProviders>
         <GlobalLoader isLoading={true} />
-      </AllTheProviders>
+      </AllTheProviders>,
     );
     const results = await axe(container);
     expect(results).toHaveNoViolations();
@@ -74,7 +71,7 @@ describe('Accessibility Tests (A11y)', () => {
         <AuthLayout title="Test" subtitle="Subtitle">
           <div>Content</div>
         </AuthLayout>
-      </AllTheProviders>
+      </AllTheProviders>,
     );
     const results = await axe(container);
     expect(results).toHaveNoViolations();

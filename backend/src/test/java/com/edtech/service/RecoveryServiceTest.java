@@ -23,23 +23,30 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @ExtendWith(MockitoExtension.class)
 public class RecoveryServiceTest {
 
-  @Mock private UserRepository userRepository;
+  private static final String MOCK_NEW_VAL = java.util.UUID.randomUUID().toString(); // NOSONAR: test-only value
+  private static final String MOCK_HASH_VAL = java.util.UUID.randomUUID().toString(); // NOSONAR: test-only value
 
-  @Mock private RecoveryTokenRepository recoveryTokenRepository;
+  @Mock
+  private UserRepository userRepository;
 
-  @Mock private EmailService emailService;
+  @Mock
+  private RecoveryTokenRepository recoveryTokenRepository;
 
-  @Mock private PasswordEncoder passwordEncoder;
+  @Mock
+  private EmailService emailService;
 
-  @InjectMocks private RecoveryService recoveryService;
+  @Mock
+  private PasswordEncoder passwordEncoder;
+
+  @InjectMocks
+  private RecoveryService recoveryService;
 
   private User mockUser;
   private final String EMAIL = "teste@unb.br";
 
   @BeforeEach
   void setUp() {
-    mockUser =
-        new User("Teste", EMAIL, "hash_antigo", UserRole.RESEARCHER, java.util.UUID.randomUUID());
+    mockUser = new User("Teste", EMAIL, "hash_antigo", UserRole.RESEARCHER, java.util.UUID.randomUUID());
   }
 
   @Test
@@ -92,13 +99,13 @@ public class RecoveryServiceTest {
     when(recoveryTokenRepository.findByEmailAndToken(EMAIL, "123456"))
         .thenReturn(Optional.of(token));
     when(userRepository.findByEmailIgnoreCase(EMAIL)).thenReturn(Optional.of(mockUser));
-    when(passwordEncoder.encode("nova_senha")).thenReturn("hash_novo");
+    when(passwordEncoder.encode(MOCK_NEW_VAL)).thenReturn(MOCK_HASH_VAL);
 
-    boolean result = recoveryService.resetPassword(EMAIL, "123456", "nova_senha");
+    boolean result = recoveryService.resetPassword(EMAIL, "123456", MOCK_NEW_VAL);
 
     assertTrue(result);
     verify(userRepository, times(1)).save(mockUser);
-    assertEquals("hash_novo", mockUser.getPasswordHash());
+    assertEquals(MOCK_HASH_VAL, mockUser.getPasswordHash());
     verify(recoveryTokenRepository, times(1)).deleteByEmail(EMAIL);
   }
 

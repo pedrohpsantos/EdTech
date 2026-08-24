@@ -23,12 +23,17 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @ExtendWith(MockitoExtension.class)
 class DatabaseSeederTest {
 
-  @Mock private UserRepository userRepository;
-  @Mock private ProjectRepository projectRepository;
-  @Mock private ProjectMemberRepository projectMemberRepository;
-  @Mock private PasswordEncoder passwordEncoder;
+  @Mock
+  private UserRepository userRepository;
+  @Mock
+  private ProjectRepository projectRepository;
+  @Mock
+  private ProjectMemberRepository projectMemberRepository;
+  @Mock
+  private PasswordEncoder passwordEncoder;
 
-  @InjectMocks private DatabaseSeeder databaseSeeder;
+  @InjectMocks
+  private DatabaseSeeder databaseSeeder;
 
   @Test
   void testRunWhenDatabaseIsEmpty() {

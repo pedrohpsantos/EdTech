@@ -21,7 +21,6 @@ const Dashboard: React.FC = () => {
   const hasResearchActivity = stats.activeDocuments > 0;
   const hasAuditActivity = (auditorStats?.totalEvents ?? 0) > 0;
 
-
   useEffect(() => {
     if (user?.role === 'RESEARCHER' || user?.role === 'ADVISOR') {
       getDashboardStats().then((data) => {
@@ -40,18 +39,17 @@ const Dashboard: React.FC = () => {
         setRecentLogs(logs.slice(0, 3));
       });
     }
-
   }, [user]);
 
   const customTopbar = (
     <div className="topbar-responsive-container">
       {user?.role === 'ADVISOR' ? (
-        <button 
+        <button
           onClick={() => navigate('/submissions')}
-          style={{ 
-            background: 'var(--ed-purple-main)', 
-            border: 'none', 
-            padding: '10px 20px', 
+          style={{
+            background: 'var(--ed-purple-main)',
+            border: 'none',
+            padding: '10px 20px',
             borderRadius: '8px',
             fontSize: '14px',
             fontWeight: 600,
@@ -60,18 +58,18 @@ const Dashboard: React.FC = () => {
             alignItems: 'center',
             gap: '8px',
             cursor: 'pointer',
-            boxShadow: '0 4px 12px rgba(63, 27, 138, 0.3)'
+            boxShadow: '0 4px 12px rgba(63, 27, 138, 0.3)',
           }}
         >
           <i className="bi bi-play-circle"></i> Ver submissões
         </button>
       ) : user?.role === 'AUDITOR' ? (
-        <button 
+        <button
           onClick={() => navigate('/audit-logs')}
-          style={{ 
-            background: 'var(--ed-purple-main)', 
-            border: 'none', 
-            padding: '10px 20px', 
+          style={{
+            background: 'var(--ed-purple-main)',
+            border: 'none',
+            padding: '10px 20px',
             borderRadius: '8px',
             fontSize: '14px',
             fontWeight: 600,
@@ -80,18 +78,18 @@ const Dashboard: React.FC = () => {
             alignItems: 'center',
             gap: '8px',
             cursor: 'pointer',
-            boxShadow: '0 4px 12px rgba(63, 27, 138, 0.3)'
+            boxShadow: '0 4px 12px rgba(63, 27, 138, 0.3)',
           }}
         >
           <i className="bi bi-journal-text"></i> Ver logs de auditoria
         </button>
       ) : (
-        <button 
+        <button
           onClick={() => navigate('/trail')}
-          style={{ 
-            background: 'var(--ed-purple-main)', 
-            border: 'none', 
-            padding: '10px 20px', 
+          style={{
+            background: 'var(--ed-purple-main)',
+            border: 'none',
+            padding: '10px 20px',
             borderRadius: '8px',
             fontSize: '14px',
             fontWeight: 600,
@@ -100,7 +98,7 @@ const Dashboard: React.FC = () => {
             alignItems: 'center',
             gap: '8px',
             cursor: 'pointer',
-            boxShadow: '0 4px 12px rgba(63, 27, 138, 0.3)'
+            boxShadow: '0 4px 12px rgba(63, 27, 138, 0.3)',
           }}
         >
           <i className="bi bi-diagram-3"></i> Ver Trilha de Pesquisa
@@ -116,7 +114,6 @@ const Dashboard: React.FC = () => {
       breadcrumbs={['EdTech', 'Visão Geral']}
       customTopbarElement={customTopbar}
     >
-
       {/* 1. SEÇÃO DE CARDS INDICADORES (STATS ROW REFACTORADO) */}
       <div className="row g-3 mb-4">
         {user?.role === 'RESEARCHER' ? (
@@ -125,11 +122,26 @@ const Dashboard: React.FC = () => {
               <div className="stat-card h-100 m-0">
                 <span className="stat-header">
                   Meus Documentos
-                  <i className="bi bi-file-earmark-text stat-icon" style={{ color: 'var(--ed-purple-light)' }}></i>
+                  <i
+                    className="bi bi-file-earmark-text stat-icon"
+                    style={{ color: 'var(--ed-purple-light)' }}
+                  ></i>
                 </span>
                 <div className="stat-body">
                   <span className="stat-value">{stats.activeDocuments}</span>
-                  <span className="stat-trend" style={{ background: 'var(--border)', color: 'var(--ed-text-muted)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}>total atual</span>
+                  <span
+                    className="stat-trend"
+                    style={{
+                      background: 'var(--border)',
+                      color: 'var(--ed-text-muted)',
+                      borderRadius: '12px',
+                      padding: '2px 8px',
+                      fontSize: '12px',
+                      fontWeight: 'bold',
+                    }}
+                  >
+                    total atual
+                  </span>
                 </div>
               </div>
             </div>
@@ -142,7 +154,19 @@ const Dashboard: React.FC = () => {
                 </div>
                 <div className="stat-body">
                   <span className="stat-value">{stats.pendingReview}</span>
-                  <span className="stat-trend" style={{ background: 'var(--border)', color: 'var(--ed-text-muted)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}>aguardando</span>
+                  <span
+                    className="stat-trend"
+                    style={{
+                      background: 'var(--border)',
+                      color: 'var(--ed-text-muted)',
+                      borderRadius: '12px',
+                      padding: '2px 8px',
+                      fontSize: '12px',
+                      fontWeight: 'bold',
+                    }}
+                  >
+                    aguardando
+                  </span>
                 </div>
               </div>
             </div>
@@ -151,11 +175,26 @@ const Dashboard: React.FC = () => {
               <div className="stat-card h-100 m-0">
                 <span className="stat-header">
                   Progresso da pesquisa
-                  <i className="bi bi-check-circle stat-icon" style={{ color: 'var(--ed-status-success)' }}></i>
+                  <i
+                    className="bi bi-check-circle stat-icon"
+                    style={{ color: 'var(--ed-status-success)' }}
+                  ></i>
                 </span>
                 <div className="stat-body">
                   <span className="stat-value">{stats.researchProgress}%</span>
-                  <span className="stat-trend" style={{ background: 'rgba(16, 185, 129, 0.1)', color: 'var(--ed-status-success)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}>atualizado</span>
+                  <span
+                    className="stat-trend"
+                    style={{
+                      background: 'rgba(16, 185, 129, 0.1)',
+                      color: 'var(--ed-status-success)',
+                      borderRadius: '12px',
+                      padding: '2px 8px',
+                      fontSize: '12px',
+                      fontWeight: 'bold',
+                    }}
+                  >
+                    atualizado
+                  </span>
                 </div>
               </div>
             </div>
@@ -164,11 +203,26 @@ const Dashboard: React.FC = () => {
               <div className="stat-card h-100 m-0">
                 <span className="stat-header">
                   Seu Compliance Score
-                  <i className="bi bi-shield-check stat-icon" style={{ color: 'var(--ed-status-info)' }}></i>
+                  <i
+                    className="bi bi-shield-check stat-icon"
+                    style={{ color: 'var(--ed-status-info)' }}
+                  ></i>
                 </span>
                 <div className="stat-body">
                   <span className="stat-value">{stats.complianceScore}%</span>
-                  <span className="stat-trend" style={{ background: 'rgba(59, 130, 246, 0.1)', color: 'var(--ed-status-info)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}>calculado</span>
+                  <span
+                    className="stat-trend"
+                    style={{
+                      background: 'rgba(59, 130, 246, 0.1)',
+                      color: 'var(--ed-status-info)',
+                      borderRadius: '12px',
+                      padding: '2px 8px',
+                      fontSize: '12px',
+                      fontWeight: 'bold',
+                    }}
+                  >
+                    calculado
+                  </span>
                 </div>
               </div>
             </div>
@@ -179,7 +233,10 @@ const Dashboard: React.FC = () => {
               <div className="stat-card h-100 m-0">
                 <span className="stat-header">
                   Eventos Hoje
-                  <i className="bi bi-activity stat-icon" style={{ color: 'var(--ed-purple-light)' }}></i>
+                  <i
+                    className="bi bi-activity stat-icon"
+                    style={{ color: 'var(--ed-purple-light)' }}
+                  ></i>
                 </span>
                 <div className="stat-body">
                   <span className="stat-value">{auditorStats?.totalEvents || 0}</span>
@@ -190,11 +247,26 @@ const Dashboard: React.FC = () => {
               <div className="stat-card h-100 m-0">
                 <div className="stat-header">
                   Alertas Ativos
-                  <i className="bi bi-exclamation-triangle stat-icon" style={{ color: 'var(--ed-orange)' }}></i>
+                  <i
+                    className="bi bi-exclamation-triangle stat-icon"
+                    style={{ color: 'var(--ed-orange)' }}
+                  ></i>
                 </div>
                 <div className="stat-body">
                   <span className="stat-value">{auditorStats?.pendingItems || 0}</span>
-                  <span className="stat-trend" style={{ background: 'rgba(239, 68, 68, 0.1)', color: 'var(--ed-status-danger)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}>ação</span>
+                  <span
+                    className="stat-trend"
+                    style={{
+                      background: 'rgba(239, 68, 68, 0.1)',
+                      color: 'var(--ed-status-danger)',
+                      borderRadius: '12px',
+                      padding: '2px 8px',
+                      fontSize: '12px',
+                      fontWeight: 'bold',
+                    }}
+                  >
+                    ação
+                  </span>
                 </div>
               </div>
             </div>
@@ -202,10 +274,15 @@ const Dashboard: React.FC = () => {
               <div className="stat-card h-100 m-0">
                 <span className="stat-header">
                   Políticas Conformes
-                  <i className="bi bi-file-earmark-text stat-icon" style={{ color: 'var(--ed-status-info)' }}></i>
+                  <i
+                    className="bi bi-file-earmark-text stat-icon"
+                    style={{ color: 'var(--ed-status-info)' }}
+                  ></i>
                 </span>
                 <div className="stat-body">
-                  <span className="stat-value">{auditorStats?.compliantPolicies || 0}/{auditorStats?.totalPolicies || 5}</span>
+                  <span className="stat-value">
+                    {auditorStats?.compliantPolicies || 0}/{auditorStats?.totalPolicies || 5}
+                  </span>
                 </div>
               </div>
             </div>
@@ -213,11 +290,26 @@ const Dashboard: React.FC = () => {
               <div className="stat-card h-100 m-0">
                 <span className="stat-header">
                   Compliance Geral
-                  <i className="bi bi-shield-check stat-icon" style={{ color: 'var(--ed-status-success)' }}></i>
+                  <i
+                    className="bi bi-shield-check stat-icon"
+                    style={{ color: 'var(--ed-status-success)' }}
+                  ></i>
                 </span>
                 <div className="stat-body">
                   <span className="stat-value">{auditorStats?.score || 0}%</span>
-                  <span className="stat-trend" style={{ background: 'rgba(16, 185, 129, 0.1)', color: 'var(--ed-status-success)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}>+{auditorStats?.scoreTrend || 0} pts</span>
+                  <span
+                    className="stat-trend"
+                    style={{
+                      background: 'rgba(16, 185, 129, 0.1)',
+                      color: 'var(--ed-status-success)',
+                      borderRadius: '12px',
+                      padding: '2px 8px',
+                      fontSize: '12px',
+                      fontWeight: 'bold',
+                    }}
+                  >
+                    +{auditorStats?.scoreTrend || 0} pts
+                  </span>
                 </div>
               </div>
             </div>
@@ -228,11 +320,26 @@ const Dashboard: React.FC = () => {
               <div className="stat-card h-100 m-0">
                 <span className="stat-header">
                   Documentos ativos
-                  <i className="bi bi-file-earmark-text stat-icon" style={{ color: 'var(--ed-purple-light)' }}></i>
+                  <i
+                    className="bi bi-file-earmark-text stat-icon"
+                    style={{ color: 'var(--ed-purple-light)' }}
+                  ></i>
                 </span>
                 <div className="stat-body">
                   <span className="stat-value">{stats.activeDocuments}</span>
-                  <span className="stat-trend" style={{ background: 'var(--border)', color: 'var(--ed-text-muted)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}>total atual</span>
+                  <span
+                    className="stat-trend"
+                    style={{
+                      background: 'var(--border)',
+                      color: 'var(--ed-text-muted)',
+                      borderRadius: '12px',
+                      padding: '2px 8px',
+                      fontSize: '12px',
+                      fontWeight: 'bold',
+                    }}
+                  >
+                    total atual
+                  </span>
                 </div>
               </div>
             </div>
@@ -245,7 +352,19 @@ const Dashboard: React.FC = () => {
                 </div>
                 <div className="stat-body">
                   <span className="stat-value">{stats.pendingReview}</span>
-                  <span className="stat-trend" style={{ background: 'var(--border)', color: 'var(--ed-text-muted)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}>total atual</span>
+                  <span
+                    className="stat-trend"
+                    style={{
+                      background: 'var(--border)',
+                      color: 'var(--ed-text-muted)',
+                      borderRadius: '12px',
+                      padding: '2px 8px',
+                      fontSize: '12px',
+                      fontWeight: 'bold',
+                    }}
+                  >
+                    total atual
+                  </span>
                 </div>
               </div>
             </div>
@@ -254,11 +373,26 @@ const Dashboard: React.FC = () => {
               <div className="stat-card h-100 m-0">
                 <span className="stat-header">
                   Compliance Score Geral
-                  <i className="bi bi-shield-check stat-icon" style={{ color: 'var(--ed-status-success)' }}></i>
+                  <i
+                    className="bi bi-shield-check stat-icon"
+                    style={{ color: 'var(--ed-status-success)' }}
+                  ></i>
                 </span>
                 <div className="stat-body">
                   <span className="stat-value">{stats.complianceScore}%</span>
-                  <span className="stat-trend" style={{ background: 'var(--border)', color: 'var(--ed-text-muted)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}>calculado</span>
+                  <span
+                    className="stat-trend"
+                    style={{
+                      background: 'var(--border)',
+                      color: 'var(--ed-text-muted)',
+                      borderRadius: '12px',
+                      padding: '2px 8px',
+                      fontSize: '12px',
+                      fontWeight: 'bold',
+                    }}
+                  >
+                    calculado
+                  </span>
                 </div>
               </div>
             </div>
@@ -267,11 +401,26 @@ const Dashboard: React.FC = () => {
               <div className="stat-card h-100 m-0">
                 <span className="stat-header">
                   Progresso da pesquisa
-                  <i className="bi bi-graph-up stat-icon" style={{ color: 'var(--ed-status-info)' }}></i>
+                  <i
+                    className="bi bi-graph-up stat-icon"
+                    style={{ color: 'var(--ed-status-info)' }}
+                  ></i>
                 </span>
                 <div className="stat-body">
                   <span className="stat-value">{stats.researchProgress}%</span>
-                  <span className="stat-trend" style={{ background: 'var(--border)', color: 'var(--ed-text-muted)', borderRadius: '12px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold' }}>calculado</span>
+                  <span
+                    className="stat-trend"
+                    style={{
+                      background: 'var(--border)',
+                      color: 'var(--ed-text-muted)',
+                      borderRadius: '12px',
+                      padding: '2px 8px',
+                      fontSize: '12px',
+                      fontWeight: 'bold',
+                    }}
+                  >
+                    calculado
+                  </span>
                 </div>
               </div>
             </div>
@@ -281,7 +430,13 @@ const Dashboard: React.FC = () => {
 
       {/* 2. BARRA DE ALERTA DE GOVERNANÇA (FLEXBOX RESPONSIVO) */}
       {user?.role === 'RESEARCHER' && hasResearchActivity ? (
-        <div className="governance-alert d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-4" style={{ background: 'linear-gradient(90deg, #f58a07 0%, #ffb057 100%)', boxShadow: '0 4px 15px rgba(245, 138, 7, 0.3)' }}>
+        <div
+          className="governance-alert d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-4"
+          style={{
+            background: 'linear-gradient(90deg, #f58a07 0%, #ffb057 100%)',
+            boxShadow: '0 4px 15px rgba(245, 138, 7, 0.3)',
+          }}
+        >
           <div className="alert-content flex-grow-1">
             <div className="alert-icon flex-shrink-0">
               <i className="bi bi-exclamation-triangle"></i>
@@ -289,16 +444,39 @@ const Dashboard: React.FC = () => {
             <div className="alert-text-container">
               <span className="alert-title">AÇÃO REQUERIDA</span>
               <span className="alert-desc">
-                Seu documento <strong>Dataset_Experimento_B.csv</strong> foi sinalizado pela verificação de LGPD e precisa de anonimização.
+                Seu documento <strong>Dataset_Experimento_B.csv</strong> foi sinalizado pela
+                verificação de LGPD e precisa de anonimização.
               </span>
             </div>
           </div>
-          <button className="btn-alert text-nowrap flex-shrink-0 mt-3 mt-md-0" style={{ background: 'white', color: 'var(--ed-orange)', border: 'none', padding: '8px 20px', borderRadius: '8px', fontWeight: 600, cursor: 'pointer', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }} onClick={() => navigate('/trail')}>
+          <button
+            className="btn-alert text-nowrap flex-shrink-0 mt-3 mt-md-0"
+            style={{
+              background: 'white',
+              color: 'var(--ed-orange)',
+              border: 'none',
+              padding: '8px 20px',
+              borderRadius: '8px',
+              fontWeight: 600,
+              cursor: 'pointer',
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '8px',
+            }}
+            onClick={() => navigate('/trail')}
+          >
             Corrigir agora <i className="bi bi-arrow-right-short" style={{ fontSize: '18px' }}></i>
           </button>
         </div>
       ) : user?.role === 'AUDITOR' && hasAuditActivity ? (
-        <div className="governance-alert d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-4" style={{ background: 'linear-gradient(90deg, #dc2626 0%, #ef4444 100%)', boxShadow: '0 4px 15px rgba(220, 38, 38, 0.3)' }}>
+        <div
+          className="governance-alert d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-4"
+          style={{
+            background: 'linear-gradient(90deg, #dc2626 0%, #ef4444 100%)',
+            boxShadow: '0 4px 15px rgba(220, 38, 38, 0.3)',
+          }}
+        >
           <div className="alert-content flex-grow-1">
             <div className="alert-icon flex-shrink-0">
               <i className="bi bi-shield-x"></i>
@@ -306,12 +484,32 @@ const Dashboard: React.FC = () => {
             <div className="alert-text-container">
               <span className="alert-title">FALHA CRÍTICA DE RETENÇÃO</span>
               <span className="alert-desc">
-                14 documentos passaram do período de retenção legal (5 anos). Ação imediata necessária.
+                14 documentos passaram do período de retenção legal (5 anos). Ação imediata
+                necessária.
               </span>
             </div>
           </div>
-          <button className="btn-alert text-nowrap flex-shrink-0 mt-3 mt-md-0" style={{ background: 'white', color: '#dc2626', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', border: 'none', padding: '8px 20px', borderRadius: '8px', fontWeight: 600, cursor: 'pointer' }} onClick={() => navigate('/compliance-center')}>
-            <i className="bi bi-arrow-right-short" style={{ fontSize: '18px', marginRight: '4px' }}></i> Investigar
+          <button
+            className="btn-alert text-nowrap flex-shrink-0 mt-3 mt-md-0"
+            style={{
+              background: 'white',
+              color: '#dc2626',
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              border: 'none',
+              padding: '8px 20px',
+              borderRadius: '8px',
+              fontWeight: 600,
+              cursor: 'pointer',
+            }}
+            onClick={() => navigate('/compliance-center')}
+          >
+            <i
+              className="bi bi-arrow-right-short"
+              style={{ fontSize: '18px', marginRight: '4px' }}
+            ></i>{' '}
+            Investigar
           </button>
         </div>
       ) : (
@@ -331,8 +529,27 @@ const Dashboard: React.FC = () => {
               </span>
             </div>
           </div>
-          <button className="btn-alert governance-primary-action" onClick={() => navigate(user?.role === 'RESEARCHER' ? '/upload' : user?.role === 'ADVISOR' ? '/submissions' : '/audit-logs')}>
-            {user?.role === 'RESEARCHER' ? 'Enviar documento' : user?.role === 'ADVISOR' ? 'Abrir fila de revisão' : 'Ver auditoria'} <i className="bi bi-arrow-right-short" style={{ fontSize: '18px', marginLeft: '4px' }}></i>
+          <button
+            className="btn-alert governance-primary-action"
+            onClick={() =>
+              navigate(
+                user?.role === 'RESEARCHER'
+                  ? '/upload'
+                  : user?.role === 'ADVISOR'
+                    ? '/submissions'
+                    : '/audit-logs',
+              )
+            }
+          >
+            {user?.role === 'RESEARCHER'
+              ? 'Enviar documento'
+              : user?.role === 'ADVISOR'
+                ? 'Abrir fila de revisão'
+                : 'Ver auditoria'}{' '}
+            <i
+              className="bi bi-arrow-right-short"
+              style={{ fontSize: '18px', marginLeft: '4px' }}
+            ></i>
           </button>
         </div>
       )}
@@ -345,33 +562,93 @@ const Dashboard: React.FC = () => {
             <div className="dashboard-card h-100 mb-0">
               <div className="card-header-flex">
                 <h3 className="card-title">Minhas Submissões Recentes</h3>
-                <button className="card-action-link" onClick={() => navigate('/documentos')}>Ver histórico</button>
+                <button className="card-action-link" onClick={() => navigate('/documentos')}>
+                  Ver histórico
+                </button>
               </div>
               <div className="doc-list">
-                {recentDocs.length > 0 ? recentDocs.map((doc: any, i) => (
-                  <div className="doc-item flex-column flex-sm-row align-items-start align-items-sm-center justify-content-between gap-2" key={doc.id} style={i === recentDocs.length - 1 ? { borderBottom: 'none' } : {}}>
-                    <div className="doc-info" style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-                      <div style={{ width: '36px', height: '36px', background: 'rgba(59, 130, 246, 0.1)', color: 'var(--ed-status-info)', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <i className={doc.title.endsWith('.pdf') ? 'bi bi-file-earmark-pdf' : 'bi bi-file-earmark-text'}></i>
+                {recentDocs.length > 0 ? (
+                  recentDocs.map((doc: any, i) => (
+                    <div
+                      className="doc-item flex-column flex-sm-row align-items-start align-items-sm-center justify-content-between gap-2"
+                      key={doc.id}
+                      style={i === recentDocs.length - 1 ? { borderBottom: 'none' } : {}}
+                    >
+                      <div
+                        className="doc-info"
+                        style={{ display: 'flex', gap: '16px', alignItems: 'center' }}
+                      >
+                        <div
+                          style={{
+                            width: '36px',
+                            height: '36px',
+                            background: 'rgba(59, 130, 246, 0.1)',
+                            color: 'var(--ed-status-info)',
+                            borderRadius: '8px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                          }}
+                        >
+                          <i
+                            className={
+                              doc.title.endsWith('.pdf')
+                                ? 'bi bi-file-earmark-pdf'
+                                : 'bi bi-file-earmark-text'
+                            }
+                          ></i>
+                        </div>
+                        <div style={{ display: 'flex', flexDirection: 'column' }}>
+                          <span
+                            className="doc-name"
+                            style={{
+                              fontWeight: 600,
+                              color: 'var(--ed-text-dark)',
+                              fontSize: '14px',
+                            }}
+                          >
+                            {doc.title}
+                          </span>
+                          <span style={{ fontSize: '12px', color: 'var(--ed-text-muted)' }}>
+                            Atualizado {new Date(doc.createdAt).toLocaleDateString()}
+                          </span>
+                        </div>
                       </div>
-                      <div style={{ display: 'flex', flexDirection: 'column' }}>
-                        <span className="doc-name" style={{ fontWeight: 600, color: 'var(--ed-text-dark)', fontSize: '14px' }}>
-                          {doc.title}
+                      <div className="d-flex align-items-center justify-content-between w-100 w-sm-auto gap-3">
+                        <span
+                          style={{
+                            fontSize: '12px',
+                            color: 'var(--ed-text-muted)',
+                            background: 'var(--border)',
+                            padding: '4px 10px',
+                            borderRadius: '12px',
+                            fontWeight: 600,
+                          }}
+                        >
+                          {doc.status}
                         </span>
-                        <span style={{ fontSize: '12px', color: 'var(--ed-text-muted)' }}>Atualizado {new Date(doc.createdAt).toLocaleDateString()}</span>
+                        <button
+                          style={{
+                            border: '1px solid var(--border)',
+                            background: 'transparent',
+                            padding: '6px 16px',
+                            borderRadius: '6px',
+                            fontSize: '13px',
+                            fontWeight: 500,
+                            color: 'var(--ed-text-dark)',
+                            cursor: 'pointer',
+                          }}
+                          onClick={() => navigate('/documentos')}
+                        >
+                          Ver
+                        </button>
                       </div>
                     </div>
-                    <div className="d-flex align-items-center justify-content-between w-100 w-sm-auto gap-3">
-                      <span style={{ fontSize: '12px', color: 'var(--ed-text-muted)', background: 'var(--border)', padding: '4px 10px', borderRadius: '12px', fontWeight: 600 }}>
-                        {doc.status}
-                      </span>
-                      <button style={{ border: '1px solid var(--border)', background: 'transparent', padding: '6px 16px', borderRadius: '6px', fontSize: '13px', fontWeight: 500, color: 'var(--ed-text-dark)', cursor: 'pointer' }} onClick={() => navigate('/documentos')}>
-                        Ver
-                      </button>
-                    </div>
+                  ))
+                ) : (
+                  <div style={{ padding: '2rem', textAlign: 'center', color: '#64748B' }}>
+                    Nenhum documento
                   </div>
-                )) : (
-                  <div style={{ padding: '2rem', textAlign: 'center', color: '#64748B' }}>Nenhum documento</div>
                 )}
               </div>
             </div>
@@ -379,28 +656,72 @@ const Dashboard: React.FC = () => {
             <div className="dashboard-card h-100 mb-0">
               <div className="card-header-flex">
                 <h3 className="card-title">Atividades Críticas Recentes</h3>
-                <span className="card-action-link" style={{ color: 'var(--ed-purple-light)', cursor: 'pointer', fontSize: '13px', fontWeight: 500 }} onClick={() => navigate('/audit-logs')}>Ver logs</span>
+                <span
+                  className="card-action-link"
+                  style={{
+                    color: 'var(--ed-purple-light)',
+                    cursor: 'pointer',
+                    fontSize: '13px',
+                    fontWeight: 500,
+                  }}
+                  onClick={() => navigate('/audit-logs')}
+                >
+                  Ver logs
+                </span>
               </div>
               <div className="doc-list">
-                {recentLogs.length > 0 ? recentLogs.map((log: any, i) => (
-                  <div className="doc-item flex-column flex-sm-row align-items-start align-items-sm-center justify-content-between gap-2" key={log.id} style={i === recentLogs.length - 1 ? { borderBottom: 'none' } : {}}>
-                    <div className="doc-info" style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-                      <div style={{ width: '36px', height: '36px', background: 'rgba(239, 68, 68, 0.1)', color: 'var(--ed-status-danger)', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <i className="bi bi-shield-exclamation"></i>
+                {recentLogs.length > 0 ? (
+                  recentLogs.map((log: any, i) => (
+                    <div
+                      className="doc-item flex-column flex-sm-row align-items-start align-items-sm-center justify-content-between gap-2"
+                      key={log.id}
+                      style={i === recentLogs.length - 1 ? { borderBottom: 'none' } : {}}
+                    >
+                      <div
+                        className="doc-info"
+                        style={{ display: 'flex', gap: '16px', alignItems: 'center' }}
+                      >
+                        <div
+                          style={{
+                            width: '36px',
+                            height: '36px',
+                            background: 'rgba(239, 68, 68, 0.1)',
+                            color: 'var(--ed-status-danger)',
+                            borderRadius: '8px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                          }}
+                        >
+                          <i className="bi bi-shield-exclamation"></i>
+                        </div>
+                        <div style={{ display: 'flex', flexDirection: 'column' }}>
+                          <span
+                            className="doc-name"
+                            style={{
+                              fontWeight: 600,
+                              color: 'var(--ed-text-dark)',
+                              fontSize: '14px',
+                            }}
+                          >
+                            {log.action}
+                          </span>
+                          <span style={{ fontSize: '12px', color: 'var(--ed-text-muted)' }}>
+                            {log.details.substring(0, 30)}...
+                          </span>
+                        </div>
                       </div>
-                      <div style={{ display: 'flex', flexDirection: 'column' }}>
-                        <span className="doc-name" style={{ fontWeight: 600, color: 'var(--ed-text-dark)', fontSize: '14px' }}>
-                          {log.action}
+                      <div className="d-flex align-items-center justify-content-between w-100 w-sm-auto gap-3">
+                        <span style={{ fontSize: '12px', color: 'var(--ed-text-muted)' }}>
+                          {log.userName}
                         </span>
-                        <span style={{ fontSize: '12px', color: 'var(--ed-text-muted)' }}>{log.details.substring(0, 30)}...</span>
                       </div>
                     </div>
-                    <div className="d-flex align-items-center justify-content-between w-100 w-sm-auto gap-3">
-                      <span style={{ fontSize: '12px', color: 'var(--ed-text-muted)' }}>{log.userName}</span>
-                    </div>
+                  ))
+                ) : (
+                  <div style={{ padding: '2rem', textAlign: 'center', color: '#64748B' }}>
+                    Nenhum log crítico
                   </div>
-                )) : (
-                  <div style={{ padding: '2rem', textAlign: 'center', color: '#64748B' }}>Nenhum log crítico</div>
                 )}
               </div>
             </div>
@@ -408,33 +729,87 @@ const Dashboard: React.FC = () => {
             <div className="dashboard-card h-100 mb-0">
               <div className="card-header-flex">
                 <h3 className="card-title">Revisões Pendentes</h3>
-                <button className="card-action-link" onClick={() => navigate('/submissions')}>Ver todas</button>
+                <button className="card-action-link" onClick={() => navigate('/submissions')}>
+                  Ver todas
+                </button>
               </div>
               <div className="doc-list">
-                {recentDocs.length > 0 ? recentDocs.map((doc: any, i) => (
-                  <div className="doc-item flex-column flex-sm-row align-items-start align-items-sm-center justify-content-between gap-2" key={doc.id} style={i === recentDocs.length - 1 ? { borderBottom: 'none' } : {}}>
-                    <div className="doc-info" style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-                      <div style={{ width: '36px', height: '36px', background: 'rgba(239, 68, 68, 0.1)', color: 'var(--ed-status-danger)', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <i className="bi bi-file-earmark-pdf"></i>
+                {recentDocs.length > 0 ? (
+                  recentDocs.map((doc: any, i) => (
+                    <div
+                      className="doc-item flex-column flex-sm-row align-items-start align-items-sm-center justify-content-between gap-2"
+                      key={doc.id}
+                      style={i === recentDocs.length - 1 ? { borderBottom: 'none' } : {}}
+                    >
+                      <div
+                        className="doc-info"
+                        style={{ display: 'flex', gap: '16px', alignItems: 'center' }}
+                      >
+                        <div
+                          style={{
+                            width: '36px',
+                            height: '36px',
+                            background: 'rgba(239, 68, 68, 0.1)',
+                            color: 'var(--ed-status-danger)',
+                            borderRadius: '8px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                          }}
+                        >
+                          <i className="bi bi-file-earmark-pdf"></i>
+                        </div>
+                        <div style={{ display: 'flex', flexDirection: 'column' }}>
+                          <span
+                            className="doc-name"
+                            style={{
+                              fontWeight: 600,
+                              color: 'var(--ed-text-dark)',
+                              fontSize: '14px',
+                            }}
+                          >
+                            {doc.title}
+                          </span>
+                          <span style={{ fontSize: '12px', color: 'var(--ed-text-muted)' }}>
+                            {doc.author?.name} - {new Date(doc.createdAt).toLocaleDateString()}
+                          </span>
+                        </div>
                       </div>
-                      <div style={{ display: 'flex', flexDirection: 'column' }}>
-                        <span className="doc-name" style={{ fontWeight: 600, color: 'var(--ed-text-dark)', fontSize: '14px' }}>
-                          {doc.title}
+                      <div className="d-flex align-items-center justify-content-between w-100 w-sm-auto gap-3">
+                        <span
+                          style={{
+                            fontSize: '12px',
+                            color: 'var(--ed-orange)',
+                            background: 'rgba(245, 158, 11, 0.1)',
+                            padding: '4px 10px',
+                            borderRadius: '12px',
+                            fontWeight: 600,
+                          }}
+                        >
+                          <i className="bi bi-clock"></i> Pendente
                         </span>
-                        <span style={{ fontSize: '12px', color: 'var(--ed-text-muted)' }}>{doc.author?.name} - {new Date(doc.createdAt).toLocaleDateString()}</span>
+                        <button
+                          style={{
+                            border: '1px solid var(--border)',
+                            background: 'transparent',
+                            padding: '6px 16px',
+                            borderRadius: '6px',
+                            fontSize: '13px',
+                            fontWeight: 500,
+                            color: 'var(--ed-text-dark)',
+                            cursor: 'pointer',
+                          }}
+                          onClick={() => navigate('/submissions')}
+                        >
+                          Revisar
+                        </button>
                       </div>
                     </div>
-                    <div className="d-flex align-items-center justify-content-between w-100 w-sm-auto gap-3">
-                      <span style={{ fontSize: '12px', color: 'var(--ed-orange)', background: 'rgba(245, 158, 11, 0.1)', padding: '4px 10px', borderRadius: '12px', fontWeight: 600 }}>
-                        <i className="bi bi-clock"></i> Pendente
-                      </span>
-                      <button style={{ border: '1px solid var(--border)', background: 'transparent', padding: '6px 16px', borderRadius: '6px', fontSize: '13px', fontWeight: 500, color: 'var(--ed-text-dark)', cursor: 'pointer' }} onClick={() => navigate('/submissions')}>
-                        Revisar
-                      </button>
-                    </div>
+                  ))
+                ) : (
+                  <div style={{ padding: '2rem', textAlign: 'center', color: '#64748B' }}>
+                    Nenhuma submissão pendente.
                   </div>
-                )) : (
-                  <div style={{ padding: '2rem', textAlign: 'center', color: '#64748B' }}>Nenhuma submissão pendente.</div>
                 )}
               </div>
             </div>
@@ -487,7 +862,10 @@ const Dashboard: React.FC = () => {
                       <span>100%</span>
                     </div>
                     <div className="progress-bar-bg">
-                      <div className="progress-bar-fill fill-purple" style={{ width: '100%' }}></div>
+                      <div
+                        className="progress-bar-fill fill-purple"
+                        style={{ width: '100%' }}
+                      ></div>
                     </div>
                   </div>
 
@@ -527,7 +905,10 @@ const Dashboard: React.FC = () => {
                       <span>100%</span>
                     </div>
                     <div className="progress-bar-bg">
-                      <div className="progress-bar-fill fill-purple" style={{ width: '100%', background: '#4CAF50' }}></div>
+                      <div
+                        className="progress-bar-fill fill-purple"
+                        style={{ width: '100%', background: '#4CAF50' }}
+                      ></div>
                     </div>
                   </div>
                   <div className="progress-item">
@@ -545,7 +926,10 @@ const Dashboard: React.FC = () => {
                       <span>58%</span>
                     </div>
                     <div className="progress-bar-bg">
-                      <div className="progress-bar-fill fill-red" style={{ width: '58%', background: '#F44336' }}></div>
+                      <div
+                        className="progress-bar-fill fill-red"
+                        style={{ width: '58%', background: '#F44336' }}
+                      ></div>
                     </div>
                   </div>
                 </div>
@@ -558,7 +942,9 @@ const Dashboard: React.FC = () => {
                 <div className="card-header-flex" style={{ paddingBottom: '10px', border: 'none' }}>
                   <div>
                     <div className="card-title">Pontuação de Conformidade (Laboratório)</div>
-                    <div className="card-title-muted mt-1">LGPD · Integridade · Rastreabilidade</div>
+                    <div className="card-title-muted mt-1">
+                      LGPD · Integridade · Rastreabilidade
+                    </div>
                   </div>
                 </div>
                 <div className="score-content">

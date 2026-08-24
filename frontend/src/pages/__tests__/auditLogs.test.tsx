@@ -59,7 +59,7 @@ const mockLogs = [
     details: 'Critical failure',
     severity: 'CRITICAL',
     actionClass: 'critical',
-  }
+  },
 ];
 
 describe('AuditLogs Page', () => {
@@ -73,13 +73,13 @@ describe('AuditLogs Page', () => {
 
   it('renders and fetches logs on mount', async () => {
     render(<AuditLogs />);
-    
+
     expect(screen.getByText('Total de Eventos')).toBeInTheDocument();
-    
+
     await waitFor(() => {
       expect(screen.getByText('EVT-003')).toBeInTheDocument();
     });
-    
+
     expect(screen.getAllByText('UPLOAD_DOCUMENT').length).toBeGreaterThan(0);
     expect(apiServices.getAuditLogs).toHaveBeenCalledWith('', '', '', '', 0, 20);
   });
@@ -128,33 +128,33 @@ describe('AuditLogs Page', () => {
 
     expect(apiServices.exportAuditLogsCSV).toHaveBeenCalledWith('', '', '', '');
   });
-  
+
   it('handles refresh button click', async () => {
     render(<AuditLogs />);
     await waitFor(() => expect(apiServices.getAuditLogs).toHaveBeenCalled());
-    
+
     const refreshBtn = screen.getByText(/Atualizar/i);
     fireEvent.click(refreshBtn);
-    
+
     expect(apiServices.getAuditLogs).toHaveBeenCalledTimes(2);
   });
-  
+
   it('renders different actions badges correctly', async () => {
-      const complexLogs = [
-          { ...mockLogs[0], action: 'LOGIN_SUCCESS', id: '10' },
-          { ...mockLogs[0], action: 'SUBMISSION_APPROVED', id: '11' },
-          { ...mockLogs[0], action: 'DOCUMENT_VIEWED', id: '12' },
-          { ...mockLogs[0], action: 'PERMISSION_CHANGED', id: '13' },
-          { ...mockLogs[0], action: 'DOCUMENT_DELETED', id: '14' }
-      ];
-      (apiServices.getAuditLogs as any).mockResolvedValue(complexLogs);
-      render(<AuditLogs />);
-      await waitFor(() => {
-          expect(screen.getByText('LOGIN_SUCCESS')).toBeInTheDocument();
-          expect(screen.getByText('SUBMISSION_APPROVED')).toBeInTheDocument();
-          expect(screen.getByText('DOCUMENT_VIEWED')).toBeInTheDocument();
-          expect(screen.getByText('PERMISSION_CHANGED')).toBeInTheDocument();
-          expect(screen.getByText('DOCUMENT_DELETED')).toBeInTheDocument();
-      });
+    const complexLogs = [
+      { ...mockLogs[0], action: 'LOGIN_SUCCESS', id: '10' },
+      { ...mockLogs[0], action: 'SUBMISSION_APPROVED', id: '11' },
+      { ...mockLogs[0], action: 'DOCUMENT_VIEWED', id: '12' },
+      { ...mockLogs[0], action: 'PERMISSION_CHANGED', id: '13' },
+      { ...mockLogs[0], action: 'DOCUMENT_DELETED', id: '14' },
+    ];
+    (apiServices.getAuditLogs as any).mockResolvedValue(complexLogs);
+    render(<AuditLogs />);
+    await waitFor(() => {
+      expect(screen.getByText('LOGIN_SUCCESS')).toBeInTheDocument();
+      expect(screen.getByText('SUBMISSION_APPROVED')).toBeInTheDocument();
+      expect(screen.getByText('DOCUMENT_VIEWED')).toBeInTheDocument();
+      expect(screen.getByText('PERMISSION_CHANGED')).toBeInTheDocument();
+      expect(screen.getByText('DOCUMENT_DELETED')).toBeInTheDocument();
+    });
   });
 });

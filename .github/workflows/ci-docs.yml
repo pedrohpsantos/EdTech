@@ -5,13 +5,13 @@ on:
     branches:
       - main
     paths:
-      - 'docs/**'
-      - 'mkdocs.yml'
-      - 'pyproject.toml'
-      - '.github/workflows/ci-docs.yml'
-      - 'backend/**'
-      - 'frontend/**'
-      - 'tests/api-contract/**'
+      - "docs/**"
+      - "mkdocs.yml"
+      - "pyproject.toml"
+      - ".github/workflows/ci-docs.yml"
+      - "backend/**"
+      - "frontend/**"
+      - "tests/api-contract/**"
   workflow_dispatch:
 
 permissions:
@@ -46,7 +46,15 @@ jobs:
         # frontend       = Vitest + Allure smoke test report
         # performance    = K6 load test report
         # lighthouse     = Auditoria UX/SEO/Performance
-        report-type: [backend-jacoco, backend-pitest, frontend, performance, api-security-contract, lighthouse]
+        report-type:
+          [
+            backend-jacoco,
+            backend-pitest,
+            frontend,
+            performance,
+            api-security-contract,
+            lighthouse,
+          ]
     steps:
       - name: Checkout do codigo
         uses: actions/checkout@v7
@@ -58,10 +66,10 @@ jobs:
         if: matrix.report-type == 'backend-jacoco'
         uses: actions/setup-java@v5.6.0
         with:
-          java-version: '21'
-          distribution: 'temurin'
+          java-version: "21"
+          distribution: "temurin"
           cache: maven
-          cache-dependency-path: 'backend/pom.xml'
+          cache-dependency-path: "backend/pom.xml"
 
       - name: Gerar Relatorio JaCoCo
         if: matrix.report-type == 'backend-jacoco'
@@ -95,10 +103,10 @@ jobs:
         if: matrix.report-type == 'backend-pitest'
         uses: actions/setup-java@v5.6.0
         with:
-          java-version: '21'
-          distribution: 'temurin'
+          java-version: "21"
+          distribution: "temurin"
           cache: maven
-          cache-dependency-path: 'backend/pom.xml'
+          cache-dependency-path: "backend/pom.xml"
 
       - name: Cache PiTest History
         if: matrix.report-type == 'backend-pitest'
@@ -139,9 +147,9 @@ jobs:
         if: matrix.report-type == 'frontend'
         uses: actions/setup-node@v7
         with:
-          node-version: '24'
-          cache: 'npm'
-          cache-dependency-path: 'frontend/package-lock.json'
+          node-version: "24"
+          cache: "npm"
+          cache-dependency-path: "frontend/package-lock.json"
 
       - name: Instalar Dependencias
         if: matrix.report-type == 'frontend'
@@ -172,7 +180,7 @@ jobs:
         run: npm run test
         env:
           # Evita resumos Vitest repetidos durante as execuções mutadas do Stryker.
-          GITHUB_ACTIONS: 'false'
+          GITHUB_ACTIONS: "false"
 
       - name: Cache Stryker History
         if: matrix.report-type == 'frontend'
@@ -190,7 +198,7 @@ jobs:
         run: npx stryker run
         env:
           # O relatório HTML do Stryker é a fonte de verdade para a documentação.
-          GITHUB_ACTIONS: 'false'
+          GITHUB_ACTIONS: "false"
 
       - name: Restaurar Historico do Allure (Trend)
         if: matrix.report-type == 'frontend'
@@ -205,7 +213,7 @@ jobs:
         working-directory: frontend
         run: npx playwright test || true
         env:
-          BASE_URL: 'https://edtechacademic.com.br'
+          BASE_URL: "https://edtechacademic.com.br"
 
       - name: Gerar Allure Report
         if: matrix.report-type == 'frontend'
@@ -244,7 +252,7 @@ jobs:
         if: matrix.report-type == 'lighthouse'
         uses: actions/setup-node@v7
         with:
-          node-version: '24'
+          node-version: "24"
       - name: Run Lighthouse Audit
         if: matrix.report-type == 'lighthouse'
         run: |
@@ -270,8 +278,8 @@ jobs:
         if: matrix.report-type == 'api-security-contract' || matrix.report-type == 'performance'
         uses: actions/setup-java@v4
         with:
-          java-version: '21'
-          distribution: 'temurin'
+          java-version: "21"
+          distribution: "temurin"
 
       # ==========================
       # PERFORMANCE
@@ -293,7 +301,7 @@ jobs:
         if: matrix.report-type == 'performance'
         run: |
           cd backend
-          ./mvnw clean test-compile spring-boot:start -B -Dspring-boot.run.profiles=ci 
+          ./mvnw clean test-compile spring-boot:start -B -Dspring-boot.run.profiles=ci
         env:
           SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/edtech_db_test
           SPRING_DATASOURCE_USERNAME: edtech_user
@@ -303,7 +311,7 @@ jobs:
         if: matrix.report-type == 'performance'
         working-directory: tests/performance
         env:
-          API_URL: 'http://localhost:8080'
+          API_URL: "http://localhost:8080"
         run: k6 run load-test.js || true
 
       - name: Stop Local Backend (Performance)
@@ -334,7 +342,7 @@ jobs:
         if: matrix.report-type == 'api-security-contract'
         run: |
           cd backend
-          ./mvnw clean test-compile spring-boot:start -B -Dspring-boot.run.profiles=ci 
+          ./mvnw clean test-compile spring-boot:start -B -Dspring-boot.run.profiles=ci
         env:
           SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/edtech_db_test
           SPRING_DATASOURCE_USERNAME: edtech_user
@@ -343,7 +351,7 @@ jobs:
       - name: Run API security contract
         if: matrix.report-type == 'api-security-contract'
         env:
-          API_URL: 'http://localhost:8080'
+          API_URL: "http://localhost:8080"
         run: node tests/api-contract/production-security-contract.mjs
 
       - name: Stop Local Backend
@@ -380,7 +388,7 @@ jobs:
       - name: Configurar Python
         uses: actions/setup-python@v7
         with:
-          python-version: '3.11'
+          python-version: "3.11"
 
       - name: Instalar uv
         uses: astral-sh/setup-uv@v7
@@ -418,7 +426,7 @@ jobs:
         with:
           name: frontend-reports
           path: docs/
-          
+
       - name: Download Lighthouse Reports
         uses: actions/download-artifact@v8
         continue-on-error: true

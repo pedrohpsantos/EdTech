@@ -1,4 +1,3 @@
-
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import { BrowserRouter } from 'react-router-dom';
@@ -10,7 +9,7 @@ import { vi } from 'vitest';
 
 vi.mock('../../services/api', () => ({
   register: vi.fn(),
-  verifyRegistration: vi.fn()
+  verifyRegistration: vi.fn(),
 }));
 
 const queryClient = new QueryClient();
@@ -18,9 +17,7 @@ const queryClient = new QueryClient();
 const Wrapper = ({ children }) => (
   <QueryClientProvider client={queryClient}>
     <BrowserRouter>
-      <AuthProvider>
-        {children}
-      </AuthProvider>
+      <AuthProvider>{children}</AuthProvider>
     </BrowserRouter>
   </QueryClientProvider>
 );
@@ -60,7 +57,7 @@ describe('Register Page', () => {
     const passFields = screen.getAllByPlaceholderText('••••••••');
     const passwordInput = passFields[0];
     const confirmPasswordInput = passFields[1];
-    
+
     const togglePassword = screen.getByRole('button', { name: 'Mostrar senha' });
     const toggleConfirm = screen.getByRole('button', { name: 'Mostrar confirmação de senha' });
 
@@ -170,7 +167,9 @@ describe('Register Page', () => {
     fireEvent.change(verifyInput, { target: { value: '12' } }); // < 6
     fireEvent.click(screen.getByRole('button', { name: /Verificar Conta/i }));
 
-    expect(await screen.findByText(/Por favor, insira o código de 6 dígitos./i)).toBeInTheDocument();
+    expect(
+      await screen.findByText(/Por favor, insira o código de 6 dígitos./i),
+    ).toBeInTheDocument();
 
     const backButton = screen.getByRole('button', { name: /Voltar/i });
     fireEvent.click(backButton);
@@ -225,11 +224,11 @@ describe('Register Page', () => {
     vi.useFakeTimers();
     render(<Register />, { wrapper: Wrapper });
     const nameInput = screen.getByPlaceholderText('ex: Chiquinha Silva');
-    
+
     // We can simulate an invalid event on the form by firing it directly on the input or the form
     fireEvent.invalid(nameInput);
-    
-    // Check if the shaking animation state is triggered (we can't easily check the state directly, 
+
+    // Check if the shaking animation state is triggered (we can't easily check the state directly,
     // but we can advance timers to cover the setTimeout)
     vi.advanceTimersByTime(500);
     vi.useRealTimers();

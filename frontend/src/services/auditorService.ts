@@ -205,7 +205,7 @@ const mockLogs: AuditLog[] = [
 
 export const getAuditLogs = (
   user: User | null,
-  filters?: { search?: string; action?: string; date?: string; userId?: string }
+  filters?: { search?: string; action?: string; date?: string; userId?: string },
 ): AuditLog[] => {
   if (!isDemoAccount(user)) {
     return [];
@@ -216,17 +216,17 @@ export const getAuditLogs = (
   if (filters?.search) {
     const s = filters.search.toLowerCase();
     filtered = filtered.filter(
-      log =>
+      (log) =>
         log.action.toLowerCase().includes(s) ||
         log.details.toLowerCase().includes(s) ||
         log.userName.toLowerCase().includes(s) ||
         log.ip.includes(s) ||
-        log.userId.toLowerCase().includes(s)
+        log.userId.toLowerCase().includes(s),
     );
   }
 
   if (filters?.action && filters.action !== 'Todas as Ações') {
-    filtered = filtered.filter(log => log.action === filters.action);
+    filtered = filtered.filter((log) => log.action === filters.action);
   }
 
   return filtered;

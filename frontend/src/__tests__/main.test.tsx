@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 vi.mock('react-dom/client', () => ({
-  createRoot: vi.fn().mockReturnValue({ render: vi.fn() })
+  createRoot: vi.fn().mockReturnValue({ render: vi.fn() }),
 }));
 
 describe('main.tsx entry point', () => {

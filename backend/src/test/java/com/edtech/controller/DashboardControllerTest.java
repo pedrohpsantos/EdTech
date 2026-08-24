@@ -29,13 +29,12 @@ class DashboardControllerTest {
   @Test
   void testGetStats() {
     Authentication auth = mock(Authentication.class);
-    User mockUser =
-        new User(
-            "Test",
-            "test@unb.br",
-            "hash",
-            com.edtech.model.UserRole.RESEARCHER,
-            java.util.UUID.randomUUID());
+    User mockUser = new User(
+        "Test",
+        "test@unb.br",
+        "hash",
+        com.edtech.model.UserRole.RESEARCHER,
+        java.util.UUID.randomUUID());
     UUID userId = UUID.randomUUID();
     try {
       java.lang.reflect.Field idField = User.class.getDeclaredField("id");
@@ -49,13 +48,13 @@ class DashboardControllerTest {
 
     when(documentRepository.countDocumentsByUserId(mockUser.getId())).thenReturn(10L);
     when(documentRepository.countDocumentsByUserIdAndStatus(
-            mockUser.getId(), DocumentStatus.PENDING_REVIEW))
+        mockUser.getId(), DocumentStatus.PENDING_REVIEW))
         .thenReturn(2L);
     when(documentRepository.countDocumentsByUserIdAndStatus(
-            mockUser.getId(), DocumentStatus.APPROVED))
+        mockUser.getId(), DocumentStatus.APPROVED))
         .thenReturn(6L);
     when(documentRepository.countDocumentsByUserIdAndStatus(
-            mockUser.getId(), DocumentStatus.PUBLISHED))
+        mockUser.getId(), DocumentStatus.PUBLISHED))
         .thenReturn(1L);
 
     ResponseEntity<Map<String, Object>> response = dashboardController.getStats(auth);

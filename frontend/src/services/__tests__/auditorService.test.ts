@@ -23,10 +23,12 @@ describe('auditorService', () => {
     const stats = getComplianceStats(demoUser);
 
     expect(logs).toHaveLength(14);
-    expect(logs).toEqual(expect.arrayContaining([
-      expect.objectContaining({ action: 'UPLOAD_DOCUMENT', severity: 'INFO' }),
-      expect.objectContaining({ action: 'DOCUMENT_DELETED', severity: 'CRITICAL' }),
-    ]));
+    expect(logs).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ action: 'UPLOAD_DOCUMENT', severity: 'INFO' }),
+        expect.objectContaining({ action: 'DOCUMENT_DELETED', severity: 'CRITICAL' }),
+      ]),
+    );
     expect(stats).toMatchObject({
       score: 92,
       scoreTrend: 4,
@@ -36,11 +38,31 @@ describe('auditorService', () => {
       totalEvents: 14,
     });
     expect(stats.policies).toEqual([
-      expect.objectContaining({ name: 'Anonimização de dados pessoais (LGPD)', status: 'conforme', percentage: 100 }),
-      expect.objectContaining({ name: 'Termo de consentimento informado', status: 'parcial', percentage: 83 }),
-      expect.objectContaining({ name: 'Versionamento e cadeia de custódia', status: 'conforme', percentage: 96 }),
-      expect.objectContaining({ name: 'Retenção e descarte de dados', status: 'pendente', percentage: 58 }),
-      expect.objectContaining({ name: 'Aprovação do comitê de ética', status: 'conforme', percentage: 100 }),
+      expect.objectContaining({
+        name: 'Anonimização de dados pessoais (LGPD)',
+        status: 'conforme',
+        percentage: 100,
+      }),
+      expect.objectContaining({
+        name: 'Termo de consentimento informado',
+        status: 'parcial',
+        percentage: 83,
+      }),
+      expect.objectContaining({
+        name: 'Versionamento e cadeia de custódia',
+        status: 'conforme',
+        percentage: 96,
+      }),
+      expect.objectContaining({
+        name: 'Retenção e descarte de dados',
+        status: 'pendente',
+        percentage: 58,
+      }),
+      expect.objectContaining({
+        name: 'Aprovação do comitê de ética',
+        status: 'conforme',
+        percentage: 100,
+      }),
     ]);
   });
 

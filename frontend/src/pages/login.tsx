@@ -45,7 +45,7 @@ function Login() {
         if (resultado.sucesso) {
           navigate('/dashboard');
           // Reload to update AuthContext if needed, or update it manually.
-          window.location.reload(); 
+          window.location.reload();
         } else {
           setErro(resultado.mensagem);
         }
@@ -54,7 +54,6 @@ function Login() {
       setErro(erro.message || 'Erro ao realizar login');
     }
   };
-
 
   return (
     <AuthLayout title="Bem-vindo de volta" subtitle="Entre com suas credenciais institucionais">
@@ -75,7 +74,9 @@ function Login() {
 
         <div className={styles.inputGroup}>
           <div className={styles.labelRow}>
-            <label className={styles.inputLabel} htmlFor="login-email">E-mail Institucional</label>
+            <label className={styles.inputLabel} htmlFor="login-email">
+              E-mail Institucional
+            </label>
           </div>
           <div className={styles.inputWrapper}>
             <input
@@ -93,7 +94,9 @@ function Login() {
 
         <div className={styles.inputGroup}>
           <div className={styles.labelRow}>
-            <label className={styles.inputLabel} htmlFor="login-password">Senha</label>
+            <label className={styles.inputLabel} htmlFor="login-password">
+              Senha
+            </label>
             <Link to="/recover-password" className={styles.forgotLink}>
               Recuperar senha
             </Link>
@@ -152,7 +155,9 @@ function Login() {
         {step === '2fa' && (
           <div className={styles.inputGroup} style={{ marginTop: '1rem' }}>
             <div className={styles.labelRow}>
-              <label className={styles.inputLabel} htmlFor="login-totp">Código 2FA (Authenticator)</label>
+              <label className={styles.inputLabel} htmlFor="login-totp">
+                Código 2FA (Authenticator)
+              </label>
             </div>
             <div className={styles.inputWrapper}>
               <input
@@ -170,10 +175,7 @@ function Login() {
           </div>
         )}
 
-        <button
-          className={`${styles.submitBtn} ${isShaking ? styles.shake : ''}`}
-          type="submit"
-        >
+        <button className={`${styles.submitBtn} ${isShaking ? styles.shake : ''}`} type="submit">
           {step === 'credentials' ? 'Continuar' : 'Verificar e Entrar'} <span>→</span>
         </button>
       </form>

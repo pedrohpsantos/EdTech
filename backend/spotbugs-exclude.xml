@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FindBugsFilter>
-    <!-- Ignore getter/setter exposure which is standard for JPA Entities and Spring Controllers/Services -->
+    <!-- Ignore getter/setter exposure which is standard for JPA Entities and Spring
+    Controllers/Services -->
     <Match>
         <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2" />
     </Match>
 
-    <!-- Ignore CT_CONSTRUCTOR_THROW in JwtService since throwing IllegalStateException is standard validation -->
+    <!-- Ignore CT_CONSTRUCTOR_THROW in JwtService since throwing IllegalStateException is standard
+    validation -->
     <Match>
         <Class name="com.edtech.service.JwtService" />
         <Bug pattern="CT_CONSTRUCTOR_THROW" />
@@ -37,7 +39,8 @@
         <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
     </Match>
 
-    <!-- Ignore DM_EXIT in MigrationExitRunner since it is explicitly designed to exit the JVM after migration -->
+    <!-- Ignore DM_EXIT in MigrationExitRunner since it is explicitly designed to exit the JVM after
+    migration -->
     <Match>
         <Class name="com.edtech.config.MigrationExitRunner" />
         <Bug pattern="DM_EXIT" />

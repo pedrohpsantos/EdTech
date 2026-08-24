@@ -30,7 +30,9 @@ from rich import print as rprint
 # ---------------------------------------------------------------------------
 PROJECT_ID = os.getenv("GCP_PROJECT_ID") or os.getenv("GOOGLE_CLOUD_PROJECT")
 if not PROJECT_ID:
-    rprint("[bold red][ERRO][/] Defina a variável de ambiente GCP_PROJECT_ID ou GOOGLE_CLOUD_PROJECT.")
+    rprint(
+        "[bold red][ERRO][/] Defina a variável de ambiente GCP_PROJECT_ID ou GOOGLE_CLOUD_PROJECT."
+    )
     sys.exit(1)
 
 BACKUP_BUCKET = f"edtech-backups-{PROJECT_ID}"
@@ -55,7 +57,9 @@ def main() -> None:
         client = storage.Client(project=PROJECT_ID)
         bucket = client.get_bucket(BACKUP_BUCKET)
     except Exception as exc:
-        rprint(f"[bold red][ERRO][/] Não foi possível acessar o bucket '[cyan]{BACKUP_BUCKET}[/]': {exc}")
+        rprint(
+            f"[bold red][ERRO][/] Não foi possível acessar o bucket '[cyan]{BACKUP_BUCKET}[/]': {exc}"
+        )
         sys.exit(1)
 
     blobs = sorted(
@@ -65,13 +69,19 @@ def main() -> None:
     )
 
     if not blobs:
-        rprint(f"[bold yellow][AVISO][/] Nenhum backup encontrado em gs://{BACKUP_BUCKET}.")
+        rprint(
+            f"[bold yellow][AVISO][/] Nenhum backup encontrado em gs://{BACKUP_BUCKET}."
+        )
         sys.exit(0)
 
     # -----------------------------------------------------------------------
     # Tabela de backups
     # -----------------------------------------------------------------------
-    table = Table(title=f"Backups em gs://{BACKUP_BUCKET}", show_header=True, header_style="bold cyan")
+    table = Table(
+        title=f"Backups em gs://{BACKUP_BUCKET}",
+        show_header=True,
+        header_style="bold cyan",
+    )
     table.add_column("#", style="dim", width=4)
     table.add_column("Arquivo", style="white")
     table.add_column("Tamanho", justify="right")
@@ -84,9 +94,7 @@ def main() -> None:
     for idx, blob in enumerate(blobs[:10], start=1):  # mostra os 10 mais recentes
         created = blob.time_created
         age = now - created
-        age_str = (
-            f"{int(age.total_seconds() // 3600)}h {int((age.total_seconds() % 3600) // 60)}min"
-        )
+        age_str = f"{int(age.total_seconds() // 3600)}h {int((age.total_seconds() % 3600) // 60)}min"
         created_brt = created.astimezone(brt).strftime("%d/%m/%Y %H:%M")
         size_str = human_size(blob.size or 0)
 
