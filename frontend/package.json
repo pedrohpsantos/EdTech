@@ -22,7 +22,7 @@
     "axios": "^1.19.0",
     "bootstrap": "^5.3.8",
     "bootstrap-icons": "^1.13.1",
-    "framer-motion": "^12.42.2",
+    "framer-motion": "^13.1.1",
     "i18next": "^26.4.0",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
