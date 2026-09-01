@@ -64,7 +64,7 @@ jobs:
       # ==========================
       - name: Configurar JDK 21 (JaCoCo)
         if: matrix.report-type == 'backend-jacoco'
-        uses: actions/setup-java@v5.6.0
+        uses: actions/setup-java@v6
         with:
           java-version: "21"
           distribution: "temurin"
@@ -101,7 +101,7 @@ jobs:
       # ==========================
       - name: Configurar JDK 21 (PiTest)
         if: matrix.report-type == 'backend-pitest'
-        uses: actions/setup-java@v5.6.0
+        uses: actions/setup-java@v6
         with:
           java-version: "21"
           distribution: "temurin"
@@ -276,7 +276,7 @@ jobs:
 
       - name: Setup Java
         if: matrix.report-type == 'api-security-contract' || matrix.report-type == 'performance'
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v6
         with:
           java-version: "21"
           distribution: "temurin"
